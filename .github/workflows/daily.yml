@@ -1,0 +1,46 @@
+name: 发射台日更 + 网站发布
+
+on:
+  schedule:
+    - cron: "20 10 * * *"      # 每天 UTC 10:20（DefiLlama 昨日数据基本稳定后）
+  workflow_dispatch: {}         # 允许手动触发
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-pipeline
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # 中文字体：网站与图表用 Noto Sans/Serif CJK，Ubuntu runner 默认没装
+      - name: 安装中文字体
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-noto-cjk
+
+      - name: 跑日更（拉数 → 看板 → 网站）
+        env:
+          LP_DATA: ${{ github.workspace }}/data
+          LP_OUT: ${{ github.workspace }}/build
+          COINGECKO_API_KEY: ${{ secrets.COINGECKO_API_KEY }}
+        run: |
+          python3 pipeline/跑日更.py --site
+
+      - name: 提交 data/ 与 site/
+        run: |
+          git config user.name "uncleonchain-bot"
+          git config user.email "bot@uncleonchain.com"
+          git add data/ site/
+          git diff --cached --quiet && echo "没有变化，跳过提交" && exit 0
+          git commit -m "日更 $(date -u +%Y-%m-%d)"
+          git push

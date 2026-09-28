@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>链上大叔研究台</title>
+<meta name="description" content="宏观流动性 → BTC/ETH → 板块轮动 → 发射台 / 低位叙事">
+<meta property="og:title" content="链上大叔研究台">
+<meta property="og:description" content="宏观流动性 → BTC/ETH → 板块轮动 → 发射台 / 低位叙事">
+<meta property="og:type" content="website">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap">
+<style>
+:root{--bg:#fffefc;--panel:#f7f4ee;--ink:#26221e;--ink2:#3d3730;--muted:#7a736b;--rule:#ece7e0;--rule2:#d8d2c9;
+--accent:#8a6d1f;--accent-soft:#fdf9ef;--card:#ffffff;
+--blue:#15628f;--blue-soft:#eef5fa;--red:#c02128;--red-soft:#fdf4f4;--green:#3f6b4c;--green-soft:#f4faf5;
+color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#18140f;--panel:#221d16;--ink:#efe9e0;--ink2:#cfc6b8;
+--muted:#9c9284;--rule:#332c22;--rule2:#463c2e;--accent:#dcae4b;--accent-soft:#2b2416;--card:#1f1a13;
+--blue:#6fa9ec;--blue-soft:#182430;--red:#ef7d7a;--red-soft:#301a19;--green:#7dbf94;--green-soft:#152a1c;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#18140f;--panel:#221d16;--ink:#efe9e0;--ink2:#cfc6b8;--muted:#9c9284;--rule:#332c22;
+--rule2:#463c2e;--accent:#dcae4b;--accent-soft:#2b2416;--card:#1f1a13;
+--blue:#6fa9ec;--blue-soft:#182430;--red:#ef7d7a;--red-soft:#301a19;--green:#7dbf94;--green-soft:#152a1c;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{background:var(--bg)}
+body{margin:0;color:var(--ink);font:16px/1.72 -apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif}
+a{color:inherit}
+.site-nav{position:sticky;top:0;z-index:10;background:var(--bg);border-bottom:1px solid var(--rule);
+display:flex;align-items:center;gap:20px;padding:14px 20px;flex-wrap:wrap}
+.site-nav .brand{font:400 17px/1 Georgia,"Songti SC","STSong",serif;text-decoration:none;color:var(--ink);white-space:nowrap}
+.site-nav .links{display:flex;gap:16px;flex-wrap:wrap;font-size:13.5px}
+.site-nav .links a{text-decoration:none;color:var(--ink2)}
+.site-nav .links a:hover,.site-nav .links a.on{color:var(--accent)}
+.wrap{max-width:900px;margin:0 auto;padding-inline:20px;padding-block:40px 72px}
+.wrap.wide{max-width:1180px}
+.eyebrow{font-size:12px;letter-spacing:.14em;color:var(--accent);font-weight:600;text-transform:uppercase}
+h1{font:400 40px/1.24 Georgia,"Songti SC","STSong",serif;letter-spacing:-.3px;margin:8px 0 10px;text-wrap:balance}
+h2{font:400 26px/1.32 Georgia,"Songti SC","STSong",serif;letter-spacing:-.2px;margin:40px 0 8px}
+h3{font:600 16.5px/1.4 -apple-system,"PingFang SC",sans-serif;margin:26px 0 8px}
+.meta{color:var(--muted);font-size:13px;padding-bottom:22px;border-bottom:2px solid var(--ink)}
+.lede{font-size:16.5px;color:var(--ink2);max-width:66ch;margin:0 0 8px}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--rule);
+border:1px solid var(--rule);border-radius:10px;overflow:hidden;margin-top:30px}
+.card{background:var(--card);padding:22px 24px;text-decoration:none;color:inherit;display:block}
+.card:hover{background:var(--panel)}
+.card .ic{font-size:21px}
+.card h3{margin:9px 0 5px;font:600 17px/1.3 -apple-system,"PingFang SC",sans-serif}
+.card p{margin:0;color:var(--ink2);font-size:13.5px;line-height:1.6}
+.card .tag{display:inline-block;margin-top:11px;font-size:11px;letter-spacing:.4px;color:var(--muted);
+border:1px solid var(--rule2);border-radius:999px;padding:2px 10px}
+.card .tag.live{color:var(--accent);border-color:var(--accent)}
+.postlist{list-style:none;padding:0;margin:20px 0}
+.postlist li{padding:16px 0;border-bottom:1px solid var(--rule)}
+.postlist a{text-decoration:none;font:600 16px/1.4 -apple-system,"PingFang SC",sans-serif}
+.postlist a:hover{color:var(--accent)}
+.postlist .d{color:var(--muted);font-size:12.5px;font-family:ui-monospace,Menlo,monospace;margin-right:10px}
+.postlist .s{display:block;color:var(--ink2);font-size:13.5px;margin-top:4px}
+.empty{background:var(--panel);border-radius:8px;padding:22px 24px;color:var(--ink2);font-size:14px;margin-top:18px}
+.article{max-width:70ch}
+.article p{margin:0 0 14px}
+.article blockquote{margin:0 0 14px;padding:8px 18px;border-left:3px solid var(--accent);color:var(--ink2);background:var(--panel);border-radius:0 8px 8px 0}
+.article code{background:var(--panel);padding:1px 5px;border-radius:4px;font-family:ui-monospace,Menlo,monospace;font-size:.9em}
+.article ul{padding-left:22px}
+.article li{margin:0 0 7px}
+.datelist{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.datelist a{font-size:13px;font-family:ui-monospace,Menlo,monospace;padding:5px 12px;border:1px solid var(--rule2);
+border-radius:999px;text-decoration:none;color:var(--ink2)}
+.datelist a:hover{color:var(--accent);border-color:var(--accent)}
+.tbl{overflow-x:auto;margin-top:10px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--rule);text-align:left;vertical-align:top}
+th{color:var(--muted);font-weight:600;font-size:11.5px;letter-spacing:.5px;text-transform:uppercase}
+td.num,th.num{text-align:right;font-family:ui-monospace,Menlo,monospace;font-variant-numeric:tabular-nums}
+tr:hover td{background:var(--panel)}
+.site-footer{border-top:1px solid var(--rule);color:var(--muted);font-size:12.5px;padding:24px 20px;text-align:center}
+.site-footer a{color:var(--muted)}
+
+/* ---- 报告组件：md 文章里可以直接手拼这些 class，出看板.py 生成的 .html 报告自带同名/同构组件 ---- */
+.lead{font-size:18px;line-height:1.7;color:var(--ink2);margin:0 0 24px}
+.tldr{border:1px solid var(--rule2);border-radius:8px;padding:22px 26px;margin:0 0 30px;background:var(--accent-soft)}
+.tldr h4{margin:0 0 14px;font:700 13px/1 -apple-system,sans-serif;letter-spacing:1.2px;color:var(--accent);text-transform:uppercase}
+.tldr ol{margin:0;padding-left:20px;font-size:15.5px}
+.tldr li{margin:0 0 9px}
+.hook{border:1px solid var(--rule2);border-left:5px solid var(--blue);border-radius:8px;padding:26px 30px;margin:0 0 24px;
+background:linear-gradient(160deg,var(--blue-soft) 0%,var(--accent-soft) 100%)}
+.hook .q{font:400 28px/1.3 Georgia,"Songti SC",serif;margin:0 0 14px;color:var(--blue)}
+.hook p{font-size:16px;margin:0 0 12px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule2);
+border:1px solid var(--rule2);border-radius:8px;overflow:hidden;margin:24px 0 28px}
+.kpi{background:var(--blue-soft);padding:16px 14px}
+.kpi .k{font-size:11px;letter-spacing:.6px;color:var(--muted);text-transform:uppercase;margin-bottom:5px}
+.kpi .v{font:400 26px/1.1 Georgia,serif;letter-spacing:-.4px}
+.kpi .s{font-size:12px;color:var(--muted);margin-top:3px}
+.callout{border-left:3px solid var(--accent);background:var(--accent-soft);padding:16px 20px;margin:22px 0;font-size:15px}
+.callout h4{margin:0 0 7px;font-size:13.5px;letter-spacing:.4px;color:var(--accent);font-weight:700}
+.callout.blue{border-color:var(--blue);background:var(--blue-soft)} .callout.blue h4{color:var(--blue)}
+.callout.red{border-color:var(--red);background:var(--red-soft)} .callout.red h4{color:var(--red)}
+.callout.gray,.callout.green{border-color:var(--green);background:var(--green-soft)} .callout.gray h4,.callout.green h4{color:var(--green)}
+.callout p:last-child{margin:0}
+.chart-fig{margin:22px 0 28px;padding:0}
+.chart-cap{font:600 14.5px/1.45 -apple-system,"PingFang SC",sans-serif;color:var(--ink);margin:0 0 10px;
+padding-left:11px;border-left:3px solid var(--accent)}
+.chart-fig svg{display:block;width:100%;height:auto}
+.fnote{font-size:12.5px;color:var(--muted);margin-top:8px;line-height:1.6}
+.sign{margin-top:40px;border:1.5px solid var(--ink);padding:18px 22px;display:flex;
+justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.sign .l{font-size:14px;color:var(--ink2);max-width:520px}
+.sign .r{text-align:right;line-height:1.35}
+.sign .nm{font:400 16px Georgia,"Songti SC",serif;color:var(--ink)}
+.sign .hd2{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--muted);margin-top:2px}
+
+@media (max-width:720px){.cards{grid-template-columns:1fr}h1{font-size:29px}
+.kpis{grid-template-columns:repeat(2,1fr)}.kpi .v{font-size:22px}}
+</style>
+
+</head>
+<body>
+<nav class="site-nav"><a class="brand" href="/">链上大叔研究台</a><div class="links"><a href="/launchpad/" class="">发射台日更</a><a href="/macro/" class="">宏观流动性</a><a href="/rotation/" class="">板块轮动复盘</a><a href="/narrative/" class="">叙事币埋伏</a><a href="/methodology/" class="">口径</a><a href="/corrections/" class="">更正记录</a><a href="/about/" class="">关于</a></div></nav>
+<div class="wrap">
+<div class="eyebrow">链上一级市场与宏观数据研究</div>
+<h1>链上大叔研究台</h1>
+<p class="lede">宏观流动性 → BTC/ETH → 板块轮动 → 发射台 / 低位叙事。一个 web3 链上数据分析师的公开台账：宏观流动性怎么传导到 BTC / ETH，
+板块怎么轮动，发射台每天赚多少钱，叙事币在哪个位置埋伏——只给数据和过程记录，不给买卖建议。</p>
+<div class="cards"><a class="card" href="/launchpad/"><div class="ic">🚀</div><h3>发射台日更</h3><p>pump.fun、Pons、StonkFun、Flap 逐日手续费与协议收入，PONS 链上销毁与回购市盈率，Arc 链整链观察。</p><span class="tag live">日更 · 截至 2026-09-27</span></a><a class="card" href="/macro/"><div class="ic">🌊</div><h3>宏观流动性</h3><p>美元流动性、美债利率、稳定币供给这些宏观指标，和 BTC / ETH 的相关系数——先看水位，再看币价。</p><span class="tag">筹备接入</span></a><a class="card" href="/rotation/"><div class="ic">🔄</div><h3>板块轮动复盘</h3><p>高波动窗口里板块轮动的交易复盘：进出场理由、事后对错、当时没看到的信息。</p><span class="tag">敬请期待</span></a><a class="card" href="/narrative/"><div class="ic">🔍</div><h3>叙事币埋伏</h3><p>低位叙事币的观察笔记：为什么进、仓位怎么摆、后续怎么跟踪——过程记录，不是喊单。</p><span class="tag">敬请期待</span></a></div>
+<h2>今日一览 · 2026-09-27</h2><p class="lede" style="font-size:14px">pump.fun 2,112,093（-21.8%） ｜ Pons 合计 1,310,993（-22.0%） ｜ StonkFun 529,093（-9.2%） ｜ Flap 877,261（-15.4%）</p><p><a href="/launchpad/">看完整日更 →</a></p>
+</div>
+<footer class="site-footer">链上大叔研究台（Uncle Onchain）｜ @Uncle_Web3PM ｜ 数据源：DefiLlama · CoinGecko · GeckoTerminal · DexScreener · Robinhood Chain / Arc 链上节点<br>本站只给数据和复盘记录，不构成任何投资建议；不对任何交易结果负责。</footer>
+</body>
+</html>
