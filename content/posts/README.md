@@ -35,9 +35,15 @@
 -->
 ```
 
-网站全站（首页、四个板块、口径、更正记录、关于、发射台看板）用同一套编辑体报告视觉语言
-（Georgia/Songti SC 衬线大标题、暖白底、金色强调、蓝/红/绿三色 callout），跟推特报告和交易计划表是
-一个系统，`pipeline/出网站.py` 里的 `SITE_CSS` 定义了 `.lead / .tldr / .hook / .kpis / .kpi / .callout
-(.blue/.red/.gray) / .chart-fig / .sign` 这些组件，.md 笔记想用同款视觉，直接在正文里手拼这些 class 即可。
+网站分两套视觉语言。首页、四个板块列表、口径、更正记录、关于，以及发射台的「文字解读」深度页
+（`/launchpad/report/`）用编辑体报告风格（Georgia/Songti SC 衬线大标题、暖白底、金色强调、
+蓝/红/绿三色 callout），跟推特报告和交易计划表是一个系统，`pipeline/出网站.py` 里的 `SITE_CSS`
+定义了 `.lead / .tldr / .hook / .kpis / .kpi / .callout(.blue/.red/.gray) / .chart-fig / .sign`
+这些组件，.md 笔记想用同款视觉，直接在正文里手拼这些 class 即可。
+
+发射台的数据页（`/launchpad/` 总览 + `/launchpad/platforms/<slug>/` 分平台页）用另一套深色终端仪表盘
+风格（参考 Token Terminal / DefiLlama），`TERMINAL_CSS` 定义，总览页是全市场排行表 + 90 天走势图
+（总数据），点进任意一行是该平台自己的手续费/收入/估值详情（分数据）。这套风格只服务于原始数据展示，
+不影响上面的编辑体报告风格，两边各管各的，互不干扰。
 
 两种稿子跑一次 `python3 pipeline/出网站.py`（或等每日定时任务自动跑）就会出现在对应板块页面和首页卡片上。

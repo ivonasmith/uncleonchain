@@ -1306,6 +1306,51 @@ print("->", os.path.join(OUT, "notion_payload.json"), {k: v["日期"] for k, v i
 # ======================================================================
 # 网站素材：出网站.py 读它，把同一份看板套进网站外壳（Claude 定时任务不用这个文件）
 # ======================================================================
+SERIES_DAYS = 180        # 网站仪表盘用的历史长度（详情页图表、迷你走势线）
+SITE_SYM = {"pump.fun": "PUMP", "stonkfun": "STONK"}      # 平台 slug → 估值符号（Pons 合并算，见下）
+
+
+def series4(getter, ds):
+    """{日期: 数值} 稀疏序列，跳过 None（延迟/上线前），前端按存在的点连线，不补零。"""
+    out = {}
+    for d in ds:
+        v = getter(d)
+        if v is not None:
+            out[d] = round(v, 2) if isinstance(v, float) else v
+    return out
+
+
+SDAYS = days[-SERIES_DAYS:]
+site_platforms = []
+for x in rows:
+    s = x["slug"]
+    sym = SITE_SYM.get(s) or ("PONS" if s in ("pons-v1", "pons-v2") else None)
+    site_platforms.append({
+        "slug": s, "名称": x["名称"], "链": x["链"], "延迟": x["延迟"],
+        "当日手续费": x["当日手续费"], "日环比": x["日环比"], "7日均": x["7日均"], "7日均环比": x["7日均环比"],
+        "当日收入": x["当日收入"], "分账比率": x["分账比率"], "占赛道份额": x["占赛道份额"],
+        "距单日峰值": x["距单日峰值"], "单日峰值": x["单日峰值"], "峰值日": x["峰值日"], "累计": x["累计"],
+        "手续费序列": series4(lambda d, s=s: fee(s, d), SDAYS),
+        "收入序列": series4(lambda d, s=s: rv(s, d), SDAYS),
+        "估值符号": sym,
+    })
+site_arc_lp = []
+if ARC_OK:
+    for z in LPS:
+        e = A["发射台"][z["名称"]]
+        site_arc_lp.append({
+            "slug": z["slug"] or z["名称"], "名称": z["名称"], "链": "Arc",
+            "当日手续费": z["当日"], "7日": z["7日"], "30日": z["30日"], "7日DEX": z["7日DEX"],
+            "手续费序列": series4(lambda d, e=e: e["fees"].get(d), [d for d in adays if d >= ARC_MAINNET]),
+        })
+site_val = {}
+for sym in VSYMS:
+    r = vr(sym) or {}
+    site_val[sym] = {**{k: v for k, v in r.items() if k != "日期"},
+                      "平台": VMETA[sym].get("平台"),
+                      "序列": {d: {kk: vv for kk, vv in (VROWS[sym].get(d) or {}).items() if kk in
+                                  ("市值", "回购市盈率", "收入市盈率", "回购收益率")} for d in VROWS.get(sym, {})
+                              if d >= shift(LAST, -SERIES_DAYS)}}
 site = {
     "日期": LAST, "生成时间UTC": GEN, "距今天数": AGE, "整体延迟": GLOBAL_DELAY,
     "延迟平台": [NAME[s] for s in DELAYED],
@@ -1313,14 +1358,17 @@ site = {
     "正文": inner, "指标卡": hero,
     "一句话": L[2],
     "异常": [a for a in AN if a not in AN_NOTION_ONLY],
-    "平台": [{"slug": x["slug"], "名称": x["名称"], "链": x["链"], "延迟": x["延迟"],
-              "当日手续费": x["当日手续费"], "日环比": x["日环比"], "7日均": x["7日均"],
-              "当日收入": x["当日收入"], "占赛道份额": x["占赛道份额"]} for x in rows],
+    "平台": site_platforms,
+    "赛道Top60": {"当日": TOT.get(LAST), "序列": series4(lambda d: TOT.get(d), SDAYS),
+              "协议数": D.get("Launchpad协议总数")},
     "Pons合计": pons_cur, "Pons日环比": pch(pons_cur, pons_prev), "pump除以Pons": ratio,
     "PONS当日销毁": burn_last, "PONS当日销毁USD": burn_usd(LAST), "PONS销毁地址累计": BURNED,
+    "PONS销毁序列": series4(lambda d: burn_daily.get(d), SDAYS),
     "回购市盈率": {s: vget(s, "回购市盈率") for s in VSYMS},
+    "估值": site_val,
     "Arc": {"日期": ARC_LAST, "发射台手续费": A["发射台手续费"].get(ARC_LAST) if ARC_OK else None,
-            "升级条件": arc_state},
+            "全链手续费": A.get("全链手续费", {}).get(ARC_LAST) if ARC_OK else None,
+            "升级条件": arc_state, "发射台": site_arc_lp},
     "csv": os.path.basename(csv_path),
 }
 with open(os.path.join(OUT, "网站素材.json"), "w", encoding="utf-8") as fh:

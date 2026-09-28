@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>发射台日更往期 · 链上大叔研究台</title>
+<title>Argus World（Arc）· 发射台 · 链上大叔研究台</title>
 <meta name="description" content="宏观流动性 → BTC/ETH → 板块轮动 → 发射台 / 低位叙事">
-<meta property="og:title" content="发射台日更往期 · 链上大叔研究台">
+<meta property="og:title" content="Argus World（Arc）· 发射台 · 链上大叔研究台">
 <meta property="og:description" content="宏观流动性 → BTC/ETH → 板块轮动 → 发射台 / 低位叙事">
 <meta property="og:type" content="website">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -112,12 +112,68 @@ justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
 @media (max-width:720px){.cards{grid-template-columns:1fr}h1{font-size:29px}
 .kpis{grid-template-columns:repeat(2,1fr)}.kpi .v{font-size:22px}}
 </style>
-
+<style>
+:root[data-theme="dark"]{--bg:#0b0e14;--panel:#121722;--card:#121722;--ink:#e7eaf0;--ink2:#b7bfcc;
+--muted:#7c8598;--rule:#1e2531;--rule2:#2a3242;--accent:#e2b357;--accent-soft:#221b0f;
+--up:#2ecc8f;--dn:#f0555a;--up-soft:#12251d;--dn-soft:#2a1517;color-scheme:dark}
+body{font-family:-apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif}
+h1{font:400 32px/1.25 Georgia,"Songti SC","STSong",serif}
+.term-hero{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:10px 20px;margin-top:6px}
+.term-updated{color:var(--muted);font-size:12.5px;font-family:ui-monospace,Menlo,monospace}
+.term-kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--rule);
+border:1px solid var(--rule);border-radius:10px;overflow:hidden;margin:22px 0 30px}
+.term-kpi{background:var(--card);padding:14px 16px}
+.term-kpi .k{font-size:10.5px;letter-spacing:.5px;color:var(--muted);text-transform:uppercase;margin-bottom:6px}
+.term-kpi .v{font:600 21px/1.15 ui-monospace,Menlo,monospace;letter-spacing:-.3px}
+.term-kpi .s{font-size:11.5px;color:var(--muted);margin-top:4px}
+.term-tabs{display:flex;gap:6px;margin:28px 0 4px;flex-wrap:wrap}
+.term-tabs a{font-size:12.5px;padding:6px 13px;border-radius:999px;border:1px solid var(--rule2);
+color:var(--ink2);text-decoration:none}
+.term-tabs a.on,.term-tabs a:hover{border-color:var(--accent);color:var(--accent)}
+.term-table-wrap{overflow-x:auto;margin-top:14px;border:1px solid var(--rule);border-radius:10px}
+table.term{border-collapse:collapse;width:100%;font-size:13px;min-width:760px}
+table.term th{background:var(--panel);color:var(--muted);font-weight:600;font-size:10.5px;letter-spacing:.5px;
+text-transform:uppercase;padding:10px 12px;text-align:right;border-bottom:1px solid var(--rule);white-space:nowrap}
+table.term th.l{text-align:left}
+table.term td{padding:10px 12px;border-bottom:1px solid var(--rule);text-align:right;font-family:ui-monospace,Menlo,monospace;
+font-variant-numeric:tabular-nums;white-space:nowrap}
+table.term td.l{text-align:left;font-family:-apple-system,"PingFang SC",sans-serif}
+table.term tr:last-child td{border-bottom:none}
+table.term tr:hover td{background:var(--panel)}
+table.term a.nm{color:var(--ink);text-decoration:none;font-weight:600}
+table.term a.nm:hover{color:var(--accent)}
+table.term .rk{color:var(--muted);font-size:12px;width:1%}
+.badge{display:inline-block;font-size:10.5px;padding:2px 8px;border-radius:999px;margin-left:8px;
+border:1px solid currentColor;opacity:.85;vertical-align:1px}
+.badge.solana{color:#b891ff}.badge.robinhood{color:#4c9be8}.badge.bsc{color:#e2b357}
+.badge.arc{color:#37c9d6}.badge.other{color:#8b93a7}
+.d{font-variant-numeric:tabular-nums}.d.up{color:var(--up)}.d.dn{color:var(--dn)}
+.spk{display:block;width:88px;height:26px;margin-left:auto}
+.term-plot{overflow-x:auto}
+.term-svg{display:block;width:100%;min-width:520px;height:auto}
+.term-svg .gl{stroke:var(--rule);stroke-width:1}
+.term-svg .ax{fill:var(--muted);font-size:10.5px;font-family:ui-monospace,Menlo,monospace}
+.term-legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12.5px;color:var(--ink2);margin:14px 0 8px}
+.term-legend .lg-item{display:inline-flex;align-items:center;gap:6px}
+.term-legend .lg-item i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.term-legend .lg-item b{color:var(--ink);font-family:ui-monospace,Menlo,monospace}
+.term-note{background:var(--panel);border-radius:8px;padding:14px 18px;margin:18px 0;font-size:13px;color:var(--ink2)}
+.term-back{display:inline-block;margin-top:26px;font-size:13px;color:var(--muted);text-decoration:none}
+.term-back:hover{color:var(--accent)}
+@media(max-width:720px){.term-kpis{grid-template-columns:repeat(2,1fr)}}
+</style>
 </head>
 <body>
 <nav class="site-nav"><a class="brand" href="/">链上大叔研究台</a><div class="links"><a href="/launchpad/" class="on">发射台日更</a><a href="/macro/" class="">宏观流动性</a><a href="/rotation/" class="">板块轮动复盘</a><a href="/narrative/" class="">叙事币埋伏</a><a href="/methodology/" class="">口径</a><a href="/corrections/" class="">更正记录</a><a href="/about/" class="">关于</a></div></nav>
-<div class="wrap">
-<div class="eyebrow">🚀 板块</div><h1>发射台日更 · 往期归档</h1><p class="lede">共 1 期，UTC 完整日为单位，每天一期。</p><div class="datelist"><a href="/launchpad/2026-09-27/">2026-09-27</a></div>
+<div class="wrap wide">
+<div class="eyebrow">🚀 发射台 · 分数据</div>
+<div class="term-hero"><h1>Argus World<span class="badge arc">Arc</span></h1>
+<div class="term-updated">数据截至 2026-09-27</div></div>
+<div class="term-kpis" style="grid-template-columns:repeat(4,1fr)"><div class="term-kpi"><div class="k">当日手续费</div><div class="v">$435.3K</div></div><div class="term-kpi"><div class="k">7 日合计</div><div class="v">$1.08M</div></div><div class="term-kpi"><div class="k">30 日合计</div><div class="v">$4.25M</div></div><div class="term-kpi"><div class="k">7 日 DEX 成交</div><div class="v">$0</div></div></div>
+<h2 style="font-size:19px">手续费走势</h2>
+<div class="term-legend"><span class="lg-item"><i style="background:#e2b357"></i>手续费 <b>$435.3K</b></span></div><div class="term-plot"><svg viewBox="0 0 860 250" class="term-svg"><line x1="54" y1="216.0" x2="844" y2="216.0" class="gl"/><text x="46" y="220.0" class="ax" text-anchor="end">$0</text><line x1="54" y1="166.0" x2="844" y2="166.0" class="gl"/><text x="46" y="170.0" class="ax" text-anchor="end">$629.1K</text><line x1="54" y1="116.0" x2="844" y2="116.0" class="gl"/><text x="46" y="120.0" class="ax" text-anchor="end">$1.26M</text><line x1="54" y1="66.0" x2="844" y2="66.0" class="gl"/><text x="46" y="70.0" class="ax" text-anchor="end">$1.89M</text><line x1="54" y1="16.0" x2="844" y2="16.0" class="gl"/><text x="46" y="20.0" class="ax" text-anchor="end">$2.52M</text><polyline points="54.0,30.8 125.8,186.6 197.6,202.0 269.5,205.5 341.3,208.8 413.1,208.9 484.9,209.2 556.7,209.0 628.5,208.5 700.4,204.2 772.2,204.8 844.0,181.4" fill="none" stroke="#e2b357" stroke-width="1.8" stroke-linejoin="round"/><circle cx="844.0" cy="181.4" r="3" fill="#e2b357"/><text x="54.0" y="236" class="ax" text-anchor="middle">09-16</text><text x="197.6" y="236" class="ax" text-anchor="middle">09-18</text><text x="341.3" y="236" class="ax" text-anchor="middle">09-20</text><text x="484.9" y="236" class="ax" text-anchor="middle">09-22</text><text x="628.5" y="236" class="ax" text-anchor="middle">09-24</text><text x="772.2" y="236" class="ax" text-anchor="middle">09-26</text></svg></div>
+<div class="term-note">Arc 上不少发射台的 swap 走 Uniswap 底层池，DEX 成交记在 Uniswap 名下而不是发射台名下，这里的「DEX 成交」系统性偏低，看手续费更可靠。</div>
+<a class="term-back" href="/launchpad/">← 返回发射台总览</a>
 </div>
 <footer class="site-footer">链上大叔研究台（Uncle Onchain）｜ @Uncle_Web3PM ｜ 数据源：DefiLlama · CoinGecko · GeckoTerminal · DexScreener · Robinhood Chain / Arc 链上节点<br>本站只给数据和复盘记录，不构成任何投资建议；不对任何交易结果负责。</footer>
 </body>
