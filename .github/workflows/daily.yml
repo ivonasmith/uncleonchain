@@ -1,9 +1,16 @@
-name: 发射台日更 + 网站发布
+name: 日更：发射台 + 宏观四层 + 解读日志 + 网站发布
 
 on:
   schedule:
     - cron: "20 10 * * *"      # 每天 UTC 10:20（DefiLlama 昨日数据基本稳定后）
-  workflow_dispatch: {}         # 允许手动触发
+  workflow_dispatch: {}         # 允许在 Actions 页面手动触发
+  push:                         # 改了脚本 / 文章 / 点评 / 图标，推上来立刻重跑一次，不用等第二天
+    branches: [main]
+    paths:
+      - "pipeline/**"
+      - "content/**"
+      - "assets/**"
+      - ".github/workflows/**"
 
 permissions:
   contents: write
@@ -28,7 +35,17 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y -qq fonts-noto-cjk
 
-      - name: 跑日更（拉数 → 看板 → 网站）
+      # 分享长图用的 html2canvas 自托管一份（国内访问 CDN 不稳），只在缺失时下载一次
+      - name: 自托管 html2canvas
+        run: |
+          mkdir -p assets/vendor
+          if [ ! -s assets/vendor/html2canvas.min.js ]; then
+            curl -fsSL -o assets/vendor/html2canvas.min.js https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js \
+              || curl -fsSL -o assets/vendor/html2canvas.min.js https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js \
+              || echo "html2canvas 下载失败，页面会退回 CDN 加载"
+          fi
+
+      - name: 跑日更（拉数 → 看板 → 宏观 → 解读日志 → 网站）
         env:
           LP_DATA: ${{ github.workspace }}/data
           LP_OUT: ${{ github.workspace }}/build
@@ -40,7 +57,8 @@ jobs:
         run: |
           git config user.name "uncleonchain-bot"
           git config user.email "bot@uncleonchain.com"
-          git add data/ site/
+          git add data/ site/ assets/vendor/
           git diff --cached --quiet && echo "没有变化，跳过提交" && exit 0
           git commit -m "日更 $(date -u +%Y-%m-%d)"
+          git pull --rebase --autostash origin main
           git push

@@ -9,7 +9,7 @@
 """
 import datetime as dt
 from concurrent.futures import ThreadPoolExecutor
-from common import get, day, today_utc, shift, save
+from common import get, day, today_utc, shift, save, load
 
 FOCUS = {
     "pump.fun": ("pump.fun", "Solana"),
@@ -90,6 +90,32 @@ def main():
         }
     data["Top60数量"] = len(top60)
     data["Launchpad协议总数"] = len(lp)
+
+    # 发射台矩阵（网站用）：DefiLlama Launchpad 类目全部协议的当日 / 7 日 / 30 日与分链拆分，外加逐日历史
+    # （Top60 用上面已经拉到的逐日序列回填，其余协议从今天起逐日攒），给网站的跨链排行 + 生态切流用
+    snap = []
+    for p in lp:
+        if not p.get("slug"):
+            continue
+        snap.append({"slug": p["slug"], "名称": p.get("displayName") or p.get("name"), "链": p.get("chains") or [],
+                     "当日": p.get("total24h"), "前日": p.get("total48hto24h"), "7日": p.get("total7d"),
+                     "上7日": p.get("total14dto7d"), "30日": p.get("total30d"), "上30日": p.get("total60dto30d"),
+                     "累计": p.get("totalAllTime"), "日环比": p.get("change_1d"),
+                     "分链当日": {k: sum(v.values()) for k, v in (p.get("breakdown24h") or {}).items()},
+                     "分链30日": {k: sum(v.values()) for k, v in (p.get("breakdown30d") or {}).items()},
+                     "logo": p.get("logo"), "母协议": p.get("parentProtocol")})
+    M = load("发射台矩阵.json", {}) or {}
+    hist = M.get("历史", {})
+    for s in top60:
+        for k, v in (res.get((s, "dailyFees")) or {}).items():
+            if k >= shift(expected, -119):
+                hist.setdefault(k, {})[s] = v
+    hist.setdefault(expected, {})
+    for x in snap:
+        if x["当日"] is not None and (x["30日"] or 0) >= 1000 and x["slug"] not in hist[expected]:
+            hist[expected][x["slug"]] = x["当日"]
+    hist = {k: hist[k] for k in sorted(hist)[-120:]}
+    save("发射台矩阵.json", {"日期": expected, "生成时间UTC": data["生成时间UTC"], "协议": snap, "历史": hist})
 
     out = save("日度数据.json", data)
     print("写入", out, "期望最后一天", expected)

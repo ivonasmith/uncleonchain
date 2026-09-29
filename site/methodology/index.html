@@ -1,126 +1,329 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>口径与统计方法 · 链上大叔研究台</title>
-<meta name="description" content="宏观流动性 → BTC/ETH → 板块轮动 → 发射台 / 低位叙事">
-<meta property="og:title" content="口径与统计方法 · 链上大叔研究台">
-<meta property="og:description" content="宏观流动性 → BTC/ETH → 板块轮动 → 发射台 / 低位叙事">
-<meta property="og:type" content="website">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap">
+<title>口径与规则 · 链上大叔研究台</title>
+<meta name="description" content="宏观流动性 → 周期位置 → 筹码结构 → 情绪 → 发射台一级市场，每天一篇公开解读日志">
+<meta name="theme-color" content="#05070c">
+<meta property="og:title" content="口径与规则 · 链上大叔研究台"><meta property="og:description" content="宏观流动性 → 周期位置 → 筹码结构 → 情绪 → 发射台一级市场，每天一篇公开解读日志">
+<meta property="og:type" content="website"><meta property="og:site_name" content="链上大叔研究台">
+<meta property="og:image" content="https://uncleonchain.com/assets/og.png">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@Uncle_Web3PM">
+<meta name="twitter:image" content="https://uncleonchain.com/assets/og.png">
+<link rel="icon" href="/assets/favicon.ico" sizes="any"><link rel="icon" href="/assets/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="icon" href="/assets/favicon-192.png" type="image/png" sizes="192x192"><link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&display=swap">
 <style>
-:root{--bg:#fffefc;--panel:#f7f4ee;--ink:#26221e;--ink2:#3d3730;--muted:#7a736b;--rule:#ece7e0;--rule2:#d8d2c9;
---accent:#8a6d1f;--accent-soft:#fdf9ef;--card:#ffffff;
---blue:#15628f;--blue-soft:#eef5fa;--red:#c02128;--red-soft:#fdf4f4;--green:#3f6b4c;--green-soft:#f4faf5;
-color-scheme:light}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#18140f;--panel:#221d16;--ink:#efe9e0;--ink2:#cfc6b8;
---muted:#9c9284;--rule:#332c22;--rule2:#463c2e;--accent:#dcae4b;--accent-soft:#2b2416;--card:#1f1a13;
---blue:#6fa9ec;--blue-soft:#182430;--red:#ef7d7a;--red-soft:#301a19;--green:#7dbf94;--green-soft:#152a1c;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#18140f;--panel:#221d16;--ink:#efe9e0;--ink2:#cfc6b8;--muted:#9c9284;--rule:#332c22;
---rule2:#463c2e;--accent:#dcae4b;--accent-soft:#2b2416;--card:#1f1a13;
---blue:#6fa9ec;--blue-soft:#182430;--red:#ef7d7a;--red-soft:#301a19;--green:#7dbf94;--green-soft:#152a1c;color-scheme:dark}
+:root,:root[data-theme="dark"]{--bg:#05070c;--card:#0b0e17;--card2:#10141f;--line:rgba(255,255,255,.06);--line2:rgba(255,255,255,.11);
+--ink:#e8ecf3;--ink2:#a7afc0;--muted:#6b7488;--up:#00ffcc;--dn:#ff3366;--warn:#ffb020;--cool:#5b8cff;--lime:#a3e635;
+--up-bg:rgba(0,255,204,.08);--dn-bg:rgba(255,51,102,.09);--warn-bg:rgba(255,176,32,.09);--cool-bg:rgba(91,140,255,.10);
+--panel:var(--card2);--rule:var(--line);--rule2:var(--line2);--accent:var(--lime);--accent-soft:rgba(163,230,53,.08);
+--mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+--sans:Inter,"Noto Sans SC",-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+color-scheme:dark}
 *{box-sizing:border-box}
-html,body{background:var(--bg)}
-body{margin:0;color:var(--ink);font:16px/1.72 -apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif}
+html,body{background:var(--bg);margin:0}
+body{color:var(--ink);font:14.5px/1.65 var(--sans);-webkit-font-smoothing:antialiased;min-height:100vh}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+background:radial-gradient(700px 420px at 12% -8%,rgba(0,255,204,.07),transparent 70%),
+radial-gradient(640px 420px at 100% 108%,rgba(163,230,53,.05),transparent 70%)}
 a{color:inherit}
-.site-nav{position:sticky;top:0;z-index:10;background:var(--bg);border-bottom:1px solid var(--rule);
-display:flex;align-items:center;gap:20px;padding:14px 20px;flex-wrap:wrap}
-.site-nav .brand{font:400 17px/1 Georgia,"Songti SC","STSong",serif;text-decoration:none;color:var(--ink);white-space:nowrap}
-.site-nav .links{display:flex;gap:16px;flex-wrap:wrap;font-size:13.5px}
-.site-nav .links a{text-decoration:none;color:var(--ink2)}
-.site-nav .links a:hover,.site-nav .links a.on{color:var(--accent)}
-.wrap{max-width:900px;margin:0 auto;padding-inline:20px;padding-block:40px 72px}
-.wrap.wide{max-width:1180px}
-.eyebrow{font-size:12px;letter-spacing:.14em;color:var(--accent);font-weight:600;text-transform:uppercase}
-h1{font:400 40px/1.24 Georgia,"Songti SC","STSong",serif;letter-spacing:-.3px;margin:8px 0 10px;text-wrap:balance}
-h2{font:400 26px/1.32 Georgia,"Songti SC","STSong",serif;letter-spacing:-.2px;margin:40px 0 8px}
-h3{font:600 16.5px/1.4 -apple-system,"PingFang SC",sans-serif;margin:26px 0 8px}
-.meta{color:var(--muted);font-size:13px;padding-bottom:22px;border-bottom:2px solid var(--ink)}
-.lede{font-size:16.5px;color:var(--ink2);max-width:66ch;margin:0 0 8px}
-.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--rule);
-border:1px solid var(--rule);border-radius:10px;overflow:hidden;margin-top:30px}
-.card{background:var(--card);padding:22px 24px;text-decoration:none;color:inherit;display:block}
-.card:hover{background:var(--panel)}
-.card .ic{font-size:21px}
-.card h3{margin:9px 0 5px;font:600 17px/1.3 -apple-system,"PingFang SC",sans-serif}
-.card p{margin:0;color:var(--ink2);font-size:13.5px;line-height:1.6}
-.card .tag{display:inline-block;margin-top:11px;font-size:11px;letter-spacing:.4px;color:var(--muted);
-border:1px solid var(--rule2);border-radius:999px;padding:2px 10px}
-.card .tag.live{color:var(--accent);border-color:var(--accent)}
-.postlist{list-style:none;padding:0;margin:20px 0}
-.postlist li{padding:16px 0;border-bottom:1px solid var(--rule)}
-.postlist a{text-decoration:none;font:600 16px/1.4 -apple-system,"PingFang SC",sans-serif}
-.postlist a:hover{color:var(--accent)}
-.postlist .d{color:var(--muted);font-size:12.5px;font-family:ui-monospace,Menlo,monospace;margin-right:10px}
-.postlist .s{display:block;color:var(--ink2);font-size:13.5px;margin-top:4px}
-.empty{background:var(--panel);border-radius:8px;padding:22px 24px;color:var(--ink2);font-size:14px;margin-top:18px}
-.article{max-width:70ch}
+a:hover{color:var(--lime)}
+.num,.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+svg.ic{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+/* ---- 外壳：左侧常驻导航 ---- */
+.side{position:fixed;top:0;left:0;bottom:0;width:236px;z-index:30;background:rgba(7,9,15,.92);
+border-right:1px solid var(--line);display:flex;flex-direction:column;padding:18px 14px;backdrop-filter:blur(12px)}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none;padding:4px 6px 18px;border-bottom:1px solid var(--line);margin-bottom:14px}
+.brand .av{width:38px;height:38px;border-radius:50%;box-shadow:0 0 0 1.5px var(--lime),0 0 18px rgba(163,230,53,.25)}
+.brand b{display:block;font-size:15px;font-weight:700;letter-spacing:.2px;color:var(--ink)}
+.brand i{display:block;font-style:normal;font-family:var(--mono);font-size:9.5px;letter-spacing:1.4px;color:var(--muted);margin-top:2px}
+.snav{display:flex;flex-direction:column;gap:2px;flex:1;overflow-y:auto}
+.sgrp{font-family:var(--mono);font-size:10px;letter-spacing:1.6px;color:var(--muted);padding:12px 10px 6px;text-transform:uppercase}
+.snav a{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;text-decoration:none;color:var(--ink2);
+font-size:13.5px;position:relative;transition:background .15s,color .15s}
+.snav a:hover{background:rgba(255,255,255,.035);color:var(--ink)}
+.snav a.on{background:rgba(163,230,53,.07);color:var(--ink)}
+.snav a.on:before{content:"";position:absolute;left:-14px;top:7px;bottom:7px;width:3px;border-radius:0 3px 3px 0;background:var(--lime)}
+.snav a.on svg.ic{color:var(--lime)}
+.snav a .tag{margin-left:auto;font-family:var(--mono);font-size:9.5px;color:var(--muted);border:1px solid var(--line2);border-radius:4px;padding:0 5px}
+.sfoot{border-top:1px solid var(--line);padding:14px 6px 0;font-size:11.5px;color:var(--muted);line-height:1.6}
+.live{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:10.5px;color:var(--ink2)}
+.live i{width:7px;height:7px;border-radius:50%;background:var(--up);box-shadow:0 0 8px var(--up);animation:pulse 2.4s infinite}
+@keyframes pulse{50%{opacity:.35}}
+.sfoot a{display:inline-block;margin-top:8px;color:var(--ink2);text-decoration:none;font-family:var(--mono);font-size:11.5px}
+.sfoot p{margin:8px 0 0;font-size:10.5px}
+.main{margin-left:236px;position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column}
+.mi{width:100%;max-width:1280px;margin:0 auto;padding:30px 36px 56px;flex:1}
+.mi.narrow{max-width:900px}
+.foot{border-top:1px solid var(--line);color:var(--muted);font-size:11.5px;padding:18px 36px;display:flex;gap:10px 22px;flex-wrap:wrap}
+.foot a{color:var(--muted)}
+.topbar{display:none}
+.navtg{display:none}
+@media (max-width:960px){
+ .side{transform:translateX(-100%);transition:transform .2s;width:264px}
+ .navtg:checked~.side{transform:none}
+ .navtg:checked~.scrim{display:block}
+ .scrim{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:25}
+ .main{margin-left:0}
+ .topbar{display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:20;padding:10px 16px;
+  background:rgba(5,7,12,.9);border-bottom:1px solid var(--line);backdrop-filter:blur(10px)}
+ .topbar label{cursor:pointer;display:flex;padding:6px;border:1px solid var(--line2);border-radius:8px}
+ .topbar a{display:flex;align-items:center;gap:8px;text-decoration:none;font-weight:700;font-size:14px}
+ .topbar img{width:26px;height:26px;border-radius:50%;box-shadow:0 0 0 1.5px var(--lime)}
+ .topbar .d{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--muted)}
+ .mi{padding:20px 16px 40px}
+ .ph .stamp{text-align:left}
+ .foot{padding:16px}
+}
+
+/* ---- 页头 ---- */
+.ph{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:10px 24px;margin-bottom:22px}
+.eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:1.8px;color:var(--lime);text-transform:uppercase}
+h1{font:700 26px/1.25 var(--sans);letter-spacing:-.2px;margin:6px 0 0}
+h2{font:600 17px/1.35 var(--sans);margin:34px 0 12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+h2 .sub{font-weight:400;font-size:12.5px;color:var(--muted)}
+h3{font:600 14.5px/1.4 var(--sans);margin:22px 0 8px}
+.lede{color:var(--ink2);max-width:78ch;margin:10px 0 0;font-size:14px}
+.stamp{font-family:var(--mono);font-size:11px;color:var(--muted);text-align:right;line-height:1.7}
+.stamp b{color:var(--ink2);font-weight:500}
+
+/* ---- 卡片 / 毛玻璃 ---- */
+.glass{background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.01));border:1px solid var(--line);
+border-radius:14px;backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);
+box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px}
+.grid{display:grid;gap:12px}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(max-width:1100px){.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:640px){.g4,.g3,.g2{grid-template-columns:1fr}}
+
+.verdict{padding:20px 22px;display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-bottom:14px;position:relative;overflow:hidden}
+.verdict:after{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;
+background:radial-gradient(circle,rgba(0,255,204,.10),transparent 70%)}
+.verdict .lbl{font-family:var(--mono);font-size:10px;letter-spacing:1.6px;color:var(--muted);text-transform:uppercase}
+.verdict .txt{font-size:17px;font-weight:600;line-height:1.5;margin:6px 0 10px;max-width:70ch}
+.verdict .body{flex:1;min-width:260px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;padding:3px 9px;border-radius:999px;
+border:1px solid var(--line2);color:var(--ink2);white-space:nowrap}
+.chip i{width:6px;height:6px;border-radius:50%;background:currentColor}
+.t-up{color:var(--up)}.t-dn{color:var(--dn)}.t-warn{color:var(--warn)}.t-cool{color:var(--cool)}.t-neutral{color:var(--ink2)}
+.chip.t-up{border-color:rgba(0,255,204,.35);background:var(--up-bg)}.chip.t-dn{border-color:rgba(255,51,102,.4);background:var(--dn-bg)}
+.chip.t-warn{border-color:rgba(255,176,32,.4);background:var(--warn-bg)}.chip.t-cool{border-color:rgba(91,140,255,.45);background:var(--cool-bg)}
+
+.hero{padding:16px 18px 12px;position:relative;overflow:hidden}
+.hero .k{font-size:11.5px;color:var(--muted);display:flex;justify-content:space-between;gap:8px}
+.hero .k span{font-family:var(--mono);font-size:10px;letter-spacing:.6px}
+.hero .v{font:600 25px/1.2 var(--mono);letter-spacing:-.5px;margin:8px 0 4px}
+.hero .s{font-size:12px;color:var(--ink2)}
+.hero svg.spk{margin-top:10px;width:100%;height:34px}
+
+.sig{padding:16px 18px;text-decoration:none;display:block;border-top:2px solid var(--line2)}
+.sig:hover{background:var(--card2);color:inherit}
+.sig .n{font-family:var(--mono);font-size:10px;letter-spacing:1.4px;color:var(--muted)}
+.sig .q{font-size:12px;color:var(--muted);margin-top:2px}
+.sig .v{font-size:15px;font-weight:600;margin:10px 0 8px;line-height:1.4}
+.sig ul{list-style:none;margin:0;padding:0;font-size:12px;color:var(--ink2)}
+.sig li{display:flex;justify-content:space-between;gap:8px;padding:3px 0;border-top:1px dashed var(--line)}
+.sig li b{font-family:var(--mono);font-weight:500;color:var(--ink)}
+.sig.t-up{border-top-color:var(--up)}.sig.t-dn{border-top-color:var(--dn)}.sig.t-warn{border-top-color:var(--warn)}.sig.t-cool{border-top-color:var(--cool)}
+
+/* ---- 异动预警看台 ---- */
+.board{padding:0;overflow:hidden}
+.board-hd{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line)}
+.board-hd b{font-size:13.5px}
+.board-hd .dot{width:8px;height:8px;border-radius:50%;background:var(--dn);box-shadow:0 0 10px var(--dn);animation:pulse 1.6s infinite}
+.board-hd .sp{flex:1}
+.ticker{overflow:hidden;white-space:nowrap;border-bottom:1px solid var(--line);background:rgba(255,255,255,.015);
+-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.ticker-track{display:inline-flex;gap:38px;padding:9px 0;animation:tick 70s linear infinite;font-family:var(--mono);font-size:12px}
+.ticker:hover .ticker-track{animation-play-state:paused}
+.ticker-track span{color:var(--ink2)}.ticker-track span b{color:var(--ink);font-weight:500}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.ticker-track{animation:none}}
+.alerts{list-style:none;margin:0;padding:6px 0}
+.alerts li{display:flex;gap:12px;align-items:flex-start;padding:8px 16px;font-size:13px;border-bottom:1px solid var(--line)}
+.alerts li:last-child{border-bottom:none}
+.alerts .lv{font-family:var(--mono);font-size:10px;padding:1px 6px;border-radius:4px;flex:none;margin-top:2px}
+.alerts .lv.h{color:var(--dn);background:var(--dn-bg);border:1px solid rgba(255,51,102,.35)}
+.alerts .lv.m{color:var(--warn);background:var(--warn-bg);border:1px solid rgba(255,176,32,.35)}
+.alerts .d{font-family:var(--mono);font-size:11px;color:var(--muted);flex:none;margin-top:1px}
+.quiet{padding:14px 16px;color:var(--muted);font-size:13px}
+
+.btn{display:inline-flex;align-items:center;gap:7px;font:600 12px/1 var(--sans);padding:8px 12px;border-radius:8px;
+border:1px solid rgba(163,230,53,.5);color:var(--lime);background:rgba(163,230,53,.06);cursor:pointer;text-decoration:none;white-space:nowrap}
+.btn:hover{background:rgba(163,230,53,.14);color:var(--lime)}
+.btn.ghost{border-color:var(--line2);color:var(--ink2);background:transparent}
+.btn.ghost:hover{color:var(--ink);border-color:var(--ink2)}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);opacity:0;z-index:99;
+background:#11161f;border:1px solid var(--line2);color:var(--ink);padding:10px 16px;border-radius:10px;font-size:13px;transition:.25s;pointer-events:none}
+.toast.on{opacity:1;transform:translateX(-50%)}
+
+/* ---- 指标卡（宏观仪表盘） ---- */
+.layer{margin-top:34px;scroll-margin-top:20px}
+.layer-hd{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin-bottom:12px}
+.layer-hd .no{font-family:var(--mono);font-size:11px;color:var(--lime);border:1px solid rgba(163,230,53,.4);border-radius:6px;padding:2px 7px}
+.layer-hd h2{margin:0}
+.layer-hd .why{font-size:12.5px;color:var(--muted);width:100%}
+.ind{padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-height:168px}
+.ind .top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.ind .nm{font-size:13px;font-weight:600}
+.ind .lv{font-family:var(--mono);font-size:9.5px;color:var(--muted);border:1px solid var(--line2);border-radius:4px;padding:0 5px;margin-left:6px;font-weight:400}
+.ind .v{font:600 22px/1.2 var(--mono);letter-spacing:-.4px}
+.ind .b{font-size:12px;color:var(--ink2)}
+.ind .ft{margin-top:auto;display:flex;justify-content:space-between;gap:8px;font-size:10.5px;color:var(--muted);font-family:var(--mono)}
+.ind .ft .stale{color:var(--warn)}
+.ind svg.spk{width:100%;height:32px}
+.ind details{font-size:12px;color:var(--muted)}
+.ind summary{cursor:pointer;list-style:none;font-size:11px}
+.ind summary::-webkit-details-marker{display:none}
+.pend{padding:12px 14px;border:1px dashed var(--line2);border-radius:12px;font-size:12px;color:var(--muted)}
+.pend b{display:block;color:var(--ink2);font-size:12.5px;margin-bottom:3px;font-weight:600}
+.src{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+
+/* ---- 表格 ---- */
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th{font-size:10.5px;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);font-weight:600;text-align:right;
+padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap;background:rgba(255,255,255,.015)}
+td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap;font-family:var(--mono);font-variant-numeric:tabular-nums}
+th.l,td.l{text-align:left}
+td.l{font-family:var(--sans)}
+tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:rgba(255,255,255,.025)}
+td.rk{color:var(--muted);width:1%;font-size:11.5px}
+th.hl{color:var(--lime)} td.hl{color:var(--ink);background:rgba(163,230,53,.035)}
+.pname{display:flex;align-items:center;gap:9px;font-weight:600}
+.pname img{width:18px;height:18px;border-radius:50%;background:#1a1f2b;flex:none}
+.pname a{text-decoration:none}
+.pname .deep{font-family:var(--mono);font-size:9px;color:var(--lime);border:1px solid rgba(163,230,53,.4);border-radius:3px;padding:0 4px;font-weight:500}
+.badge{display:inline-block;font-family:var(--mono);font-size:10px;padding:1px 7px;border-radius:999px;border:1px solid currentColor;margin-left:4px;opacity:.9;font-weight:400}
+.b-solana{color:#c084fc}.b-robinhood{color:#4ade80}.b-bsc{color:#fbbf24}.b-base{color:#60a5fa}.b-arc{color:#22d3ee}
+.b-monad{color:#a78bfa}.b-ethereum{color:#94a3b8}.b-other{color:#7c8598}
+.d.up{color:var(--up)}.d.dn{color:var(--dn)}.d{color:var(--ink2)}
+svg.spk{display:block;width:92px;height:26px;margin-left:auto}
+.tw.scroll{max-height:720px;overflow:auto}.tw.scroll thead th{position:sticky;top:0;z-index:2;background:#0d111b}
+.tnote{font-size:12px;color:var(--muted);margin:10px 2px 0;line-height:1.7}
+
+/* ---- 过滤器（发射台矩阵） ---- */
+.fbar{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;padding:12px 14px;margin:0 0 12px}
+.fg{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.fg .fl{font-family:var(--mono);font-size:10px;letter-spacing:1.2px;color:var(--muted);text-transform:uppercase;margin-right:2px}
+.pill{font:500 12px/1 var(--sans);padding:6px 10px;border-radius:7px;border:1px solid var(--line2);color:var(--ink2);background:transparent;cursor:pointer}
+.pill:hover{color:var(--ink);border-color:rgba(255,255,255,.22)}
+.pill.on{color:#05070c;background:var(--lime);border-color:var(--lime)}
+.pill small{font-family:var(--mono);font-size:10px;opacity:.75;margin-left:4px}
+.fcount{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--muted)}
+.chainbar{display:flex;height:8px;border-radius:5px;overflow:hidden;margin:12px 0 6px;background:var(--card)}
+.chainbar i{display:block;height:100%}
+.chainleg{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:11.5px;color:var(--ink2)}
+.chainleg span{display:inline-flex;align-items:center;gap:6px}.chainleg i{width:8px;height:8px;border-radius:2px}
+.chainleg b{font-family:var(--mono);font-weight:500;color:var(--ink)}
+
+/* ---- 图表 ---- */
+.plot{overflow-x:auto}
+.tsvg{display:block;width:100%;min-width:520px;height:auto}
+.tsvg .gl{stroke:rgba(255,255,255,.06);stroke-width:1}
+.tsvg .ax{fill:var(--muted);font-size:10.5px;font-family:var(--mono)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12px;color:var(--ink2);margin:4px 0 8px}
+.legend span{display:inline-flex;align-items:center;gap:6px}.legend i{width:10px;height:3px;border-radius:2px}
+.legend b{font-family:var(--mono);color:var(--ink);font-weight:500}
+
+/* ---- 列表 / 日志 ---- */
+.list{list-style:none;margin:0;padding:0}
+.list li{display:flex;gap:14px;align-items:baseline;padding:11px 16px;border-bottom:1px solid var(--line)}
+.list li:last-child{border-bottom:none}
+.list .d{font-family:var(--mono);font-size:11.5px;color:var(--muted);flex:none;min-width:92px}
+.list a{text-decoration:none;font-weight:600}
+.list .s{display:block;font-size:12.5px;color:var(--ink2);margin-top:3px;font-weight:400}
+.list .x{margin-left:auto;flex:none}
+.empty{padding:18px 20px;color:var(--ink2);font-size:13px;border:1px dashed var(--line2);border-radius:12px}
+.pager{display:flex;justify-content:space-between;gap:10px;margin-top:26px;font-size:13px}
+.pager a{text-decoration:none;color:var(--ink2)}
+.cmt{border-left:3px solid var(--lime);padding:14px 18px;background:rgba(163,230,53,.04);border-radius:0 10px 10px 0;margin-top:12px}
+.cmt p{margin:0 0 10px}.cmt p:last-child{margin:0}
+
+/* ---- 板块轮动 ---- */
+.cat{padding:13px 14px;display:flex;flex-direction:column;gap:4px}
+.cat .nm{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cat .v{font:600 19px/1.2 var(--mono)}
+.cat .s{font-size:11px;color:var(--muted);font-family:var(--mono)}
+.cat .t3{font-size:10.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cat.t-up{box-shadow:inset 0 2px 0 var(--up)}.cat.t-dn{box-shadow:inset 0 2px 0 var(--dn)}
+
+/* ---- 文章（手写 md） ---- */
+.article{max-width:74ch;font-size:15px;line-height:1.8}
 .article p{margin:0 0 14px}
-.article blockquote{margin:0 0 14px;padding:8px 18px;border-left:3px solid var(--accent);color:var(--ink2);background:var(--panel);border-radius:0 8px 8px 0}
-.article code{background:var(--panel);padding:1px 5px;border-radius:4px;font-family:ui-monospace,Menlo,monospace;font-size:.9em}
-.article ul{padding-left:22px}
-.article li{margin:0 0 7px}
-.datelist{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
-.datelist a{font-size:13px;font-family:ui-monospace,Menlo,monospace;padding:5px 12px;border:1px solid var(--rule2);
-border-radius:999px;text-decoration:none;color:var(--ink2)}
-.datelist a:hover{color:var(--accent);border-color:var(--accent)}
-.tbl{overflow-x:auto;margin-top:10px}
-table{border-collapse:collapse;width:100%;font-size:14px}
-th,td{padding:8px 10px;border-bottom:1px solid var(--rule);text-align:left;vertical-align:top}
-th{color:var(--muted);font-weight:600;font-size:11.5px;letter-spacing:.5px;text-transform:uppercase}
-td.num,th.num{text-align:right;font-family:ui-monospace,Menlo,monospace;font-variant-numeric:tabular-nums}
-tr:hover td{background:var(--panel)}
-.site-footer{border-top:1px solid var(--rule);color:var(--muted);font-size:12.5px;padding:24px 20px;text-align:center}
-.site-footer a{color:var(--muted)}
+.article blockquote{margin:0 0 14px;padding:8px 18px;border-left:3px solid var(--lime);color:var(--ink2);background:rgba(255,255,255,.02);border-radius:0 8px 8px 0}
+.article code{background:rgba(255,255,255,.06);padding:1px 5px;border-radius:4px;font-family:var(--mono);font-size:.88em}
+.article ul{padding-left:22px}.article li{margin:0 0 7px}
+.callout{border-left:3px solid var(--lime);background:rgba(163,230,53,.05);padding:14px 18px;margin:20px 0;border-radius:0 10px 10px 0}
+.callout h4{margin:0 0 6px;font-size:13px;color:var(--lime)}
+.callout.blue{border-color:var(--cool);background:var(--cool-bg)}.callout.blue h4{color:var(--cool)}
+.callout.red{border-color:var(--dn);background:var(--dn-bg)}.callout.red h4{color:var(--dn)}
+.callout.green,.callout.gray{border-color:var(--up);background:var(--up-bg)}.callout.green h4,.callout.gray h4{color:var(--up)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:20px 0}
+.kpi{background:var(--card);padding:14px}.kpi .k{font-size:11px;color:var(--muted)}.kpi .v{font:600 22px/1.2 var(--mono)}.kpi .s{font-size:11.5px;color:var(--muted)}
 
-/* ---- 报告组件：md 文章里可以直接手拼这些 class，出看板.py 生成的 .html 报告自带同名/同构组件 ---- */
-.lead{font-size:18px;line-height:1.7;color:var(--ink2);margin:0 0 24px}
-.tldr{border:1px solid var(--rule2);border-radius:8px;padding:22px 26px;margin:0 0 30px;background:var(--accent-soft)}
-.tldr h4{margin:0 0 14px;font:700 13px/1 -apple-system,sans-serif;letter-spacing:1.2px;color:var(--accent);text-transform:uppercase}
-.tldr ol{margin:0;padding-left:20px;font-size:15.5px}
-.tldr li{margin:0 0 9px}
-.hook{border:1px solid var(--rule2);border-left:5px solid var(--blue);border-radius:8px;padding:26px 30px;margin:0 0 24px;
-background:linear-gradient(160deg,var(--blue-soft) 0%,var(--accent-soft) 100%)}
-.hook .q{font:400 28px/1.3 Georgia,"Songti SC",serif;margin:0 0 14px;color:var(--blue)}
-.hook p{font-size:16px;margin:0 0 12px}
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule2);
-border:1px solid var(--rule2);border-radius:8px;overflow:hidden;margin:24px 0 28px}
-.kpi{background:var(--blue-soft);padding:16px 14px}
-.kpi .k{font-size:11px;letter-spacing:.6px;color:var(--muted);text-transform:uppercase;margin-bottom:5px}
-.kpi .v{font:400 26px/1.1 Georgia,serif;letter-spacing:-.4px}
-.kpi .s{font-size:12px;color:var(--muted);margin-top:3px}
-.callout{border-left:3px solid var(--accent);background:var(--accent-soft);padding:16px 20px;margin:22px 0;font-size:15px}
-.callout h4{margin:0 0 7px;font-size:13.5px;letter-spacing:.4px;color:var(--accent);font-weight:700}
-.callout.blue{border-color:var(--blue);background:var(--blue-soft)} .callout.blue h4{color:var(--blue)}
-.callout.red{border-color:var(--red);background:var(--red-soft)} .callout.red h4{color:var(--red)}
-.callout.gray,.callout.green{border-color:var(--green);background:var(--green-soft)} .callout.gray h4,.callout.green h4{color:var(--green)}
-.callout p:last-child{margin:0}
-.chart-fig{margin:22px 0 28px;padding:0}
-.chart-cap{font:600 14.5px/1.45 -apple-system,"PingFang SC",sans-serif;color:var(--ink);margin:0 0 10px;
-padding-left:11px;border-left:3px solid var(--accent)}
-.chart-fig svg{display:block;width:100%;height:auto}
-.fnote{font-size:12.5px;color:var(--muted);margin-top:8px;line-height:1.6}
-.sign{margin-top:40px;border:1.5px solid var(--ink);padding:18px 22px;display:flex;
-justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
-.sign .l{font-size:14px;color:var(--ink2);max-width:520px}
-.sign .r{text-align:right;line-height:1.35}
-.sign .nm{font:400 16px Georgia,"Songti SC",serif;color:var(--ink)}
-.sign .hd2{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--muted);margin-top:2px}
-
-@media (max-width:720px){.cards{grid-template-columns:1fr}h1{font-size:29px}
-.kpis{grid-template-columns:repeat(2,1fr)}.kpi .v{font-size:22px}}
+/* ---- 分享长图舞台（屏幕外渲染，html2canvas 截图） ---- */
+.sc{position:fixed;left:-12000px;top:0;width:1080px;padding:54px 56px 40px;background:#05070c;color:#e8ecf3;font-family:var(--sans);
+background-image:radial-gradient(700px 400px at 0% 0%,rgba(0,255,204,.10),transparent 70%),radial-gradient(600px 400px at 100% 100%,rgba(163,230,53,.08),transparent 70%)}
+.sc-hd{display:flex;align-items:center;gap:16px}
+.sc-hd img{width:64px;height:64px;border-radius:50%;box-shadow:0 0 0 3px #a3e635}
+.sc-hd b{display:block;font-size:26px}.sc-hd i{display:block;font-style:normal;font-family:var(--mono);font-size:16px;color:#8c94a6;margin-top:2px}
+.sc-date{margin-left:auto;font-family:var(--mono);font-size:18px;color:#a7afc0;text-align:right}
+.sc-title{font-size:40px;font-weight:700;margin:34px 0 8px;letter-spacing:-.5px}
+.sc-sub{font-size:19px;color:#a7afc0;margin-bottom:24px;line-height:1.5}
+.sc table{font-size:20px}.sc th{font-size:14px;padding:12px 14px}.sc td{padding:13px 14px}
+.sc .sc-box{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:#0b0e17;overflow:hidden;margin-bottom:22px}
+.sc .sc-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+.sc .sc-kpi{border:1px solid rgba(255,255,255,.08);border-radius:16px;background:#0b0e17;padding:18px}
+.sc .sc-kpi .k{font-size:15px;color:#8c94a6}.sc .sc-kpi .v{font:600 30px/1.2 var(--mono);margin-top:8px}.sc .sc-kpi .s{font-size:15px;margin-top:4px}
+.sc .sc-al{list-style:none;margin:0;padding:6px 0;font-size:19px}.sc .sc-al li{padding:11px 20px;border-bottom:1px solid rgba(255,255,255,.06)}
+.sc .sc-al li:last-child{border:none}
+.sc .chip{font-size:17px;padding:6px 14px}
+.sc-ft{display:flex;gap:24px;align-items:center;margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,255,255,.08);font-family:var(--mono);font-size:15px;color:#6b7488}
+.sc-ft b{color:#a3e635;font-size:18px}
 </style>
 
 </head>
 <body>
-<nav class="site-nav"><a class="brand" href="/">链上大叔研究台</a><div class="links"><a href="/launchpad/" class="">发射台日更</a><a href="/macro/" class="">宏观流动性</a><a href="/rotation/" class="">板块轮动复盘</a><a href="/narrative/" class="">叙事币埋伏</a><a href="/methodology/" class="on">口径</a><a href="/corrections/" class="">更正记录</a><a href="/about/" class="">关于</a></div></nav>
-<div class="wrap">
-<div class="eyebrow">方法论</div><h1>口径与统计方法</h1>
-<p class="lede">这页固定不变，发射台看板里的「九 · 口径与已知缺口」是每天数据层面的具体缺口，这里是长期不变的统计原则。</p>
-<div class="tbl"><table><tr><th>项目</th><th>说明</th></tr><tr><td>统计口径</td><td>全部用手续费（fees），不用成交量；成交量口径覆盖不全，会系统性低估份额。</td></tr><tr><td>统计周期</td><td>只报「昨天」这一个 UTC 完整日；当天数据永远不完整，不进正文。</td></tr><tr><td>延迟处理</td><td>某个数据源没出昨天的数，标「延迟」，不拿旧值顶替、不记 0。</td></tr><tr><td>Flap 单独看</td><td>税代币模型，费用来自转账税，和其他平台的手续费口径不可直接比大小。</td></tr><tr><td>StonkFun 比较</td><td>跨平台比较一律用协议收入（revenue），不用 fees，避免系统性低估。</td></tr><tr><td>PONS 销毁</td><td>转到 0x…dEaD 地址，不是调用 burn()，totalSupply 不会减少，市值一律按 burn-adjusted 流通计。</td></tr><tr><td>估值口径</td><td>市值 = burn-adjusted 流通市值；年化协议收入/回购额取近 30 日滚动合计外推，不足 30 天标注。</td></tr><tr><td>绝不做的事</td><td>不拿历史峰值和现在比来判断一个平台是否「死了」；只给数据，不给买卖建议。</td></tr></table></div>
+<input type="checkbox" id="navtg" class="navtg">
+<header class="topbar"><label for="navtg" aria-label="菜单"><svg viewBox="0 0 16 16" class="ic"><path d="M2 4h12M2 8h12M2 12h12"/></svg></label>
+<a href="/"><img src="/assets/avatar-96.png" alt="">链上大叔研究台</a><span class="d">2026-09-29 13:15 UTC</span></header>
+<aside class="side">
+<a class="brand" href="/"><img class="av" src="/assets/avatar-96.png" alt="链上大叔"><span><b>链上大叔研究台</b><i>UNCLE ONCHAIN · TERMINAL</i></span></a>
+<nav class="snav"><div class="sgrp">Terminal</div><a href="/" class=""><svg viewBox="0 0 16 16" class="ic" aria-hidden="true"><path d="M2.5 2.5h4.5v4.5H2.5zM9 2.5h4.5v4.5H9zM2.5 9h4.5v4.5H2.5zM9 9h4.5v4.5H9z"/></svg>终端总览</a><a href="/macro/" class=""><svg viewBox="0 0 16 16" class="ic" aria-hidden="true"><path d="M1.5 10.5c1.6-3.2 3.2-3.2 4.8 0s3.2 3.2 4.8 0c.9-1.8 1.9-2.6 2.9-2.2M1.5 5.5c1.6-3.2 3.2-3.2 4.8 0s3.2 3.2 4.8 0"/></svg>宏观仪表盘</a><a href="/launchpad/" class=""><svg viewBox="0 0 16 16" class="ic" aria-hidden="true"><path d="M3 14V8.5M8 14V2.5M13 14V6"/><path d="M1.5 14h13"/></svg>发射台矩阵</a><a href="/rotation/" class=""><svg viewBox="0 0 16 16" class="ic" aria-hidden="true"><path d="M13.2 6A5.5 5.5 0 0 0 3.1 5.4M2.8 10a5.5 5.5 0 0 0 10.1.6M13.4 2.6v3.5H9.9M2.6 13.4V9.9h3.5"/></svg>板块轮动</a><a href="/narrative/" class=""><svg viewBox="0 0 16 16" class="ic" aria-hidden="true"><circle cx="8" cy="8" r="6"/><circle cx="8" cy="8" r="2.4"/><path d="M8 8l4.2-4.2"/></svg>叙事埋伏</a><a href="/journal/" class=""><svg viewBox="0 0 16 16" class="ic" aria-hidden="true"><path d="M3.5 1.8h9v12.4h-9z"/><path d="M6 5h4M6 8h4M6 11h2.5"/></svg>解读日志</a><div class="sgrp">Records</div><a href="/methodology/" class="on"><svg viewBox="0 0 16 16" class="ic" aria-hidden="true"><path d="M2 12.5 12.5 2l1.5 1.5L3.5 14H2z"/><path d="M9.5 5l1.5 1.5M7.5 7l1 1M5.5 9l1.5 1.5"/></svg>口径与规则</a><a href="/corrections/" class=""><svg viewBox="0 0 16 16" class="ic" aria-hidden="true"><path d="M2.5 8.5l3.5 3.5 7.5-8"/></svg>更正记录</a><a href="/about/" class=""><svg viewBox="0 0 16 16" class="ic" aria-hidden="true"><circle cx="8" cy="5.2" r="2.8"/><path d="M2.5 14c.9-2.9 2.9-4.2 5.5-4.2s4.6 1.3 5.5 4.2"/></svg>关于</a></nav>
+<div class="sfoot"><div class="live"><i></i>数据更新 2026-09-29 13:15 UTC</div>
+<a href="https://x.com/Uncle_Web3PM" target="_blank" rel="noopener">𝕏 @Uncle_Web3PM</a><p>本站只给数据和过程记录，不构成任何投资建议；不对任何交易结果负责。</p></div>
+</aside><label for="navtg" class="scrim"></label>
+<main class="main"><div class="mi">
+<div class="eyebrow">Methodology</div><h1>口径与规则</h1>
+<p class="lede">解读日志里的每一个判断都来自下面这些公开规则。规则改动会在更正记录里留痕，历史日志不跟着改。</p>
+<h2>层结论怎么来</h2>
+<div class="card" style="padding:16px 20px;font-size:13.5px;color:var(--ink2)">
+<p style="margin:0 0 8px"><b style="color:var(--ink)">L1 流动性</b>：核心指标（稳定币 30 日增速、实际利率 20 日变化、广义美元 20 日变化、期货升水）各打 −1~+2 分，合计 ≥2 扩张、≤−2 收缩，其余中性。利差只做衰退信号提示，不计分。</p>
+<p style="margin:0 0 8px"><b style="color:var(--ink)">L2 周期</b>：以 MVRV Z-Score 所在区间为周期位置（缺失时退回 MVRV）。NUPL、Realized Price 与 MVRV 同源，只展示不重复计分。</p>
+<p style="margin:0 0 8px"><b style="color:var(--ink)">L3 筹码</b>：以交易所 BTC 7 日净流量为准：净流出 = 筹码离开交易所，净流入 = 留意抛压。框架里的 URPD / STH 系列暂无免费源，明示待接入。</p>
+<p style="margin:0"><b style="color:var(--ink)">L4 情绪</b>：恐慌贪婪（−2~+2）、资金费率（−1~+2）、未平仓 7 日变化（−1~+1）合计 ≥3 过热、1~2 偏热、≤−2 偏冷，其余中性。</p></div>
+<h2>异动预警阈值</h2>
+<div class="card" style="padding:16px 20px;font-size:13.5px;color:var(--ink2)">核心指标区间切换 · USDT+USDC 单日净增发 / 赎回 ≥ $1B · 交易所单日 BTC 净流量 ≥ 5,000 枚 ·
+资金费率正负翻转 · 10Y 实际利率单日变动 ≥ 10bp · Pi Cycle Top 触发 · 发射台赛道单日 ±25% · 发射台当日第一易主 · 深度追踪平台日环比超 ±60%。</div>
+<h2>宏观四层 · 指标与区间</h2><h3>L1 · 宏观流动性（水多不多？）</h3><div class='tw'><table><thead><tr><th class='l'>指标</th><th class='l'>级别</th><th class='l'>怎么读</th><th class='l'>区间规则</th></tr></thead><tbody><tr><td class='l'><b>USDT+USDC 总市值</b><br><span class='stamp' style='text-align:left'>DefiLlama</span></td><td class='l'>核心 · 计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>稳定币是场外资金进场的通道。看 30 日增速：扩张 = 有新钱在进，收缩 = 在撤。</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按30 日增速：&lt; -1% → 收缩；-1% ~ +1% → 持平；+1% ~ +3% → 扩张；&gt; +3% → 强扩张</td></tr><tr><td class='l'><b>10Y 美债实际利率</b><br><span class='stamp' style='text-align:left'>FRED · DFII10</span></td><td class='l'>核心 · 计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>持有无息资产的机会成本。下行 = 对 BTC 这类资产更友好，上行 = 压制。</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按20 日变化：20 日 ≤ -15bp → 下行；±15bp → 横盘；≥ +15bp → 上行</td></tr><tr><td class='l'><b>2Y / 10Y 利差</b><br><span class='stamp' style='text-align:left'>FRED · T10Y2Y</span></td><td class='l'>核心 · 不计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>衰退与流动性拐点信号。历史上衰退多发生在倒挂「解除」之后，不是倒挂当下。不计入层打分。</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按水平：&lt; 0 → 倒挂；0 ~ 0.5% → 偏平（刚解除倒挂）；&gt; 0.5% → 正常陡峭</td></tr><tr><td class='l'><b>广义美元指数</b><br><span class='stamp' style='text-align:left'>FRED · DTWEXBGS</span></td><td class='l'>核心 · 计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>覆盖 DXY 盲区的贸易加权美元。美元走弱 = 全球美元流动性宽松。（DXY 本身没有免费官方接口，用它替代）</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按20 日变化：20 日 ≤ -1% → 走弱；±1% → 横盘；≥ +1% → 走强</td></tr><tr><td class='l'><b>BTC 期货年化升水</b><br><span class='stamp' style='text-align:left'>Deribit（约 3 个月期）</span></td><td class='l'>核心 · 计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>机构加杠杆做多的意愿。CME Basis 没有免费接口，用 Deribit 约 3 个月期交割合约替代，同一口径。</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按年化升水：&lt; 3% → 冷淡；3% ~ 8% → 正常；8% ~ 15% → 偏高；&gt; 15% → 过热</td></tr><tr><td class='l'><b>美联储资产负债表</b><br><span class='stamp' style='text-align:left'>FRED · WALCL</span></td><td class='l'>辅助 · 不计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>QT / QE 节奏。阶段性参考，不计入层打分。</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按30 日变化：30 日 &lt; -0.5% → 缩表；±0.5% → 持平；&gt; +0.5% → 扩表</td></tr><tr><td class='l'><b>隔夜逆回购 RRP</b><br><span class='stamp' style='text-align:left'>FRED · RRPONTSYD</span></td><td class='l'>辅助 · 不计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>流动性「蓄水池」剩多少。抽干后 QT 直接抽银行准备金。阶段性参考，不计入层打分。</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按余额：&lt; $100B → 基本抽干；$100B ~ $500B → 低位；&gt; $500B → 充裕</td></tr></tbody></table></div><h3>L2 · 周期定位（现在贵不贵？）</h3><div class='tw'><table><thead><tr><th class='l'>指标</th><th class='l'>级别</th><th class='l'>怎么读</th><th class='l'>区间规则</th></tr></thead><tbody><tr><td class='l'><b>MVRV</b><br><span class='stamp' style='text-align:left'>CoinMetrics</span></td><td class='l'>核心 · 计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>市值 / 已实现市值 = 全网平均浮盈倍数。</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按水平：&lt; 1.0 → 低估·历史底部区；1.0 ~ 1.5 → 偏低；1.5 ~ 2.4 → 合理；2.4 ~ 3.2 → 偏热；&gt; 3.2 → 过热·历史顶部区</td></tr><tr><td class='l'><b>MVRV Z-Score</b><br><span class='stamp' style='text-align:left'>CoinMetrics（自算）</span></td><td class='l'>核心 · 计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>（市值 − 已实现市值）÷ 市值历史标准差，把 MVRV 标准化到跨周期可比。</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按水平：&lt; 0 → 底部区；0 ~ 1.5 → 偏低；1.5 ~ 3 → 合理；3 ~ 5 → 偏热；&gt; 5 → 过热·顶部区</td></tr><tr><td class='l'><b>Realized Price</b><br><span class='stamp' style='text-align:left'>CoinMetrics（自算）</span></td><td class='l'>核心 · 不计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>全网持币成本均价（价格 ÷ MVRV）。现价跌破它 = 全网平均浮亏，历史上是大底区。待证伪观察中。</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按现价溢价：现价 &lt; 成本 → 跌破成本线；溢价 0 ~ 30% → 贴近成本线；30% ~ 140% → 合理溢价；&gt; 140% → 高溢价</td></tr><tr><td class='l'><b>NUPL</b><br><span class='stamp' style='text-align:left'>CoinMetrics（自算）</span></td><td class='l'>核心 · 不计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>净未实现盈亏 = 1 − 1/MVRV，和 MVRV 高度相关，看情绪阶段用，不重复计分。</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按水平：&lt; 0 → 投降；0 ~ 0.25 → 希望 / 恐惧；0.25 ~ 0.5 → 乐观 / 焦虑；0.5 ~ 0.75 → 信念 / 否认；&gt; 0.75 → 狂热</td></tr><tr><td class='l'><b>Mayer Multiple</b><br><span class='stamp' style='text-align:left'>CoinMetrics（自算）</span></td><td class='l'>辅助 · 不计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>价格 ÷ 200 日均线。</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按水平：&lt; 0.8 → 深度低估；0.8 ~ 1.0 → 低于 200 日线；1.0 ~ 1.5 → 合理；1.5 ~ 2.4 → 偏热；&gt; 2.4 → 过热</td></tr><tr><td class='l'><b>Puell Multiple</b><br><span class='stamp' style='text-align:left'>CoinMetrics（自算）</span></td><td class='l'>辅助 · 不计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>矿工日发行收入 ÷ 365 日均值，矿工视角的周期位置。</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按水平：&lt; 0.5 → 矿工投降区；0.5 ~ 1.0 → 偏低；1.0 ~ 2.0 → 合理；2.0 ~ 3.5 → 偏热；&gt; 3.5 → 过热</td></tr><tr><td class='l'><b>Pi Cycle Top</b><br><span class='stamp' style='text-align:left'>CoinMetrics（自算）</span></td><td class='l'>辅助 · 不计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>111 日均线 ÷（2 × 350 日均线），≥ 1 即历史顶部信号触发。只用于顶部区警示。</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按比值：&lt; 0.9 → 远离顶部信号；0.9 ~ 1.0 → 接近；≥ 1.0 → 已触发</td></tr></tbody></table></div><h3>L3 · 筹码结构（谁在进出交易所？）</h3><div class='tw'><table><thead><tr><th class='l'>指标</th><th class='l'>级别</th><th class='l'>怎么读</th><th class='l'>区间规则</th></tr></thead><tbody><tr><td class='l'><b>交易所 BTC 净流量</b><br><span class='stamp' style='text-align:left'>CoinMetrics（flash 口径）</span></td><td class='l'>核心 · 计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>流入 − 流出。持续净流出 = 筹码离开交易所（提币囤币），净流入 = 潜在抛压。flash 数据次日可能小幅修订。</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按7 日合计：7 日 &lt; -10,000 → 大幅净流出；-10,000 ~ -2,000 → 净流出；±2,000 → 进出均衡；2,000 ~ 10,000 → 净流入；&gt; 10,000 → 大幅净流入</td></tr><tr><td class='l'><b>交易所 BTC 余额</b><br><span class='stamp' style='text-align:left'>CoinMetrics</span></td><td class='l'>辅助 · 不计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>交易所托管的 BTC 总量。免费档更新有约 2 周滞后，只看趋势。</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按30 日变化：30 日 &lt; -1% → 下降；±1% → 持平；&gt; +1% → 上升</td></tr></tbody></table></div><h3>L4 · 情绪衍生品（短期会不会超调？）</h3><div class='tw'><table><thead><tr><th class='l'>指标</th><th class='l'>级别</th><th class='l'>怎么读</th><th class='l'>区间规则</th></tr></thead><tbody><tr><td class='l'><b>恐慌贪婪指数</b><br><span class='stamp' style='text-align:left'>alternative.me</span></td><td class='l'>核心 · 计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>综合波动、成交、社媒、搜索的情绪温度计。</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按水平：0 ~ 24 → 极度恐慌；25 ~ 44 → 恐慌；45 ~ 55 → 中性；56 ~ 75 → 贪婪；76 ~ 100 → 极度贪婪</td></tr><tr><td class='l'><b>BTC 永续资金费率</b><br><span class='stamp' style='text-align:left'>Hyperliquid（日均年化）</span></td><td class='l'>核心 · 计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>多空谁在付钱。含约 11% 年化的基准利息（和币安 0.01%/8h 同量级），所以「正常」不是 0。</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按年化：&lt; -5% → 空头拥挤；-5% ~ 5% → 偏冷；5% ~ 20% → 正常；20% ~ 40% → 多头偏热；&gt; 40% → 多头极度拥挤</td></tr><tr><td class='l'><b>BTC 未平仓合约</b><br><span class='stamp' style='text-align:left'>Hyperliquid</span></td><td class='l'>核心 · 计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>链上最大永续所的 BTC 未平仓名义价值，看 7 日变化判断杠杆在堆还是在出清。单一交易所口径。</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按7 日变化：7 日 &lt; -15% → 去杠杆；±15% → 平稳；&gt; +15% → 杠杆快速堆积</td></tr><tr><td class='l'><b>山寨季指数（自建）</b><br><span class='stamp' style='text-align:left'>CoinGecko（自算）</span></td><td class='l'>核心 · 计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>市值前 50（剔除稳定币、包装币、质押衍生品）里 30 日涨幅跑赢 BTC 的占比。blockchaincenter 原版用 90 日，没有免费接口，这里是自建口径。</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按占比：&lt; 25% → 比特币季；25% ~ 50% → 比特币偏强；50% ~ 75% → 山寨偏强；&gt; 75% → 山寨季</td></tr><tr><td class='l'><b>BTC 市值占比</b><br><span class='stamp' style='text-align:left'>CoinGecko</span></td><td class='l'>辅助 · 不计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>和山寨季指数交叉验证。</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按水平：— → 只看趋势</td></tr></tbody></table></div>
+<h2>框架里暂未接入的指标</h2><div class="tw"><table><thead><tr><th class="l">层</th><th class="l">指标</th><th class="l">原因 / 计划</th></tr></thead><tbody><tr><td class='l'>L1</td><td class='l'>DXY 美元指数</td><td class='l' style='white-space:normal;font-family:var(--sans)'>ICE 官方数据收费，免费行情接口不稳定；先用 FRED 广义美元指数替代</td></tr><tr><td class='l'>L1</td><td class='l'>BTC 现货 ETF 净流入</td><td class='l' style='white-space:normal;font-family:var(--sans)'>Farside 只有网页表格、SoSoValue 接口要 key；v2 接入</td></tr><tr><td class='l'>L1</td><td class='l'>黄金 / 纳指 / 标普联动</td><td class='l' style='white-space:normal;font-family:var(--sans)'>阶段性交叉验证，不进日常仪表盘</td></tr><tr><td class='l'>L2</td><td class='l'>Realized Cap HODL Waves</td><td class='l' style='white-space:normal;font-family:var(--sans)'>需要按 UTXO 年龄分布计算，免费接口不提供；Glassnode 付费或自建节点</td></tr><tr><td class='l'>L3</td><td class='l'>URPD 链上筹码分布</td><td class='l' style='white-space:normal;font-family:var(--sans)'>Glassnode 付费指标；属于框架里标 🔧 的差异化自建方向</td></tr><tr><td class='l'>L3</td><td class='l'>STH-MVRV / LTH-MVRV</td><td class='l' style='white-space:normal;font-family:var(--sans)'>需要按持有时长拆分已实现市值，Glassnode 付费</td></tr><tr><td class='l'>L3</td><td class='l'>STH-SOPR / aSOPR</td><td class='l' style='white-space:normal;font-family:var(--sans)'>Glassnode 付费指标</td></tr><tr><td class='l'>L3</td><td class='l'>矿工储备 / 非流动性供给</td><td class='l' style='white-space:normal;font-family:var(--sans)'>Glassnode 付费指标</td></tr><tr><td class='l'>L4</td><td class='l'>多空比 / 24h 爆仓</td><td class='l' style='white-space:normal;font-family:var(--sans)'>Coinglass 接口需要 key（免费档可申请），拿到 key 即可接入</td></tr><tr><td class='l'>L4</td><td class='l'>期权 Put/Call · IV Skew</td><td class='l' style='white-space:normal;font-family:var(--sans)'>Deribit 免费可取，v2 接入</td></tr></tbody></table></div>
+<h2>解读日志规则</h2>
+<div class="card" style="padding:16px 20px;font-size:13.5px;color:var(--ink2)">日志日期 = 解读当天（UTC），每个读数带自己的数据日期（FRED 按美国工作日、交易所余额约有 2 周滞后，超过容忍天数标 ⚠）。
+写入即冻结；同一天重跑且核心缺失变少才覆盖一次并标「补录」。周复盘按 ISO 周（周一至周日），月复盘按自然月。人工点评放在 content/journal/，单独标注。</div>
+<h2>发射台口径</h2><div class="tw"><table><tbody><tr><td class='l'>统计口径</td><td class='l' style='white-space:normal;font-family:var(--sans)'>发射台一律用手续费（fees），不用成交量；成交量口径覆盖不全，会系统性低估份额。</td></tr><tr><td class='l'>统计周期</td><td class='l' style='white-space:normal;font-family:var(--sans)'>只报「昨天」这一个 UTC 完整日；当天数据永远不完整，不进正文。</td></tr><tr><td class='l'>发射台矩阵</td><td class='l' style='white-space:normal;font-family:var(--sans)'>DefiLlama Launchpad 类目全部协议；多链协议的分链数字用 DefiLlama 分链拆分；30 日走势来自本站逐日台账。</td></tr><tr><td class='l'>赛道份额</td><td class='l' style='white-space:normal;font-family:var(--sans)'>深度追踪平台的份额分母是 Top60 当日总量（和文字解读一致）；矩阵页的份额分母是全类目。</td></tr><tr><td class='l'>延迟处理</td><td class='l' style='white-space:normal;font-family:var(--sans)'>某个数据源没出昨天的数，标「延迟」，不拿旧值顶替、不记 0。</td></tr><tr><td class='l'>Flap / StonkFun</td><td class='l' style='white-space:normal;font-family:var(--sans)'>Flap 是税代币模型、StonkFun 的 fees 只记平台自己那份，跨平台比较用协议收入。</td></tr><tr><td class='l'>PONS 销毁</td><td class='l' style='white-space:normal;font-family:var(--sans)'>转到 0x…dEaD 地址，不是调用 burn()，市值一律按 burn-adjusted 流通计。</td></tr><tr><td class='l'>绝不做的事</td><td class='l' style='white-space:normal;font-family:var(--sans)'>不拿历史峰值和现在比来判断一个平台是否「死了」；只给数据，不给买卖建议。</td></tr></tbody></table></div>
 </div>
-<footer class="site-footer">链上大叔研究台（Uncle Onchain）｜ @Uncle_Web3PM ｜ 数据源：DefiLlama · CoinGecko · GeckoTerminal · DexScreener · Robinhood Chain / Arc 链上节点<br>本站只给数据和复盘记录，不构成任何投资建议；不对任何交易结果负责。</footer>
+<footer class="foot"><span>链上大叔研究台（Uncle Onchain）</span><a href="https://x.com/Uncle_Web3PM">@Uncle_Web3PM</a>
+<span>数据：DefiLlama · CoinMetrics · FRED · alternative.me · Hyperliquid · Deribit · CoinGecko · 链上节点</span><span>本站只给数据和过程记录，不构成任何投资建议；不对任何交易结果负责。</span></footer>
+</main>
+
+
 </body>
 </html>
