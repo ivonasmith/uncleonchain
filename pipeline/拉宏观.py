@@ -69,6 +69,8 @@ def sma(vals, n):
 PAY = ["PYUSD", "RLUSD", "USDG", "USDGO", "U", "USDP", "GUSD"]           # 支付 / 合规机构
 CORE = ["USDT", "USDC", "FDUSD", "USD1", "TUSD", "USDD"]                 # 交易核心
 YIELD = ["USDE", "USDF", "BFUSD", "USDS", "DAI"]                          # 生息 / 合成
+# 同名符号有多个币时按名称认人（2026-10-02 首跑发现 GUSD 会匹配到 Gate USD，研究里指的是 Gemini Dollar）
+PREFER = {"GUSD": "gemini"}
 
 
 def _llama_chart(path):
@@ -111,6 +113,8 @@ def fetch_stables():
             continue
         circ = ((a.get("circulating") or {}).get("peggedUSD")) or 0
         s = (a.get("symbol") or "").upper()
+        if s in PREFER and PREFER[s] not in (a.get("name") or "").lower():
+            continue
         if s not in by_sym or circ > by_sym[s][1]:          # 同名币取流通量最大的那个，防仿冒币
             by_sym[s] = (a["id"], circ, a.get("name"))
     note = {}
