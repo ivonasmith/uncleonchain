@@ -70,7 +70,7 @@ def og_card(av):
     d.text((402, 292), "宏观四层仪表盘 · 发射台矩阵 · 每日解读日志", font=font(SANS, 34), fill=MUTED)
     d.rectangle((402, 370, 408, 420), fill=MINT)
     d.text((426, 368), "uncleonchain.com", font=font(MONO, 40), fill=MINT)
-    d.text((426, 426), "@Uncle_Web3PM", font=font(MONO, 28), fill=MUTED)
+    d.text((426, 426), "@Uncle_Onchain", font=font(MONO, 28), fill=MUTED)
     d.text((80, 560), "只给数据和过程记录 · 不构成投资建议", font=font(SANS, 22), fill=(90, 98, 116))
     im.save(os.path.join(A, "og.png"), optimize=True)
 

@@ -15,16 +15,24 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
 - `pipeline/跑日更.py --site`：GitHub Actions 每天 UTC 10:20 跑（推送 pipeline/content/assets 也会触发）。
   拉日度 → 读销毁 → 拉估值 → 拉Arc → 出看板 → 拉宏观 → 写日志 → 出网站，结果提交回 `data/` 和 `site/`。
 - `pipeline/宏观规则.py`：四层框架（流动性 / 周期 / 筹码 / 情绪）的指标注册表、区间规则、层结论、预警、日志与周月复盘生成。
-  规则改动要在「更正记录」留痕，已写入的历史日志不改。
+  每个指标 = 一条「判定序列」（原始或派生，如 13 周变化，W-FRI 对齐）+ 一张 cuts 区间表，卡片、详情页全历史图、正常波动范围都用它。
+  L1 按《L1 宏观层数据维度规格》（2026-10-02）：乐观度 / 信用 / 实际利率四态 / 情境格 / 净流动性闸门 / 稳定币两条线 / ETF / 升水；
+  判定 = 顺风 / 中性 / 中性偏谨慎 / 逆风。规则改动写进 `RULE_CHANGES`（更正记录页自动展示），已写入的历史日志不改。
+  日志里中英文字段并存（…EN），英文站直接读。
+- `pipeline/出网站.py` + `pipeline/网站样式.py`：中英双语（英文挂 /en/，`T(中, 英)` 包所有文案）、深 / 浅主题（CSS 变量，
+  别写死颜色）、面包屑、交互走势图（`chart_div` + /data/*.json）。指标详情页 /macro/<key>/。
 - `data/解读日志/{日,周,月}/`：写入即冻结。同日重跑且核心缺失变少才覆盖并标「补录」。
 - `content/posts/<macro|rotation|narrative>/`：手写文章（.md 或整篇 .html）；`content/journal/<日期|周|月>.md`：人工点评。
+- `content/reports/`：分析报告（Notion 导出 HTML 原样放，iframe 嵌入；元信息写 `<!--meta-->`，见目录 README）。
 - `assets/`：头像、favicon、og 卡（`pipeline/做图标.py` 生成），`assets/vendor/html2canvas.min.js` 由 Actions 自托管。
 - 视觉：底 #05070c、卡片 #0b0e17、1px rgba(255,255,255,.06) 细线、涨 #00ffcc、跌 #ff3366、品牌青柠 #a3e635（只用于导航和按钮）。
-  左侧常驻导航，每个板块独立 URL（方便推特直链）。
+  浅色主题（太阳 / 月亮按钮切换）的配色在 `网站样式.py`。左侧常驻导航，每个板块独立 URL（方便推特直链）；子页面顶部有面包屑。
 
 ## 待办（按优先级）
 
-1. 核对 Actions 首跑：宏观各数据源（DefiLlama 稳定币、FRED CSV、Deribit、CoinMetrics Community、alternative.me、Hyperliquid、CoinGecko）
-   在 GitHub runner 上是否都通；看 `data/宏观台账.json` 的「源状态」和线上 /macro/ 页。第一篇日志应是 2026-09-29。
-2. 宏观 v2：BTC 现货 ETF 净流入、Coinglass（多空比 / 爆仓，需 key）、Deribit 期权 P/C 与 IV。
+1. 核对 2026-10-02 L1 改版后的 Actions 首跑：FRED 新序列（NASDAQ100 / VIXCLS / T10YIE / BAA10Y / NFCI / BAMLH0A0HYM2 / WTREGEN）、
+   DefiLlama 稳定币分组（附注里有实际匹配到的币）、ETF（haturatu 镜像）、CME 升水（Yahoo 合约代码能否取到）是否都通；
+   乐观度 z 在 2026-09-25 应约为 +0.49、净流动性约 $5.77T（研究报告 §7.1），对不上就查口径。
+2. 宏观 v2：Coinglass（多空比 / 爆仓，需 key）、Deribit 期权 P/C 与 IV。2026 年底复核净流动性闸门（规格 D1）。
 3. 叙事雷达：DefiLlama 无代币协议 × 收入增速筛选；Robinhood Chain / Arc 发射台大户地址追踪。
+4. 把 Notion 里已有的分析报告搬到 content/reports/（需要大叔确认哪些可以公开）。

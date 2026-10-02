@@ -51,7 +51,8 @@ def main():
     p = os.path.join(J, "日", f"{today}.json")
     if os.path.exists(p):
         old = read(p)
-        if len(new["核心缺失"]) < len(old.get("核心缺失", [])):
+        # 规则版本不同（比如 2026-10-02 的 L1 改版）时核心指标清单也不同，不拿来比，旧日志原样冻结
+        if old.get("版本") == new.get("版本") and len(new["核心缺失"]) < len(old.get("核心缺失", [])):
             new["补录"] = True
             new["首次生成UTC"] = old.get("首次生成UTC") or old.get("生成时间UTC")
             write(p, new)

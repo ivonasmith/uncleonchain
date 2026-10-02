@@ -20,6 +20,8 @@ FOCUS = {
     "stonkfun": ("StonkFun", "Solana"),
     "flap-sh":  ("Flap sh", "BSC + X Layer + Monad + RH"),
 }
+# 发射台矩阵逐日历史从这天起保留（pump.fun 上线后的赛道全程），给网站的全网手续费汇总趋势图用
+HIST_START = "2024-01-01"
 # 已知返回 400，别重试
 BAD = {"jup-studio", "bigpump", "seiyan-fun", "moonshot", "vectorfun", "daos.fun",
        "pools-trade", "ansem-io", "americafun", "user-fun"}
@@ -92,7 +94,7 @@ def main():
     data["Launchpad协议总数"] = len(lp)
 
     # 发射台矩阵（网站用）：DefiLlama Launchpad 类目全部协议的当日 / 7 日 / 30 日与分链拆分，外加逐日历史
-    # （Top60 用上面已经拉到的逐日序列回填，其余协议从今天起逐日攒），给网站的跨链排行 + 生态切流用
+    # （Top60 用上面已经拉到的逐日序列回填到 HIST_START，其余协议从今天起逐日攒），给网站的跨链排行 + 汇总趋势 + 生态切流用
     snap = []
     for p in lp:
         if not p.get("slug"):
@@ -108,13 +110,13 @@ def main():
     hist = M.get("历史", {})
     for s in top60:
         for k, v in (res.get((s, "dailyFees")) or {}).items():
-            if k >= shift(expected, -119):
+            if k >= HIST_START and v:
                 hist.setdefault(k, {})[s] = v
     hist.setdefault(expected, {})
     for x in snap:
         if x["当日"] is not None and (x["30日"] or 0) >= 1000 and x["slug"] not in hist[expected]:
             hist[expected][x["slug"]] = x["当日"]
-    hist = {k: hist[k] for k in sorted(hist)[-120:]}
+    hist = {k: hist[k] for k in sorted(hist) if k >= HIST_START}
     save("发射台矩阵.json", {"日期": expected, "生成时间UTC": data["生成时间UTC"], "协议": snap, "历史": hist})
 
     out = save("日度数据.json", data)

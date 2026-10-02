@@ -35,8 +35,8 @@
 -->
 ```
 
-全站是终端深色风格（底 #05070c、卡片 #0b0e17、涨 #00ffcc、跌 #ff3366、品牌色青柠 #a3e635），`pipeline/出网站.py`
-里的 `SITE_CSS` 定义。.md 笔记里可以直接手拼 `.callout / .callout.blue / .callout.red / .callout.green / .kpis / .kpi`
+全站默认终端深色风格（底 #05070c、卡片 #0b0e17、涨 #00ffcc、跌 #ff3366、品牌色青柠 #a3e635），读者可以用太阳 / 月亮按钮切浅色，
+`pipeline/网站样式.py` 里的 `SITE_CSS` 定义；手拼组件时用 `var(--ink)` 这类变量而不是写死颜色，两套主题都能看。.md 笔记里可以直接手拼 `.callout / .callout.blue / .callout.red / .callout.green / .kpis / .kpi`
 这些组件；.html 定制报告保留它自己的 `<style>`（比如暖白底的推特报告），在深色站点里会像一张「纸」嵌在终端里。
 
 两种稿子跑一次 `python3 pipeline/出网站.py`（或等每日定时任务自动跑）就会出现在对应板块页面和首页卡片上。

@@ -4,51 +4,76 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>口径与规则 · 链上大叔研究台</title>
+<script>(function(){try{var t=localStorage.getItem('uc-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}})();</script>
 <meta name="description" content="宏观流动性 → 周期位置 → 筹码结构 → 情绪 → 发射台一级市场，每天一篇公开解读日志">
 <meta name="theme-color" content="#05070c">
+<link rel="alternate" hreflang="zh-CN" href="https://uncleonchain.com/methodology/"><link rel="alternate" hreflang="en" href="https://uncleonchain.com/en/methodology/">
 <meta property="og:title" content="口径与规则 · 链上大叔研究台"><meta property="og:description" content="宏观流动性 → 周期位置 → 筹码结构 → 情绪 → 发射台一级市场，每天一篇公开解读日志">
 <meta property="og:type" content="website"><meta property="og:site_name" content="链上大叔研究台">
 <meta property="og:image" content="https://uncleonchain.com/assets/og.png">
-<meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@Uncle_Web3PM">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@Uncle_Onchain">
 <meta name="twitter:image" content="https://uncleonchain.com/assets/og.png">
 <link rel="icon" href="/assets/favicon.ico" sizes="any"><link rel="icon" href="/assets/favicon-32.png" type="image/png" sizes="32x32">
 <link rel="icon" href="/assets/favicon-192.png" type="image/png" sizes="192x192"><link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&display=swap">
 <style>
 :root,:root[data-theme="dark"]{--bg:#05070c;--card:#0b0e17;--card2:#10141f;--line:rgba(255,255,255,.06);--line2:rgba(255,255,255,.11);
---ink:#e8ecf3;--ink2:#a7afc0;--muted:#6b7488;--up:#00ffcc;--dn:#ff3366;--warn:#ffb020;--cool:#5b8cff;--lime:#a3e635;
---up-bg:rgba(0,255,204,.08);--dn-bg:rgba(255,51,102,.09);--warn-bg:rgba(255,176,32,.09);--cool-bg:rgba(91,140,255,.10);
---panel:var(--card2);--rule:var(--line);--rule2:var(--line2);--accent:var(--lime);--accent-soft:rgba(163,230,53,.08);
+--ink:#e8ecf3;--ink2:#a7afc0;--muted:#6b7488;--up:#00ffcc;--dn:#ff3366;--warn:#ffb020;--cool:#5b8cff;--lime:#a3e635;--lime-ink:#a3e635;
+--on-lime:#05070c;--up-bg:rgba(0,255,204,.08);--dn-bg:rgba(255,51,102,.09);--warn-bg:rgba(255,176,32,.09);--cool-bg:rgba(91,140,255,.10);
+--up-bd:rgba(0,255,204,.35);--dn-bd:rgba(255,51,102,.4);--warn-bd:rgba(255,176,32,.4);--cool-bd:rgba(91,140,255,.45);
+--lime-bg:rgba(163,230,53,.07);--lime-bd:rgba(163,230,53,.45);--hover:rgba(255,255,255,.035);--wash:rgba(255,255,255,.015);
+--glass1:rgba(255,255,255,.035);--glass2:rgba(255,255,255,.01);--side:rgba(7,9,15,.92);--topbar:rgba(5,7,12,.9);--thead:#0d111b;
+--glow1:rgba(0,255,204,.07);--glow2:rgba(163,230,53,.05);--scrim:rgba(0,0,0,.55);--toast:#11161f;--grid:rgba(255,255,255,.06);
+--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--s5:#d55181;--s6:#008300;--s7:#9085e9;--s8:#e66767;--s9:#5b6274;
+--c-solana:#c084fc;--c-robinhood:#4ade80;--c-bsc:#fbbf24;--c-base:#60a5fa;--c-arc:#22d3ee;--c-monad:#a78bfa;--c-ethereum:#94a3b8;--c-other:#4b5364;
 --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
 --sans:Inter,"Noto Sans SC",-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
 color-scheme:dark}
+:root[data-theme="light"]{--bg:#f5f7fa;--card:#ffffff;--card2:#f0f3f7;--line:rgba(15,23,42,.08);--line2:rgba(15,23,42,.15);
+--ink:#0f172a;--ink2:#475569;--muted:#64748b;--up:#059669;--dn:#e11d48;--warn:#b45309;--cool:#2563eb;--lime:#a3e635;--lime-ink:#4d7c0f;
+--on-lime:#14210a;--up-bg:rgba(5,150,105,.08);--dn-bg:rgba(225,29,72,.07);--warn-bg:rgba(180,83,9,.08);--cool-bg:rgba(37,99,235,.08);
+--up-bd:rgba(5,150,105,.35);--dn-bd:rgba(225,29,72,.35);--warn-bd:rgba(180,83,9,.35);--cool-bd:rgba(37,99,235,.35);
+--lime-bg:rgba(132,204,22,.12);--lime-bd:rgba(77,124,15,.45);--hover:rgba(15,23,42,.04);--wash:rgba(15,23,42,.02);
+--glass1:rgba(255,255,255,.92);--glass2:rgba(255,255,255,.80);--side:rgba(255,255,255,.94);--topbar:rgba(255,255,255,.92);--thead:#f3f5f8;
+--glow1:rgba(5,150,105,.06);--glow2:rgba(132,204,22,.07);--scrim:rgba(15,23,42,.35);--toast:#ffffff;--grid:rgba(15,23,42,.07);
+--s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--s4:#eda100;--s5:#e87ba4;--s6:#008300;--s7:#4a3aa7;--s8:#e34948;--s9:#94a3b8;
+--c-solana:#9333ea;--c-robinhood:#16a34a;--c-bsc:#b45309;--c-base:#2563eb;--c-arc:#0891b2;--c-monad:#7c3aed;--c-ethereum:#64748b;--c-other:#94a3b8;
+color-scheme:light}
 *{box-sizing:border-box}
 html,body{background:var(--bg);margin:0}
 body{color:var(--ink);font:14.5px/1.65 var(--sans);-webkit-font-smoothing:antialiased;min-height:100vh}
 body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
-background:radial-gradient(700px 420px at 12% -8%,rgba(0,255,204,.07),transparent 70%),
-radial-gradient(640px 420px at 100% 108%,rgba(163,230,53,.05),transparent 70%)}
+background:radial-gradient(700px 420px at 12% -8%,var(--glow1),transparent 70%),radial-gradient(640px 420px at 100% 108%,var(--glow2),transparent 70%)}
 a{color:inherit}
-a:hover{color:var(--lime)}
+a:hover{color:var(--lime-ink)}
 .num,.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
 svg.ic{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;flex:none}
 
 /* ---- 外壳：左侧常驻导航 ---- */
-.side{position:fixed;top:0;left:0;bottom:0;width:236px;z-index:30;background:rgba(7,9,15,.92);
+.side{position:fixed;top:0;left:0;bottom:0;width:236px;z-index:30;background:var(--side);
 border-right:1px solid var(--line);display:flex;flex-direction:column;padding:18px 14px;backdrop-filter:blur(12px)}
-.brand{display:flex;align-items:center;gap:11px;text-decoration:none;padding:4px 6px 18px;border-bottom:1px solid var(--line);margin-bottom:14px}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none;padding:4px 6px 14px}
 .brand .av{width:38px;height:38px;border-radius:50%;box-shadow:0 0 0 1.5px var(--lime),0 0 18px rgba(163,230,53,.25)}
 .brand b{display:block;font-size:15px;font-weight:700;letter-spacing:.2px;color:var(--ink)}
 .brand i{display:block;font-style:normal;font-family:var(--mono);font-size:9.5px;letter-spacing:1.4px;color:var(--muted);margin-top:2px}
+.tools{display:flex;align-items:center;gap:8px;padding:0 6px 14px;border-bottom:1px solid var(--line);margin-bottom:10px}
+.lang{display:inline-flex;border:1px solid var(--line2);border-radius:8px;overflow:hidden;font:600 11.5px/1 var(--sans)}
+.lang a{padding:6px 10px;text-decoration:none;color:var(--ink2)}
+.lang a.on{background:var(--lime);color:var(--on-lime)}
+.lang a:not(.on):hover{background:var(--hover);color:var(--ink)}
+.thm{display:inline-flex;align-items:center;justify-content:center;width:30px;height:28px;border:1px solid var(--line2);border-radius:8px;
+background:transparent;color:var(--ink2);cursor:pointer;padding:0}
+.thm:hover{color:var(--ink);background:var(--hover)}
+.thm .sun{display:none}.thm .moon{display:block}
+:root[data-theme="light"] .thm .sun{display:block}:root[data-theme="light"] .thm .moon{display:none}
 .snav{display:flex;flex-direction:column;gap:2px;flex:1;overflow-y:auto}
 .sgrp{font-family:var(--mono);font-size:10px;letter-spacing:1.6px;color:var(--muted);padding:12px 10px 6px;text-transform:uppercase}
 .snav a{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;text-decoration:none;color:var(--ink2);
 font-size:13.5px;position:relative;transition:background .15s,color .15s}
-.snav a:hover{background:rgba(255,255,255,.035);color:var(--ink)}
-.snav a.on{background:rgba(163,230,53,.07);color:var(--ink)}
+.snav a:hover{background:var(--hover);color:var(--ink)}
+.snav a.on{background:var(--lime-bg);color:var(--ink)}
 .snav a.on:before{content:"";position:absolute;left:-14px;top:7px;bottom:7px;width:3px;border-radius:0 3px 3px 0;background:var(--lime)}
-.snav a.on svg.ic{color:var(--lime)}
-.snav a .tag{margin-left:auto;font-family:var(--mono);font-size:9.5px;color:var(--muted);border:1px solid var(--line2);border-radius:4px;padding:0 5px}
+.snav a.on svg.ic{color:var(--lime-ink)}
 .sfoot{border-top:1px solid var(--line);padding:14px 6px 0;font-size:11.5px;color:var(--muted);line-height:1.6}
 .live{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:10.5px;color:var(--ink2)}
 .live i{width:7px;height:7px;border-radius:50%;background:var(--up);box-shadow:0 0 8px var(--up);animation:pulse 2.4s infinite}
@@ -56,7 +81,7 @@ font-size:13.5px;position:relative;transition:background .15s,color .15s}
 .sfoot a{display:inline-block;margin-top:8px;color:var(--ink2);text-decoration:none;font-family:var(--mono);font-size:11.5px}
 .sfoot p{margin:8px 0 0;font-size:10.5px}
 .main{margin-left:236px;position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column}
-.mi{width:100%;max-width:1280px;margin:0 auto;padding:30px 36px 56px;flex:1}
+.mi{width:100%;max-width:1280px;margin:0 auto;padding:26px 36px 56px;flex:1}
 .mi.narrow{max-width:900px}
 .foot{border-top:1px solid var(--line);color:var(--muted);font-size:11.5px;padding:18px 36px;display:flex;gap:10px 22px;flex-wrap:wrap}
 .foot a{color:var(--muted)}
@@ -66,22 +91,30 @@ font-size:13.5px;position:relative;transition:background .15s,color .15s}
  .side{transform:translateX(-100%);transition:transform .2s;width:264px}
  .navtg:checked~.side{transform:none}
  .navtg:checked~.scrim{display:block}
- .scrim{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:25}
+ .scrim{display:none;position:fixed;inset:0;background:var(--scrim);z-index:25}
  .main{margin-left:0}
- .topbar{display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:20;padding:10px 16px;
-  background:rgba(5,7,12,.9);border-bottom:1px solid var(--line);backdrop-filter:blur(10px)}
+ .topbar{display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:20;padding:10px 16px;
+  background:var(--topbar);border-bottom:1px solid var(--line);backdrop-filter:blur(10px)}
  .topbar label{cursor:pointer;display:flex;padding:6px;border:1px solid var(--line2);border-radius:8px}
- .topbar a{display:flex;align-items:center;gap:8px;text-decoration:none;font-weight:700;font-size:14px}
+ .topbar .home{display:flex;align-items:center;gap:8px;text-decoration:none;font-weight:700;font-size:14px;min-width:0}
+ .topbar .home span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
  .topbar img{width:26px;height:26px;border-radius:50%;box-shadow:0 0 0 1.5px var(--lime)}
- .topbar .d{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--muted)}
- .mi{padding:20px 16px 40px}
+ .topbar .sp{flex:1}
+ .mi{padding:18px 16px 40px}
  .ph .stamp{text-align:left}
  .foot{padding:16px}
 }
 
+/* ---- 面包屑 ---- */
+.crumbs{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;font-size:12.5px;color:var(--muted);margin:0 0 14px}
+.crumbs a{color:var(--ink2);text-decoration:none;border-bottom:1px dashed var(--line2)}
+.crumbs a:hover{color:var(--lime-ink);border-color:var(--lime-ink)}
+.crumbs .sep{opacity:.6}
+.crumbs .cur{color:var(--ink)}
+
 /* ---- 页头 ---- */
 .ph{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:10px 24px;margin-bottom:22px}
-.eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:1.8px;color:var(--lime);text-transform:uppercase}
+.eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:1.8px;color:var(--lime-ink);text-transform:uppercase}
 h1{font:700 26px/1.25 var(--sans);letter-spacing:-.2px;margin:6px 0 0}
 h2{font:600 17px/1.35 var(--sans);margin:34px 0 12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 h2 .sub{font-weight:400;font-size:12.5px;color:var(--muted)}
@@ -89,38 +122,42 @@ h3{font:600 14.5px/1.4 var(--sans);margin:22px 0 8px}
 .lede{color:var(--ink2);max-width:78ch;margin:10px 0 0;font-size:14px}
 .stamp{font-family:var(--mono);font-size:11px;color:var(--muted);text-align:right;line-height:1.7}
 .stamp b{color:var(--ink2);font-weight:500}
+.note{border:1px dashed var(--line2);border-radius:10px;padding:10px 14px;font-size:12.5px;color:var(--ink2);margin:0 0 16px;background:var(--wash)}
 
-/* ---- 卡片 / 毛玻璃 ---- */
-.glass{background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.01));border:1px solid var(--line);
-border-radius:14px;backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);
-box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+/* ---- 卡片 ---- */
+.glass{background:linear-gradient(180deg,var(--glass1),var(--glass2));border:1px solid var(--line);
+border-radius:14px;backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%)}
 .card{background:var(--card);border:1px solid var(--line);border-radius:12px}
 .grid{display:grid;gap:12px}
 .g4{grid-template-columns:repeat(4,minmax(0,1fr))}.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
-.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
-@media(max-width:1100px){.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:640px){.g4,.g3,.g2{grid-template-columns:1fr}}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}.g5{grid-template-columns:repeat(5,minmax(0,1fr))}
+@media(max-width:1100px){.g4,.g5{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:640px){.g4,.g3,.g2,.g5{grid-template-columns:1fr}}
 
 .verdict{padding:20px 22px;display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-bottom:14px;position:relative;overflow:hidden}
 .verdict:after{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;
-background:radial-gradient(circle,rgba(0,255,204,.10),transparent 70%)}
+background:radial-gradient(circle,var(--glow1),transparent 70%)}
 .verdict .lbl{font-family:var(--mono);font-size:10px;letter-spacing:1.6px;color:var(--muted);text-transform:uppercase}
 .verdict .txt{font-size:17px;font-weight:600;line-height:1.5;margin:6px 0 10px;max-width:70ch}
 .verdict .body{flex:1;min-width:260px}
+.l1line{font-family:var(--mono);font-size:11.5px;color:var(--ink2);line-height:1.7;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line2);word-break:break-word}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
 .chip{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;padding:3px 9px;border-radius:999px;
 border:1px solid var(--line2);color:var(--ink2);white-space:nowrap}
 .chip i{width:6px;height:6px;border-radius:50%;background:currentColor}
 .t-up{color:var(--up)}.t-dn{color:var(--dn)}.t-warn{color:var(--warn)}.t-cool{color:var(--cool)}.t-neutral{color:var(--ink2)}
-.chip.t-up{border-color:rgba(0,255,204,.35);background:var(--up-bg)}.chip.t-dn{border-color:rgba(255,51,102,.4);background:var(--dn-bg)}
-.chip.t-warn{border-color:rgba(255,176,32,.4);background:var(--warn-bg)}.chip.t-cool{border-color:rgba(91,140,255,.45);background:var(--cool-bg)}
+.chip.t-up{border-color:var(--up-bd);background:var(--up-bg)}.chip.t-dn{border-color:var(--dn-bd);background:var(--dn-bg)}
+.chip.t-warn{border-color:var(--warn-bd);background:var(--warn-bg)}.chip.t-cool{border-color:var(--cool-bd);background:var(--cool-bg)}
+.grade{font-family:var(--mono);font-size:9.5px;border-radius:4px;padding:0 5px;border:1px solid var(--line2);color:var(--muted);white-space:nowrap;font-weight:400}
+.grade.g-v{color:var(--up);border-color:var(--up-bd)}.grade.g-d{color:var(--cool);border-color:var(--cool-bd)}.grade.g-o{color:var(--warn);border-color:var(--warn-bd)}
 
-.hero{padding:16px 18px 12px;position:relative;overflow:hidden}
+.hero{padding:16px 18px 12px;position:relative;overflow:hidden;text-decoration:none;display:block}
 .hero .k{font-size:11.5px;color:var(--muted);display:flex;justify-content:space-between;gap:8px}
 .hero .k span{font-family:var(--mono);font-size:10px;letter-spacing:.6px}
 .hero .v{font:600 25px/1.2 var(--mono);letter-spacing:-.5px;margin:8px 0 4px}
 .hero .s{font-size:12px;color:var(--ink2)}
 .hero svg.spk{margin-top:10px;width:100%;height:34px}
+a.hero:hover{border-color:var(--line2)}
 
 .sig{padding:16px 18px;text-decoration:none;display:block;border-top:2px solid var(--line2)}
 .sig:hover{background:var(--card2);color:inherit}
@@ -129,109 +166,161 @@ border:1px solid var(--line2);color:var(--ink2);white-space:nowrap}
 .sig .v{font-size:15px;font-weight:600;margin:10px 0 8px;line-height:1.4}
 .sig ul{list-style:none;margin:0;padding:0;font-size:12px;color:var(--ink2)}
 .sig li{display:flex;justify-content:space-between;gap:8px;padding:3px 0;border-top:1px dashed var(--line)}
-.sig li b{font-family:var(--mono);font-weight:500;color:var(--ink)}
+.sig li b{font-family:var(--mono);font-weight:500;color:var(--ink);text-align:right}
 .sig.t-up{border-top-color:var(--up)}.sig.t-dn{border-top-color:var(--dn)}.sig.t-warn{border-top-color:var(--warn)}.sig.t-cool{border-top-color:var(--cool)}
 
 /* ---- 异动预警看台 ---- */
 .board{padding:0;overflow:hidden}
-.board-hd{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line)}
+.board-hd{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap}
 .board-hd b{font-size:13.5px}
 .board-hd .dot{width:8px;height:8px;border-radius:50%;background:var(--dn);box-shadow:0 0 10px var(--dn);animation:pulse 1.6s infinite}
 .board-hd .sp{flex:1}
-.ticker{overflow:hidden;white-space:nowrap;border-bottom:1px solid var(--line);background:rgba(255,255,255,.015);
+.ticker{overflow:hidden;white-space:nowrap;border-bottom:1px solid var(--line);background:var(--wash);
 -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
 .ticker-track{display:inline-flex;gap:38px;padding:9px 0;animation:tick 70s linear infinite;font-family:var(--mono);font-size:12px}
 .ticker:hover .ticker-track{animation-play-state:paused}
-.ticker-track span{color:var(--ink2)}.ticker-track span b{color:var(--ink);font-weight:500}
+.ticker-track span{color:var(--ink2)}.ticker-track span b{font-weight:500}
 @keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){.ticker-track{animation:none}}
 .alerts{list-style:none;margin:0;padding:6px 0}
 .alerts li{display:flex;gap:12px;align-items:flex-start;padding:8px 16px;font-size:13px;border-bottom:1px solid var(--line)}
 .alerts li:last-child{border-bottom:none}
 .alerts .lv{font-family:var(--mono);font-size:10px;padding:1px 6px;border-radius:4px;flex:none;margin-top:2px}
-.alerts .lv.h{color:var(--dn);background:var(--dn-bg);border:1px solid rgba(255,51,102,.35)}
-.alerts .lv.m{color:var(--warn);background:var(--warn-bg);border:1px solid rgba(255,176,32,.35)}
+.alerts .lv.h{color:var(--dn);background:var(--dn-bg);border:1px solid var(--dn-bd)}
+.alerts .lv.m{color:var(--warn);background:var(--warn-bg);border:1px solid var(--warn-bd)}
 .alerts .d{font-family:var(--mono);font-size:11px;color:var(--muted);flex:none;margin-top:1px}
 .quiet{padding:14px 16px;color:var(--muted);font-size:13px}
 
 .btn{display:inline-flex;align-items:center;gap:7px;font:600 12px/1 var(--sans);padding:8px 12px;border-radius:8px;
-border:1px solid rgba(163,230,53,.5);color:var(--lime);background:rgba(163,230,53,.06);cursor:pointer;text-decoration:none;white-space:nowrap}
-.btn:hover{background:rgba(163,230,53,.14);color:var(--lime)}
+border:1px solid var(--lime-bd);color:var(--lime-ink);background:var(--lime-bg);cursor:pointer;text-decoration:none;white-space:nowrap}
+.btn:hover{filter:brightness(1.1);color:var(--lime-ink)}
 .btn.ghost{border-color:var(--line2);color:var(--ink2);background:transparent}
 .btn.ghost:hover{color:var(--ink);border-color:var(--ink2)}
 .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);opacity:0;z-index:99;
-background:#11161f;border:1px solid var(--line2);color:var(--ink);padding:10px 16px;border-radius:10px;font-size:13px;transition:.25s;pointer-events:none}
+background:var(--toast);border:1px solid var(--line2);color:var(--ink);padding:10px 16px;border-radius:10px;font-size:13px;transition:.25s;pointer-events:none}
 .toast.on{opacity:1;transform:translateX(-50%)}
 
 /* ---- 指标卡（宏观仪表盘） ---- */
 .layer{margin-top:34px;scroll-margin-top:20px}
 .layer-hd{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin-bottom:12px}
-.layer-hd .no{font-family:var(--mono);font-size:11px;color:var(--lime);border:1px solid rgba(163,230,53,.4);border-radius:6px;padding:2px 7px}
+.layer-hd .no{font-family:var(--mono);font-size:11px;color:var(--lime-ink);border:1px solid var(--lime-bd);border-radius:6px;padding:2px 7px}
 .layer-hd h2{margin:0}
 .layer-hd .why{font-size:12.5px;color:var(--muted);width:100%}
+.grp{font-family:var(--mono);font-size:10.5px;letter-spacing:1.2px;color:var(--muted);margin:18px 0 8px;display:flex;align-items:center;gap:10px}
+.grp:after{content:"";flex:1;height:1px;background:var(--line)}
+a.ind{text-decoration:none;color:inherit;transition:border-color .15s,background .15s}
+a.ind:hover{border-color:var(--lime-bd);background:var(--card2);color:inherit}
 .ind{padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-height:168px}
 .ind .top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
-.ind .nm{font-size:13px;font-weight:600}
-.ind .lv{font-family:var(--mono);font-size:9.5px;color:var(--muted);border:1px solid var(--line2);border-radius:4px;padding:0 5px;margin-left:6px;font-weight:400}
+.ind .nm{font-size:13px;font-weight:600;display:flex;flex-wrap:wrap;gap:4px 6px;align-items:center}
 .ind .v{font:600 22px/1.2 var(--mono);letter-spacing:-.4px}
 .ind .b{font-size:12px;color:var(--ink2)}
 .ind .ft{margin-top:auto;display:flex;justify-content:space-between;gap:8px;font-size:10.5px;color:var(--muted);font-family:var(--mono)}
 .ind .ft .stale{color:var(--warn)}
+.ind .ft .go{color:var(--lime-ink)}
 .ind svg.spk{width:100%;height:32px}
-.ind details{font-size:12px;color:var(--muted)}
-.ind summary{cursor:pointer;list-style:none;font-size:11px}
-.ind summary::-webkit-details-marker{display:none}
+.ind.obs{opacity:.75}
 .pend{padding:12px 14px;border:1px dashed var(--line2);border-radius:12px;font-size:12px;color:var(--muted)}
 .pend b{display:block;color:var(--ink2);font-size:12.5px;margin-bottom:3px;font-weight:600}
 .src{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+
+/* ---- 情境格 ---- */
+.scen{display:grid;grid-template-columns:150px repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:12.5px}
+.scen>div{background:var(--card);padding:10px 12px}
+.scen .h{font-size:11px;color:var(--muted);font-family:var(--mono)}
+.scen .r{color:var(--ink2);font-size:12px}
+.scen .c b{display:block;font:600 16px/1.3 var(--mono)}
+.scen .c span{font-size:11px;color:var(--muted)}
+.scen .c.on{outline:2px solid var(--lime);outline-offset:-2px;background:var(--lime-bg)}
+.scen .c.worst:after{content:attr(data-w);display:block;font-size:10.5px;color:var(--warn);margin-top:2px}
+@media(max-width:760px){.scen{grid-template-columns:110px repeat(4,minmax(86px,1fr));overflow-x:auto}}
+.scen-wrap{overflow-x:auto}
 
 /* ---- 表格 ---- */
 .tw{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--card)}
 table{border-collapse:collapse;width:100%;font-size:13px}
 th{font-size:10.5px;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);font-weight:600;text-align:right;
-padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap;background:rgba(255,255,255,.015)}
+padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap;background:var(--wash)}
 td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap;font-family:var(--mono);font-variant-numeric:tabular-nums}
 th.l,td.l{text-align:left}
 td.l{font-family:var(--sans)}
+td.wrap{white-space:normal;font-family:var(--sans)}
 tr:last-child td{border-bottom:none}
-tbody tr:hover td{background:rgba(255,255,255,.025)}
+tbody tr:hover td{background:var(--hover)}
+tr.cur td{background:var(--lime-bg)}
 td.rk{color:var(--muted);width:1%;font-size:11.5px}
-th.hl{color:var(--lime)} td.hl{color:var(--ink);background:rgba(163,230,53,.035)}
+th.hl{color:var(--lime-ink)} td.hl{color:var(--ink);background:var(--lime-bg)}
 .pname{display:flex;align-items:center;gap:9px;font-weight:600}
-.pname img{width:18px;height:18px;border-radius:50%;background:#1a1f2b;flex:none}
+.pname img{width:18px;height:18px;border-radius:50%;background:var(--card2);flex:none}
 .pname a{text-decoration:none}
-.pname .deep{font-family:var(--mono);font-size:9px;color:var(--lime);border:1px solid rgba(163,230,53,.4);border-radius:3px;padding:0 4px;font-weight:500}
+.pname .deep{font-family:var(--mono);font-size:9px;color:var(--lime-ink);border:1px solid var(--lime-bd);border-radius:3px;padding:0 4px;font-weight:500}
 .badge{display:inline-block;font-family:var(--mono);font-size:10px;padding:1px 7px;border-radius:999px;border:1px solid currentColor;margin-left:4px;opacity:.9;font-weight:400}
-.b-solana{color:#c084fc}.b-robinhood{color:#4ade80}.b-bsc{color:#fbbf24}.b-base{color:#60a5fa}.b-arc{color:#22d3ee}
-.b-monad{color:#a78bfa}.b-ethereum{color:#94a3b8}.b-other{color:#7c8598}
+.b-solana{color:var(--c-solana)}.b-robinhood{color:var(--c-robinhood)}.b-bsc{color:var(--c-bsc)}.b-base{color:var(--c-base)}.b-arc{color:var(--c-arc)}
+.b-monad{color:var(--c-monad)}.b-ethereum{color:var(--c-ethereum)}.b-other{color:var(--muted)}
 .d.up{color:var(--up)}.d.dn{color:var(--dn)}.d{color:var(--ink2)}
 svg.spk{display:block;width:92px;height:26px;margin-left:auto}
-.tw.scroll{max-height:720px;overflow:auto}.tw.scroll thead th{position:sticky;top:0;z-index:2;background:#0d111b}
+.tw.scroll{max-height:720px;overflow:auto}.tw.scroll thead th{position:sticky;top:0;z-index:2;background:var(--thead)}
 .tnote{font-size:12px;color:var(--muted);margin:10px 2px 0;line-height:1.7}
+.share{display:flex;align-items:center;gap:8px;min-width:120px}
+.share .bar{flex:1;height:8px;background:var(--wash);border-radius:4px;overflow:hidden;min-width:70px}
+.share .bar i{display:block;height:100%;border-radius:0 4px 4px 0}
+.share b{font-weight:500;min-width:44px;text-align:right}
+.zbar{display:inline-block;height:8px;border-radius:0 4px 4px 0;vertical-align:middle;margin-right:8px;opacity:.8}
 
-/* ---- 过滤器（发射台矩阵） ---- */
+/* ---- 过滤器 ---- */
 .fbar{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;padding:12px 14px;margin:0 0 12px}
 .fg{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .fg .fl{font-family:var(--mono);font-size:10px;letter-spacing:1.2px;color:var(--muted);text-transform:uppercase;margin-right:2px}
 .pill{font:500 12px/1 var(--sans);padding:6px 10px;border-radius:7px;border:1px solid var(--line2);color:var(--ink2);background:transparent;cursor:pointer}
-.pill:hover{color:var(--ink);border-color:rgba(255,255,255,.22)}
-.pill.on{color:#05070c;background:var(--lime);border-color:var(--lime)}
+.pill:hover{color:var(--ink);border-color:var(--ink2)}
+.pill.on{color:var(--on-lime);background:var(--lime);border-color:var(--lime)}
 .pill small{font-family:var(--mono);font-size:10px;opacity:.75;margin-left:4px}
 .fcount{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--muted)}
-.chainbar{display:flex;height:8px;border-radius:5px;overflow:hidden;margin:12px 0 6px;background:var(--card)}
+.chainbar{display:flex;height:8px;border-radius:5px;overflow:hidden;margin:12px 0 6px;background:var(--card2);gap:2px}
 .chainbar i{display:block;height:100%}
 .chainleg{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:11.5px;color:var(--ink2)}
 .chainleg span{display:inline-flex;align-items:center;gap:6px}.chainleg i{width:8px;height:8px;border-radius:2px}
 .chainleg b{font-family:var(--mono);font-weight:500;color:var(--ink)}
 
-/* ---- 图表 ---- */
+/* ---- 静态小图 / 交互图 ---- */
 .plot{overflow-x:auto}
 .tsvg{display:block;width:100%;min-width:520px;height:auto}
-.tsvg .gl{stroke:rgba(255,255,255,.06);stroke-width:1}
+.tsvg .gl{stroke:var(--grid);stroke-width:1}
 .tsvg .ax{fill:var(--muted);font-size:10.5px;font-family:var(--mono)}
 .legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12px;color:var(--ink2);margin:4px 0 8px}
 .legend span{display:inline-flex;align-items:center;gap:6px}.legend i{width:10px;height:3px;border-radius:2px}
+.legend i.box{width:10px;height:10px;border-radius:2px}
 .legend b{font-family:var(--mono);color:var(--ink);font-weight:500}
+.uc-chart{position:relative}
+.uc-bar{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin:0 0 8px}
+.uc-bar .fg{gap:4px}
+.uc-plot{position:relative;width:100%;touch-action:pan-y}
+.uc-plot svg{display:block;width:100%;overflow:visible}
+.uc-plot .gl{stroke:var(--grid);stroke-width:1}
+.uc-plot .ax{fill:var(--muted);font-size:10.5px;font-family:var(--mono)}
+.uc-plot .thr{stroke-width:1;stroke-dasharray:4 4;opacity:.85}
+.uc-plot .thl{font-size:10px;font-family:var(--sans)}
+.uc-plot .zero{stroke:var(--line2);stroke-width:1}
+.uc-plot .xh{stroke:var(--ink2);stroke-width:1;opacity:.6}
+.uc-tip{position:absolute;pointer-events:none;z-index:5;background:var(--card);border:1px solid var(--line2);border-radius:8px;
+padding:8px 10px;font-size:12px;min-width:150px;box-shadow:0 6px 24px rgba(0,0,0,.25);display:none}
+.uc-tip .td{font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-bottom:4px}
+.uc-tip .tr{display:flex;align-items:center;gap:8px;line-height:1.55}
+.uc-tip .tr i{width:10px;height:2px;border-radius:1px;flex:none}
+.uc-tip .tr b{font-family:var(--mono);font-weight:600;color:var(--ink);margin-left:auto;padding-left:10px}
+.uc-tip .tr span{color:var(--ink2)}
+.uc-empty{padding:30px 10px;text-align:center;color:var(--muted);font-size:12.5px;border:1px dashed var(--line2);border-radius:10px}
+.uc-note{font-size:11.5px;color:var(--muted);margin-top:6px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.stats>div{background:var(--card);padding:12px 14px}
+.stats .k{font-size:11px;color:var(--muted)}.stats .v{font:600 17px/1.3 var(--mono);margin-top:4px}.stats .s{font-size:11px;color:var(--muted)}
+@media(max-width:760px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.gauge{position:relative;height:26px;margin:14px 0 4px}
+.gauge .trk{position:absolute;left:0;right:0;top:10px;height:6px;border-radius:3px;background:var(--card2)}
+.gauge .iqr{position:absolute;top:10px;height:6px;background:var(--cool-bg);border:1px solid var(--cool-bd);border-radius:3px}
+.gauge .p90{position:absolute;top:8px;height:10px;border-left:1px solid var(--line2);border-right:1px solid var(--line2)}
+.gauge .now{position:absolute;top:2px;width:3px;height:22px;background:var(--ink);border-radius:2px;transform:translateX(-1px)}
+.gauge-lbl{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;color:var(--muted)}
 
 /* ---- 列表 / 日志 ---- */
 .list{list-style:none;margin:0;padding:0}
@@ -244,8 +333,20 @@ svg.spk{display:block;width:92px;height:26px;margin-left:auto}
 .empty{padding:18px 20px;color:var(--ink2);font-size:13px;border:1px dashed var(--line2);border-radius:12px}
 .pager{display:flex;justify-content:space-between;gap:10px;margin-top:26px;font-size:13px}
 .pager a{text-decoration:none;color:var(--ink2)}
-.cmt{border-left:3px solid var(--lime);padding:14px 18px;background:rgba(163,230,53,.04);border-radius:0 10px 10px 0;margin-top:12px}
+.cmt{border-left:3px solid var(--lime);padding:14px 18px;background:var(--lime-bg);border-radius:0 10px 10px 0;margin-top:12px}
 .cmt p{margin:0 0 10px}.cmt p:last-child{margin:0}
+
+/* ---- 分析报告 ---- */
+.rcard{padding:18px 20px;text-decoration:none;display:flex;flex-direction:column;gap:8px}
+a.rcard:hover{border-color:var(--lime-bd);color:inherit}
+.rcard .d{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.rcard b{font-size:16px;line-height:1.4}
+.rcard p{margin:0;font-size:13px;color:var(--ink2)}
+.rsum{padding:18px 22px;margin:6px 0 22px}
+.rsum h4{margin:0 0 8px;font-size:12px;letter-spacing:1px;color:var(--lime-ink);font-family:var(--mono);text-transform:uppercase}
+.rsum ul{margin:8px 0 0;padding-left:20px}.rsum li{margin:4px 0}
+.rbody{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px 30px;overflow-x:auto}
+@media(max-width:640px){.rbody{padding:16px}}
 
 /* ---- 板块轮动 ---- */
 .cat{padding:13px 14px;display:flex;flex-direction:column;gap:4px}
@@ -258,19 +359,21 @@ svg.spk{display:block;width:92px;height:26px;margin-left:auto}
 /* ---- 文章（手写 md） ---- */
 .article{max-width:74ch;font-size:15px;line-height:1.8}
 .article p{margin:0 0 14px}
-.article blockquote{margin:0 0 14px;padding:8px 18px;border-left:3px solid var(--lime);color:var(--ink2);background:rgba(255,255,255,.02);border-radius:0 8px 8px 0}
-.article code{background:rgba(255,255,255,.06);padding:1px 5px;border-radius:4px;font-family:var(--mono);font-size:.88em}
+.article blockquote{margin:0 0 14px;padding:8px 18px;border-left:3px solid var(--lime);color:var(--ink2);background:var(--wash);border-radius:0 8px 8px 0}
+.article code{background:var(--hover);padding:1px 5px;border-radius:4px;font-family:var(--mono);font-size:.88em}
 .article ul{padding-left:22px}.article li{margin:0 0 7px}
-.callout{border-left:3px solid var(--lime);background:rgba(163,230,53,.05);padding:14px 18px;margin:20px 0;border-radius:0 10px 10px 0}
-.callout h4{margin:0 0 6px;font-size:13px;color:var(--lime)}
+.callout{border-left:3px solid var(--lime);background:var(--lime-bg);padding:14px 18px;margin:20px 0;border-radius:0 10px 10px 0}
+.callout h4{margin:0 0 6px;font-size:13px;color:var(--lime-ink)}
 .callout.blue{border-color:var(--cool);background:var(--cool-bg)}.callout.blue h4{color:var(--cool)}
 .callout.red{border-color:var(--dn);background:var(--dn-bg)}.callout.red h4{color:var(--dn)}
 .callout.green,.callout.gray{border-color:var(--up);background:var(--up-bg)}.callout.green h4,.callout.gray h4{color:var(--up)}
 .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:20px 0}
 .kpi{background:var(--card);padding:14px}.kpi .k{font-size:11px;color:var(--muted)}.kpi .v{font:600 22px/1.2 var(--mono)}.kpi .s{font-size:11.5px;color:var(--muted)}
 
-/* ---- 分享长图舞台（屏幕外渲染，html2canvas 截图） ---- */
+/* ---- 分享长图舞台（屏幕外渲染，html2canvas 截图；长图固定深色） ---- */
 .sc{position:fixed;left:-12000px;top:0;width:1080px;padding:54px 56px 40px;background:#05070c;color:#e8ecf3;font-family:var(--sans);
+--ink:#e8ecf3;--ink2:#a7afc0;--muted:#6b7488;--up:#00ffcc;--dn:#ff3366;--warn:#ffb020;--cool:#5b8cff;--line:rgba(255,255,255,.06);--line2:rgba(255,255,255,.11);
+--up-bg:rgba(0,255,204,.08);--dn-bg:rgba(255,51,102,.09);--warn-bg:rgba(255,176,32,.09);--cool-bg:rgba(91,140,255,.10);--card:#0b0e17;--wash:rgba(255,255,255,.015);
 background-image:radial-gradient(700px 400px at 0% 0%,rgba(0,255,204,.10),transparent 70%),radial-gradient(600px 400px at 100% 100%,rgba(163,230,53,.08),transparent 70%)}
 .sc-hd{display:flex;align-items:center;gap:16px}
 .sc-hd img{width:64px;height:64px;border-radius:50%;box-shadow:0 0 0 3px #a3e635}
@@ -294,35 +397,52 @@ background-image:radial-gradient(700px 400px at 0% 0%,rgba(0,255,204,.10),transp
 <body>
 <input type="checkbox" id="navtg" class="navtg">
 <header class="topbar"><label for="navtg" aria-label="菜单"><svg viewBox="0 0 16 16" class="ic"><path d="M2 4h12M2 8h12M2 12h12"/></svg></label>
-<a href="/"><img src="/assets/avatar-96.png" alt="">链上大叔研究台</a><span class="d">2026-10-02 10:35 UTC</span></header>
+<a class="home" href="/"><img src="/assets/avatar-96.png" alt=""><span>链上大叔研究台</span></a><span class="sp"></span><span class="lang" role="tablist" aria-label="Language"><a href="/methodology/" class="on" hreflang="zh-CN" role="tab">中文</a><a href="/en/methodology/" class="" hreflang="en" role="tab">EN</a></span><button class="thm" type="button" aria-label="切换浅色 / 深色" title="切换浅色 / 深色"><svg class="ic moon" viewBox="0 0 16 16"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1z"/></svg><svg class="ic sun" viewBox="0 0 16 16"><circle cx="8" cy="8" r="3"/><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3 3l1.1 1.1M11.9 11.9 13 13M3 13l1.1-1.1M11.9 4.1 13 3"/></svg></button></header>
 <aside class="side">
 <a class="brand" href="/"><img class="av" src="/assets/avatar-96.png" alt="链上大叔"><span><b>链上大叔研究台</b><i>UNCLE ONCHAIN · TERMINAL</i></span></a>
-<nav class="snav"><div class="sgrp">Terminal</div><a href="/" class=""><svg viewBox="0 0 16 16" class="ic" aria-hidden="true"><path d="M2.5 2.5h4.5v4.5H2.5zM9 2.5h4.5v4.5H9zM2.5 9h4.5v4.5H2.5zM9 9h4.5v4.5H9z"/></svg>终端总览</a><a href="/macro/" class=""><svg viewBox="0 0 16 16" class="ic" aria-hidden="true"><path d="M1.5 10.5c1.6-3.2 3.2-3.2 4.8 0s3.2 3.2 4.8 0c.9-1.8 1.9-2.6 2.9-2.2M1.5 5.5c1.6-3.2 3.2-3.2 4.8 0s3.2 3.2 4.8 0"/></svg>宏观仪表盘</a><a href="/launchpad/" class=""><svg viewBox="0 0 16 16" class="ic" aria-hidden="true"><path d="M3 14V8.5M8 14V2.5M13 14V6"/><path d="M1.5 14h13"/></svg>发射台矩阵</a><a href="/rotation/" class=""><svg viewBox="0 0 16 16" class="ic" aria-hidden="true"><path d="M13.2 6A5.5 5.5 0 0 0 3.1 5.4M2.8 10a5.5 5.5 0 0 0 10.1.6M13.4 2.6v3.5H9.9M2.6 13.4V9.9h3.5"/></svg>板块轮动</a><a href="/narrative/" class=""><svg viewBox="0 0 16 16" class="ic" aria-hidden="true"><circle cx="8" cy="8" r="6"/><circle cx="8" cy="8" r="2.4"/><path d="M8 8l4.2-4.2"/></svg>叙事埋伏</a><a href="/journal/" class=""><svg viewBox="0 0 16 16" class="ic" aria-hidden="true"><path d="M3.5 1.8h9v12.4h-9z"/><path d="M6 5h4M6 8h4M6 11h2.5"/></svg>解读日志</a><div class="sgrp">Records</div><a href="/methodology/" class="on"><svg viewBox="0 0 16 16" class="ic" aria-hidden="true"><path d="M2 12.5 12.5 2l1.5 1.5L3.5 14H2z"/><path d="M9.5 5l1.5 1.5M7.5 7l1 1M5.5 9l1.5 1.5"/></svg>口径与规则</a><a href="/corrections/" class=""><svg viewBox="0 0 16 16" class="ic" aria-hidden="true"><path d="M2.5 8.5l3.5 3.5 7.5-8"/></svg>更正记录</a><a href="/about/" class=""><svg viewBox="0 0 16 16" class="ic" aria-hidden="true"><circle cx="8" cy="5.2" r="2.8"/><path d="M2.5 14c.9-2.9 2.9-4.2 5.5-4.2s4.6 1.3 5.5 4.2"/></svg>关于</a></nav>
+<div class="tools"><span class="lang" role="tablist" aria-label="Language"><a href="/methodology/" class="on" hreflang="zh-CN" role="tab">中文</a><a href="/en/methodology/" class="" hreflang="en" role="tab">EN</a></span><button class="thm" type="button" aria-label="切换浅色 / 深色" title="切换浅色 / 深色"><svg class="ic moon" viewBox="0 0 16 16"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1z"/></svg><svg class="ic sun" viewBox="0 0 16 16"><circle cx="8" cy="8" r="3"/><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3 3l1.1 1.1M11.9 11.9 13 13M3 13l1.1-1.1M11.9 4.1 13 3"/></svg></button></div>
+<nav class="snav"><div class="sgrp">Terminal</div><a href="/" class=""><svg viewBox="0 0 16 16" class="ic" aria-hidden="true"><path d="M2.5 2.5h4.5v4.5H2.5zM9 2.5h4.5v4.5H9zM2.5 9h4.5v4.5H2.5zM9 9h4.5v4.5H9z"/></svg>终端总览</a><a href="/macro/" class=""><svg viewBox="0 0 16 16" class="ic" aria-hidden="true"><path d="M1.5 10.5c1.6-3.2 3.2-3.2 4.8 0s3.2 3.2 4.8 0c.9-1.8 1.9-2.6 2.9-2.2M1.5 5.5c1.6-3.2 3.2-3.2 4.8 0s3.2 3.2 4.8 0"/></svg>宏观仪表盘</a><a href="/launchpad/" class=""><svg viewBox="0 0 16 16" class="ic" aria-hidden="true"><path d="M3 14V8.5M8 14V2.5M13 14V6"/><path d="M1.5 14h13"/></svg>发射台矩阵</a><a href="/rotation/" class=""><svg viewBox="0 0 16 16" class="ic" aria-hidden="true"><path d="M13.2 6A5.5 5.5 0 0 0 3.1 5.4M2.8 10a5.5 5.5 0 0 0 10.1.6M13.4 2.6v3.5H9.9M2.6 13.4V9.9h3.5"/></svg>板块轮动</a><a href="/narrative/" class=""><svg viewBox="0 0 16 16" class="ic" aria-hidden="true"><circle cx="8" cy="8" r="6"/><circle cx="8" cy="8" r="2.4"/><path d="M8 8l4.2-4.2"/></svg>叙事埋伏</a><a href="/reports/" class=""><svg viewBox="0 0 16 16" class="ic" aria-hidden="true"><path d="M3 1.8h7l3 3v9.4H3z"/><path d="M10 1.8v3h3M5.5 11.5V9.5M8 11.5V7.5M10.5 11.5V8.5"/></svg>分析报告</a><a href="/journal/" class=""><svg viewBox="0 0 16 16" class="ic" aria-hidden="true"><path d="M3.5 1.8h9v12.4h-9z"/><path d="M6 5h4M6 8h4M6 11h2.5"/></svg>解读日志</a><div class="sgrp">Records</div><a href="/methodology/" class="on"><svg viewBox="0 0 16 16" class="ic" aria-hidden="true"><path d="M2 12.5 12.5 2l1.5 1.5L3.5 14H2z"/><path d="M9.5 5l1.5 1.5M7.5 7l1 1M5.5 9l1.5 1.5"/></svg>口径与规则</a><a href="/corrections/" class=""><svg viewBox="0 0 16 16" class="ic" aria-hidden="true"><path d="M2.5 8.5l3.5 3.5 7.5-8"/></svg>更正记录</a><a href="/about/" class=""><svg viewBox="0 0 16 16" class="ic" aria-hidden="true"><circle cx="8" cy="5.2" r="2.8"/><path d="M2.5 14c.9-2.9 2.9-4.2 5.5-4.2s4.6 1.3 5.5 4.2"/></svg>关于</a></nav>
 <div class="sfoot"><div class="live"><i></i>数据更新 2026-10-02 10:35 UTC</div>
-<a href="https://x.com/Uncle_Web3PM" target="_blank" rel="noopener">𝕏 @Uncle_Web3PM</a><p>本站只给数据和过程记录，不构成任何投资建议；不对任何交易结果负责。</p></div>
+<a href="https://x.com/Uncle_Onchain" target="_blank" rel="noopener">𝕏 @Uncle_Onchain</a><p>本站只给数据和过程记录，不构成任何投资建议；不对任何交易结果负责。</p></div>
 </aside><label for="navtg" class="scrim"></label>
 <main class="main"><div class="mi">
-<div class="eyebrow">Methodology</div><h1>口径与规则</h1>
+<nav class="crumbs" aria-label="breadcrumb"><span class="cur" aria-current="page">口径与规则</span></nav><h1>口径与规则</h1>
 <p class="lede">解读日志里的每一个判断都来自下面这些公开规则。规则改动会在更正记录里留痕，历史日志不跟着改。</p>
 <h2>层结论怎么来</h2>
 <div class="card" style="padding:16px 20px;font-size:13.5px;color:var(--ink2)">
-<p style="margin:0 0 8px"><b style="color:var(--ink)">L1 流动性</b>：核心指标（稳定币 30 日增速、实际利率 20 日变化、广义美元 20 日变化、期货升水）各打 −1~+2 分，合计 ≥2 扩张、≤−2 收缩，其余中性。利差只做衰退信号提示，不计分。</p>
+<p style="margin:0 0 8px"><b style="color:var(--ink)">L1 宏观流动性</b>（2026-10-02 起，依据《BTC 全周期宏观相关性与归因研究》）：L1 管周到月的波动、节奏和风险预算，不管方向。</p>
+<ul style="margin:0 0 10px;padding-left:20px"><li><b>顺风</b>：乐观度 z &gt; 0 且 BAA 信用利差 13 周收窄，实际利率没有急升。</li>
+<li><b>中性偏谨慎</b>：实际利率急升（13 周 ≥ +0.40pp）单独出现——框架里风险预算降一档、不加仓。</li>
+<li><b>逆风</b>：实际利率急升 且（BAA / NFCI 13 周转紧 或 乐观度 z &lt; 0），或流动性闸门触发（净流动性 13 周 ≤ −2.72% 且美元 13 周走强）——框架里名义风险预算 ×0.7，两项不叠乘。</li>
+<li><b>中性</b>：其余情况。高收益利差 13 周走阔 ≥ 0.30pp 时加「警戒」（先行提示，本站阈值，未经回测）。</li></ul>
+<p style="margin:0 0 8px">证据等级：已验证 &gt; 已验证·方向 &gt; 描述读数 &gt; 监控；只有「已验证」的指标可以直接影响仓位参数，其余只做记录。13 周变化统一按周五收盘对齐（取当周最后可得值）。阈值只用 2018 年以后的数据定。</p>
 <p style="margin:0 0 8px"><b style="color:var(--ink)">L2 周期</b>：以 MVRV Z-Score 所在区间为周期位置（缺失时退回 MVRV）。NUPL、Realized Price 与 MVRV 同源，只展示不重复计分。</p>
-<p style="margin:0 0 8px"><b style="color:var(--ink)">L3 筹码</b>：以交易所 BTC 7 日净流量为准：净流出 = 筹码离开交易所，净流入 = 留意抛压。框架里的 URPD / STH 系列暂无免费源，明示待接入。</p>
+<p style="margin:0 0 8px"><b style="color:var(--ink)">L3 筹码</b>：以交易所 BTC 7 日净流量为准：净流出 = 筹码离开交易所，净流入 = 留意抛压。交易所余额 30 日变化只展示趋势。</p>
 <p style="margin:0"><b style="color:var(--ink)">L4 情绪</b>：恐慌贪婪（−2~+2）、资金费率（−1~+2）、未平仓 7 日变化（−1~+1）合计 ≥3 过热、1~2 偏热、≤−2 偏冷，其余中性。</p></div>
 <h2>异动预警阈值</h2>
-<div class="card" style="padding:16px 20px;font-size:13.5px;color:var(--ink2)">核心指标区间切换 · USDT+USDC 单日净增发 / 赎回 ≥ $1B · 交易所单日 BTC 净流量 ≥ 5,000 枚 ·
-资金费率正负翻转 · 10Y 实际利率单日变动 ≥ 10bp · Pi Cycle Top 触发 · 发射台赛道单日 ±25% · 发射台当日第一易主 · 深度追踪平台日环比超 ±60%。</div>
-<h2>宏观四层 · 指标与区间</h2><h3>L1 · 宏观流动性（水多不多？）</h3><div class='tw'><table><thead><tr><th class='l'>指标</th><th class='l'>级别</th><th class='l'>怎么读</th><th class='l'>区间规则</th></tr></thead><tbody><tr><td class='l'><b>USDT+USDC 总市值</b><br><span class='stamp' style='text-align:left'>DefiLlama</span></td><td class='l'>核心 · 计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>稳定币是场外资金进场的通道。看 30 日增速：扩张 = 有新钱在进，收缩 = 在撤。</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按30 日增速：&lt; -1% → 收缩；-1% ~ +1% → 持平；+1% ~ +3% → 扩张；&gt; +3% → 强扩张</td></tr><tr><td class='l'><b>10Y 美债实际利率</b><br><span class='stamp' style='text-align:left'>FRED · DFII10</span></td><td class='l'>核心 · 计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>持有无息资产的机会成本。下行 = 对 BTC 这类资产更友好，上行 = 压制。</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按20 日变化：20 日 ≤ -15bp → 下行；±15bp → 横盘；≥ +15bp → 上行</td></tr><tr><td class='l'><b>2Y / 10Y 利差</b><br><span class='stamp' style='text-align:left'>FRED · T10Y2Y</span></td><td class='l'>核心 · 不计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>衰退与流动性拐点信号。历史上衰退多发生在倒挂「解除」之后，不是倒挂当下。不计入层打分。</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按水平：&lt; 0 → 倒挂；0 ~ 0.5% → 偏平（刚解除倒挂）；&gt; 0.5% → 正常陡峭</td></tr><tr><td class='l'><b>广义美元指数</b><br><span class='stamp' style='text-align:left'>FRED · DTWEXBGS</span></td><td class='l'>核心 · 计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>覆盖 DXY 盲区的贸易加权美元。美元走弱 = 全球美元流动性宽松。（DXY 本身没有免费官方接口，用它替代）</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按20 日变化：20 日 ≤ -1% → 走弱；±1% → 横盘；≥ +1% → 走强</td></tr><tr><td class='l'><b>BTC 期货年化升水</b><br><span class='stamp' style='text-align:left'>Deribit（约 3 个月期）</span></td><td class='l'>核心 · 计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>机构加杠杆做多的意愿。CME Basis 没有免费接口，用 Deribit 约 3 个月期交割合约替代，同一口径。</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按年化升水：&lt; 3% → 冷淡；3% ~ 8% → 正常；8% ~ 15% → 偏高；&gt; 15% → 过热</td></tr><tr><td class='l'><b>美联储资产负债表</b><br><span class='stamp' style='text-align:left'>FRED · WALCL</span></td><td class='l'>辅助 · 不计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>QT / QE 节奏。阶段性参考，不计入层打分。</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按30 日变化：30 日 &lt; -0.5% → 缩表；±0.5% → 持平；&gt; +0.5% → 扩表</td></tr><tr><td class='l'><b>隔夜逆回购 RRP</b><br><span class='stamp' style='text-align:left'>FRED · RRPONTSYD</span></td><td class='l'>辅助 · 不计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>流动性「蓄水池」剩多少。抽干后 QT 直接抽银行准备金。阶段性参考，不计入层打分。</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按余额：&lt; $100B → 基本抽干；$100B ~ $500B → 低位；&gt; $500B → 充裕</td></tr></tbody></table></div><h3>L2 · 周期定位（现在贵不贵？）</h3><div class='tw'><table><thead><tr><th class='l'>指标</th><th class='l'>级别</th><th class='l'>怎么读</th><th class='l'>区间规则</th></tr></thead><tbody><tr><td class='l'><b>MVRV</b><br><span class='stamp' style='text-align:left'>CoinMetrics</span></td><td class='l'>核心 · 计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>市值 / 已实现市值 = 全网平均浮盈倍数。</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按水平：&lt; 1.0 → 低估·历史底部区；1.0 ~ 1.5 → 偏低；1.5 ~ 2.4 → 合理；2.4 ~ 3.2 → 偏热；&gt; 3.2 → 过热·历史顶部区</td></tr><tr><td class='l'><b>MVRV Z-Score</b><br><span class='stamp' style='text-align:left'>CoinMetrics（自算）</span></td><td class='l'>核心 · 计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>（市值 − 已实现市值）÷ 市值历史标准差，把 MVRV 标准化到跨周期可比。</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按水平：&lt; 0 → 底部区；0 ~ 1.5 → 偏低；1.5 ~ 3 → 合理；3 ~ 5 → 偏热；&gt; 5 → 过热·顶部区</td></tr><tr><td class='l'><b>Realized Price</b><br><span class='stamp' style='text-align:left'>CoinMetrics（自算）</span></td><td class='l'>核心 · 不计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>全网持币成本均价（价格 ÷ MVRV）。现价跌破它 = 全网平均浮亏，历史上是大底区。待证伪观察中。</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按现价溢价：现价 &lt; 成本 → 跌破成本线；溢价 0 ~ 30% → 贴近成本线；30% ~ 140% → 合理溢价；&gt; 140% → 高溢价</td></tr><tr><td class='l'><b>NUPL</b><br><span class='stamp' style='text-align:left'>CoinMetrics（自算）</span></td><td class='l'>核心 · 不计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>净未实现盈亏 = 1 − 1/MVRV，和 MVRV 高度相关，看情绪阶段用，不重复计分。</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按水平：&lt; 0 → 投降；0 ~ 0.25 → 希望 / 恐惧；0.25 ~ 0.5 → 乐观 / 焦虑；0.5 ~ 0.75 → 信念 / 否认；&gt; 0.75 → 狂热</td></tr><tr><td class='l'><b>Mayer Multiple</b><br><span class='stamp' style='text-align:left'>CoinMetrics（自算）</span></td><td class='l'>辅助 · 不计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>价格 ÷ 200 日均线。</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按水平：&lt; 0.8 → 深度低估；0.8 ~ 1.0 → 低于 200 日线；1.0 ~ 1.5 → 合理；1.5 ~ 2.4 → 偏热；&gt; 2.4 → 过热</td></tr><tr><td class='l'><b>Puell Multiple</b><br><span class='stamp' style='text-align:left'>CoinMetrics（自算）</span></td><td class='l'>辅助 · 不计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>矿工日发行收入 ÷ 365 日均值，矿工视角的周期位置。</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按水平：&lt; 0.5 → 矿工投降区；0.5 ~ 1.0 → 偏低；1.0 ~ 2.0 → 合理；2.0 ~ 3.5 → 偏热；&gt; 3.5 → 过热</td></tr><tr><td class='l'><b>Pi Cycle Top</b><br><span class='stamp' style='text-align:left'>CoinMetrics（自算）</span></td><td class='l'>辅助 · 不计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>111 日均线 ÷（2 × 350 日均线），≥ 1 即历史顶部信号触发。只用于顶部区警示。</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按比值：&lt; 0.9 → 远离顶部信号；0.9 ~ 1.0 → 接近；≥ 1.0 → 已触发</td></tr></tbody></table></div><h3>L3 · 筹码结构（谁在进出交易所？）</h3><div class='tw'><table><thead><tr><th class='l'>指标</th><th class='l'>级别</th><th class='l'>怎么读</th><th class='l'>区间规则</th></tr></thead><tbody><tr><td class='l'><b>交易所 BTC 净流量</b><br><span class='stamp' style='text-align:left'>CoinMetrics（flash 口径）</span></td><td class='l'>核心 · 计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>流入 − 流出。持续净流出 = 筹码离开交易所（提币囤币），净流入 = 潜在抛压。flash 数据次日可能小幅修订。</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按7 日合计：7 日 &lt; -10,000 → 大幅净流出；-10,000 ~ -2,000 → 净流出；±2,000 → 进出均衡；2,000 ~ 10,000 → 净流入；&gt; 10,000 → 大幅净流入</td></tr><tr><td class='l'><b>交易所 BTC 余额</b><br><span class='stamp' style='text-align:left'>CoinMetrics</span></td><td class='l'>辅助 · 不计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>交易所托管的 BTC 总量。免费档更新有约 2 周滞后，只看趋势。</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按30 日变化：30 日 &lt; -1% → 下降；±1% → 持平；&gt; +1% → 上升</td></tr></tbody></table></div><h3>L4 · 情绪衍生品（短期会不会超调？）</h3><div class='tw'><table><thead><tr><th class='l'>指标</th><th class='l'>级别</th><th class='l'>怎么读</th><th class='l'>区间规则</th></tr></thead><tbody><tr><td class='l'><b>恐慌贪婪指数</b><br><span class='stamp' style='text-align:left'>alternative.me</span></td><td class='l'>核心 · 计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>综合波动、成交、社媒、搜索的情绪温度计。</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按水平：0 ~ 24 → 极度恐慌；25 ~ 44 → 恐慌；45 ~ 55 → 中性；56 ~ 75 → 贪婪；76 ~ 100 → 极度贪婪</td></tr><tr><td class='l'><b>BTC 永续资金费率</b><br><span class='stamp' style='text-align:left'>Hyperliquid（日均年化）</span></td><td class='l'>核心 · 计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>多空谁在付钱。含约 11% 年化的基准利息（和币安 0.01%/8h 同量级），所以「正常」不是 0。</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按年化：&lt; -5% → 空头拥挤；-5% ~ 5% → 偏冷；5% ~ 20% → 正常；20% ~ 40% → 多头偏热；&gt; 40% → 多头极度拥挤</td></tr><tr><td class='l'><b>BTC 未平仓合约</b><br><span class='stamp' style='text-align:left'>Hyperliquid</span></td><td class='l'>核心 · 计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>链上最大永续所的 BTC 未平仓名义价值，看 7 日变化判断杠杆在堆还是在出清。单一交易所口径。</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按7 日变化：7 日 &lt; -15% → 去杠杆；±15% → 平稳；&gt; +15% → 杠杆快速堆积</td></tr><tr><td class='l'><b>山寨季指数（自建）</b><br><span class='stamp' style='text-align:left'>CoinGecko（自算）</span></td><td class='l'>核心 · 计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>市值前 50（剔除稳定币、包装币、质押衍生品）里 30 日涨幅跑赢 BTC 的占比。blockchaincenter 原版用 90 日，没有免费接口，这里是自建口径。</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按占比：&lt; 25% → 比特币季；25% ~ 50% → 比特币偏强；50% ~ 75% → 山寨偏强；&gt; 75% → 山寨季</td></tr><tr><td class='l'><b>BTC 市值占比</b><br><span class='stamp' style='text-align:left'>CoinGecko</span></td><td class='l'>辅助 · 不计分</td><td class='l' style='white-space:normal;font-family:var(--sans)'>和山寨季指数交叉验证。</td><td class='l' style='white-space:normal;font-family:var(--sans)'>按水平：— → 只看趋势</td></tr></tbody></table></div>
-<h2>框架里暂未接入的指标</h2><div class="tw"><table><thead><tr><th class="l">层</th><th class="l">指标</th><th class="l">原因 / 计划</th></tr></thead><tbody><tr><td class='l'>L1</td><td class='l'>DXY 美元指数</td><td class='l' style='white-space:normal;font-family:var(--sans)'>ICE 官方数据收费，免费行情接口不稳定；先用 FRED 广义美元指数替代</td></tr><tr><td class='l'>L1</td><td class='l'>BTC 现货 ETF 净流入</td><td class='l' style='white-space:normal;font-family:var(--sans)'>Farside 只有网页表格、SoSoValue 接口要 key；v2 接入</td></tr><tr><td class='l'>L1</td><td class='l'>黄金 / 纳指 / 标普联动</td><td class='l' style='white-space:normal;font-family:var(--sans)'>阶段性交叉验证，不进日常仪表盘</td></tr><tr><td class='l'>L2</td><td class='l'>Realized Cap HODL Waves</td><td class='l' style='white-space:normal;font-family:var(--sans)'>需要按 UTXO 年龄分布计算，免费接口不提供；Glassnode 付费或自建节点</td></tr><tr><td class='l'>L3</td><td class='l'>URPD 链上筹码分布</td><td class='l' style='white-space:normal;font-family:var(--sans)'>Glassnode 付费指标；属于框架里标 🔧 的差异化自建方向</td></tr><tr><td class='l'>L3</td><td class='l'>STH-MVRV / LTH-MVRV</td><td class='l' style='white-space:normal;font-family:var(--sans)'>需要按持有时长拆分已实现市值，Glassnode 付费</td></tr><tr><td class='l'>L3</td><td class='l'>STH-SOPR / aSOPR</td><td class='l' style='white-space:normal;font-family:var(--sans)'>Glassnode 付费指标</td></tr><tr><td class='l'>L3</td><td class='l'>矿工储备 / 非流动性供给</td><td class='l' style='white-space:normal;font-family:var(--sans)'>Glassnode 付费指标</td></tr><tr><td class='l'>L4</td><td class='l'>多空比 / 24h 爆仓</td><td class='l' style='white-space:normal;font-family:var(--sans)'>Coinglass 接口需要 key（免费档可申请），拿到 key 即可接入</td></tr><tr><td class='l'>L4</td><td class='l'>期权 Put/Call · IV Skew</td><td class='l' style='white-space:normal;font-family:var(--sans)'>Deribit 免费可取，v2 接入</td></tr></tbody></table></div>
+<div class="card" style="padding:16px 20px;font-size:13.5px;color:var(--ink2)">核心指标区间切换 · L1 档位切换 · 交易所单日 BTC 净流量 ≥ 5,000 枚 · 资金费率正负翻转 · VIX 穿越 20 · Pi Cycle Top 触发 · 发射台赛道单日 ±25% · 发射台当日第一易主 · 深度追踪平台日环比超 ±60%。</div>
+<h2>宏观四层 · 指标与区间</h2><h3>L1 · 宏观流动性（风险预算该松还是紧？）</h3><div class='tw'><table><thead><tr><th class='l'>指标</th><th class='l'>级别 / 证据</th><th class='l'>怎么读</th><th class='l'>区间规则</th></tr></thead><tbody><tr><td class='l'><a href='/macro/ndx13/'><b>纳指 100 · 13 周涨跌</b></a><br><span class='stamp' style='text-align:left'>FRED · NASDAQ100</span></td><td class='l'>核心<br><span class="grade g-v">已验证</span></td><td class='l wrap'>美股乐观度第一指标：ln(纳指 / 13 周前纳指)。和「乐观共同因子」相关 0.95，L1 里排第一位。&gt;0 = 乐观。</td><td class='l wrap'>按13 周对数涨跌：偏弱 &lt; 0.00%；乐观</td></tr><tr><td class='l'><a href='/macro/vix/'><b>VIX 恐慌指数</b></a><br><span class='stamp' style='text-align:left'>FRED · VIXCLS</span></td><td class='l'>核心<br><span class="grade g-v">已验证</span></td><td class='l wrap'>美股隐含波动率。BTC 跟跌不跟涨：VIX 跳升那几周 BTC 往往跌得比纳指还多。&gt;20 视为乐观度转弱。</td><td class='l wrap'>按水平：平稳 &lt; 20.00；转弱（&gt;20）</td></tr><tr><td class='l'><a href='/macro/optimism_z/'><b>乐观度综合 z</b></a><br><span class='stamp' style='text-align:left'>FRED（自算）</span></td><td class='l'>核心<br><span class="grade g-d">已验证·方向</span></td><td class='l wrap'>纳指 13 周、VIX 取负、10 年通胀预期（T10YIE）13 周变化，三项各自从 2011 年起做扩张窗口 z 分数（不偷看未来）再取平均。&gt;0 = 比历史平均乐观。</td><td class='l wrap'>按三项 z 均值：乐观度弱 &lt; +0.00；乐观度强</td></tr><tr><td class='l'><a href='/macro/baa13/'><b>BAA 信用利差 · 13 周变化</b></a><br><span class='stamp' style='text-align:left'>FRED · BAA10Y</span></td><td class='l'>核心<br><span class="grade g-v">已验证</span></td><td class='l wrap'>穆迪 BAA 公司债 − 10 年美债。信用腿主指标：2011 年以来和乐观共同因子相关 0.89，有全历史。13 周上升 = 走阔（悲观）。</td><td class='l wrap'>按13 周变化：信用收窄 &lt; +0.00pp；信用走阔</td></tr><tr><td class='l'><a href='/macro/nfci13/'><b>金融条件 NFCI · 13 周变化</b></a><br><span class='stamp' style='text-align:left'>FRED · NFCI（周度）</span></td><td class='l'>核心<br><span class="grade g-d">已验证·方向</span></td><td class='l wrap'>芝加哥联储金融条件指数，0 以下 = 比历史平均宽松。13 周上升 = 收紧。每周三公布上周五的值。</td><td class='l wrap'>按13 周变化：放松 &lt; +0.00；收紧</td></tr><tr><td class='l'><a href='/macro/hy13/'><b>高收益利差 · 13 周变化</b></a><br><span class='stamp' style='text-align:left'>FRED · BAMLH0A0HYM2</span></td><td class='l'>辅助<br><span class="grade ">描述读数</span></td><td class='l wrap'>垃圾债比国债多付的利息。FRED 只公开近 3 年，没有长历史验证，只作先行提示：快速走阔时盯 BAA / NFCI 会不会跟上。±0.30pp 是本站设的提示阈值，未经回测。</td><td class='l wrap'>按13 周变化：快速收窄 &lt; -0.30pp；平稳 &lt; +0.30pp；快速走阔（先行提示）</td></tr><tr><td class='l'><a href='/macro/real13/'><b>10 年实际利率 · 四态</b></a><br><span class='stamp' style='text-align:left'>FRED · DFII10</span></td><td class='l'>核心<br><span class="grade g-d">已验证·方向</span></td><td class='l wrap'>从核心指标降为状态变量：13 周 ≥ +0.40pp = 急升，≤ −0.40pp = 下行，其余按水平 ≥1.0% 分高位 / 低位平台。急升本身是独立逆风（2022 年后），要和信用 / 乐观度一起定档。</td><td class='l wrap'>按13 周变化 + 水平：下行 &lt; -0.40pp；平台 &lt; +0.40pp；急升</td></tr><tr><td class='l'><a href='/macro/netliq13/'><b>美联储净流动性 · 13 周变化</b></a><br><span class='stamp' style='text-align:left'>FRED · WALCL − WTREGEN − RRPONTSYD</span></td><td class='l'>核心<br><span class="grade g-d">已验证·方向</span></td><td class='l wrap'>美联储总资产 − 财政部 TGA − 隔夜逆回购。≤ −2.72% 且美元 13 周走强 → 闸门触发（框架里名义风险预算 ×0.7）；扩张时不加仓。2024-05 后领先关系在变弱，2026 年底复核。</td><td class='l wrap'>按13 周变化：大幅收缩 &lt; -2.72%；小幅收缩 &lt; 0.00%；扩张（不加仓）</td></tr><tr><td class='l'><a href='/macro/usd13/'><b>广义美元 · 13 周变化</b></a><br><span class='stamp' style='text-align:left'>FRED · DTWEXBGS</span></td><td class='l'>辅助<br><span class="grade g-v">已验证</span></td><td class='l wrap'>贸易加权美元（对 26 种货币）。只作确认信号，和净流动性组合成闸门，单独不计入判定。</td><td class='l wrap'>按13 周变化：美元走弱 &lt; 0.00%；美元走强</td></tr><tr><td class='l'><a href='/macro/stable_expay13/'><b>稳定币主线 · 剔除支付机构</b></a><br><span class='stamp' style='text-align:left'>DefiLlama（逐币）</span></td><td class='l'>辅助<br><span class="grade g-d">已验证·方向</span></td><td class='l wrap'>全部美元稳定币 − 支付 / 合规机构稳定币（PYUSD、RLUSD、USDG、USDGO、U、USDP、GUSD）。ETF 时代支付机构稳定币和 BTC 13 周相关 −0.43，算进来会把信号做反。替换原来的「稳定币总量」。</td><td class='l wrap'>按13 周变化：收缩 &lt; -1.00%；持平 &lt; +1.00%；扩张</td></tr><tr><td class='l'><a href='/macro/stable_bullets13/'><b>交易子弹 · 交易核心剔除 Tron</b></a><br><span class='stamp' style='text-align:left'>DefiLlama（逐币 + Tron 链）</span></td><td class='l'>辅助<br><span class="grade g-d">已验证·方向</span></td><td class='l wrap'>(USDT+USDC+FDUSD+USD1+TUSD+USDD) − Tron 链稳定币总量。Tron 上主要是新兴市场汇款，ETF 后和 BTC 几乎无关；剔掉后最贴近交易所和主流链上的资金（ETF 后 13 周相关 0.52）。</td><td class='l wrap'>按13 周变化：收缩 &lt; -1.00%；持平 &lt; +1.00%；扩张</td></tr><tr><td class='l'><a href='/macro/stable_yield13/'><b>生息 / 合成稳定币 · 13 周</b></a><br><span class='stamp' style='text-align:left'>DefiLlama（逐币）</span></td><td class='l'>辅助<br><span class="grade ">描述读数</span></td><td class='l wrap'>USDe、USDf、BFUSD、USDS、DAI 合计。规模随资金费率和链上杠杆涨跌，当杠杆温度计看。</td><td class='l wrap'>按13 周变化：杠杆退潮 &lt; -1.00%；持平 &lt; +1.00%；杠杆扩张</td></tr><tr><td class='l'><a href='/macro/etf28/'><b>现货 ETF · 近 4 周净流入</b></a><br><span class='stamp' style='text-align:left'>Farside（haturatu 镜像）</span></td><td class='l'>辅助<br><span class="grade g-d">已验证·方向</span></td><td class='l wrap'>美国现货 BTC ETF 近 28 天净流入合计。资金跟着价格走、有滞后（和过去 3~5 天涨跌相关 0.6，和未来≈0.05）——只作趋势确认，不作反向 / 抄底信号：极端流出后 4 周平均 −3.5%，没有反弹。</td><td class='l wrap'>按28 天合计：净流出（趋势确认偏弱） &lt; $0；净流入（趋势确认偏强）</td></tr><tr><td class='l'><a href='/macro/cme_basis/'><b>CME 期货年化升水（近月）</b></a><br><span class='stamp' style='text-align:left'>Yahoo · CME 近月合约（自己逐日积累）</span></td><td class='l'>辅助<br><span class="grade ">描述读数</span></td><td class='l wrap'>(CME 近月 / 同一时点现货 − 1) × 365 / 剩余天数，到期前约 5 个交易日换下一张。美国机构和基差套利资金的杠杆意愿；高升水时 ETF 流入里套利占比上升。没有免费历史，从 2026-10 起自己积累，先当描述读数，和 Deribit 并列。</td><td class='l wrap'>按自身历史分位：自身历史分位：&lt;20 低位 / 20–80 中段 / &gt;80 高位（满 90 天）</td></tr><tr><td class='l'><a href='/macro/deribit_basis/'><b>Deribit 3 个月期年化升水</b></a><br><span class='stamp' style='text-align:left'>Deribit（前后两张插值成固定 90 天）</span></td><td class='l'>辅助<br><span class="grade ">描述读数</span></td><td class='l wrap'>加密原生杠杆资金的升水。和 CME 是同概念不同市场，绝对水平常差几个百分点，只看方向和自身历史分位。</td><td class='l wrap'>按自身历史分位：自身历史分位：&lt;20 低位 / 20–80 中段 / &gt;80 高位（满 90 天）</td></tr><tr><td class='l'><a href='/macro/btc_ndx_corr/'><b>BTC − 纳指 52 周滚动相关</b></a><br><span class='stamp' style='text-align:left'>CoinMetrics + FRED（自算）</span></td><td class='l'>辅助<br><span class="grade ">描述读数</span></td><td class='l wrap'>周对数收益的 52 周滚动相关。明显下降时，纳指 13 周和「跟跌不跟涨」规则要降权；2024 年曾回落到 ≈0。0.2 是本站设的提示线。</td><td class='l wrap'>按52 周相关：低相关（纳指类规则降权） &lt; 0.20；正常联动</td></tr><tr><td class='l'><a href='/macro/tokstock/'><b>美股代币化 / 稳定币市值</b></a><br><span class='stamp' style='text-align:left'>CoinGecko 类目快照</span></td><td class='l'>辅助<br><span class="grade g-o">监控</span></td><td class='l wrap'>买美股代币时稳定币一般流到发行方换成美元，会减少稳定币供给。规模 &gt;稳定币 3% 或成交 &gt;5% 才纳入稳定币口径调整，现在只记录。</td><td class='l wrap'>按市值占比：未达纳入门槛 &lt; 3.00%；超过 3%（需纳入稳定币口径调整）</td></tr><tr><td class='l'><a href='/macro/fred_t10y2y/'><b>2Y / 10Y 利差</b></a><br><span class='stamp' style='text-align:left'>FRED · T10Y2Y</span></td><td class='l'>观察<br><span class="grade g-o">观察项</span></td><td class='l wrap'>周度变化和 BTC 相关只有 0.06；倒挂期 BTC 反而更好，和「倒挂=衰退=利空」方向相反，独立样本约 18 段。只做观察，不定参数。</td><td class='l wrap'>按水平：倒挂 &lt; 0.00%；正常</td></tr></tbody></table></div><h3>L2 · 周期定位（现在贵不贵？）</h3><div class='tw'><table><thead><tr><th class='l'>指标</th><th class='l'>级别 / 证据</th><th class='l'>怎么读</th><th class='l'>区间规则</th></tr></thead><tbody><tr><td class='l'><a href='/macro/mvrv/'><b>MVRV</b></a><br><span class='stamp' style='text-align:left'>CoinMetrics</span></td><td class='l'>核心</td><td class='l wrap'>市值 / 已实现市值 = 全网平均浮盈倍数。</td><td class='l wrap'>按水平：低估·历史底部区 &lt; 1.00；偏低 &lt; 1.50；合理 &lt; 2.40；偏热 &lt; 3.20；过热·历史顶部区</td></tr><tr><td class='l'><a href='/macro/mvrv_z/'><b>MVRV Z-Score</b></a><br><span class='stamp' style='text-align:left'>CoinMetrics（自算）</span></td><td class='l'>核心</td><td class='l wrap'>（市值 − 已实现市值）÷ 市值历史标准差，把 MVRV 标准化到跨周期可比。</td><td class='l wrap'>按水平：底部区 &lt; 0.00；偏低 &lt; 1.50；合理 &lt; 3.00；偏热 &lt; 5.00；过热·顶部区</td></tr><tr><td class='l'><a href='/macro/realized_price/'><b>Realized Price（现价溢价）</b></a><br><span class='stamp' style='text-align:left'>CoinMetrics（自算）</span></td><td class='l'>核心</td><td class='l wrap'>全网持币成本均价（价格 ÷ MVRV）。现价跌破它 = 全网平均浮亏，历史上是大底区。这里判定的是现价相对它的溢价。</td><td class='l wrap'>按现价溢价：现价跌破成本线 &lt; 0.00%；贴近成本线 &lt; +30.00%；合理溢价 &lt; +140.00%；高溢价</td></tr><tr><td class='l'><a href='/macro/nupl/'><b>NUPL</b></a><br><span class='stamp' style='text-align:left'>CoinMetrics（自算）</span></td><td class='l'>核心</td><td class='l wrap'>净未实现盈亏 = 1 − 1/MVRV，和 MVRV 高度相关，看情绪阶段用，不重复计分。</td><td class='l wrap'>按水平：投降 &lt; 0.000；希望 / 恐惧 &lt; 0.250；乐观 / 焦虑 &lt; 0.500；信念 / 否认 &lt; 0.750；狂热</td></tr><tr><td class='l'><a href='/macro/mayer/'><b>Mayer Multiple</b></a><br><span class='stamp' style='text-align:left'>CoinMetrics（自算）</span></td><td class='l'>辅助</td><td class='l wrap'>价格 ÷ 200 日均线。</td><td class='l wrap'>按水平：深度低估 &lt; 0.80；低于 200 日线 &lt; 1.00；合理 &lt; 1.50；偏热 &lt; 2.40；过热</td></tr><tr><td class='l'><a href='/macro/puell/'><b>Puell Multiple</b></a><br><span class='stamp' style='text-align:left'>CoinMetrics（自算）</span></td><td class='l'>辅助</td><td class='l wrap'>矿工日发行收入 ÷ 365 日均值，矿工视角的周期位置。</td><td class='l wrap'>按水平：矿工投降区 &lt; 0.50；偏低 &lt; 1.00；合理 &lt; 2.00；偏热 &lt; 3.50；过热</td></tr><tr><td class='l'><a href='/macro/pi_cycle/'><b>Pi Cycle Top</b></a><br><span class='stamp' style='text-align:left'>CoinMetrics（自算）</span></td><td class='l'>辅助</td><td class='l wrap'>111 日均线 ÷（2 × 350 日均线），≥ 1 即历史顶部信号触发。只用于顶部区警示。</td><td class='l wrap'>按比值：远离顶部信号 &lt; 0.900；接近顶部信号 &lt; 1.000；已触发顶部信号</td></tr></tbody></table></div><h3>L3 · 筹码结构（谁在进出交易所？）</h3><div class='tw'><table><thead><tr><th class='l'>指标</th><th class='l'>级别 / 证据</th><th class='l'>怎么读</th><th class='l'>区间规则</th></tr></thead><tbody><tr><td class='l'><a href='/macro/ex_netflow/'><b>交易所 BTC 净流量（7 日合计）</b></a><br><span class='stamp' style='text-align:left'>CoinMetrics（flash 口径）</span></td><td class='l'>核心</td><td class='l wrap'>流入 − 流出。持续净流出 = 筹码离开交易所（提币囤币），净流入 = 潜在抛压。flash 数据次日可能小幅修订。</td><td class='l wrap'>按7 日合计：大幅净流出（提币） &lt; -10,000 BTC；净流出 &lt; -2,000 BTC；进出均衡 &lt; +2,000 BTC；净流入 &lt; +10,000 BTC；大幅净流入（抛压）</td></tr><tr><td class='l'><a href='/macro/ex_balance/'><b>交易所 BTC 余额（30 日变化）</b></a><br><span class='stamp' style='text-align:left'>CoinMetrics</span></td><td class='l'>核心</td><td class='l wrap'>交易所托管的 BTC 总量，看用户行为最直接的存量指标：长期下降 = 持币人把币提回自己钱包。免费档更新约有 2 周滞后，只看趋势，不计分。</td><td class='l wrap'>按30 日变化：下降（筹码离场） &lt; -1.00%；持平 &lt; +1.00%；上升（筹码回流）</td></tr></tbody></table></div><h3>L4 · 情绪衍生品（短期会不会超调？）</h3><div class='tw'><table><thead><tr><th class='l'>指标</th><th class='l'>级别 / 证据</th><th class='l'>怎么读</th><th class='l'>区间规则</th></tr></thead><tbody><tr><td class='l'><a href='/macro/fng/'><b>恐慌贪婪指数</b></a><br><span class='stamp' style='text-align:left'>alternative.me</span></td><td class='l'>核心</td><td class='l wrap'>综合波动、成交、社媒、搜索的情绪温度计。</td><td class='l wrap'>按水平：极度恐慌 &lt; 25；恐慌 &lt; 45；中性 &lt; 56；贪婪 &lt; 76；极度贪婪</td></tr><tr><td class='l'><a href='/macro/hl_funding/'><b>BTC 永续资金费率</b></a><br><span class='stamp' style='text-align:left'>Hyperliquid（日均年化）</span></td><td class='l'>核心</td><td class='l wrap'>多空谁在付钱。含约 11% 年化的基准利息（和币安 0.01%/8h 同量级），所以「正常」不是 0。</td><td class='l wrap'>按年化：空头拥挤（易轧空） &lt; -5.0%；偏冷 &lt; 5.0%；正常 &lt; 20.0%；多头偏热 &lt; 40.0%；多头极度拥挤</td></tr><tr><td class='l'><a href='/macro/hl_oi/'><b>BTC 未平仓合约（7 日变化）</b></a><br><span class='stamp' style='text-align:left'>Hyperliquid</span></td><td class='l'>核心</td><td class='l wrap'>链上最大永续所的 BTC 未平仓名义价值，看 7 日变化判断杠杆在堆还是在出清。单一交易所口径。</td><td class='l wrap'>按7 日变化：去杠杆 &lt; -15.00%；平稳 &lt; +15.00%；杠杆快速堆积</td></tr><tr><td class='l'><a href='/macro/altseason/'><b>山寨季指数（自建）</b></a><br><span class='stamp' style='text-align:left'>CoinGecko（自算）</span></td><td class='l'>核心</td><td class='l wrap'>市值前 50（剔除稳定币、包装币、质押衍生品）里 30 日涨幅跑赢 BTC 的占比。原版用 90 日，没有免费接口，这里是自建口径。</td><td class='l wrap'>按占比：比特币季 &lt; 25.0%；比特币偏强 &lt; 50.0%；山寨偏强 &lt; 75.0%；山寨季</td></tr><tr><td class='l'><a href='/macro/btc_dom/'><b>BTC 市值占比</b></a><br><span class='stamp' style='text-align:left'>CoinGecko</span></td><td class='l'>辅助</td><td class='l wrap'>和山寨季指数交叉验证。</td><td class='l wrap'>按水平：只看趋势</td></tr></tbody></table></div>
+<h2>研究里测过、不再使用的说法</h2><div class="tw"><table><thead><tr><th class="l">说法</th><th class="l">原因</th></tr></thead><tbody><tr><td class='l wrap'>M2 及「全球流动性 / M2 领先 BTC 2-3 个月」</td><td class='l wrap'>周度 14 个领先关系样本外只过 1 个；M2 水平相关 0.94 是假相关，涨跌幅相关只有 0.08</td></tr><tr><td class='l wrap'>稳定币总量作为加密资金读数</td><td class='l wrap'>ETF 时代支付机构稳定币和 BTC 13 周相关 −0.43、Tron≈0；总量 +4.0% 时交易子弹 −4.2%</td></tr><tr><td class='l wrap'>实际利率作为 L1 第一指标</td><td class='l wrap'>周度相关 −0.09 不显著；改为状态变量</td></tr><tr><td class='l wrap'>黄金走势 /「黄金新高利好 BTC」</td><td class='l wrap'>2022 年后不显著；溢出说法两种口径方向相反</td></tr><tr><td class='l wrap'>单次 FOMC 加息 / 降息定方向</td><td class='l wrap'>7 次事件方向对不上；只调波动预算</td></tr><tr><td class='l wrap'>BTC 顶部对应实际利率低点</td><td class='l wrap'>中位相距 96 天 vs 随机 110 天，p=0.40</td></tr><tr><td class='l wrap'>原油作乐观度指标</td><td class='l wrap'>2023 年后与乐观共同因子相关 0.04</td></tr><tr><td class='l wrap'>「ETF 大幅流出 = 抄底 / 反向信号」</td><td class='l wrap'>极端流出周之后 4 周平均 −3.5%，低于基准 +1.9%，没有反弹</td></tr><tr><td class='l wrap'>「Deribit 升水与 CME 同一口径」</td><td class='l wrap'>同概念不同市场，绝对水平常差几个百分点</td></tr><tr><td class='l wrap'>用 2018 年以前数据定任何阈值</td><td class='l wrap'>2010-2017 宏观解释力低于噪声地板</td></tr></tbody></table></div>
+<h2>框架里暂未接入的指标</h2><div class="tw"><table><thead><tr><th class="l">层</th><th class="l">指标</th><th class="l">原因 / 计划</th></tr></thead><tbody><tr><td class='l'>L2</td><td class='l'>Realized Cap HODL Waves</td><td class='l wrap'>需要按 UTXO 年龄分布计算，免费接口不提供；Glassnode 付费或自建节点</td></tr><tr><td class='l'>L3</td><td class='l'>URPD 链上筹码分布</td><td class='l wrap'>Glassnode 付费指标；属于框架里标 🔧 的差异化自建方向</td></tr><tr><td class='l'>L3</td><td class='l'>STH-MVRV / LTH-MVRV</td><td class='l wrap'>需要按持有时长拆分已实现市值，Glassnode 付费</td></tr><tr><td class='l'>L3</td><td class='l'>STH-SOPR / aSOPR</td><td class='l wrap'>Glassnode 付费指标</td></tr><tr><td class='l'>L3</td><td class='l'>矿工储备 / 非流动性供给</td><td class='l wrap'>Glassnode 付费指标</td></tr><tr><td class='l'>L4</td><td class='l'>多空比 / 24h 爆仓</td><td class='l wrap'>Coinglass 接口需要 key（免费档可申请），拿到 key 即可接入</td></tr><tr><td class='l'>L4</td><td class='l'>期权 Put/Call · IV Skew</td><td class='l wrap'>Deribit 免费可取，v2 接入</td></tr></tbody></table></div>
 <h2>解读日志规则</h2>
-<div class="card" style="padding:16px 20px;font-size:13.5px;color:var(--ink2)">日志日期 = 解读当天（UTC），每个读数带自己的数据日期（FRED 按美国工作日、交易所余额约有 2 周滞后，超过容忍天数标 ⚠）。
-写入即冻结；同一天重跑且核心缺失变少才覆盖一次并标「补录」。周复盘按 ISO 周（周一至周日），月复盘按自然月。人工点评放在 content/journal/，单独标注。</div>
-<h2>发射台口径</h2><div class="tw"><table><tbody><tr><td class='l'>统计口径</td><td class='l' style='white-space:normal;font-family:var(--sans)'>发射台一律用手续费（fees），不用成交量；成交量口径覆盖不全，会系统性低估份额。</td></tr><tr><td class='l'>统计周期</td><td class='l' style='white-space:normal;font-family:var(--sans)'>只报「昨天」这一个 UTC 完整日；当天数据永远不完整，不进正文。</td></tr><tr><td class='l'>发射台矩阵</td><td class='l' style='white-space:normal;font-family:var(--sans)'>DefiLlama Launchpad 类目全部协议；多链协议的分链数字用 DefiLlama 分链拆分；30 日走势来自本站逐日台账。</td></tr><tr><td class='l'>赛道份额</td><td class='l' style='white-space:normal;font-family:var(--sans)'>深度追踪平台的份额分母是 Top60 当日总量（和文字解读一致）；矩阵页的份额分母是全类目。</td></tr><tr><td class='l'>延迟处理</td><td class='l' style='white-space:normal;font-family:var(--sans)'>某个数据源没出昨天的数，标「延迟」，不拿旧值顶替、不记 0。</td></tr><tr><td class='l'>Flap / StonkFun</td><td class='l' style='white-space:normal;font-family:var(--sans)'>Flap 是税代币模型、StonkFun 的 fees 只记平台自己那份，跨平台比较用协议收入。</td></tr><tr><td class='l'>PONS 销毁</td><td class='l' style='white-space:normal;font-family:var(--sans)'>转到 0x…dEaD 地址，不是调用 burn()，市值一律按 burn-adjusted 流通计。</td></tr><tr><td class='l'>绝不做的事</td><td class='l' style='white-space:normal;font-family:var(--sans)'>不拿历史峰值和现在比来判断一个平台是否「死了」；只给数据，不给买卖建议。</td></tr></tbody></table></div>
+<div class="card" style="padding:16px 20px;font-size:13.5px;color:var(--ink2)">日志日期 = 解读当天（UTC），每个读数带自己的数据日期（FRED 按美国工作日、NFCI 周度、交易所余额约有 2 周滞后，超过容忍天数标 ⚠）。写入即冻结；同一天重跑且核心缺失变少才覆盖一次并标「补录」。周复盘按 ISO 周（周一至周日），月复盘按自然月。人工点评放在 content/journal/，单独标注。</div>
+<h2>发射台口径</h2><div class="tw"><table><tbody><tr><td class='l'>统计口径</td><td class='l wrap'>发射台一律用手续费（fees），不用成交量；成交量口径覆盖不全，会系统性低估份额。</td></tr><tr><td class='l'>统计周期</td><td class='l wrap'>只报「昨天」这一个 UTC 完整日；当天数据永远不完整，不进正文。</td></tr><tr><td class='l'>发射台矩阵</td><td class='l wrap'>DefiLlama Launchpad 类目全部协议；多链协议的分链数字用 DefiLlama 分链拆分；汇总趋势用 Top60 逐日手续费（2024-01 起）。</td></tr><tr><td class='l'>份额</td><td class='l wrap'>排行榜的份额条 = 该协议占当前筛选范围（链 × 周期 × 金额档）合计的百分比；深度追踪平台的份额分母是 Top60 当日总量。</td></tr><tr><td class='l'>延迟处理</td><td class='l wrap'>某个数据源没出昨天的数，标「延迟」，不拿旧值顶替、不记 0。</td></tr><tr><td class='l'>Flap / StonkFun</td><td class='l wrap'>Flap 是税代币模型、StonkFun 的 fees 只记平台自己那份，跨平台比较用协议收入。</td></tr><tr><td class='l'>PONS 销毁</td><td class='l wrap'>转到 0x…dEaD 地址，不是调用 burn()，市值一律按 burn-adjusted 流通计。</td></tr><tr><td class='l'>绝不做的事</td><td class='l wrap'>不拿历史峰值和现在比来判断一个平台是否「死了」；只给数据，不给买卖建议。</td></tr></tbody></table></div>
 </div>
-<footer class="foot"><span>链上大叔研究台（Uncle Onchain）</span><a href="https://x.com/Uncle_Web3PM">@Uncle_Web3PM</a>
-<span>数据：DefiLlama · CoinMetrics · FRED · alternative.me · Hyperliquid · Deribit · CoinGecko · 链上节点</span><span>本站只给数据和过程记录，不构成任何投资建议；不对任何交易结果负责。</span></footer>
+<footer class="foot"><span>链上大叔研究台（Uncle Onchain）</span><a href="https://x.com/Uncle_Onchain">@Uncle_Onchain</a>
+<span>数据: DefiLlama · CoinMetrics · FRED · Farside · Yahoo · alternative.me · Hyperliquid · Deribit · CoinGecko · 链上节点</span><span>本站只给数据和过程记录，不构成任何投资建议；不对任何交易结果负责。</span></footer>
 </main>
+<script>
+(function(){
+const root=document.documentElement;
+function setT(t){root.setAttribute('data-theme',t);try{localStorage.setItem('uc-theme',t)}catch(e){}
+ document.querySelectorAll('.thm').forEach(b=>b.setAttribute('aria-pressed',t==='light'?'true':'false'));
+ window.dispatchEvent(new Event('uc-theme'))}
+document.querySelectorAll('.thm').forEach(b=>b.addEventListener('click',()=>setT(root.getAttribute('data-theme')==='light'?'dark':'light')));
+// 语言切换时带上当前的 #筛选状态
+document.querySelectorAll('.lang a').forEach(a=>a.addEventListener('click',()=>{if(location.hash)a.href=a.getAttribute('href')+location.hash}));
+})();
+</script>
+
 
 
 </body>

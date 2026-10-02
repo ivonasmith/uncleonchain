@@ -1090,7 +1090,7 @@ TOLLY 销毁与分红监控还缺金库、分红池、销毁去向三个地址�
 </section>
 """
 foot = f"""<footer>数据源：DefiLlama Fees / DEX / TVL API ｜ Robinhood Chain 公共节点 <code>rpc.mainnet.chain.robinhood.com</code>（Chain ID 4663）｜ CoinGecko ｜ GeckoTerminal ｜ DexScreener<br>
-产品大叔 ｜ Crypto PM　@Uncle_Web3PM　·　内部研究台账，不构成投资建议</footer>"""
+产品大叔 ｜ Crypto PM　@Uncle_Onchain　·　内部研究台账，不构成投资建议</footer>"""
 scripts = f'<script type="application/json" id="chart-data">{CH_JSON}</script>\n<script>{JS}</script>'
 body = f'\n<div class="wrap">\n{inner}\n{foot}\n</div>\n{scripts}\n'
 
