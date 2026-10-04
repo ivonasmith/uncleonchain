@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Trading bullets · core ex-Tron · Macro · Uncle Onchain</title>
+<title>Trading bullets · ex-Tron · Macro · Uncle Onchain</title>
 <script>(function(){try{var t=localStorage.getItem('uc-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}})();</script>
-<meta name="description" content="(USDT+USDC+FDUSD+USD1+TUSD+USDD) minus all stablecoins on Tron (mostly EM remittances, ~uncorrelated with BTC since the ETFs). Closest proxy for exchange-side dry powder.">
+<meta name="description" content="Trading core (USDT, USDC, FDUSD, USD1, TUSD, USDD) minus all stablecoins on Tron. 0.52 correlation with BTC over 13 weeks in the ETF era — the closest proxy for exchange-side dry powder. Confirm, don&#x27;t front-run.">
 <meta name="theme-color" content="#05070c">
 <link rel="alternate" hreflang="zh-CN" href="https://uncleonchain.com/macro/stable_bullets13/"><link rel="alternate" hreflang="en" href="https://uncleonchain.com/en/macro/stable_bullets13/">
-<meta property="og:title" content="Trading bullets · core ex-Tron · Macro · Uncle Onchain"><meta property="og:description" content="(USDT+USDC+FDUSD+USD1+TUSD+USDD) minus all stablecoins on Tron (mostly EM remittances, ~uncorrelated with BTC since the ETFs). Closest proxy for exchange-side dry powder.">
+<meta property="og:title" content="Trading bullets · ex-Tron · Macro · Uncle Onchain"><meta property="og:description" content="Trading core (USDT, USDC, FDUSD, USD1, TUSD, USDD) minus all stablecoins on Tron. 0.52 correlation with BTC over 13 weeks in the ETF era — the closest proxy for exchange-side dry powder. Confirm, don&#x27;t front-run.">
 <meta property="og:type" content="website"><meta property="og:site_name" content="Uncle Onchain">
 <meta property="og:image" content="https://uncleonchain.com/assets/og.png">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@Uncle_Onchain">
@@ -224,6 +224,14 @@ a.ind:hover{border-color:var(--lime-bd);background:var(--card2);color:inherit}
 .pend b{display:block;color:var(--ink2);font-size:12.5px;margin-bottom:3px;font-weight:600}
 .src{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
 
+/* ---- FAQ ---- */
+.faqs{display:grid;gap:8px}
+.faq summary{cursor:pointer;padding:12px 16px;font-weight:600;font-size:13.5px;list-style:none;display:flex;justify-content:space-between;gap:10px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:after{content:"+";color:var(--muted);font-family:var(--mono)}
+.faq[open] summary:after{content:"−"}
+.faq p{margin:0;padding:0 16px 14px;color:var(--ink2);font-size:13.5px;line-height:1.75}
+
 /* ---- 情境格 ---- */
 .scen{display:grid;grid-template-columns:150px repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:12.5px}
 .scen>div{background:var(--card);padding:10px 12px}
@@ -406,9 +414,9 @@ background-image:radial-gradient(700px 400px at 0% 0%,rgba(0,255,204,.10),transp
 <a href="https://x.com/Uncle_Onchain" target="_blank" rel="noopener">𝕏 @Uncle_Onchain</a><p>Data and process notes only. Not investment advice.</p></div>
 </aside><label for="navtg" class="scrim"></label>
 <main class="main"><div class="mi">
-<nav class="crumbs" aria-label="breadcrumb"><a href="/en/macro/">Macro</a><span class="sep">/</span><a href="/en/macro/#layer-1">L1 · Macro Liquidity</a><span class="sep">/</span><span class="cur" aria-current="page">Trading bullets · core ex-Tron</span></nav>
-<div class="ph"><div><div class="eyebrow">L1 · Crypto-native funds (L1.5, confirm only)</div>
-<h1>Trading bullets · core ex-Tron</h1><p class="lede">(USDT+USDC+FDUSD+USD1+TUSD+USDD) minus all stablecoins on Tron (mostly EM remittances, ~uncorrelated with BTC since the ETFs). Closest proxy for exchange-side dry powder.</p>
+<nav class="crumbs" aria-label="breadcrumb"><a href="/en/macro/">Macro</a><span class="sep">/</span><a href="/en/macro/#layer-1">L1 · Macro Liquidity</a><span class="sep">/</span><span class="cur" aria-current="page">Trading bullets · ex-Tron</span></nav>
+<div class="ph"><div><div class="eyebrow">L1 · L1-B crypto funding channels · stablecoins (confirm, don&#x27;t predict)</div>
+<h1>Trading bullets · ex-Tron</h1><p class="lede">Trading core (USDT, USDC, FDUSD, USD1, TUSD, USDD) minus all stablecoins on Tron. 0.52 correlation with BTC over 13 weeks in the ETF era — the closest proxy for exchange-side dry powder. Confirm, don&#x27;t front-run.</p>
 <div class="chips" style="margin-top:10px"><span class="chip">Source：DefiLlama（逐币 + Tron 链）</span><span class="chip">Level：aux</span><span class="grade g-d">Verified · direction</span></div></div></div>
 <div class="glass verdict"><div class="body"><div class="lbl">Current reading · as of 2026-10-03</div><div class="txt" style="font-family:var(--mono);font-size:26px">-2.12%</div><div class="chips"><span class="chip t-warn"><i></i>Contracting · diverges from price</span><span class="chip">13w -2.12%, BTC 13w +27.9% (level $170.16B)</span></div></div></div>
 <h2>Zones: rules and how often each occurred</h2><div class="tw"><table><thead><tr><th class="l">Zone</th><th>Rule</th><th class="l">Share of history in this zone</th></tr></thead><tbody><tr class="cur"><td class="l"><span class="chip t-dn"><i></i>Contracting</span> ◀ now</td><td>&lt; -1.00%</td><td class="l" style="min-width:180px"><span class="zbar" style="width:40px;background:var(--dn)"></span>28.3%</td></tr><tr class=""><td class="l"><span class="chip t-neutral"><i></i>Flat</span></td><td>-1.00% ~ +1.00%</td><td class="l" style="min-width:180px"><span class="zbar" style="width:6px;background:var(--ink2)"></span>4.2%</td></tr><tr class=""><td class="l"><span class="chip t-up"><i></i>Expanding</span></td><td>≥ +1.00%</td><td class="l" style="min-width:180px"><span class="zbar" style="width:94px;background:var(--up)"></span>67.5%</td></tr></tbody></table></div>

@@ -4,7 +4,7 @@
 
 产品结构（左侧常驻导航，每个板块独立 URL，方便从推特直链到具体页面；英文版同结构挂在 /en/ 下）：
   /                 终端总览    综合研判 + 四张核心卡 + 四层信号灯 + 异动预警看台 + 发射台 / 板块 / 报告 / 日志快照
-  /macro/           宏观仪表盘  四层框架；L1 按《L1 宏观层数据维度规格》：乐观度 · 信用 · 实际利率四态 · 情境格 · 闸门 · 加密原生资金
+  /macro/           宏观仪表盘  四层框架；L1 按《L1 宏观层数据维度规格》：乐观度 · 信用 · 实际利率四态 · 情境格 · 闸门 · L1-B 加密资金通道（稳定币 / ETF / 升水 / 资金轮动矩阵）
                     /macro/<指标>/   每个指标的全历史走势、区间规则、各区间历史占比、正常波动范围（分位带）、当前分位
   /launchpad/       发射台矩阵  全网手续费汇总趋势（金额 / 份额堆叠）+ 当日变化拆解 + 跨链排行（带份额条）+ 多维过滤 + 一键长图
                     /launchpad/platforms/<slug>/  深度追踪平台分数据   /launchpad/report/  每日文字解读（出看板.py 原文）
@@ -230,21 +230,25 @@ ALL_POSTS = {p["slug"]: load_posts(p["slug"]) for p in PILLARS}
 
 
 def load_reports():
-    """content/reports/ 下的分析报告：<slug>.html（整篇原样）/ <slug>.md / <slug>/index.html（带图片等附件的文件夹）。"""
+    """content/reports/ 下的分析报告：<slug>.html（整篇原样，英文版 <slug>.en.html）/ <slug>.md /
+    <slug>/index.html（带图片等附件的文件夹，英文版 index.en.html）。"""
     out = []
     if not os.path.isdir(REPORTS):
         return out
     for f in sorted(os.listdir(REPORTS)):
         p = os.path.join(REPORTS, f)
-        if f.startswith((".", "_")) or f.lower() == "readme.md":
+        if f.startswith((".", "_")) or f.lower() == "readme.md" or f.endswith((".en.html", ".en.md")):
             continue
+        en = None
         if os.path.isdir(p) and os.path.exists(os.path.join(p, "index.html")):
             raw = open(os.path.join(p, "index.html"), encoding="utf-8").read()
             meta = html_meta(raw, os.path.join(p, "index.html"))
             meta.update({"slug": slugify(f), "kind": "dir", "src": p})
+            en = os.path.join(p, "index.en.html")
         elif f.endswith(".html"):
             meta = html_meta(open(p, encoding="utf-8").read(), p)
             meta.update({"slug": slugify(f), "kind": "html", "src": p})
+            en = p[:-5] + ".en.html"
         elif f.endswith(".md"):
             meta, body = split_front(open(p, encoding="utf-8").read())
             if not meta:
@@ -255,8 +259,11 @@ def load_reports():
         else:
             continue
         meta.setdefault("摘要", "")
-        meta["结论列表"] = [x.strip() for x in (meta.get("结论") or "").split("|") if x.strip()]
-        meta["结论列表EN"] = [x.strip() for x in (meta.get("结论EN") or "").split("|") if x.strip()]
+        if en and os.path.exists(en):
+            em = html_meta(open(en, encoding="utf-8").read(), en)
+            meta["en_src"] = en
+            meta.setdefault("标题EN", em.get("标题"))
+            meta.setdefault("摘要EN", em.get("摘要"))
         meta["标签列表"] = [x.strip() for x in re.split(r"[,，、]", meta.get("标签") or "") if x.strip()]
         out.append(meta)
     out.sort(key=lambda p: p["日期"], reverse=True)
@@ -507,10 +514,10 @@ def hero_cards(S, as_of, sd):
     b = R.judge(S, R.IND["stable_bullets13"], as_of)
     if j:
         sub = T(f'交易子弹 13 周 {b["显示"] if b else "—"} · {short_zone(j["区间"])}', f'Trading bullets 13w {b["显示"] if b else "—"} · {short_zone(j["区间EN"])}')
-        cards.append((T("稳定币主线 13 周", "Stablecoins ex-payment 13w"), T("剔除支付机构", "ex-payment"), j["显示"], sub, j["tone"], j["走势"],
+        cards.append((T("稳定币主线（去重）13 周", "Stablecoin main line 13w"), "L1-B", j["显示"], sub, j["tone"], j["走势"],
                       ind_href("stable_expay13")))
     else:
-        cards.append((T("稳定币主线 13 周", "Stablecoins ex-payment 13w"), T("剔除支付机构", "ex-payment"), "—",
+        cards.append((T("稳定币主线（去重）13 周", "Stablecoin main line 13w"), "L1-B", "—",
                       T("等待首次抓取", "Awaiting first fetch"), "neutral", [], ind_href("stable_expay13")))
     if sd:
         tot = sd.get("赛道Top60") or {}
@@ -722,6 +729,71 @@ def scenario_grid(v1):
                    "BTC same-period 13-week median return / share of up periods since 2022 (weekly, few independent samples). Describes the current cell only — no forecast. When the two lenses disagree, the worse cell counts. Highlighted = current cell.")}</p>"""
 
 
+def rotation_matrix(rot):
+    """资金轮动矩阵：ETF 13 周 × 交易子弹 13 周，四格。"""
+    def usd(v):
+        return R.f_signed_usd(v) if v is not None else "—"
+    cells = ""
+    for k in (("入", "增"), ("入", "减"), ("出", "增"), ("出", "减")):
+        zh, en, tone = R.ROTATION[k]
+        on = bool(rot and rot["格"] == k)
+        cells += (f'<div class="c{" on" if on else ""}"><b class="t-{tone}" style="font-size:14px;font-family:var(--sans)">{esc(T(zh, en))}</b>'
+                  + (f'<span>{T("← 当前所在格", "← current cell")}</span>' if on else "") + "</div>")
+    now = ""
+    if rot:
+        now = T(f"当前：ETF 13 周 {usd(rot['ETF13'])}，交易子弹（剔除 Tron）13 周 {usd(rot['子弹13USD'])}（{rot['子弹13']:+.1f}%；含 Tron {usd(rot['含Tron13USD'])}），"
+                f"两条通道合计约 {usd(rot['合计USD'])} → {rot['名称']}。",
+                f"Now: ETF 13w {usd(rot['ETF13'])}, trading bullets (ex-Tron) 13w {usd(rot['子弹13USD'])} ({rot['子弹13']:+.1f}%; incl. Tron {usd(rot['含Tron13USD'])}), "
+                f"about {usd(rot['合计USD'])} across both channels → {rot['名称EN']}.")
+    return f"""<div class="grp">{T("L1-B 资金轮动矩阵 · ETF × 交易子弹", "L1-B rotation matrix · ETF × trading bullets")}</div>
+<div class="scen-wrap"><div class="scen" style="grid-template-columns:170px repeat(2,minmax(0,1fr))">
+<div class="h"></div><div class="h">{T("交易子弹 13 周增", "Trading bullets 13w up")}</div><div class="h">{T("交易子弹 13 周减", "Trading bullets 13w down")}</div>
+<div class="r">{T("ETF 13 周净流入", "ETF 13w net inflow")}</div>{cells.split("</div>", 2)[0]}</div>{cells.split("</div>", 2)[1]}</div>
+<div class="r">{T("ETF 13 周净流出", "ETF 13w net outflow")}</div>{"</div>".join(cells.split("</div>")[2:])}
+</div></div>
+<p class="tnote">{esc(now)} {T("ETF 流入、稳定币下降 = 资金从链上搬到 ETF，不是新钱进场；「存量换手」指资金通道从链上转到 ETF，不是换了一批人。",
+                                "ETF inflows with falling stablecoins = money moving from on-chain to ETFs, not new money; 'switching channels' means the pipe changed, not the people.")}</p>"""
+
+
+FAQ = [
+    ("ETF 资金是散户还是机构？流入说明机构看多吗？", "Is ETF money retail or institutional? Do inflows mean institutions are bullish?",
+     "从公开的机构季度持仓披露看，机构一直是少数，大部分是散户和小型投顾账户；还有一部分对冲基金在做基差套利（买入 ETF、同时做空期货赚价差），本身不看多也不看空。所以 ETF 流入不等于机构看多。",
+     "Quarterly institutional filings show institutions are a minority; most holders are retail and small advisory accounts, plus hedge funds running basis trades (long ETF, short futures) with no directional view. Inflows do not mean institutions are bullish."),
+    ("ETF 大幅流出是不是抄底信号？", "Are big ETF outflows a buy signal?",
+     "不是。资金流出最多的那 20% 的周，之后 4 周 BTC 平均 −3.5%，全部样本平均 +1.9%，没有反弹规律；流入最多的周之后 4 周平均 +6.6%，方向是延续不是反转，但统计上不显著。日度资金流和过去 3 天涨跌相关 0.60，和之后 1~10 天只有约 0.05——它是滞后的顺势指标。",
+     "No. Four weeks after the 20% of weeks with the largest outflows, BTC averaged −3.5% versus +1.9% for all weeks — no rebound pattern; after the largest inflows +6.6%, continuation rather than reversal, but not significant. Daily flows correlate 0.60 with the past 3 days of price and only ~0.05 with the next 1–10: a lagging trend indicator."),
+    ("稳定币到底怎么算？", "How should stablecoins be counted?",
+     "主线（去重）= 总供给 − 支付/机构类（PYUSD、RLUSD、USDG 等）− 生息/合成类（USDe、USDS、DAI 等，部分拿 USDT/USDC 抵押铸造，会重复计算）。交易子弹 = 交易核心（USDT、USDC、FDUSD、USD1、TUSD、USDD）− Tron 链，旁边并列含 Tron 口径。Tron 和支付机构单列：支付机构稳定币和 BTC 13 周相关 −0.43，不是交易资金。",
+     "Main line (de-dup) = total − payment/institutional coins − yield/synthetic coins (partly minted against USDT/USDC). Trading bullets = trading core − Tron, with an incl.-Tron lens beside it. Tron and payment coins are shown separately; payment coins run −0.43 vs BTC over 13 weeks."),
+    ("稳定币增长能提前反映资金进场吗？", "Does stablecoin growth lead money into crypto?",
+     "不能。ETF 上线以来，稳定币增速和过去 13 周 BTC 涨跌相关 0.60、同期 0.52、未来 13 周 −0.26：是价格先涨，人们才去换稳定币进场。所以只当确认，不当埋伏信号。",
+     "No. Since the ETFs, stablecoin growth correlates 0.60 with the past 13 weeks of BTC, 0.52 same-period and −0.26 with the next 13: price rises first, then people buy stablecoins. Confirmation only."),
+    ("ETF 在流入、稳定币在下降，说明什么？", "ETF inflows while stablecoins fall — what does it mean?",
+     "存量换手：链上的加密资金没有增加，买盘主要从 ETF 这条通道进来。换的是通道不是人群——钱从链上和交易所转到美股券商账户里的 ETF。2024 年以来 ETF 当周资金流和 BTC 当周涨跌相关 0.67，稳定币只有 0.3 左右，边际定价权在 ETF。换手行情里 ETF 一旦转为流出，没有原生资金托底，下跌会比上涨更快。",
+     "Money switching channels: on-chain crypto money is not growing; buying comes through the ETF pipe. The pipe changed, not the people. Since 2024 weekly ETF flows correlate 0.67 with BTC versus ~0.3 for stablecoins — the marginal price is set in ETFs. If ETFs turn to outflows, there is no native money underneath, so declines run faster than rallies."),
+    ("利率和「印钱」哪个更重要？", "Which matters more: interest rates or money printing?",
+     "看「钱的价格」多于「钱的数量」。控制信用条件后，实际利率急升的系数仍为 −0.34（t −3.4）；美联储净流动性和 BTC 相关 0.28~0.32，而且 2024 年 5 月后领先性在变弱；M2 和 BTC 的涨跌幅相关只有 0.08（0.94 是两条都向上的假相关）。所以 L1 看利率和信用多于看印了多少钱，流动性只当打折条件。",
+     "The price of money matters more than its quantity. Controlling for credit, a real-yield surge still carries a −0.34 coefficient (t −3.4); Fed net liquidity correlates 0.28–0.32 with BTC and its lead has weakened since May 2024; M2's return correlation is only 0.08 (the 0.94 is a spurious level correlation). Liquidity is only a discount condition."),
+    ("加息就一定跌吗？", "Do rate hikes always mean BTC falls?",
+     "看信用松不松。2022 年以来实际利率急升时：信用走阔，BTC 同期 13 周中位 −27%；信用收窄，中位只有 −3%；利率没急升、信用收窄，中位 +12.5%。这是同期描述，不预测未来 13 周。",
+     "It depends on credit. Since 2022, during real-yield surges: with widening credit BTC's same-period 13-week median was −27%; with narrowing credit −3%; with no surge and narrowing credit +12.5%. Descriptive, not a forecast."),
+    ("L1-B 是什么？", "What is L1-B?",
+     "L1-B 加密资金通道：稳定币、现货 ETF、期货升水和资金轮动矩阵这一组。它们和价格互为因果、大多是滞后的，所以只用来确认 L1 的判断（同向 = 确认，背离 = 提示），不单独预测方向。",
+     "L1-B crypto funding channels: stablecoins, spot ETFs, futures basis and the rotation matrix. They are mutually causal with price and mostly lagging, so they only confirm L1 (agreement = confirmation, divergence = warning) and never predict direction on their own."),
+]
+
+
+def l1_method_faq():
+    pq = T("""<b>为什么 L1 看「利率和情绪」多于看「印了多少钱」</b>：实际利率是钱的价格，美联储净流动性是钱的数量。控制信用条件后，实际利率急升的系数仍为 −0.34（t −3.4）；
+净流动性和 BTC 的相关只有 0.28~0.32，而且 2024 年 5 月后领先性在变弱；M2 和 BTC 的涨跌幅相关只有 0.08。所以流动性在 L1 里只当「打折条件」，方向信号来自乐观度和信用。""",
+           """<b>Why L1 watches rates and sentiment more than money supply</b>: the real yield is the price of money, Fed net liquidity its quantity. Controlling for credit, a real-yield surge still carries −0.34 (t −3.4);
+net liquidity correlates only 0.28–0.32 with BTC and its lead has weakened since May 2024; M2's return correlation is 0.08. Liquidity is therefore only a discount condition; the signal comes from optimism and credit.""")
+    qa = "".join(f'<details class="card faq"><summary>{esc(T(q, qe))}</summary><p>{esc(T(a, ae))}</p></details>' for q, qe, a, ae in FAQ)
+    return (f'<h3>{T("方法说明：价格 vs 数量", "Method note: price vs quantity")}</h3><div class="note">{pq}</div>'
+            f'<h3>{T("常见问题", "FAQ")} <span style="font-weight:400;font-size:12px;color:var(--muted)">{T("数字出处：", "Sources: ")}<a href="{U("/reports/2026-10-04-macro-vs-bitcoin/")}">{T("《宏观到底管不管比特币？》", "the macro weekend report")}</a>{T("与 BTC 全周期宏观研究", " and the BTC full-cycle macro study")}</span></h3>'
+            f'<div class="faqs">{qa}</div>')
+
+
 def build_macro(L, S, logs):
     log = logs[-1] if logs else None
     as_of = log["日期"] if log else G.get("今天")
@@ -744,7 +816,12 @@ def build_macro(L, S, logs):
             cards = ""
             for g in groups:
                 gi = [x for x in inds if x["组"] == g]
-                cards += f'<div class="grp">{esc(T(g, gi[0]["组EN"]))}</div><div class="grid g4">' + "".join(ind_card(x, jby.get(x["key"]), as_of) for x in gi) + "</div>"
+                cards += f'<div class="grp">{esc(T(g, gi[0]["组EN"]))}</div>'
+                if g == R.G_SC[0]:
+                    cards += (f'<p class="tnote" style="margin:-2px 0 10px">{T("价格先动、稳定币后增，只确认、不埋伏。", "Price moves first, stablecoins follow — confirm, never front-run.")}</p>')
+                cards += '<div class="grid g4">' + "".join(ind_card(x, jby.get(x["key"]), as_of) for x in gi) + "</div>"
+                if g == R.G_SC[0]:
+                    cards += rotation_matrix(R.rotation(S, as_of) if as_of else None)
         else:
             cards = '<div class="grid g4">' + "".join(ind_card(x, jby.get(x["key"]), as_of) for x in inds) + "</div>"
         pend = "".join(f'<div class="pend"><b>{esc(T(p["名称"], p["EN"]))} · {T("待接入", "pending")}</b>{esc(T(p["原因"], p["原因EN"]))}</div>'
@@ -764,7 +841,7 @@ def build_macro(L, S, logs):
             src_ = write_data("macro/btc-realized.json", sorted(set(S["btc_price"]) & set(S["realized_price"])),
                               {"p": S["btc_price"], "r": S["realized_price"]})
             chart = (f'<h3 style="margin-top:0">{T("BTC 价格 vs 全网持币成本（Realized Price）", "BTC price vs realized price")}</h3>' +
-                     chart_div({"src": src_, "fmt": "price", "log": True, "ranges": ["1Y", "3Y", "5Y", "ALL"], "range": "ALL",
+                     chart_div({"src": src_, "fmt": "price", "log": True, "ranges": ["1Y", "3Y", "5Y", "ALL"], "range": "ALL", "note": T("对数坐标：同样的高度代表同样的涨跌幅，比如 1 万→2 万和 5 万→10 万一样高。", "Log scale: equal heights mean equal percentage moves — 10k→20k is as tall as 50k→100k."),
                                 "series": [{"k": "p", "n": T("BTC 价格", "BTC price"), "c": "s1"}, {"k": "r", "n": "Realized Price", "c": "s2"}]}))
         if i == 3 and S.get("ex_netflow"):
             cum = R.s_cum_netflow(S)
@@ -784,6 +861,11 @@ def build_macro(L, S, logs):
                      + chart_div({"src": src_, "fmt": "int", "ranges": ["1Y", "3Y", "ALL"], "range": "1Y",
                                   "lines": [{"v": 25, "label": T("恐慌", "fear"), "tone": "cool"}, {"v": 76, "label": T("贪婪", "greed"), "tone": "warn"}],
                                   "series": [{"k": "v", "n": "F&G", "c": "s1"}]}))
+        if i == 1:
+            chart = ""
+            extra_after = l1_method_faq()
+        else:
+            extra_after = ""
         why = "；".join(LF(lay, "依据", []) or []) if i != 1 else ""
         sections += f"""<section class="layer" id="layer-{i}">
 <div class="layer-hd"><span class="no">L{i}</span><h2>{esc(T(meta["名称"], meta["EN"]))} <span class="sub">{esc(T(meta["问"], meta["问EN"]))}？· {esc(T(meta["频率"], meta["频率EN"]))}</span></h2>{verdict if i != 1 else ''}
@@ -792,6 +874,7 @@ def build_macro(L, S, logs):
 {cards}
 {f'<div class="grid g4" style="margin-top:12px">{pend}</div>' if pend else ''}
 {f'<div class="card" style="padding:14px 18px;margin-top:12px">{chart}</div>' if chart else ''}
+{extra_after}
 </section>"""
     posts = ALL_POSTS["macro"]
     plist = "".join(f'<li><span class="d">{esc(x["日期"])}</span><span><a href="{U("/macro/" + x["slug"] + "/")}">{esc(x["标题"])}</a>'
@@ -936,13 +1019,14 @@ def build_indicator_pages(L, S, logs, files):
             rt = RAW_TITLE.get(key, (ind["名称"], ind["EN"]))
             rawfmt = "btcs" if key == "ex_netflow" else ind.get("rawfmt", "x")
             cfg = {"src": f["raw"], "fmt": rawfmt, "ranges": rngs, "range": "ALL", "group": "d", "log": key in ("ndx13", "realized_price"),
+                   "note": T("对数坐标：同样的高度代表同样的涨跌幅，比如 1 万→2 万和 5 万→10 万一样高。", "Log scale: equal heights mean equal percentage moves — 10k→20k is as tall as 50k→100k.") if key in ("ndx13", "realized_price") else "",
                    "zero": rawfmt in ("btcs", "usds"), "series": [{"k": "v", "n": T(rt[0], rt[1]), "c": "s3", "area": rawfmt == "btcs"}]}
             if key == "real13":
                 cfg["lines"] = [{"v": 1.0, "label": T("1.0% 高位线", "1.0% line"), "tone": "warn"}]
             charts += f'<h2>{esc(T(rt[0], rt[1]))}</h2><div class="card" style="padding:14px 18px">{chart_div(cfg)}</div>'
         if S.get("btc_price") and key != "realized_price":
-            charts += (f'<h2>{T("对照：BTC 价格（对数坐标）", "For reference: BTC price (log)")} <span class="sub">{T("同一时间轴，悬停联动", "same time axis, linked hover")}</span></h2>'
-                       f'<div class="card" style="padding:14px 18px">{chart_div({"src": "/data/macro/btc.json", "fmt": "price", "log": True, "ranges": rngs, "range": "ALL", "group": "d", "series": [{"k": "v", "n": "BTC", "c": "s2"}]})}</div>')
+            charts += (f'<h2>{T("对照：BTC 价格（对数坐标，按涨跌幅比例显示）", "For reference: BTC price (log scale, proportional to % moves)")} <span class="sub">{T("同一时间轴，悬停联动", "same time axis, linked hover")}</span></h2>'
+                       f'<div class="card" style="padding:14px 18px">{chart_div({"src": "/data/macro/btc.json", "fmt": "price", "log": True, "ranges": rngs, "range": "ALL", "group": "d", "note": T("对数坐标：同样的高度代表同样的涨跌幅，比如 1 万→2 万和 5 万→10 万一样高。", "Log scale: equal heights mean equal percentage moves — 10k→20k is as tall as 50k→100k."), "series": [{"k": "v", "n": "BTC", "c": "s2"}]})}</div>')
         if not f.get("main"):
             charts = (f'<div class="empty" style="margin-top:20px">{T("这个指标还没有数据（数据源接通后的下一次每日运行会生成）。", "No data yet for this indicator; it appears after the next daily run.")}</div>'
                       + charts)
@@ -1366,15 +1450,30 @@ def build_posts():
 
 
 # ---------------------------------------------------------------- 分析报告
+REPORT_JS = r"""<script>
+(function(){
+const f=document.getElementById('rf'),open=document.getElementById('rf-open');
+function fit(){try{const d=f.contentWindow.document;f.style.height=(d.documentElement.scrollHeight+4)+'px'}catch(e){}}
+function pick(){const t=document.documentElement.getAttribute('data-theme')==='light'?'light':'dark';
+ const want=f.dataset[t];if(f.getAttribute('src')!==want){f.setAttribute('src',want)}if(open)open.href=want}
+f.addEventListener('load',()=>{fit();try{new ResizeObserver(fit).observe(f.contentWindow.document.body)}catch(e){};setTimeout(fit,800);setTimeout(fit,2500)});
+window.addEventListener('uc-theme',pick);window.addEventListener('resize',fit);pick();
+})();
+</script>"""
+
+
 def build_reports():
     lst = ""
     for r in ALL_REPORTS:
         tags = "".join(f'<span class="chip">{esc(t)}</span>' for t in r["标签列表"])
+        if LANG["v"] == "en" and not r.get("en_src") and r["kind"] != "md":
+            tags = '<span class="chip t-warn">中文</span>' + tags
         lst += (f'<a class="card rcard" href="{U("/reports/" + r["slug"] + "/")}"><span class="d">{esc(r["日期"])}</span><b>{esc(LF(r, "标题"))}</b>'
                 f'<p>{esc(LF(r, "摘要"))}</p>{f"<div class=chips>{tags}</div>" if tags else ""}</a>')
-    how = T("周度节奏的深度报告：针对一个方向或议题做全方位分析，给出可以拿来做决策依据的结论。每篇先看摘要和核心结论，再看完整正文（原样排版）。报告是写作当时的判断，发布后不改，后续修正另起一篇。",
-            "Weekly deep-dive reports: one theme analysed end to end, with conclusions usable as decision inputs. Each starts with a summary and key conclusions, then the full original layout. Reports are frozen once published; corrections go in a new report.")
-    en_note = '<div class="note">Reports are written in Chinese; titles and summaries are translated where available.</div>' if LANG["v"] == "en" and ALL_REPORTS else ""
+    how = T("周度节奏的深度报告：针对一个方向或议题做全方位分析，给出可以拿来做决策依据的结论。报告原样排版、跟随站点深浅色；写作当时的判断发布后不改，后续修正另起一篇。",
+            "Weekly deep-dive reports: one theme analysed end to end, with conclusions usable as decision inputs. Original layout, following the site's light/dark theme. Frozen once published; corrections go in a new report.")
+    zh_only = [r for r in ALL_REPORTS if not r.get("en_src") and r["kind"] != "md"]
+    en_note = ('<div class="note">Reports marked 中文 are available in Chinese only for now.</div>' if LANG["v"] == "en" and zh_only else "")
     empty = '<div class="empty">' + T("第一篇报告整理好就发在这里。", "The first report will appear here.") + '</div>'
     body = f"""<div class="ph"><div><div class="eyebrow">Research Reports</div><h1>{T("分析报告", "Research reports")}</h1>
 <p class="lede">{esc(how)}</p></div></div>
@@ -1383,42 +1482,91 @@ def build_reports():
     emit("reports/index.html", T(f"分析报告 · {BRAND}", f"Research reports · {BRAND_EN}"), body, active="reports", desc=how)
     for r in ALL_REPORTS:
         cr = crumbs([(T("分析报告", "Reports"), "/reports/"), (LF(r, "标题"), None)])
-        con = r["结论列表EN"] if LANG["v"] == "en" and r["结论列表EN"] else r["结论列表"]
-        sm = (f'<div class="glass rsum"><h4>{T("摘要", "Summary")}</h4><div>{esc(LF(r, "摘要"))}</div>'
-              + (f'<h4 style="margin-top:14px">{T("核心结论", "Key conclusions")}</h4><ul>' + "".join(f"<li>{esc(c)}</li>" for c in con) + "</ul>" if con else "")
-              + (f'<p class="tnote" style="margin-top:12px"><a href="{esc(r["notion"])}" target="_blank" rel="noopener">{T("Notion 原文 ↗", "Original on Notion ↗")}</a></p>' if r.get("notion") else "")
-              + "</div>")
-        tags = "".join(f'<span class="chip">{esc(t)}</span>' for t in r["标签列表"])
-        head = (f'<div class="ph"><div><div class="eyebrow">{T("分析报告", "Research report")} · {esc(r["日期"])}</div><h1>{esc(LF(r, "标题"))}</h1>'
-                + (f'<div class="chips" style="margin-top:10px">{tags}</div>' if tags else "") + "</div></div>")
-        note = ZH_ONLY if LANG["v"] == "en" else ""
+        note = ZH_ONLY if LANG["v"] == "en" and not r.get("en_src") else ""
         if r["kind"] == "md":
             content = f'<div class="rbody"><div class="article">{r["html"]}</div></div>'
+            scripts = ""
         else:
-            # 整篇 HTML 原样放进 iframe：报告自己的样式（比如 Notion 导出的排版）不会和站点样式互相干扰
-            content = (f'<p class="tnote" style="margin:0 0 8px"><a href="raw.html" target="_blank" rel="noopener">{T("在新窗口全屏阅读 ↗", "Open full screen ↗")}</a></p>'
-                       f'<iframe src="raw.html" title="{esc(LF(r, "标题"))}" style="width:100%;border:1px solid var(--line);border-radius:14px;background:#fff;min-height:70vh;display:block" '
-                       f'onload="try{{this.style.height=(this.contentWindow.document.documentElement.scrollHeight+24)+\'px\'}}catch(e){{}}"></iframe>')
-        emit(f'reports/{r["slug"]}/index.html', f'{LF(r, "标题")} · {T("分析报告", "Reports")} · {T(BRAND, BRAND_EN)}', cr + head + note + sm + content,
-             active="reports", desc=LF(r, "摘要"))
+            # 整篇 HTML 原样放进 iframe（报告自己的样式不和站点互相干扰）；浅色用原文，深色用构建时自动换色的副本
+            content = (f'<p class="tnote" style="margin:0 0 8px;text-align:right"><a id="rf-open" href="raw.html" target="_blank" rel="noopener">{T("在新窗口全屏阅读 ↗", "Open full screen ↗")}</a></p>'
+                       f'<iframe id="rf" data-light="raw.html" data-dark="raw-dark.html" title="{esc(LF(r, "标题"))}" '
+                       f'style="width:100%;border:1px solid var(--line);border-radius:14px;min-height:80vh;display:block;background:var(--card)"></iframe>')
+            scripts = REPORT_JS
+        emit(f'reports/{r["slug"]}/index.html', f'{LF(r, "标题")} · {T("分析报告", "Reports")} · {T(BRAND, BRAND_EN)}', cr + note + content,
+             active="reports", desc=LF(r, "摘要"), scripts=scripts)
+
+
+# 报告深色副本：把每个颜色的明度翻转、色相保留（白纸 → 深底，深字 → 浅字，品牌蓝红金 → 同色系的亮色），
+# 只改 <style> 和 style / fill / stroke / color 这些颜色属性，任何排版的报告都能自动适配，不用逐篇手调。
+import colorsys                                                          # noqa: E402
+
+_HEX = re.compile(r"#([0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{4}|[0-9a-fA-F]{3})\b")
+_RGB = re.compile(r"rgba?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*(,\s*[\d.]+\s*)?\)")
+_NAMED = re.compile(r"(?<![\w-])(white|black)(?![\w-])")
+
+
+def _flip(r, g, b):
+    h, l, s_ = colorsys.rgb_to_hls(r / 255, g / 255, b / 255)
+    l2 = 0.065 + (1 - l) * 0.875
+    if l2 < 0.3:                      # 变成深底的浅色块：降饱和，避免一块块脏色
+        s_ *= 0.5
+    elif s_ > 0.35 and l2 < 0.62:     # 品牌强调色：再提亮一点，深底上看得清
+        l2 = min(0.72, l2 + 0.06)
+    r2, g2, b2 = colorsys.hls_to_rgb(h, l2, s_)
+    return round(r2 * 255), round(g2 * 255), round(b2 * 255)
+
+
+def _dark_css(text):
+    def hx(m):
+        v = m.group(1)
+        if len(v) in (3, 4):
+            v = "".join(c * 2 for c in v)
+        r, g, b = (int(v[i:i + 2], 16) for i in (0, 2, 4))
+        a = v[6:8] if len(v) == 8 else ""
+        return "#%02x%02x%02x%s" % (*_flip(r, g, b), a)
+
+    def rg(m):
+        r, g, b = _flip(int(m.group(1)), int(m.group(2)), int(m.group(3)))
+        return f"rgba({r},{g},{b}{m.group(4)})" if m.group(4) else f"rgb({r},{g},{b})"
+    text = _HEX.sub(hx, text)
+    text = _RGB.sub(rg, text)
+    return _NAMED.sub(lambda m: "#151821" if m.group(1) == "white" else "#e6e9ef", text)
+
+
+def dark_report(raw):
+    raw = re.sub(r"(<style[^>]*>)(.*?)(</style>)", lambda m: m.group(1) + _dark_css(m.group(2)) + m.group(3), raw, flags=re.S | re.I)
+    raw = re.sub(r'(\s(?:style|fill|stroke|stop-color|color|bgcolor)=")([^"]*)(")', lambda m: m.group(1) + _dark_css(m.group(2)) + m.group(3), raw)
+    return raw.replace("</head>", "<style>html{color-scheme:dark}img{filter:brightness(.9)}</style></head>", 1)
+
+
+REPORT_HEAD = ("<script>(function(){document.documentElement.setAttribute('data-theme','light');"   # 报告自带的深色媒体查询不要抢
+               "document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href]');if(!a)return;"
+               "var h=a.getAttribute('href');if(h&&h.charAt(0)!=='#'&&!a.target){a.target=/uncleonchain\\.com|^\\//.test(h)?'_top':'_blank'}});})();</script>")
 
 
 def copy_report_files():
-    """报告原文和附件（图片等）拷到 site/reports/<slug>/ 与 site/en/reports/<slug>/（iframe 用相对路径 raw.html）。"""
+    """报告原文和附件拷到 site/reports/<slug>/ 与 site/en/reports/<slug>/：raw.html（浅色原文）+ raw-dark.html（自动深色）。
+    英文站有 .en.html 就用英文版，没有就用中文原文。"""
     for r in ALL_REPORTS:
         if r["kind"] not in ("dir", "html"):
             continue
-        for base in (os.path.join(SITE, "reports", r["slug"]), os.path.join(SITE, "en", "reports", r["slug"])):
+        for lang, base in (("zh", os.path.join(SITE, "reports", r["slug"])), ("en", os.path.join(SITE, "en", "reports", r["slug"]))):
             os.makedirs(base, exist_ok=True)
-            if r["kind"] == "html":
-                shutil.copyfile(r["src"], os.path.join(base, "raw.html"))
-                continue
-            for root, _, fs in os.walk(r["src"]):
-                for f in fs:
-                    rel = os.path.relpath(os.path.join(root, f), r["src"])
-                    out = os.path.join(base, "raw.html" if rel == "index.html" else rel)
-                    os.makedirs(os.path.dirname(out), exist_ok=True)
-                    shutil.copyfile(os.path.join(root, f), out)
+            main = r.get("en_src") if lang == "en" and r.get("en_src") else (r["src"] if r["kind"] == "html" else os.path.join(r["src"], "index.html"))
+            if r["kind"] == "dir":
+                for root, _, fs in os.walk(r["src"]):
+                    for f in fs:
+                        if f in ("index.html", "index.en.html"):
+                            continue
+                        rel = os.path.relpath(os.path.join(root, f), r["src"])
+                        os.makedirs(os.path.dirname(os.path.join(base, rel)), exist_ok=True)
+                        shutil.copyfile(os.path.join(root, f), os.path.join(base, rel))
+            raw = open(main, encoding="utf-8").read()
+            raw = re.sub(r"<head([^>]*)>", lambda m: f"<head{m.group(1)}>{REPORT_HEAD}", raw, count=1)
+            with open(os.path.join(base, "raw.html"), "w", encoding="utf-8") as fh:
+                fh.write(raw)
+            with open(os.path.join(base, "raw-dark.html"), "w", encoding="utf-8") as fh:
+                fh.write(dark_report(raw))
 
 
 # ---------------------------------------------------------------- 解读日志
@@ -1545,12 +1693,14 @@ L1_RULES_ZH = """<p style="margin:0 0 8px"><b style="color:var(--ink)">L1 宏观
 <li><b>中性偏谨慎</b>：实际利率急升（13 周 ≥ +0.40pp）单独出现——框架里风险预算降一档、不加仓。</li>
 <li><b>逆风</b>：实际利率急升 且（BAA / NFCI 13 周转紧 或 乐观度 z &lt; 0），或流动性闸门触发（净流动性 13 周 ≤ −2.72% 且美元 13 周走强）——框架里名义风险预算 ×0.7，两项不叠乘。</li>
 <li><b>中性</b>：其余情况。高收益利差 13 周走阔 ≥ 0.30pp 时加「警戒」（先行提示，本站阈值，未经回测）。</li></ul>
+<p style="margin:0 0 8px"><b>L1-B 加密资金通道（只确认、不预测）</b>：稳定币主线（去重 = 总量 − 支付/机构 − 生息/合成）、交易子弹（剔除 Tron，并列含 Tron 口径）、现货 ETF（趋势确认，滞后）、期货升水（CME 与 Deribit 并列）和资金轮动矩阵（ETF 13 周 × 交易子弹 13 周：共振 / 换手 / 承接 / 双撤）。和价格同向 = 确认，背离 = 提示，不进档位判定。</p>
 <p style="margin:0 0 8px">证据等级：已验证 &gt; 已验证·方向 &gt; 描述读数 &gt; 监控；只有「已验证」的指标可以直接影响仓位参数，其余只做记录。13 周变化统一按周五收盘对齐（取当周最后可得值）。阈值只用 2018 年以后的数据定。</p>"""
 L1_RULES_EN = """<p style="margin:0 0 8px"><b style="color:var(--ink)">L1 Macro liquidity</b> (since 2026-10-02, based on the BTC full-cycle macro attribution study): L1 sets volatility, pacing and risk budget over weeks to months, not direction.</p>
 <ul style="margin:0 0 10px;padding-left:20px"><li><b>Tailwind</b>: optimism z &gt; 0 and the BAA spread narrowing over 13 weeks, with no real-yield surge.</li>
 <li><b>Neutral-cautious</b>: a real-yield surge (13w ≥ +0.40pp) on its own — one notch less risk budget, no adds.</li>
 <li><b>Headwind</b>: a surge plus (BAA/NFCI tightening or optimism z &lt; 0), or the liquidity gate (net liquidity 13w ≤ −2.72% with a stronger dollar) — nominal risk budget ×0.7, not compounded.</li>
 <li><b>Neutral</b>: everything else. An 'alert' tag is added when the high-yield spread widens ≥ 0.30pp over 13 weeks (early warning; this site's threshold, not back-tested).</li></ul>
+<p style="margin:0 0 8px"><b>L1-B crypto funding channels (confirm, don't predict)</b>: stablecoin main line (de-dup = total − payment − yield/synthetic), trading bullets (ex-Tron, with an incl.-Tron lens), spot ETFs (trend confirmation, lagging), futures basis (CME and Deribit side by side) and the rotation matrix (ETF 13w × trading bullets 13w). Agreement with price confirms, divergence warns; not part of the regime verdict.</p>
 <p style="margin:0 0 8px">Evidence grades: verified &gt; verified·direction &gt; descriptive &gt; monitor; only verified gauges may move position parameters. 13-week changes are aligned to Friday closes. Thresholds use post-2018 data only.</p>"""
 LP_RULES = {
     "zh": [("统计口径", "发射台一律用手续费（fees），不用成交量；成交量口径覆盖不全，会系统性低估份额。"),

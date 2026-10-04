@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!--meta
+标题: 可能被忽略的真相：牛市启动在减半前 15 个月
+日期: 2026-08-22
+标签: BTC, 周期, 回测, 周末特辑
+摘要: 四年周期没死，死的是幅度：三波几乎一样深的下跌，$79,009 是唯一该盯的分水岭。
+-->
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>可能被忽略的真相：牛市启动在减半前 15 个月</title>
+<style>
+*{box-sizing:border-box}
+body{max-width:900px;margin:0 auto;padding:44px 34px 80px;background:#fff;color:#26221e;
+     font:16px/1.75 -apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif}
+h1{font:400 40px/1.22 Georgia,"Songti SC",serif;margin:0 0 6px;letter-spacing:-.5px}
+.dek{color:#7a736b;font-size:15.5px;margin:0 0 8px}
+.meta{color:#9a938a;font-size:13px;margin:0 0 32px;padding-bottom:20px;border-bottom:2px solid #26221e}
+h2{font:400 26px/1.3 Georgia,"Songti SC",serif;margin:54px 0 4px;letter-spacing:-.2px}
+h2 .n{color:#c9c1b7;font-size:19px;margin-right:10px}
+h2+.sub{color:#7a736b;font-size:14.5px;margin:0 0 20px}
+h3{font:600 17px/1.4 -apple-system,"PingFang SC",sans-serif;margin:30px 0 8px}
+p{margin:0 0 14px}ul,ol{margin:0 0 14px;padding-left:22px}li{margin:0 0 7px}
+code{font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;background:#f4f1ec;padding:1px 5px;border-radius:3px}
+table{border-collapse:collapse;width:100%;margin:16px 0 20px;font-size:14px}
+th{text-align:left;font-weight:600;font-size:12px;letter-spacing:.6px;color:#7a736b;
+   text-transform:uppercase;padding:0 10px 8px;border-bottom:1.5px solid #d8d2c9;vertical-align:bottom}
+td{padding:9px 10px;border-bottom:1px solid #ece7e0;vertical-align:top}
+td.num,th.num{text-align:right;font-family:ui-monospace,Menlo,monospace;font-variant-numeric:tabular-nums}
+tr:hover td{background:#faf8f5}
+tr.hi td{background:#eef5fa}tr.hi:hover td{background:#e5eff7}
+tr.warn td{background:#fdf6e6}tr.warn:hover td{background:#faeed3}
+.red{color:#c02128;font-weight:600}.blue{color:#15628f;font-weight:600}
+.lead{font-size:18px;line-height:1.7;color:#3d3730;margin:0 0 24px}
+.tldr{border:1px solid #e8dcc0;border-radius:8px;padding:22px 26px;margin:0 0 30px;background:#fdfaf0}
+.hook{border:1px solid #d9e6f0;border-left:5px solid #15628f;border-radius:8px;padding:26px 30px;margin:0 0 24px;background:linear-gradient(160deg,#f0f7fc 0%,#fdf9ef 100%)}
+.hook .q{font:400 30px/1.25 Georgia,"Songti SC",serif;margin:0 0 14px;letter-spacing:-.4px;color:#0f4d73}
+.hook p{font-size:16px;margin:0 0 12px}
+.hook .big2{font-size:17.5px;line-height:1.7;color:#26221e}
+.hook .fin{margin:16px 0 0;padding:14px 18px;background:#fff;border-radius:6px;border:1px solid #e3ecf3;font-size:15.5px;color:#3d3730}
+.scensum{margin:22px 0 26px}
+.scensum table{margin:0}
+.scensum td:first-child{font-weight:600;white-space:nowrap}
+.tldr h4{margin:0 0 14px;font:700 13px/1 -apple-system,sans-serif;letter-spacing:1.2px;color:#8a6d1f}
+.tldr ol{margin:0;padding-left:20px;font-size:15.5px}
+.tldr ol li::marker{color:#8a6d1f;font-weight:700}
+.tldr li{margin:0 0 9px}
+.tldr li:last-child{margin:0}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#dfe8ef;
+      border:1px solid #dfe8ef;border-radius:8px;overflow:hidden;margin:24px 0 28px}
+.kpi{background:#f7fbfd;padding:16px 14px}
+.kpi .k{font-size:11px;letter-spacing:.7px;color:#5b7c94;text-transform:uppercase;margin-bottom:5px}
+.kpi .v{font:400 27px/1.1 Georgia,serif;letter-spacing:-.5px}
+.kpi .s{font-size:12px;color:#8d857c;margin-top:3px}
+.callout{border-left:3px solid #8a6d1f;background:#fdfaf1;padding:16px 20px;margin:22px 0;font-size:15px}
+.callout.blue{border-color:#15628f;background:#f2f8fc}
+.callout.red{border-color:#c02128;background:#fdf4f4}
+.callout.gray{border-color:#5f8a6a;background:#f4faf5}
+.callout h4{margin:0 0 7px;font-size:13.5px;letter-spacing:.5px;color:#8a6d1f;font-weight:700}
+.callout.blue h4{color:#15628f}.callout.red h4{color:#c02128}.callout.gray h4{color:#3f6b4c}
+.callout p:last-child{margin:0}
+.chart{margin:20px 0 26px;font-size:13px}
+.chart .row{display:grid;grid-template-columns:128px 1fr 92px;align-items:center;gap:10px;margin-bottom:7px}
+.chart .lbl{color:#5a5550;font-size:12.5px;text-align:right}
+.chart .track{background:#f4f1ec;height:20px;border-radius:2px}
+.chart .fill{height:20px;border-radius:2px;background:#c02128}
+.chart .fill.up{background:#15628f}
+.chart .val{font-family:ui-monospace,Menlo,monospace;font-size:12.5px;font-variant-numeric:tabular-nums}
+.tl{margin:24px 0 28px;font-size:13px}
+.tl .row{display:grid;grid-template-columns:150px 1fr;align-items:center;gap:12px;margin-bottom:5px}
+.tl .lbl{text-align:right;color:#5a5550;font-family:ui-monospace,Menlo,monospace;font-size:12px}
+.tl .bar{position:relative;height:22px;background:#f4f1ec;border-radius:2px}
+.tl .seg{position:absolute;top:0;height:22px;border-radius:2px;display:flex;align-items:center;
+         justify-content:center;font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#fff}
+.tl .zero{position:absolute;top:-4px;bottom:-4px;width:2px;background:#26221e}
+.wave .hd{background:#faf8f5;padding:10px 16px;font-size:13px;font-weight:600;border-bottom:1px solid #ece7e0}
+.wave{border:1px solid #e4ded5;border-radius:6px;margin:18px 0;overflow:hidden}
+.wave table{margin:0}.wave td,.wave th{padding:8px 16px}
+.scen{border:1px solid #e4ded5;border-radius:7px;margin:20px 0;overflow:hidden}
+.scen .hd{padding:13px 18px;font-weight:600;font-size:16px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.scen.a .hd{background:#eef5fa;color:#15628f}
+.scen.b .hd{background:#fdf6e6;color:#8a6d1f}
+.scen.c .hd{background:#f2f0f7;color:#5a4b7a}
+.scen .p{font-family:ui-monospace,Menlo,monospace;font-size:13px;font-weight:700;white-space:nowrap}
+.scen .bd{padding:16px 18px;font-size:15px}
+.scen .bd p:last-child{margin:0}
+.scen .bd table{margin:12px 0 0;font-size:13.5px}
+.sign{margin-top:40px;border:1.5px solid #26221e;padding:18px 22px;display:flex;
+      justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.sign .l{font-size:14px;color:#5a5550;max-width:520px}
+.sign .r{text-align:right;line-height:1.35}
+.sign .nm{font:400 16px Georgia,"Songti SC",serif;color:#26221e}
+.sign .hd2{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:#8d857c;margin-top:2px}
+footer{margin-top:40px;padding-top:20px;border-top:1px solid #ddd6cc;font-size:13px;color:#8d857c}
+@media(max-width:920px){body{padding:24px 14px 50px}h1{font-size:28px}h2{font-size:21px}
+ table{font-size:11.5px}th{font-size:10.5px}th,td{padding:6px 5px}
+ .kpis{grid-template-columns:repeat(2,1fr)}.kpi .v{font-size:22px}
+ .chart .row{grid-template-columns:84px 1fr 70px}.chart .lbl{font-size:11px}
+ .tl .row{grid-template-columns:96px 1fr}.tl .lbl{font-size:10.5px}
+ .lead{font-size:16px}.tldr{padding:16px 18px}.tldr ol{font-size:14.5px}}
+
+.chart-fig{margin:22px 0 28px;padding:0}
+.chart-cap{font:600 14.5px/1.45 -apple-system,"PingFang SC",sans-serif;color:#26221e;margin:0 0 10px;
+  padding-left:11px;border-left:3px solid #8a6d1f}
+.chart-fig svg{display:block;width:100%;height:auto}
+.fnote{font-size:12.5px;color:#8d857c;margin-top:8px;line-height:1.6}
+@media(max-width:920px){.chart-cap{font-size:13px}}
+</style>
+</head>
+<body>
+
+<h1>可能被忽略的真相：<br>牛市启动在减半前 15 个月</h1>
+<p class="dek">四年周期没死，死的是幅度 · 三波几乎一样深的下跌 · $79,009 分水岭</p>
+<p class="meta">2026-08-22 周六特辑 · 数据截至 2026-08-22 11:00 UTC · 5,879 根日线（2010-07-18 起）· 19,736 根 4h K 线 · 覆盖 5 轮熊市、4 轮牛市</p>
+
+<div class="hook">
+<div class="q">现在到底要不要 FOMO？</div>
+<p>过去两个月 BTC 从 $58,525 一度涨到 $79,500，评论区问得最多的就是这一句。我把 2010 年以来 5,879 根日线全部拉下来，按「距减半多少天」重新对齐之后，得到一个和直觉相反的答案。</p>
+<p class="big2">历史上四轮周期里，牛市真正的加速都发生在<strong>减半前约 15 个月之后</strong>。在那之前的那一年，价格上蹿下跳但净涨幅接近零——路径效率只有 <strong>2.3%–6.3%</strong>，上涨天数占比 46%–53%，基本等于抛硬币。</p>
+<p><strong>而今天距下次减半还有 597 天，那条历史分界线落在 2027-01-16 前后。也就是说，按历史节奏我们正卡在最磨人的区间里，还要再待约 5 个月。</strong></p>
+<p><strong>就在昨天，市场刚给了一个现场示范：</strong>8 月 21 日 BTC 盘中最高冲到 $79,500，站上了确认线 $79,009，但收盘回落到 $78,338；今天进一步回到 $76,894。<strong>如果你昨天按影线追进去，今天已经浮亏 3.3%。</strong>这就是我们所有交易计划都用「收盘价口径」而不是「触及即算」的原因。</p>
+<p class="fin">这不代表现在该空仓，也不代表该满仓。它的意思是：<strong>接下来这段时间，靠「等大行情」大概率什么也等不到，靠「抓波段、控风险」反而是能赚到钱的。</strong>下面是完整数据。</p>
+</div>
+
+<div class="kpis">
+  <div class="kpi"><div class="k">历史最高</div><div class="v">$124,824</div><div class="s">2025-10-06</div></div>
+  <div class="kpi"><div class="k">本轮最低</div><div class="v">$58,525</div><div class="s">2026-06-30</div></div>
+  <div class="kpi"><div class="k">当前</div><div class="v">$76,894</div><div class="s">距高点 −38.4%</div></div>
+  <div class="kpi"><div class="k">距确认线</div><div class="v" style="color:#8a6d1f">+2.75%</div><div class="s">$79,009</div></div>
+</div>
+
+<div class="tldr">
+<h4>六条结论</h4>
+<ol>
+<li>本轮下跌只有 <strong>3 波</strong>，而且深度出奇一致：<strong>−32.1% / −34.6% / −28.9%</strong>。历史上熊市要跌 7–12 波。</li>
+<li><strong>截至目前</strong>，本轮最大回撤 −53.1%，是五轮里最浅的一次（前四轮 −92.7% / −84.4% / −83.8% / −76.7%）。<strong>但这个数字还没定稿</strong>——只要还没确认转牛，它随时可能被改写。</li>
+<li><strong>$79,009</strong> = 本轮低点上方 35%，是历史上大周期反转的确认阈值。<strong>8 月 21 日盘中最高 $79,500 已经摸上去过，但当日收盘 $78,338 没站住，8 月 22 日回落到 $76,894。</strong>影线不算，收盘才算——这是未来几周最该盯的单一数字。</li>
+<li>四年周期在<strong>时间上没有失效</strong>：减半到顶部间隔 366 / 525 / 546 / <strong>534</strong> 天，本轮 2024-04-20 + 534 天 = 2025-10-06，正是历史最高点当天。失效的是幅度。</li>
+<li><strong>牛市真正的启动窗口 = 2027-01-16 至 2027-04-11</strong>（减半前 15 到 12 个月）。在这之前，历史中位是 −25.4%。</li>
+<li>未来会走哪条路有三种可能，<strong>我不知道是哪一种，也不打算假装知道</strong>。三条路的分歧点和共同点见第 06 节。</li>
+</ol>
+</div>
+
+<div class="callout gray">
+<h4>写在前面：现在是不是牛市，其实没那么重要</h4>
+<p>大家太容易被「牛市/熊市」这个二分法绑架。但翻回去看数据就会发现：<strong>牛市里跌 30% 是常态（四轮牛市中途 33 次回撤，中位 −27.5%），熊市里涨 40% 也是常态（熊市反弹中位 +43.3%）。</strong>把标签贴对了，不代表你这一年就赚钱。</p>
+<p>真正决定盈亏的是节奏——一次波动通常有多大、持续多久、什么位置进、错了在哪认。这些东西<strong>在牛市和熊市里几乎是一样的</strong>（第 05 节有数据）。所以这份报告的重点不是给你一个「现在是牛是熊」的答案，是给你一套无论牛熊都能用的尺子。</p>
+</div>
+
+<h2><span class="n">01</span>本轮熊市：只有三波，而且三波几乎一样深</h2>
+<p class="sub">ZigZag 阈值 12%，2025-10-06 至今</p>
+
+<div class="wave">
+<figure class="chart-fig">
+<div class="chart-cap">三波下跌几乎一样深，而第六波是本轮第一次「反弹 &gt; 前一跌」</div>
+<svg viewBox="0 0 860 330" width="100%" role="img">
+<line x1="62" y1="286.0" x2="834" y2="286.0" stroke="#ece7e0"/>
+<text x="54.0" y="290.0" font-size="11" fill="#8d857c" text-anchor="end" font-family="ui-monospace,Menlo,monospace" font-weight="400" >56k</text>
+<line x1="62" y1="221.0" x2="834" y2="221.0" stroke="#ece7e0"/>
+<text x="54.0" y="225.0" font-size="11" fill="#8d857c" text-anchor="end" font-family="ui-monospace,Menlo,monospace" font-weight="400" >75k</text>
+<line x1="62" y1="156.0" x2="834" y2="156.0" stroke="#ece7e0"/>
+<text x="54.0" y="160.0" font-size="11" fill="#8d857c" text-anchor="end" font-family="ui-monospace,Menlo,monospace" font-weight="400" >93k</text>
+<line x1="62" y1="91.0" x2="834" y2="91.0" stroke="#ece7e0"/>
+<text x="54.0" y="95.0" font-size="11" fill="#8d857c" text-anchor="end" font-family="ui-monospace,Menlo,monospace" font-weight="400" >111k</text>
+<line x1="62" y1="26.0" x2="834" y2="26.0" stroke="#ece7e0"/>
+<text x="54.0" y="30.0" font-size="11" fill="#8d857c" text-anchor="end" font-family="ui-monospace,Menlo,monospace" font-weight="400" >130k</text>
+<polyline points="62.0,43.6 175.4,185.0 303.2,141.7 356.3,260.3 583.1,194.2 706.1,277.7 831.6,203.7 834.0,212.9" fill="none" stroke="#26221e" stroke-width="2.2" stroke-linejoin="round"/>
+<line x1="62.0" y1="43.6" x2="175.4" y2="185.0" stroke="#c02128" stroke-width="3.4" opacity=".85" stroke-linecap="round"/>
+<text x="118.7" y="137.3" font-size="12" fill="#c02128" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" stroke="#fff" stroke-width="4" paint-order="stroke">−32.1%</text>
+<line x1="175.4" y1="185.0" x2="303.2" y2="141.7" stroke="#15628f" stroke-width="3.4" opacity=".85" stroke-linecap="round"/>
+<text x="239.3" y="150.4" font-size="12" fill="#15628f" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" stroke="#fff" stroke-width="4" paint-order="stroke">+14.5%</text>
+<line x1="303.2" y1="141.7" x2="356.3" y2="260.3" stroke="#c02128" stroke-width="3.4" opacity=".85" stroke-linecap="round"/>
+<text x="329.8" y="224.0" font-size="12" fill="#c02128" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" stroke="#fff" stroke-width="4" paint-order="stroke">−34.6%</text>
+<line x1="356.3" y1="260.3" x2="583.1" y2="194.2" stroke="#15628f" stroke-width="3.4" opacity=".85" stroke-linecap="round"/>
+<text x="469.7" y="214.2" font-size="12" fill="#15628f" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" stroke="#fff" stroke-width="4" paint-order="stroke">+29.5%</text>
+<line x1="583.1" y1="194.2" x2="706.1" y2="277.7" stroke="#c02128" stroke-width="3.4" opacity=".85" stroke-linecap="round"/>
+<text x="644.6" y="259.0" font-size="12" fill="#c02128" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" stroke="#fff" stroke-width="4" paint-order="stroke">−28.9%</text>
+<line x1="706.1" y1="277.7" x2="831.6" y2="203.7" stroke="#15628f" stroke-width="3.4" opacity=".85" stroke-linecap="round"/>
+<text x="768.9" y="227.7" font-size="12" fill="#15628f" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" stroke="#fff" stroke-width="4" paint-order="stroke">+35.8%</text>
+<circle cx="62.0" cy="43.6" r="3.6" fill="#fff" stroke="#26221e" stroke-width="1.8"/>
+<circle cx="175.4" cy="185.0" r="3.6" fill="#fff" stroke="#26221e" stroke-width="1.8"/>
+<circle cx="303.2" cy="141.7" r="3.6" fill="#fff" stroke="#26221e" stroke-width="1.8"/>
+<circle cx="356.3" cy="260.3" r="3.6" fill="#fff" stroke="#26221e" stroke-width="1.8"/>
+<circle cx="583.1" cy="194.2" r="3.6" fill="#fff" stroke="#26221e" stroke-width="1.8"/>
+<circle cx="706.1" cy="277.7" r="3.6" fill="#fff" stroke="#26221e" stroke-width="1.8"/>
+<circle cx="831.6" cy="203.7" r="3.6" fill="#fff" stroke="#26221e" stroke-width="1.8"/>
+<circle cx="834.0" cy="212.9" r="3.6" fill="#fff" stroke="#26221e" stroke-width="1.8"/>
+</svg>
+<figcaption class="fnote">横轴为距 2025-10-06 周期顶的天数。最后一段的高点 $79,500 是 8-21 盘中价，当日收盘 $78,338，8-22 收在 $76,894。</figcaption></figure>
+</div>
+
+<p>三波下跌 <strong>−32.1% / −34.6% / −28.9%</strong>，中位 −32.1%，历时 47 / 22 / 51 天。这种一致性不是巧合，说明每一波都是同一类资金在同一个规模上出货。</p>
+
+<p>中间两次反弹 +14.5% 和 +29.5%，用了 53 天和 94 天。<strong>反弹永远比下跌慢。</strong>第三波只跌了 22 天，修复却花了 94 天。这就是熊市最折磨人的地方，也是大多数人在反弹里被磨到失去耐心、然后在最后一跌割在地板上的原因。</p>
+
+<div class="callout blue">
+<h4>第 6 波和前面不一样</h4>
+<p>盘中最高 +35.8%、52 天，幅度已经超过前两次反弹，更关键的是<strong>它超过了紧邻的那一波下跌（−28.9%）</strong>。这是本轮第一次出现「反弹 &gt; 前一跌」，技术上是结构转折的第一个必要条件——注意，是必要条件，不是充分条件。</p><p><strong>但按收盘价口径，这个条件还没达成。</strong>8-21 最高 $79,500 摸到了确认线 $79,009，收盘 $78,338 差 0.85% 没站住，8-22 回落到 $76,894。<strong>一根长上影线不构成确认，需要日线收盘站上并守住两周。</strong></p>
+</div>
+
+<h2><span class="n">02</span>五轮熊市对比：这一轮到目前为止浅得反常</h2>
+<p class="sub">注意「到目前为止」四个字——下面这一行随时可能被改写</p>
+
+<table>
+<tr><th>周期</th><th class="num">高点</th><th class="num">低点</th><th class="num">跌幅</th><th class="num">历时</th><th class="num">下跌波数</th></tr>
+<tr><td>2011-06 → 2011-11</td><td class="num">29</td><td class="num">2</td><td class="num red">−92.7%</td><td class="num">163 天</td><td class="num">11</td></tr>
+<tr><td>2013-11 → 2015-01</td><td class="num">1,129</td><td class="num">176</td><td class="num red">−84.4%</td><td class="num">411 天</td><td class="num">12</td></tr>
+<tr><td>2017-12 → 2018-12</td><td class="num">19,641</td><td class="num">3,185</td><td class="num red">−83.8%</td><td class="num">364 天</td><td class="num">11</td></tr>
+<tr><td>2021-11 → 2022-11</td><td class="num">67,542</td><td class="num">15,758</td><td class="num red">−76.7%</td><td class="num">366 天</td><td class="num">7</td></tr>
+<tr class="hi"><td><strong>2025-10 → 至今 ⚠</strong></td><td class="num"><strong>124,824</strong></td><td class="num"><strong>58,525</strong></td><td class="num red"><strong>−53.1%</strong></td><td class="num"><strong>320 天</strong></td><td class="num"><strong>3</strong></td></tr>
+</table>
+<p style="font-size:13.5px;color:#8d857c;margin-top:-8px">⚠ 前四行是<strong>已经结束</strong>的熊市，数字是定稿。最后一行<strong>还没结束</strong>——$58,525 只是「目前为止的最低点」，不是「已确认的周期低点」。如果后面还有一波下跌，这一行会被改写。</p>
+
+<figure class="chart-fig">
+<div class="chart-cap">本轮（蓝线）目前最深 −53.1%，但它并不是全程最浅：第 150–170 天时 2021 那轮还比它浅，之后一路跌到 −76.7%</div>
+<svg viewBox="0 0 860 360" width="100%" role="img">
+<line x1="52" y1="18.0" x2="722" y2="18.0" stroke="#ece7e0" stroke-width="1"/>
+<text x="44.0" y="22.0" font-size="11" fill="#8d857c" text-anchor="end" font-family="ui-monospace,Menlo,monospace" font-weight="400" >0%</text>
+<line x1="52" y1="79.6" x2="722" y2="79.6" stroke="#ece7e0" stroke-width="1"/>
+<text x="44.0" y="83.6" font-size="11" fill="#8d857c" text-anchor="end" font-family="ui-monospace,Menlo,monospace" font-weight="400" >-20%</text>
+<line x1="52" y1="141.2" x2="722" y2="141.2" stroke="#ece7e0" stroke-width="1"/>
+<text x="44.0" y="145.2" font-size="11" fill="#8d857c" text-anchor="end" font-family="ui-monospace,Menlo,monospace" font-weight="400" >-40%</text>
+<line x1="52" y1="202.8" x2="722" y2="202.8" stroke="#ece7e0" stroke-width="1"/>
+<text x="44.0" y="206.8" font-size="11" fill="#8d857c" text-anchor="end" font-family="ui-monospace,Menlo,monospace" font-weight="400" >-60%</text>
+<line x1="52" y1="264.4" x2="722" y2="264.4" stroke="#ece7e0" stroke-width="1"/>
+<text x="44.0" y="268.4" font-size="11" fill="#8d857c" text-anchor="end" font-family="ui-monospace,Menlo,monospace" font-weight="400" >-80%</text>
+<line x1="52" y1="326.0" x2="722" y2="326.0" stroke="#ece7e0" stroke-width="1"/>
+<text x="44.0" y="330.0" font-size="11" fill="#8d857c" text-anchor="end" font-family="ui-monospace,Menlo,monospace" font-weight="400" >-100%</text>
+<text x="52.0" y="348.0" font-size="11" fill="#8d857c" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="400" >0</text>
+<text x="147.7" y="348.0" font-size="11" fill="#8d857c" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="400" >60</text>
+<text x="243.4" y="348.0" font-size="11" fill="#8d857c" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="400" >120</text>
+<text x="339.1" y="348.0" font-size="11" fill="#8d857c" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="400" >180</text>
+<text x="434.9" y="348.0" font-size="11" fill="#8d857c" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="400" >240</text>
+<text x="530.6" y="348.0" font-size="11" fill="#8d857c" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="400" >300</text>
+<text x="626.3" y="348.0" font-size="11" fill="#8d857c" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="400" >360</text>
+<text x="722.0" y="348.0" font-size="11" fill="#8d857c" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="400" >420</text>
+<text x="387.0" y="348.0" font-size="11" fill="#26221e" text-anchor="start" font-family="-apple-system,'PingFang SC','Noto Sans SC',sans-serif" font-weight="400" ></text>
+<text x="52.0" y="14.0" font-size="11" fill="#8d857c" text-anchor="start" font-family="-apple-system,'PingFang SC','Noto Sans SC',sans-serif" font-weight="400" >距周期顶天数 →</text>
+<polyline points="52.0,18.0 56.8,169.5 61.6,121.7 66.4,162.2 71.1,140.2 75.9,140.2 80.7,152.4 85.5,147.2 90.3,162.8 95.1,188.4 99.9,174.3 104.6,174.2 109.4,177.5 114.2,185.3 119.0,180.9 123.8,180.8 128.6,178.7 133.4,182.6 138.1,187.9 142.9,211.8 147.7,235.8 152.5,219.4 157.3,219.9 162.1,209.4 166.9,202.2 171.6,210.1 176.4,224.7 181.2,230.2 186.0,239.0 190.8,236.3 195.6,253.4 200.4,273.1 205.1,261.4 209.9,274.3 214.7,270.4 219.5,266.6 224.3,268.1 229.1,273.9 233.9,271.4 238.6,272.7 243.4,275.8 248.2,282.4 253.0,281.8 257.8,285.3 262.6,300.3 267.4,298.7 272.1,299.2 276.9,293.7 281.7,291.4 286.5,291.4 291.3,294.4 296.1,293.6 300.9,293.4 305.6,302.4 310.4,301.8" fill="none" stroke="#c02128" stroke-width="1.7" stroke-dasharray="2 3" stroke-linejoin="round" opacity="0.72"/>
+<text x="316.4" y="305.8" font-size="11.5" fill="#c02128" text-anchor="start" font-family="-apple-system,'PingFang SC','Noto Sans SC',sans-serif" font-weight="400" >2011</text>
+<polyline points="52.0,18.0 56.8,135.0 61.6,60.8 66.4,87.4 71.1,142.0 75.9,140.0 80.7,159.1 85.5,141.9 90.3,131.7 95.1,128.0 99.9,106.9 104.6,77.8 109.4,100.4 114.2,96.6 119.0,97.7 123.8,106.2 128.6,102.4 133.4,114.0 138.1,124.4 142.9,109.0 147.7,104.9 152.5,113.1 157.3,142.1 162.1,143.7 166.9,144.5 171.6,154.7 176.4,173.0 181.2,160.5 186.0,166.5 190.8,172.0 195.6,143.0 200.4,154.5 205.1,155.5 209.9,151.4 214.7,153.9 219.5,160.3 224.3,172.7 229.1,167.6 233.9,190.7 238.6,202.4 243.4,204.0 248.2,201.5 253.0,205.8 257.8,210.9 262.6,184.4 267.4,194.9 272.1,190.8 276.9,189.4 281.7,206.9 286.5,204.2 291.3,206.9 296.1,209.3 300.9,203.1 305.6,206.2 310.4,204.7 315.2,204.7 320.0,192.0 324.8,182.8 329.6,170.2 334.4,157.5 339.1,145.9 343.9,146.5 348.7,147.5 353.5,154.6 358.3,169.8 363.1,160.7 367.9,165.5 372.6,166.0 377.4,168.4 382.2,162.9 387.0,149.2 391.8,154.9 396.6,156.4 401.4,153.8 406.1,158.0 410.9,156.6 415.7,156.3 420.5,157.8 425.3,164.6 430.1,167.5 434.9,164.1 439.6,166.5 444.4,166.9 449.2,166.1 454.0,177.2 458.8,184.4 463.6,193.9 468.4,185.9 473.1,189.9 477.9,188.6 482.7,196.1 487.5,197.4 492.3,195.6 497.1,197.5 501.9,197.4 506.6,197.7 511.4,210.2 516.2,217.3 521.0,211.0 525.8,217.3 530.6,220.4 535.4,228.9 540.1,237.3 544.9,227.8 549.7,223.5 554.5,218.9 559.3,219.8 564.1,221.5 568.9,229.0 573.6,231.0 578.4,232.5 583.2,238.0 588.0,234.1 592.8,232.2 597.6,226.2 602.4,217.9 607.1,220.8 611.9,229.3 616.7,226.2 621.5,226.3 626.3,223.9 631.1,222.1 635.9,223.3 640.6,227.4 645.4,231.4 650.2,229.4 655.0,239.1 659.8,236.4 664.6,234.8 669.4,236.6 674.1,241.1 678.9,240.6 683.7,254.5 688.5,245.2 693.3,251.0 698.1,265.2" fill="none" stroke="#a8564f" stroke-width="1.7" stroke-dasharray="4 3" stroke-linejoin="round" opacity="0.72"/>
+<text x="704.1" y="269.2" font-size="11.5" fill="#a8564f" text-anchor="start" font-family="-apple-system,'PingFang SC','Noto Sans SC',sans-serif" font-weight="400" >2013–15</text>
+<polyline points="52.0,18.0 56.8,49.2 61.6,101.7 66.4,105.2 71.1,101.9 75.9,107.7 80.7,90.6 85.5,57.8 90.3,100.5 95.1,109.8 99.9,112.9 104.6,149.6 109.4,146.9 114.2,149.9 119.0,148.5 123.8,169.8 128.6,188.2 133.4,218.6 138.1,197.1 142.9,199.0 147.7,177.5 152.5,152.2 157.3,149.6 162.1,166.7 166.9,164.3 171.6,154.7 176.4,146.3 181.2,170.7 186.0,188.2 190.8,182.3 195.6,194.6 200.4,192.1 205.1,189.4 209.9,193.6 214.7,201.6 219.5,217.5 224.3,209.6 229.1,222.3 233.9,220.4 238.6,202.0 243.4,195.2 248.2,198.0 253.0,187.0 257.8,174.6 262.6,185.2 267.4,181.3 272.1,173.1 276.9,175.5 281.7,180.3 286.5,192.9 291.3,192.9 296.1,196.9 300.9,194.3 305.6,207.2 310.4,210.9 315.2,210.3 320.0,206.2 324.8,206.7 329.6,206.5 334.4,218.6 339.1,222.0 343.9,224.9 348.7,220.1 353.5,229.2 358.3,230.4 363.1,228.5 367.9,222.4 372.6,223.5 377.4,220.8 382.2,226.0 387.0,227.9 391.8,211.2 396.6,211.1 401.4,205.0 406.1,201.9 410.9,196.9 415.7,206.9 420.5,216.2 425.3,220.6 430.1,229.8 434.9,227.7 439.6,227.3 444.4,224.2 449.2,226.2 454.0,220.2 458.8,214.8 463.6,215.8 468.4,212.2 473.1,224.3 477.9,228.0 482.7,226.8 487.5,223.7 492.3,226.6 497.1,220.3 501.9,222.9 506.6,221.3 511.4,222.4 516.2,224.6 521.0,223.3 525.8,222.6 530.6,228.9 535.4,225.0 540.1,225.7 544.9,225.4 549.7,225.4 554.5,225.5 559.3,227.7 564.1,226.5 568.9,225.6 573.6,225.5 578.4,226.6 583.2,238.6 588.0,239.7 592.8,258.3 597.6,258.7 602.4,268.0 607.1,259.5 611.9,261.7 616.7,267.8 621.5,272.6 626.3,273.4 631.1,275.8" fill="none" stroke="#c98b33" stroke-width="1.7" stroke-dasharray="5 3" stroke-linejoin="round" opacity="0.72"/>
+<text x="637.1" y="279.8" font-size="11.5" fill="#c98b33" text-anchor="start" font-family="-apple-system,'PingFang SC','Noto Sans SC',sans-serif" font-weight="400" >2017–18</text>
+<polyline points="52.0,18.0 56.8,29.8 61.6,29.5 66.4,51.7 71.1,53.5 75.9,63.2 80.7,80.6 85.5,61.9 90.3,68.0 95.1,101.1 99.9,95.7 104.6,101.1 109.4,105.8 114.2,114.7 119.0,111.9 123.8,94.8 128.6,94.4 133.4,114.1 138.1,109.1 142.9,116.7 147.7,136.7 152.5,135.3 157.3,131.6 162.1,129.2 166.9,135.4 171.6,166.4 176.4,157.5 181.2,153.8 186.0,150.6 190.8,157.0 195.6,132.9 200.4,123.5 205.1,133.7 209.9,123.0 214.7,143.4 219.5,156.8 224.3,151.4 229.1,154.2 233.9,125.4 238.6,146.4 243.4,149.4 248.2,149.0 253.0,145.2 257.8,139.2 262.6,137.7 267.4,131.1 272.1,123.0 276.9,109.6 281.7,115.1 286.5,113.2 291.3,127.3 296.1,133.3 300.9,138.3 305.6,141.6 310.4,136.8 315.2,144.8 320.0,141.4 324.8,144.7 329.6,150.6 334.4,145.2 339.1,164.1 343.9,184.7 348.7,192.5 353.5,189.7 358.3,188.0 363.1,187.7 367.9,191.1 372.6,193.6 377.4,180.8 382.2,190.7 387.0,183.1 391.8,188.9 396.6,203.7 401.4,223.3 406.1,239.3 410.9,231.7 415.7,228.9 420.5,231.4 425.3,237.9 430.1,238.1 434.9,232.2 439.6,227.6 444.4,237.8 449.2,231.0 454.0,224.3 458.8,220.4 463.6,222.7 468.4,221.6 473.1,218.3 477.9,221.0 482.7,220.0 487.5,217.5 492.3,216.8 497.1,215.1 501.9,219.6 506.6,229.6 511.4,227.8 516.2,233.7 521.0,233.6 525.8,234.3 530.6,235.0 535.4,238.0 540.1,227.0 544.9,234.0 549.7,236.0 554.5,236.8 559.3,237.5 564.1,240.3 568.9,237.3 573.6,237.9 578.4,233.3 583.2,236.9 588.0,238.7 592.8,237.6 597.6,238.2 602.4,238.7 607.1,238.4 611.9,234.4 616.7,232.0 621.5,232.6 626.3,233.9 631.1,230.5 635.9,254.1" fill="none" stroke="#5a4b7a" stroke-width="1.7" stroke-dasharray="3 4" stroke-linejoin="round" opacity="0.72"/>
+<text x="641.9" y="258.1" font-size="11.5" fill="#5a4b7a" text-anchor="start" font-family="-apple-system,'PingFang SC','Noto Sans SC',sans-serif" font-weight="400" >2021–22</text>
+<polyline points="52.0,18.0 56.8,25.9 61.6,41.9 66.4,52.4 71.1,61.6 75.9,57.8 80.7,52.1 85.5,44.5 90.3,59.5 95.1,53.6 99.9,69.6 104.6,73.5 109.4,71.9 114.2,92.8 119.0,99.2 123.8,111.5 128.6,111.6 133.4,102.8 138.1,101.8 142.9,100.1 147.7,105.7 152.5,102.3 157.3,97.5 162.1,108.6 166.9,113.7 171.6,108.2 176.4,110.4 181.2,110.5 186.0,111.0 190.8,107.2 195.6,100.6 200.4,100.9 205.1,102.9 209.9,90.8 214.7,90.4 219.5,97.7 224.3,105.4 229.1,112.7 233.9,106.0 238.6,131.8 243.4,139.3 248.2,151.7 253.0,152.7 257.8,162.6 262.6,156.7 267.4,162.2 272.1,158.2 276.9,167.8 281.7,163.5 286.5,155.9 291.3,150.8 296.1,162.6 300.9,152.5 305.6,150.5 310.4,143.2 315.2,152.0 320.0,151.5 324.8,156.4 329.6,163.2 334.4,157.9 339.1,160.0 343.9,148.2 348.7,146.0 353.5,141.8 358.3,140.7 363.1,143.6 367.9,132.8 372.6,134.5 377.4,137.8 382.2,133.2 387.0,129.0 391.8,128.6 396.6,123.0 401.4,130.4 406.1,133.1 410.9,136.5 415.7,139.5 420.5,135.4 425.3,144.6 430.1,144.4 434.9,167.5 439.6,176.0 444.4,173.9 449.2,169.4 454.0,162.6 458.8,171.0 463.6,169.7 468.4,175.7 473.1,178.1 477.9,181.6 482.7,171.6 487.5,167.9 492.3,170.1 497.1,168.7 501.9,166.2 506.6,166.1 511.4,162.1 516.2,167.8 521.0,168.8 525.8,166.1 530.6,169.4 535.4,166.6 540.1,165.8 544.9,169.2 549.7,170.7 554.5,167.0 559.3,145.7 560.9,132.6" fill="none" stroke="#15628f" stroke-width="2.6" stroke-linejoin="round" opacity="0.95"/>
+<text x="566.9" y="136.6" font-size="11.5" fill="#15628f" text-anchor="start" font-family="-apple-system,'PingFang SC','Noto Sans SC',sans-serif" font-weight="700" >2025–26 本轮</text>
+</svg>
+<figcaption class="fnote">横轴 = 距周期顶天数，纵轴 = 相对周期顶的回撤。四条历史线画到各自最低点为止就停笔了，所以「只有蓝线在抬头」是画法造成的，不是结论。这张图真正的用处是：走到第 165 天时，2021 那轮看起来也「很浅」。</figcaption></figure>
+<div class="chart">
+<div class="row"><div class="lbl">2011</div><div class="track"><div class="fill" style="width:100%"></div></div><div class="val">−92.7%</div></div>
+<div class="row"><div class="lbl">2013–15</div><div class="track"><div class="fill" style="width:91%"></div></div><div class="val">−84.4%</div></div>
+<div class="row"><div class="lbl">2017–18</div><div class="track"><div class="fill" style="width:90%"></div></div><div class="val">−83.8%</div></div>
+<div class="row"><div class="lbl">2021–22</div><div class="track"><div class="fill" style="width:83%"></div></div><div class="val">−76.7%</div></div>
+<div class="row"><div class="lbl">2025–26</div><div class="track"><div class="fill" style="width:57%"></div></div><div class="val">−53.1%</div></div>
+</div>
+
+<p>到目前为止三件事同时发生：<strong>回撤史上最浅、波数最少（3 波 vs 中位 11 波）</strong>，而历时 320 天已经接近历史中位的 364 天。前四轮的跌幅是严格单调衰减的，一次反弹都没有。</p>
+
+<div class="callout red">
+<h4>同一份数据，两种完全相反的读法</h4>
+<p><strong>读法 A：结构变了。</strong>ETF、机构配置、企业资产负债表持币，把边际卖压的来源改掉了。−80% 那种熊市需要一个前提——市场主体是加杠杆的散户。这个前提正在消失，所以浅熊是新常态，本轮已经见底。</p>
+<p><strong>读法 B：还没走完。</strong>只跌了 3 波，历史上要 7–12 波。按老节奏还差一波，底可能在 2026 年底到 2027 年初。</p>
+<p><strong>这两种读法我都无法证伪，所以我不站队。</strong>能站队的只有价格：站上 $79,009 并守住，A 成立；跌破 $58,525，B 被确认。<strong>在这两条线之间，任何笃定的说法——包括我的——都是在编。</strong></p>
+<p>更重要的是：<strong>你不需要提前知道答案也能交易。</strong>两种情况下，$79,009 和 $58,525 都是同一组关键位；区别只在于你在这两条线之间该用多大仓位。这就是「找位置」比「猜方向」更可靠的原因。</p>
+</div>
+
+<h2><span class="n">03</span>四轮牛市：时间稳得离谱，幅度崩得厉害</h2>
+
+<figure class="chart-fig">
+<div class="chart-cap">时长几乎是一条直线，幅度掉了十六倍——信时间，不信幅度</div>
+<svg viewBox="0 0 860 300" width="100%" role="img">
+<text x="92.0" y="16.0" font-size="11.5" fill="#8d857c" text-anchor="start" font-family="-apple-system,'PingFang SC','Noto Sans SC',sans-serif" font-weight="400" >柱 = 牛市时长（天）</text>
+<text x="768.0" y="16.0" font-size="11.5" fill="#8a6d1f" text-anchor="end" font-family="-apple-system,'PingFang SC','Noto Sans SC',sans-serif" font-weight="400" >点 = 涨幅（对数刻度）</text>
+<rect x="142.7" y="121.7" width="67.6" height="132.3" fill="#15628f" opacity=".22" rx="2"/>
+<text x="176.5" y="114.7" font-size="12" fill="#15628f" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >742 天</text>
+<circle cx="176.5" cy="45.1" r="6" fill="#8a6d1f"/>
+<text x="176.5" y="33.1" font-size="12" fill="#8a6d1f" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >+53,520%</text>
+<text x="176.5" y="286.0" font-size="11.5" fill="#26221e" text-anchor="middle" font-family="-apple-system,'PingFang SC','Noto Sans SC',sans-serif" font-weight="400" >2010–2011</text>
+<rect x="311.7" y="63.7" width="67.6" height="190.3" fill="#15628f" opacity=".22" rx="2"/>
+<text x="345.5" y="56.7" font-size="12" fill="#15628f" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >1,067 天</text>
+<circle cx="345.5" cy="115.5" r="6" fill="#8a6d1f"/>
+<text x="345.5" y="103.5" font-size="12" fill="#8a6d1f" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >+11,082%</text>
+<text x="345.5" y="286.0" font-size="11.5" fill="#26221e" text-anchor="middle" font-family="-apple-system,'PingFang SC','Noto Sans SC',sans-serif" font-weight="400" >2015–2017</text>
+<line x1="176.5" y1="45.1" x2="345.5" y2="115.5" stroke="#8a6d1f" stroke-width="1.6" opacity=".55"/>
+<line x1="176.5" y1="121.7" x2="345.5" y2="63.7" stroke="#15628f" stroke-width="1.4" opacity=".45" stroke-dasharray="3 3"/>
+<rect x="480.7" y="65.1" width="67.6" height="188.9" fill="#15628f" opacity=".22" rx="2"/>
+<text x="514.5" y="58.1" font-size="12" fill="#15628f" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >1,059 天</text>
+<circle cx="514.5" cy="191.6" r="6" fill="#8a6d1f"/>
+<text x="514.5" y="179.6" font-size="12" fill="#8a6d1f" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >+2,021%</text>
+<text x="514.5" y="286.0" font-size="11.5" fill="#26221e" text-anchor="middle" font-family="-apple-system,'PingFang SC','Noto Sans SC',sans-serif" font-weight="400" >2018–2021</text>
+<line x1="345.5" y1="115.5" x2="514.5" y2="191.6" stroke="#8a6d1f" stroke-width="1.6" opacity=".55"/>
+<line x1="345.5" y1="63.7" x2="514.5" y2="65.1" stroke="#15628f" stroke-width="1.4" opacity=".45" stroke-dasharray="3 3"/>
+<rect x="649.7" y="64.6" width="67.6" height="189.4" fill="#15628f" opacity=".22" rx="2"/>
+<text x="683.5" y="57.6" font-size="12" fill="#15628f" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >1,062 天</text>
+<circle cx="683.5" cy="239.5" r="6" fill="#8a6d1f"/>
+<text x="683.5" y="227.5" font-size="12" fill="#8a6d1f" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >+692%</text>
+<text x="683.5" y="286.0" font-size="11.5" fill="#26221e" text-anchor="middle" font-family="-apple-system,'PingFang SC','Noto Sans SC',sans-serif" font-weight="400" >2022–2025</text>
+<line x1="514.5" y1="191.6" x2="683.5" y2="239.5" stroke="#8a6d1f" stroke-width="1.6" opacity=".55"/>
+<line x1="514.5" y1="65.1" x2="683.5" y2="64.6" stroke="#15628f" stroke-width="1.4" opacity=".45" stroke-dasharray="3 3"/>
+<line x1="82" y1="254" x2="778" y2="254" stroke="#26221e" stroke-width="1.2"/>
+</svg>
+<figcaption class="fnote">涨幅用对数刻度，否则 2010 那轮会把其他三轮压成贴地的一条线。</figcaption></figure>
+
+<p><strong>最近三轮牛市的长度是 1,067 / 1,059 / 1,062 天，差异不到 8 天。</strong>在金融市场里这种稳定性极其罕见。</p>
+<p><strong>而幅度是断崖式的：</strong>+53,520% → +11,082% → +2,021% → +692%，每轮大约是上一轮的 1/5、1/5.5、1/2.9。</p>
+
+<h3>减半到顶部的间隔，同样稳定</h3>
+<table>
+<tr><th>减半日</th><th>周期顶</th><th class="num">间隔</th></tr>
+<tr><td>2012-11-28</td><td>2013-11-29</td><td class="num">366 天</td></tr>
+<tr><td>2016-07-09</td><td>2017-12-16</td><td class="num">525 天</td></tr>
+<tr><td>2020-05-11</td><td>2021-11-08</td><td class="num">546 天</td></tr>
+<tr class="hi"><td><strong>2024-04-20</strong></td><td><strong>2025-10-06</strong></td><td class="num"><strong>534 天</strong></td></tr>
+</table>
+
+<div class="callout blue">
+<h4>「四年周期已死」这个说法，至少在时间上是错的</h4>
+<p>2024-04-20 减半，加 534 天，等于 2025-10-06——本轮历史最高点当天。最近三轮全部落在 <strong>525–546 天</strong>这个窄区间。节奏一点没乱，乱的是幅度。</p>
+<p>这件事的推论很重要：<strong>能被套利掉的东西在衰减，不能被套利掉的东西保持稳定。</strong>幅度是资金行为的结果，越多人知道就越被提前定价、越被压平；而减半是写死在代码里的，交易改变不了它。所以要「反刻舟求剑」，方向应该是<strong>怀疑幅度，谨慎参考时间</strong>，而不是把两者一起扔掉。</p>
+</div>
+
+<h2><span class="n">04</span>被忽略的时间窗：启动线在 2027 年 1–4 月</h2>
+<p class="sub">这是这次回测最反直觉、也最有操作价值的一节</p>
+
+<p>大多数人讨论周期时只盯两个点：底部、减半。但把四轮数据按「距减半多少天」对齐之后，会看到一条非常清晰的分界。</p>
+
+<figure class="chart-fig">
+<div class="chart-cap">最近三轮全红的区间只有一个：减半前 2 年 → 前 1 年。而紧挨着它的下一行，四轮全蓝</div>
+<svg viewBox="0 0 860 286" width="100%" role="img">
+<text x="257.0" y="26.0" font-size="12" fill="#8d857c" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >2012</text>
+<text x="391.0" y="26.0" font-size="12" fill="#8d857c" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >2016</text>
+<text x="525.0" y="26.0" font-size="12" fill="#8d857c" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >2020</text>
+<text x="659.0" y="26.0" font-size="12" fill="#8d857c" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >2024</text>
+<text x="793.0" y="26.0" font-size="12" fill="#8d857c" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >中位</text>
+<text x="178.0" y="77.0" font-size="12.5" fill="#26221e" text-anchor="end" font-family="-apple-system,'PingFang SC','Noto Sans SC',sans-serif" font-weight="400" >减半前 3 年 → 前 2 年</text>
+<rect x="190.0" y="50" width="131.0" height="42" fill="#f4f1ec" rx="3"/>
+<text x="255.5" y="77.0" font-size="12" fill="#8d857c" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >—</text>
+<rect x="324.0" y="50" width="131.0" height="42" fill="#15628fdc" rx="3"/>
+<text x="389.5" y="77.0" font-size="12" fill="#fff" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >+625.2%</text>
+<rect x="458.0" y="50" width="131.0" height="42" fill="#15628fdc" rx="3"/>
+<text x="523.5" y="77.0" font-size="12" fill="#fff" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >+397.8%</text>
+<rect x="592.0" y="50" width="131.0" height="42" fill="#c0212855" rx="3"/>
+<text x="657.5" y="77.0" font-size="12" fill="#26221e" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >−25.1%</text>
+<rect x="726.0" y="50" width="131.0" height="42" fill="#15628fdc" rx="3"/>
+<text x="791.5" y="77.0" font-size="12" fill="#fff" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >+397.8%</text>
+<text x="178.0" y="123.0" font-size="12.5" fill="#26221e" text-anchor="end" font-family="-apple-system,'PingFang SC','Noto Sans SC',sans-serif" font-weight="700" >减半前 2 年 → 前 1 年</text>
+<rect x="190.0" y="96" width="131.0" height="42" fill="#15628fdc" rx="3"/>
+<text x="255.5" y="123.0" font-size="12" fill="#fff" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >+1,096.1%</text>
+<rect x="324.0" y="96" width="131.0" height="42" fill="#c0212870" rx="3"/>
+<text x="389.5" y="123.0" font-size="12" fill="#fff" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >−53.7%</text>
+<rect x="458.0" y="96" width="131.0" height="42" fill="#c021284c" rx="3"/>
+<text x="523.5" y="123.0" font-size="12" fill="#26221e" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >−18.2%</text>
+<rect x="592.0" y="96" width="131.0" height="42" fill="#c021285d" rx="3"/>
+<text x="657.5" y="123.0" font-size="12" fill="#26221e" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >−32.5%</text>
+<rect x="726.0" y="96" width="131.0" height="42" fill="#c0212855" rx="3"/>
+<text x="791.5" y="123.0" font-size="12" fill="#26221e" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >−25.4%</text>
+<text x="178.0" y="169.0" font-size="12.5" fill="#26221e" text-anchor="end" font-family="-apple-system,'PingFang SC','Noto Sans SC',sans-serif" font-weight="700" >减半前 1 年 → 减半</text>
+<rect x="190.0" y="142" width="131.0" height="42" fill="#15628fdc" rx="3"/>
+<text x="255.5" y="169.0" font-size="12" fill="#fff" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >+347.2%</text>
+<rect x="324.0" y="142" width="131.0" height="42" fill="#15628f9c" rx="3"/>
+<text x="389.5" y="169.0" font-size="12" fill="#fff" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >+128.3%</text>
+<rect x="458.0" y="142" width="131.0" height="42" fill="#15628f53" rx="3"/>
+<text x="523.5" y="169.0" font-size="12" fill="#26221e" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >+23.8%</text>
+<rect x="592.0" y="142" width="131.0" height="42" fill="#15628fa0" rx="3"/>
+<text x="657.5" y="169.0" font-size="12" fill="#fff" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >+137.8%</text>
+<rect x="726.0" y="142" width="131.0" height="42" fill="#15628f9e" rx="3"/>
+<text x="791.5" y="169.0" font-size="12" fill="#fff" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >+133.1%</text>
+<text x="178.0" y="215.0" font-size="12.5" fill="#26221e" text-anchor="end" font-family="-apple-system,'PingFang SC','Noto Sans SC',sans-serif" font-weight="400" >减半 → 减半后 1 年</text>
+<rect x="190.0" y="188" width="131.0" height="42" fill="#15628fdc" rx="3"/>
+<text x="255.5" y="215.0" font-size="12" fill="#fff" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >+8,069.1%</text>
+<rect x="324.0" y="188" width="131.0" height="42" fill="#15628fd7" rx="3"/>
+<text x="389.5" y="215.0" font-size="12" fill="#fff" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >+284.4%</text>
+<rect x="458.0" y="188" width="131.0" height="42" fill="#15628fdc" rx="3"/>
+<text x="523.5" y="215.0" font-size="12" fill="#fff" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >+558.9%</text>
+<rect x="592.0" y="188" width="131.0" height="42" fill="#15628f5c" rx="3"/>
+<text x="657.5" y="215.0" font-size="12" fill="#26221e" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >+31.1%</text>
+<rect x="726.0" y="188" width="131.0" height="42" fill="#15628fdc" rx="3"/>
+<text x="791.5" y="215.0" font-size="12" fill="#fff" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >+421.7%</text>
+<text x="178.0" y="261.0" font-size="12.5" fill="#26221e" text-anchor="end" font-family="-apple-system,'PingFang SC','Noto Sans SC',sans-serif" font-weight="400" >减半后 1 年 → 后 2 年</text>
+<rect x="190.0" y="234" width="131.0" height="42" fill="#c0212876" rx="3"/>
+<text x="255.5" y="261.0" font-size="12" fill="#fff" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >−62.5%</text>
+<rect x="324.0" y="234" width="131.0" height="42" fill="#15628fad" rx="3"/>
+<text x="389.5" y="261.0" font-size="12" fill="#fff" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >+165.9%</text>
+<rect x="458.0" y="234" width="131.0" height="42" fill="#c021286c" rx="3"/>
+<text x="523.5" y="261.0" font-size="12" fill="#26221e" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >−49.1%</text>
+<rect x="592.0" y="234" width="131.0" height="42" fill="#c0212840" rx="3"/>
+<text x="657.5" y="261.0" font-size="12" fill="#26221e" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >−10.9%</text>
+<rect x="726.0" y="234" width="131.0" height="42" fill="#c021285a" rx="3"/>
+<text x="791.5" y="261.0" font-size="12" fill="#26221e" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >−30.0%</text>
+</svg>
+<figcaption class="fnote">颜色深浅按涨跌幅绝对值（对数压缩），蓝为正、红为负。2012 轮缺前 3 年数据，历史长度不够。</figcaption></figure>
+
+<p><strong>「减半前 1 年 → 减半」这一格，四轮全部为正，没有例外。</strong>而它前面那一年，后三轮全是负的（2012 那轮是比特币早期的异常样本，那时候一年涨十倍是常态）。</p>
+
+<h3>那段时间到底在干什么：不是跌，是磨</h3>
+<p>光看净涨跌还不够。我加了一个「路径效率」指标——净涨幅除以期间每日绝对波动之和。数值越低，说明走得越多、赚得越少。</p>
+
+<figure class="chart-fig">
+<div class="chart-cap">路径效率：走了四十倍的路，回到原地</div>
+<svg viewBox="0 0 860 270" width="100%" role="img">
+<line x1="56" y1="230.0" x2="836" y2="230.0" stroke="#ece7e0"/>
+<text x="48.0" y="234.0" font-size="11" fill="#8d857c" text-anchor="end" font-family="ui-monospace,Menlo,monospace" font-weight="400" >0%</text>
+<line x1="56" y1="181.0" x2="836" y2="181.0" stroke="#ece7e0"/>
+<text x="48.0" y="185.0" font-size="11" fill="#8d857c" text-anchor="end" font-family="ui-monospace,Menlo,monospace" font-weight="400" >8%</text>
+<line x1="56" y1="132.0" x2="836" y2="132.0" stroke="#ece7e0"/>
+<text x="48.0" y="136.0" font-size="11" fill="#8d857c" text-anchor="end" font-family="ui-monospace,Menlo,monospace" font-weight="400" >15%</text>
+<line x1="56" y1="83.0" x2="836" y2="83.0" stroke="#ece7e0"/>
+<text x="48.0" y="87.0" font-size="11" fill="#8d857c" text-anchor="end" font-family="ui-monospace,Menlo,monospace" font-weight="400" >22%</text>
+<line x1="56" y1="34.0" x2="836" y2="34.0" stroke="#ece7e0"/>
+<text x="48.0" y="38.0" font-size="11" fill="#8d857c" text-anchor="end" font-family="ui-monospace,Menlo,monospace" font-weight="400" >30%</text>
+<rect x="105.4" y="188.8" width="76.6" height="41.2" fill="#8a6d1f" rx="2"/>
+<text x="143.7" y="182.8" font-size="11.5" fill="#8a6d1f" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >6.3%</text>
+<rect x="186.0" y="115.0" width="76.6" height="115.0" fill="#15628f" rx="2"/>
+<text x="224.3" y="109.0" font-size="11.5" fill="#15628f" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >17.6%</text>
+<text x="186.0" y="256.0" font-size="12" fill="#26221e" text-anchor="middle" font-family="-apple-system,'PingFang SC','Noto Sans SC',sans-serif" font-weight="400" >2016</text>
+<rect x="365.4" y="215.0" width="76.6" height="15.0" fill="#8a6d1f" rx="2"/>
+<text x="403.7" y="209.0" font-size="11.5" fill="#8a6d1f" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >2.3%</text>
+<rect x="446.0" y="215.0" width="76.6" height="15.0" fill="#15628f" rx="2"/>
+<text x="484.3" y="209.0" font-size="11.5" fill="#15628f" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >2.3%</text>
+<text x="446.0" y="256.0" font-size="12" fill="#26221e" text-anchor="middle" font-family="-apple-system,'PingFang SC','Noto Sans SC',sans-serif" font-weight="400" >2020</text>
+<rect x="625.4" y="202.6" width="76.6" height="27.4" fill="#8a6d1f" rx="2"/>
+<text x="663.7" y="196.6" font-size="11.5" fill="#8a6d1f" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >4.2%</text>
+<rect x="706.0" y="79.7" width="76.6" height="150.3" fill="#15628f" rx="2"/>
+<text x="744.3" y="73.7" font-size="11.5" fill="#15628f" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="700" >23%</text>
+<text x="706.0" y="256.0" font-size="12" fill="#26221e" text-anchor="middle" font-family="-apple-system,'PingFang SC','Noto Sans SC',sans-serif" font-weight="400" >2024</text>
+<rect x="60" y="10" width="11" height="11" fill="#8a6d1f" rx="2"/>
+<text x="77.0" y="20.0" font-size="12" fill="#26221e" text-anchor="start" font-family="-apple-system,'PingFang SC','Noto Sans SC',sans-serif" font-weight="400" >减半前 2 年 → 前 1 年</text>
+<rect x="250" y="10" width="11" height="11" fill="#15628f" rx="2"/>
+<text x="267.0" y="20.0" font-size="12" fill="#26221e" text-anchor="start" font-family="-apple-system,'PingFang SC','Noto Sans SC',sans-serif" font-weight="400" >减半前 1 年 → 减半</text>
+<line x1="56" y1="230" x2="836" y2="230" stroke="#26221e" stroke-width="1.2"/>
+</svg>
+<figcaption class="fnote">路径效率 = 区间净涨幅绝对值 ÷ 每日涨跌幅绝对值之和。2.3% 意味着价格走的总路程是净涨幅的约 43 倍。2020 轮两段都低，是因为那轮的加速几乎全部挤在减半之后。</figcaption></figure>
+
+<p>路径效率 <strong>2.3% – 6.3%</strong> 是什么概念？意思是价格每天上蹿下跳，累计走了几十倍于净涨幅的路，最后原地踏步甚至倒退。上涨天数占比 46%–53%，基本等于抛硬币。</p>
+<p>这就是「涨涨跌跌，算下来没涨多少」的精确定义。而进入减半前一年之后，路径效率跳到 17.6%–23.0%，上涨天占比升到 53%–56%——趋势开始真正咬合。</p>
+
+<h3>更精细的切法：以减半日为原点，每 90 天一格</h3>
+<p>把四轮合并，看每个 90 天窗口的中位涨幅：</p>
+
+<div class="tl">
+<div class="row"><div class="lbl">T−720 ~ T−630</div><div class="bar"><div class="seg" style="right:50%;width:14.8%;background:#c02128">−29.5%</div></div></div>
+<div class="row"><div class="lbl">T−630 ~ T−540</div><div class="bar"><div class="seg" style="right:50%;width:6.1%;background:#c02128"></div></div></div>
+<div class="row"><div class="lbl">T−540 ~ T−450</div><div class="bar"><div class="seg" style="right:50%;width:6.4%;background:#c02128"></div></div></div>
+<div class="row"><div class="lbl">T−450 ~ T−360</div><div class="bar"><div class="seg" style="left:50%;width:12.1%;background:#15628f">+24.2%</div></div></div>
+<div class="row"><div class="lbl">T−360 ~ T−270</div><div class="bar"><div class="seg" style="left:50%;width:10.9%;background:#15628f">+21.8%</div></div></div>
+<div class="row"><div class="lbl">T−270 ~ T−180</div><div class="bar"><div class="seg" style="left:50%;width:6.7%;background:#15628f"></div></div></div>
+<div class="row"><div class="lbl">T−180 ~ T−90</div><div class="bar"><div class="seg" style="left:50%;width:10.8%;background:#15628f">+21.6%</div></div></div>
+<div class="row"><div class="lbl">T−90 ~ 减半</div><div class="bar"><div class="seg" style="left:50%;width:17.4%;background:#15628f">+34.7%</div></div></div>
+<div class="row"><div class="lbl">减半 ~ T+90</div><div class="bar"><div class="seg" style="left:50%;width:9.7%;background:#15628f">+19.4%</div></div></div>
+<div class="row"><div class="lbl">T+90 ~ T+180</div><div class="bar"><div class="seg" style="left:50%;width:22.3%;background:#15628f">+44.6%</div></div></div>
+<div class="row"><div class="lbl">T+180 ~ T+270</div><div class="bar"><div class="seg" style="left:50%;width:15.6%;background:#15628f">+31.1%</div></div></div>
+<div class="row"><div class="lbl">T+270 ~ T+360</div><div class="bar"><div class="seg" style="left:50%;width:44.4%;background:#15628f">+88.7%</div></div></div>
+<div class="row"><div class="lbl">T+360 ~ T+450</div><div class="bar"><div class="seg" style="left:50%;width:3.4%;background:#15628f"></div></div></div>
+<div class="row"><div class="lbl">T+450 ~ T+540</div><div class="bar"><div class="seg" style="left:50%;width:13.7%;background:#15628f">+27.3%</div></div></div>
+<div class="row"><div class="lbl">T+540 ~ T+630</div><div class="bar"><div class="seg" style="right:50%;width:15.1%;background:#c02128">−30.2%</div></div></div>
+</div>
+
+<div class="callout">
+<h4>分界点在 T−450，不是 T−365</h4>
+<p><strong>T−450 天之前，每一个 90 天窗口的中位涨幅都是负的；T−450 之后，每一个都是正的。</strong>没有一格例外。</p>
+<p>所以准确说法是：<strong>转折发生在减半前约 15 个月，到减半前 12 个月时已经稳定到四轮无一例外。</strong></p>
+<p style="margin-bottom:0"><strong>换算成具体日期，下一轮的启动窗口是 2027-01-16 至 2027-04-11。</strong>前半段（1 月底起）是历史上开始转正的时点，后半段（4 月下旬起）是四轮无例外的时点。要给一个单一日期的话，<strong>我会盯 2027 年一季度末</strong>。</p>
+</div>
+
+<div class="callout gray">
+<h4>这个日期有多大误差</h4>
+<p>它建立在两个估算上：一是下次减半按 <strong>2028-04-10</strong> 推算，实际取决于出块速度，历史上偏差在正负两三周；二是 T−450 / T−365 这两条线来自四个样本，n=4 做不出置信区间。<strong>把它当成一个「几个月宽的窗口」，不要当成一个日期。</strong>真正该等的是价格确认，日期只是提醒你别在窗口之前把子弹打光。</p>
+</div>
+
+<h3>那么我们现在在哪</h3>
+<figure class="chart-fig">
+<div class="chart-cap">我们在这里：距历史启动线还有 148 天</div>
+<svg viewBox="0 0 860 168" width="100%" role="img">
+<rect x="40" y="66" width="780" height="14" fill="#f4f1ec" rx="7"/>
+<rect x="499.1" y="63" width="79.0" height="20" fill="#8a6d1f" opacity=".20" rx="4"/>
+<text x="538.6" y="108.0" font-size="12" fill="#8a6d1f" text-anchor="middle" font-family="-apple-system,'PingFang SC','Noto Sans SC',sans-serif" font-weight="700" ></text>
+<text x="40.0" y="110.0" font-size="11.5" fill="#8d857c" text-anchor="start" font-family="ui-monospace,Menlo,monospace" font-weight="400" >2024-04-20 上次减半</text>
+<line x1="499.1" y1="58" x2="499.1" y2="88" stroke="#26221e" stroke-width="2.4"/>
+<circle cx="499.1" cy="73" r="5.5" fill="#26221e"/>
+<text x="499.1" y="46.0" font-size="13" fill="#26221e" text-anchor="middle" font-family="-apple-system,'PingFang SC','Noto Sans SC',sans-serif" font-weight="700" >今天</text>
+<text x="499.1" y="29.0" font-size="11.5" fill="#8d857c" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="400" >2026-08-22</text>
+<line x1="578.1" y1="58" x2="578.1" y2="88" stroke="#15628f" stroke-width="2.4"/>
+<circle cx="578.1" cy="73" r="5.5" fill="#15628f"/>
+<text x="578.1" y="132.0" font-size="13" fill="#15628f" text-anchor="middle" font-family="-apple-system,'PingFang SC','Noto Sans SC',sans-serif" font-weight="700" >T−450 分界线</text>
+<text x="578.1" y="149.0" font-size="11.5" fill="#8d857c" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="400" >2027-01-16 · 还有 148 天</text>
+<line x1="623.8" y1="58" x2="623.8" y2="88" stroke="#7aa3bd" stroke-width="2.4"/>
+<circle cx="623.8" cy="73" r="5.5" fill="#7aa3bd"/>
+<text x="623.8" y="46.0" font-size="13" fill="#7aa3bd" text-anchor="middle" font-family="-apple-system,'PingFang SC','Noto Sans SC',sans-serif" font-weight="700" >T−365</text>
+<line x1="820.0" y1="58" x2="820.0" y2="88" stroke="#8a6d1f" stroke-width="2.4"/>
+<circle cx="820.0" cy="73" r="5.5" fill="#8a6d1f"/>
+<text x="820.0" y="46.0" font-size="13" fill="#8a6d1f" text-anchor="end" font-family="-apple-system,'PingFang SC','Noto Sans SC',sans-serif" font-weight="700" >下次减半</text>
+<text x="820.0" y="29.0" font-size="11.5" fill="#8d857c" text-anchor="end" font-family="ui-monospace,Menlo,monospace" font-weight="400" >2028-04-10 · 597 天</text>
+</svg>
+<figcaption class="fnote">金色阴影就是我们现在所处的区间——历史上路径效率最低的一段，按历史节奏还要再待约 5 个月。2028 年减半日按当前出块速度估算为 2028-04-10，可能有数周偏差。</figcaption></figure>
+
+<div class="callout red">
+<h4>这是本文最该记住的一句话</h4>
+<p><strong>我们现在正卡在历史上路径效率最低的那一段里，而且还要再待约 5 个月。</strong></p>
+<p>这条发现有个意想不到的好处：它把前面两种读法调和了。<strong>底可能确实已经探明（读法 A 成立），但这不代表接下来就一路向上。</strong>历史上这个位置的常态是宽幅震荡、反复打脸、净涨幅接近零。</p>
+<p>如果你的计划是「囤现货等牛市」，那这段时间正是分批建仓的窗口，慢慢买、别急。如果你的计划是「拿满杠杆等启动」，历史数据会在未来 5 个月里反复清算你——因为这段区间的特征恰恰是<strong>波动大、方向不明、上涨天数只有一半</strong>。</p>
+</div>
+
+<h2><span class="n">05</span>4h 级别：一次波动到底有多大、多久</h2>
+<p class="sub">19,736 根 4h K 线，2017-08 起。这一节直接决定日常交易参数</p>
+
+<table>
+<tr><th>ZigZag 阈值</th><th>环境</th><th>方向</th><th class="num">样本</th><th class="num">中位幅度</th><th class="num">中位历时</th><th class="num">80 分位</th></tr>
+<tr class="hi"><td rowspan="4"><strong>2%</strong></td><td>牛市</td><td class="blue">涨</td><td class="num">406</td><td class="num"><strong>4.8%</strong></td><td class="num">32 小时</td><td class="num">9.4%</td></tr>
+<tr class="hi"><td>牛市</td><td class="red">跌</td><td class="num">433</td><td class="num"><strong>4.6%</strong></td><td class="num">28 小时</td><td class="num">7.6%</td></tr>
+<tr class="hi"><td>熊市</td><td class="blue">涨</td><td class="num">423</td><td class="num"><strong>4.9%</strong></td><td class="num">28 小时</td><td class="num">8.7%</td></tr>
+<tr class="hi"><td>熊市</td><td class="red">跌</td><td class="num">396</td><td class="num"><strong>4.7%</strong></td><td class="num">28 小时</td><td class="num">8.2%</td></tr>
+<tr><td rowspan="2">3%</td><td>牛市</td><td class="blue">涨</td><td class="num">251</td><td class="num">6.8%</td><td class="num">52 小时</td><td class="num">14.2%</td></tr>
+<tr><td>熊市</td><td class="blue">涨</td><td class="num">279</td><td class="num">6.8%</td><td class="num">44 小时</td><td class="num">11.5%</td></tr>
+<tr><td rowspan="2">5%</td><td>牛市</td><td class="blue">涨</td><td class="num">122</td><td class="num">11.6%</td><td class="num">104 小时</td><td class="num">20.5%</td></tr>
+<tr><td>熊市</td><td class="blue">涨</td><td class="num">144</td><td class="num">10.6%</td><td class="num">90 小时</td><td class="num">19.9%</td></tr>
+</table>
+
+<p><strong>一句话：BTC 在 4h 级别上，一次典型波动是「28–32 小时走 4.6–4.9%」。</strong>想抓 9–11% 的大波，就得准备持有 86–104 小时，也就是三到四天。</p>
+
+<div class="callout blue">
+<h4>两个可以直接拿去用的结论</h4>
+<p><strong>一、牛熊在 4h 级别几乎没有差别。</strong>牛市涨波 4.8% 对熊市涨波 4.9%，牛市跌波 4.6% 对熊市跌波 4.7%。所以短线参数不需要按牛熊来回切换，一套走天下。大周期只决定你该偏多还是偏空，不决定单次波动能给你多少空间。</p>
+<p><strong>二、把目标定在 3.5%–4.5% 是有依据的，不是拍脑袋。</strong>它落在一次典型波动的中位数以内，命中率天然不低；再往上就要赌尾部了。这也是我给短线目标定在币价 3.6% 的原因——听起来不多，但按 1.5% 的单笔风险和 4 倍盈亏比算，对应的是<strong>账户 +6%</strong>。多数人亏钱不是看错方向，是按「本金比例」而不是「风险比例」下单，结果承担了三倍于计划的风险。</p>
+</div>
+
+<h3>中级波段：逆势又快又短，顺势又慢又长</h3>
+<table>
+<tr><th>环境</th><th>方向</th><th class="num">样本</th><th class="num">中位幅度</th><th class="num">中位历时</th></tr>
+<tr><td>牛市</td><td class="blue">涨波</td><td class="num">28</td><td class="num blue">+94.2%</td><td class="num">46 天</td></tr>
+<tr><td>牛市</td><td class="red">跌波</td><td class="num">52</td><td class="num red">−33.0%</td><td class="num">22 天</td></tr>
+<tr><td>熊市</td><td class="blue">涨波</td><td class="num">35</td><td class="num blue">+43.3%</td><td class="num">28 天</td></tr>
+<tr><td>熊市</td><td class="red">跌波</td><td class="num">12</td><td class="num red">−38.2%</td><td class="num">44 天</td></tr>
+</table>
+<p>牛市里跌波只要 22 天，涨波要 46 天；熊市里涨波 28 天，跌波要 44 天。<strong>逆着大方向的波动又快又短，顺着大方向的波动又慢又长。</strong>直接推论：逆势单必须快进快出，顺势单可以拿得住。</p>
+
+<h2><span class="n">06</span>下一轮：三种情景</h2>
+<p class="sub">这是推演，不是预测。每条路都给「怎么确认」和「怎么否掉」，你可以自己实时验证</p>
+
+<div class="callout gray">
+<h4>先说清楚这一节的可信度</h4>
+<p>前面 01–05 节是<strong>已发生事实的统计</strong>，你可以自己去核对。这一节是<strong>基于 n=4 的外推</strong>。四个样本做不出置信区间，任何声称「下一轮会涨到 X 万」的人——包括我——给的都是一个带巨大误差的中心值。<strong>请把下面的价格当成情景锚点，不是目标价。</strong></p>
+<p><strong>我不给概率，也不说自己偏向哪一个。</strong>周期这种东西只有走完了回头看才是确定的，现在押注哪条路，本身就是另一种刻舟求剑。<strong>下面给的是每条路「怎么被确认」和「怎么被否掉」——这些是你能实时验证的，比概率有用得多。</strong></p>
+</div>
+
+<h3>三条路，一眼看完</h3>
+<div class="scensum">
+<table>
+<tr><th>情景</th><th>一句话</th><th>确认信号</th><th>否掉信号</th><th class="num">周期顶</th></tr>
+<tr class="hi"><td><strong>A</strong> 底已探明</td><td>浅熊是新常态，慢牛已启动</td><td>站上 $79,009 守两周</td><td>跌破 $58,525</td><td class="num">$193k–222k<br><span style="color:#8d857c;font-size:12px">2029 年中</span></td></tr>
+<tr class="warn"><td><strong>B</strong> 还有一跌</td><td>3 波不够，历史要 7–12 波</td><td>日线破 $66,000</td><td>站上 $79,009 守两周</td><td class="num">$160k–200k<br><span style="color:#8d857c;font-size:12px">2029–2030</span></td></tr>
+<tr><td><strong>C</strong> 周期终结</td><td>不再有牛熊，变成股票式波动</td><td>2028 减半前后 6 个月无加速</td><td>2028 后出现 &gt;+300% 的年度行情</td><td class="num">不适用<br><span style="color:#8d857c;font-size:12px">年化 15–40%</span></td></tr>
+</table>
+</div>
+
+<div class="callout blue">
+<h4>为什么必须留着 C 这一栏</h4>
+<p>大多数人做周期分析只在 A 和 B 之间选——「已经见底」还是「还有一跌」。<strong>但这两个选项共享同一个前提：四年周期会继续存在。</strong>如果这个前提本身错了，A 和 B 一起作废。</p>
+<p>而数据里恰恰有支持 C 的证据：熊市跌幅 −92.7 → −84.4 → −83.8 → −76.7 → −53.1 是单调衰减的。<strong>如果外推这条衰减线而不是外推倍数，下一轮熊市只有 −35% 左右</strong>——那已经是纳斯达克的量级，不是加密周期了。</p>
+<p>我把 C 单列出来不是因为它更可能，是因为<strong>心里有第三个选项的人，不会在前两个选项都被证伪时手足无措</strong>。规律可能依然成立，但把「规律会变」提前放进考虑，才是真正的反刻舟求剑。</p>
+</div>
+
+<div class="scen a">
+  <div class="hd"><span>情景 A · 底已探明，慢牛已启动</span><span class="p">看 $79,009</span></div>
+  <div class="bd">
+    <p><strong>核心假设：</strong>2026-06-30 的 $58,525 就是本轮周期低点，跌幅逐轮衰减是结构性变化而非偶然。</p>
+    <p><strong>这个假设的依据：</strong>五轮熊市跌幅 −92.7 → −84.4 → −83.8 → −76.7 → −53.1，单调衰减无一例外。−80% 级别的崩盘需要一个前提：市场主体是加杠杆的散户，被迫平仓形成螺旋。现货 ETF、企业资产负债表持币、机构配置盘这三类资金<strong>没有强平线</strong>，它们的存在把螺旋掐断了。第 6 波反弹盘中 +35.8% 超过前一跌 −28.9%，是结构转折的第一个必要条件。</p>
+    <p><strong>推演路径：</strong>上一轮牛市 +692%，按 1/2.5 ~ 1/3 的衰减率外推，本轮 +230% ~ +280%。牛市长度按最近三轮的 1,059–1,067 天算，从 2026-06-30 起 + 约 1,060 天。</p>
+    <table>
+    <tr><td>起点</td><td class="num">$58,525（2026-06-30）</td></tr>
+    <tr><td>周期顶区间</td><td class="num">$193,000 – $222,000</td></tr>
+    <tr><td>见顶时间</td><td class="num">2029 年年中前后</td></tr>
+    <tr><td>中途最深回撤</td><td class="num">−28% ~ −35%</td></tr>
+    <tr><td>未来 5 个月预期</td><td class="num">宽幅震荡，净涨幅接近零</td></tr>
+    </table>
+    <p style="margin-top:14px"><strong>✅ 确认它：</strong>日线收盘站上 <code>$79,009</code> 并守住两周；随后回踩不破 $70,000 一线。</p>
+    <p><strong>❌ 否掉它：</strong>日线收盘跌破 <code>$58,525</code>。</p>
+    <p><strong>⚠️ 最容易踩的坑：</strong>把「A 成立」理解成「可以追高了」。第 04 节的数据说得很清楚——<strong>即便 A 完全正确，未来约 5 个月仍然是历史上路径效率最低的区间</strong>，年化算下来接近零。A 成立的正确操作是分批建现货，不是上杠杆。</p>
+  </div>
+</div>
+
+<div class="scen b">
+  <div class="hd"><span>情景 B · 还有最后一跌</span><span class="p">看 $66,000</span></div>
+  <div class="bd">
+    <p><strong>核心假设：</strong>三波下跌不够，本轮熊市还没走完，当前这波 +35.8% 只是一次比较大的熊市反弹。</p>
+    <p><strong>这个假设的依据：</strong>历史四轮熊市的下跌波数是 11 / 12 / 11 / 7，本轮只有 3 波，差得太远。而当前这波反弹 +35.8% / 52 天，完全落在熊市反弹的正常区间内（熊市涨波中位 +43.3%、28 天，最大 +722%）——<strong>换句话说，这个幅度本身证明不了任何事</strong>。历史上每一轮熊市都至少有一次让人以为见底的反弹。</p>
+    <p><strong>推演路径：</strong>按前三波跌幅中位 −32.1% 计算，若从当前 $76,894 附近开始第四波，目标约 $52,200；若先摸到 $79,009 附近做成双顶再跌，约 $53,600。考虑到跌幅逐波收窄的倾向（−34.6% → −28.9%），第四波可能更浅，落在 $56,000 一线。</p>
+    <table>
+    <tr><td>最终低点</td><td class="num">$48,000 – $56,000</td></tr>
+    <tr><td>对应距 ATH</td><td class="num">−55% ~ −62%（仍浅于历史）</td></tr>
+    <tr><td>见底时间</td><td class="num">2026 Q4 – 2027 Q1</td></tr>
+    <tr><td>之后周期顶</td><td class="num">$160,000 – $200,000</td></tr>
+    <tr><td>见顶时间</td><td class="num">2029 – 2030</td></tr>
+    </table>
+    <p style="margin-top:14px"><strong>✅ 确认它：</strong>在 $79,009 下方出现<strong>放量长上影</strong>，同时资金费率年化冲上 80%（多头过度拥挤）；或日线收盘跌破 <code>$66,000</code>——那是第 5 / 6 波的交界，破了说明反弹结构作废。</p>
+    <p><strong>❌ 否掉它：</strong>站上 $79,009 并守住两周。</p>
+    <p><strong>⚠️ 最容易踩的坑：</strong>因为相信 B 而完全空仓等最后一跌。历史上这一跌<strong>不一定会来</strong>，而且就算来了，$56,000 距现价也只有 −28%——为了躲这 28% 而错过启动窗口，代价可能更大。B 成立时的正确操作是降低仓位、把子弹留到 $60,000 下方，不是清仓。</p>
+  </div>
+</div>
+
+<div class="scen c">
+  <div class="hd"><span>情景 C · 四年周期终结，转成股票化慢牛</span><span class="p">看 2028 减半</span></div>
+  <div class="bd">
+    <p><strong>核心假设：</strong>四年周期这个框架本身正在失效，A 和 B 争论的前提不再成立。</p>
+    <p><strong>这个假设的依据：</strong>把五轮熊市的跌幅连成线——−92.7 → −84.4 → −83.8 → −76.7 → −53.1——这是一条很干净的衰减曲线。<strong>大多数人拿它来论证「这轮已经见底」，但它其实在说另一件事：波动率本身在系统性下降。</strong>如果外推这条衰减线而不是外推涨跌倍数，下一轮熊市大约只有 −35%。那已经是纳斯达克的量级。</p>
+    <p>同时牛市涨幅也在崩：+53,520% → +11,082% → +2,021% → +692%，每轮约为上一轮的 1/5、1/5.5、1/2.9。两条线同时收敛，指向的是同一个终点：<strong>BTC 正在从「四年一次暴涨暴跌的投机品」变成「一个波动较大的宏观资产」。</strong></p>
+    <p><strong>推演路径：</strong>没有周期顶，也没有周期底。年化收益 15%–40%，年内最大回撤 20%–35%，涨跌由实际利率、美元指数、风险偏好主导，减半的影响降到噪声级别。走势会更像纳斯达克而不是像 2021 年的 BTC。</p>
+    <table>
+    <tr><td>年化收益</td><td class="num">15% – 40%</td></tr>
+    <tr><td>年内最大回撤</td><td class="num">20% – 35%</td></tr>
+    <tr><td>周期顶 / 底</td><td class="num">不再适用</td></tr>
+    <tr><td>减半的作用</td><td class="num">降为噪声</td></tr>
+    </table>
+    <p style="margin-top:14px"><strong>✅ 确认它：</strong>2028 减半前后 6 个月内<strong>没有出现明显加速</strong>（对照第 04 节，历史上 T−450 之后每个 90 天窗口中位都为正）；且年度最大回撤连续两年不超过 −40%。</p>
+    <p><strong>❌ 否掉它：</strong>2028 之后出现任何一个 &gt;+300% 的年度行情。</p>
+    <p><strong>为什么这个情景对我们反而最友好：</strong>「熊市底部囤现货、等下一轮牛市一把梭」这套打法在 C 里彻底失效，因为不再有可识别的「底部」和「顶部」。而<strong>「找位置、控风险、赚波段」在 C 里是唯一还成立的方法</strong>——第 05 节的数据显示，4h 级别一次典型波动在牛熊环境下几乎完全一样（4.8% vs 4.9%），这套尺子不依赖周期判断。</p>
+    <p><strong>⚠️ 最容易踩的坑：</strong>用 A 或 B 的仓位管理去应对 C 的行情。在 C 里重仓等待「大级别启动」，等到的会是连续三四年的高波动横盘。</p>
+  </div>
+</div>
+
+<h3>三个情景的共同点，比分歧更可靠</h3>
+<ul>
+<li><strong>都不认为会重演 +2,000% 以上的涨幅。</strong>幅度衰减是四轮全部支持的唯一单调规律。</li>
+<li><strong>都不认为会再有 −80% 的熊市。</strong>同上，方向一致。</li>
+<li><strong>中途都要扛住 −28% 以上的回撤。</strong>四轮牛市中途共 33 次回撤，中位 −27.5%，45% 超过 −30%，最深 −64.1%。在一轮总涨 +692% 的牛市里，你依然要扛 −28%。<strong>用满杠杆拿完全程在数学上就是不可能的</strong>——这也是「合约打利润、现货囤仓」这套架构成立的根本原因。</li>
+<li><strong>$79,009 是共同的近期分水岭。</strong>不管你信哪个，这条线都值得盯。</li>
+</ul>
+
+<h2><span class="n">07</span>所以现在该怎么做</h2>
+
+<table>
+<tr><th>如果你是</th><th>这份数据给你的建议</th></tr>
+<tr><td><strong>现货囤仓的人</strong></td><td>未来约 5 个月是历史上路径效率最低的区间，正适合分批建仓。别一次买完，也别等「确认转牛」——等你确认时，$79,009 早就在下面了。</td></tr>
+<tr><td><strong>做波段的人</strong></td><td>4h 一次典型波动 4.6–4.9% / 28–32 小时，这就是你的空间预算。牛熊不用切参数。逆势单快进快出，顺势单可以拿住。</td></tr>
+<tr><td><strong>用杠杆的人</strong></td><td>这段区间上涨天数只有一半、波动却不小，是杠杆最容易被反复清算的环境。降低仓位，或者干脆等 2027 年一季度之后。</td></tr>
+<tr><td><strong>想抄底的人</strong></td><td>别按历史 −80% 挂单。这轮最低只到 −53.1%，任何按老经验挂在 −80% 的人一手都没成交。这就是刻舟求剑被直接惩罚。</td></tr>
+</table>
+
+<div class="callout red">
+<h4>最后一条，也是最重要的</h4>
+<p>上面所有内容<strong>都不该被用来决定单笔交易</strong>。周期判断的作用是决定「偏多还是偏空、仓位给多大」，不是决定「今天在哪个价位买」。今天在哪买，依然由 4h 枢轴位、触及次数、ATR 决定。</p>
+<p>把周期观点当进场依据，是亏钱的第二大来源。第一是仓位。</p>
+</div>
+
+<div class="sign">
+  <div class="l">10 年从业，不谈信仰，只拆机制。每个交易日晚 8 点更新热币分析，附完整交易计划表。<br>本文所有数据可自行复核，方法与脚本见下方说明。</div>
+  <div class="r"><div class="nm">产品大叔 ｜ Crypto PM</div><div class="hd2">@Uncle_Onchain</div></div>
+</div>
+
+<footer>
+<p><strong>数据与方法</strong>：日线来自 CoinMetrics 社区版 API（<code>PriceUSD</code>，5,879 根，2010-07-18 → 2026-08-21）；4h 与日线 OHLC 来自币安 BTCUSDT（19,736 根 4h，2017-08-17 起）。周期分解用 ZigZag 摆动算法，宏观段阈值 35%，中级段 20%，本轮细分 12%，4h 分别测 2% / 3% / 5% 三档。牛熊环境用日线收盘对 MA200 判定。路径效率 = 区间净涨幅绝对值 ÷ 区间内每日绝对涨跌幅之和。下次减半日期按 2028-04-10 估算，实际取决于出块速度。</p>
+<p><strong>局限</strong>：周期样本仅 4–5 轮，不足以做统计推断；ZigZag 分段对阈值敏感，换阈值会改变波数；2017 年前无 4h 数据；2012 那一轮属于比特币早期的异常样本，多处统计已单独标注；第 06 节为情景推演而非预测，本文不对哪一种情景给出概率或倾向。</p>
+<p>本文为市场结构研究，不构成投资建议，不代表作者实际持仓。</p>
+</footer>
+
+</body>
+</html>

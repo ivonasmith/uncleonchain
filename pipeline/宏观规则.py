@@ -298,9 +298,20 @@ def s_usd13(S):
 
 
 def s_stable_expay(S):
-    """稳定币主线：DefiLlama 全部美元稳定币 − 支付/机构类。"""
-    return _memo(S, "expay", lambda: combine_daily(lambda a, b: a - b, S.get("stable_total") or {}, S.get("stable_pay") or {})
-                 if S.get("stable_pay") else {})
+    """稳定币主线（去重）= 全部美元稳定币 − 支付/机构类 − 生息/合成类（后者部分拿 USDT/USDC 抵押铸造，不剔除会重复计算）。
+    支付类、生息类在各自出现之前记 0。"""
+    def calc():
+        tot, pay, yl = S.get("stable_total") or {}, S.get("stable_pay") or {}, S.get("stable_yield") or {}
+        if not pay or not yl:
+            return {}
+        p0, y0 = min(pay), min(yl)
+        out = {}
+        for d, v in tot.items():
+            if (d >= p0 and d not in pay) or (d >= y0 and d not in yl):
+                continue
+            out[d] = v - pay.get(d, 0) - yl.get(d, 0)
+        return out
+    return _memo(S, "expay", calc)
 
 
 def s_stable_bullets(S):
@@ -320,12 +331,40 @@ def s_yield13(S):
     return _memo(S, "yield13", lambda: chg_weeks(weekly(S.get("stable_yield") or {}), "pct"))
 
 
+def s_core13(S):
+    return _memo(S, "core13", lambda: chg_weeks(weekly(S.get("stable_core") or {}), "pct"))
+
+
+def s_tron13(S):
+    return _memo(S, "tron13", lambda: chg_weeks(weekly(S.get("stable_tron") or {}), "pct"))
+
+
+def s_pay13(S):
+    return _memo(S, "pay13", lambda: chg_weeks(weekly(S.get("stable_pay") or {}), "pct"))
+
+
+def w52(level_fn):
+    """52 周变化（%），给卡片依据里补一个长周期读数。"""
+    return lambda S: _memo(S, "w52:" + level_fn.__name__, lambda: chg_weeks(weekly(level_fn(S)), "pct", 52))
+
+
+def lv(key):
+    def f(S):
+        return S.get(key) or {}
+    f.__name__ = "lv_" + key
+    return f
+
+
 def s_btc13(S):
     return _memo(S, "btc13", lambda: chg_weeks(weekly(S.get("btc_price") or {}), "log"))
 
 
 def s_etf28(S):
     return _memo(S, "etf28", lambda: rolling_sum(S.get("etf_flow") or {}, 28) if S.get("etf_flow") else {})
+
+
+def s_etf13(S):
+    return _memo(S, "etf13", lambda: rolling_sum(S.get("etf_flow") or {}, 91) if S.get("etf_flow") else {})
 
 
 def s_btc_ndx_corr(S):
@@ -461,6 +500,19 @@ def relation_to_price(zone_cuts):
 # 级别：核心 = 进层判定；辅助 = 展示 + 只做记录；观察 = 测过但没达到可用标准，只看不用
 # 等级（L1）：已验证 > 已验证·方向 > 描述读数 > 监控；只有「已验证」可以直接影响仓位参数
 STABLE_CUTS = [(-1, "收缩", "Contracting", "dn", 0), (1, "持平", "Flat", "neutral", 0), (None, "扩张", "Expanding", "up", 0)]
+G_SC = ("L1-B 加密资金通道 · 稳定币（只确认、不预测）", "L1-B crypto funding channels · stablecoins (confirm, don't predict)")
+G_ETF = ("L1-B 加密资金通道 · 现货 ETF", "L1-B crypto funding channels · spot ETFs")
+G_FUT = ("L1-B 加密资金通道 · 期货升水（两条并列）", "L1-B crypto funding channels · futures basis (side by side)")
+G_SEP = ("L1-B 加密资金通道 · 单列观察（不计入）", "L1-B crypto funding channels · watched separately (not counted)")
+ETF_CUTS = [(0, "趋势确认（滞后）· 净流出", "Trend confirm (lagging) · outflow", "dn", 0),
+            (None, "趋势确认（滞后）· 净流入", "Trend confirm (lagging) · inflow", "up", 0)]
+ETF_TXT = ("美国现货 BTC ETF 净流入合计。ETF 资金里有散户和基差套利资金，不等于机构看多；大幅流出后没有反弹规律，不作抄底信号。"
+           "日度资金流和过去 3 日涨跌相关 0.60，和未来 1~10 日约 0.05；极端流出周之后 4 周平均 −3.5%（基准 +1.9%，p=0.20），极端流入周之后 +6.6%（p=0.30，不显著）。")
+ETF_TXT_EN = ("US spot BTC ETF net flows. ETF money includes retail and basis-trade funds — it does not mean institutions are bullish; "
+              "there is no rebound pattern after big outflows, so it is never a bottom signal. Daily flows correlate 0.60 with the past 3 days of price and ~0.05 with the next 1–10; "
+              "four weeks after extreme outflow weeks averaged −3.5% (baseline +1.9%, p=0.20), after extreme inflows +6.6% (p=0.30, not significant).")
+BASIS_TXT = "同概念不同市场：CME 是美国机构与基差套利，Deribit 是加密原生杠杆，绝对值常差几个百分点，只看各自方向和历史分位。"
+BASIS_TXT_EN = "Same concept, different markets: CME is US institutions and basis trades, Deribit is crypto-native leverage; levels often differ by several points — read each one's direction and own percentile only."
 
 INDICATORS = [
     # ================= 第一层：宏观流动性
@@ -529,48 +581,79 @@ INDICATORS = [
      "说明": "贸易加权美元（对 26 种货币）。只作确认信号，和净流动性组合成闸门，单独不计入判定。",
      "说明EN": "Trade-weighted dollar vs 26 currencies. Confirmation only; combined with net liquidity for the gate.",
      "依据": "13 周变化", "依据EN": "13-week change"},
-    {"key": "stable_expay13", "层": 1, "组": "加密原生资金（L1.5，只确认不预测）", "组EN": "Crypto-native funds (L1.5, confirm only)", "级别": "辅助",
-     "等级": "已验证·方向", "名称": "稳定币主线 · 剔除支付机构", "EN": "Stablecoins ex-payment issuers", "series": s_expay13, "fmt": "pcts",
-     "freq": "w", "来源": "DefiLlama（逐币）", "滞后": 9, "raw": "stable_expay", "rawfmt": "usd",
+    # ---- L1-B 加密资金通道（只确认、不预测）：稳定币 → 资金轮动矩阵（页面插在稳定币和 ETF 之间）→ ETF → 期货升水 → 单列观察
+    {"key": "stable_expay13", "层": 1, "组": G_SC[0], "组EN": G_SC[1], "级别": "辅助", "等级": "已验证·方向",
+     "名称": "稳定币主线（去重）· 13 周", "EN": "Stablecoin main line (de-duplicated) · 13w", "series": s_expay13, "fmt": "pcts",
+     "freq": "w", "来源": "DefiLlama（逐币）", "滞后": 9, "raw": "stable_expay", "rawfmt": "usd", "w52": w52(s_stable_expay),
      "classify": relation_to_price(STABLE_CUTS), "cuts": STABLE_CUTS,
-     "说明": "全部美元稳定币 − 支付 / 合规机构稳定币（PYUSD、RLUSD、USDG、USDGO、U、USDP、GUSD）。ETF 时代支付机构稳定币和 BTC 13 周相关 −0.43，算进来会把信号做反。替换原来的「稳定币总量」。",
-     "说明EN": "All USD stablecoins minus payment/institutional ones (PYUSD, RLUSD, USDG, USDGO, U, USDP, GUSD), which run −0.43 vs BTC over 13w in the ETF era. Replaces the old total-supply reading.",
+     "说明": "= 全部美元稳定币 − 支付 / 机构类（PYUSD、RLUSD、USDG、USDGO、USDP、GUSD、U）− 生息 / 合成类（USDe、USDf、USDS、DAI 等，"
+             "部分是拿 USDT / USDC 抵押铸造的，不剔除会重复计算）。不用 USDT+USDC：会漏掉 FDUSD、USD1 等交易用币，也去不掉支付类和重复计算的生息类。"
+             "价格先动、稳定币后增，只确认、不埋伏：稳定币增速和过去 13 周 BTC 涨跌相关 0.60，和未来 13 周相关 −0.26。",
+     "说明EN": "= all USD stablecoins − payment/institutional coins (PYUSD, RLUSD, USDG, USDGO, USDP, GUSD, U) − yield/synthetic coins "
+               "(USDe, USDf, USDS, DAI… partly minted against USDT/USDC, so keeping them double-counts). Not USDT+USDC, which misses FDUSD/USD1 "
+               "and keeps the noise. Price moves first, stablecoins follow — confirm, don't front-run: growth correlates 0.60 with the past 13 weeks of BTC and −0.26 with the next 13.",
      "依据": "13 周变化", "依据EN": "13-week change"},
-    {"key": "stable_bullets13", "层": 1, "组": "加密原生资金（L1.5，只确认不预测）", "组EN": "Crypto-native funds (L1.5, confirm only)", "级别": "辅助",
-     "等级": "已验证·方向", "名称": "交易子弹 · 交易核心剔除 Tron", "EN": "Trading bullets · core ex-Tron", "series": s_bullets13, "fmt": "pcts",
-     "freq": "w", "来源": "DefiLlama（逐币 + Tron 链）", "滞后": 9, "raw": "stable_bullets", "rawfmt": "usd",
+    {"key": "stable_bullets13", "层": 1, "组": G_SC[0], "组EN": G_SC[1], "级别": "辅助", "等级": "已验证·方向",
+     "名称": "交易子弹 · 剔除 Tron", "EN": "Trading bullets · ex-Tron", "series": s_bullets13, "fmt": "pcts",
+     "freq": "w", "来源": "DefiLlama（逐币 + Tron 链）", "滞后": 9, "raw": "stable_bullets", "rawfmt": "usd", "w52": w52(s_stable_bullets),
      "classify": relation_to_price(STABLE_CUTS), "cuts": STABLE_CUTS,
-     "说明": "(USDT+USDC+FDUSD+USD1+TUSD+USDD) − Tron 链稳定币总量。Tron 上主要是新兴市场汇款，ETF 后和 BTC 几乎无关；剔掉后最贴近交易所和主流链上的资金（ETF 后 13 周相关 0.52）。",
-     "说明EN": "(USDT+USDC+FDUSD+USD1+TUSD+USDD) minus all stablecoins on Tron (mostly EM remittances, ~uncorrelated with BTC since the ETFs). Closest proxy for exchange-side dry powder.",
+     "说明": "交易核心（USDT、USDC、FDUSD、USD1、TUSD、USDD）− Tron 链稳定币。ETF 时代和 BTC 13 周相关 0.52，最贴近交易所和主流链上的资金。"
+             "价格先动、稳定币后增，只确认、不埋伏。",
+     "说明EN": "Trading core (USDT, USDC, FDUSD, USD1, TUSD, USDD) minus all stablecoins on Tron. 0.52 correlation with BTC over 13 weeks in the ETF era — "
+               "the closest proxy for exchange-side dry powder. Confirm, don't front-run.",
      "依据": "13 周变化", "依据EN": "13-week change"},
-    {"key": "stable_yield13", "层": 1, "组": "加密原生资金（L1.5，只确认不预测）", "组EN": "Crypto-native funds (L1.5, confirm only)", "级别": "辅助",
-     "等级": "描述读数", "名称": "生息 / 合成稳定币 · 13 周", "EN": "Yield / synthetic stablecoins · 13w", "series": s_yield13, "fmt": "pcts",
-     "freq": "w", "来源": "DefiLlama（逐币）", "滞后": 9, "raw": "stable_yield", "rawfmt": "usd",
+    {"key": "stable_core13", "层": 1, "组": G_SC[0], "组EN": G_SC[1], "级别": "辅助", "等级": "描述读数",
+     "名称": "交易子弹 · 含 Tron（并列口径）", "EN": "Trading bullets · incl. Tron (parallel)", "series": s_core13, "fmt": "pcts",
+     "freq": "w", "来源": "DefiLlama（逐币）", "滞后": 9, "raw": "stable_core", "rawfmt": "usd", "w52": w52(lv("stable_core")),
+     "cuts": STABLE_CUTS,
+     "说明": "交易核心不剔除 Tron。Tron 上的 USDT 有汇款支付，也有场外入金和交易所放在 Tron 上的币，链上分不开，所以含 Tron、剔除 Tron 两种口径并列看。",
+     "说明EN": "Trading core without removing Tron. Tron USDT mixes remittances with OTC on-ramps and exchange hot wallets, which cannot be separated on-chain — so both lenses are shown.",
+     "依据": "13 周变化", "依据EN": "13-week change"},
+    {"key": "stable_yield13", "层": 1, "组": G_SC[0], "组EN": G_SC[1], "级别": "辅助", "等级": "描述读数",
+     "名称": "生息 / 合成稳定币 · 13 周", "EN": "Yield / synthetic stablecoins · 13w", "series": s_yield13, "fmt": "pcts",
+     "freq": "w", "来源": "DefiLlama（逐币）", "滞后": 9, "raw": "stable_yield", "rawfmt": "usd", "w52": w52(lv("stable_yield")),
      "cuts": [(-1, "杠杆退潮", "Leverage receding", "cool", 0), (1, "持平", "Flat", "neutral", 0), (None, "杠杆扩张", "Leverage building", "warn", 0)],
-     "说明": "USDe、USDf、BFUSD、USDS、DAI 合计。规模随资金费率和链上杠杆涨跌，当杠杆温度计看。",
-     "说明EN": "USDe, USDf, BFUSD, USDS and DAI combined. Size tracks funding rates and on-chain leverage — a leverage thermometer.",
+     "说明": "链上杠杆温度计：收缩 = 杠杆退潮。USDe、USDf、USDS、DAI 等合计（BFUSD 不在 DefiLlama 上），单列观察，不加回主线。",
+     "说明EN": "On-chain leverage thermometer: shrinking = leverage receding. USDe, USDf, USDS, DAI… (BFUSD is not on DefiLlama). Shown separately, never added back to the main line.",
      "依据": "13 周变化", "依据EN": "13-week change"},
-    {"key": "etf28", "层": 1, "组": "加密原生资金（L1.5，只确认不预测）", "组EN": "Crypto-native funds (L1.5, confirm only)", "级别": "辅助",
-     "等级": "已验证·方向", "名称": "现货 ETF · 近 4 周净流入", "EN": "Spot ETF · 4-week net flow", "series": s_etf28, "fmt": "usds",
+    {"key": "etf13", "层": 1, "组": G_ETF[0], "组EN": G_ETF[1], "级别": "辅助", "等级": "已验证·方向",
+     "名称": "现货 ETF · 近 13 周净流入", "EN": "Spot ETF · 13-week net flow", "series": s_etf13, "fmt": "usds",
      "freq": "d", "来源": "Farside（haturatu 镜像）", "滞后": 5, "raw": "etf_flow", "rawfmt": "usds",
-     "cuts": [(0, "净流出（趋势确认偏弱）", "Outflow (trend confirm weak)", "dn", 0), (None, "净流入（趋势确认偏强）", "Inflow (trend confirm strong)", "up", 0)],
-     "说明": "美国现货 BTC ETF 近 28 天净流入合计。资金跟着价格走、有滞后（和过去 3~5 天涨跌相关 0.6，和未来≈0.05）——只作趋势确认，不作反向 / 抄底信号：极端流出后 4 周平均 −3.5%，没有反弹。",
-     "说明EN": "US spot BTC ETF net flows over the last 28 days. Flows chase price with a lag (0.6 vs past 3–5 days, ~0.05 vs the future): trend confirmation only, never a contrarian/bottom signal.",
-     "依据": "28 天合计", "依据EN": "28-day sum"},
-    {"key": "cme_basis", "层": 1, "组": "期货升水（描述读数）", "组EN": "Futures basis (descriptive)", "级别": "辅助", "等级": "描述读数",
-     "名称": "CME 期货年化升水（近月）", "EN": "CME futures annualized basis (front)", "series": raw("cme_basis"), "fmt": "pct1",
-     "freq": "d", "来源": "Yahoo · CME 近月合约（自己逐日积累）", "滞后": 4, "classify": own_pct_zone(),
+     "cuts": ETF_CUTS, "说明": ETF_TXT, "说明EN": ETF_TXT_EN, "依据": "91 天合计", "依据EN": "91-day sum"},
+    {"key": "etf28", "层": 1, "组": G_ETF[0], "组EN": G_ETF[1], "级别": "辅助", "等级": "已验证·方向",
+     "名称": "现货 ETF · 近 4 周净流入", "EN": "Spot ETF · 4-week net flow", "series": s_etf28, "fmt": "usds",
+     "freq": "d", "来源": "Farside（haturatu 镜像）", "滞后": 5, "raw": "etf_flow", "rawfmt": "usds",
+     "cuts": ETF_CUTS, "说明": ETF_TXT, "说明EN": ETF_TXT_EN, "依据": "28 天合计", "依据EN": "28-day sum"},
+    {"key": "cme_basis", "层": 1, "组": G_FUT[0], "组EN": G_FUT[1], "级别": "辅助", "等级": "描述读数",
+     "名称": "H1 · CME 近月年化升水", "EN": "H1 · CME front-month annualized basis", "series": raw("cme_basis"), "fmt": "pct1",
+     "freq": "d", "来源": "Yahoo · CME 近月合约（每天抓一次）", "滞后": 4, "classify": own_pct_zone(),
      "cuts": [(None, "—", "—", "neutral", 0)],
-     "说明": "(CME 近月 / 同一时点现货 − 1) × 365 / 剩余天数，到期前约 5 个交易日换下一张。美国机构和基差套利资金的杠杆意愿；高升水时 ETF 流入里套利占比上升。没有免费历史，从 2026-10 起自己积累，先当描述读数，和 Deribit 并列。",
-     "说明EN": "(CME front month / spot at the same moment − 1) × 365 / days to expiry, rolling ~5 trading days before expiry. US institutional and basis-trade appetite. No free history: recorded daily since 2026-10, descriptive only.",
+     "说明": "(CME 近月 / 同一时点现货 − 1) × 365 / 剩余天数，到期前约 5 个交易日换下一张；Yahoo 每天只在日更时抓一次。" + BASIS_TXT,
+     "说明EN": "(CME front month / spot at the same moment − 1) × 365 / days to expiry, rolling ~5 trading days before expiry; fetched once a day. " + BASIS_TXT_EN,
      "依据": "自身历史分位", "依据EN": "own-history percentile"},
-    {"key": "deribit_basis", "层": 1, "组": "期货升水（描述读数）", "组EN": "Futures basis (descriptive)", "级别": "辅助", "等级": "描述读数",
-     "名称": "Deribit 3 个月期年化升水", "EN": "Deribit 3-month annualized basis", "series": raw("deribit_basis"), "fmt": "pct1",
+    {"key": "deribit_basis", "层": 1, "组": G_FUT[0], "组EN": G_FUT[1], "级别": "辅助", "等级": "描述读数",
+     "名称": "H2 · Deribit 3 个月年化升水", "EN": "H2 · Deribit 3-month annualized basis", "series": raw("deribit_basis"), "fmt": "pct1",
      "freq": "d", "来源": "Deribit（前后两张插值成固定 90 天）", "滞后": 3, "classify": own_pct_zone(),
      "cuts": [(None, "—", "—", "neutral", 0)],
-     "说明": "加密原生杠杆资金的升水。和 CME 是同概念不同市场，绝对水平常差几个百分点，只看方向和自身历史分位。",
-     "说明EN": "Crypto-native leveraged demand. Same concept as CME but a different market — levels often differ by several points, so only direction and own-history percentile matter.",
+     "说明": "前后两张交割合约按剩余天数插值成固定 90 天（插不了时取剩余 ≥30 天、最接近 90 天的一张）。" + BASIS_TXT,
+     "说明EN": "Two delivery contracts interpolated to a constant 90 days (else the nearest contract with ≥30 days left). " + BASIS_TXT_EN,
      "依据": "自身历史分位", "依据EN": "own-history percentile"},
+    {"key": "stable_tron13", "层": 1, "组": G_SEP[0], "组EN": G_SEP[1], "级别": "辅助", "等级": "监控",
+     "名称": "Tron 链稳定币 · 13 周", "EN": "Stablecoins on Tron · 13w", "series": s_tron13, "fmt": "pcts",
+     "freq": "w", "来源": "DefiLlama（按链）", "滞后": 9, "raw": "stable_tron", "rawfmt": "usd", "w52": w52(lv("stable_tron")),
+     "cuts": [(-1, "收缩", "Contracting", "neutral", 0), (1, "持平", "Flat", "neutral", 0), (None, "扩张", "Expanding", "neutral", 0)],
+     "说明": "Tron 是混合用途：汇款支付、场外入金、交易所放在 Tron 上的币都有。已含在主线（去重）里，只在「交易子弹」里剔除。"
+             "与 BTC 周度相关 0.00、13 周 0.15（2022–2026 全段 13 周 0.55）。",
+     "说明EN": "Tron is mixed-use (remittances, OTC on-ramps, exchange wallets). Included in the main line, removed only from trading bullets. "
+               "Correlation with BTC: 0.00 weekly, 0.15 over 13 weeks (0.55 over 2022–2026).",
+     "依据": "13 周变化", "依据EN": "13-week change"},
+    {"key": "stable_pay13", "层": 1, "组": G_SEP[0], "组EN": G_SEP[1], "级别": "辅助", "等级": "监控",
+     "名称": "支付 / 机构稳定币 · 13 周", "EN": "Payment / institutional stablecoins · 13w", "series": s_pay13, "fmt": "pcts",
+     "freq": "w", "来源": "DefiLlama（逐币）", "滞后": 9, "raw": "stable_pay", "rawfmt": "usd", "w52": w52(lv("stable_pay")),
+     "cuts": [(-1, "收缩", "Contracting", "neutral", 0), (1, "持平", "Flat", "neutral", 0), (None, "扩张", "Expanding", "neutral", 0)],
+     "说明": "支付机构稳定币不是交易资金：一年变成 2.8 倍，与 BTC 13 周相关 −0.43（BTC 弱时反而增长）。不计入主线。",
+     "说明EN": "Payment stablecoins are not trading money: 2.8× in a year, −0.43 correlation with BTC over 13 weeks (they grow when BTC is weak). Excluded from the main line.",
+     "依据": "13 周变化", "依据EN": "13-week change"},
     {"key": "btc_ndx_corr", "层": 1, "组": "联动与监控", "组EN": "Linkage & monitoring", "级别": "辅助", "等级": "描述读数",
      "名称": "BTC − 纳指 52 周滚动相关", "EN": "BTC–Nasdaq 52w rolling correlation", "series": s_btc_ndx_corr, "fmt": "x", "freq": "w",
      "来源": "CoinMetrics + FRED（自算）", "滞后": 10,
@@ -733,6 +816,15 @@ RULE_CHANGES = [
            "Logs up to 2026-10-02 were written under the old rules and stay unchanged."},
 ]
 
+RULE_CHANGES.append(
+    {"日期": "2026-10-04", "范围": "L1-B 加密资金通道", "EN范围": "L1-B crypto funding channels",
+     "内容": "「L1.5」更名为「L1-B 加密资金通道（只确认、不预测）」。稳定币主线改为去重口径：总供给 − 支付/机构类 − 生息/合成类（原为只剔除支付机构）；"
+             "交易子弹旁并列「含 Tron」口径；Tron 链和支付机构稳定币单列观察、不计入；卡片补 52 周变化。新增现货 ETF 13 周净流入和"
+             "「资金轮动矩阵」（ETF 13 周 × 交易子弹 13 周）；ETF 标签统一为「趋势确认（滞后）」。L1 每日一行的 L1-B 段改为 主线(去重) / 交易子弹 / ETF 13 周 / 轮动格。",
+     "EN": "'L1.5' renamed to 'L1-B crypto funding channels (confirm, don't predict)'. The stablecoin main line is now de-duplicated: total − payment − yield/synthetic "
+           "(previously payment only); an incl.-Tron lens sits beside trading bullets; Tron and payment coins are watched separately; 52-week changes added. "
+           "New: spot ETF 13-week flow and the rotation matrix (ETF 13w × trading bullets 13w); ETF labels unified as 'trend confirmation (lagging)'."})
+
 # 情境表（L1 规格 §3；2022 年以来 BTC 同期 13 周收益中位数 / 收涨占比，只描述当下，不预测未来 13 周）
 SCENARIO_NDX = {("急升", "强"): (27.1, 79), ("急升", "弱"): (-17.8, 13), ("平台", "强"): (13.5, 72), ("平台", "弱"): (-12.0, 33)}
 SCENARIO_CREDIT = {("急升", "收窄"): (-3.2, 44), ("急升", "走阔"): (-27.0, 15), ("未急升", "收窄"): (12.5, 67), ("未急升", "走阔"): (-7.6, 39)}
@@ -801,12 +893,18 @@ def judge(S, ind, as_of):
         ks = [k for k in rs if k <= r["截至"]]
         if ks:
             lv = FMT[ind.get("rawfmt", "x")](rs[max(ks)])
-            if ind["key"] in ("ex_netflow", "etf28"):          # 原始序列是逐日流量，不是「水平」
+            if ind["key"] in ("ex_netflow", "etf28", "etf13"):          # 原始序列是逐日流量，不是「水平」
                 basis += f"，当日 {lv}"
                 basis_en += f", latest day {lv}"
             else:
                 basis += f"（水平 {lv}）"
                 basis_en += f" (level {lv})"
+    if ind.get("w52"):
+        w = ind["w52"](S)
+        ks = [k for k in w if k <= r["截至"]]
+        if ks:
+            basis += f"，52 周 {w[max(ks)]:+.1f}%"
+            basis_en += f", 52w {w[max(ks)]:+.1f}%"
     if ind["key"] == "real13":
         disp = basis.split("，")[0].replace("水平 ", "")
     return {"key": ind["key"], "名称": ind["名称"], "名称EN": ind["EN"], "层": ind["层"], "级别": ind["级别"],
@@ -842,6 +940,35 @@ def scenario_cells(st):
         b = (row, col, *SCENARIO_CREDIT[(row, col)])
     worse = min([x for x in (a, b) if x], key=lambda x: x[2], default=None)
     return a, b, worse
+
+
+# 资金轮动矩阵（ETF 13 周 × 交易子弹 13 周）：看两条资金通道是一起进、一起撤，还是互相换手
+ROTATION = {
+    ("入", "增"): ("新增资金共振（顺风确认）", "New money on both channels (tailwind confirm)", "up"),
+    ("入", "减"): ("存量换手（背离，不加仓）", "Existing money switching channels (divergence, no adds)", "warn"),
+    ("出", "增"): ("链上资金承接（观察）", "On-chain money absorbing (watch)", "neutral"),
+    ("出", "减"): ("资金双撤（逆风确认）", "Money leaving both channels (headwind confirm)", "dn"),
+}
+
+
+def _last(series, d):
+    ks = [k for k in series if k <= d]
+    return (max(ks), series[max(ks)]) if ks else (None, None)
+
+
+def rotation(S, as_of):
+    de, etf = _last(s_etf13(S), as_of)
+    db, b = _last(s_bullets13(S), as_of)
+    if etf is None or b is None:
+        return None
+    _, busd = _last(_memo(S, "bullets13usd", lambda: chg_weeks(weekly(s_stable_bullets(S)), "diff")), as_of)
+    _, cpct = _last(s_core13(S), as_of)
+    _, cusd = _last(_memo(S, "core13usd", lambda: chg_weeks(weekly(S.get("stable_core") or {}), "diff")), as_of)
+    k = ("入" if etf >= 0 else "出", "增" if b >= 0 else "减")
+    zh, en, tone = ROTATION[k]
+    return {"格": k, "名称": zh, "名称EN": en, "tone": tone, "ETF13": etf, "ETF截至": de, "子弹13": b, "子弹13USD": busd,
+            "含Tron13": cpct, "含Tron13USD": cusd, "子弹截至": db,
+            "合计USD": (etf + busd) if busd is not None else None}
 
 
 def l1_verdict(rs):
@@ -880,7 +1007,7 @@ def l1_verdict(rs):
             "情境": {"纳指口径": a, "信用口径": b, "较差": worse}, "闸门": gate, "警戒": alert}
 
 
-def l1_line(rs, verdict):
+def l1_line(rs, verdict, rot=None):
     """L1 输出一行（规格 §4）。"""
     by = {x["key"]: x for x in rs if x and x["层"] == 1}
 
@@ -898,12 +1025,12 @@ def l1_line(rs, verdict):
     cell = f"{w[0]}·{w[1]}" if w else "—"
     zh = (f"L1：[{cell}｜{verdict['结论']}]｜乐观度z {g('optimism_z')}｜信用：BAA 13周Δ {g('baa13')} / 高收益利差 {lv('hy13')}（13周 {g('hy13')}）"
           f"｜实际利率 {g('real13')}｜净流动性13周 {g('netliq13')} / 美元13周 {g('usd13')}"
-          f"｜稳定币：剔除支付机构13周 {g('stable_expay13')} / 交易子弹13周 {g('stable_bullets13')}｜ETF 4周 {g('etf28')}")
+          f"｜L1-B：主线(去重)13周 {g('stable_expay13')} / 交易子弹13周 {g('stable_bullets13')} / ETF 13周 {g('etf13')} / 轮动格 {rot['名称'] if rot else '—'}")
     cell_en = {"急升": "surging", "平台": "plateau", "未急升": "not surging", "强": "strong", "弱": "weak", "收窄": "narrowing", "走阔": "widening"}
     ce = f"{cell_en.get(w[0], w[0])}·{cell_en.get(w[1], w[1])}" if w else "—"
     en = (f"L1: [{ce} | {verdict['结论EN']}] | optimism z {g('optimism_z')} | credit: BAA 13wΔ {g('baa13')} / HY {lv('hy13')} (13w {g('hy13')})"
           f" | real yield {g('real13')} | net liquidity 13w {g('netliq13')} / USD 13w {g('usd13')}"
-          f" | stablecoins: ex-payment 13w {g('stable_expay13')} / bullets 13w {g('stable_bullets13')} | ETF 4w {g('etf28')}")
+          f" | L1-B: main line (de-dup) 13w {g('stable_expay13')} / trading bullets 13w {g('stable_bullets13')} / ETF 13w {g('etf13')} / rotation {rot['名称EN'] if rot else '—'}")
     return zh, en
 
 
@@ -1066,7 +1193,8 @@ def daily_log(date, S, sd, prev_log, sources):
     vs = {i: layer_verdict(i, rs) for i in LAYERS}
     lp = launchpad_summary(sd)
     comp = composite(vs)
-    l1zh, l1en = l1_line(rs, vs[1])
+    rot = rotation(S, date)
+    l1zh, l1en = l1_line(rs, vs[1], rot)
     layers = []
     for i, meta in LAYERS.items():
         extra = {k: vs[i][k] for k in ("状态", "情境", "闸门", "警戒") if k in vs[i]}
@@ -1074,7 +1202,7 @@ def daily_log(date, S, sd, prev_log, sources):
                        **{k: vs[i][k] for k in ("结论", "结论EN", "短", "短EN", "tone", "分", "依据", "依据EN")}, **extra,
                        "读数": [{k: x.get(k) for k in _READ_KEYS} for x in rs if x["层"] == i]})
     return {"类型": "日", "版本": 2, "日期": date, "生成时间UTC": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M"),
-            "综合": comp, "L1行": l1zh, "L1行EN": l1en, "层": layers, "发射台": lp, "预警": alerts(rs, prev_log, lp, vs[1]),
+            "综合": comp, "L1行": l1zh, "L1行EN": l1en, "轮动": rot, "层": layers, "发射台": lp, "预警": alerts(rs, prev_log, lp, vs[1]),
             "数据源": {k: {"ok": v.get("ok"), "最新日期": v.get("最新日期")} for k, v in (sources or {}).items()},
             "核心缺失": [ind["名称"] for ind in INDICATORS if ind["级别"] == "核心" and not any(x["key"] == ind["key"] and not x["过期"] for x in rs)]}
 

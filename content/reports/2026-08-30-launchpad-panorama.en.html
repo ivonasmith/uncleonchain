@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<!--meta
+标题: 141 Launchpads, One Ruler: Where the Money Is and Where Retail Fits
+日期: 2026-08-30
+摘要: Issuance is back to 56.5% of its peak, discovery only 28.6%; pump.fun took 47.0% of all launchpad fees in August.
+-->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Weekend Special: 141 Launchpads, One Ruler — Where the Money Is and Where Retail Fits</title>
+<style>
+:root{--ink:#1c1a17;--body:#3a352e;--faint:#9a9186;--line:#ece7e0;--paper:#fff;
+--down:#c02128;--up:#15628f;--neu:#8a6d1f;--wash:#faf8f5;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--body);
+font:16px/1.75 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;}
+.wrap{max-width:860px;margin:0 auto;padding:0 22px 80px}
+h1,h2,h3,.dek{font-family:Georgia,"Songti SC","Times New Roman",serif}
+h1{font-size:40px;line-height:1.2;color:var(--ink);margin:56px 0 10px;letter-spacing:-.5px}
+.dek{font-size:19px;color:var(--body);margin:0 0 22px;line-height:1.5}
+.meta{font-size:13px;color:var(--faint);border-top:1px solid var(--line);
+border-bottom:1px solid var(--line);padding:10px 0;margin-bottom:40px}
+h2{font-size:26px;color:var(--ink);margin:64px 0 6px;line-height:1.3}
+h2 .num{display:block;font-family:-apple-system,sans-serif;font-size:12px;letter-spacing:2px;
+color:var(--faint);font-weight:600;margin-bottom:6px}
+h3{font-size:19px;color:var(--ink);margin:34px 0 8px}
+p{margin:14px 0}
+a{color:var(--up)}
+.lede{font-size:18px;line-height:1.7;color:var(--ink)}
+/* 核心结论卡 */
+.keys{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);
+border:1px solid var(--line);margin:30px 0}
+.keys div{background:var(--paper);padding:16px 14px}
+.keys b{display:block;font-family:Georgia,serif;font-size:28px;color:var(--ink);line-height:1.1}
+.keys span{display:block;font-size:13px;color:var(--faint);margin-top:6px;line-height:1.45}
+/* 目录 */
+nav.toc{background:var(--wash);padding:20px 24px;margin:34px 0}
+nav.toc b{font-size:13px;letter-spacing:1px;color:var(--faint)}
+nav.toc ol{margin:10px 0 0;padding-left:20px;columns:2;column-gap:30px;font-size:14.5px}
+nav.toc li{margin:5px 0;break-inside:avoid}
+/* 表 */
+table{border-collapse:collapse;width:100%;margin:20px 0;font-size:14.5px}
+th,td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{font-size:12.5px;color:var(--faint);font-weight:600;letter-spacing:.5px;
+border-bottom:1.5px solid #d9d2c8}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+tr.hi td{background:#fdf8ee}
+caption{caption-side:bottom;font-size:12.5px;color:var(--faint);text-align:left;padding-top:8px}
+/* 图 */
+.fig{margin:30px 0;border:1px solid var(--line);padding:16px 12px 10px}
+.fig figcaption{font-family:Georgia,serif;font-size:16px;color:var(--ink);
+margin:0 4px 12px;line-height:1.4}
+.ax{font-size:11px;fill:#9a9186;font-family:-apple-system,sans-serif}
+.lbl{font-size:12px;fill:#1c1a17;font-family:-apple-system,sans-serif;font-weight:600}
+.lbl2{font-size:12px;fill:#3a352e;font-family:-apple-system,sans-serif}
+.rowlbl{font-size:13px;fill:#1c1a17;font-family:-apple-system,sans-serif}
+.note{font-size:11.5px;fill:#9a9186;font-family:-apple-system,sans-serif}
+/* 提示块 */
+.warn{border-left:3px solid var(--down);background:#fdf6f6;padding:12px 16px;margin:20px 0;font-size:15px}
+.tip{border-left:3px solid var(--up);background:#f5f8fb;padding:12px 16px;margin:20px 0;font-size:15px}
+.rule{border-left:3px solid var(--neu);background:#fdfaf2;padding:12px 16px;margin:20px 0;font-size:15px}
+.warn b,.tip b,.rule b{color:var(--ink)}
+/* 折叠 */
+details{border:1px solid var(--line);margin:18px 0}
+summary{cursor:pointer;padding:11px 16px;background:var(--wash);font-size:14.5px;color:var(--ink);
+font-weight:600;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"▸ ";color:var(--faint)}
+details[open] summary::before{content:"▾ "}
+details .inner{padding:4px 16px 12px}
+/* 卡片列 */
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:22px 0}
+.card{border:1px solid var(--line);padding:16px}
+.card h4{margin:0 0 8px;font-size:15.5px;color:var(--ink);font-family:Georgia,serif}
+.card p{margin:6px 0;font-size:14px}
+ul,ol{padding-left:22px}li{margin:7px 0}
+code{background:var(--wash);padding:1px 5px;font-size:13px;
+font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:#5a5348;word-break:break-all}
+pre{background:var(--wash);padding:14px 16px;overflow-x:auto;font-size:12.5px;
+line-height:1.6;font-family:ui-monospace,Menlo,monospace;color:#4a443b;margin:16px 0}
+hr{border:0;border-top:1px solid var(--line);margin:56px 0}
+footer{border-top:1px solid var(--line);margin-top:60px;padding-top:20px;
+font-size:13px;color:var(--faint)}
+.sig{font-family:Georgia,serif;font-size:15px;color:var(--ink)}
+@media(max-width:640px){h1{font-size:30px}.keys{grid-template-columns:1fr 1fr}
+.cards{grid-template-columns:1fr}nav.toc ol{columns:1}}
+</style></head>
+<body><div class="wrap">
+<h1>Weekend Special: 141 Launchpads, One Ruler — Where the Money Is and Where Retail Fits</h1>
+<p class="dek">August 2026 · 141 launchpads measured on one ruler: fees.</p>
+<div class="meta">Uncle Onchain · Weekend Special · data as of 2026-08-29</div>
+<p>August 2026 data. Measured on one metric only: fees. Token issuance has climbed back to 57% of its all-time peak. The terminals people use to <em>find</em> those tokens are still stuck at 29%. This report measures where that gap sits and what is left unoccupied.
+Sources: DefiLlama Fees API (all 141 protocols in the Launchpad category, pulled 2026-08-29), full on-chain event scans of Flap (BSC), Pons V1 and pools.trade (Robinhood Chain), the official <a href="http://ponsfamily.com/">ponsfamily.com</a> analytics and graduated list (2026-08-30), launch.o1.exchange, plus official documentation from pump.fun, o1 and Hyperliquid. Every number below is either measured directly or derived from a stated formula. Where something could not be verified, the final section says so.</p>
+<hr />
+<h2>Three-minute version</h2>
+<ul>
+<li>The primary market did not die. It bottomed in June 2026 at 19.3% of its own peak and is now at <strong>56.5%</strong>. The discovery layer — the bots, terminals and screeners people use to find tokens — bottomed at 14.2% and only recovered to 28.6%. Coins are being issued. Buyers have not come back.</li>
+<li><strong>pump.fun took 47.0% of every launchpad fee dollar in August</strong> — $45.1M of $96.0M.<div class="tip">47.0% of the entire category's fees, from one platform. Over 24 months it has lost the monthly crown exactly twice, and never twice in a row.</div>
+</li>
+<li><strong>Robinhood Chain is already #2 by 30-day fees</strong> ($28.5M) with 46 live launchpads. 35.3% of its all-time fees were earned in the last 30 days. Newest battlefield, and the most crowded.</li>
+<li><strong>Flap's fees went 3.9× in one month.</strong> 58.5% of that came from taking share off four.meme, not from the category growing.<div class="tip">$5.04M of Flap's $8.61M gain was taken from a competitor. $3.57M came from growth.</div>
+</li>
+<li>Survival rates track the denominator, not the mechanism. pools.trade graduated 2.43% of 2,263 launches in month one; Pons has graduated 0.117% of 349,200; Flap graduates 0.237% of 70,000 a day. <strong>The more machine-made the denominator, the lower the ratio.</strong><div class="tip">2,263 launches → 2.43% graduated. 349,200 launches → 0.117% graduated.</div>
+</li>
+<li>Death in this category is a cliff, not a slope. clanker went from $22.39M monthly to $207k in six months — <strong>down 99.1% while the category grew 32%</strong>.<div class="tip">Down 99.1% in six months while its own category grew 32%.</div>
+</li>
+<li>Pons's funnel: <strong>349,200 launches → 407 graduated (0.117%) → 29 above $1M (0.0083%)</strong>. The platform token is 47.7% of all graduated market cap — dominant, but not the only thing worth anything.</li>
+<li>The most useful thing here for a retail trader is not a coin. It is knowing which segment of this market is priced for competition and which is not.</li>
+</ul>
+<hr />
+<h2>1. One ruler, or the comparison is meaningless</h2>
+<p>Two things get mixed constantly: how far something has fallen from its peak, and how far it has bounced off its bottom. They point in opposite directions and can both be true at once.
+Everything below uses one ruler: <strong>percentage of that segment's own all-time monthly peak fee revenue.</strong></p>
+<div class="tip">Issuance is back to 56.5% of its own peak. Discovery is at 28.6%. Same ruler, same month.
+Both peaks landed in the same month, January 2025. Token issuance peaked at $161.4M. The discovery layer — Axiom, Photon, BullX, GMGN, Trojan, DEX Screener, the trading bots, excluding pump.fun's own terminal and Jupiter's aggregator — peaked at $302.6M.</div>
+<table>
+<thead>
+<tr>
+<th>Segment</th>
+<th>Jan 2025 peak</th>
+<th>Jun 2026 trough</th>
+<th>Aug 2026</th>
+<th>% of own peak</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Issuance (launchpads)</td>
+<td>$161.4M</td>
+<td>19.3%</td>
+<td>$91.2M</td>
+<td>56.5%</td>
+</tr>
+<tr>
+<td>Discovery (terminals/bots)</td>
+<td>$302.6M</td>
+<td>14.2%</td>
+<td>$86.7M</td>
+<td>28.6%</td>
+</tr>
+</tbody>
+</table>
+<p>Two things fall out of this immediately.
+First, in January 2025 discovery earned <strong>65%</strong> of the two segments' combined revenue. In August 2026 it earns 48.7%. The money moved from finding tokens to issuing them.
+Second, issuance recovered roughly twice as far as discovery. The plumbing that produces supply has healed. The plumbing that produces demand has not.</p>
+<hr />
+<h2>2. The market is not dead. It is recovering unevenly.</h2>
+<p>Monthly launchpad fees, selected months: Jun 2024 $22.2M → Nov 2024 $101.6M → <strong>Jan 2025 $161.4M (peak)</strong> → Jun 2025 $61.1M → Oct 2025 $106.9M → Jan 2026 $110.7M → Jun 2026 $31.2M (trough) → Jul 2026 $71.3M → Aug 2026 $91.2M.
+That is a doubling off the June low in two months. Anyone describing this category as dead is reading a chart that stopped in June.
+The discovery layer, same window, tells a different story — and it is not a uniform story. Broken out per platform, from each one's own peak to August 2026:</p>
+<table>
+<thead>
+<tr>
+<th>Platform</th>
+<th>Own peak</th>
+<th>Aug 2026</th>
+<th>% of own peak</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>tradeXYZ</td>
+<td>$9.54M (Jul 2026)</td>
+<td>$7.33M</td>
+<td>76.9%</td>
+</tr>
+<tr>
+<td>Terminal</td>
+<td>$6.33M (Jan 2026)</td>
+<td>$3.89M</td>
+<td>61.3%</td>
+</tr>
+<tr>
+<td>GMGN</td>
+<td>$44.62M (Oct 2025)</td>
+<td>$24.19M</td>
+<td>54.2%</td>
+</tr>
+<tr>
+<td>Axiom</td>
+<td>$92.66M (May 2025)</td>
+<td>$29.69M</td>
+<td>32.0%</td>
+</tr>
+<tr>
+<td>DEX Screener</td>
+<td>$27.03M (Dec 2024)</td>
+<td>$3.58M</td>
+<td>13.2%</td>
+</tr>
+<tr>
+<td>Maestro</td>
+<td>$9.97M (Jan 2025)</td>
+<td>$0.94M</td>
+<td>9.4%</td>
+</tr>
+<tr>
+<td>Trojan</td>
+<td>$34.55M (Jan 2025)</td>
+<td>$1.00M</td>
+<td>2.9%</td>
+</tr>
+<tr>
+<td>Photon</td>
+<td>$84.59M (Jan 2025)</td>
+<td>$0.62M</td>
+<td>0.7%</td>
+</tr>
+<tr>
+<td>moonshot.money</td>
+<td>$34.52M (Jan 2025)</td>
+<td>$0.22M</td>
+<td>0.6%</td>
+</tr>
+<tr>
+<td>BONKbot</td>
+<td>$14.15M (Mar 2024)</td>
+<td>$0.07M</td>
+<td>0.5%</td>
+</tr>
+<tr>
+<td>Banana Gun</td>
+<td>$8.94M (Mar 2024)</td>
+<td>$8,235</td>
+<td>0.1%</td>
+</tr>
+<tr>
+<td>BullX</td>
+<td>$54.65M (Jan 2025)</td>
+<td>$445</td>
+<td>0.0%</td>
+</tr>
+</tbody>
+</table>
+<p>fomo Wallet ($11.09M) and pump.fun Mobile ($3.56M) are both at their peaks right now — they are new, so their peak is today.
+The aggregate "28.6%" hides a purge. Axiom and GMGN together are 62.2% of the segment. BullX, at $445 for the entire month, is functionally gone. This is not a segment in a drawdown. It is a segment that changed hands.</p>
+<hr />
+<h2>3. pump.fun is still pump.fun</h2>
+<p>30-day fees $45.13M, <strong>47.0% of the entire $96.03M category</strong>. Cumulative $1.199B. Monthly trend: Jun 2026 $23.6M → Jul $28.4M → Aug $42.71M. Single-day record $15,455,966 on 2025-01-24.
+Over the last 24 months it has won the monthly fee crown every month except two: July 2025 (lost to BONK.fun at $33.4M, pump's share 18.8%) and October 2025 (lost to four.meme at $44.0M, pump's share 35.0%). Its monthly share has ranged from 18.8% to 93.1%. It has never lost two consecutive months.</p>
+<h3>The September 1 fee change, read properly</h3>
+<p>The most repeated version of this is wrong. <strong>The bonding curve fee is not changing. It stays at 1.25%.</strong> What changes is the fee on graduated PumpSwap canonical pools, and it scales <em>down</em> with market cap.
+Effective 2026-09-01 20:00 UTC. Source: <code>pump-fun/pump-public-docs</code>, <code>docs/FEE_PROGRAM_README.md</code>. Fee program address <code>pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ</code>. Market cap for tiering is computed as <code>virtualSolReserves × mintSupply ÷ virtualTokenReserves</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Approx. market cap</th>
+<th>Creator</th>
+<th>Protocol</th>
+<th>LP</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bonding curve (any)</td>
+<td>0.300%</td>
+<td>0.950%</td>
+<td>0%</td>
+<td>1.25%</td>
+</tr>
+<tr>
+<td>$0–85k</td>
+<td>0.300%</td>
+<td>0.930%</td>
+<td>0.02%</td>
+<td>1.25%</td>
+</tr>
+<tr>
+<td>$85k–300k</td>
+<td>0.950%</td>
+<td>0.05%</td>
+<td>0.20%</td>
+<td>1.20%</td>
+</tr>
+<tr>
+<td>$900k–2M</td>
+<td>0.750%</td>
+<td>0.05%</td>
+<td>0.20%</td>
+<td>1.00%</td>
+</tr>
+<tr>
+<td>$5–6M</td>
+<td>0.550%</td>
+<td>0.05%</td>
+<td>0.20%</td>
+<td>0.80%</td>
+</tr>
+<tr>
+<td>$10–11M</td>
+<td>0.300%</td>
+<td>0.05%</td>
+<td>0.20%</td>
+<td>0.55%</td>
+</tr>
+<tr>
+<td>$20M+</td>
+<td>0.050%</td>
+<td>0.05%</td>
+<td>0.20%</td>
+<td>0.30%</td>
+</tr>
+</tbody>
+</table>
+<p>Three readings worth keeping:
+<strong>The total rate falls monotonically from 1.25% to 0.30%. Bigger tokens trade cheaper.</strong></p>
+<div class="tip">Above $20M market cap, pump.fun keeps 0.05% and hands the creator 0.05%. This is explicit "keep the big ones" pricing. Historically graduated tokens leaked out to Raydium and aggregators; this plugs that hole.
+<strong>The $85k tier is a structural break in who gets paid.</strong> Below it, the protocol takes 0.93–0.95% and the creator 0.30%. Above it, the protocol drops to 0.05% and the creator jumps to 0.95%. pump.fun keeps the small-token money and hands the large-token money to creators — buying creator loyalty to keep large tokens in its own pools.
+<strong>The direction of the revenue impact is negative; the magnitude is a bet.</strong> Every tier above $85k pays the protocol an order of magnitude less than today. It is betting that retained volume more than compensates. September's DefiLlama number will settle it. That is the single most informative data point in this category next month.
+⚠️ Not verified: whether the on-chain FeeConfig account matches this published table exactly. The docs state tiers can be changed without client changes. Values above are the officially published figures as of 2026-08-29.</div>
+<hr />
+<h2>4. The chain picture</h2>
+<p>Multi-chain protocols are split evenly across their chains; the total reconciles to $96.03M.</p>
+<table>
+<thead>
+<tr>
+<th>Chain</th>
+<th>Launchpads</th>
+<th>30d fees</th>
+<th>Cumulative</th>
+<th>Avg per launchpad</th>
+<th>30d ÷ cumulative</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Solana</td>
+<td>43</td>
+<td>$50.59M</td>
+<td>$1.575B</td>
+<td>$1.18M</td>
+<td>3.2%</td>
+</tr>
+<tr>
+<td>Robinhood Chain</td>
+<td>46</td>
+<td>$28.50M</td>
+<td>$80.8M</td>
+<td>$620k</td>
+<td>35.3%</td>
+</tr>
+<tr>
+<td>Monad</td>
+<td>5</td>
+<td>$3.63M</td>
+<td>$28.8M</td>
+<td>$726k</td>
+<td>12.6%</td>
+</tr>
+<tr>
+<td>BSC</td>
+<td>17</td>
+<td>$3.40M</td>
+<td>$109.4M</td>
+<td>$200k</td>
+<td>3.1%</td>
+</tr>
+<tr>
+<td>X Layer</td>
+<td>4</td>
+<td>$2.84M</td>
+<td>$5.8M</td>
+<td>$710k</td>
+<td>49.2%</td>
+</tr>
+<tr>
+<td>Base</td>
+<td>27</td>
+<td>$2.57M</td>
+<td>$44.1M</td>
+<td>$95k</td>
+<td>5.8%</td>
+</tr>
+<tr>
+<td>MegaETH</td>
+<td>3</td>
+<td>$0.67M</td>
+<td>$3.4M</td>
+<td>$222k</td>
+<td>19.5%</td>
+</tr>
+<tr>
+<td>Ethereum</td>
+<td>14</td>
+<td>$0.22M</td>
+<td>$26.6M</td>
+<td>$16k</td>
+<td>0.8%</td>
+</tr>
+<tr>
+<td>Arbitrum</td>
+<td>8</td>
+<td>$0.19M</td>
+<td>$25.1M</td>
+<td>$24k</td>
+<td>0.8%</td>
+</tr>
+<tr>
+<td>Hyperliquid L1</td>
+<td>6</td>
+<td>$0.10M</td>
+<td>$1.5M</td>
+<td>$17k</td>
+<td>7.1%</td>
+</tr>
+</tbody>
+</table>
+<p>Read these columns as three different questions, because they answer three different things.
+<strong>Total fees = real volume.</strong> This is the one that matters first. Solana at $50.6M is still the market.
+<strong>Launchpad count = heat and competition.</strong> A chain with three launchpads does not have high average revenue because it is efficient — it has high average revenue because nobody showed up. Count is a demand signal, not a dilution signal.
+<strong>Average per launchpad = concentration only.</strong> Never rank chains on it.
+<strong>30d ÷ cumulative = how new this chain is.</strong> Robinhood Chain earned 35.3% of everything it has ever earned in the last 30 days. X Layer, 49.2%. Ethereum and Arbitrum, 0.8% each — those two are historical.
+On Robinhood Chain specifically: it built the category's #2 position by pulling in 46 launchpads in about two months. That is the hottest battlefield in this market right now, and also the most crowded one. Both halves of that sentence are the same fact.</p>
+<hr />
+<h2>5. How Flap took 3.9× in one month</h2>
+<p>Flap's August fees were $10.59M, 3.9× July. The two most-discussed BSC tokens of the month both launched there.
+<strong>It was throughput, not one hot coin.</strong> Launches went from 238k in July to 1.318M in August — 5.5×. Fee per token barely moved, $7.55 → $7.90. Over eight months, fee per token has fallen 57% (January 2026: $18.38). The two peaks diverged: fees peaked 08-20, launches peaked 08-26. The late-August surge was volume without revenue.
+<strong>The trigger was the 08-13 bBroker Vault, not the 08-19 trading festival.</strong> Daily fees first jumped 08-14 → 08-15, $208,778 → $381,508 — four full days before the BNB Chain × Flap event. bBroker turned NFT minting into "buy the tax token first, and the purchase burns it," manufacturing bid-side demand for tax tokens, each trade of which pays the protocol. The festival (08-19 to 08-28, 100k USDT, 500 wallets/day above $500 volume) amplified it. The order matters: attribute the whole move to the subsidy and you conclude it ends when the subsidy ends.
+<strong>Normalized against the category, ~60% was share theft.</strong> BSC launchpad fees went $4.07M → $12.15M (+199%). Flap's share went 44.2% → 85.7%; four.meme's collapsed 35.2% → 2.6%. Decomposed: $5.04M (58.5%) from share gain, $3.57M (41.5%) from category expansion. four.meme ran its own 100k USDT PnL contest in the same window and still fell 78%. The difference was not subsidy.
+<strong>The tax is not a platform fee — 90% goes back to holders and burns.</strong> This is the real structural difference. <code>FlapTaxTokenV3</code> does not split anything itself; once tax accumulates it calls a per-token <code>TaxProcessor</code> clone. The split is hardcoded in <code>TaxProcessorBase.sol</code>: take <code>feeRate</code> for the platform, then divide the remainder across project wallet / burn / liquidity / holder dividends, with the contract enforcing that the four sum to 10000.
+Reading <code>feeConfig()</code> on-chain for four live tokens:</p>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Platform cut</th>
+<th>Holder dividend</th>
+<th>Burn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Niulai</td>
+<td>10%</td>
+<td>90%</td>
+<td>0</td>
+</tr>
+<tr>
+<td>My Girlfriend Jing Tian</td>
+<td>10%</td>
+<td>90%</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Sun Xiaosheng</td>
+<td>10%</td>
+<td>67.5%</td>
+<td>22.5%</td>
+</tr>
+<tr>
+<td>MarsCoin</td>
+<td>10%</td>
+<td>90%</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>Token implementation <code>0x024f18294970B5c76c0691b87f138A0317156422</code>; TaxProcessor implementation <code>0x9fe67a78f05c6569db77e3f4d957ed67bddc9569</code>. Each token gets its own EIP-1167 clone.
+That is the answer to how Flap took share from four.meme. four.meme sells "the platform takes 1%." Flap sells "trades pay a 0–10% tax, 90% of which returns to holders and burns, and the platform keeps 10%." It is not selling an issuance tool. It is selling an automatic dividend-and-burn machine that runs for the project without a dev writing a contract.
+<strong>What survives.</strong> Taking every token launched on 2026-08-20 and checking nine days later:</p>
+<table>
+<thead>
+<tr>
+<th>Measure</th>
+<th>Count</th>
+<th>Share of 70,142</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Launched that day</td>
+<td>70,142</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>Graduated</td>
+<td>166</td>
+<td>0.237%</td>
+</tr>
+<tr>
+<td>Liquidity ≥ $10,000 after 9 days</td>
+<td>15</td>
+<td>0.021%</td>
+</tr>
+<tr>
+<td>Liquidity ≥ $50,000 after 9 days</td>
+<td>1</td>
+<td>0.0014%</td>
+</tr>
+</tbody>
+</table>
+<p>Users paid $597k in fees that day. The combined market cap of everything launched, nine days later, was $1.12M. Graduation injects 16 BNB (≈$11,010); the median surviving graduate held $5,938 nine days later, down 46%.
+Do not read 0.24% as "Flap's tokens are worse." Platforms with machine-made denominators all land in the 0.1%–0.24% band — Pons has graduated 407 of 349,200 lifetime launches, which is 0.117%, the same order. The real difference is absolute: Flap produces 166 graduates in a day, close to half of Pons's lifetime total of 407. Before comparing survival rates across platforms, ask whether the two denominators are the same kind of thing.</p>
+<hr />
+<h2>6. Death here is a cliff, not a slope</h2>
+<p>Dividing 30-day fees by cumulative fees shows which platforms are still alive:</p>
+<table>
+<thead>
+<tr>
+<th>Platform</th>
+<th>Cumulative</th>
+<th>30d</th>
+<th>30d ÷ cumulative</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bags</td>
+<td>$63.9M</td>
+<td>$1.76M</td>
+<td>2.8%</td>
+</tr>
+<tr>
+<td>Meteora DBC</td>
+<td>$95.3M</td>
+<td>$0.93M</td>
+<td>1.0%</td>
+</tr>
+<tr>
+<td>four.meme</td>
+<td>$98.0M</td>
+<td>$0.39M</td>
+<td>0.4%</td>
+</tr>
+<tr>
+<td>BONK.fun</td>
+<td>$66.9M</td>
+<td>$0.17M</td>
+<td>0.3%</td>
+</tr>
+<tr>
+<td>clanker</td>
+<td>$90.7M</td>
+<td>$0.22M</td>
+<td>0.2%</td>
+</tr>
+<tr>
+<td>Metaplex</td>
+<td>$48.0M</td>
+<td>$0.08M</td>
+<td>0.2%</td>
+</tr>
+</tbody>
+</table>
+<p>clanker is the clearest case: $22.39M in February 2026 → $1.46M in March → $207k in August. <strong>Down 99.1% in six months while the category's total grew 32%.</strong> Every one of these platforms was, at some point inside the last 18 months, someone's obvious winner.
+There is no gentle decline in this category. Liquidity, attention and bot infrastructure all migrate together, and once they leave they do not trickle back.</p>
+<hr />
+<h2>7. Six platform types, four pricing mechanisms</h2>
+<p>The category gets described as "bonding curve launchpads." That covers maybe half of it.
+<strong>Type 1 — Bonding curve.</strong> pump.fun, Flap, four.meme, BONK.fun, Pons. Instant issuance, price set by a formula, graduation to a DEX at a threshold. Pricing: a flat percentage of every trade.
+<strong>Type 2 — Continuous / single-sided liquidity.</strong> o1, Zora. No graduation threshold at all; the token opens directly into a real AMM position. Pricing: a swap fee split among creator, platform and referrer.
+<strong>Type 3 — Auction.</strong> pools.trade (4-hour CCA in 13 steps), Hyperliquid HIP-1 (31-hour Dutch auction). Price is discovered by bidding rather than by a curve. Pricing: no launch fee, revenue comes from the auction clear or from LP fees.
+<strong>Type 4 — Tax token infrastructure.</strong> Flap's <code>TaxProcessor</code> layer. What is being sold is not issuance but the automatic dividend/burn/liquidity machinery attached to it.
+<strong>Type 5 — Agent and app launchpads.</strong> Virtuals (42,000 VIRTUAL threshold, Uniswap V2 migration, LP locked 10 years, 1% fee split 70/30), Believe, Bags. Issuance is bundled with a product or an agent.
+<strong>Type 6 — Compliant / institutional.</strong> Legion (30+ sales, 350k+ verified users), Securitize (Q1 2026 AUM $3.4B, quarterly volume $1.9B, 650 active funds), Ondo (TVL &gt;$500M, cumulative volume &gt;$9B). KYC-gated, real-asset backed, and almost entirely disconnected from the retail launchpad market above.</p>
+<h3>The "no migration means no rug" claim does not hold</h3>
+<p>Pons is often described as safer because there is no migration step for the team to exit through. The premise is misread: <strong>graduation on Pons creates no new pool.</strong> Graduation itself is real and public — the official Explore page lists all 407 graduates — but nothing migrates, and the 4.2 ETH threshold is a tick mark on a progress bar rather than capital that gets injected.
+What the design actually changes is cost structure, not safety. With no exit channel to build toward, teams have no reason to fund the pool up front. The measured result: median liquidity among surviving Pons tokens is <strong>$3,625</strong></p>
+<div class="tip">A $50 launch fee filters effort, not intent.. The pools are not safer. They are thinner.
+A launch on Pons costs 0.0005 ETH (≈$1.22). A $50 barrier stops nobody who intends to rug. Barriers priced in tens of dollars do not filter behaviour; they only filter effort.</div>
+<h3>"Getting in early helps" is two different claims</h3>
+<h2>Early entry can mean paying a lower average price, or receiving more tokens for the same money. Most secondhand analysis blurs them. On pools.trade the measured effect is a lower average price yielding roughly 2× the tokens for the same spend — which is one claim, not two, and the risk profile is completely different from "commit more capital early."</h2>
+<h2>8. Survival: the denominator decides</h2>
+<p>Three platforms, three mechanisms, one ruler: how many launches reached the graduation threshold.</p>
+<table>
+<thead>
+<tr>
+<th>Platform</th>
+<th>Mechanism</th>
+<th>Launches</th>
+<th>Graduated</th>
+<th>Rate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pools.trade (month one)</td>
+<td>Continuous clearing auction</td>
+<td>2,263</td>
+<td>55</td>
+<td>2.43%</td>
+</tr>
+<tr>
+<td>Pons (lifetime)</td>
+<td>Locked pool, no migration</td>
+<td>349,200</td>
+<td>407</td>
+<td>0.117%</td>
+</tr>
+<tr>
+<td>Flap (single day, 08-20)</td>
+<td>Bonding curve</td>
+<td>70,142</td>
+<td>166</td>
+<td>0.237%</td>
+</tr>
+</tbody>
+</table>
+<p>The mechanisms could not be more different, and the rates differ by 20×. Sort them by denominator and the pattern is immediate: <strong>the bigger the denominator, the lower the rate.</strong>
+pools.trade issued 2,263 tokens in its first month and graduated 55. Pons has issued 349,200 across its entire life and graduated 407. Flap issues 70,000 in a day and graduates 166. <strong>Read that last pair again: Flap produces in one day nearly half the graduates Pons has produced in total.</strong> The absolute count is not collapsing. The ratio is.
+<strong>What sets the survival rate is whether the denominator was filtered, not the mechanism and not the quality of the tokens.</strong> At $0.69 per launch with zero review, the denominator is machine-made. When a launchpad quotes a graduation rate, the first question is not whether it is high or low — it is who built the denominator.
+⚠️ And do not let a third-party index define either side of that fraction. DexScreener has indexed 45 of Pons's 407 graduated tokens — 11% coverage. On a new chain, "indexed" and "alive" are different facts.</p>
+<hr />
+<h2>9. The platform token dominates, but the funnel is the real story</h2>
+<p>Pons is the only platform in this report with both a full official dataset and a complete on-chain scan.
+Official lifetime figures (as of 2026-08-30, from <a href="http://ponsfamily.com/">ponsfamily.com</a>'s own Dune-backed analytics page and its public graduated list):</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lifetime launches</td>
+<td>349,200</td>
+</tr>
+<tr>
+<td>Graduated tokens</td>
+<td>407 (0.117%)</td>
+</tr>
+<tr>
+<td>Lifetime volume</td>
+<td>$3.31B</td>
+</tr>
+<tr>
+<td>Lifetime protocol revenue</td>
+<td>$4.31M</td>
+</tr>
+<tr>
+<td>Lifetime creator earnings</td>
+<td>$19.9M</td>
+</tr>
+<tr>
+<td>Unique token deployers</td>
+<td>127,100</td>
+</tr>
+</tbody>
+</table>
+<div class="warn">⚠️ DefiLlama records $7.61M of lifetime protocol revenue for Pons. The official Dune dashboard says $4.31M — DefiLlama is 77% high. Every revenue-based figure below uses the official number.
+<strong>Graduation here is a 4.2 ETH (~$10,000) tick mark, not a gate.</strong> The median graduated token is worth $41,700. The scarcity is one rung further up.
+How the 407 graduates split by market cap:</div>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Tokens</th>
+<th>Market cap</th>
+<th>Share</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PONS (the platform's own token)</td>
+<td>1</td>
+<td>$152.99M</td>
+<td>47.7%</td>
+</tr>
+<tr>
+<td>Ranks 2–10</td>
+<td>9</td>
+<td>$91.40M</td>
+<td>28.5%</td>
+</tr>
+<tr>
+<td>Ranks 11–50</td>
+<td>40</td>
+<td>$52.57M</td>
+<td>16.4%</td>
+</tr>
+<tr>
+<td>Ranks 51–150</td>
+<td>100</td>
+<td>$16.31M</td>
+<td>5.1%</td>
+</tr>
+<tr>
+<td>Ranks 151–407</td>
+<td>257</td>
+<td>$7.17M</td>
+<td>2.2%</td>
+</tr>
+</tbody>
+</table>
+<p>Cumulatively: <strong>the top 10 hold 76.3%, the top 50 hold 92.7%</strong>, and the remaining 357 share 7.3%. Strip out the platform token and the concentration does not ease at all — among the 406 user-launched graduates, the top 10 hold 56.9% and the top 50 hold 86.2%.
+Three things follow.
+1. <strong>The platform token is the largest single asset, not the only one.</strong> PONS at $152.99M is 8.1× the number two. But 28 non-platform tokens are above $1M, and the largest is $18.78M.
+2. <strong>The dividing line sits at rank 50.</strong> The top 50 hold 92.7%; the remaining 357 share 7.3%.</p>
+<div class="tip">Median graduated token: $41,700. For a token ranked past 200 on the graduated list, the word "graduated" carries no information.
+1. <strong>The funnel is the business.</strong> 349,200 launches → 407 graduated (0.117%) → 29 above $1M (0.0083%). That is 0.83 million-dollar tokens per 10,000 launches.
+349,200 launches. 407 graduated. 29 worth more than $1M.
+The official numbers give totals; the on-chain scan gives structure. Across the full V1 cohort of 1,895 launches: 508 unique creators, 77.2% launched exactly once, the top 10 creators did 47.3%, and 834 launches (44.0%) had a creator who bought nothing. A bimodal "scripts at one end, one-time retail at the other" distribution. At platform scale, 127,100 deployers account for 349,200 launches — 2.7 each.
+PONS itself is a standard Pons launch: fixed supply of 1B, locked pool, no reserve, no team unlock, no VC allocation. Market cap $152.99M, FDV $215.61M, with 290,021,980 tokens (29.00%) sitting in the burn address.
+On the official "80% of protocol fees TWAP'd into buybacks" policy: $4.31M of lifetime revenue over roughly 47 days of operation works out to about $2.75M a month, of which 80% is <strong>≈$2.2M a month of buying</strong>, or $26.4M annualised — 17.3% of market cap.
+⚠️ The burn and the buyback do not reconcile. Total buybacks cannot exceed $3.45M, yet 290M tokens sit in the burn address, implying an average price of <strong>$0.0119</strong> — below where this token has traded for most of its life. The straightforward reading is that a large share of that 290M is a one-time launch burn rather than accumulated buybacks. Judge buyback intensity on the flow, not by working backwards from the burned stock.
+Five things to hold alongside all of that.
+1. <strong>It is up roughly 65× from its all-time low and currently trades near its high.</strong> That 17.3% buyback yield is calculated against a price that has already run.
+2. <strong>The annualisation extrapolates from a peak stretch.</strong> The category did $91.25M in August against $31.20M in June.
+3. <strong>Revenue depends entirely on issuance heat on a single chain.</strong> 46 launchpads now compete on Robinhood Chain — more than Solana's 43 — on a chain with 9.3% of Solana's cumulative fees.
+4. <strong>The buyback is currently run by hand.</strong> The official documentation lists immutability, decentralisation and automation as future releases.
+5. <strong>Third-party data does not match the source.</strong> DefiLlama's revenue runs 77% high, and its revenue-to-fee ratios (V1 26%, V2 18%) contradict the documentation (10%, 30%).
+One more accounting trap: the burn is a transfer to <code>0x...dEaD</code>, not a <code>burn()</code> call. On-chain <code>totalSupply()</code> still returns 1B, so any market cap computed on total supply overstates by 29%.
+<strong>Where this lands:</strong> the platform earns from 349,200 launches, of which 407 graduated and 29 cleared $1M. The platform token is priced off the width of the top of that funnel, not the quality of anything below it. How long new people keep arriving to launch tokens that go to zero is the real variable — not the buyback rate.</div>
+<hr />
+<h2>10. Why the bonding curve won</h2>
+<p>Every alternative — auctions, sealed bids, whitelists, KYC — is better at price discovery. The bonding curve won anyway, for three reasons that have nothing to do with fairness.
+<strong>It removes the counterparty.</strong> No book, no bidders, no minimum raise. One person with $1 can create a market that functions immediately. Everything else in this category needs someone on the other side before it works at all.
+<strong>It makes failure cheap and instant.</strong> At $0.69 a launch, a team can test ten ideas in an afternoon. Zama's January 2026 sealed-bid Dutch auction drew 24,697 bids from 11,103 bidders, $118.5M committed, $44M paid, 218% oversubscribed, 62.89% refunded — an excellent auction, and one that takes weeks to run.
+<strong>Early entry is a real, visible advantage, and everyone can see it on the curve.</strong> This is the part that sustains it. The curve makes the payoff for being early legible in a way an auction never does. Enough participants act on the belief that they are early rather than last for the mechanism to keep clearing.
+That third reason is also the mechanism's honest description of itself. Nothing about the design is hidden. The curve is published; anyone can read where they are on it.</p>
+<hr />
+<h2>11. o1's single-sided liquidity</h2>
+<p>Worth studying as a design, and as a warning.
+Single-sided Uniswap v4, tickSpacing 200, opening FDV ≈$4,000, <strong>no graduation threshold</strong>. The 1% swap fee splits creator 50% / platform 30% / referrer 20%. Anti-sandwich protection decays from 99% to 1% over 16 seconds.
+Revenue: 24h $229,826, 30d $1,948,633, cumulative $2,867,547. Its own terminal contributes $46,710 over 30 days — <strong>2.4%</strong>.</p>
+<div class="tip">o1 built the issuance layer. 97.6% of the trading happens somewhere else.
+<strong>It is a two-chain launchpad, which is easy to miss.</strong> o1 issues equity-backed tokens on Base and community tokens on Robinhood Chain from a single interface, with quote assets including ETH, NVDA, GOOGL, AMD and GLD. That puts it head to head with Pons on Robinhood Chain rather than confined to Base.
+Its own published lifetime figures (2026-08-30): 34,690 tokens launched, $352.27M of launch-pool volume across 87,360 traders, $455.55M across all pools. The highest market cap any o1 token has ever reached is <strong>$44.8M</strong> — and it belongs to a user, not to the platform. The current leaderboard runs Basecat at $18.07M, BLUE CHIP at $9.16M, RAWR at $1.39M. o1's own token does not appear on it at all.
+Set against Pons, that is the same funnel with the platform token removed from the top: Pons's single largest asset is its own token at $152.99M, while o1's ceiling in fourteen months is a $44.8M token it does not own. Neither arrangement produces many large tokens. One of them at least produces an asset the platform can monetise.
+The design is genuinely clean: no migration risk, no graduation cliff, instant real liquidity. And it stays small. The likely reason is in that 50/30/20 split: with single-sided liquidity there is no counterparty putting capital in, so the only money in the system is what buyers bring. The platform captures 30% of every trade from a pool that nobody seeded. It works, and it does not compound, because nothing accumulates on the other side.</div>
+<hr />
+<h2>12. Hyperliquid raises the floor instead of lowering it</h2>
+<p>Everything above competes on making issuance cheaper. Hyperliquid went the other direction, and it belongs in this survey precisely because it is the complement to everything else.
+<strong>HIP-1:</strong> a 31-hour Dutch auction, starting at 2× the previous clearing price, floor 500 HYPE. Genesis holders must hold at least 0.0001% of the anchor token's max supply.
+<strong>HIP-3:</strong> stake 500,000 HYPE for a minimum of 183 days to deploy a perp market. Fee share 0–300% (0–100% in growth mode). Reserved deploy slots follow <code>7 + 0.2 × n</code>.
+From the documentation: <em>"Slashing is technical and does not distinguish between malicious and incompetent behavior."</em>
+Builder codes cap fees at 0.1% on perps and 1% on spot, with roughly $90M cumulative.
+This is the opposite bet from pump.fun's. pump.fun optimises for the number of things launched; Hyperliquid optimises for the quality of the thing launched by making launching expensive. Both are working. They are not competing for the same participant.</p>
+<hr />
+<h2>13. What is still unmet</h2>
+<p>Four gaps came out of the research, and they are all on the same side of the lifecycle.
+<strong>Nobody owns the 90 days after launch.</strong> Issuance costs $0.69 and takes seconds. After that there is no product for liquidity management, holder communication, vesting, or treasury operations. The entire category's product surface stops at graduation.
+<strong>No cross-platform record of what was launched.</strong> From Echo/Sonar, verbatim: <em>"there is no place where all the sales are listed."</em> Every platform indexes itself.
+<strong>Discovery is a purge, not a market.</strong> Two platforms hold 62.2% of the segment and the rest are at fractions of a percent. That is a segment that has been abandoned, not a segment that has consolidated. It is the most obvious opening in this report.
+<strong>Nothing prices survival.</strong> Every platform's UI ranks by market cap or volume. None of them expose whether a token still has liquidity a week later — which, per section 8, is the number that actually separates the 407 from the 349,200.</p>
+<hr />
+<h2>14. Why the buyers did not come back</h2>
+<p>The gap between 56.5% and 28.6% is the whole story of this market, and it is not a single cause.
+<strong>Supply outran attention by orders of magnitude.</strong> CoinGecko has recorded 18,675,645 pump.fun tokens with at least one trade; 12,825,175 (68.67%) last traded on the day they were created, and only 850,180 (4.55%) traded in the past 90 days. Gate recorded roughly 42,000 new tokens in a single day in June 2026, 11.9M cumulative. No terminal, and no human, filters at that rate.
+<strong>Speed became the entire game.</strong> Roughly 94% of a Solana new token's volume happens in the first hour. Research on 41,470 migrated Solana tokens (arXiv 2602.13480v1) and on sniper behaviour (arXiv 2601.08641v2, entries in blocks 1–5, i.e. 0.4–2 seconds, bundle bots present in ~25% of projects) points the same way. Median time-to-peak in one measured sample was 4 minutes. A terminal that surfaces a token in 30 seconds is already late.
+<strong>Extraction is measurable.</strong> Helius/Jito data shows 1.55M sandwich transactions over 30 days, 65,880 SOL (≈$13.43M).
+<strong>Signals do not survive contact.</strong> MadeOnSol on 2026-08-28: 138 alerts across 104 mints in 2h49m; of the 65 with one-hour outcomes, 14 (21.5%) were still above their trigger price.
+The discovery layer is not underbuilt. It is being asked to solve a problem that the issuance layer made unsolvable at the current supply rate.</p>
+<hr />
+<h2>15. Where retail actually fits</h2>
+<p>Not a recommendation. Just what the measurements imply about the terrain.
+<strong>Phantom market cap is the first thing to check, and most people never do.</strong> <code>price × total supply</code> is meaningless when one address holds nearly all supply. Of 1,442 tokens with a nominal all-time-high market cap above $10M, 84.5% now sit below $10k. Apply a 7-day survival gate first and 99 of 1,129 (8.77%) are still above $1M. In the 7-to-40-day window, out of 729 tokens, 6.
+<strong>The two chains are different jobs, not a choice.</strong> BSC's large tokens carry real but small pools — 14 measured tokens above $10M market cap had pool liquidity between $150k and $2.7M. Above roughly 2–3% of pool depth, slippage becomes obvious. Solana runs 34× the volume at 2.6× lower fees, with ~94% of new-token volume in the first hour. BSC is "real market cap, small capacity." Solana is "questionable market cap, large capacity."
+<strong>Social presence is the strongest observable pre-success filter measured here.</strong> Across 129 BSC tokens: with social channels, median peak market cap $1,227,909 and 53.2% exceeded $1M. Without, $145,402 and 26.9%. An 8.44× gap, and Telegram outperformed Twitter.
+<strong>Peak market cap is not a valid success metric on a bonding curve.</strong> It can be manufactured with a small amount of capital against a thin curve. Durability — still alive after 7 days, still holding liquidity — is the only measure that survives scrutiny.
+The segment of this market with the clearest economics is not the tokens. It is the platforms, and their cash flow is visible on DefiLlama every day.</p>
+<hr />
+<h2>16. What could not be verified</h2>
+<p>Stated plainly, because a report that never fails at anything is not measuring anything.
+- Whether pump.fun's on-chain FeeConfig account matches the published tier table. The docs reserve the right to change tiers without notice.
+- DefiLlama's lifetime protocol revenue for Pons ($7.61M) is 77% above the official Dune figure ($4.31M), and its revenue-to-fees ratios (V1 26%, V2 18%) contradict the documentation (10%, 30%). Both unresolved; this report uses the official numbers.
+- Volume data is unavailable for bonk.fun, Believe, Bags, clanker, SunPump, Binance Alpha, Metaplex and PinkSale — DefiLlama tracks their fees but not their volume. This is why the entire report uses a fees-only ruler.
+- Flap's cross-check produced two different daily figures: a route-B on-chain measurement across 139 tokens (24h volume $49.5M, volume-weighted one-side tax 1.535%) implies $760,023/day, against DefiLlama's August average of $378,781/day. <strong>These have not been averaged.</strong> A measured number and an inferred number should never be blended; both are reported and the gap is left open.
+- Pons's 349,200 lifetime launches and 407 graduates are the platform's own published figures, not independently scanned. The V1 cohort (1,895 launches) is the only part measured directly on-chain.
+- o1 was not scanned on-chain at all; its 34,690 launches come from its own dashboard. It also issues on two chains — Base for equity-backed tokens, Robinhood Chain for community tokens — which makes it a direct competitor to Pons, not a Base-only platform.
+- GeckoTerminal does not index Flap, so no independent price cross-check was possible for Flap tokens.</p>
+<hr />
+<p><em>Uncle Onchain ｜ Crypto PM　@Uncle_Onchain</em>
+<em>Data measured 2026-08-29; Pons and o1 figures are the platforms' own published numbers as of 2026-08-30. Nothing here is investment advice. Every figure is either directly measured or derived from a stated formula; where a number is inferred it says so.</em></p>
+</div></body></html>

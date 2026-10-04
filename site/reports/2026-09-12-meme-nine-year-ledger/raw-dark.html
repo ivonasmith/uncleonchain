@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><script>(function(){document.documentElement.setAttribute('data-theme','light');document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href]');if(!a)return;var h=a.getAttribute('href');if(h&&h.charAt(0)!=='#'&&!a.target){a.target=/uncleonchain\.com|^\//.test(h)?'_top':'_blank'}});})();</script>
+<!--meta
+标题: MEME 币九年生死簿：495 个样本讲透一个长尾赛道
+日期: 2026-09-12
+标签: MEME, 币安 Alpha, 周末特辑
+摘要: 495 个币安 Alpha 项目「至今」收益均值 −38.9%、中位数 −82.4%：多数归零、少数暴富的统计学证据。
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MEME 币九年生死簿</title>
+<style>
+:root{--ink:#dddad6;--body:#c9c3bb;--faint:#7c7367;--line:#2b2722;--paper:#111111;--down:#e2575d;--up:#67b9e9;--neu:#dec06d;--wash:#1b1813;--wash-up:#171f24;--wash-down:#241314;--wash-neu:#2b2619;--ink-up:#89c8f0;--ink-down:#e8787d;--ink-neu:#e2ca89;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--paper);color:var(--body);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;font-size:16px;line-height:1.75;}
+.wrap{max-width:860px;margin:0 auto;padding:60px 24px 90px;}
+h1,h2,h3,.dek{font-family:Georgia,"Songti SC","Times New Roman",serif;color:var(--ink);}
+.hero{position:relative;background:linear-gradient(135deg,var(--wash-up) 0%,var(--wash) 45%,var(--wash-neu) 100%);padding:30px 30px 26px 34px;margin:0 0 28px;border-radius:10px;}
+.hero::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,var(--up),var(--neu),var(--down));border-radius:10px 0 0 10px;}
+.hook{position:relative;border:1px solid rgba(103,185,233,.18);border-left:5px solid var(--up);border-radius:10px;padding:28px 32px;margin:0 0 30px;background:linear-gradient(160deg,var(--wash-up) 0%,var(--wash-neu) 100%);}
+.hook .q{font-family:Georgia,"Songti SC",serif;font-size:26px;line-height:1.35;color:var(--ink-up);margin:0 0 16px;letter-spacing:-.2px;}
+.hook p{font-size:16px;line-height:1.75;margin:0 0 14px;}
+.hook p:last-of-type{margin-bottom:0;}
+.hook .fin,.closer .fin{margin:16px 0 0;padding:14px 18px;background:#111111;border-radius:8px;border:1px solid rgba(103,185,233,.15);font-size:15.5px;line-height:1.7;}
+.kicker{display:inline-block;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-neu);background:rgba(17,17,17,.6);border:1px solid rgba(222,192,109,.25);padding:5px 11px;margin-bottom:16px;}
+h1{font-size:40px;line-height:1.25;margin:0 0 14px;}
+.dek{font-size:19px;line-height:1.6;margin:0 0 22px;color:var(--body);font-style:italic;}
+.meta{display:flex;flex-wrap:wrap;gap:10px;font-size:12.5px;margin:0;}
+.meta span{padding:5px 12px;border:1px solid var(--line);background:var(--paper);color:var(--body);}
+.meta span:nth-child(2){background:var(--wash-neu);border-color:rgba(222,192,109,.25);color:var(--ink-neu);}
+.meta span:nth-child(3){background:var(--wash-up);border-color:rgba(103,185,233,.25);color:var(--ink-up);}
+h2{font-size:26px;margin:56px 0 18px;line-height:1.4;padding-bottom:12px;border-bottom:2px solid var(--line);}
+.num{display:table;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:12px;letter-spacing:.14em;color:var(--paper);text-transform:uppercase;margin-bottom:10px;background:var(--ink);padding:3px 9px;}
+h3{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;font-size:18px;margin:32px 0 12px;color:var(--ink);font-weight:600;}
+p{margin:0 0 18px;}
+.lede{font-size:18px;line-height:1.85;margin:0 0 22px;}
+b{color:var(--ink);}
+a{color:var(--up);}
+.keys{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:32px 0;border-radius:8px;overflow:hidden;}
+.keys div{background:var(--paper);padding:20px 14px 18px;text-align:center;border-top:3px solid var(--line);}
+.keys div.k-up{border-top-color:var(--up);background:var(--wash-up);}
+.keys div.k-down{border-top-color:var(--down);background:var(--wash-down);}
+.keys div.k-neu{border-top-color:var(--neu);background:var(--wash-neu);}
+.keys b{display:block;font-family:Georgia,"Songti SC",serif;font-size:27px;color:var(--ink);}
+.keys span{display:block;font-size:12.5px;color:var(--faint);margin-top:8px;line-height:1.5;}
+.closer{position:relative;background:linear-gradient(135deg,var(--wash-down) 0%,var(--wash) 50%,var(--wash-up) 100%);padding:26px 28px 24px 32px;margin:48px 0 0;border-radius:10px;}
+.closer::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,var(--down),var(--neu),var(--up));border-radius:10px 0 0 10px;}
+.closer .lede{margin-bottom:16px;}
+.closer .lede:last-child{margin-bottom:0;}
+.q{color:var(--ink-neu);font-weight:600;}
+.hl-up{color:var(--ink-up);}
+.hl-down{color:var(--ink-down);}
+.hl-neu{color:var(--ink-neu);}
+.rule,.warn,.tip{border-left:3px solid;padding:14px 18px;margin:24px 0;background:var(--wash);font-size:15px;line-height:1.75;border-radius:0 8px 8px 0;}
+.rule{border-color:var(--neu);}
+.warn{border-color:var(--down);}
+.tip{border-color:var(--up);}
+.rule ol,.rule ul{margin:8px 0 0;padding-left:20px;}
+.rule li{margin-bottom:6px;}
+nav.toc{columns:2;column-gap:32px;border:1px solid var(--line);padding:20px 26px;margin:32px 0;background:var(--wash);font-size:14px;border-radius:8px;}
+nav.toc ol{margin:0;padding-left:20px;}
+nav.toc li{margin-bottom:9px;break-inside:avoid;}
+nav.toc a{color:var(--body);text-decoration:none;border-bottom:1px dotted var(--faint);}
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14px;}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;}
+th{color:var(--faint);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.03em;}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;}
+tr.hi{background:var(--wash);}
+caption{caption-side:bottom;text-align:left;font-size:12.5px;color:var(--faint);margin-top:8px;line-height:1.6;}
+.fig{margin:32px 0;}
+figcaption{font-size:13px;color:var(--faint);margin-bottom:10px;}
+.ax{font-size:11px;fill:var(--faint);font-family:-apple-system,sans-serif;}
+.lbl{font-size:12px;fill:var(--ink);font-family:-apple-system,sans-serif;font-weight:600;}
+.lbl2{font-size:11px;fill:var(--faint);font-family:-apple-system,sans-serif;}
+.note{font-size:11px;fill:var(--faint);font-family:-apple-system,sans-serif;}
+details{margin:22px 0;border:1px solid var(--line);padding:12px 18px;background:var(--wash);border-radius:8px;}
+summary{cursor:pointer;font-size:14px;color:var(--body);list-style:none;position:relative;padding-left:20px;}
+summary::-webkit-details-marker{display:none;}
+summary::before{content:"▸";position:absolute;left:0;color:var(--faint);}
+details[open] summary::before{content:"▾";}
+.inner{margin-top:14px;overflow-x:auto;}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0;}
+.cards>div{border:1px solid var(--line);padding:16px;border-radius:8px;}
+.cards h4{margin:0 0 8px;font-size:15px;color:var(--ink);}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12.5px;background:var(--wash);padding:2px 5px;border-radius:3px;word-break:break-all;}
+footer{position:relative;margin-top:40px;padding-top:26px;font-size:13.5px;color:var(--faint);line-height:1.85;}
+footer::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--up),var(--neu),var(--down));}
+footer .sig{display:inline-block;font-family:Georgia,"Songti SC",serif;font-size:16px;color:var(--ink);background:var(--wash);border:1px solid var(--line);padding:7px 16px;margin-bottom:16px;}
+@media(max-width:640px){
+  .keys{grid-template-columns:repeat(2,1fr);}
+  .cards{grid-template-columns:1fr;}
+  nav.toc{columns:1;}
+  h1{font-size:30px;}
+  table{font-size:13px;}
+  th,td{padding:6px 6px;}
+  .hero{padding:24px 20px 22px 26px;}
+}
+</style>
+<style>html{color-scheme:dark}img{filter:brightness(.9)}</style></head>
+<body>
+<div class="wrap">
+
+<div class="hero">
+<span class="kicker">周末特辑 · 赛道研报</span>
+<h1>MEME 币九年生死簿</h1>
+<p class="dek">从 654 倍的 DOGE 到跌 82% 的中位数——写在牛来、MARSCOIN 之后，这条赛道真正该被记住的不是造富故事，是赔率</p>
+<div class="meta"><span>产品大叔 · Crypto PM</span><span>周末特辑 · 赛道研报</span><span>数据截至 2026-09-11</span></div>
+</div>
+
+<div class="hook">
+<div class="q">如果把币安九年里上过的每一个 MEME 都摆在一起算一遍，普通人能拿到的到底是哪一个数字？</div>
+<p>每一轮 MEME 热潮里都会有一个<span class="q">"654 倍"</span>或者<span class="q">"6000 倍"</span>的故事在社群里反复被转发。但 495 个币安 Alpha 项目的<span class="q">"至今"</span>收益，均值是 <b class="hl-neu">-38.9%</b>，中位数是 <b class="hl-down">-82.4%</b>——均值看起来还能接受，中位数说的却是完全不同的故事。</p>
+<p>这个巨大的落差本身就是证据：极少数暴涨案例把平均数硬拉了上去，而排在中间的那个典型项目，实际结局是腰斩之后再腰斩。这篇周末特辑把 2017 到 2026 九年的币安 MEME 上市史、495 个 Alpha 样本、451 个见顶时间样本，以及 MARSCOIN 一份读到底的合约代码放在一起，尝试回答同一个问题：这条赛道的真实赔率长什么样。</p>
+<p class="fin">普通参与者能抓住的不是<span class="q">"下一个 654 倍在哪里"</span>，而是：<b>见顶速度是目前最干净的量化信号，倍数故事和生存能力是两件独立的事，叙事正在从一条链快速搬到下一条链。</b></p>
+</div>
+
+<div class="keys">
+<div class="k-neu"><b>495</b><span>币安 Alpha 上线案例样本量</span></div>
+<div class="k-down"><b>-82.4%</b><span>495 个案例"至今"收益中位数</span></div>
+<div class="k-down"><b>-38.9%</b><span>同期收益均值（被极端案例拉高）</span></div>
+<div class="k-up"><b>654.8x</b><span>DOGE 历史最高倍数，动物鼻祖天花板</span></div>
+<div class="k-down"><b>39%</b><span>上线 1 小时内即见顶的案例占比</span></div>
+<div class="k-up"><b>+66.6%</b><span>截至快照仍在创新高案例的中位数收益</span></div>
+</div>
+
+<div class="rule"><b>三分钟摘要</b>
+<ol>
+<li>币安 MEME 上线密度是周期位置的反向温度计：深熊市几乎零上线，牛市顶峰密集扎堆；2026 年 5 月至 9 月，月均新增 Alpha 项目从高峰期的 36-43 个断崖式跌到 1-9 个，牛来和 MARSCOIN 正好诞生在这个冷清窗口。</li>
+<li>九年里能查到完整数据的标志性 MEME 中，"长期品牌型"只有 DOGE、SHIB、PEPE 三个（约 15%），"一次性烟花型"占了 75-80%。</li>
+<li>动物鼻祖的倍数天花板正在逐代衰减：<b class="hl-up">DOGE 654.8 倍</b> &gt;&gt; <b class="hl-neu">PEPE 28.75 倍</b> &gt; <b class="hl-neu">SHIB 17.46 倍</b>，第一个吃到品类红利的永远吃得最多。</li>
+<li>倍数大小和"能不能长期活下来"是两回事：PEPE（28.75 倍）和 PNUT（25 倍）当年疯狂程度几乎一样，PEPE 后来创了新高，PNUT 至今仍在高点下方 -91%。</li>
+<li>495 个样本证实：均值 <b class="hl-neu">-38.9%</b> 和中位数 <b class="hl-down">-82.4%</b> 的落差，就是<span class="q">"多数归零、少数暴富"</span>这个长尾结构的统计学铁证，MEME 细分赛道里只有 <b class="hl-up">20%</b> 的项目<span class="q">"至今"</span>是正收益。</li>
+<li>见顶速度是目前样本量最大（451 个）、最干净的信号：上线 1 小时内见顶的中位数结局是 <b class="hl-down">-87.3%</b>，而截至快照仍在创新高的中位数结局是 <b class="hl-up">+66.6%</b>，是一条单调递增的梯度。</li>
+<li>TRUMP、BOME 的真实暴涨几乎全部发生在币安上线之前的链上阶段，币安上的散户是纯粹<span class="q">站岗接盘</span>，现货上线更适合当减仓信号，不是买入信号。</li>
+<li>MEME 热潮正在按链迁移：2024 年 Solana 是主战场，2025 年起 BNB Chain 靠官方个人动作反复引爆，2026 年 7 月起 Robinhood Chain 异军突起，且带出一个独有的"meme+股票代币化"混血品类，MARSCOIN 是这个新品类里跨链平行的案例。</li>
+<li>MARSCOIN 的税收分红机制已经读源码 + 查实时链上状态验证：3% 买卖税锁死在代币合约里，但税怎么分、分红门槛多高，平台自己留了后门；交易所提现到个人钱包被证实可以合规避税且不影响分红资格。</li>
+</ol>
+</div>
+
+<nav class="toc">
+<ol>
+<li><a href="#s1">01 上线密度：周期的反向温度计</a></li>
+<li><a href="#s2">02 九年 13 个标志性案例</a></li>
+<li><a href="#s3">03 长期品牌 vs 一次性烟花</a></li>
+<li><a href="#s4">04 495 个样本：均值撒谎，中位数说真话</a></li>
+<li><a href="#s5">05 见顶速度：451 个样本验证的单调信号</a></li>
+<li><a href="#s6">06 三段式上市：放大效应与站岗陷阱</a></li>
+<li><a href="#s7">07 链上迁移史：叙事在链之间搬家</a></li>
+<li><a href="#s8">08 案例对照：牛来 vs MARSCOIN</a></li>
+<li><a href="#s9">09 MARSCOIN 分红机制：读完合约能确认的三件事</a></li>
+<li><a href="#s10">10 链归属分类与热度快照</a></li>
+<li><a href="#s11">11 未能核实的部分</a></li>
+</ol>
+</nav>
+
+<h2 id="s1"><span class="num">01</span>上线密度：周期的反向温度计</h2>
+<p>把币安九年里 MEME 币的上线动作按时间摆开，会看到一条很干净的规律：<b>深熊市几乎没有新 MEME 上线，熊市恢复早期只有一两个"重启信号弹"，牛市顶峰则密集扎堆</b>。这不是感觉，是可以按时间段直接数出来的。</p>
+<table>
+<tr><th>周期阶段</th><th>时间</th><th>BTC 价格区间</th><th>上线频率</th><th>代表案例</th></tr>
+<tr><td>初创 + ICO 热潮 → 熊市</td><td>2017-2018</td><td>&lt;$1K → $19.7K → 深熊</td><td>零上线</td><td>—</td></tr>
+<tr><td>熊市恢复早期</td><td>2019</td><td>$11-12K</td><td>极低频，"重启信号弹"</td><td>DOGE 现货（7-05）</td></tr>
+<tr><td>Dog Coin Summer → 顶峰</td><td>2020-2021</td><td>$9.2K → $64.8K</td><td>抬升 → 密集扎堆</td><td>DOGE 永续、SHIB（2021-05）</td></tr>
+<tr class="hi"><td>深熊市</td><td>2022 全年 → 2023-04</td><td>$47K → $15.8K 底部</td><td>零上线（已证实空白）</td><td>—</td></tr>
+<tr><td>熊市恢复早期</td><td>2023-05</td><td>$29K</td><td>极低频，"重启信号弹"</td><td>PEPE + FLOKI（5-05）</td></tr>
+<tr><td>牛市中段</td><td>2023 下半年-2024 上半年</td><td>$35K → $73K</td><td>明显抬升</td><td>BONK、WIF、BOME、MEW</td></tr>
+<tr class="hi"><td>牛市顶峰扎堆</td><td>2024Q4-2025Q1</td><td>$80K → $108K</td><td>最高频</td><td>PNUT、PENGU、FARTCOIN、TRUMP</td></tr>
+<tr><td>BNB Chain 喊单驱动期</td><td>2025 全年</td><td>区间震荡</td><td>间歇性脉冲，跟官方个人动作强相关</td><td>Mubarak 系列、"币安人生"（6000 倍）</td></tr>
+<tr><td>当前阶段</td><td>2025 下半年-2026</td><td>数据缺口</td><td>Alpha→永续→现货漏斗；Robinhood Chain 异军突起</td><td>MARSCOIN、牛来、CASHCAT、PONS</td></tr>
+</table>
+<p>这条规律现在有精确数字支撑，不再只是定性描述。按月统计币安 Alpha 项目的上线数量：</p>
+<table>
+<tr><th>时间段</th><th class="n">月均 Alpha 上线数量</th><th>说明</th></tr>
+<tr class="hi"><td>2025-06 至 2025-10（高峰期）</td><td class="n">36-43 个/月</td><td>全周期最密集的 5 个月</td></tr>
+<tr><td>2025-11 至 2026-04</td><td class="n">16-32 个/月</td><td>逐步降温</td></tr>
+<tr class="hi"><td>2026-05 至 2026-09（近期）</td><td class="n">1-9 个/月</td><td>断崖式萎缩，其中 07 月仅 3 个、09 月仅 1 个</td></tr>
+</table>
+<div class="tip"><b>MARSCOIN 和牛来正好出现在这个空窗期。</b>不是"感觉最近上得少了"，是月均新增数量真的从 20+ 断崖跌到了个位数——两者是这个冷清窗口里少数的例外，这一点在判断它们的周期位置时是一个需要记住的背景。</div>
+
+<h2 id="s2"><span class="num">02</span>九年 13 个标志性案例</h2>
+<p>下面这张表的"倍数"全部来自币安 / TradingView 周线图手动核实的"上线后最低点 → 历史最高点"真实价格，不是估算：</p>
+<table>
+<tr><th>币种</th><th>发行链</th><th>上线阶段/日期</th><th>周期位置</th><th class="n">倍数</th><th class="n">距今跌幅</th><th>类型</th></tr>
+<tr class="hi"><td>DOGE</td><td>Litecoin 分叉链（多链桥接）</td><td>现货 2019-07-05</td><td>熊后恢复早期</td><td class="n">654.8x</td><td class="n">-88%</td><td>长期品牌</td></tr>
+<tr><td>SHIB</td><td>Ethereum</td><td>现货 2021-05-10</td><td>第一轮顶峰</td><td class="n">17.46x</td><td class="n">-94%</td><td>长期品牌</td></tr>
+<tr class="hi"><td>PEPE</td><td>Ethereum</td><td>现货 2023-05-05</td><td>熊后恢复早期</td><td class="n">28.75x</td><td class="n">-87%</td><td>长期品牌</td></tr>
+<tr><td>FLOKI</td><td>Ethereum/BSC 双线</td><td>现货 2023-05-05</td><td>熊后恢复早期</td><td class="n">22.9x</td><td class="n">-92%</td><td>一次性烟花</td></tr>
+<tr><td>BONK</td><td>Solana</td><td>现货 2023-12-15</td><td>牛市中段</td><td class="n">6.68x</td><td class="n">-95%</td><td>一次性烟花</td></tr>
+<tr><td>BOME</td><td>Solana</td><td>链上 2024-03-13 → 现货 2024-03-16</td><td>牛市局部顶</td><td class="n">186x*</td><td class="n">-96%</td><td>一次性烟花</td></tr>
+<tr><td>PNUT</td><td>Solana</td><td>现货 2024-11-11</td><td>大选后加速期</td><td class="n">25x</td><td class="n">-91%</td><td>一次性烟花</td></tr>
+<tr><td>TRUMP</td><td>Solana</td><td>链上 2025-01-17 → 现货 2025-01-19</td><td>顶峰区域</td><td class="n">64.4x*</td><td class="n">-97%</td><td>一次性烟花</td></tr>
+<tr><td>POPCAT</td><td>Solana</td><td>现货 2024-09-07 附近</td><td>牛市顶峰</td><td class="n">4.49x</td><td class="n">-97.5%</td><td>一次性烟花</td></tr>
+<tr><td>PENGU</td><td>Solana</td><td>现货 2024-12-17</td><td>接近顶峰</td><td class="n">20.74x</td><td class="n">-88%</td><td>一次性烟花</td></tr>
+<tr><td>FARTCOIN</td><td>Solana</td><td>永续 2024-12-20</td><td>接近顶峰</td><td class="n">4.17x</td><td class="n">-93%</td><td>一次性烟花</td></tr>
+<tr class="hi"><td>MARSCOIN</td><td>BNB Chain</td><td>Alpha 7-30 → 合约 9-01 → 现货 9-04</td><td>当前阶段</td><td class="n">周期未走完</td><td class="n">-47%（阶段性）</td><td>待定</td></tr>
+<tr class="hi"><td>牛来 NIULAI</td><td>BNB Chain</td><td>Alpha 8-18 → 合约 8 月下旬 → 现货 9-09</td><td>当前阶段</td><td class="n">周期未走完</td><td class="n">较新</td><td>待定</td></tr>
+<caption>* BOME、TRUMP 的倍数发生在币安现货上线之前的链上阶段，见下方说明。</caption>
+</table>
+<div class="warn"><b>PENGU、BOME、TRUMP 的"低点=高点同一天"，是三种不同的真相。</b>PENGU 的 20.74 倍确实发生在币安盘内，上线当天完成了从低点到高点的整段拉升，散户理论上有机会参与，只是窗口被压缩到一天以内。但 BOME（真实 186 倍）和 TRUMP（真实 64.4 倍）不同——两者真正的暴涨几乎全部发生在币安上线之前的链上阶段，币安上线那一刻价格已经在高位。<b class="hl-down">币安上的散户从头到尾没有分到任何一段真实的上涨，纯粹是站岗接盘</b>，这是<span class="q">"品牌局"</span>利用币安上市这个流量入口做最后变现的实锤证据，不再是推测。</div>
+
+<h2 id="s3"><span class="num">03</span>长期品牌 vs 一次性烟花</h2>
+<p>约 20 个能查到完整历史的知名案例里，<b>长期品牌型只有 DOGE、SHIB、PEPE 三个，占比约 15%</b>；剩下的 75-80% 全部是一次性烟花——见顶之后再没有回到过有意义的高度。三者里唯一在下一个周期直接刷新历史高点的，只有 PEPE 一个；DOGE 在 2021 高点跌 92% 后，2024 年底反弹到过 ATH 的 66%；SHIB 反弹到过 ATH 的 52.6%，但从未接近重返。其余全部至今深陷高点下方 90-98%。</p>
+<p>能被归为"长期品牌"的三个币，共同点不是"是不是动物"，而是动物之外的东西：文化原型地位（"元祖狗币""元祖青蛙币"）、跨周期社区延续、持续的叙事延展（SHIB 的 Shibarium、DOGE 的长期名人背书）、以及足够早的广泛上市。</p>
+<figure class="fig"><figcaption>图 1　"动物鼻祖"的倍数天花板正在逐代衰减——第一个吃到品类红利的永远吃得最多（横轴为对数刻度，标注真实倍数）</figcaption>
+<svg viewBox="0 0 860 220" width="100%" role="img">
+<text x="20" y="30" class="ax">上线后最低点 → 历史最高点真实倍数</text>
+<text x="150" y="70" text-anchor="end" class="lbl">DOGE（2019）</text>
+<rect x="160" y="56" width="560" height="26" fill="#67b9e9"/>
+<text x="730" y="74" class="lbl">654.8x</text>
+<text x="150" y="120" text-anchor="end" class="lbl">PEPE（2023）</text>
+<rect x="160" y="106" width="330" height="26" fill="#dec06d"/>
+<text x="500" y="124" class="lbl">28.75x</text>
+<text x="150" y="170" text-anchor="end" class="lbl">SHIB（2021）</text>
+<rect x="160" y="156" width="290" height="26" fill="#dec06d"/>
+<text x="460" y="174" class="lbl">17.46x</text>
+<text x="20" y="205" class="note">DOGE → PEPE 差了一个数量级；目前只有两个"动物鼻祖"级的点，方向合理但样本仍然很小——未来即使有新币复制这条路径，也应该预期倍数天花板远低于 PEPE，更远低于 DOGE。</text>
+</svg>
+</figure>
+<h3>倍数大小和"能不能活下来"，是两个独立的维度</h3>
+<p>把 PEPE（28.75 倍，长期品牌）和 PNUT（25 倍，一次性烟花）放在一起看，两者上线时的疯狂程度几乎一样，但 PEPE 后来在下一个周期直接创新高，PNUT 至今仍在高点下方 -91% 躺尸。POPCAT（4.49 倍）倍数比 BONK（6.68 倍）还低，也没有因此更"安全"。<b>能不能在暴跌之后活下来，跟"当初冲得有多猛"没有必然关系</b>——判断能不能活下来，要看文化原型地位和社区延续这些东西；判断当时有多疯狂，才看倍数。不要用后者去预测前者。</p>
+<h3>"有背书=割韭菜"，需要拆开看</h3>
+<p>一个常见判断是：比特币顶峰期上线、倍数又高、又"有背书"的 MEME，基本是精心设计的收割局。这个方向大致正确，但需要拆开看——TRUMP 是最贴合这个描述的案例（官方站台 + 约 80% 供应量集中在团队/关联地址），但 PNUT、POPCAT 完全没有官方背书，结局却跟 TRUMP 一样惨。<b>真正起决定作用的更可能是"上线时机是不是卡在 BTC 最狂热的窗口"，不是"有没有背书"本身</b>。一个更容易实操的信号是从上线到历史高点的时间跨度：DOGE 走了约 1 年 4 个月、PEPE 走了约 8 个月才见顶，中间有真实的价格发现过程；TRUMP、BOME 这类"上线即巅峰"的币，见顶只用了几小时到一天。见顶速度越快，越像是设计好的收割局——这条信号在下一节有 451 个样本的统计验证。</p>
+
+<h2 id="s4"><span class="num">04</span>495 个样本：均值撒谎，中位数说真话</h2>
+<p>前面几节都是手挑的知名案例，容易有幸存者偏差。这一节换成一份覆盖 495 个币安 Alpha 项目、8 个赛道的完整数据集，第一次能在大样本而不是"手挑 20 个知名案例"的基础上验证前面的判断。</p>
+<table>
+<tr><th>持有周期</th><th class="n">全样本均值</th><th class="n">全样本中位数</th></tr>
+<tr><td>+1 小时</td><td class="n">+6.5%</td><td class="n">0%</td></tr>
+<tr><td>+24 小时</td><td class="n">+11.4%</td><td class="n">-4.6%</td></tr>
+<tr><td>+7 天</td><td class="n">+8.5%</td><td class="n">-14.5%</td></tr>
+<tr><td>+30 天</td><td class="n">-0.1%</td><td class="n">-30.8%</td></tr>
+<tr class="hi"><td>至今</td><td class="n">-38.9%</td><td class="n">-82.4%</td></tr>
+</table>
+<div class="rule"><b>均值"至今"只跌 39%，中位数却跌 82%——这个落差本身就是证据。</b>极少数暴涨的币（比如 MARSCOIN 自己 +1471%）把平均数硬拉了上去，但典型的、排在中间的那一个项目，实际结局是腰斩再腰斩。这不是主观挑案例挑出的偏差，是这个赛道的收益分布本身就长这样——极端右偏，长尾。</div>
+<p>MEME 细分赛道（85 个样本）具体表现：<b>42.4% 已下架</b>；"至今"中位数 -78.7%，均值反而是 +37.5%（同样被极端暴涨案例拉起来）；<b>只有 20% 的 MEME 币"至今"是正收益</b>，74.1% 是负收益，40% 的 MEME 币跌幅超过 90%。按赛道拆开看"至今"中位数：</p>
+<table>
+<tr><th>赛道</th><th class="n">样本量</th><th class="n">下架率</th><th class="n">至今中位数</th></tr>
+<tr><td>RWA · 代币化股票*</td><td class="n">23</td><td class="n">17.4%</td><td class="n">0%</td></tr>
+<tr><td>DePIN</td><td class="n">21</td><td class="n">23.8%</td><td class="n">-56.7%</td></tr>
+<tr class="hi"><td>MEME</td><td class="n">85</td><td class="n">42.4%</td><td class="n">-78.7%</td></tr>
+<tr><td>DeFi</td><td class="n">71</td><td class="n">46.5%</td><td class="n">-78.8%</td></tr>
+<tr><td>社交·消费·内容</td><td class="n">24</td><td class="n">33.3%</td><td class="n">-81.2%</td></tr>
+<tr><td>公链·L2·基础设施</td><td class="n">156</td><td class="n">36.5%</td><td class="n">-82.0%</td></tr>
+<tr><td>AI · Agent</td><td class="n">74</td><td class="n">52.7%</td><td class="n">-89.5%</td></tr>
+<tr><td>GameFi · 元宇宙</td><td class="n">39</td><td class="n">64.1%</td><td class="n">-94.0%</td></tr>
+<caption>* RWA · 代币化股票这一档主要是真实股价的低波动映射资产，没有 MEME 式投机波动，中位数持平是因为它们几乎不涨也不跌，不能拿来跟 MEME 类比。MARSCOIN 在这份数据集里被明确归类为 MEME，不是 RWA。</caption>
+</table>
+
+<h2 id="s5"><span class="num">05</span>见顶速度：451 个样本验证的单调信号</h2>
+<p>"见顶越快、结局越差"这条判断，现在有 451 个样本的统计验证，不再是几个案例的猜测。按"峰值出现在哪个时间检查点"分组，看"至今"的中位数表现：</p>
+<figure class="fig"><figcaption>图 2　见顶越晚，最终表现越好——一条极其干净的单调梯度（451 个样本，"至今"中位数收益）</figcaption>
+<svg viewBox="0 0 860 300" width="100%" role="img">
+<line x1="470" y1="38" x2="470" y2="288" stroke="#2b2722" stroke-width="1"/>
+<text x="470" y="28" text-anchor="middle" class="ax">0%</text>
+<text x="175" y="66" text-anchor="end" class="lbl2">上线 1 小时内见顶（39%）</text>
+<rect x="225.6" y="50" width="244.4" height="24" fill="#e2575d"/>
+<text x="233.6" y="66" class="lbl" fill="#111111">-87.3%</text>
+<text x="175" y="108" text-anchor="end" class="lbl2">上线 4 小时内见顶</text>
+<rect x="211.6" y="92" width="258.4" height="24" fill="#e2575d"/>
+<text x="219.6" y="108" class="lbl" fill="#111111">-92.3%</text>
+<text x="175" y="150" text-anchor="end" class="lbl2">上线 24 小时内见顶</text>
+<rect x="214.9" y="134" width="255.1" height="24" fill="#e2575d"/>
+<text x="222.9" y="150" class="lbl" fill="#111111">-91.1%</text>
+<text x="175" y="192" text-anchor="end" class="lbl2">上线 7 天内见顶</text>
+<rect x="249.6" y="176" width="220.4" height="24" fill="#e2575d"/>
+<text x="257.6" y="192" class="lbl" fill="#111111">-78.7%</text>
+<text x="175" y="234" text-anchor="end" class="lbl2">上线 30 天内见顶</text>
+<rect x="285.5" y="218" width="184.5" height="24" fill="#e2575d"/>
+<text x="293.5" y="234" class="lbl" fill="#111111">-65.9%</text>
+<text x="175" y="276" text-anchor="end" class="lbl2">截至快照仍在创新高</text>
+<rect x="470" y="260" width="186.5" height="24" fill="#67b9e9"/>
+<text x="666.5" y="276" class="lbl">+66.6%</text>
+<text x="20" y="298" class="note">样本数：1 小时 175（占 39%）、4 小时 61、24 小时 56、7 天 63、30 天 59、仍在创新高 37。仍在创新高一档均值高达 +244.7%。</text>
+</svg>
+</figure>
+<div class="tip"><b>这条规律现在可以正式当作核心筛选信号。</b>上线 1 小时内就见顶，是全部 495 个 Alpha 项目里最常见的单一结局（39%）——"上线即巅峰"不是极端个例，是这个赛道里发生概率最高的单一情况。一个新币上线后，越久没有创出新高就被打回，反而越值得关注；反过来，上线极短时间内就冲到顶点后再没突破，应该直接归类为高风险的"品牌局"候选，无论有没有查到明确的背书证据。</div>
+
+<h2 id="s6"><span class="num">06</span>三段式上市：放大效应与站岗陷阱</h2>
+<p>Alpha → 合约 → 现货，是币安 MEME 上市的标准三段式，每一段理论上都会带来一次价格放大。但要干净地拆分出每一段各自的贡献，需要同时满足两个条件：消息没有提前泄露、且该窗口 BTC 恰好平静，两者同时成立的概率并不高。窗口越短、大盘越平静，分离效果越干净；反之越难拆分。</p>
+<p>目前唯一一个可以逐段核对完整时间线的案例是 MARSCOIN（BNB Chain）：Alpha（7-30）→ 合约（9-01，20 倍杠杆）→ 现货（9-04），8 月底还在 $0.04-0.06 横盘，现货当日冲到 $0.16-0.26 历史高点，一周涨幅约 +288%，未平仓合约从 200 万美元飙升至 3,464 万美元。</p>
+<div class="warn"><b>现货上线更适合当减仓/做空信号，不是买入信号。</b>PEPE 现货上线 40 分钟见顶后回落；MARSCOIN 现货上线日即历史高点当日，此后一路下跌。跟第 02 节的结论互相印证——TRUMP、BOME 的真实暴涨几乎全部发生在币安上线之前的链上阶段，币安上的散户等于纯粹站岗接盘。</div>
+
+<h2 id="s7"><span class="num">07</span>链上迁移史：叙事在链之间搬家</h2>
+<p>把新链/新发行平台叙事按时间摆开，能看到 MEME 热潮正在按"链"发生规律性迁移，而且这个周期正在从"季"压缩成"周"（2021 年一波热潮持续 3 个月，2024 年 12 月只持续 6 天）：</p>
+<table>
+<tr><th>时间</th><th>链</th><th>叙事</th><th>代表数据</th><th>退潮方式</th></tr>
+<tr><td>2021</td><td>BSC</td><td>BSC + SafeMoon</td><td>峰值市值超 $80 亿</td><td>团队涉诉，事实归零</td></tr>
+<tr><td>2024 上半年</td><td>Base</td><td>Base 链</td><td>BRETT 市值超 $10 亿</td><td>2025 大幅回撤</td></tr>
+<tr><td>2024-2025</td><td>Solana</td><td>Solana + Pump.fun</td><td>峰值占 Solana 代币铸造 71.1%</td><td>日活腰斩，FDV 跌至 $24 亿</td></tr>
+<tr class="hi"><td>2025-03</td><td>BNB Chain</td><td>Mubarak 系列（CZ 亲自买入引爆）</td><td>单币峰值市值突破 $2.7 亿</td><td>快速见顶，依赖官方动作维系热度</td></tr>
+<tr class="hi"><td>2025-10</td><td>BNB Chain</td><td>"币安人生"——何一一句回复引爆</td><td>96 小时内市值从零冲上 5 亿美元，6000 倍</td><td>96 小时冲顶后长期回落</td></tr>
+<tr class="hi"><td>2026 至今</td><td>Robinhood Chain</td><td>"meme+股票代币化"混血叙事</td><td>PONS 超 100 倍涨幅；链上 MEME 市值一度是代币化股票资产的数十倍</td><td>进行中，已现降温信号</td></tr>
+</table>
+<p>截至 2026 年中，山寨季指数 ASI 一直在 30-37 附近，从未触及 75 的"确认山寨季"门槛——当前更可能处于短促的板块性"迷你轮动"，而非经典意义的全面山寨季。</p>
+<h3>Robinhood Chain：独有的品类空位，和一个写死的到期日</h3>
+<p>Robinhood Chain 于 2026 年 7 月 1 日主网上线，本意是股票/ETF 代币化，但链上数据显示 <b>92.9% 的账户只跟 MEME 互动过</b>，只碰过股票代币化资产的仅 3.7%——是目前观察到的所有"新链叙事"里，MEME 对该链原定用途"喧宾夺主"程度最极端的一个。这也天然催生出一个其他链没有的品类空位："meme+真实股票/分红机制绑定"的混血品类，MARSCOIN 虽然发行在 BNB Chain 而非 Robinhood Chain 本链，但叙事逻辑与这个新品类高度同构，可以视为同一叙事在不同链上的平行案例。</p>
+<div class="warn"><b>一个写在日历上的结构性风险点：2026 年 9 月 29 日 23:59 EST。</b>Robinhood 为钱包内部分交易补贴 Gas 费，窗口是上线后 90 天，到期日就是这一天。补贴期间 Gas 支出总额 11 天涨了 82 倍，说明当前活跃度数据里有相当比例是被"免费"人为撑起来的。9 月 29 日之后，DEX 成交量、协议费收入、以及"炒 MEME 的用户有多少会转化成真实用户"这三个指标，是判断这条链能不能沉淀出独立于补贴的真实生命力的第一手证据。</p>
+<div class="rule"><b>一个需要标注证据边界的市场传闻："币安刻意扶持 BSC 链 MEME"。</b>可以确认的事实模式是：币安核心人物历史上多次亲自下场为 BSC 链上的 MEME 站台或买入，客观上带来显著的官方背书效应（Mubarak 系列、"币安人生"）。但"币安存在系统性策略、刻意打压其他链以扶持 BSC"属于意图层面的断言，目前没有查到官方或严肃信源的证实，只能标注为市场传闻/KOL 解读，不应作为交易决策的事实依据。一个不太吻合"刻意打压"叙事的反例：币安 Web3 钱包已在 2026 年 7 月支持 Robinhood Chain 代币交易。</div>
+
+<h2 id="s8"><span class="num">08</span>案例对照：牛来 vs MARSCOIN</h2>
+<p>DOGE 是狗、PEPE 是蛙，长期品牌型都是"动物鼻祖"；牛来本身是"牛"这个动物形象，是否比 MARSCOIN 更有希望复制这条路径？两者均发行在 BNB Chain，是同一条链内部的横向比较，代表两种不同性质、不构成互斥关系的长期潜力路径。</p>
+<table>
+<tr><th>币种</th><th>发行链</th><th>Alpha 上线日</th><th class="n">上线价</th><th class="n">至今涨幅</th><th>是否已下架</th></tr>
+<tr class="hi"><td>MARSCOIN</td><td>BNB Chain</td><td>2026-07-30</td><td class="n">$0.00401</td><td class="n">+1471.2%</td><td>否</td></tr>
+<tr><td>牛来 NIULAI</td><td>BNB Chain</td><td>2026-08-18</td><td class="n">$0.03107</td><td class="n">+152.2%</td><td>否</td></tr>
+<caption>截至这份数据快照，MARSCOIN 从 Alpha 上线价算起的涨幅是牛来的约 6 倍——这只是"目前为止谁涨得多"，不等于"谁更有长期品牌潜力"。</caption>
+</table>
+<p>关键补充：两个币各自上线时刻，BTC 都不在周期顶部区域——生命周期内 BTC 从约 $64K 涨到约 $79.5K（+24.1%），始终没有创出上一轮周期约 $100-109K 的历史高点。这意味着两者都不是诞生在 BTC 顶峰狂热期，更接近"熊后恢复/牛市中前段"的参照系，跟 PEPE（2023 年熊后恢复期上线）那一类更像，而不是 TRUMP/PNUT/PENGU 那种顶峰期上线的案例。</p>
+<div class="cards">
+<div><h4>支持牛来走"动物鼻祖"路线的理由</h4>"牛/ox"目前没有公认的西方鼻祖级代表，是一个品类空位；"牛"在中文金融俚语里本身就等于"牛市"，是一个独立于币价、已经先天嵌入认知的正面联想，DOGE 和 PEPE 都没有这种语言层面的先天优势。但 DOGE、PEPE 的护城河主要不是"是动物"，而是动物之外多年积累的文化符号——牛来目前没有可比的、独立于币价之外的文化积累，且只有一个多月历史，样本量是"零个完整周期"。</div>
+<div><h4>MARSCOIN 的潜力：另一条赛道</h4>绑定真实资产分红机制（SPCXB/SpaceX 代币化股权），是"meme+实际现金流"的混合模式，跟纯靠文化符号撑住热度的 DOGE/PEPE 路线不同。Robinhood Chain 已经独立地、跟 MARSCOIN 毫无关系地跑出了同一种"meme+股票"叙事，说明这不是一个项目的孤立设计，而是当前周期里一个正在被多条链同时验证的新品类假设。</div>
+</div>
+<p class="lede" style="font-size:16px;">两者代表两种不同性质的长期潜力路径，样本时间太短，无法给出任何有信心的预测，需要持续观察这两个币在下一次深度回调/叙事降温时的相对抗跌能力，那才是检验"是否具备长期品牌潜质"的第一个真实压力测试。</p>
+
+<h2 id="s9"><span class="num">09</span>MARSCOIN 分红机制：读完合约能确认的三件事</h2>
+<p>现货都上了，为什么还有人在链上买？税有没有到期时间？提现能不能避税还继续拿分红？这三个此前只能猜测的问题，这一轮全部用真实合约数据坐实了。</p>
+<details>
+<summary>展开：MARSCOIN 相关合约地址</summary>
+<div class="inner">
+<table>
+<tr><th>地址</th><th>角色</th></tr>
+<tr><td><code>0xfe189e97832da1573e4e4ff034f4ffc3a15c7777</code></td><td>MARSCOIN 代币合约（FlapTaxTokenV3 克隆）</td></tr>
+<tr><td><code>0xeCaeDd9AB9b67b7Bc013d8e4322AeD07F982C8cb</code></td><td>专属 TaxProcessor 克隆</td></tr>
+<tr><td><code>0xBBA9d21286fCAfd707a88c572010A3b838Ace819</code></td><td>专属 Dividend 克隆</td></tr>
+<tr><td><code>0x94F3ed36706c746ad59fAdCAF271b7431AB1D8F1</code></td><td>唯一被征税的 mainPool</td></tr>
+<tr><td><code>0xe2cE6ab80874Fa9Fa2aAE65D277Dd6B8e65C9De0</code></td><td>TaxProcessor 和 Dividend 的 owner，Flap 平台管理中枢合约</td></tr>
+</table>
+</div>
+</details>
+<h3>一、3% 买卖税：代币层已锁死，但怎么分平台仍能改</h3>
+<p>链上实时读数确认买卖税各 3%，写死在代币合约存储里，没有任何函数能改这两个数字，且代币合约 owner 已经弃权归零地址，唯一的"过期机制"换算下来是 2126 年，实际等同于永久。但<b>税收上来之后怎么分，这一层不是锁死的</b>——分配逻辑所在合约的 owner 是 Flap 平台中枢合约，没有弃权，随时可以改分配比例和分红门槛（目前 10,000 枚）。3% 这个税率数字很难被改，但这 3% 怎么分、分红门槛多高，平台自己留了后门，不是完全不可变的承诺。</p>
+<h3>二、3% 税不是 100% 给用户，是 90%——纠正此前的网传说法</h3>
+<p>实时读取分账合约：每笔交易额的 3% 总税里，<b>0.3% 归 Flap 协议层，2.7%（即总税的 90%）才真正进入 SPCXB 分红池</b>。此前网上有说法称"100% 用于回购 SPCXB"，链上实测并非如此。</p>
+<h3>三、提现到个人钱包，确认可以避税且不影响分红</h3>
+<p>征税逻辑只在转账双方涉及 mainPool 时触发——直接查了两个常见外部流通池在合约里的状态，两个都返回未被征税，说明走这两个池子的交易不扣税，交易所提现到个人钱包这类普通转账更不会碰到 mainPool，自然也不扣税。分红资格只看转账后的实时余额，跟这些币是从哪儿来的完全无关。<b>从交易所买入后提现到自己钱包，被证实可以避开 3% 买入税，并且不影响拿分红资格，这是一条被链上机制证实的、完全合规的路径</b>，这也直接回答了"现货上线后谁还在链上买"的问题：链上自持能拿到更快、更确定的分红，还能省掉买卖税。</p>
+
+<h2 id="s10"><span class="num">10</span>链归属分类与热度快照</h2>
+<p>MEME 热潮正在哪些链之间迁移，是一个此前散落在各节案例里、没有被系统化的问题。这里先给出一套统一分类标准：</p>
+<table>
+<tr><th>分类</th><th>特征</th><th>典型发行/交易平台</th></tr>
+<tr><td>Ethereum 主网/传统 L1</td><td>元老级 MEME 的原生链，新发行成本高，新币少</td><td>直接部署 + Uniswap</td></tr>
+<tr><td>Solana 生态</td><td>发行门槛最低，2024-2025 历史峰值时期的绝对主战场，目前活跃度较峰值腰斩</td><td>pump.fun</td></tr>
+<tr class="hi"><td>BNB Chain 生态</td><td>官方个人动作驱动型脉冲式爆发，退潮也快</td><td>Four.meme、Flap（MARSCOIN 发行平台）</td></tr>
+<tr><td>Base 生态</td><td>靠 Coinbase 分发优势冷启动，流量未能转化为该链自身金融业务</td><td>各类 DEX</td></tr>
+<tr class="hi"><td>Robinhood Chain 生态</td><td>本意股票代币化，MEME 意外反客为主，独有"meme+股票"混血品类空位</td><td>Pons、hood.fun、Pools.trade</td></tr>
+</table>
+<p>跨链热度快照表刚刚建立，用来持续追踪"当前最热的链是哪一条"，同一份表格会在后续每次分析后累积新记录：</p>
+<table>
+<tr><th>记录时间</th><th>当前最热的链</th><th>依据</th></tr>
+<tr><td>2026-09-11</td><td>Robinhood Chain（短期）；BNB Chain（有官方个人动作时脉冲式领先）</td><td>Robinhood Chain 链上 MEME 市值一度是代币化股票资产数十倍；BNB Chain 有历史脉冲式爆发案例。Solana、Base 相对沉寂，未观察到新的爆发性叙事。</td></tr>
+</table>
+<div class="rule">目前样本量只有 1 条记录，远未达到统计意义，"哪条链最热"这类判断在样本积累前只能当作当下的观察快照，不是可持续依赖的规律。</div>
+
+<h2 id="s11"><span class="num">11</span>未能核实的部分</h2>
+<div class="rule">
+<b>本文引用纪律：每个数字都要么标出来源，要么明确标注"未能核实"，不做臆测。</b>以下是目前仍然存在的不确定性：
+<ul>
+<li>第 03、08 节里约 20 个手挑知名案例，统计意义有限，第 04、05 节的 495 个/451 个样本数据集才是大样本验证；即便如此，495 个 Alpha 案例数据集覆盖 2024-12-18 至 2026-09-02，未独立核实数据源和统计口径（例如"至今超额"是相对什么基准计算的未注明）。</li>
+<li>各数据源对同一币历史高点价格/市值存在分歧，本文倍数以手动核实的图表数据为准；BOME、TRUMP 的链上起涨点日期原始记录疑似存在年份笔误，本文已按更合理的日期处理并据此计算倍数，建议后续再核实一次原始日期。</li>
+<li>DOGE → PEPE 的倍数逐代衰减规律，仅基于两个点，方向合理但样本远不足以严格验证；见顶速度规律已用 451 个样本验证，可信度显著更高。</li>
+<li>第 08 节抗跌 MEME 候选名单及"中文命名占比偏高"的观察均为探索性发现，样本量小，不构成可下注的规律，且其中超过一半币种的链归属仍标注为"待确认"，是主动留白，不是遗漏。</li>
+<li>第 08 节牛来 vs MARSCOIN 的长期品牌潜力讨论仍为推测性分析，不构成任何投资建议，两者均只有一个多月交易历史；但两者的 BTC 周期位置数据已通过链上时间戳 + K 线核实，是确定性事实。</li>
+<li>MARSCOIN 分红机制已通过合约源码阅读和实时链上状态查询验证，唯一仍未确认的疑点是"币安普通现货持有者是否自动具备分红资格，还是仅限特定身份用户"，公开资料未讲清楚。</li>
+<li>第 10 节链归属分类与热度快照是刚建立的框架，目前只有 1 条记录，远未达到统计意义；"币安是否偏袒某条链"这类意图性传闻，本文明确不采信为事实，只记录为市场传闻并标注证据边界。</li>
+</ul>
+</div>
+
+<div class="closer">
+<p class="lede">把这些数字放在一起看，这条赛道真正的教训不是"下一个 654 倍在哪里"，而是：<b>倍数故事和生存能力是两件独立的事，时机比背书更能解释谁会被割，见顶速度是目前最干净的量化信号，而叙事正在从一条链快速搬到下一条链</b>——追故事的人总是在追上一轮已经涨完的那条链。</p>
+<p class="lede">MARSCOIN 和牛来目前都还只是"待定"，样本时间不到两个月，任何关于它们能否成为下一个 DOGE 或者下一个 PEPE 的判断都为时过早。真正值得持续跟踪的，是它们各自在下一次深度回调里的相对抗跌能力，以及 Robinhood Chain 那个写在日历上的 <b class="hl-down">9 月 29 日</b>——这两件事，会比任何一个当下的倍数数字都更能回答<span class="q">"谁能活下来"</span>这个问题。</p>
+<p class="fin">下一步该盯的两件事：MARSCOIN、牛来在下一次深度回调里的相对抗跌能力；以及 Robinhood Chain 写在日历上的 <b class="hl-down">2026-09-29</b> Gas 补贴到期日。</p>
+</div>
+
+<footer>
+<p class="sig">产品大叔 ｜ Crypto PM　@Uncle_Onchain</p>
+<p><b>数据来源与方法：</b>币安历史上市公告与 K 线、TradingView 周线图（用户手动核实的低点/高点价格）、币安 Alpha 官方表现数据集（495 个项目，2024-12-18 至 2026-09-02 快照）、MARSCOIN/牛来相关合约代码与实时链上状态读取、Robinhood Chain 与 Flap 平台公开数据。全文数字口径已在正文和第 11 节标注，无法溯源的一律标注为"未能核实"或"市场传闻"，不作为事实呈现。</p>
+<p>本文只做机制拆解与数据统计，不构成任何投资建议。MEME 币波动极大、流动性风险高，历史数据不代表未来表现，请独立判断并自行承担交易风险。</p>
+</footer>
+
+</div>
+</body>
+</html>
