@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>CME futures annualized basis (front) · Macro · Uncle Onchain</title>
+<title>H1 · CME front-month annualized basis · Macro · Uncle Onchain</title>
 <script>(function(){try{var t=localStorage.getItem('uc-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}})();</script>
-<meta name="description" content="(CME front month / spot at the same moment − 1) × 365 / days to expiry, rolling ~5 trading days before expiry. US institutional and basis-trade appetite. No free history: recorded daily since 2026-10, descriptive only.">
+<meta name="description" content="(CME front month / spot at the same moment − 1) × 365 / days to expiry, rolling ~5 trading days before expiry; fetched once a day. Same concept, different markets: CME is US institutions and basis trades, Deribit is crypto-native leverage; levels often differ by several points — read each one&#x27;s direction and own percentile only.">
 <meta name="theme-color" content="#05070c">
 <link rel="alternate" hreflang="zh-CN" href="https://uncleonchain.com/macro/cme_basis/"><link rel="alternate" hreflang="en" href="https://uncleonchain.com/en/macro/cme_basis/">
-<meta property="og:title" content="CME futures annualized basis (front) · Macro · Uncle Onchain"><meta property="og:description" content="(CME front month / spot at the same moment − 1) × 365 / days to expiry, rolling ~5 trading days before expiry. US institutional and basis-trade appetite. No free history: recorded daily since 2026-10, descriptive only.">
+<meta property="og:title" content="H1 · CME front-month annualized basis · Macro · Uncle Onchain"><meta property="og:description" content="(CME front month / spot at the same moment − 1) × 365 / days to expiry, rolling ~5 trading days before expiry; fetched once a day. Same concept, different markets: CME is US institutions and basis trades, Deribit is crypto-native leverage; levels often differ by several points — read each one&#x27;s direction and own percentile only.">
 <meta property="og:type" content="website"><meta property="og:site_name" content="Uncle Onchain">
 <meta property="og:image" content="https://uncleonchain.com/assets/og.png">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@Uncle_Onchain">
@@ -224,6 +224,14 @@ a.ind:hover{border-color:var(--lime-bd);background:var(--card2);color:inherit}
 .pend b{display:block;color:var(--ink2);font-size:12.5px;margin-bottom:3px;font-weight:600}
 .src{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
 
+/* ---- FAQ ---- */
+.faqs{display:grid;gap:8px}
+.faq summary{cursor:pointer;padding:12px 16px;font-weight:600;font-size:13.5px;list-style:none;display:flex;justify-content:space-between;gap:10px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:after{content:"+";color:var(--muted);font-family:var(--mono)}
+.faq[open] summary:after{content:"−"}
+.faq p{margin:0;padding:0 16px 14px;color:var(--ink2);font-size:13.5px;line-height:1.75}
+
 /* ---- 情境格 ---- */
 .scen{display:grid;grid-template-columns:150px repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:12.5px}
 .scen>div{background:var(--card);padding:10px 12px}
@@ -406,14 +414,14 @@ background-image:radial-gradient(700px 400px at 0% 0%,rgba(0,255,204,.10),transp
 <a href="https://x.com/Uncle_Onchain" target="_blank" rel="noopener">𝕏 @Uncle_Onchain</a><p>Data and process notes only. Not investment advice.</p></div>
 </aside><label for="navtg" class="scrim"></label>
 <main class="main"><div class="mi">
-<nav class="crumbs" aria-label="breadcrumb"><a href="/en/macro/">Macro</a><span class="sep">/</span><a href="/en/macro/#layer-1">L1 · Macro Liquidity</a><span class="sep">/</span><span class="cur" aria-current="page">CME futures annualized basis (front)</span></nav>
-<div class="ph"><div><div class="eyebrow">L1 · Futures basis (descriptive)</div>
-<h1>CME futures annualized basis (front)</h1><p class="lede">(CME front month / spot at the same moment − 1) × 365 / days to expiry, rolling ~5 trading days before expiry. US institutional and basis-trade appetite. No free history: recorded daily since 2026-10, descriptive only.</p>
-<div class="chips" style="margin-top:10px"><span class="chip">Source：Yahoo · CME 近月合约（自己逐日积累）</span><span class="chip">Level：aux</span><span class="grade ">Descriptive</span></div></div></div>
+<nav class="crumbs" aria-label="breadcrumb"><a href="/en/macro/">Macro</a><span class="sep">/</span><a href="/en/macro/#layer-1">L1 · Macro Liquidity</a><span class="sep">/</span><span class="cur" aria-current="page">H1 · CME front-month annualized basis</span></nav>
+<div class="ph"><div><div class="eyebrow">L1 · L1-B crypto funding channels · futures basis (side by side)</div>
+<h1>H1 · CME front-month annualized basis</h1><p class="lede">(CME front month / spot at the same moment − 1) × 365 / days to expiry, rolling ~5 trading days before expiry; fetched once a day. Same concept, different markets: CME is US institutions and basis trades, Deribit is crypto-native leverage; levels often differ by several points — read each one&#x27;s direction and own percentile only.</p>
+<div class="chips" style="margin-top:10px"><span class="chip">Source：Yahoo · CME 近月合约（每天抓一次）</span><span class="chip">Level：aux</span><span class="grade ">Descriptive</span></div></div></div>
 <div class="glass verdict"><div class="body"><div class="lbl">Current reading · as of 2026-10-03</div><div class="txt" style="font-family:var(--mono);font-size:26px">3.4%</div><div class="chips"><span class="chip t-neutral"><i></i>Recording</span><span class="chip">2 days recorded; percentile after 90</span></div></div></div>
 <h2>Zones: rules and how often each occurred</h2><div class="tw"><table><tbody><tr><td class="l wrap">Own-history percentile only: <20 low, 20–80 mid, >80 high; judged after 90 observations.</td></tr></tbody></table></div>
 <h2>Normal range</h2><div class="empty">Not enough data yet.</div>
-<h2>Judged series · full history <span class="sub">own-history percentile · dashed = zone boundaries; blue band = normal range (light p10–p90, dark p25–p75)</span></h2><div class="card" style="padding:14px 18px"><div class="" style="" data-chart="{&quot;src&quot;: &quot;/data/macro/cme_basis.json&quot;, &quot;fmt&quot;: &quot;pct1&quot;, &quot;ranges&quot;: [&quot;1Y&quot;, &quot;3Y&quot;, &quot;5Y&quot;, &quot;ALL&quot;], &quot;range&quot;: &quot;ALL&quot;, &quot;group&quot;: &quot;d&quot;, &quot;lines&quot;: [], &quot;zone&quot;: [], &quot;zero&quot;: false, &quot;series&quot;: [{&quot;k&quot;: &quot;v&quot;, &quot;n&quot;: &quot;CME futures annualized basis (front)&quot;, &quot;c&quot;: &quot;s1&quot;, &quot;area&quot;: false}]}"></div></div><h2>For reference: BTC price (log) <span class="sub">same time axis, linked hover</span></h2><div class="card" style="padding:14px 18px"><div class="" style="" data-chart="{&quot;src&quot;: &quot;/data/macro/btc.json&quot;, &quot;fmt&quot;: &quot;price&quot;, &quot;log&quot;: true, &quot;ranges&quot;: [&quot;1Y&quot;, &quot;3Y&quot;, &quot;5Y&quot;, &quot;ALL&quot;], &quot;range&quot;: &quot;ALL&quot;, &quot;group&quot;: &quot;d&quot;, &quot;series&quot;: [{&quot;k&quot;: &quot;v&quot;, &quot;n&quot;: &quot;BTC&quot;, &quot;c&quot;: &quot;s2&quot;}]}"></div></div>
+<h2>Judged series · full history <span class="sub">own-history percentile · dashed = zone boundaries; blue band = normal range (light p10–p90, dark p25–p75)</span></h2><div class="card" style="padding:14px 18px"><div class="" style="" data-chart="{&quot;src&quot;: &quot;/data/macro/cme_basis.json&quot;, &quot;fmt&quot;: &quot;pct1&quot;, &quot;ranges&quot;: [&quot;1Y&quot;, &quot;3Y&quot;, &quot;5Y&quot;, &quot;ALL&quot;], &quot;range&quot;: &quot;ALL&quot;, &quot;group&quot;: &quot;d&quot;, &quot;lines&quot;: [], &quot;zone&quot;: [], &quot;zero&quot;: false, &quot;series&quot;: [{&quot;k&quot;: &quot;v&quot;, &quot;n&quot;: &quot;H1 · CME front-month annualized basis&quot;, &quot;c&quot;: &quot;s1&quot;, &quot;area&quot;: false}]}"></div></div><h2>For reference: BTC price (log scale, proportional to % moves) <span class="sub">same time axis, linked hover</span></h2><div class="card" style="padding:14px 18px"><div class="" style="" data-chart="{&quot;src&quot;: &quot;/data/macro/btc.json&quot;, &quot;fmt&quot;: &quot;price&quot;, &quot;log&quot;: true, &quot;ranges&quot;: [&quot;1Y&quot;, &quot;3Y&quot;, &quot;5Y&quot;, &quot;ALL&quot;], &quot;range&quot;: &quot;ALL&quot;, &quot;group&quot;: &quot;d&quot;, &quot;note&quot;: &quot;Log scale: equal heights mean equal percentage moves — 10k→20k is as tall as 50k→100k.&quot;, &quot;series&quot;: [{&quot;k&quot;: &quot;v&quot;, &quot;n&quot;: &quot;BTC&quot;, &quot;c&quot;: &quot;s2&quot;}]}"></div></div>
 <p class="tnote" style="margin-top:20px">Rules and evidence grades: <a href="/en/methodology/">Methodology</a>; rule changes are logged in <a href="/en/corrections/">Corrections</a>.</p>
 </div>
 <footer class="foot"><span>链上大叔研究台（Uncle Onchain）</span><a href="https://x.com/Uncle_Onchain">@Uncle_Onchain</a>

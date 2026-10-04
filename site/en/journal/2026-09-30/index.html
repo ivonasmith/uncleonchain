@@ -224,6 +224,14 @@ a.ind:hover{border-color:var(--lime-bd);background:var(--card2);color:inherit}
 .pend b{display:block;color:var(--ink2);font-size:12.5px;margin-bottom:3px;font-weight:600}
 .src{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
 
+/* ---- FAQ ---- */
+.faqs{display:grid;gap:8px}
+.faq summary{cursor:pointer;padding:12px 16px;font-weight:600;font-size:13.5px;list-style:none;display:flex;justify-content:space-between;gap:10px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:after{content:"+";color:var(--muted);font-family:var(--mono)}
+.faq[open] summary:after{content:"−"}
+.faq p{margin:0;padding:0 16px 14px;color:var(--ink2);font-size:13.5px;line-height:1.75}
+
 /* ---- 情境格 ---- */
 .scen{display:grid;grid-template-columns:150px repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:12.5px}
 .scen>div{background:var(--card);padding:10px 12px}
@@ -460,6 +468,6 @@ window.ucToast=toast;
 })();
 </script>
 
-<script>function shareLog(){ucShare({"title": "Onchain terminal · 2026-09-30", "date": "2026-09-30", "sub": "水在变少、情绪却偏热——最需要警惕的组合：价格靠杠杆和情绪撑着，缺增量资金。", "html": "<div class=\"sc-kpis\"><div class=\"sc-kpi\"><div class=\"k\">Stablecoins ex-payment 13w</div><div class=\"v t-warn\">-1.84%</div></div><div class=\"sc-kpi\"><div class=\"k\">Exchange BTC net flow</div><div class=\"v t-up\">-4,464 BTC</div></div><div class=\"sc-kpi\"><div class=\"k\">Fear &amp; Greed</div><div class=\"v t-warn\">71</div></div></div><div style=\"margin-bottom:20px\"><span class=\"chip t-dn\" style=\"margin:0 8px 8px 0\">宏观流动性 · 流动性收缩</span><span class=\"chip t-cool\" style=\"margin:0 8px 8px 0\">周期定位 · 周期偏低</span><span class=\"chip t-up\" style=\"margin:0 8px 8px 0\">筹码结构 · 筹码流出交易所</span><span class=\"chip t-warn\" style=\"margin:0 8px 8px 0\">情绪衍生品 · 情绪偏热</span></div><div class=\"sc-box\"><ul class=\"sc-al\"><li>🟠 发射台：StonkFun 数据源延迟（最后一天 2026-09-28），相关列标「延迟」，没有拿旧值顶替</li><li>🟠 发射台：赛道 Top60 分母缺 2 家（约占前一日 9%），份额偏高</li></ul></div>", "file": "uncleonchain-journal-2026-09-30.png"})}</script>
+<script>function shareLog(){ucShare({"title": "Onchain terminal · 2026-09-30", "date": "2026-09-30", "sub": "水在变少、情绪却偏热——最需要警惕的组合：价格靠杠杆和情绪撑着，缺增量资金。", "html": "<div class=\"sc-kpis\"><div class=\"sc-kpi\"><div class=\"k\">Stablecoin main line 13w</div><div class=\"v t-warn\">-1.49%</div></div><div class=\"sc-kpi\"><div class=\"k\">Exchange BTC net flow</div><div class=\"v t-up\">-4,464 BTC</div></div><div class=\"sc-kpi\"><div class=\"k\">Fear &amp; Greed</div><div class=\"v t-warn\">71</div></div></div><div style=\"margin-bottom:20px\"><span class=\"chip t-dn\" style=\"margin:0 8px 8px 0\">宏观流动性 · 流动性收缩</span><span class=\"chip t-cool\" style=\"margin:0 8px 8px 0\">周期定位 · 周期偏低</span><span class=\"chip t-up\" style=\"margin:0 8px 8px 0\">筹码结构 · 筹码流出交易所</span><span class=\"chip t-warn\" style=\"margin:0 8px 8px 0\">情绪衍生品 · 情绪偏热</span></div><div class=\"sc-box\"><ul class=\"sc-al\"><li>🟠 发射台：StonkFun 数据源延迟（最后一天 2026-09-28），相关列标「延迟」，没有拿旧值顶替</li><li>🟠 发射台：赛道 Top60 分母缺 2 家（约占前一日 9%），份额偏高</li></ul></div>", "file": "uncleonchain-journal-2026-09-30.png"})}</script>
 </body>
 </html>

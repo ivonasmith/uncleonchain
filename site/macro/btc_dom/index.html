@@ -224,6 +224,14 @@ a.ind:hover{border-color:var(--lime-bd);background:var(--card2);color:inherit}
 .pend b{display:block;color:var(--ink2);font-size:12.5px;margin-bottom:3px;font-weight:600}
 .src{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
 
+/* ---- FAQ ---- */
+.faqs{display:grid;gap:8px}
+.faq summary{cursor:pointer;padding:12px 16px;font-weight:600;font-size:13.5px;list-style:none;display:flex;justify-content:space-between;gap:10px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:after{content:"+";color:var(--muted);font-family:var(--mono)}
+.faq[open] summary:after{content:"−"}
+.faq p{margin:0;padding:0 16px 14px;color:var(--ink2);font-size:13.5px;line-height:1.75}
+
 /* ---- 情境格 ---- */
 .scen{display:grid;grid-template-columns:150px repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:12.5px}
 .scen>div{background:var(--card);padding:10px 12px}
@@ -413,7 +421,7 @@ background-image:radial-gradient(700px 400px at 0% 0%,rgba(0,255,204,.10),transp
 <div class="glass verdict"><div class="body"><div class="lbl">当前读数 · 截至 2026-10-03</div><div class="txt" style="font-family:var(--mono);font-size:26px">59.2%</div><div class="chips"><span class="chip t-neutral"><i></i>只看趋势</span><span class="chip">水平 59.2%</span></div></div></div>
 <h2>这个数字落在哪：区间规则与历史占比</h2><div class="empty">只看趋势，没有区间判定。</div>
 <h2>正常波动范围</h2><div class="empty">样本还不够，满 10 个数据点后给出。</div>
-<h2>判定序列 · 全部历史 <span class="sub">水平 · 虚线 = 区间分界；蓝色带 = 正常波动范围（浅 p10–p90，深 p25–p75）</span></h2><div class="card" style="padding:14px 18px"><div class="" style="" data-chart="{&quot;src&quot;: &quot;/data/macro/btc_dom.json&quot;, &quot;fmt&quot;: &quot;pct1&quot;, &quot;ranges&quot;: [&quot;1Y&quot;, &quot;3Y&quot;, &quot;5Y&quot;, &quot;ALL&quot;], &quot;range&quot;: &quot;ALL&quot;, &quot;group&quot;: &quot;d&quot;, &quot;lines&quot;: [], &quot;zone&quot;: [], &quot;zero&quot;: false, &quot;series&quot;: [{&quot;k&quot;: &quot;v&quot;, &quot;n&quot;: &quot;BTC 市值占比&quot;, &quot;c&quot;: &quot;s1&quot;, &quot;area&quot;: false}]}"></div></div><h2>对照：BTC 价格（对数坐标） <span class="sub">同一时间轴，悬停联动</span></h2><div class="card" style="padding:14px 18px"><div class="" style="" data-chart="{&quot;src&quot;: &quot;/data/macro/btc.json&quot;, &quot;fmt&quot;: &quot;price&quot;, &quot;log&quot;: true, &quot;ranges&quot;: [&quot;1Y&quot;, &quot;3Y&quot;, &quot;5Y&quot;, &quot;ALL&quot;], &quot;range&quot;: &quot;ALL&quot;, &quot;group&quot;: &quot;d&quot;, &quot;series&quot;: [{&quot;k&quot;: &quot;v&quot;, &quot;n&quot;: &quot;BTC&quot;, &quot;c&quot;: &quot;s2&quot;}]}"></div></div>
+<h2>判定序列 · 全部历史 <span class="sub">水平 · 虚线 = 区间分界；蓝色带 = 正常波动范围（浅 p10–p90，深 p25–p75）</span></h2><div class="card" style="padding:14px 18px"><div class="" style="" data-chart="{&quot;src&quot;: &quot;/data/macro/btc_dom.json&quot;, &quot;fmt&quot;: &quot;pct1&quot;, &quot;ranges&quot;: [&quot;1Y&quot;, &quot;3Y&quot;, &quot;5Y&quot;, &quot;ALL&quot;], &quot;range&quot;: &quot;ALL&quot;, &quot;group&quot;: &quot;d&quot;, &quot;lines&quot;: [], &quot;zone&quot;: [], &quot;zero&quot;: false, &quot;series&quot;: [{&quot;k&quot;: &quot;v&quot;, &quot;n&quot;: &quot;BTC 市值占比&quot;, &quot;c&quot;: &quot;s1&quot;, &quot;area&quot;: false}]}"></div></div><h2>对照：BTC 价格（对数坐标，按涨跌幅比例显示） <span class="sub">同一时间轴，悬停联动</span></h2><div class="card" style="padding:14px 18px"><div class="" style="" data-chart="{&quot;src&quot;: &quot;/data/macro/btc.json&quot;, &quot;fmt&quot;: &quot;price&quot;, &quot;log&quot;: true, &quot;ranges&quot;: [&quot;1Y&quot;, &quot;3Y&quot;, &quot;5Y&quot;, &quot;ALL&quot;], &quot;range&quot;: &quot;ALL&quot;, &quot;group&quot;: &quot;d&quot;, &quot;note&quot;: &quot;对数坐标：同样的高度代表同样的涨跌幅，比如 1 万→2 万和 5 万→10 万一样高。&quot;, &quot;series&quot;: [{&quot;k&quot;: &quot;v&quot;, &quot;n&quot;: &quot;BTC&quot;, &quot;c&quot;: &quot;s2&quot;}]}"></div></div>
 <p class="tnote" style="margin-top:20px">区间规则和证据等级的出处见<a href="/methodology/">口径与规则</a>；规则改动记在<a href="/corrections/">更正记录</a>。</p>
 </div>
 <footer class="foot"><span>链上大叔研究台（Uncle Onchain）</span><a href="https://x.com/Uncle_Onchain">@Uncle_Onchain</a>

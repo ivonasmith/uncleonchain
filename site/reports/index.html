@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>分析报告 · 链上大叔研究台</title>
 <script>(function(){try{var t=localStorage.getItem('uc-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}})();</script>
-<meta name="description" content="周度节奏的深度报告：针对一个方向或议题做全方位分析，给出可以拿来做决策依据的结论。每篇先看摘要和核心结论，再看完整正文（原样排版）。报告是写作当时的判断，发布后不改，后续修正另起一篇。">
+<meta name="description" content="周度节奏的深度报告：针对一个方向或议题做全方位分析，给出可以拿来做决策依据的结论。报告原样排版、跟随站点深浅色；写作当时的判断发布后不改，后续修正另起一篇。">
 <meta name="theme-color" content="#05070c">
 <link rel="alternate" hreflang="zh-CN" href="https://uncleonchain.com/reports/"><link rel="alternate" hreflang="en" href="https://uncleonchain.com/en/reports/">
-<meta property="og:title" content="分析报告 · 链上大叔研究台"><meta property="og:description" content="周度节奏的深度报告：针对一个方向或议题做全方位分析，给出可以拿来做决策依据的结论。每篇先看摘要和核心结论，再看完整正文（原样排版）。报告是写作当时的判断，发布后不改，后续修正另起一篇。">
+<meta property="og:title" content="分析报告 · 链上大叔研究台"><meta property="og:description" content="周度节奏的深度报告：针对一个方向或议题做全方位分析，给出可以拿来做决策依据的结论。报告原样排版、跟随站点深浅色；写作当时的判断发布后不改，后续修正另起一篇。">
 <meta property="og:type" content="website"><meta property="og:site_name" content="链上大叔研究台">
 <meta property="og:image" content="https://uncleonchain.com/assets/og.png">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@Uncle_Onchain">
@@ -224,6 +224,14 @@ a.ind:hover{border-color:var(--lime-bd);background:var(--card2);color:inherit}
 .pend b{display:block;color:var(--ink2);font-size:12.5px;margin-bottom:3px;font-weight:600}
 .src{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
 
+/* ---- FAQ ---- */
+.faqs{display:grid;gap:8px}
+.faq summary{cursor:pointer;padding:12px 16px;font-weight:600;font-size:13.5px;list-style:none;display:flex;justify-content:space-between;gap:10px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:after{content:"+";color:var(--muted);font-family:var(--mono)}
+.faq[open] summary:after{content:"−"}
+.faq p{margin:0;padding:0 16px 14px;color:var(--ink2);font-size:13.5px;line-height:1.75}
+
 /* ---- 情境格 ---- */
 .scen{display:grid;grid-template-columns:150px repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:12.5px}
 .scen>div{background:var(--card);padding:10px 12px}
@@ -407,9 +415,9 @@ background-image:radial-gradient(700px 400px at 0% 0%,rgba(0,255,204,.10),transp
 </aside><label for="navtg" class="scrim"></label>
 <main class="main"><div class="mi">
 <div class="ph"><div><div class="eyebrow">Research Reports</div><h1>分析报告</h1>
-<p class="lede">周度节奏的深度报告：针对一个方向或议题做全方位分析，给出可以拿来做决策依据的结论。每篇先看摘要和核心结论，再看完整正文（原样排版）。报告是写作当时的判断，发布后不改，后续修正另起一篇。</p></div></div>
+<p class="lede">周度节奏的深度报告：针对一个方向或议题做全方位分析，给出可以拿来做决策依据的结论。报告原样排版、跟随站点深浅色；写作当时的判断发布后不改，后续修正另起一篇。</p></div></div>
 
-<div class="empty">第一篇报告整理好就发在这里。</div>
+<div class="grid g2"><a class="card rcard" href="/reports/2026-10-04-macro-vs-bitcoin/"><span class="d">2026-10-04</span><b>宏观到底管不管比特币？</b><p>用 16 年数据逐条检验「加息必跌、放水必涨、黄金溢出、ETF 流入=机构看多」：宏观管节奏和风险，不管方向。</p><div class=chips><span class="chip">宏观</span><span class="chip">L1</span><span class="chip">周末特辑</span></div></a><a class="card rcard" href="/reports/2026-09-20-robinhood-chain-pons/"><span class="d">2026-09-20</span><b>Robinhood Chain / PONS：蹭 RWA 叙事，还是真有本事？</b><p>7–8 月的爆发是真的，但引擎不是股票代币化，而是 90 天免 Gas 补贴喂出来的机器人铸币经济；9 月 29 日补贴到期才是真正的压力测试。</p><div class=chips><span class="chip">Robinhood Chain</span><span class="chip">PONS</span><span class="chip">发射台</span><span class="chip">周末特辑</span></div></a><a class="card rcard" href="/reports/2026-09-12-meme-nine-year-ledger/"><span class="d">2026-09-12</span><b>MEME 币九年生死簿：495 个样本讲透一个长尾赛道</b><p>495 个币安 Alpha 项目「至今」收益均值 −38.9%、中位数 −82.4%：多数归零、少数暴富的统计学证据。</p><div class=chips><span class="chip">MEME</span><span class="chip">币安 Alpha</span><span class="chip">周末特辑</span></div></a><a class="card rcard" href="/reports/2026-08-30-launchpad-panorama/"><span class="d">2026-08-30</span><b>全链拆解 141 家发射台的分布格局与散户机会</b><p>发币端回到自身峰值的 56.5%，找币端只有 28.6%；pump.fun 占 141 家发射台 30 天费用的 47.0%。</p><div class=chips><span class="chip">发射台</span><span class="chip">pump.fun</span><span class="chip">Flap</span><span class="chip">PONS</span><span class="chip">周末特辑</span></div></a><a class="card rcard" href="/reports/2026-08-22-btc-cycle-backtest/"><span class="d">2026-08-22</span><b>可能被忽略的真相：牛市启动在减半前 15 个月</b><p>四年周期没死，死的是幅度：三波几乎一样深的下跌，$79,009 是唯一该盯的分水岭。</p><div class=chips><span class="chip">BTC</span><span class="chip">周期</span><span class="chip">回测</span><span class="chip">周末特辑</span></div></a></div>
 </div>
 <footer class="foot"><span>链上大叔研究台（Uncle Onchain）</span><a href="https://x.com/Uncle_Onchain">@Uncle_Onchain</a>
 <span>数据: DefiLlama · CoinMetrics · FRED · Farside · Yahoo · alternative.me · Hyperliquid · Deribit · CoinGecko · 链上节点</span><span>本站只给数据和过程记录，不构成任何投资建议；不对任何交易结果负责。</span></footer>

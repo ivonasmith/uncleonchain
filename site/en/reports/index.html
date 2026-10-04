@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Research reports · Uncle Onchain</title>
 <script>(function(){try{var t=localStorage.getItem('uc-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}})();</script>
-<meta name="description" content="Weekly deep-dive reports: one theme analysed end to end, with conclusions usable as decision inputs. Each starts with a summary and key conclusions, then the full original layout. Reports are frozen once published; corrections go in a new report.">
+<meta name="description" content="Weekly deep-dive reports: one theme analysed end to end, with conclusions usable as decision inputs. Original layout, following the site&#x27;s light/dark theme. Frozen once published; corrections go in a new report.">
 <meta name="theme-color" content="#05070c">
 <link rel="alternate" hreflang="zh-CN" href="https://uncleonchain.com/reports/"><link rel="alternate" hreflang="en" href="https://uncleonchain.com/en/reports/">
-<meta property="og:title" content="Research reports · Uncle Onchain"><meta property="og:description" content="Weekly deep-dive reports: one theme analysed end to end, with conclusions usable as decision inputs. Each starts with a summary and key conclusions, then the full original layout. Reports are frozen once published; corrections go in a new report.">
+<meta property="og:title" content="Research reports · Uncle Onchain"><meta property="og:description" content="Weekly deep-dive reports: one theme analysed end to end, with conclusions usable as decision inputs. Original layout, following the site&#x27;s light/dark theme. Frozen once published; corrections go in a new report.">
 <meta property="og:type" content="website"><meta property="og:site_name" content="Uncle Onchain">
 <meta property="og:image" content="https://uncleonchain.com/assets/og.png">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@Uncle_Onchain">
@@ -224,6 +224,14 @@ a.ind:hover{border-color:var(--lime-bd);background:var(--card2);color:inherit}
 .pend b{display:block;color:var(--ink2);font-size:12.5px;margin-bottom:3px;font-weight:600}
 .src{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
 
+/* ---- FAQ ---- */
+.faqs{display:grid;gap:8px}
+.faq summary{cursor:pointer;padding:12px 16px;font-weight:600;font-size:13.5px;list-style:none;display:flex;justify-content:space-between;gap:10px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:after{content:"+";color:var(--muted);font-family:var(--mono)}
+.faq[open] summary:after{content:"−"}
+.faq p{margin:0;padding:0 16px 14px;color:var(--ink2);font-size:13.5px;line-height:1.75}
+
 /* ---- 情境格 ---- */
 .scen{display:grid;grid-template-columns:150px repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:12.5px}
 .scen>div{background:var(--card);padding:10px 12px}
@@ -407,9 +415,9 @@ background-image:radial-gradient(700px 400px at 0% 0%,rgba(0,255,204,.10),transp
 </aside><label for="navtg" class="scrim"></label>
 <main class="main"><div class="mi">
 <div class="ph"><div><div class="eyebrow">Research Reports</div><h1>Research reports</h1>
-<p class="lede">Weekly deep-dive reports: one theme analysed end to end, with conclusions usable as decision inputs. Each starts with a summary and key conclusions, then the full original layout. Reports are frozen once published; corrections go in a new report.</p></div></div>
-
-<div class="empty">The first report will appear here.</div>
+<p class="lede">Weekly deep-dive reports: one theme analysed end to end, with conclusions usable as decision inputs. Original layout, following the site&#x27;s light/dark theme. Frozen once published; corrections go in a new report.</p></div></div>
+<div class="note">Reports marked 中文 are available in Chinese only for now.</div>
+<div class="grid g2"><a class="card rcard" href="/en/reports/2026-10-04-macro-vs-bitcoin/"><span class="d">2026-10-04</span><b>宏观到底管不管比特币？</b><p>用 16 年数据逐条检验「加息必跌、放水必涨、黄金溢出、ETF 流入=机构看多」：宏观管节奏和风险，不管方向。</p><div class=chips><span class="chip t-warn">中文</span><span class="chip">宏观</span><span class="chip">L1</span><span class="chip">周末特辑</span></div></a><a class="card rcard" href="/en/reports/2026-09-20-robinhood-chain-pons/"><span class="d">2026-09-20</span><b>Robinhood Chain / PONS: Riding the RWA Narrative, or Actually Onto Something?</b><p>The July–August surge was real, but the engine was a 90-day gas subsidy feeding a robot minting economy, not tokenized stocks. The real test starts when the subsidy expires on Sept 29.</p><div class=chips><span class="chip">Robinhood Chain</span><span class="chip">PONS</span><span class="chip">发射台</span><span class="chip">周末特辑</span></div></a><a class="card rcard" href="/en/reports/2026-09-12-meme-nine-year-ledger/"><span class="d">2026-09-12</span><b>The Nine-Year MEME Coin Ledger: 495 Samples on a Long-Tail Sector</b><p>Across 495 Binance Alpha listings the all-time return has a mean of −38.9% and a median of −82.4% — the statistical signature of a long tail.</p><div class=chips><span class="chip">MEME</span><span class="chip">币安 Alpha</span><span class="chip">周末特辑</span></div></a><a class="card rcard" href="/en/reports/2026-08-30-launchpad-panorama/"><span class="d">2026-08-30</span><b>141 Launchpads, One Ruler: Where the Money Is and Where Retail Fits</b><p>Issuance is back to 56.5% of its peak, discovery only 28.6%; pump.fun took 47.0% of all launchpad fees in August.</p><div class=chips><span class="chip">发射台</span><span class="chip">pump.fun</span><span class="chip">Flap</span><span class="chip">PONS</span><span class="chip">周末特辑</span></div></a><a class="card rcard" href="/en/reports/2026-08-22-btc-cycle-backtest/"><span class="d">2026-08-22</span><b>The Overlooked Truth: Bull Markets Start 15 Months Before the Halving</b><p>The four-year cycle isn&#x27;t dead — the magnitude is. Three down waves of near-identical depth; $79,009 is the only line that matters.</p><div class=chips><span class="chip">BTC</span><span class="chip">周期</span><span class="chip">回测</span><span class="chip">周末特辑</span></div></a></div>
 </div>
 <footer class="foot"><span>链上大叔研究台（Uncle Onchain）</span><a href="https://x.com/Uncle_Onchain">@Uncle_Onchain</a>
 <span>Data: DefiLlama · CoinMetrics · FRED · Farside · Yahoo · alternative.me · Hyperliquid · Deribit · CoinGecko · own nodes</span><span>Data and process notes only. Not investment advice.</span></footer>
