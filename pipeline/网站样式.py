@@ -23,8 +23,8 @@ SITE_CSS = r"""
 --glow1:rgba(0,255,204,.07);--glow2:rgba(163,230,53,.05);--scrim:rgba(0,0,0,.55);--toast:#11161f;--grid:rgba(255,255,255,.06);
 --s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--s5:#d55181;--s6:#008300;--s7:#9085e9;--s8:#e66767;--s9:#5b6274;
 --c-solana:#c084fc;--c-robinhood:#4ade80;--c-bsc:#fbbf24;--c-base:#60a5fa;--c-arc:#22d3ee;--c-monad:#a78bfa;--c-ethereum:#94a3b8;--c-other:#4b5364;
---mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
---sans:Inter,"Noto Sans SC",-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+--mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
 color-scheme:dark}
 :root[data-theme="light"]{--bg:#f5f7fa;--card:#ffffff;--card2:#f0f3f7;--line:rgba(15,23,42,.08);--line2:rgba(15,23,42,.15);
 --ink:#0f172a;--ink2:#475569;--muted:#64748b;--up:#059669;--dn:#e11d48;--warn:#b45309;--cool:#2563eb;--lime:#a3e635;--lime-ink:#4d7c0f;
@@ -398,9 +398,8 @@ background-image:radial-gradient(700px 400px at 0% 0%,rgba(0,255,204,.10),transp
 .sc-ft b{color:#a3e635;font-size:18px}
 """
 
-FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
-         '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&'
-         'family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&display=swap">')
+# 不再加载 Google Fonts：国内经常连不上，<head> 里的字体样式表会卡住整页渲染好几秒。全部用系统字体（字体栈在 SITE_CSS 的 --sans / --mono）。
+FONTS = ""
 
 # <head> 里最先跑：没存过偏好就用深色（终端风是品牌默认），存过就用存的
 HEAD_JS = ("(function(){try{var t=localStorage.getItem('uc-theme');if(t==='light'||t==='dark')"
@@ -413,6 +412,14 @@ function setT(t){root.setAttribute('data-theme',t);try{localStorage.setItem('uc-
  document.querySelectorAll('.thm').forEach(b=>b.setAttribute('aria-pressed',t==='light'?'true':'false'));
  window.dispatchEvent(new Event('uc-theme'))}
 document.querySelectorAll('.thm').forEach(b=>b.addEventListener('click',()=>setT(root.getAttribute('data-theme')==='light'?'dark':'light')));
+// 预取：鼠标停在站内链接上 65ms，或手指按下，就提前下载那一页
+const seen=new Set([location.pathname]);let tm=null;
+function pf(a){if(!a||!a.href)return;let u;try{u=new URL(a.href)}catch(e){return}
+ if(u.origin!==location.origin||seen.has(u.pathname)||a.target==='_blank'||/\.(png|jpe?g|svg|json)$/.test(u.pathname))return;
+ seen.add(u.pathname);const l=document.createElement('link');l.rel='prefetch';l.href=u.pathname;document.head.appendChild(l)}
+document.addEventListener('mouseover',e=>{const a=e.target.closest&&e.target.closest('a[href]');if(!a)return;clearTimeout(tm);tm=setTimeout(()=>pf(a),65)},{passive:true});
+document.addEventListener('mouseout',()=>clearTimeout(tm),{passive:true});
+document.addEventListener('touchstart',e=>{const a=e.target.closest&&e.target.closest('a[href]');if(a)pf(a)},{passive:true});
 // 语言切换时带上当前的 #筛选状态
 document.querySelectorAll('.lang a').forEach(a=>a.addEventListener('click',()=>{if(location.hash)a.href=a.getAttribute('href')+location.hash}));
 })();

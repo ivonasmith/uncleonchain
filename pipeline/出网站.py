@@ -321,6 +321,22 @@ def crumbs(items):
     return '<nav class="crumbs" aria-label="breadcrumb">' + '<span class="sep">/</span>'.join(out) + "</nav>"
 
 
+# 全站共用的样式和脚本写成独立文件（浏览器缓存，翻页不用重复下载），文件名带内容哈希，改了自动换新
+import hashlib                                                           # noqa: E402
+
+ASSET_SRC = {"site.css": ST.SITE_CSS, "ui.js": ST.UI_JS, "share.js": ST.SHARE_JS, "chart.js": ST.CHART_JS}
+ASSET_URL = {k: f"/assets/{k}?v={hashlib.md5(v.encode('utf-8')).hexdigest()[:10]}" for k, v in ASSET_SRC.items()}
+
+# Cloudflare Pages 缓存规则：样式脚本带版本号可以长缓存；走势数据一小时；页面本身每次都向服务器确认
+HEADERS = """/assets/*
+  Cache-Control: public, max-age=2592000
+/data/*
+  Cache-Control: public, max-age=3600
+/*
+  X-Content-Type-Options: nosniff
+"""
+
+
 def page(title, body, active="", desc="", extra_head="", narrow=False, share=False, scripts="", chart=False):
     d = esc(desc or T(SLOGAN, SLOGAN_EN))
     t = esc(title)
@@ -342,8 +358,7 @@ def page(title, body, active="", desc="", extra_head="", narrow=False, share=Fal
 <meta name="twitter:image" content="https://{DOMAIN}/assets/og.png">
 <link rel="icon" href="/assets/favicon.ico" sizes="any"><link rel="icon" href="/assets/favicon-32.png" type="image/png" sizes="32x32">
 <link rel="icon" href="/assets/favicon-192.png" type="image/png" sizes="192x192"><link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-{ST.FONTS}
-<style>{ST.SITE_CSS}</style>
+<link rel="stylesheet" href="{ASSET_URL["site.css"]}">
 {extra_head}
 </head>
 <body>
@@ -354,9 +369,9 @@ def page(title, body, active="", desc="", extra_head="", narrow=False, share=Fal
 <footer class="foot"><span>{esc(BRAND)}（{BRAND_EN}）</span><a href="{X_URL}">{esc(TWITTER)}</a>
 <span>{T('数据', 'Data')}: DefiLlama · CoinMetrics · FRED · Farside · Yahoo · alternative.me · Hyperliquid · Deribit · CoinGecko · {T('链上节点', 'own nodes')}</span><span>{esc(T(DISCLAIMER, DISCLAIMER_EN))}</span></footer>
 </main>
-<script>{ST.UI_JS}</script>
-{('<script>' + ST.SHARE_JS + '</script>') if share else ''}
-{('<script>' + ST.CHART_JS + '</script>') if chart else ''}
+<script src="{ASSET_URL["ui.js"]}"></script>
+{('<script src="' + ASSET_URL["share.js"] + '"></script>') if share else ''}
+{('<script src="' + ASSET_URL["chart.js"] + '"></script>') if chart else ''}
 {scripts}
 </body>
 </html>
@@ -1354,6 +1369,15 @@ def build_launchpad_report(sd):
         emit(rel, f'{T("发射台日更 · 文字解读", "Launchpad daily narrative")} · {sd["日期"]} · {T(BRAND, BRAND_EN)}', body, active="launchpad",
              extra_head=extra, desc=sd["一句话"], scripts=scripts)
     ds = sorted([d for d in os.listdir(rd) if re.match(r"^\d{4}-\d{2}-\d{2}$", d)], reverse=True)
+    for base in (rd, os.path.join(SITE, "en", "launchpad", "report")):
+        for d in (os.listdir(base) if os.path.isdir(base) else []):
+            f = os.path.join(base, d, "index.html")
+            if os.path.exists(f):
+                old = open(f, encoding="utf-8").read()
+                new = strip_webfonts(old)
+                if new != old:
+                    with open(f, "w", encoding="utf-8") as fh:
+                        fh.write(new)
     lis = "".join(f'<li><span class="d">{d}</span><a href="{U("/launchpad/report/" + d + "/")}">{T("发射台日更 · 文字解读", "Launchpad daily narrative")}</a></li>' for d in ds)
     emit("launchpad/report/archive/index.html", T(f"发射台文字解读往期 · {BRAND}", f"Narrative archive · {BRAND_EN}"),
          crumbs([(T("发射台矩阵", "Launchpads"), "/launchpad/"), (T("文字解读 · 往期", "Narrative archive"), None)])
@@ -1544,6 +1568,12 @@ REPORT_HEAD = ("<script>(function(){document.documentElement.setAttribute('data-
                "var h=a.getAttribute('href');if(h&&h.charAt(0)!=='#'&&!a.target){a.target=/uncleonchain\\.com|^\\//.test(h)?'_top':'_blank'}});})();</script>")
 
 
+def strip_webfonts(html_):
+    """去掉 Google Fonts（国内连不上会卡住渲染），字体退回系统字体。"""
+    html_ = re.sub(r'<link[^>]*fonts\.(?:googleapis|gstatic)\.com[^>]*>\s*', "", html_)
+    return re.sub(r'@import\s+url\([^)]*fonts\.googleapis\.com[^)]*\)\s*;?', "", html_)
+
+
 def copy_report_files():
     """报告原文和附件拷到 site/reports/<slug>/ 与 site/en/reports/<slug>/：raw.html（浅色原文）+ raw-dark.html（自动深色）。
     英文站有 .en.html 就用英文版，没有就用中文原文。"""
@@ -1562,6 +1592,7 @@ def copy_report_files():
                         os.makedirs(os.path.dirname(os.path.join(base, rel)), exist_ok=True)
                         shutil.copyfile(os.path.join(root, f), os.path.join(base, rel))
             raw = open(main, encoding="utf-8").read()
+            raw = strip_webfonts(raw)
             raw = re.sub(r"<head([^>]*)>", lambda m: f"<head{m.group(1)}>{REPORT_HEAD}", raw, count=1)
             with open(os.path.join(base, "raw.html"), "w", encoding="utf-8") as fh:
                 fh.write(raw)
@@ -1799,6 +1830,11 @@ def build_404():
 
 
 def build_misc(logs, weeks, months):
+    os.makedirs(os.path.join(SITE, "assets"), exist_ok=True)
+    for k, v in ASSET_SRC.items():
+        with open(os.path.join(SITE, "assets", k), "w", encoding="utf-8") as fh:
+            fh.write(v)
+    write("_headers", HEADERS)
     write("robots.txt", f"User-agent: *\nAllow: /\nSitemap: https://{DOMAIN}/sitemap.xml\n")
     urls = ["/", "/macro/", "/launchpad/", "/rotation/", "/narrative/", "/reports/", "/journal/", "/methodology/", "/corrections/", "/about/",
             "/launchpad/report/", "/launchpad/report/archive/"]
