@@ -20,7 +20,7 @@ import requests
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-from l2_signals import features, signals, run_states, STATES  # noqa: E402
+from l2_signals import features, signals, run_states, STATES, HALVINGS  # noqa: E402
 
 OUT = Path(os.environ.get("L2_OUT_DIR", HERE / "output"))
 CACHE = Path(os.environ.get("L2_CACHE_DIR", HERE / "cache"))
@@ -237,13 +237,13 @@ SIG = {
                      "已验证·方向（4 次对 3 次）", "§2.5", "历史上唯一一次假信号在 2014 年"),
     "C_四大名右7天": ("价格连续 7 天站上 3-6 月成本、1-3 月成本、200 日均、短期持有者成本", "Price above 4 short-term cost lines for 7 days",
                 "底部确认", "已验证·方向", "§3.5 #20", "熊底右侧确认；需要本轮已出现过分龄底部信号才算数"),
-    "C_6-12M死叉12-18M(本轮)": ("6-12 月成本跌破 12-18 月成本（本轮已出现）", "6-12M cost < 12-18M cost (this cycle)", "底部确认",
+    "C_6-12M死叉12-18M(本轮)": ("6-12 月成本跌破 12-18 月成本（本轮出现过即计入）", "6-12M cost < 12-18M cost (counts once seen this cycle)", "底部确认",
                            "已验证·方向", "§3.5 #16", "历轮都在真实底后 −1~+31 天出现"),
-    "C_三叉第三叉(本轮)": ("6-12 月成本跌破 1-2 年成本（本轮已出现）", "6-12M cost < 1-2Y cost (this cycle)", "底部确认", "已验证·方向",
+    "C_三叉第三叉(本轮)": ("6-12 月成本跌破 1-2 年成本（本轮出现过即计入）", "6-12M cost < 1-2Y cost (counts once seen this cycle)", "底部确认", "已验证·方向",
                     "§3.5 #17", "三叉筑底的第三叉，出现在真实底前后 85 天内"),
-    "C_绿黑比≥1(本轮)": ("6 月-10 年成本 ≥ 0-10 年成本（本轮已出现）", "6m-10y cost ≥ 0-10y cost (this cycle)", "底部确认",
+    "C_绿黑比≥1(本轮)": ("6 月-10 年成本 ≥ 0-10 年成本（本轮出现过即计入）", "6m-10y cost ≥ 0-10y cost (counts once seen this cycle)", "底部确认",
                     "已验证·方向（本轮未触发）", "§3.5 #22", "熊市够深时才会出现"),
-    "C_STH成本<LTH成本(本轮)": ("短期持有者成本跌破长期持有者成本（本轮已出现）", "STH cost < LTH cost (this cycle)", "底部确认",
+    "C_STH成本<LTH成本(本轮)": ("短期持有者成本跌破长期持有者成本（本轮出现过即计入）", "STH cost < LTH cost (counts once seen this cycle)", "底部确认",
                            "已验证·方向（本轮未触发）", "§3.4 #1", "熊市够深时才会出现"),
     "T_减半后480~600天": ("处在减半后 480~600 天", "Halving + 480~600 days", "顶部风险", "已验证·方向", "§2.1",
                      "后三轮都在减半后 525~546 天见顶"),
@@ -273,6 +273,121 @@ NEXT = {
 }
 
 
+# ---------------------------------------------------------------- 网站展示用的附加信息（只读 F / S，不改任何规则）
+# 每条信号的「原始条件」（不含 30 天记忆、不含本轮累计），用来给出当前读数、本轮首次出现日、最近一次满足日
+SIG_METRIC = {   # 信号 → 网站上对应的指标详情页（没有的留空）
+    "Z_盈利供应<50%": "psip", "Z_利润365<亏损365": "rpl365", "Z_MVRV<1": "mvrv", "Z_价<200周均": "price_200wma",
+    "Z_LTH占比>75%": "lth_share", "C_绿黑比≥1(本轮)": "green_black", "T_MVRV≥2且价/200周均≥2": "mvrv",
+}
+
+
+def _date(x):
+    return None if x is None or pd.isna(x) else str(pd.Timestamp(x).date())
+
+
+def signal_detail(F, S):
+    f = F.iloc[-1]
+    four = (F.price > F.rp_3_6m) & (F.price > F.rp_1_3m) & (F.price > F.ma200d) & (F.price > F.sth_rp)
+    run = 0
+    for v in reversed(four.fillna(False).tolist()):
+        if not v:
+            break
+        run += 1
+    cond = {
+        "Z_盈利供应<50%": F.psip < 0.5, "Z_利润365<亏损365": F.pl_365 < 1, "Z_MVRV<1": F.mvrv < 1, "Z_价<200周均": F.p_200w < 1,
+        "Z_LTH占比>75%": F.lth_share_ex7y > 0.75, "Z_价≤1.3×CVDD": F.price <= 1.3 * F.cvdd,
+        "C_6-12M死叉12-18M(本轮)": F.rp_6_12m < F.rp_12_18m, "C_三叉第三叉(本轮)": F.rp_6_12m < F.rp_1_2y,
+        "C_绿黑比≥1(本轮)": F.green_black >= 1, "C_STH成本<LTH成本(本轮)": F.sth_rp < F.lth_rp,
+        "T_MVRV≥2且价/200周均≥2": (F.mvrv >= 2) & (F.p_200w >= 2),
+    }
+    n2 = lambda v, d=3: "—" if pd.isna(v) else f"{v:.{d}f}"
+    p1 = lambda v: "—" if pd.isna(v) else f"{v * 100:.1f}%"
+    cur = {
+        "Z_盈利供应<50%": (f"当前 {p1(f.psip)}", f"now {p1(f.psip)}"),
+        "Z_利润365<亏损365": (f"当前 {n2(f.pl_365)}", f"now {n2(f.pl_365)}"),
+        "Z_MVRV<1": (f"当前 {n2(f.mvrv)}", f"now {n2(f.mvrv)}"),
+        "Z_价<200周均": (f"当前 价/200 周均 {n2(f.p_200w)}", f"now price/200WMA {n2(f.p_200w)}"),
+        "Z_LTH占比>75%": (f"当前 {p1(f.lth_share_ex7y)}", f"now {p1(f.lth_share_ex7y)}"),
+        "Z_价≤1.3×CVDD": (f"当前 价 / CVDD {n2(f.price / f.cvdd, 2)}", f"now price/CVDD {n2(f.price / f.cvdd, 2)}"),
+        "C_底后+40%且过90天": (f"当前 +{f.rebound * 100:.1f}%，最低点已过 {int(f.d_low)} 天", f"now +{f.rebound * 100:.1f}%, low {int(f.d_low)} days ago"),
+        "C_四大名右7天": (f"已连续 {run} 天站上四条线", f"{run} straight days above all four"),
+        "C_6-12M死叉12-18M(本轮)": (f"当前 6-12 月 ÷ 12-18 月成本 {n2(f.rp_6_12m / f.rp_12_18m)}", f"now 6-12M ÷ 12-18M cost {n2(f.rp_6_12m / f.rp_12_18m)}"),
+        "C_三叉第三叉(本轮)": (f"当前 6-12 月 ÷ 1-2 年成本 {n2(f.rp_6_12m / f.rp_1_2y)}", f"now 6-12M ÷ 1-2Y cost {n2(f.rp_6_12m / f.rp_1_2y)}"),
+        "C_绿黑比≥1(本轮)": (f"当前 {n2(f.green_black)}", f"now {n2(f.green_black)}"),
+        "C_STH成本<LTH成本(本轮)": (f"当前 STH ÷ LTH 成本 {n2(f.sth_rp / f.lth_rp, 2)}", f"now STH ÷ LTH cost {n2(f.sth_rp / f.lth_rp, 2)}"),
+        "T_减半后480~600天": (f"当前 减半后第 {int(f.d_halving)} 天", f"now day {int(f.d_halving)} after the halving"),
+        "T_MVRV≥2且价/200周均≥2": (f"当前 MVRV {n2(f.mvrv)} · 价/200 周均 {n2(f.p_200w)}", f"now MVRV {n2(f.mvrv)} · price/200WMA {n2(f.p_200w)}"),
+    }
+    grp = (F.price >= F.ath).cumsum()
+    this = grp == grp.iloc[-1]
+    out = {}
+    for k, (zh, en) in cur.items():
+        d = {"reading_zh": zh, "reading_en": en, "metric": SIG_METRIC.get(k)}
+        c = cond.get(k)
+        if c is not None:
+            c = c.fillna(False).astype(bool)
+            if k.endswith("(本轮)"):
+                hit = c[this & c]
+                d["rule"] = "cycle"                      # 本轮出现过一次就计入
+                d["cycle_first"] = _date(hit.index[0]) if len(hit) else None
+            elif k.startswith(("Z_", "T_MVRV")):
+                hit = c[c]
+                d["rule"] = "mem30"                      # 30 天记忆：最近 30 天内满足过就亮
+                d["last_true"] = _date(hit.index[-1]) if len(hit) else None
+                d["now_true"] = bool(c.iloc[-1])
+        out[k] = d
+    return out
+
+
+# 全历史序列（网站详情页、L2 图用）：日度，起点 = 有价格的第一天；缺数据存 null
+SERIES = [("mvrv", "mvrv", 1), ("price_200wma", "p_200w", 1), ("psip", "psip", 100), ("rpl365", "pl_365", 1),
+          ("lth_share", "lth_share_ex7y", 100), ("green_black", "green_black", 1),
+          ("price", "price", 1), ("sth_rp", "sth_rp", 1), ("lth_rp", "lth_rp", 1), ("rp", "rp", 1), ("tmmp", "tmmp", 1),
+          ("ma200w", "ma200w", 1), ("rp_1_3m", "rp_1_3m", 1), ("rp_3_6m", "rp_3_6m", 1), ("rp_6_12m", "rp_6_12m", 1),
+          ("rp_1_2y", "rp_1_2y", 1), ("ma200d", "ma200d", 1), ("cvdd", "cvdd", 1)]
+STATE_CODE = ["BULL", "BULL_RISK", "BULL_PULLBACK", "BEAR", "BEAR_ZONE", "RECOVERY"]
+
+
+def _sig(v):
+    if v is None or pd.isna(v) or np.isinf(v):
+        return None
+    v = float(v)
+    if v == 0:
+        return 0
+    return round(v, 5 - int(np.floor(np.log10(abs(v)))))
+
+
+def write_series(F, st, t):
+    p = F.price.dropna()
+    start = p.index[0]
+    idx = pd.date_range(start, t, freq="D")
+    G = F.reindex(idx)
+    out = {"start": str(start.date()), "end": str(t.date()), "freq": "D", "updated": str(t.date()), "series": {}, "valid_from": {}}
+    for name, col, mul in SERIES:
+        s = G[col] * mul if col in G else pd.Series(np.nan, index=idx)
+        out["series"][name] = [_sig(v) for v in s.tolist()]
+        fv = s.first_valid_index()
+        out["valid_from"][name] = str(fv.date()) if fv is not None else None
+    code = st.reindex(idx)
+    out["series"]["state"] = [None if (c is None or (isinstance(c, float) and np.isnan(c))) else STATE_CODE.index(c) for c in code.tolist()]
+    out["state_codes"] = STATE_CODE
+    # 标记：减半（历轮周期顶底以研究文档 §2.1 年表为准，不从状态机切换点推）
+    out["markers"] = [{"date": str(h.date()), "type": "halving"} for h in HALVINGS if h <= t]
+    json.dump(out, open(OUT / "l2_series.json", "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
+
+
+def append_live(t, code, since):
+    """实时记录：每次运行把当天状态追加进 l2_live.json（同一数据日只记第一次，写入后不改）。
+    网站据此把「历史回放（样本内）」和「实时记录」分开画。"""
+    p = OUT / "l2_live.json"
+    live = json.load(open(p, encoding="utf-8")) if p.exists() else []
+    if not any(x["date"] == str(t.date()) for x in live):
+        live.append({"date": str(t.date()), "state": code, "since": str(since.date()),
+                     "recorded_utc": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M")})
+        live.sort(key=lambda x: x["date"])
+        json.dump(live, open(p, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+
+
 def fmt(x):
     return f"{x:,.0f}" if pd.notna(x) else "—"
 
@@ -290,12 +405,13 @@ def main():
     prev_code = st.iloc[-2]
 
     sig_list = []
+    ext = signal_detail(F, S)
     for k, (zh, en, cat, grade, ref, note) in SIG.items():
         if k in S:
             on = bool(s[k])
             was = bool(S[k].iloc[-2])
             sig_list.append(dict(key=k, name_zh=zh, name_en=en, category=cat, evidence=grade, ref=ref, note=note, on=on,
-                                 changed_today=(on != was)))
+                                 changed_today=(on != was), **ext.get(k, {})))
     price = f.price
     lv = []
     for k, zh, en in LEVELS:
@@ -351,6 +467,8 @@ def main():
     hist = [dict(date=str(i.date()), state=r.state, **{k: (round(float(r[k]), 2) if pd.notna(r[k]) else None)
                                                        for k in H.columns if k != "state"}) for i, r in H.iterrows()]
     json.dump(hist, open(OUT / "l2_history.json", "w", encoding="utf-8"), ensure_ascii=False)
+    write_series(F, st, t)
+    append_live(t, code, since)
     print(latest["summary_zh"])
     print("\n数据状态：", latest["data_status"])
 

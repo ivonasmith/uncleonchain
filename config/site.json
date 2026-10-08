@@ -1,0 +1,14 @@
+{
+ "_说明": "全站配置。定时任务的时间不在这里写死：出网站时从 .github/workflows/ 里的 cron 读出来，页面文案（含欢迎弹窗）一律引用这里生成的结果。",
+ "定时任务": [
+  {"文件": "l2-daily.yml", "名称": "L2 周期状态机", "EN": "L2 cycle state machine",
+   "覆盖": "L2 状态、14 条信号、关键价位、估值与持有者 6 个指标（Coin Metrics + bitview.space）；跑完重出网站",
+   "覆盖EN": "L2 state, 14 signals, key levels and the six valuation & holder gauges (Coin Metrics + bitview.space); rebuilds the site"},
+  {"文件": "daily.yml", "名称": "日更", "EN": "Daily run", "主": true,
+   "覆盖": "L1 宏观与 L1-B 资金通道、L3 交易所、L4 情绪、发射台、板块快照；写当天解读日志（写入即冻结）；重出网站",
+   "覆盖EN": "L1 macro and L1-B channels, L3 exchanges, L4 sentiment, launchpads, sector snapshots; writes the day's log (frozen once written); rebuilds the site"}
+ ],
+ "推送重跑": "改了脚本、文章或配置推上来时，会立刻额外跑一次（所以个别日志的生成时间早于定时时间）。",
+ "推送重跑EN": "Pushing code, posts or config triggers an extra run right away (so some logs are generated before the scheduled time).",
+ "反馈账号": "Uncle_Onchain"
+}

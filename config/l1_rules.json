@@ -1,0 +1,167 @@
+{
+ "_说明": "宏观总文档 §10.2 规则清单，逐条照抄（中文原文）；英文为本站翻译。口径页「L1 规则清单」直接读这里。",
+ "权限": {
+  "只做系数": [
+   "可以按规则调仓位倍数或风险预算。",
+   "May adjust position multiples or the risk budget per the rule."
+  ],
+  "只做记录": [
+   "写进简报帮助理解，不触发动作。",
+   "Written into briefs for context; triggers no action."
+  ],
+  "禁止使用": [
+   "测过不成立，不再出现在分析里。",
+   "Tested and failed; no longer used in analysis."
+  ],
+  "方法规则": [
+   "做研究时遵守的规矩（如「2018 年以前的数据不用来定参数」）。",
+   "A rule for doing research (e.g. no pre-2018 data for parameters)."
+  ]
+ },
+ "rules": [
+  {
+   "#": "1",
+   "规则": "乐观度是L1第一指标",
+   "怎么用": "两条腿一起看：美股腿=纳指13周涨跌（与乐观共同因子相关0.95）+VIX；信用腿=BAA利差13周变化（2011年以来相关0.89）+NFCI，高收益利差作先行提示。油价不当乐观度指标（2023年后相关只有0.04）",
+   "依据": "§6.2",
+   "可靠程度": "已验证",
+   "能否改交易参数": "只做系数",
+   "规则EN": "Optimism is L1's first gauge",
+   "怎么用EN": "Read both legs: equity leg = Nasdaq 13-week change (0.95 with the common optimism factor) + VIX; credit leg = BAA spread 13-week change (0.89 since 2011) + NFCI, with the high-yield spread as an early warning. Oil is not an optimism gauge (0.04 since 2023).",
+   "可靠程度EN": "Verified",
+   "能否改交易参数EN": "Coefficient only"
+  },
+  {
+   "#": "2",
+   "规则": "实际利率急升本身是逆风，但要和信用条件一起定档",
+   "怎么用": "把10年实际利率分4态：急升（13周升≥0.40pp）/ 下行（13周降≥0.40pp）/ 高位平台（水平≥1.0%）/ 低位平台。急升单独出现→风险预算降一档；急升+信用走阔→逆风",
+   "依据": "控制信用利差后实际利率系数−0.34（t−3.4）；急升让同期13周中位少涨15~20个百分点；2014-2021年无此作用",
+   "可靠程度": "已验证·方向（2022年后）",
+   "能否改交易参数": "只做系数",
+   "规则EN": "A real-yield surge is a headwind in itself, but the regime is set together with credit",
+   "怎么用EN": "Four states for the 10y real yield: surging (13w ≥ +0.40pp) / falling (13w ≤ −0.40pp) / high plateau (level ≥ 1.0%) / low plateau. A surge alone → one notch less risk budget; surge + widening credit → headwind.",
+   "可靠程度EN": "Verified · direction (since 2022)",
+   "能否改交易参数EN": "Coefficient only"
+  },
+  {
+   "#": "3",
+   "规则": "情境矩阵 = 实际利率状态 × 乐观度/信用条件",
+   "怎么用": "两张表一起看：纳指类乐观度表、信用条件表；两张表给出不同格子时取较差的一格。只描述当下，不预测未来13周",
+   "依据": "纳指口径：急升+乐观强 +27.1%、急升+乐观弱 −17.8%；信用口径：急升+收窄 −3.2%、急升+走阔 −27.0%",
+   "可靠程度": "已验证·方向（独立样本少）",
+   "能否改交易参数": "只做系数",
+   "规则EN": "Scenario matrix = real-yield state × optimism / credit",
+   "怎么用EN": "Read both tables (Nasdaq optimism and credit); when they disagree take the worse cell. Describes the present only; no 13-week forecast.",
+   "可靠程度EN": "Verified · direction (few independent samples)",
+   "能否改交易参数EN": "Coefficient only"
+  },
+  {
+   "#": "4",
+   "规则": "跟跌不跟涨",
+   "怎么用": "纳指或VIX转弱的那一周，下调BTC单笔风险预算；不要用“BTC会独立走强/避险”当理由",
+   "依据": "对纳指下行β 1.11、上行β 0.39；纳指最差10%周BTC周均−6.0%",
+   "可靠程度": "已验证",
+   "能否改交易参数": "只做系数",
+   "规则EN": "Follows the downside, not the upside",
+   "怎么用EN": "In weeks when the Nasdaq or VIX weakens, cut BTC's per-trade risk budget; never argue that BTC will rally on its own as a haven.",
+   "可靠程度EN": "Verified",
+   "能否改交易参数EN": "Coefficient only"
+  },
+  {
+   "#": "5",
+   "规则": "流动性闸门：只打折不加仓",
+   "怎么用": "美联储净流动性13周≤−2.72% 且 美元13周走强 → 名义仓位×0.7；其他情况不加仓",
+   "依据": "2024-05后单独的领先关系明显变弱（不重叠样本≈0，重叠13周0.25）；2026-12底复核，若仍≈0降为只做记录",
+   "可靠程度": "已验证·方向（在变弱）",
+   "能否改交易参数": "只做系数（打折）",
+   "规则EN": "Liquidity gate: discount only, never add",
+   "怎么用EN": "Fed net liquidity 13w ≤ −2.72% and a stronger dollar over 13w → nominal size × 0.7; otherwise no adds.",
+   "可靠程度EN": "Verified · direction (weakening)",
+   "能否改交易参数EN": "Coefficient only (discount)"
+  },
+  {
+   "#": "6",
+   "规则": "美元只作确认信号",
+   "怎么用": "美元走强时对BTC是轻微负面，最近26周滚动相关−0.44时权重略升",
+   "依据": "周度Era III DXY r=−0.15，占比0.9%；月度广义美元r=−0.24；挂钩始于2018年",
+   "可靠程度": "已验证",
+   "能否改交易参数": "只做记录",
+   "规则EN": "The dollar is a confirmation signal only",
+   "怎么用EN": "A stronger dollar is mildly negative for BTC; slightly more weight when the 26-week rolling correlation is around −0.44.",
+   "可靠程度EN": "Verified",
+   "能否改交易参数EN": "Record only"
+  },
+  {
+   "#": "7",
+   "规则": "加密原生资金层（L1.5）只确认不预测",
+   "怎么用": "稳定币看两条线：主线“剔除支付/机构”、交易子弹“交易核心剔除Tron”（不再看总量）；Tron链和支付机构稳定币单列不计入；生息/合成稳定币（USDe等）单独当杠杆温度计；再加ETF近4周净流入（滞后的顺势指标，不是反向信号，§6.6）。和价格同向=确认，背离=提示；美股代币化每次运行记录规模快照，超过稳定币的3%再纳入",
+   "依据": "同期相关：稳定币0.29、ETF 0.67，但与价格互为因果；ETF时代支付机构稳定币与BTC 13周相关−0.43、Tron链≈0；近一年总量+4.0%，交易核心剔除Tron−4.2%（§6.5）",
+   "可靠程度": "已验证（同期）",
+   "能否改交易参数": "只做记录",
+   "规则EN": "The crypto-native money layer (L1.5) confirms, never predicts",
+   "怎么用EN": "Stablecoins on two lines: the ex-payment main line and trading bullets (trading core ex-Tron) — no longer the total; Tron and payment coins watched separately; yield/synthetic coins as a leverage thermometer; plus 4-week ETF flows (a lagging trend indicator, not contrarian). Same direction as price = confirmation, divergence = warning; tokenized stocks are recorded and only included above 3% of stablecoins.",
+   "可靠程度EN": "Verified (same-period)",
+   "能否改交易参数EN": "Record only"
+  },
+  {
+   "#": "8",
+   "规则": "FOMC动作不决定方向",
+   "怎么用": "加息/降息日只调波动预算（如缩小单笔仓位），方向看周期相位",
+   "依据": "7次事件后3~12个月方向与政策方向对不上",
+   "可靠程度": "已验证·方向（n=7）",
+   "能否改交易参数": "只做记录",
+   "规则EN": "FOMC moves do not set direction",
+   "怎么用EN": "On hike/cut days only adjust the volatility budget (e.g. smaller size); direction comes from the cycle phase.",
+   "可靠程度EN": "Verified · direction (n=7)",
+   "能否改交易参数EN": "Record only"
+  },
+  {
+   "#": "9",
+   "规则": "黄金不是BTC的同伴",
+   "怎么用": "黄金走势不作BTC方向依据",
+   "依据": "2018-2021黄金与BTC显著相关（r=0.24），2022年后不显著（0.12）",
+   "可靠程度": "已验证",
+   "能否改交易参数": "只做记录",
+   "规则EN": "Gold is not BTC's companion",
+   "怎么用EN": "Gold's trend is not a basis for BTC direction.",
+   "可靠程度EN": "Verified",
+   "能否改交易参数EN": "Record only"
+  },
+  {
+   "#": "10",
+   "规则": "每周看一次BTC-纳指52周滚动相关",
+   "怎么用": "相关明显下降时，规则1和4的权重要降",
+   "依据": "当前0.43；2024年曾回落到约0",
+   "可靠程度": "描述读数",
+   "能否改交易参数": "只做记录",
+   "规则EN": "Check the BTC–Nasdaq 52-week correlation weekly",
+   "怎么用EN": "When it falls clearly, rules 1 and 4 lose weight.",
+   "可靠程度EN": "Descriptive",
+   "能否改交易参数EN": "Record only"
+  },
+  {
+   "#": "11",
+   "规则": "2018年以前的数据不用来定参数",
+   "怎么用": "研究可以看，但任何阈值、权重都只用2018年以后（最好2020年以后）的数据算",
+   "依据": "2010-2017宏观解释力低于噪声地板",
+   "可靠程度": "已验证",
+   "能否改交易参数": "方法规则",
+   "规则EN": "No pre-2018 data for parameters",
+   "怎么用EN": "Research may look at it, but every threshold and weight uses post-2018 (preferably post-2020) data only.",
+   "可靠程度EN": "Verified",
+   "能否改交易参数EN": "Method rule"
+  },
+  {
+   "#": "12",
+   "规则": "第8章的说法一律不用",
+   "怎么用": "M2、“流动性领先2-3个月”、顶部对利率低点、黄金溢出、单次议息定方向、避险资产、arxiv相关数字",
+   "依据": "§8",
+   "可靠程度": "已证伪 / 不可复现",
+   "能否改交易参数": "禁止使用",
+   "规则EN": "Never use the claims in chapter 8",
+   "怎么用EN": "M2, 'liquidity leads by 2–3 months', tops at real-yield lows, gold spill-over, single FOMC decisions as direction, safe-haven claims, arxiv correlation figures.",
+   "可靠程度EN": "Falsified / not reproducible",
+   "能否改交易参数EN": "Do not use"
+  }
+ ]
+}

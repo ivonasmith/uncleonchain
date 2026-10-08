@@ -58,11 +58,12 @@ jobs:
           python3 pipeline/出看板.py
           python3 pipeline/出网站.py
 
-      - name: 提交 data/l2 与 site/
+      - name: 提交 data/l2、数据回改记录与 site/
         run: |
           git config user.name "uncleonchain-bot"
           git config user.email "bot@uncleonchain.com"
           git add data/l2 site/
+          [ -f data/data_revisions.json ] && git add data/data_revisions.json
           git diff --cached --quiet && echo "没有变化，跳过提交" && exit 0
           git commit -m "L2 日更 $(date -u +%Y-%m-%d)"
           git pull --rebase --autostash -X theirs origin main   # 万一中途有人推送：site/ 是生成物，以本次生成的为准

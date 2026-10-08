@@ -1,0 +1,38 @@
+{
+ "_说明": "术语表（G7）：页面上这些词第一次出现时加虚下划线，悬停 / 点按显示一句话解释。按词长自动优先匹配；改措辞只改这里。",
+ "terms": [
+  {"zh": ["MVRV"], "en": ["MVRV"], "def_zh": "市值 ÷ 已实现市值，也就是价格 ÷ 全网平均持币成本。1 以下 = 平均每个币都在浮亏。", "def_en": "Market cap ÷ realized cap, i.e. price ÷ the network-wide average cost. Below 1 = the average coin is under water."},
+  {"zh": ["TMMP", "真实市场均价"], "en": ["TMMP", "True Market Mean"], "def_zh": "真实市场均价：剔除长期不动的币后，活跃筹码的平均成本，常被当作牛熊分界的参考线。", "def_en": "True Market Mean: the average cost of actively traded coins, excluding long-dormant supply; often used as a bull/bear reference line."},
+  {"zh": ["CVDD"], "en": ["CVDD"], "def_zh": "累计币天销毁价值 ÷（币龄 × 600 万）。历史上价格从没收盘跌破过它，常被当作价格下限。", "def_en": "Cumulative value-days destroyed ÷ (age × 6 million). Price has never closed below it, so it is read as a floor."},
+  {"zh": ["短期持有者成本", "短期持有者", "STH"], "en": ["STH cost", "STH"], "def_zh": "短期持有者（STH）= 持币不满 155 天的人；短期持有者成本 = 这批币的平均买入价。", "def_en": "Short-term holders (STH) hold coins for under 155 days; STH cost is the average buy price of those coins."},
+  {"zh": ["长期持有者成本", "长期持有者", "LTH"], "en": ["LTH cost", "LTH"], "def_zh": "长期持有者（LTH）= 持币超过 155 天的人；长期持有者成本 = 这批币的平均买入价。", "def_en": "Long-term holders (LTH) hold coins for over 155 days; LTH cost is their average buy price."},
+  {"zh": ["分龄成本", "持币成本"], "en": ["age-band cost"], "def_zh": "按持币时长分组（1-3 月、3-6 月、6-12 月……）算出的每组平均买入价。", "def_en": "The average buy price of each holding-age group (1–3 months, 3–6 months, 6–12 months…)."},
+  {"zh": ["绿 / 黑比", "绿/黑比"], "en": ["green / black ratio", "Green / black ratio"], "def_zh": "持有 6 个月到 10 年的币的平均成本 ÷ 10 年内全部币的平均成本。≥ 1 只在熊市够深时出现。", "def_en": "Average cost of coins held 6 months–10 years ÷ average cost of all coins moved within 10 years. ≥ 1 only appears in deep bear markets."},
+  {"zh": ["全网平均成本", "已实现价格"], "en": ["Realized price"], "def_zh": "已实现市值 ÷ 供应量 = 全网每个币最后一次移动时的价格的平均值。", "def_en": "Realized cap ÷ supply = the average price at which every coin last moved."},
+  {"zh": ["交易子弹"], "en": ["trading bullets", "Trading bullets"], "def_zh": "交易核心稳定币（USDT、USDC、FDUSD、USD1、TUSD、USDD）剔除 Tron 链之后的量，最贴近交易所和主流链上能直接买币的钱。", "def_en": "Trading-core stablecoins (USDT, USDC, FDUSD, USD1, TUSD, USDD) excluding Tron — the closest proxy for money ready to buy on exchanges."},
+  {"zh": ["L1-B"], "en": ["L1-B"], "def_zh": "L1 里的「加密资金通道」：稳定币、现货 ETF、期货升水和资金轮动矩阵。只用来确认 L1，不单独预测方向。", "def_en": "L1's crypto funding channels: stablecoins, spot ETFs, futures basis and the rotation matrix. They only confirm L1 and never predict direction on their own."},
+  {"zh": ["存量换手"], "en": ["switching channels"], "def_zh": "ETF 在流入、链上稳定币在减少：钱从链上搬到 ETF，换的是通道不是人群，不是新钱进场。", "def_en": "ETF inflows while on-chain stablecoins shrink: money moves from on-chain into ETFs — a change of pipe, not new money."},
+  {"zh": ["NFCI"], "en": ["NFCI"], "def_zh": "芝加哥联储全国金融条件指数，0 以下 = 比历史平均宽松；13 周上升 = 收紧。", "def_en": "Chicago Fed National Financial Conditions Index; below 0 = looser than average; rising over 13 weeks = tightening."},
+  {"zh": ["实际利率四态", "实际利率"], "en": ["real-yield states", "real yield"], "def_zh": "10 年期通胀保值国债收益率。按 13 周变化和水平分四态：急升、下行、高位平台、低位平台。", "def_en": "The 10-year TIPS yield, split into four states by its 13-week change and level: surging, falling, high plateau, low plateau."},
+  {"zh": ["乐观度综合 z", "乐观度 z", "乐观度"], "en": ["optimism z", "Optimism composite z"], "def_zh": "纳指 13 周涨跌、VIX（取负）、通胀预期 13 周变化三项各自标准化后取平均；> 0 = 比历史平均乐观。", "def_en": "The average of standardized Nasdaq 13-week change, −VIX and the 13-week change in breakeven inflation; > 0 = more optimistic than average."},
+  {"zh": ["资金费率"], "en": ["funding rate", "funding"], "def_zh": "永续合约多空之间定期互付的费用。正 = 多头付钱给空头，越高说明多头越拥挤。", "def_en": "The periodic payment between longs and shorts on perpetual futures. Positive = longs pay shorts; higher = more crowded longs."},
+  {"zh": ["未平仓合约"], "en": ["open interest"], "def_zh": "还没平仓的合约名义价值总和，7 日变化看杠杆在堆积还是在出清。", "def_en": "The notional value of contracts still open; its 7-day change shows leverage building or flushing."},
+  {"zh": ["山寨季指数"], "en": ["Altseason index", "altseason index"], "def_zh": "市值前 50（剔除稳定币等）里 30 日涨幅跑赢 BTC 的币占比，本站自建口径。", "def_en": "Share of the top-50 coins (ex stablecoins etc.) beating BTC over 30 days; this site's own construction."},
+  {"zh": ["发射台"], "en": ["launchpad", "Launchpads"], "def_zh": "发新币的平台（如 pump.fun），本站按每天收的手续费比较它们的生意。", "def_en": "Token-launch platforms (e.g. pump.fun); this site compares them by daily fees."},
+  {"zh": ["深度追踪"], "en": ["deep-tracked"], "def_zh": "本站用链上数据自己核算手续费和销毁的几个重点平台。", "def_en": "Platforms whose fees and burns this site reconciles from its own on-chain data."},
+  {"zh": ["减半"], "en": ["halving"], "def_zh": "比特币每约四年一次的出块奖励减半，四年周期的时间锚点。", "def_en": "Bitcoin's block-reward cut roughly every four years — the time anchor of the four-year cycle."}
+ ],
+ "tags": {
+  "核心": ["进入本层结论判定。", "Feeds the layer verdict."],
+  "辅助": ["展示、帮助理解，不进判定。", "Shown for context; not part of the verdict."],
+  "观察": ["测过但没达到可用标准，只看不用。", "Tested but not good enough; watch only."],
+  "已验证": ["自有数据实测，且过了噪声 / 稳健性检验。", "Measured on our own data and passed noise / robustness checks."],
+  "已验证·方向": ["方向稳定，但样本小或幅度不稳。", "Direction is stable, but samples are few or magnitudes unstable."],
+  "描述读数": ["只描述当下所处的位置，不定参数。", "Describes where things stand; sets no parameters."],
+  "监控": ["规模或口径还在变，先记录。", "Size or definition is still changing; recorded for now."],
+  "观察项": ["测过但没达到可用标准。", "Tested but not usable."],
+  "假设": ["机制推理，或只在部分周期成立。", "Reasoned mechanism, or holds only in some cycles."],
+  "已证伪": ["测过不成立；仍显示的是为了说明为什么不用。", "Tested and failed; shown only to explain why it is not used."],
+  "记录中": ["自录数据不满 90 天，暂不给分位。", "Self-recorded for fewer than 90 days; no percentiles yet."]
+ }
+}

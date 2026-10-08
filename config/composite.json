@@ -1,0 +1,273 @@
+{
+ "_说明": "综合研判短句表（需求文档附录 D 定稿）。改措辞只改这里，下一次生成就生效。{} 是运行时填入的数值。方向只由 L2 给；动作只来自 L1 的风险预算规则和 L2 研究的交接原则；L3、L4 负责确认与提醒。",
+ "L2": {
+  "BULL": {
+   "方向": "偏多",
+   "一句话": "周期在牛市，方向向上",
+   "一句话EN": "Cycle in a bull phase, pointing up",
+   "分段": "价格仍在创新高，周期处于牛市阶段，方向向上。",
+   "分段EN": "Price is still making new highs; the cycle is in its bull phase and points up."
+  },
+  "BULL_RISK": {
+   "方向": "防顶",
+   "一句话": "周期进入顶部风险区",
+   "一句话EN": "Cycle in the top-risk zone",
+   "分段": "已经走进历史上最常见的见顶时段（减半后 480~600 天），或估值进入高估区。这里的回放结果接近抛硬币：之后一年中位 −6%，上涨的时候只有 47%。",
+   "分段EN": "We are in the window where past cycles usually peaked (480–600 days after the halving), or valuations have turned expensive. Replays here are close to a coin flip: a median one-year return of −6%, positive only 47% of the time."
+  },
+  "BULL_PULLBACK": {
+   "方向": "待确认",
+   "一句话": "牛市回撤中，方向待确认",
+   "一句话EN": "Bull-market pullback, direction unconfirmed",
+   "分段": "价格从高点回撤已超过两成。是牛市里的一次深蹲，还是转熊的开始，还需要时间确认。",
+   "分段EN": "Price is more than 20% off its high. Whether this is a deep squat in a bull market or the start of a bear market still needs time to tell."
+  },
+  "BEAR": {
+   "方向": "偏空",
+   "一句话": "周期在熊市，方向向下",
+   "一句话EN": "Cycle in a bear phase, pointing down",
+   "分段": "周期处于熊市阶段。历史回放里，这个阶段之后一年中位 −36%，上涨的时候只有 31%。",
+   "分段EN": "The cycle is in its bear phase. In historical replays, the following year had a median return of −36%, positive only 31% of the time."
+  },
+  "BEAR_ZONE": {
+   "方向": "偏多",
+   "一句话": "周期进入熊底区",
+   "一句话EN": "Cycle in the bear-bottom zone",
+   "分段": "底部信号开始陆续亮起（已亮 {n}/6），但还缺最后的确认。历史回放里，这个阶段之后一年中位 +68%，91% 的时间收涨。",
+   "分段EN": "Bottom signals are starting to light up ({n}/6), but the final confirmation is still missing. In historical replays, the following year had a median return of +68%, positive 91% of the time."
+  },
+  "RECOVERY": {
+   "方向": "偏多",
+   "一句话": "周期底部已确认，方向偏多",
+   "一句话EN": "Cycle bottom confirmed, leaning up",
+   "分段": "底部已经确认，这是本阶段第 {天数} 天。历史回放里，这个阶段之后一年中位 +152%，92% 的时间收涨，但途中出现两到六成的回撤也很常见。失效条件：收盘跌破本轮最低收盘 {价格}。",
+   "分段EN": "The bottom is confirmed; this is day {days} of the phase. In historical replays, the following year had a median return of +152%, positive 92% of the time, though 20–60% drawdowns along the way were common. Invalidation: a daily close below this cycle's lowest close, {price}."
+  },
+  "_缺": {
+   "方向": "待确认",
+   "一句话": "周期数据暂缺",
+   "一句话EN": "Cycle data unavailable",
+   "分段": "L2 状态机今天没有数据。",
+   "分段EN": "The L2 state machine has no data today."
+  }
+ },
+ "L1": {
+  "顺风": {
+   "一句话": "宏观顺风",
+   "一句话EN": "macro tailwind",
+   "分段": "市场乐观、信用宽松、实际利率没有急升，宏观在推着走。风险预算照常使用。",
+   "分段EN": "Markets are optimistic, credit is easy and real yields are not surging. Macro is pushing; use the risk budget as normal."
+  },
+  "中性": {
+   "一句话": "宏观中性",
+   "一句话EN": "macro neutral",
+   "分段": "宏观既不推，也不拦。风险预算照常。",
+   "分段EN": "Macro is neither pushing nor holding back. Risk budget as normal."
+  },
+  "中性偏谨慎": {
+   "一句话": "实际利率急升",
+   "一句话EN": "real yields surging",
+   "分段": "实际利率在一个季度内急升，这本身就是一股独立的逆风。风险预算降一档，不加仓。",
+   "分段EN": "Real yields have jumped within a quarter, a headwind in its own right. Cut the risk budget one notch; no adding."
+  },
+  "逆风": {
+   "一句话": "宏观逆风",
+   "一句话EN": "macro headwind",
+   "分段": "{触发原因}，宏观在拖后腿。风险预算打七折。",
+   "分段EN": "{trigger}, so macro is a drag. Size the risk budget at 70%."
+  },
+  "警戒": {
+   "分段": "另外，高收益债利差正在快速走阔；它比其他信用指标跑得快，但还没有长历史检验，先当作一声提醒。",
+   "分段EN": "Also, high-yield spreads are widening fast. They move ahead of other credit gauges but lack a long track record, so treat this as an early warning."
+  },
+  "_缺": {
+   "一句话": "宏观数据不足",
+   "一句话EN": "macro data incomplete",
+   "分段": "L1 今天缺少关键读数，不给档位。",
+   "分段EN": "L1 is missing key readings today; no regime."
+  }
+ },
+ "逆风原因": [
+  {
+   "条件": "实际利率急升 + BAA 利差 13 周转紧",
+   "中文": "实际利率急升，又碰上信用利差走阔",
+   "英文": "Surging real yields now meet widening credit spreads",
+   "条件EN": "Real-yield surge + BAA spread tightening over 13w"
+  },
+  {
+   "条件": "实际利率急升 + NFCI 13 周转紧",
+   "中文": "实际利率急升，又碰上金融条件转紧",
+   "英文": "Surging real yields now meet tightening financial conditions",
+   "条件EN": "Real-yield surge + NFCI tightening over 13w"
+  },
+  {
+   "条件": "实际利率急升 + 乐观度 z < 0",
+   "中文": "实际利率急升，市场乐观度也跌到了零以下",
+   "英文": "Real yields are surging and market optimism has slipped below zero",
+   "条件EN": "Real-yield surge + optimism z < 0"
+  },
+  {
+   "条件": "流动性闸门（净流动性 13 周 ≤ −2.72% 且美元 13 周走强）",
+   "中文": "流动性在收缩、美元在走强，流动性闸门打开",
+   "英文": "Liquidity is shrinking while the dollar strengthens, tripping the liquidity gate",
+   "条件EN": "Liquidity gate (net liquidity 13w ≤ −2.72% and a stronger dollar over 13w)"
+  }
+ ],
+ "动作": {
+  "偏多": {
+   "顺风": [
+    "风险预算照常",
+    "risk budget as normal"
+   ],
+   "中性": [
+    "风险预算照常",
+    "risk budget as normal"
+   ],
+   "中性偏谨慎": [
+    "节奏上不追高、不加仓",
+    "no chasing, no adding"
+   ],
+   "逆风": [
+    "节奏上不追高，风险预算打七折",
+    "no chasing, risk budget at 70%"
+   ]
+  },
+  "防顶": {
+   "顺风": [
+    "风险预算照常",
+    "risk budget as normal"
+   ],
+   "中性": [
+    "风险预算照常",
+    "risk budget as normal"
+   ],
+   "中性偏谨慎": [
+    "不加仓",
+    "no adding"
+   ],
+   "逆风": [
+    "风险预算打七折",
+    "risk budget at 70%"
+   ]
+  },
+  "待确认": {
+   "顺风": [
+    "风险预算照常",
+    "risk budget as normal"
+   ],
+   "中性": [
+    "风险预算照常",
+    "risk budget as normal"
+   ],
+   "中性偏谨慎": [
+    "不加仓",
+    "no adding"
+   ],
+   "逆风": [
+    "风险预算打七折",
+    "risk budget at 70%"
+   ]
+  },
+  "偏空": {
+   "顺风": [
+    "可它改变不了熊市的深度",
+    "but it won't change how deep a bear market goes"
+   ],
+   "中性": [
+    "宏观层不额外打折",
+    "no extra macro discount"
+   ],
+   "中性偏谨慎": [
+    "风险预算降一档",
+    "cut the risk budget one notch"
+   ],
+   "逆风": [
+    "风险预算打七折",
+    "risk budget at 70%"
+   ]
+  }
+ },
+ "L3": {
+  "流出": {
+   "分段": "筹码正在离开交易所（7 日净流出 {数值} BTC），持有人更愿意把币提回自己的钱包。",
+   "分段EN": "Coins are leaving exchanges ({value} BTC net over 7 days); holders are moving coins into their own wallets.",
+   "一致": [
+    "偏多"
+   ],
+   "背离": [
+    "偏空",
+    "防顶"
+   ]
+  },
+  "均衡": {
+   "分段": "交易所里的筹码进出大致平衡。",
+   "分段EN": "Exchange inflows and outflows are roughly balanced.",
+   "一致": [],
+   "背离": []
+  },
+  "流入": {
+   "分段": "筹码正在流回交易所（7 日净流入 {数值} BTC），潜在的卖压在增加。",
+   "分段EN": "Coins are flowing back to exchanges ({value} BTC net over 7 days); potential selling pressure is building.",
+   "一致": [
+    "偏空",
+    "防顶"
+   ],
+   "背离": [
+    "偏多"
+   ]
+  },
+  "一致": [
+   "与周期方向一致",
+   "Consistent with the cycle"
+  ],
+  "背离": [
+   "与周期方向背离",
+   "Diverges from the cycle"
+  ],
+  "背离句": [
+   "筹码与周期方向背离。",
+   "Exchange flows diverge from the cycle."
+  ],
+  "_缺": {
+   "分段": "L3 今天没有数据。",
+   "分段EN": "No L3 data today."
+  }
+ },
+ "L4": {
+  "过热": {
+   "一句话": "短期杠杆过热",
+   "一句话EN": "short-term leverage overheated",
+   "分段": "杠杆和情绪都已过热（{关键读数}）。这是一支温度计，不是方向标。",
+   "分段EN": "Leverage and sentiment are running hot ({reading}). This is a thermometer, not a compass."
+  },
+  "偏热": {
+   "一句话": "短期杠杆偏热",
+   "一句话EN": "short-term leverage running warm",
+   "分段": "杠杆和情绪在升温（{关键读数}）。这是一支温度计，不是方向标。",
+   "分段EN": "Leverage and sentiment are warming up ({reading}). This is a thermometer, not a compass."
+  },
+  "中性": {
+   "一句话": "",
+   "一句话EN": "",
+   "分段": "短期情绪和杠杆都在常温区。",
+   "分段EN": "Short-term sentiment and leverage are at normal temperature."
+  },
+  "偏冷": {
+   "一句话": "短期情绪偏冷",
+   "一句话EN": "short-term sentiment cold",
+   "分段": "情绪低迷，杠杆正在出清（{关键读数}）。",
+   "分段EN": "Sentiment is subdued and leverage is being flushed out ({reading})."
+  },
+  "_缺": {
+   "一句话": "",
+   "一句话EN": "",
+   "分段": "L4 今天没有数据。",
+   "分段EN": "No L4 data today."
+  }
+ },
+ "小字": [
+  "方向看周期，节奏看宏观；筹码和情绪用来确认和提醒。",
+  "The cycle sets the direction, macro sets the pace; flows and sentiment confirm and caution."
+ ],
+ "一句话上限": 60
+}

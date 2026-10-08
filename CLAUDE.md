@@ -25,6 +25,15 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
   缓存 `l2/cache/` 走 actions/cache，不进仓库。宏观页 L2 段、日志里的 L2 层结论 / 「L2」快照 / 状态切换预警都只读这两个 json；
   原 L2 单指标卡（MVRV / MVRV Z / Realized Price / NUPL / Mayer / Puell / Pi Cycle）2026-10-08 撤掉，旧链接 `_redirects` 301 到 /macro/#layer-2。
   本地沙箱连不上 Coin Metrics / bitview（代理拒绝），L2 首跑只能在 Actions 里验。
+- **指标注册表**（M12）= `宏观规则.REGISTRY`：每条带 层 / 组 / 序 / 状态（live · pending · retired；自录的满 90 天前自动「记录中」）/ cuts（tone 即 bias：up 顺风 · neutral · dn 逆风 · warn 留意）/
+  fmt / 出处 / 界（边界文字）/ 解读。宏观页各 Tab 的卡片分组、待接入占位卡、详情页、上一个 / 下一个、口径页指标表、停用说明页全部从它生成——改层的数据维度只改注册表 + 数据。
+  L2 六个「估值与持有者」指标读 `data/l2/l2_series.json`（`R.attach_l2` 挂到 S 上）。
+- `config/`：`composite.json` 综合研判短句表（附录 D，四层合成，`pipeline/综合研判.py` 拼接）、`site.json`（定时任务说明；时间从 workflow cron 读）、
+  `glossary.json` 术语表与标签定义（G7）、`l1_rules.json`（宏观总文档 §10.2 逐条照抄）。改措辞只改配置。
+- `content/changelog.json`：更新日志（附录 B）。**每次上线新功能 / 改口径都在最前面加一条**（`notify: true` 才弹窗；`data` 类带 `corrections_anchor` 并在 `RULE_CHANGES` 里加原因）。
+- 全历史数据：`site/data/series/<id>.json`（归档，截至上月末，每月 1 日重写；数据源回改时重写）+ `<id>.recent.json`（本月）。
+  构建时和上一版比较，7 天以前的数据变动 > 0.5% 记进 `data/data_revisions.json`（更正记录页展示）。`site/data/latest.json` = 全站当前读数唯一来源。
+- 页面上的「当前读数」一律读本次构建的最新值（`G["RS"]`），日志只在日志页和标「日志 · 冻结」的位置出现；统计窗口规则在 `宏观规则.stats_window`（D3）。
 - `pipeline/出网站.py` + `pipeline/网站样式.py`：中英双语（英文挂 /en/，`T(中, 英)` 包所有文案）、深 / 浅主题（CSS 变量，
   别写死颜色）、面包屑、交互走势图（`chart_div` + /data/*.json）。指标详情页 /macro/<key>/。
 - `data/解读日志/{日,周,月}/`：写入即冻结。同日重跑且核心缺失变少才覆盖并标「补录」。

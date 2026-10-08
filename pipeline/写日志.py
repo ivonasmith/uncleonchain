@@ -40,6 +40,7 @@ def all_daily():
 def main():
     L = load("宏观台账.json", {}) or {}
     S = L.get("序列") or {}
+    R.attach_l2(S, load("l2/l2_series.json"))          # L2 估值与持有者 6 个指标（l2_daily.py 的全历史）
     sd_path = os.path.join(OUT, "网站素材.json")
     sd = read(sd_path) if os.path.exists(sd_path) else None
     today = today_utc()

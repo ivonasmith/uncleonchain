@@ -23,6 +23,8 @@ import bisect
 import datetime as dt
 import math
 
+import 综合研判 as 综合
+
 LAYERS = {
     1: {"名称": "宏观流动性", "EN": "Macro Liquidity", "问": "风险预算该松还是紧", "问EN": "How much risk budget",
         "频率": "周到月", "频率EN": "weeks to months"},
@@ -50,7 +52,7 @@ def days_between(a, b):
 def f_usd(v):
     if v is None:
         return "—"
-    a, s = abs(v), "-" if v < 0 else ""
+    a, s = abs(v), "\u2212" if v < 0 else ""
     if a >= 1e12:
         return f"{s}${a/1e12:.2f}T"
     if a >= 1e9:
@@ -78,7 +80,12 @@ def f_btc(v, signed=False):
     return f"{'+' if signed and v > 0 else ''}{v:,.0f} BTC"
 
 
-FMT = {
+def _m(x):
+    """负号统一用 U+2212（G8）。"""
+    return x.replace("-", "\u2212", 1) if isinstance(x, str) and x.startswith("-") else x
+
+
+_FMT = {
     "usd": f_usd,
     "usds": f_signed_usd,
     "pct": lambda v: f_pct(v, 2),
@@ -94,6 +101,7 @@ FMT = {
     "btcs": lambda v: f_btc(v, True),
     "price": lambda v: "—" if v is None else f"${v:,.0f}",
 }
+FMT = {k: (lambda f: (lambda v: _m(f(v))))(f) for k, f in _FMT.items()}
 
 
 # ---------------------------------------------------------------- 序列工具（全部纯函数，结果按 S 缓存）
@@ -450,10 +458,10 @@ def own_pct_zone(min_n=90):
     def f(v, ctx):
         hist = {d: x for d, x in ctx["series"].items() if d <= ctx["d"]}
         if len(hist) < min_n:
-            return ("记录中", "Recording", "neutral", 0,
-                    f"已记录 {len(hist)} 天，满 {min_n} 天后给自身历史分位", f"{len(hist)} days recorded; percentile after {min_n}")
+            return ("记录中", "Recording", "warn", 0,
+                    f"已记录 {len(hist)} / {min_n} 天 · 满 {min_n} 天后给出区间判定", f"{len(hist)} / {min_n} days recorded · zone judgment after {min_n} days")
         p = pct_rank(hist, v)
-        z = band(p, [(20, "自身历史低位", "Low vs own history", "cool", 0), (80, "自身历史中段", "Mid-range", "neutral", 0),
+        z = band(p, [(20, "自身历史低位", "Low vs own history", "warn", 0), (80, "自身历史中段", "Mid-range", "neutral", 0),
                      (None, "自身历史高位", "High vs own history", "warn", 0)])
         return (*z, f"自身历史第 {p:.0f} 百分位", f"{p:.0f}th percentile of own history")
     return f
@@ -504,6 +512,8 @@ G_SC = ("L1-B 加密资金通道 · 稳定币（只确认、不预测）", "L1-B
 G_ETF = ("L1-B 加密资金通道 · 现货 ETF", "L1-B crypto funding channels · spot ETFs")
 G_FUT = ("L1-B 加密资金通道 · 期货升水（两条并列）", "L1-B crypto funding channels · futures basis (side by side)")
 G_SEP = ("L1-B 加密资金通道 · 单列观察（不计入）", "L1-B crypto funding channels · watched separately (not counted)")
+G_L2V = ("估值与持有者", "Valuation & holders")
+G_PEND = ("待接入", "Pending")
 ETF_CUTS = [(0, "趋势确认（滞后）· 净流出", "Trend confirm (lagging) · outflow", "dn", 0),
             (None, "趋势确认（滞后）· 净流入", "Trend confirm (lagging) · inflow", "up", 0)]
 ETF_TXT = ("美国现货 BTC ETF 净流入合计。ETF 资金里有散户和基差套利资金，不等于机构看多；大幅流出后没有反弹规律，不作抄底信号。"
@@ -514,7 +524,7 @@ ETF_TXT_EN = ("US spot BTC ETF net flows. ETF money includes retail and basis-tr
 BASIS_TXT = "同概念不同市场：CME 是美国机构与基差套利，Deribit 是加密原生杠杆，绝对值常差几个百分点，只看各自方向和历史分位。"
 BASIS_TXT_EN = "Same concept, different markets: CME is US institutions and basis trades, Deribit is crypto-native leverage; levels often differ by several points — read each one's direction and own percentile only."
 
-INDICATORS = [
+REGISTRY = [
     # ================= 第一层：宏观流动性
     {"key": "ndx13", "层": 1, "组": "乐观度 · 美股腿", "组EN": "Optimism · equity leg", "级别": "核心", "等级": "已验证",
      "名称": "纳指 100 · 13 周涨跌", "EN": "Nasdaq-100 · 13w change", "series": s_ndx13, "fmt": "pcts", "freq": "w",
@@ -563,14 +573,20 @@ INDICATORS = [
      "名称": "10 年实际利率 · 四态", "EN": "10y real yield · 4 states", "series": s_real13, "fmt": "pp", "freq": "w",
      "来源": "FRED · DFII10", "滞后": 7, "raw": "fred_dfii10", "rawfmt": "pct", "classify": classify_real,
      "cuts": [(-0.40, "下行", "Falling", "up", 0), (0.40, "平台", "Plateau", "neutral", 0), (None, "急升", "Surging", "dn", 0)],
-     "说明": "从核心指标降为状态变量：13 周 ≥ +0.40pp = 急升，≤ −0.40pp = 下行，其余按水平 ≥1.0% 分高位 / 低位平台。急升本身是独立逆风（2022 年后），要和信用 / 乐观度一起定档。",
-     "说明EN": "Now a state variable, not the headline: 13w ≥ +0.40pp = surging, ≤ −0.40pp = falling, otherwise high/low plateau by level ≥1.0%. A surge is an independent headwind since 2022 and is combined with credit/optimism.",
+     "说明": "实际利率不再是 L1 的第一指标（第一指标是乐观度），改作“状态变量”：它决定当下落在情境矩阵的哪一行，再和信用条件一起定档。"
+             "13 周 ≥ +0.40pp = 急升，≤ −0.40pp = 下行，其余按水平 ≥ 1.0% 分高位 / 低位平台。",
+     "说明EN": "The real yield is no longer L1's first gauge (optimism is); it is a state variable that picks the row of the scenario matrix and sets the regime together with credit conditions. "
+               "13w ≥ +0.40pp = surging, ≤ −0.40pp = falling, otherwise high/low plateau by level ≥ 1.0%.",
+     "级别注": "状态变量", "级别注EN": "state variable", "等级注": "2022 年后成立；2014~2021 年没有这种作用", "等级注EN": "holds since 2022; no such effect in 2014–2021",
+     "界": ["≤ −0.40pp", "−0.40pp ~ +0.40pp（按水平 ≥ 1.0% 分高位 / 低位）", "≥ +0.40pp"],
+     "界EN": ["≤ −0.40pp", "−0.40pp – +0.40pp (high/low by level ≥ 1.0%)", "≥ +0.40pp"],
      "依据": "13 周变化 + 水平", "依据EN": "13-week change + level"},
     {"key": "netliq13", "层": 1, "组": "流动性闸门（只打折不加仓）", "组EN": "Liquidity gate (discount only)", "级别": "核心", "等级": "已验证·方向",
      "名称": "美联储净流动性 · 13 周变化", "EN": "Fed net liquidity · 13w change", "series": s_netliq13, "fmt": "pcts", "freq": "w",
      "来源": "FRED · WALCL − WTREGEN − RRPONTSYD", "滞后": 9, "raw": "netliq", "rawfmt": "usd",
-     "cuts": [(-2.72, "大幅收缩", "Sharp contraction", "dn", 0), (0, "小幅收缩", "Mild contraction", "neutral", 0),
+     "cuts": [(-2.72 + 1e-9, "大幅收缩", "Sharp contraction", "dn", 0), (0, "小幅收缩", "Mild contraction", "neutral", 0),
               (None, "扩张（不加仓）", "Expanding (no add)", "neutral", 0)],
+     "界": ["≤ −2.72%", "−2.72% ~ 0", "≥ 0"], "界EN": ["≤ −2.72%", "−2.72% – 0", "≥ 0"],
      "说明": "美联储总资产 − 财政部 TGA − 隔夜逆回购。≤ −2.72% 且美元 13 周走强 → 闸门触发（框架里名义风险预算 ×0.7）；扩张时不加仓。2024-05 后领先关系在变弱，2026 年底复核。",
      "说明EN": "Fed assets − Treasury General Account − overnight RRP. ≤ −2.72% with a stronger dollar over 13w trips the gate (risk budget ×0.7 in the framework); expansion never adds. Weakening since 2024-05; review end-2026.",
      "依据": "13 周变化", "依据EN": "13-week change"},
@@ -612,7 +628,7 @@ INDICATORS = [
     {"key": "stable_yield13", "层": 1, "组": G_SC[0], "组EN": G_SC[1], "级别": "辅助", "等级": "描述读数",
      "名称": "生息 / 合成稳定币 · 13 周", "EN": "Yield / synthetic stablecoins · 13w", "series": s_yield13, "fmt": "pcts",
      "freq": "w", "来源": "DefiLlama（逐币）", "滞后": 9, "raw": "stable_yield", "rawfmt": "usd", "w52": w52(lv("stable_yield")),
-     "cuts": [(-1, "杠杆退潮", "Leverage receding", "cool", 0), (1, "持平", "Flat", "neutral", 0), (None, "杠杆扩张", "Leverage building", "warn", 0)],
+     "cuts": [(-1, "杠杆退潮", "Leverage receding", "neutral", 0), (1, "持平", "Flat", "neutral", 0), (None, "杠杆扩张", "Leverage building", "warn", 0)],
      "说明": "链上杠杆温度计：收缩 = 杠杆退潮。USDe、USDf、USDS、DAI 等合计（BFUSD 不在 DefiLlama 上），单列观察，不加回主线。",
      "说明EN": "On-chain leverage thermometer: shrinking = leverage receding. USDe, USDf, USDS, DAI… (BFUSD is not on DefiLlama). Shown separately, never added back to the main line.",
      "依据": "13 周变化", "依据EN": "13-week change"},
@@ -624,14 +640,14 @@ INDICATORS = [
      "名称": "现货 ETF · 近 4 周净流入", "EN": "Spot ETF · 4-week net flow", "series": s_etf28, "fmt": "usds",
      "freq": "d", "来源": "Farside（haturatu 镜像）", "滞后": 5, "raw": "etf_flow", "rawfmt": "usds",
      "cuts": ETF_CUTS, "说明": ETF_TXT, "说明EN": ETF_TXT_EN, "依据": "28 天合计", "依据EN": "28-day sum"},
-    {"key": "cme_basis", "层": 1, "组": G_FUT[0], "组EN": G_FUT[1], "级别": "辅助", "等级": "描述读数",
+    {"key": "cme_basis", "自录": True, "层": 1, "组": G_FUT[0], "组EN": G_FUT[1], "级别": "辅助", "等级": "描述读数",
      "名称": "H1 · CME 近月年化升水", "EN": "H1 · CME front-month annualized basis", "series": raw("cme_basis"), "fmt": "pct1",
      "freq": "d", "来源": "Yahoo · CME 近月合约（每天抓一次）", "滞后": 4, "classify": own_pct_zone(),
      "cuts": [(None, "—", "—", "neutral", 0)],
      "说明": "(CME 近月 / 同一时点现货 − 1) × 365 / 剩余天数，到期前约 5 个交易日换下一张；Yahoo 每天只在日更时抓一次。" + BASIS_TXT,
      "说明EN": "(CME front month / spot at the same moment − 1) × 365 / days to expiry, rolling ~5 trading days before expiry; fetched once a day. " + BASIS_TXT_EN,
      "依据": "自身历史分位", "依据EN": "own-history percentile"},
-    {"key": "deribit_basis", "层": 1, "组": G_FUT[0], "组EN": G_FUT[1], "级别": "辅助", "等级": "描述读数",
+    {"key": "deribit_basis", "自录": True, "层": 1, "组": G_FUT[0], "组EN": G_FUT[1], "级别": "辅助", "等级": "描述读数",
      "名称": "H2 · Deribit 3 个月年化升水", "EN": "H2 · Deribit 3-month annualized basis", "series": raw("deribit_basis"), "fmt": "pct1",
      "freq": "d", "来源": "Deribit（前后两张插值成固定 90 天）", "滞后": 3, "classify": own_pct_zone(),
      "cuts": [(None, "—", "—", "neutral", 0)],
@@ -661,7 +677,7 @@ INDICATORS = [
      "说明": "周对数收益的 52 周滚动相关。明显下降时，纳指 13 周和「跟跌不跟涨」规则要降权；2024 年曾回落到 ≈0。0.2 是本站设的提示线。",
      "说明EN": "52-week rolling correlation of weekly log returns. When it drops, Nasdaq-based rules lose weight; it fell to ~0 in 2024. 0.2 is this site's alert line.",
      "依据": "52 周相关", "依据EN": "52-week correlation"},
-    {"key": "tokstock", "层": 1, "组": "联动与监控", "组EN": "Linkage & monitoring", "级别": "辅助", "等级": "监控",
+    {"key": "tokstock", "自录": True, "层": 1, "组": "联动与监控", "组EN": "Linkage & monitoring", "级别": "辅助", "等级": "监控",
      "名称": "美股代币化 / 稳定币市值", "EN": "Tokenized stocks / stablecoin cap", "series": s_tokstock, "fmt": "pct", "freq": "d",
      "来源": "CoinGecko 类目快照", "滞后": 3,
      "cuts": [(3, "未达纳入门槛", "Below threshold", "neutral", 0), (None, "超过 3%（需纳入稳定币口径调整）", "Above 3% (adjust stablecoin lines)", "warn", 0)],
@@ -676,9 +692,76 @@ INDICATORS = [
      "说明EN": "Weekly correlation with BTC only 0.06; BTC did better during inversions, the opposite of the folk rule. ~18 independent samples. Watch only.",
      "依据": "水平", "依据EN": "level"},
 
-    # ================= 第二层：周期定位 —— 2026-10-08 起改为 L2 状态机（l2/，见下方 L2 段），不再用单指标卡
+    # ================= 第二层：周期定位 —— 层结论 = L2 状态机（l2/）；下面 6 个指标是状态机的输入，卡片 + 详情页展示全历史
+    # 区间和证据等级全部来自《BTC周期层L2研究》（不另定阈值）；数据由 l2/l2_daily.py 每天输出 data/l2/l2_series.json
+    {"key": "mvrv", "层": 2, "组": G_L2V[0], "组EN": G_L2V[1], "级别": "核心", "等级": "已验证·方向",
+     "等级注": "分档有效；「< 1 = 底」本轮已证伪", "等级注EN": "bands hold; '< 1 = bottom' failed this cycle",
+     "名称": "MVRV（价格 ÷ 全网平均成本）", "EN": "MVRV (price ÷ realized price)", "series": raw("l2_mvrv"), "fmt": "x3", "freq": "d",
+     "来源": "Coin Metrics（l2_daily.py）", "滞后": 3, "链上": True, "出处": "L2 研究 §2.2、§2.4", "出处EN": "L2 study §2.2, §2.4",
+     "cuts": [(1.0, "底部区", "Bottom zone", "up", 0), (1.5, "低估", "Undervalued", "up", 0), (2.0, "中间区", "Mid zone", "neutral", 0),
+              (None, "高估区", "Overvalued", "dn", 0)],
+     "说明": "市值 ÷ 已实现市值 = 价格 ÷ 全网平均持币成本。「< 1 = 底」的固定阈值本轮第一次没触发（本轮熊市最低 1.10），仍显示，但只按分档看方向。",
+     "说明EN": "Market cap ÷ realized cap = price ÷ the network-wide average cost. The fixed '< 1 = bottom' rule failed for the first time this cycle (the low was 1.10); still shown, but only the bands are used.",
+     "解读": {"中间区": "当前 {v}，在 1.5~2 中间区。这个区间之后一年为正的比例，2014-17、2018-21、2022-26 三个年代分别是 64%、64%、52%，最近一个年代接近抛硬币。",
+              "*": "当前 {v}，在「{zone}」。"},
+     "解读EN": {"中间区": "Now {v}, in the 1.5–2 mid zone. The share of positive following years was 64%, 64% and 52% in 2014-17, 2018-21 and 2022-26 — the latest era is close to a coin flip.",
+                "*": "Now {v}, in the '{zone}' zone."},
+     "解读尾": "另外「MVRV < 1 就是底」本轮第一次没触发（本轮熊市最低 1.10），固定阈值已失效。",
+     "解读尾EN": "Also, 'MVRV < 1 = bottom' did not trigger this cycle for the first time (the bear low was 1.10); the fixed threshold no longer works.",
+     "依据": "水平", "依据EN": "level"},
+    {"key": "price_200wma", "层": 2, "组": G_L2V[0], "组EN": G_L2V[1], "级别": "核心", "等级": "已验证·方向",
+     "名称": "价格 / 200 周均线", "EN": "Price / 200-week MA", "series": raw("l2_price_200wma"), "fmt": "x3", "freq": "d",
+     "来源": "Coin Metrics（l2_daily.py）", "滞后": 3, "链上": True, "出处": "L2 研究 §2.4", "出处EN": "L2 study §2.4",
+     "cuts": [(1.0, "底部区信号", "Bottom-zone signal", "up", 0), (1.5, "低估", "Undervalued", "up", 0), (2.0, "中间区", "Mid zone", "neutral", 0),
+              (None, "高估区", "Overvalued", "dn", 0)],
+     "说明": "价格 ÷ 最近 200 周（1,400 天）收盘均价。< 1 是底部区信号之一；≥ 2 且 MVRV ≥ 2 是顶部风险信号之一。研究代码在攒满 1,000 天后就开始算均线，所以序列比满 200 周早一年出值。",
+     "说明EN": "Price ÷ the average close of the last 200 weeks (1,400 days). < 1 is a bottom-zone signal; ≥ 2 together with MVRV ≥ 2 is a top-risk signal. The study code starts the average after 1,000 days, a year before a full 200 weeks.",
+     "解读": {"低估": "当前 {v}，在 1~1.5 低估区。这个区间之后一年为正的比例，三个年代分别是 100% / 100% / 89%。", "*": "当前 {v}，在「{zone}」。"},
+     "解读EN": {"低估": "Now {v}, in the 1–1.5 undervalued zone. The following year was positive 100% / 100% / 89% of the time across the three eras.",
+                "*": "Now {v}, in the '{zone}' zone."},
+     "依据": "比值", "依据EN": "ratio"},
+    {"key": "psip", "层": 2, "组": G_L2V[0], "组EN": G_L2V[1], "级别": "核心", "等级": "已验证·方向",
+     "等级注": "只标熊底区，不能定底", "等级注EN": "marks the bottom zone only, cannot time the bottom",
+     "名称": "盈利供应占比", "EN": "Supply in profit", "series": raw("l2_psip"), "fmt": "pct1", "freq": "d",
+     "来源": "bitview.space（l2_daily.py）", "滞后": 3, "链上": True, "出处": "L2 研究 §3.4 #10", "出处EN": "L2 study §3.4 #10",
+     "cuts": [(50, "熊底区信号", "Bear-bottom signal", "up", 0), (None, "非底部区", "Not a bottom zone", "neutral", 0)],
+     "说明": "持币成本低于现价（处在浮盈）的币占全部供应的比例。",
+     "说明EN": "Share of all coins whose cost basis is below the current price (in profit).",
+     "解读": "当前 {v}。四轮熊底附近都低于过 50%，但同一轮会多次触发，所以只能说明「在熊底区」，不能用来定底。",
+     "解读EN": "Now {v}. It dipped below 50% around all four bear bottoms, but fires several times per cycle, so it only says 'in the bottom zone' and cannot time the bottom.",
+     "依据": "占比", "依据EN": "share"},
+    {"key": "rpl365", "层": 2, "组": G_L2V[0], "组EN": G_L2V[1], "级别": "核心", "等级": "已验证·方向",
+     "名称": "一年已实现盈亏比", "EN": "1-year realized profit / loss ratio", "series": raw("l2_rpl365"), "fmt": "x3", "freq": "d",
+     "来源": "bitview.space（l2_daily.py）", "滞后": 3, "链上": True, "出处": "L2 研究 §3.4 #3", "出处EN": "L2 study §3.4 #3",
+     "cuts": [(1, "底部区信号·亮", "Bottom-zone signal · on", "up", 0), (None, "非底部区", "Not a bottom zone", "neutral", 0)],
+     "说明": "过去 365 天卖币实现的利润合计 ÷ 实现的亏损合计。< 1 = 一年里卖出时亏的比赚的多，属于投降式卖出。",
+     "说明EN": "Realized profit ÷ realized loss summed over the past 365 days. < 1 = sellers lost more than they made over a year — capitulation.",
+     "解读": "当前 {v}。历史上跌破 1 都在真实底 ±44 天内；本轮 2026-09-15 才出现，在 6/30 最低点之后 77 天。",
+     "解读EN": "Now {v}. In history it dropped below 1 within ±44 days of the true bottom; this cycle it only did so on 2026-09-15, 77 days after the 6/30 low.",
+     "依据": "比值", "依据EN": "ratio"},
+    {"key": "lth_share", "层": 2, "组": G_L2V[0], "组EN": G_L2V[1], "级别": "核心", "等级": "假设",
+     "等级注": "4 轮里 3 轮成立", "等级注EN": "held in 3 of 4 cycles",
+     "名称": "长期持有者占比（剔除 >7 年）", "EN": "Long-term holder share (ex >7y)", "series": raw("l2_lth_share"), "fmt": "pct1", "freq": "d",
+     "来源": "bitview.space（l2_daily.py）", "滞后": 3, "链上": True, "出处": "L2 研究 §3.5 #21", "出处EN": "L2 study §3.5 #21",
+     "cuts": [(75 + 1e-9, "非底部区", "Not a bottom zone", "neutral", 0), (None, "熊底区信号·亮", "Bear-bottom signal · on", "up", 0)],
+     "界": ["≤ 75%", "> 75%"], "界EN": ["≤ 75%", "> 75%"],
+     "说明": "持有超过 155 天的币（剔除 7 年以上没动过的，多半已丢失）占流通供应（同样剔除）的比例。",
+     "说明EN": "Coins held longer than 155 days as a share of supply, both excluding coins unmoved for over 7 years (mostly lost).",
+     "解读": "当前 {v}。C1、C3 在底前 32~48 天达到 75%，C2 整轮没达到（最高 74.2%），所以只是假设。",
+     "解读EN": "Now {v}. C1 and C3 reached 75% 32–48 days before the bottom; C2 never did (peak 74.2%), so this is only a hypothesis.",
+     "依据": "占比", "依据EN": "share"},
+    {"key": "green_black", "层": 2, "组": G_L2V[0], "组EN": G_L2V[1], "级别": "核心", "等级": "已验证·方向",
+     "等级注": "本轮未触发", "等级注EN": "not triggered this cycle",
+     "名称": "绿 / 黑比（6 月-10 年成本 ÷ 0-10 年成本）", "EN": "Green / black ratio (6m–10y cost ÷ 0–10y cost)", "series": raw("l2_green_black"),
+     "fmt": "x3", "freq": "d", "来源": "bitview.space（l2_daily.py）", "滞后": 3, "链上": True, "出处": "L2 研究 §3.5 #22", "出处EN": "L2 study §3.5 #22",
+     "cuts": [(1, "未达", "Not reached", "neutral", 0), (None, "底部确认", "Bottom confirmation", "up", 0)],
+     "说明": "持有 6 个月到 10 年的币的平均成本 ÷ 10 年内全部币的平均成本。≥ 1 = 新买的人成本反而更低，熊市够深时才会出现。",
+     "说明EN": "Average cost of coins held 6 months–10 years ÷ average cost of all coins moved within 10 years. ≥ 1 = recent buyers sit on a lower cost; only happens in deep bear markets.",
+     "解读": "当前 {v}。历史上升到 1 都在底部 ±60 天内；本轮最高 0.985（8/17），没到 1，原因是熊市不够深。",
+     "解读EN": "Now {v}. Historically it reached 1 within ±60 days of the bottom; this cycle it peaked at 0.985 (8/17) and never got there because the bear market was not deep enough.",
+     "依据": "比值", "依据EN": "ratio"},
     # ================= 第三层：筹码结构
-    {"key": "ex_netflow", "层": 3, "级别": "核心", "名称": "交易所 BTC 净流量（7 日合计）", "EN": "Exchange BTC net flow (7-day sum)",
+    {"key": "ex_netflow", "层": 3, "组": "交易所流量与余额", "组EN": "Exchange flows & balance", "级别": "核心", "名称": "交易所 BTC 净流量（7 日合计）", "EN": "Exchange BTC net flow (7-day sum)",
      "series": s_netflow7, "fmt": "btcs", "freq": "d", "来源": "CoinMetrics（flash 口径）", "滞后": 3, "raw": "ex_netflow", "rawfmt": "btcs",
      "cuts": [(-10000, "大幅净流出（提币）", "Heavy outflow (withdrawals)", "up", 2), (-2000, "净流出", "Net outflow", "up", 1),
               (2000, "进出均衡", "Balanced", "neutral", 0), (10000, "净流入", "Net inflow", "dn", -1),
@@ -686,7 +769,7 @@ INDICATORS = [
      "说明": "流入 − 流出。持续净流出 = 筹码离开交易所（提币囤币），净流入 = 潜在抛压。flash 数据次日可能小幅修订。",
      "说明EN": "Inflow − outflow. Sustained outflow = coins leaving exchanges (hoarding); inflow = potential sell pressure. Flash data may be revised slightly next day.",
      "依据": "7 日合计", "依据EN": "7-day sum"},
-    {"key": "ex_balance", "层": 3, "级别": "核心", "名称": "交易所 BTC 余额（30 日变化）", "EN": "Exchange BTC balance (30d change)",
+    {"key": "ex_balance", "层": 3, "组": "交易所流量与余额", "组EN": "Exchange flows & balance", "级别": "核心", "名称": "交易所 BTC 余额（30 日变化）", "EN": "Exchange BTC balance (30d change)",
      "series": s_exbal30, "fmt": "pcts", "freq": "d", "来源": "CoinMetrics", "滞后": 21, "raw": "ex_balance", "rawfmt": "btc",
      "cuts": [(-1, "下降（筹码离场）", "Falling (coins leaving)", "up", 0), (1, "持平", "Flat", "neutral", 0),
               (None, "上升（筹码回流）", "Rising (coins returning)", "dn", 0)],
@@ -694,50 +777,85 @@ INDICATORS = [
      "说明EN": "Total BTC held on exchanges — the most direct stock measure of holder behaviour. A long decline = holders self-custodying. ~2-week lag on the free tier; trend only, not scored.",
      "依据": "30 日变化", "依据EN": "30-day change"},
     # ================= 第四层：情绪衍生品
-    {"key": "fng", "层": 4, "级别": "核心", "名称": "恐慌贪婪指数", "EN": "Fear & Greed Index", "series": raw("fng"), "fmt": "int", "freq": "d",
+    {"key": "fng", "层": 4, "组": "情绪", "组EN": "Sentiment", "级别": "核心", "名称": "恐慌贪婪指数", "EN": "Fear & Greed Index", "series": raw("fng"), "fmt": "int", "freq": "d",
      "来源": "alternative.me", "滞后": 2,
-     "cuts": [(25, "极度恐慌", "Extreme fear", "cool", -2), (45, "恐慌", "Fear", "cool", -1), (56, "中性", "Neutral", "neutral", 0),
-              (76, "贪婪", "Greed", "warn", 1), (None, "极度贪婪", "Extreme greed", "dn", 2)],
+     "cuts": [(25, "极度恐慌", "Extreme fear", "neutral", -2), (45, "恐慌", "Fear", "neutral", -1), (56, "中性", "Neutral", "neutral", 0),
+              (76, "贪婪", "Greed", "warn", 1), (None, "极度贪婪", "Extreme greed", "warn", 2)],
      "说明": "综合波动、成交、社媒、搜索的情绪温度计。", "说明EN": "Sentiment thermometer from volatility, volume, social and search data.",
      "依据": "水平", "依据EN": "level"},
-    {"key": "hl_funding", "层": 4, "级别": "核心", "名称": "BTC 永续资金费率", "EN": "BTC perp funding rate", "series": raw("hl_funding"), "fmt": "pct1",
+    {"key": "hl_funding", "层": 4, "组": "杠杆", "组EN": "Leverage", "级别": "核心", "名称": "BTC 永续资金费率", "EN": "BTC perp funding rate", "series": raw("hl_funding"), "fmt": "pct1",
      "freq": "d", "来源": "Hyperliquid（日均年化）", "滞后": 2,
-     "cuts": [(-5, "空头拥挤（易轧空）", "Shorts crowded", "cool", -1), (5, "偏冷", "Cool", "cool", 0), (20, "正常", "Normal", "neutral", 0),
-              (40, "多头偏热", "Longs warm", "warn", 1), (None, "多头极度拥挤", "Longs crowded", "dn", 2)],
+     "cuts": [(-5, "空头拥挤（易轧空）", "Shorts crowded (squeeze-prone)", "warn", -1), (5, "偏冷", "Cool", "neutral", 0), (20, "正常", "Normal", "neutral", 0),
+              (40, "多头偏热", "Longs warm", "warn", 1), (None, "多头极度拥挤", "Longs crowded", "warn", 2)],
      "说明": "多空谁在付钱。含约 11% 年化的基准利息（和币安 0.01%/8h 同量级），所以「正常」不是 0。",
      "说明EN": "Who pays whom. Includes ~11% annualized base interest (same order as Binance 0.01%/8h), so 'normal' is not zero.",
      "依据": "年化", "依据EN": "annualized"},
-    {"key": "hl_oi", "层": 4, "级别": "核心", "名称": "BTC 未平仓合约（7 日变化）", "EN": "BTC open interest (7d change)", "series": s_oi7, "fmt": "pcts",
+    {"key": "hl_oi", "自录": True, "层": 4, "组": "杠杆", "组EN": "Leverage", "级别": "核心", "名称": "BTC 未平仓合约（7 日变化）", "EN": "BTC open interest (7d change)", "series": s_oi7, "fmt": "pcts",
      "freq": "d", "来源": "Hyperliquid", "滞后": 2, "raw": "hl_oi", "rawfmt": "usd",
-     "cuts": [(-15, "去杠杆", "Deleveraging", "cool", -1), (15, "平稳", "Stable", "neutral", 0), (None, "杠杆快速堆积", "Leverage piling up", "warn", 1)],
+     "cuts": [(-15, "去杠杆", "Deleveraging", "neutral", -1), (15, "平稳", "Stable", "neutral", 0), (None, "杠杆快速堆积", "Leverage piling up", "warn", 1)],
      "说明": "链上最大永续所的 BTC 未平仓名义价值，看 7 日变化判断杠杆在堆还是在出清。单一交易所口径。",
      "说明EN": "BTC open interest on the largest on-chain perp venue; the 7-day change shows leverage building or flushing. Single venue.",
      "依据": "7 日变化", "依据EN": "7-day change"},
-    {"key": "altseason", "层": 4, "级别": "核心", "名称": "山寨季指数（自建）", "EN": "Altseason index (own)", "series": raw("altseason"), "fmt": "pct1",
+    {"key": "altseason", "自录": True, "层": 4, "组": "轮动", "组EN": "Rotation", "级别": "核心", "名称": "山寨季指数（自建）", "EN": "Altseason index (own)", "series": raw("altseason"), "fmt": "pct1",
      "freq": "d", "来源": "CoinGecko（自算）", "滞后": 2,
      "cuts": [(25, "比特币季", "Bitcoin season", "neutral", 0), (50, "比特币偏强", "BTC leaning", "neutral", 0), (75, "山寨偏强", "Alts leaning", "warn", 0),
               (None, "山寨季", "Altseason", "warn", 0)],
      "说明": "市值前 50（剔除稳定币、包装币、质押衍生品）里 30 日涨幅跑赢 BTC 的占比。原版用 90 日，没有免费接口，这里是自建口径。",
      "说明EN": "Share of the top-50 coins (ex stablecoins, wrapped and staked derivatives) beating BTC over 30 days. Own construction.",
      "依据": "占比", "依据EN": "share"},
-    {"key": "btc_dom", "层": 4, "级别": "辅助", "名称": "BTC 市值占比", "EN": "BTC dominance", "series": raw("btc_dom"), "fmt": "pct1", "freq": "d",
+    {"key": "btc_dom", "自录": True, "层": 4, "组": "轮动", "组EN": "Rotation", "级别": "辅助", "名称": "BTC 市值占比", "EN": "BTC dominance", "series": raw("btc_dom"), "fmt": "pct1", "freq": "d",
      "来源": "CoinGecko", "滞后": 2, "cuts": [(None, "只看趋势", "Trend only", "neutral", 0)],
      "说明": "和山寨季指数交叉验证。", "说明EN": "Cross-check for the altseason index.", "依据": "水平", "依据EN": "level"},
+
+    # ================= 待接入（框架里有、暂时没有免费稳定数据源：页面上明示原因，不拿近似值冒充）
+    {"key": "urpd", "状态": "pending", "层": 3, "名称": "URPD 链上筹码分布", "EN": "URPD",
+     "原因": "Glassnode 付费指标；属于框架里标 🔧 的差异化自建方向", "原因EN": "Paid Glassnode metric; planned self-build", "计划": "bitview 自建", "计划EN": "self-build on bitview"},
+    {"key": "sth_lth_mvrv", "状态": "pending", "层": 3, "名称": "STH-MVRV / LTH-MVRV", "EN": "STH-MVRV / LTH-MVRV",
+     "原因": "需要按持有时长拆分已实现市值；L2 状态机已用 bitview 的短期 / 长期持有者成本，L3 重做时一并接入", "原因EN": "Needs realized cap by holding age; L2 already uses bitview STH/LTH cost — to be wired in the L3 rebuild",
+     "计划": "bitview.space", "计划EN": "bitview.space"},
+    {"key": "sopr", "状态": "pending", "层": 3, "名称": "STH-SOPR / aSOPR", "EN": "STH-SOPR / aSOPR", "原因": "Glassnode 付费指标", "原因EN": "Paid Glassnode metric",
+     "计划": "bitview 自建", "计划EN": "self-build on bitview"},
+    {"key": "miner_reserves", "状态": "pending", "层": 3, "名称": "矿工储备 / 非流动性供给", "EN": "Miner reserves / illiquid supply",
+     "原因": "Glassnode 付费指标", "原因EN": "Paid Glassnode metric", "计划": "待定", "计划EN": "TBD"},
+    {"key": "ls_liq", "状态": "pending", "层": 4, "名称": "多空比 / 24h 爆仓", "EN": "Long/short ratio / liquidations",
+     "原因": "Coinglass 接口需要 key（免费档可申请），拿到 key 即可接入", "原因EN": "Coinglass needs an API key", "计划": "Coinglass", "计划EN": "Coinglass"},
+    {"key": "options", "状态": "pending", "层": 4, "名称": "期权 Put/Call · IV Skew", "EN": "Options put/call · IV skew",
+     "原因": "Deribit 免费可取，v2 接入", "原因EN": "Free on Deribit; next version", "计划": "Deribit", "计划EN": "Deribit"},
+
+    # ================= 已停用（旧链接给说明页，不让推特链接落到空页面）
+    {"key": "mvrv_z", "状态": "retired", "层": 2, "名称": "MVRV Z-Score", "EN": "MVRV Z-Score", "停用": "2026-10-08",
+     "原因": "和 MVRV 同源，固定阈值在本轮失灵（本轮熊市 MVRV 最低只到 1.10，从没跌破 1）", "原因EN": "Same source as MVRV; fixed thresholds failed this cycle (MVRV bottomed at 1.10 and never broke 1)",
+     "去处": "/macro/mvrv/", "去处名": "L2 周期定位 → MVRV", "去处名EN": "L2 Cycle → MVRV"},
+    {"key": "realized_price", "状态": "retired", "层": 2, "名称": "已实现价格（Realized Price）", "EN": "Realized price", "停用": "2026-10-08",
+     "原因": "已实现价格 = 全网平均成本，现在是 L2 关键价位之一，并画在「价格 + 成本线」图里", "原因EN": "Realized price = the network-wide average cost; it is now one of the L2 key levels and a line on the price + cost chart",
+     "去处": "/macro/#l2-levels", "去处名": "L2 周期定位 → 关键价位", "去处名EN": "L2 Cycle → key levels"},
+    {"key": "nupl", "状态": "retired", "层": 2, "名称": "NUPL", "EN": "NUPL", "停用": "2026-10-08",
+     "原因": "NUPL = 1 − 1/MVRV，和 MVRV 同源，不再单列", "原因EN": "NUPL = 1 − 1/MVRV, the same source as MVRV; no longer shown separately",
+     "去处": "/macro/mvrv/", "去处名": "L2 周期定位 → MVRV", "去处名EN": "L2 Cycle → MVRV"},
+    {"key": "mayer", "状态": "retired", "层": 2, "名称": "Mayer Multiple", "EN": "Mayer Multiple", "停用": "2026-10-08",
+     "原因": "价格 ÷ 200 日均线；200 日均线现在是 L2 底部确认「四条短期成本线」之一，并作为关键价位展示", "原因EN": "Price ÷ 200-day MA; the 200-day MA is now one of the four short-term lines in the L2 bottom confirmation and a key level",
+     "去处": "/macro/#l2-levels", "去处名": "L2 周期定位 → 关键价位", "去处名EN": "L2 Cycle → key levels"},
+    {"key": "puell", "状态": "retired", "层": 2, "名称": "Puell Multiple", "EN": "Puell Multiple", "停用": "2026-10-08",
+     "原因": "单指标估值卡用的固定阈值在本轮集体失灵；L2 改为只用跨周期检验过的三类信号", "原因EN": "Fixed single-gauge thresholds failed together this cycle; L2 now uses only the three cross-cycle-tested signal groups",
+     "去处": "/macro/#layer-2", "去处名": "L2 周期定位", "去处名EN": "L2 Cycle"},
+    {"key": "pi_cycle", "状态": "retired", "层": 2, "名称": "Pi Cycle Top", "EN": "Pi Cycle Top", "停用": "2026-10-08",
+     "原因": "Pi 周期顶指标本轮没有出现交叉；顶部风险改由「减半后 480~600 天」「MVRV ≥ 2 且价 / 200 周均 ≥ 2」两条判断", "原因EN": "Pi Cycle did not cross this cycle; top risk now comes from 'halving + 480–600 days' and 'MVRV ≥ 2 with price/200WMA ≥ 2'",
+     "去处": "/macro/#l2-signals", "去处名": "L2 周期定位 → 14 条信号", "去处名EN": "L2 Cycle → 14 signals"},
 ]
+for _n, _x in enumerate(REGISTRY):
+    _x.setdefault("状态", "live")
+    _x.setdefault("序", _n)
+    _x.setdefault("组", G_PEND[0] if _x["状态"] == "pending" else LAYERS[_x["层"]]["名称"])
+    _x.setdefault("组EN", G_PEND[1] if _x["状态"] == "pending" else LAYERS[_x["层"]]["EN"])
+INDICATORS = [x for x in REGISTRY if x["状态"] in ("live", "recording")]     # 有数据、参与判定和画图的
+PENDING = [x for x in REGISTRY if x["状态"] == "pending"]
+RETIRED = [x for x in REGISTRY if x["状态"] == "retired"]
 IND = {x["key"]: x for x in INDICATORS}
+LAYER_RULE_DATES = {1: ("2026-10-02", "2026-10-04"), 2: ("2026-10-08",)}   # 各层规则变更日（复盘里注明「规则变更所致」）
+RECORD_DAYS = 90       # 自录指标：满 90 天才给区间分位与正常波动范围（全站只用这一个门槛）
 
 # 派生「原始水平」序列（详情页第二张图用）：key → 函数
 RAW_DERIVED = {"netliq": s_netliq, "stable_expay": s_stable_expay, "stable_bullets": s_stable_bullets}
-
-# 框架里有、但暂时没有免费稳定数据源的指标——页面上明示「待接入」和原因，不拿近似值冒充
-PENDING = [
-    {"层": 3, "名称": "URPD 链上筹码分布", "EN": "URPD", "原因": "Glassnode 付费指标；属于框架里标 🔧 的差异化自建方向", "原因EN": "Paid Glassnode metric; planned self-build"},
-    {"层": 3, "名称": "STH-MVRV / LTH-MVRV", "EN": "STH-MVRV / LTH-MVRV", "原因": "需要按持有时长拆分已实现市值，Glassnode 付费", "原因EN": "Needs realized cap by holding age; paid"},
-    {"层": 3, "名称": "STH-SOPR / aSOPR", "EN": "STH-SOPR / aSOPR", "原因": "Glassnode 付费指标", "原因EN": "Paid Glassnode metric"},
-    {"层": 3, "名称": "矿工储备 / 非流动性供给", "EN": "Miner reserves / illiquid supply", "原因": "Glassnode 付费指标", "原因EN": "Paid Glassnode metric"},
-    {"层": 4, "名称": "多空比 / 24h 爆仓", "EN": "Long/short ratio / liquidations", "原因": "Coinglass 接口需要 key（免费档可申请），拿到 key 即可接入", "原因EN": "Coinglass needs an API key"},
-    {"层": 4, "名称": "期权 Put/Call · IV Skew", "EN": "Options put/call · IV skew", "原因": "Deribit 免费可取，v2 接入", "原因EN": "Free on Deribit; next version"},
-]
 
 # 研究里测过不成立 / 不可复现，网页和日志里一律不用（L1 规格 §2.2）
 BANNED = [
@@ -757,7 +875,7 @@ BANNED = [
 
 # 规则变更留痕（更正记录页原样展示；已写入的历史日志不改）
 RULE_CHANGES = [
-    {"日期": "2026-10-02", "范围": "L1 宏观流动性", "EN范围": "L1 Macro Liquidity",
+    {"日期": "2026-10-02", "原因": "用 16 年数据逐条检验后发现，“印了多少钱”几乎不领先 BTC：14 个领先关系做样本外检验只过 1 个，M2 与 BTC 的涨跌幅相关只有 0.08。真正左右周到月节奏的，是市场的乐观度和信用的松紧。所以 L1 改以乐观度为第一指标，用实际利率和信用条件定档，流动性只保留“打折”这一项权力。", "原因EN": "Testing 16 years of data rule by rule showed that 'how much money was printed' barely leads BTC: only 1 of 14 lead relations survived out-of-sample, and M2's return correlation with BTC is just 0.08. What drives the weeks-to-months pace is market optimism and credit conditions. So L1 now puts optimism first, sets the regime with real yields and credit, and keeps liquidity only as a discount.", "范围": "L1 宏观流动性", "EN范围": "L1 Macro Liquidity",
      "内容": "按《L1 宏观层数据维度规格》重做：新增纳指 13 周、VIX、乐观度综合 z、BAA / NFCI / 高收益利差 13 周、实际利率四态与情境格、"
              "净流动性 13 周闸门、稳定币「剔除支付机构」「交易子弹」「生息/合成」、ETF 4 周、CME 升水、BTC−纳指 52 周相关、美股代币化快照；"
              "删除「USDT+USDC 总市值」「RRP」「美联储资产负债表单列」；2Y/10Y 利差降为观察项；实际利率从核心指标降为状态变量；"
@@ -771,7 +889,7 @@ RULE_CHANGES = [
 ]
 
 RULE_CHANGES.append(
-    {"日期": "2026-10-04", "范围": "L1-B 加密资金通道", "EN范围": "L1-B crypto funding channels",
+    {"日期": "2026-10-04", "原因": "稳定币总量里混着三类不是来交易的钱：支付与机构稳定币（和 BTC 的 13 周相关是 −0.43）、用 USDT/USDC 抵押再铸造的生息合成币（会重复计算），以及和 BTC 几乎不相关的 Tron 链稳定币。剔除之后，剩下的才像交易资金。ETF 已经成为边际买盘的主通道（ETF 时代同周相关 0.67），所以和稳定币放在一起。这组数据只确认、不预测，是 L1 的一部分而不是独立一层，名字随之改为 L1-B。", "原因EN": "Total stablecoin supply mixes in three kinds of money that is not there to trade: payment and institutional coins (−0.43 with BTC over 13 weeks), yield/synthetic coins minted against USDT/USDC (double-counted), and Tron stablecoins that barely track BTC. What is left after removing them looks like trading money. ETFs have become the main pipe for marginal buying (0.67 same-week correlation in the ETF era), so they sit with stablecoins. This group confirms but does not predict, so it is part of L1 rather than a layer of its own — hence 'L1-B'.", "范围": "L1-B 加密资金通道", "EN范围": "L1-B crypto funding channels",
      "内容": "「L1.5」更名为「L1-B 加密资金通道（只确认、不预测）」。稳定币主线改为去重口径：总供给 − 支付/机构类 − 生息/合成类（原为只剔除支付机构）；"
              "交易子弹旁并列「含 Tron」口径；Tron 链和支付机构稳定币单列观察、不计入；卡片补 52 周变化。新增现货 ETF 13 周净流入和"
              "「资金轮动矩阵」（ETF 13 周 × 交易子弹 13 周）；ETF 标签统一为「趋势确认（滞后）」。L1 每日一行的 L1-B 段改为 主线(去重) / 交易子弹 / ETF 13 周 / 轮动格。",
@@ -780,7 +898,7 @@ RULE_CHANGES.append(
            "New: spot ETF 13-week flow and the rotation matrix (ETF 13w × trading bullets 13w); ETF labels unified as 'trend confirmation (lagging)'."})
 
 RULE_CHANGES.append(
-    {"日期": "2026-10-08", "范围": "L2 周期定位", "EN范围": "L2 Cycle Position",
+    {"日期": "2026-10-08", "原因": "单指标估值卡用的固定阈值在本轮集体失灵：MVRV 整轮熊市最低只到 1.10，从没跌破 1；Pi 周期顶指标没有出现交叉；估值峰值比价格顶早了 9~10 个月。L2 因此改为状态机，只用跨周期检验过的三类信号（底部区、底部确认、顶部风险时间窗）判断所处阶段。历史回放里，各阶段之后一年的表现区分清楚：“熊末→牛初”中位 +152%，“熊市”中位 −36%。", "原因EN": "The fixed thresholds of the single-gauge valuation cards all failed this cycle: MVRV bottomed at 1.10 and never broke 1; Pi Cycle never crossed; valuation peaked 9–10 months before price. L2 is now a state machine that uses only the three cross-cycle-tested signal groups (bottom zone, bottom confirmation, top-risk window). In the historical replay the phases separate cleanly: 'late bear → early bull' median +152% over the next year, 'bear' −36%.", "范围": "L2 周期定位", "EN范围": "L2 Cycle Position",
      "内容": "L2 改为规则化状态机（《BTC周期层L2研究》§7）：Coin Metrics + bitview.space 取价格、已实现市值、分龄成本、持有者与盈亏，"
              "每天判定六个状态之一（牛市 / 牛市·顶部风险区 / 牛市回撤·待确认 / 熊市 / 熊底区 / 熊末→牛初），附 14 条信号（底部区 / 底部确认 / 顶部风险）和 13 条关键价位。"
              "删除原 L2 单指标卡：MVRV、MVRV Z-Score、Realized Price、NUPL、Mayer、Puell、Pi Cycle Top，以及 Pi Cycle 预警；"
@@ -790,13 +908,26 @@ RULE_CHANGES.append(
            "Removed the old single-gauge L2 cards (MVRV, MVRV Z, realized price, NUPL, Mayer, Puell, Pi Cycle) and the Pi Cycle alert; "
            "the L2 verdict is now the state, not the MVRV Z zone. Logs up to 2026-10-07 stay unchanged."})
 
+RULE_CHANGES.append(
+    {"日期": "2026-10-08", "锚": "2026-10-08-comp", "范围": "综合研判", "EN范围": "Overall read",
+     "内容": "综合研判从「L1 × L4 组合」改为 L1~L4 四层合成：一句话 = 方向（L2 周期状态）+ 节奏（L1 档位与风险预算动作）+ 筹码背离提示（L3）+ 短期温度（L4）；四段说明固定顺序。短句、动作、逆风触发原因写在 config/composite.json。上线当天起新生成的日志用新规则，旧日志保持原样。",
+     "EN": "The overall read moved from an L1 × L4 combination to a four-layer synthesis: one line = direction (L2 state) + pace (L1 regime and risk-budget action) + a flow divergence note (L3) + short-term temperature (L4), followed by four fixed paragraphs. Phrases, actions and headwind triggers live in config/composite.json. Logs from this day on use the new rule; older logs stay unchanged.",
+     "原因": "综合研判此前只由宏观（L1）和情绪（L4）组合而成，周期位置和筹码流向没有进入总结论。按框架本来的分工——周期定方向、宏观管节奏、筹码和情绪负责确认与提醒——改为四层合成。",
+     "原因EN": "The overall read used to combine only macro (L1) and sentiment (L4); cycle position and coin flows never entered it. Following the framework's own division of labour — the cycle sets direction, macro sets pace, flows and sentiment confirm and caution — it now combines all four layers."})
+RULE_CHANGES.append(
+    {"日期": "2026-10-08", "锚": "2026-10-08-stats", "范围": "统计窗口（正常波动范围、分位、区间占比）", "EN范围": "Statistics window (normal range, percentiles, zone shares)",
+     "内容": "链上周期类指标（L2 估值与持有者、L3 交易所）统计起点改为 2012-01-01（或有效起点）；百分比变化类指标（L1-B 稳定币系列、交易所余额 30 日变化等）从统计起点往后若仍有 |变化率| > 100% 的点，推迟到此后再也没有的第一天。图上照样展示更早的数据，铺灰底并注明原因。各指标新旧起点见下表。指标公式、阈值、区间规则不变。",
+     "EN": "On-chain cycle gauges (L2 valuation & holders, L3 exchanges) now start their statistics on 2012-01-01 (or their first valid day); percentage-change gauges (L1-B stablecoin lines, 30-day exchange balance change, etc.) are pushed further to the first day after which no |change| > 100% occurs. Earlier data stays on the charts with a grey background and a note. Old and new start dates per gauge are in the table below. Formulas, thresholds and zone rules are unchanged.",
+     "原因": "早期基数极小时变化率会爆炸，把历史极值、分位和区间占比全部拉歪：交易所余额 30 日变化的历史极值显示过 +2,569,800%，稳定币主线 13 周的 p90 显示过 +128%，读者看到会以为数据有问题。",
+     "原因EN": "With a tiny early base, percentage changes explode and distort the extremes, percentiles and zone shares: the 30-day exchange balance change once showed a historical extreme of +2,569,800% and the stablecoin main line a p90 of +128% — readers would assume the data was broken."})
+
 # ---------------------------------------------------------------- L2 周期状态机（规则与计算全在 l2/l2_signals.py，这里只做展示用的译名与配色）
 L2_STATES = {   # code: (中文名, 英文名, 英文一句话, 层结论 tone, 配色变量)
     "BULL": ("牛市", "Bull market", "Uptrend after a new all-time high.", "up", "l2-bull"),
     "BULL_RISK": ("牛市·顶部风险区", "Bull · top-risk zone", "In the historical top window or overvaluation zone; the following year has been clearly weaker.", "warn", "l2-risk"),
     "BULL_PULLBACK": ("牛市回撤·待确认", "Bull pullback · unconfirmed", "More than 20% off the high, bear conditions not yet met.", "warn", "l2-pb"),
     "BEAR": ("熊市", "Bear market", "More than 35% off the high, and the high is over 90 days old.", "dn", "l2-bear"),
-    "BEAR_ZONE": ("熊底区", "Bear bottom zone", "At least two bottom-zone signals inside a bear market.", "cool", "l2-zone"),
+    "BEAR_ZONE": ("熊底区", "Bear bottom zone", "At least two bottom-zone signals inside a bear market.", "up", "l2-zone"),
     "RECOVERY": ("熊末→牛初（底部已确认）", "Late bear → early bull (bottom confirmed)", "Bottom confirmation met; lasts until the previous high is reclaimed.", "up", "l2-rec"),
 }
 L2_ORDER = ["BULL", "BULL_RISK", "BULL_PULLBACK", "BEAR", "BEAR_ZONE", "RECOVERY"]
@@ -810,13 +941,13 @@ L2_NOTE_EN = {
     "Z_MVRV<1": "Price below the network-wide average cost.",
     "Z_价<200周均": "Historically the following year was almost always up.",
     "Z_LTH占比>75%": "Coins concentrate in long-term hands; seen around 3 of 4 bear bottoms.",
-    "Z_价≤1.3×CVDD": "Close to a price floor never broken in history.",
+    "Z_价≤1.3×CVDD": "Price is near a floor it has never closed below in history.",
     "C_底后+40%且过90天": "The only false signal in history was in 2014.",
     "C_四大名右7天": "Right-side bottom confirmation; counts only if an age-band bottom signal has appeared this cycle.",
     "C_6-12M死叉12-18M(本轮)": "Appeared −1 to +31 days around every true bottom.",
     "C_三叉第三叉(本轮)": "Third cross of the triple-cross bottom; within 85 days of the true bottom.",
     "C_绿黑比≥1(本轮)": "Only appears when the bear market runs deep enough.",
-    "C_STH成本<LTH成本(本轮)": "Only appears when the bear market runs deep enough.",
+    "C_STH成本<LTH成本(本轮)": "Like the green/black ratio, it needs a deep enough bear market to show up.",
     "T_减半后480~600天": "The last three cycles topped 525–546 days after the halving.",
     "T_MVRV≥2且价/200周均≥2": "Since 2018 the median return over the following year has been negative.",
 }
@@ -916,7 +1047,7 @@ def reading(S, key, as_of, lag=3, raw=False):
         r[f"变{n}"] = (v - b) if b is not None else None
         r[f"涨{n}"] = ((v / b - 1) * 100) if b not in (None, 0) else None
     weekly_ = key in IND and not raw and IND[key].get("freq") == "w"
-    span = 365 if weekly_ else 90
+    span = 365                                          # 迷你走势线统一近 1 年（周度约 52 个点）
     r["走势"] = [s[x] for x in ds if days_between(x, d) <= span]
     r["走势日期"] = [x for x in ds if days_between(x, d) <= span]
     return r
@@ -1055,7 +1186,7 @@ def l1_verdict(rs):
     a, b, worse = scenario_cells(st)
     core = [x for x in by.values() if x["级别"] == "核心" and not x["过期"]]
     basis = [f"{x['名称']} {x['区间']}（{x['依据']}）" for x in core]
-    basis_en = [f"{x['名称EN']}: {x['区间EN']} ({x['依据EN']})" for x in core]
+    basis_en = [f"{x['名称EN']}: {x['区间EN']} · {x['依据EN']}" for x in core]
     if gate:
         basis.append("流动性闸门触发：净流动性 13 周 ≤ −2.72% 且美元 13 周走强")
         basis_en.append("Liquidity gate tripped: net liquidity 13w ≤ −2.72% with a stronger dollar")
@@ -1117,48 +1248,16 @@ def layer_verdict(layer, rs, l2=None):
             v, ve, short, se, tone = "交易所进出均衡", "Exchange flows balanced", "筹码进出均衡", "Flows balanced", "neutral"
     else:
         if sc >= 3:
-            v, ve, short, se, tone = "过热：短期超调风险高", "Overheated: high overshoot risk", "情绪过热", "Sentiment hot", "dn"
+            v, ve, short, se, tone = "过热：短期超调风险高", "Overheated: high overshoot risk", "情绪过热", "Sentiment hot", "warn"
         elif sc >= 1:
             v, ve, short, se, tone = "偏热：杠杆和情绪在升温", "Warm: leverage and sentiment rising", "情绪偏热", "Sentiment warm", "warn"
         elif sc <= -2:
-            v, ve, short, se, tone = "偏冷：恐慌出清中", "Cool: fear being flushed", "情绪偏冷", "Sentiment cool", "cool"
+            v, ve, short, se, tone = "偏冷：恐慌出清中", "Cool: fear being flushed", "情绪偏冷", "Sentiment cool", "neutral"
         else:
             v, ve, short, se, tone = "中性：没有明显超调", "Neutral: no clear overshoot", "情绪中性", "Sentiment neutral", "neutral"
     basis = [f"{x['名称']} {x['区间']}（{x['依据']}）" for x in core]
-    basis_en = [f"{x['名称EN']}: {x['区间EN']} ({x['依据EN']})" for x in core]
+    basis_en = [f"{x['名称EN']}: {x['区间EN']} · {x['依据EN']}" for x in core]
     return {"层": layer, "结论": v, "结论EN": ve, "短": short, "短EN": se, "tone": tone, "分": sc, "依据": basis, "依据EN": basis_en}
-
-
-def composite(vs):
-    L1, L4 = vs.get(1, {}), vs.get(4, {})
-    s1, s4 = L1.get("tone"), L4.get("tone")
-    hot, cold = s4 in ("dn", "warn"), s4 == "cool"
-    T = {
-        ("dn", "hot"): ("宏观逆风、情绪却偏热——最需要警惕的组合：缺宏观支撑，价格靠杠杆和情绪撑着。",
-                        "Macro headwind while sentiment runs hot — the most fragile mix: price is held up by leverage, not macro."),
-        ("dn", "cold"): ("宏观逆风、情绪也冷——外部环境和情绪同步退潮。", "Macro headwind and cold sentiment — both are receding together."),
-        ("dn", ""): ("宏观逆风（利率急升叠加信用 / 乐观度转弱，或流动性闸门触发），情绪暂时平稳。",
-                     "Macro headwind (rate surge plus weaker credit/optimism, or the liquidity gate), sentiment still calm."),
-        ("warn", "hot"): ("实际利率在急升、情绪偏热——宏观层降一档风险预算，杠杆拥挤时回调会来得急。",
-                          "Real yields surging while sentiment is warm — macro trims the risk budget a notch; crowded leverage makes pullbacks sharp."),
-        ("warn", "cold"): ("实际利率在急升、情绪偏冷——宏观和情绪都没给支撑。", "Real yields surging and sentiment cool — neither macro nor sentiment is supportive."),
-        ("warn", ""): ("实际利率在急升，但信用和乐观度还撑着——中性偏谨慎，盯信用会不会转紧。",
-                       "Real yields surging but credit and optimism still hold — neutral-cautious; watch whether credit tightens."),
-        ("up", "hot"): ("宏观顺风、情绪也热——顺风期，但杠杆拥挤时回调会来得很急。", "Macro tailwind and hot sentiment — supportive, but crowded leverage makes pullbacks sharp."),
-        ("up", "cold"): ("宏观顺风、情绪偏冷——外部环境支持，情绪还没跟上。", "Macro tailwind but cool sentiment — the backdrop is supportive, sentiment has not caught up."),
-        ("up", ""): ("宏观顺风：乐观度和信用条件都在支持风险资产。", "Macro tailwind: optimism and credit both support risk assets."),
-        ("neutral", "hot"): ("宏观没给明确方向，情绪和杠杆在升温——短期波动主要由杠杆驱动。",
-                             "Macro gives no clear signal while sentiment and leverage heat up — short-term moves are leverage-driven."),
-        ("neutral", "cold"): ("宏观没给明确方向，情绪偏冷。", "Macro gives no clear signal; sentiment is cool."),
-        ("neutral", ""): ("宏观和情绪都没给明确方向，按区间思路对待。", "Neither macro nor sentiment gives a clear signal — treat it as a range."),
-    }
-    k1 = s1 if s1 in ("dn", "warn", "up") else "neutral"
-    k4 = "hot" if hot else ("cold" if cold else "")
-    t, te = T[(k1, k4)]
-    vs_ = [vs.get(i, {}) for i in (1, 2, 3, 4)]
-    tags = [x.get("短") for x in vs_ if x.get("短") and x.get("短") != "数据不足"]
-    tags_en = [x.get("短EN") for x in vs_ if x.get("短EN") and x.get("短") != "数据不足"]
-    return {"一句话": t, "一句话EN": te, "标签": tags, "标签EN": tags_en}
 
 
 # ---------------------------------------------------------------- 发射台摘要（来自 出看板.py 的 网站素材.json）
@@ -1190,58 +1289,58 @@ def alerts(rs, prev_log, lp, l1=None, l2=None):
             for x in lay.get("读数", []):
                 prev[x["key"]] = x
 
-    def add(level, zh, en):
-        out.append({"级别": level, "文本": zh, "文本EN": en})
+    def add(level, zh, en, layer=None, key=None):
+        out.append({"级别": level, "文本": zh, "文本EN": en, "层": layer, "key": key})
     for x in rs:
-        if not x or x["过期"]:
+        if not x or x["过期"] or x["层"] == 2:          # L2 用状态机自己的状态切换 / 信号亮灭预警
             continue
         p = prev.get(x["key"])
         if p and p.get("区间") != x["区间"] and x["级别"] == "核心" and x["区间"] not in ("—", "记录中"):
             add("高" if x["tone"] in ("dn", "warn") else "中",
                 f"{x['名称']}从「{p['区间']}」进入「{x['区间']}」（{p['显示']} → {x['显示']}）",
-                f"{x['名称EN']} moved from '{p.get('区间EN') or p['区间']}' to '{x['区间EN']}' ({p['显示']} → {x['显示']})")
+                f"{x['名称EN']} moved from '{p.get('区间EN') or p['区间']}' to '{x['区间EN']}' ({p['显示']} → {x['显示']})", x["层"], x["key"])
     if l1 and prev_log:
         p1 = next((lay for lay in prev_log.get("层", []) if lay["层"] == 1), None)
         if p1 and p1.get("短") and p1["短"] != l1["短"] and l1["短"] != "数据不足" and "状态" in p1:
-            add("高", f"L1 档位切换：{p1['短']} → {l1['短']}", f"L1 regime change: {p1.get('短EN') or p1['短']} → {l1['短EN']}")
+            add("高", f"L1 档位切换：{p1['短']} → {l1['短']}", f"L1 regime change: {p1.get('短EN') or p1['短']} → {l1['短EN']}", 1)
     by = {x["key"]: x for x in rs if x}
     nf = by.get("ex_netflow")
     if nf:
         dval = nf["依据"]
         raw_ = None
         try:
-            raw_ = float(dval[dval.find("当日 ") + 3:].split(" BTC")[0].replace(",", "").replace("+", "")) if "当日 " in dval else None
+            raw_ = float(dval[dval.find("当日 ") + 3:].split(" BTC")[0].replace(",", "").replace("+", "").replace("\u2212", "-")) if "当日 " in dval else None
         except ValueError:
             raw_ = None
         if raw_ is not None and abs(raw_) >= 5000:
             add("中", f"交易所单日 BTC 净{'流出' if raw_ < 0 else '流入'} {abs(raw_):,.0f} 枚",
-                f"Exchanges saw a one-day net {'outflow' if raw_ < 0 else 'inflow'} of {abs(raw_):,.0f} BTC")
+                f"Exchanges saw a one-day net {'outflow' if raw_ < 0 else 'inflow'} of {abs(raw_):,.0f} BTC", 3, "ex_netflow")
     fu = by.get("hl_funding")
     pf = prev.get("hl_funding")
     if fu and pf and (fu["值"] < 0) != (pf["值"] < 0):
         add("高", f"BTC 资金费率翻{'负' if fu['值'] < 0 else '正'}（{pf['显示']} → {fu['显示']}）",
-            f"BTC funding flipped {'negative' if fu['值'] < 0 else 'positive'} ({pf['显示']} → {fu['显示']})")
+            f"BTC funding flipped {'negative' if fu['值'] < 0 else 'positive'} ({pf['显示']} → {fu['显示']})", 4, "hl_funding")
     vx = by.get("vix")
     pv = prev.get("vix")
     if vx and pv and (vx["值"] >= 20) != (pv["值"] >= 20) and not vx["过期"]:
         add("高" if vx["值"] >= 20 else "中", f"VIX {'升破' if vx['值'] >= 20 else '回落到'} 20（{pv['显示']} → {vx['显示']}）",
-            f"VIX {'crossed above' if vx['值'] >= 20 else 'fell back below'} 20 ({pv['显示']} → {vx['显示']})")
+            f"VIX {'crossed above' if vx['值'] >= 20 else 'fell back below'} 20 ({pv['显示']} → {vx['显示']})", 1, "vix")
     if l2 and (l2.get("state") or {}).get("code") in L2_STATES:
         p2 = ((prev_log or {}).get("L2") or {}).get("状态")
         cur = l2["state"]["code"]
         if p2 in L2_STATES and p2 != cur:
-            add("高", f"L2 周期状态切换：{L2_STATES[p2][0]} → {l2_name(l2)}", f"L2 cycle state change: {L2_STATES[p2][1]} → {l2_name(l2, True)}")
+            add("高", f"L2 周期状态切换：{L2_STATES[p2][0]} → {l2_name(l2)}", f"L2 cycle state change: {L2_STATES[p2][1]} → {l2_name(l2, True)}", 2)
         for x in l2.get("signals") or []:
             if x.get("changed_today"):
-                add("中", f"L2 信号{'亮起' if x['on'] else '熄灭'}：{x['name_zh']}", f"L2 signal {'on' if x['on'] else 'off'}: {x['name_en']}")
+                add("中", f"L2 信号{'亮起' if x['on'] else '熄灭'}：{x['name_zh']}", f"L2 signal {'on' if x['on'] else 'off'}: {x['name_en']}", 2, x.get("metric"))
     if lp:
         if lp.get("赛道日环比") is not None and abs(lp["赛道日环比"]) >= 25:
-            add("中", f"发射台赛道 Top60 手续费单日 {lp['赛道日环比']:+.1f}%", f"Launchpad top-60 fees {lp['赛道日环比']:+.1f}% day over day")
+            add("中", f"发射台赛道 Top60 手续费单日 {lp['赛道日环比']:+.1f}%", f"Launchpad top-60 fees {lp['赛道日环比']:+.1f}% day over day", "lp")
         plp = (prev_log or {}).get("发射台") or {}
         if plp.get("第一") and lp.get("第一") and plp["第一"] != lp["第一"]:
-            add("高", f"发射台当日手续费第一易主：{plp['第一']} → {lp['第一']}", f"New #1 launchpad by daily fees: {plp['第一']} → {lp['第一']}")
+            add("高", f"发射台当日手续费第一易主：{plp['第一']} → {lp['第一']}", f"New #1 launchpad by daily fees: {plp['第一']} → {lp['第一']}", "lp")
         for a in lp.get("异常", [])[:4]:
-            add("中", f"发射台：{a}", f"Launchpad: {a}")
+            add("中", f"发射台：{a}", f"Launchpad: {a}", "lp")
     return out
 
 
@@ -1254,7 +1353,7 @@ def daily_log(date, S, sd, prev_log, sources, l2=None):
     rs = [x for x in rs if x]
     vs = {i: layer_verdict(i, rs, l2) for i in LAYERS}
     lp = launchpad_summary(sd)
-    comp = composite(vs)
+    comp = 综合.compose(vs, rs, l2)
     rot = rotation(S, date)
     l1zh, l1en = l1_line(rs, vs[1], rot)
     layers = []
@@ -1299,10 +1398,12 @@ def _period_review(kind, label, start, end, S, logs, sd, prev_period):
                      "高": fmt(max(vals)), "低": fmt(min(vals)), "期初区间": j0["区间"] if j0 else "—",
                      "期末区间": j1["区间"] if j1 else "—", "期初区间EN": j0["区间EN"] if j0 else "—", "期末区间EN": j1["区间EN"] if j1 else "—",
                      "tone": j1["tone"] if j1 else "neutral", "天数": len(ds)})
-    dist = {}
+    dist, en_of = {}, {}
     for lg in logs:
         for lay in lg.get("层", []):
             dist.setdefault(lay["层"], []).append(lay["短"])
+            if lay.get("短EN"):
+                en_of[lay["短"]] = lay["短EN"]
     verdicts = []
     for i, meta in LAYERS.items():
         seq = dist.get(i, [])
@@ -1330,8 +1431,20 @@ def _period_review(kind, label, start, end, S, logs, sd, prev_period):
         lp = {"赛道期间合计": sum(cur) if cur else None, "赛道上期合计": sum(prev) if prev else None,
               "赛道变化": ((sum(cur) / sum(prev) - 1) * 100) if cur and prev and sum(prev) else None,
               "平台": plats, "有效天数": len(cur)}
-    moves = [f"{v['名称']}由「{v['期初']}」转为「{v['期末']}」" for v in verdicts if v["期初"] != "—" and v["期初"] != v["期末"]]
-    moves_en = [f"{v['名称EN']}: {v['期初']} → {v['期末']}" for v in verdicts if v["期初"] != "—" and v["期初"] != v["期末"]]
+    # 切换发生在规则变更当天的，注明「规则变更所致」（不是市场变了）
+    rule_days = {i: [d for d in ds_ if start <= d <= end] for i, ds_ in LAYER_RULE_DATES.items()}
+    by_day = {lg["日期"]: {lay["层"]: lay["短"] for lay in lg.get("层", [])} for lg in logs}
+    days = sorted(by_day)
+
+    def by_rule(i):
+        for a, b in zip(days, days[1:]):
+            if by_day[a].get(i) != by_day[b].get(i) and b in rule_days.get(i, []):
+                return True
+        return False
+    moves = [f"{v['名称']}由「{v['期初']}」转为「{v['期末']}」" + ("（规则变更所致）" if by_rule(v["层"]) else "")
+             for v in verdicts if v["期初"] != "—" and v["期初"] != v["期末"]]
+    moves_en = [f"{v['名称EN']}: {en_of.get(v['期初'], v['期初'])} → {en_of.get(v['期末'], v['期末'])}" + (" (due to a rule change)" if by_rule(v["层"]) else "")
+                for v in verdicts if v["期初"] != "—" and v["期初"] != v["期末"]]
     if moves:
         one, one_en = "；".join(moves) + "。", "; ".join(moves_en) + "."
     elif logs:
@@ -1398,3 +1511,154 @@ def history_stats(S, ind, since=None):
     return {"起": ds[0], "止": ds[-1], "样本": len(vals), "p05": q(.05), "p10": q(.10), "p25": q(.25), "p50": q(.5), "p75": q(.75),
             "p90": q(.90), "p95": q(.95), "min": vals[0], "max": vals[-1],
             "区间占比": [(c[1], c[2], c[3], share.get(c[1], 0) / tot * 100) for c in ind["cuts"]] if share else []}
+
+
+# ---------------------------------------------------------------- L2 估值与持有者：把 l2_series.json 的全历史挂到 S 上
+L2_METRICS = ("mvrv", "price_200wma", "psip", "rpl365", "lth_share", "green_black")
+
+
+def attach_l2(S, ser):
+    """data/l2/l2_series.json（l2_daily.py 输出，起点 + 逐日数组）→ S['l2_<指标>'] = {日期: 值}。"""
+    if not ser or not ser.get("start"):
+        return S
+    d0 = dt.date.fromisoformat(ser["start"])
+    for k in L2_METRICS:
+        vals = (ser.get("series") or {}).get(k) or []
+        S["l2_" + k] = {(d0 + dt.timedelta(days=i)).isoformat(): v for i, v in enumerate(vals) if v is not None}
+    return S
+
+
+# ---------------------------------------------------------------- 颜色按「对 BTC 意味着什么」（G6）：区间 tone → bias
+BIAS = {"up": "tailwind", "dn": "headwind", "warn": "watch", "neutral": "neutral", "cool": "neutral"}
+
+# ---------------------------------------------------------------- 统计窗口（D3）
+# 1) L1 宏观：只用 2018 年以后（方法规则）；2) 链上周期类（L2 六个、L3 交易所）：2012-01-01 起（或有效起点）；
+# 3) 百分比变化类：从上面的起点往后，若仍有 |变化率| > 100% 的点，推迟到此后再也没有的第一天（早期基数过小）。
+PCT_CHG = ("ndx13", "netliq13", "usd13", "stable_expay13", "stable_bullets13", "stable_core13", "stable_yield13",
+           "stable_tron13", "stable_pay13", "ex_balance", "hl_oi")
+
+
+def stats_window(S, ind):
+    """返回 (统计起点或 None=全历史, 原因中文, 原因英文)。"""
+    s = series_of(S, ind)
+    ds = sorted(d for d in s if s[d] is not None)
+    if not ds:
+        return None, "", ""
+    since, why, why_en = None, "", ""
+    if ind["层"] == 1:
+        since, why, why_en = "2018-01-01", "2018 年前不计入统计（方法规则）", "Pre-2018 data excluded from statistics (method rule)"
+    elif ind.get("链上") or ind["层"] == 3:
+        since, why, why_en = "2012-01-01", "2012 年前不计入统计（周期分析和状态机回放都从 2012 年开始）", "Pre-2012 data excluded (cycle analysis and the state-machine replay start in 2012)"
+    if ind["key"] in PCT_CHG:
+        base = since or ds[0]
+        big = [d for d in ds if d >= base and abs(s[d]) > 100]
+        if big:
+            after = [d for d in ds if d > big[-1]]
+            if after:
+                since, why, why_en = after[0], "早期基数过小，不计入统计", "Early base too small, excluded from statistics"
+    if since and since <= ds[0]:
+        return None, "", ""
+    return since, why, why_en
+
+
+def stats_window_old(S, ind):
+    """2026-10-08 之前的统计起点（更正记录里对照用）：L1 用 2018 年以后，其余全历史。"""
+    s = series_of(S, ind)
+    ds = sorted(d for d in s if s[d] is not None)
+    if not ds:
+        return None
+    return max("2018-01-01", ds[0]) if ind["层"] == 1 else ds[0]
+
+
+# ---------------------------------------------------------------- 自录指标「记录中」（D4：全站只一个门槛 RECORD_DAYS）
+def recording_info(S, ind):
+    if not ind.get("自录"):
+        return None
+    src = S.get(ind["raw"]) if ind.get("raw") else series_of(S, ind)
+    ds = sorted(d for d, v in (src or {}).items() if v is not None)
+    return {"days": len(ds), "required": RECORD_DAYS, "since": ds[0] if ds else None, "done": len(ds) >= RECORD_DAYS}
+
+
+# ---------------------------------------------------------------- 区间切换记录（D2）
+def zone_at(S, ind, d, v):
+    """某一天读数所在的区间（不含「与价格同向 / 背离」这类附注），返回 (中文, 英文, tone) 或 None。"""
+    if ind.get("classify") is classify_real:
+        z = classify_real(v, {"S": S, "d": d})
+        return z[0], z[1], z[2]
+    if ind.get("classify") and ind["key"] in ("cme_basis", "deribit_basis"):
+        return None
+    if len(ind["cuts"]) == 1:
+        return None
+    z = band(v, ind["cuts"])
+    return z[0], z[1], z[2]
+
+
+def zone_switches(S, ind, limit=10):
+    s = series_of(S, ind)
+    ds = sorted(d for d in s if s[d] is not None)
+    btc = S.get("btc_price") or {}
+    bks = sorted(btc)
+    out, cur, start = [], None, None
+    for d in ds:
+        z = zone_at(S, ind, d, s[d])
+        if z is None:
+            return []
+        if cur is None:
+            cur, start = z, d
+            continue
+        if z[0] != cur[0]:
+            i = bisect.bisect_right(bks, d) - 1
+            out.append({"日期": d, "从": cur[0], "从EN": cur[1], "到": z[0], "到EN": z[1], "tone": z[2],
+                        "BTC": btc[bks[i]] if i >= 0 else None})
+            cur, start = z, d
+    for n, x in enumerate(out):                          # 持续天数：到下一次切换（或最新一天）
+        end = out[n + 1]["日期"] if n + 1 < len(out) else ds[-1]
+        x["天数"] = days_between(x["日期"], end) + (0 if n + 1 < len(out) else 1)
+        x["进行中"] = n + 1 == len(out)
+    return list(reversed(out[-limit:]))
+
+
+# ---------------------------------------------------------------- 当前解读（D2：只写研究里测过的；没测过只写区间和分位）
+L2_TAIL = ("相邻天高度重叠，独立段很少，只看方向，不是买卖信号。", "Adjacent days overlap heavily and independent episodes are few — read the direction only; not a trade signal.")
+GENERIC_TAIL = ("分位只描述读数在自己历史里的位置，不是买卖信号。", "Percentiles describe position in its own history — not a trade signal.")
+
+
+def interpret(S, ind, j, stt, since):
+    if not j:
+        return None
+    zone = re_short(j["区间"])
+    zone_en = re_short(j["区间EN"])
+    t = ind.get("解读")
+    if t:
+        te = ind.get("解读EN")
+        if isinstance(t, dict):
+            t = t.get(zone) or t.get("*")
+            te = te.get(zone) or te.get("*")
+        zh = t.format(v=j["显示"], zone=zone)
+        en = te.format(v=j["显示"], zone=zone_en)
+        if ind.get("解读尾"):
+            zh += ind["解读尾"]
+            en += " " + ind["解读尾EN"]
+        if ind["层"] == 2:
+            zh += L2_TAIL[0]
+            en += " " + L2_TAIL[1]
+        return zh, en
+    zh, en = f"当前 {j['显示']}，在「{zone}」区间。", f"Now {j['显示']}, in the '{zone_en}' zone."
+    if stt:
+        s = {d: v for d, v in series_of(S, ind).items() if since is None or d >= since}
+        p = pct_rank(s, j["值"])
+        share = next((z[3] for z in stt.get("区间占比", []) if re_short(z[0]) == zone), None)
+        if p is not None:
+            zh += f"在 {stt['起']} ~ {stt['止']} 的统计窗口里排第 {p:.0f} 百分位"
+            en += f" It sits at the {p:.0f}th percentile of {stt['起']} – {stt['止']}"
+            if share is not None:
+                zh += f"，历史上 {share:.1f}% 的时间落在这个区间"
+                en += f"; {share:.1f}% of history fell in this zone"
+            zh += "。"
+            en += "."
+    return zh + GENERIC_TAIL[0], en + " " + GENERIC_TAIL[1]
+
+
+def re_short(z):
+    import re as _re
+    return _re.sub(r"（.*?）|\(.*?\)", "", z or "").split("·与价格")[0].strip()

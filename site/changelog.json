@@ -1,0 +1,123 @@
+[
+ {
+  "version": "2026.10.08",
+  "date": "2026-10-08",
+  "notify": true,
+  "title_zh": "宏观仪表盘改版：四层切换 + 四层综合研判 + 周期层指标卡",
+  "title_en": "Macro dashboard redesign: layer tabs, a four-layer overall read and cycle gauges",
+  "items": [
+   {
+    "type": "new",
+    "zh": "宏观仪表盘改为 L1~L4 标签切换，每个标签直接显示该层结论、主要依据、切换条件和与昨日比",
+    "en": "The macro dashboard now switches between L1–L4 tabs; each shows the layer verdict, main evidence, switch conditions and the change from yesterday"
+   },
+   {
+    "type": "new",
+    "zh": "综合研判改为四层合成：方向看 L2 周期，节奏看 L1 宏观，筹码和情绪负责确认与提醒",
+    "en": "The overall read now combines all four layers: the cycle sets direction, macro sets pace, flows and sentiment confirm and caution"
+   },
+   {
+    "type": "new",
+    "zh": "L2 周期层改为状态机；「估值与持有者」6 个指标可点进去看全部历史、区间规则和状态解读；关键价位改为刻度尺；周期状态图扩展到 2012 年至今",
+    "en": "L2 is now a state machine; its six valuation & holder gauges open full histories, zone rules and interpretations; key levels are drawn as a ruler; the cycle chart now starts in 2012"
+   },
+   {
+    "type": "new",
+    "zh": "新手说明、更新日志、反馈入口（一键在 X 上 @ 站长）",
+    "en": "A guide, this changelog and a feedback button (one click to mention us on X)"
+   },
+   {
+    "type": "improve",
+    "zh": "指标详情页支持 1 年 / 3 年 / 5 年 / 全部切换，展示数据源能提供的最长历史，新增当前解读、状态切换记录和上一个 / 下一个指标",
+    "en": "Indicator pages switch between 1Y / 3Y / 5Y / All, show the longest history each source offers, and add an interpretation, zone-switch history and previous / next links"
+   },
+   {
+    "type": "fix",
+    "zh": "首页与宏观页同一指标数值不一致：首页改读最新数据，日志摘要标明冻结时间",
+    "en": "The same gauge showed different numbers on the home and macro pages: the home page now reads the latest data and log excerpts are marked with their freeze time"
+   },
+   {
+    "type": "fix",
+    "zh": "L2 信号同时写「本轮已出现」和「本轮未触发」的矛盾：名字里改写规则类型，另起标签写实际情况",
+    "en": "L2 signals no longer say both 'seen this cycle' and 'not triggered': the rule type moves into the name and the actual status gets its own tag"
+   },
+   {
+    "type": "data",
+    "zh": "链上类和百分比变化类指标调整统计起点，排除早期基数过小的时段",
+    "en": "On-chain and percentage-change gauges get new statistics windows that drop the early small-base period",
+    "corrections_anchor": "#rc-2026-10-08-stats"
+   },
+   {
+    "type": "data",
+    "zh": "综合研判规则改为四层合成",
+    "en": "The overall read now combines all four layers",
+    "corrections_anchor": "#rc-2026-10-08-comp"
+   },
+   {
+    "type": "data",
+    "zh": "L2 周期层改为状态机，下线单指标估值卡（MVRV Z-Score、NUPL、Mayer、Puell、Pi Cycle 等，旧链接有停用说明页）",
+    "en": "L2 became a state machine and the single-gauge valuation cards were retired (MVRV Z-Score, NUPL, Mayer, Puell, Pi Cycle…; old links now explain where they went)",
+    "corrections_anchor": "#rc-2026-10-08"
+   }
+  ]
+ },
+ {
+  "version": "2026.10.05",
+  "date": "2026-10-05",
+  "notify": false,
+  "title_zh": "周末特辑英文版 + 网站提速",
+  "title_en": "English weekend report + faster pages",
+  "items": [
+   {
+    "type": "new",
+    "zh": "《宏观到底管不管比特币？》英文版上线",
+    "en": "English edition of 'Does Macro Actually Move Bitcoin?'"
+   },
+   {
+    "type": "improve",
+    "zh": "去掉国内常打不开的 Google Fonts，样式和脚本独立缓存，悬停预取，点击响应更快",
+    "en": "Dropped Google Fonts, cached styles and scripts separately and prefetch on hover for faster clicks"
+   }
+  ]
+ },
+ {
+  "version": "2026.10.04",
+  "date": "2026-10-04",
+  "notify": false,
+  "title_zh": "L1-B 加密资金通道 + 分析报告板块",
+  "title_en": "L1-B crypto funding channels + reports",
+  "items": [
+   {
+    "type": "data",
+    "zh": "「L1.5」改名「L1-B 加密资金通道（只确认、不预测）」，稳定币主线改为去重口径，新增 ETF 13 周与资金轮动矩阵",
+    "en": "'L1.5' became 'L1-B crypto funding channels'; the stablecoin main line is de-duplicated; ETF 13-week flows and the rotation matrix were added",
+    "corrections_anchor": "#rc-2026-10-04"
+   },
+   {
+    "type": "new",
+    "zh": "分析报告板块上线，报告自动生成深色版",
+    "en": "Reports section with automatic dark versions"
+   }
+  ]
+ },
+ {
+  "version": "2026.10.02",
+  "date": "2026-10-02",
+  "notify": false,
+  "title_zh": "L1 宏观层重建 + 中英双语",
+  "title_en": "L1 rebuild + bilingual site",
+  "items": [
+   {
+    "type": "data",
+    "zh": "L1 宏观流动性按《L1 宏观层数据维度规格》重建：乐观度第一、实际利率四态与情境格、流动性闸门",
+    "en": "L1 rebuilt per the L1 spec: optimism first, real-yield states and the scenario grid, liquidity gate",
+    "corrections_anchor": "#rc-2026-10-02"
+   },
+   {
+    "type": "new",
+    "zh": "中英双语、深浅主题、指标详情页全历史与正常波动范围",
+    "en": "Bilingual site, light/dark themes, full-history indicator pages with normal ranges"
+   }
+  ]
+ }
+]

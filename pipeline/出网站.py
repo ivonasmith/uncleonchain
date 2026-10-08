@@ -44,6 +44,43 @@ DISCLAIMER_EN = "Data and process notes only. Not investment advice."
 LANG = {"v": "zh"}
 
 
+class _CN:
+    """全角 / 半角冒号按当前语言输出（英文站不留全角标点）。"""
+    def __format__(self, spec):
+        return "：" if LANG["v"] == "zh" else ": "
+
+
+CN = _CN()
+SRC_REP = [("（逐币 + Tron 链）", " (per coin + Tron)"), ("（逐币）", " (per coin)"), ("（自算）", " (own calc)"), ("（l2_daily.py）", " (l2_daily.py)"),
+           ("（flash 口径）", " (flash)"), ("（周度）", " (weekly)"), ("（每天抓一次）", " (fetched once a day)"), ("CME 近月合约", "CME front month"),
+           ("（前后两张插值成固定 90 天）", " (two contracts interpolated to 90 days)"), ("（日均年化）", " (daily avg, annualized)"),
+           ("（haturatu 镜像）", " (haturatu mirror)"), ("（按链）", " (by chain)"), ("类目快照", "category snapshot")]
+
+
+def src_t(x):
+    if LANG["v"] == "zh" or not x:
+        return x
+    for a, b in SRC_REP:
+        x = x.replace(a, b)
+    return x
+
+
+def has_cjk(t):
+    return bool(re.search(r"[\u4e00-\u9fff]", t or ""))
+
+
+SHORT_EN = {"流动性收缩": "Liquidity contracting", "周期偏低": "Cycle low", "筹码流出交易所": "Coins leaving exchanges", "情绪偏热": "Sentiment warm"}  # 日志里的层结论短语 → 英文（英文站展示旧日志 / 复盘时替换用，只改显示不改文件）
+
+
+def en_fix(t):
+    """英文站：把还夹着中文短语的冻结文本里能对上的短语换成英文；对不上的整句标「仅中文」。"""
+    if LANG["v"] == "zh" or not t or not has_cjk(t):
+        return t
+    for zh in sorted(SHORT_EN, key=len, reverse=True):
+        t = t.replace(zh, SHORT_EN[zh])
+    return t if not has_cjk(t) else None
+
+
 def T(zh, en):
     return en if LANG["v"] == "en" else zh
 
@@ -284,11 +321,20 @@ def commentary(key):
 
 
 # ---------------------------------------------------------------- 外壳
+CHANGELOG = load(os.path.join(ROOT, "content", "changelog.json"), []) or []
+CL_TYPE = {"new": ("新功能", "New"), "improve": ("改进", "Improved"), "fix": ("修复", "Fixed"), "data": ("数据口径", "Data")}
+
+
 def nav_html(active):
     def link(k, href, zh, en):
-        return f'<a href="{U(href)}" class="{"on" if k == active else ""}">{icon(k)}{esc(T(zh, en))}</a>'
+        tag = f'<span class="ntag">{T("筹备中", "soon")}</span>' if k == "narrative" else ""
+        return f'<a href="{U(href)}" class="{"on" if k == active else ""}">{icon(k)}{esc(T(zh, en))}{tag}</a>'
     main = "".join(link(*x) for x in NAV_MAIN)
     more = "".join(link(*x) for x in NAV_MORE)
+    ver = CHANGELOG[0]["version"] if CHANGELOG else ""
+    more += (f'<button type="button" class="navbtn" data-guide>{icon("about")}{T("新手说明", "Guide")}</button>'
+             f'<a href="{U("/changelog/")}" class="{"on" if active == "changelog" else ""}">{icon("journal")}{T("更新日志", "Changelog")}'
+             f'<span class="ver">v{esc(ver)}</span><i class="rdot" hidden></i></a>')
     upd = G.get("更新") or "—"
     path = G["url"]
     zh_url, en_url = path, "/en" + path
@@ -306,7 +352,7 @@ def nav_html(active):
 <div class="tools">{lang}{thm}</div>
 <nav class="snav"><div class="sgrp">Terminal</div>{main}<div class="sgrp">Records</div>{more}</nav>
 <div class="sfoot"><div class="live"><i></i>{T('数据更新', 'Updated')} {esc(upd)} UTC</div>
-<a href="{X_URL}" target="_blank" rel="noopener">𝕏 {esc(TWITTER)}</a><p>{esc(T(DISCLAIMER, DISCLAIMER_EN))}</p></div>
+<a href="{X_URL}" target="_blank" rel="noopener">𝕏 {esc(TWITTER)}</a> <a class="sfb" href="#" data-feedback>✎ {T('反馈 / 纠错', 'Feedback')}</a><p>{esc(T(DISCLAIMER, DISCLAIMER_EN))}</p></div>
 </aside><label for="navtg" class="scrim"></label>"""
 
 
@@ -366,8 +412,10 @@ def page(title, body, active="", desc="", extra_head="", narrow=False, share=Fal
 <main class="main"><div class="mi{' narrow' if narrow else ''}">
 {body}
 </div>
-<footer class="foot"><span>{esc(BRAND)}（{BRAND_EN}）</span><a href="{X_URL}">{esc(TWITTER)}</a>
-<span>{T('数据', 'Data')}: DefiLlama · CoinMetrics · FRED · Farside · Yahoo · alternative.me · Hyperliquid · Deribit · CoinGecko · {T('链上节点', 'own nodes')}</span><span>{esc(T(DISCLAIMER, DISCLAIMER_EN))}</span></footer>
+<footer class="foot"><span>{esc(T(BRAND + "（" + BRAND_EN + "）", BRAND_EN))}</span><a href="{X_URL}">{esc(TWITTER)}</a>
+<span>{T('本站数据来源', 'Data sources')}{CN}DefiLlama · CoinMetrics · bitview.space · FRED · Farside · Yahoo · alternative.me · Hyperliquid · Deribit · CoinGecko{T('（', ' (')}<a href="{U('/methodology/')}">{T('口径与规则', 'methodology')}</a>{T('）', ')')}</span>
+<span class="disc">{esc(T(DISCLAIMER, DISCLAIMER_EN))}</span></footer>
+{guide_templates()}
 </main>
 <script src="{ASSET_URL["ui.js"]}"></script>
 {('<script src="' + ASSET_URL["share.js"] + '"></script>') if share else ''}
@@ -376,6 +424,50 @@ def page(title, body, active="", desc="", extra_head="", narrow=False, share=Fal
 </body>
 </html>
 """
+
+
+GLOSS = load(os.path.join(ROOT, "config", "glossary.json"), {}) or {}
+
+
+def gloss_json():
+    """当前语言的术语表 + 标签定义（G7），给 ui.js 做悬停解释。"""
+    en = LANG["v"] == "en"
+    terms = [{"w": t["en"] if en else t["zh"], "d": t["def_en"] if en else t["def_zh"]} for t in GLOSS.get("terms", [])]
+    tags = {k: v[1] if en else v[0] for k, v in (GLOSS.get("tags") or {}).items()}
+    return json.dumps({"terms": terms, "tags": tags}, ensure_ascii=False).replace("</", "<\\/")
+
+
+def guide_templates():
+    """G1 / G2：欢迎弹窗 + 版本更新弹窗的内容（模板，脚本按本地存储决定弹不弹）。"""
+    if not CHANGELOG:
+        return ""
+    cur = CHANGELOG[0]["version"]
+    t = sched_text()
+    welcome = T(f"""<h2 id="ucg-t">欢迎来到链上大叔研究台</h2><p>这里每天自动更新一套 BTC 自上而下的四层框架数据：</p>
+<ul><li><b>L1 宏观流动性</b>：风险预算该松还是紧</li><li><b>L2 周期定位</b>：处在四年周期的哪一段</li><li><b>L3 筹码结构</b>：筹码在流入还是流出交易所</li><li><b>L4 情绪衍生品</b>：短期会不会过热超调</li></ul>
+<p>每层给一个结论，最后汇总成「综合研判」。</p>
+<p><b>怎么看</b>：先看顶部的综合研判 → 切换 L1~L4 看每层结论和依据 → 点任意指标卡，看它的全部历史、区间规则和历史上落在每个区间的比例。</p>
+<p>数据每天 {esc(t)} 自动更新，解读日志写入即冻结、公开可查。每个指标都标了<a href="{U('/methodology/')}#legend">证据等级</a>；拿不到真实数据的标「待接入」，不用近似值顶替。</p>
+<p>本站还在持续迭代，很多地方不完善。发现问题或有建议，欢迎在 X 上找 <a href="{X_URL}" target="_blank" rel="noopener">@Uncle_Onchain</a>。</p>
+<p class="muted">本站只提供数据和过程记录，不构成投资建议。</p>""",
+                f"""<h2 id="ucg-t">Welcome to Uncle Onchain Terminal</h2><p>A top-down, 4-layer BTC framework, updated automatically every day:</p>
+<ul><li><b>L1 Macro Liquidity</b>: should the risk budget be loose or tight?</li><li><b>L2 Cycle Position</b>: where are we in the four-year cycle?</li><li><b>L3 Supply Structure</b>: are coins flowing into or out of exchanges?</li><li><b>L4 Sentiment &amp; Derivatives</b>: is the short term overheating?</li></ul>
+<p>Each layer gets a verdict, and the four roll up into one overall read.</p>
+<p><b>How to use it</b>: start with the overall read at the top → switch between L1–L4 for each layer's verdict and evidence → click any metric card for its full history, zone rules and how often each zone occurred historically.</p>
+<p>Data refreshes daily at {esc(t)}; each daily log is frozen once written. Every metric carries an <a href="{U('/methodology/')}#legend">evidence grade</a>; anything we can't source for real is marked "Pending" rather than filled with a proxy.</p>
+<p>This site is a work in progress. Spotted a problem or have an idea? Find us on X at <a href="{X_URL}" target="_blank" rel="noopener">@Uncle_Onchain</a>.</p>
+<p class="muted">Data and process records only. Not investment advice.</p>""")
+    welcome += f'<div class="ucg-ft"><button type="button" class="btn ucg-ok">{T("开始看", "Start exploring")}</button><small>{T("之后可在左侧栏「新手说明」再次打开", "Reopen anytime from “Guide” in the sidebar")}</small></div>'
+    ups = ""
+    for v in [x for x in CHANGELOG if x.get("notify")][:3]:
+        lis = "".join(f'<li><span class="cltag cl-{i["type"]}">{esc(T(*CL_TYPE[i["type"]]))}</span>{esc(T(i["zh"], i["en"]))}</li>' for i in v["items"])
+        ups += f'<div class="ucg-v" data-v="{esc(v["version"])}"><h3>{T("本次更新", "What’s new")} · {esc(v["version"])}</h3><p class="muted">{esc(T(v["title_zh"], v["title_en"]))}</p><ul class="cl">{lis}</ul></div>'
+    upd = (ups + f'<div class="ucg-ft"><a class="btn ghost" href="{U("/changelog/")}">{T("查看全部更新日志 →", "Full changelog →")}</a>'
+           f'<button type="button" class="btn ucg-ok">{T("知道了", "Got it")}</button></div>')
+    vers = json.dumps([{"v": x["version"], "n": bool(x.get("notify"))} for x in CHANGELOG])
+    return (f'<template id="ucg-welcome">{welcome}</template><template id="ucg-update">{upd}</template>'
+            f'<script type="application/json" id="ucg-meta">{{"cur":"{cur}","vers":{vers}}}</script>'
+            f'<script type="application/json" id="uc-gloss">{gloss_json()}</script>')
 
 
 def write(rel, text):
@@ -481,15 +573,19 @@ def tone_chip(text, tone):
     return f'<span class="chip t-{tone}"><i></i>{esc(text)}</span>'
 
 
-GRADE_CLS = {"已验证": "g-v", "已验证·方向": "g-d", "描述读数": "", "监控": "g-o", "观察项": "g-o"}
-GRADE_EN = {"已验证": "Verified", "已验证·方向": "Verified · direction", "描述读数": "Descriptive", "监控": "Monitor", "观察项": "Watch only"}
+GRADE_CLS = {"已验证": "g-v", "已验证·方向": "g-d", "描述读数": "", "监控": "g-o", "观察项": "g-o", "假设": "g-o", "已证伪": "g-x", "记录中": "g-o"}
+GRADE_EN = {"已验证": "Verified", "已验证·方向": "Verified · direction", "描述读数": "Descriptive", "监控": "Monitor", "观察项": "Watch only",
+            "假设": "Hypothesis", "已证伪": "Falsified", "记录中": "Recording"}
 LEVEL_EN = {"核心": "core", "辅助": "aux", "观察": "watch"}
 
 
-def grade_chip(g):
+def grade_chip(g, ind=None):
     if not g:
         return ""
-    return f'<span class="grade {GRADE_CLS.get(g, "")}">{esc(T(g, GRADE_EN.get(g, g)))}</span>'
+    note = ""
+    if ind and ind.get("等级注"):
+        note = f"（{ind['等级注']}）" if LANG["v"] == "zh" else f" ({ind['等级注EN']})"
+    return (f'<span class="grade {GRADE_CLS.get(g, "")}" data-tag="{esc(g)}" tabindex="0">{esc(T(g, GRADE_EN.get(g, g)))}{esc(note)}</span>')
 
 
 def short_zone(z):
@@ -516,9 +612,142 @@ def ind_href(key):
     return U(f"/macro/{key}/")
 
 
+# ---------------------------------------------------------------- 全站配置：定时任务时间从 workflow 的 cron 读出来（G4）
+SITE_CFG = load(os.path.join(ROOT, "config", "site.json"), {}) or {}
+
+
+def schedules():
+    out = []
+    for t in SITE_CFG.get("定时任务", []):
+        p = os.path.join(ROOT, ".github", "workflows", t["文件"])
+        txt = open(p, encoding="utf-8").read() if os.path.exists(p) else ""
+        m = re.search(r'cron:\s*"(\d+)\s+(\d+)\s', txt)
+        out.append({**t, "时间": f"{int(m.group(2)):02d}:{int(m.group(1)):02d}" if m else "—"})
+    return out
+
+
+SCHED = schedules()
+MAIN_TIME = next((x["时间"] for x in SCHED if x.get("主")), "—")
+L2_TIME = next((x["时间"] for x in SCHED if x["文件"] == "l2-daily.yml"), "—")
+
+
+def sched_text():
+    """「每天 UTC 02:17（L2）和 10:20（日更）」这类文案，全站共用。"""
+    parts = [(f"UTC {x['时间']}（{x['名称']}）", f"{x['时间']} UTC ({x['EN']})") for x in SCHED]
+    return T("、".join(p[0] for p in parts), " and ".join(p[1] for p in parts))
+
+
+def times_line(log):
+    """「解读生成 … · 数据更新 …」：区分日志冻结时间和页面读数的刷新时间。"""
+    gen = (log or {}).get("生成时间UTC")
+    return (T("解读生成", "Log generated") + f" <b>{esc(gen or '—')} UTC</b> · " + T("数据更新", "Data updated") + f" <b>{esc(G.get('更新') or '—')} UTC</b>")
+
+
 def stats_since(ind):
-    """「正常波动范围」统计窗口：L1 宏观按研究的方法规则只用 2018 年以后；链上周期指标用全历史。"""
-    return "2018-01-01" if ind["层"] == 1 else None
+    """「正常波动范围」统计窗口（D3 规则在 宏观规则.stats_window）。"""
+    return R.stats_window(G["S"], ind)[0] if G.get("S") is not None else None
+
+
+# ---------------------------------------------------------------- 全历史数据文件（D1）
+# /data/series/<id>.json（归档：截至上月末，每月 1 日重写；数据源回改时也重写）+ <id>.recent.json（本月，每天重写）
+# 日度序列存「起始日期 + 数值数组」，缺数据存 null；周度序列存日期数组（周五对齐）。前端读两份拼起来。
+SERIES_DIR = "series"
+REV_PATH = os.path.join(DATA, "data_revisions.json")
+
+
+def _mend(d):
+    x = dt.date.fromisoformat(d).replace(day=1) - dt.timedelta(days=1)
+    return x.isoformat()
+
+
+def _days(a, b):
+    x, y = dt.date.fromisoformat(a), dt.date.fromisoformat(b)
+    return [(x + dt.timedelta(days=i)).isoformat() for i in range((y - x).days + 1)]
+
+
+def _old_series(name):
+    """读上一次写出的归档 + 本月文件 → {日期: 值}（比较数据源回改用）。"""
+    out = {}
+    for fn in (f"{name}.json", f"{name}.recent.json"):
+        j = load(os.path.join(SITE, "data", SERIES_DIR, fn))
+        if not j or not j.get("values"):
+            continue
+        ds = j.get("dates") or (_days(j["start"], (dt.date.fromisoformat(j["start"]) + dt.timedelta(days=len(j["values"]) - 1)).isoformat()) if j.get("start") else [])
+        out.update({d: v for d, v in zip(ds, j["values"]) if v is not None})
+    return out
+
+
+def put_series(name, ser, freq="d", meta=None, label=None, revisions=None):
+    """写一条序列（归档 + 本月），返回前端用的 src 列表（带 ?v=数据日期）。revisions：检测到数据源回改时追加记录。"""
+    ds = sorted(d for d, v in ser.items() if v is not None)
+    if not ds:
+        return None
+    last = ds[-1]
+    cut = _mend(last)
+    full = _days(ds[0], last) if freq == "d" else ds
+    arch, rec = [d for d in full if d <= cut], [d for d in full if d > cut]
+    base = os.path.join(SITE, "data", SERIES_DIR)
+    os.makedirs(base, exist_ok=True)
+    pa, pr = os.path.join(base, f"{name}.json"), os.path.join(base, f"{name}.recent.json")
+    old_a = load(pa)
+    rewrite = not old_a or old_a.get("archive_end") != cut or old_a.get("freq") != freq
+    if revisions is not None and old_a:
+        old = _old_series(name)
+        vals = sorted(abs(v) for v in ser.values() if v is not None)
+        scale = vals[len(vals) // 2] if vals else 1
+        lim = (dt.date.fromisoformat(last) - dt.timedelta(days=7)).isoformat()
+        hits = [(d, ser[d], old[d]) for d in old if d <= lim and ser.get(d) is not None and old[d] is not None
+                and abs(ser[d] - old[d]) > 0.005 * max(abs(old[d]), scale or 1)]
+        if hits:
+            mx = max(hits, key=lambda h: abs(h[1] - h[2]) / max(abs(h[2]), scale or 1))
+            revisions.append({"检测日": G.get("今天"), "指标": name, "名称": label or name, "起": min(h[0] for h in hits), "止": max(h[0] for h in hits),
+                              "点数": len(hits), "最大变动": round((mx[1] - mx[2]) / max(abs(mx[2]), scale or 1) * 100, 2), "日期": mx[0]})
+            rewrite = True
+    head = {"id": name, "freq": "D" if freq == "d" else "W"}
+    if rewrite:
+        a = {**head, "archive_end": cut, "values": [r6(ser.get(d)) for d in arch]}
+        if freq == "d":
+            a["start"] = arch[0] if arch else None
+        else:
+            a["dates"] = arch
+        with open(pa, "w", encoding="utf-8") as fh:
+            json.dump(a, fh, ensure_ascii=False, separators=(",", ":"))
+    r = {**head, **(meta or {}), "archive_end": cut, "updated": last, "values": [r6(ser.get(d)) for d in rec]}
+    if freq == "d":
+        r["start"] = rec[0] if rec else None
+    else:
+        r["dates"] = rec
+    with open(pr, "w", encoding="utf-8") as fh:
+        json.dump(r, fh, ensure_ascii=False, separators=(",", ":"))
+    v = f"?v={last}"
+    return [f"/data/{SERIES_DIR}/{name}.json{v}", f"/data/{SERIES_DIR}/{name}.recent.json{v}"]
+
+
+def put_multi(name, start_ser, freq="d", revisions=None):
+    """多条同起点日度序列合成一份（L2 价格 + 成本线 + 状态图用）：{key: {日期: 值}}。"""
+    keys = list(start_ser)
+    all_d = sorted(set().union(*[set(d for d, v in start_ser[k].items() if v is not None) for k in keys]))
+    if not all_d:
+        return None
+    last = all_d[-1]
+    cut = _mend(last)
+    full = _days(all_d[0], last)
+    arch, rec = [d for d in full if d <= cut], [d for d in full if d > cut]
+    base = os.path.join(SITE, "data", SERIES_DIR)
+    os.makedirs(base, exist_ok=True)
+    pa, pr = os.path.join(base, f"{name}.json"), os.path.join(base, f"{name}.recent.json")
+    old_a = load(pa)
+    if not old_a or old_a.get("archive_end") != cut:
+        a = {"id": name, "freq": "D", "archive_end": cut, "start": arch[0] if arch else None,
+             "extra": {k: [r6(start_ser[k].get(d)) for d in arch] for k in keys}}
+        with open(pa, "w", encoding="utf-8") as fh:
+            json.dump(a, fh, ensure_ascii=False, separators=(",", ":"))
+    r = {"id": name, "freq": "D", "archive_end": cut, "updated": last, "start": rec[0] if rec else None,
+         "extra": {k: [r6(start_ser[k].get(d)) for d in rec] for k in keys}}
+    with open(pr, "w", encoding="utf-8") as fh:
+        json.dump(r, fh, ensure_ascii=False, separators=(",", ":"))
+    v = f"?v={last}"
+    return [f"/data/{SERIES_DIR}/{name}.json{v}", f"/data/{SERIES_DIR}/{name}.recent.json{v}"]
 
 
 # ---------------------------------------------------------------- 首页组件
@@ -566,80 +795,178 @@ def hero_cards(S, as_of, sd):
     return out, cards
 
 
-def verdict_block(log, link=True):
-    if not log:
-        return ('<div class="glass verdict"><div class="body"><div class="lbl">' + T("综合研判", "Verdict") + '</div><div class="txt">'
-                + T("今日解读日志还没生成——宏观数据等待首次抓取（每天 UTC 10:20 自动跑）。",
-                    "Today's log has not been generated yet (runs daily at 10:20 UTC).") + '</div></div></div>')
-    tags = "".join(tone_chip(f'{LF(lay, "名称")} · {LF(lay, "短")}', lay["tone"]) for lay in log["层"])
-    more = f'<a class="btn ghost" href="{U("/journal/" + log["日期"] + "/")}">{T("看今日完整解读 →", "Full log →")}</a>' if link else ""
-    patch = f'<span class="chip t-warn">{T("补录", "Re-run")}</span>' if log.get("补录") else ""
-    l1 = LF(log, "L1行")
-    l1h = f'<div class="l1line">{esc(l1)}</div>' if l1 else ""
-    return (f'<div class="glass verdict"><div class="body"><div class="lbl">{T("综合研判", "Verdict")} · {log["日期"]} {T("解读日志", "log")} {patch}</div>'
-            f'<div class="txt">{esc(LF(log["综合"], "一句话"))}</div><div class="chips">{tags}</div>{l1h}</div>{more}</div>')
+# ---------------------------------------------------------------- 综合研判（M11）：一句话 + 四段（方向 / 节奏 / 筹码 / 短期）
+LAYER_TAB = {1: ("L1", "宏观流动性", "Macro Liquidity"), 2: ("L2", "周期定位", "Cycle Position"), 3: ("L3", "筹码结构", "Coin Flows"),
+             4: ("L4", "情绪衍生品", "Sentiment & Derivatives")}
 
 
-def signal_tiles(log):
-    if not log:
-        return ""
+def comp_segments(comp, prev_comp=None, link=True):
+    """四段：层徽章（颜色按 bias）+ 文本 + 段末关键数字；和前一天比有变化的段首加「变」。"""
+    old = {x["层"]: x for x in (prev_comp or {}).get("段", [])}
     out = ""
-    for lay in log["层"]:
-        meta = R.LAYERS[lay["层"]]
-        core = [y for y in lay["读数"] if y["级别"] == "核心"][:3]
-        items = "".join(f'<li><span>{esc(LF(x, "名称"))}</span><b class="t-{x["tone"]}">{esc(x["显示"])} · {esc(short_zone(LF(x, "区间")))}</b></li>'
-                        for x in core)
-        l2s = log.get("L2") if lay["层"] == 2 else None
-        if l2s:
-            c2 = l2s.get("计数") or {}
-            items = (f'<li><span>{T("已持续", "Duration")}</span><b>{T("第", "day ")}{l2s.get("天数")}{T(" 天", "")}</b></li>'
-                     f'<li><span>{T("底部区信号", "Bottom-zone signals")}</span><b>{c2.get("bottom_zone", "—")}/6</b></li>'
-                     f'<li><span>{T("分龄底部确认", "Age-band confirmations")}</span><b>{c2.get("bottom_confirm_agebands", "—")}/4</b></li>')
-        out += (f'<a class="card sig t-{lay["tone"]}" href="{U("/macro/")}#layer-{lay["层"]}"><div class="n">LAYER {lay["层"]} · {esc(T(meta["频率"], meta["频率EN"]))}</div>'
-                f'<div class="q">{esc(T(meta["名称"], meta["EN"]))}：{esc(T(meta["问"], meta["问EN"]))}？</div><div class="v t-{lay["tone"]}">{esc(LF(lay, "结论"))}</div>'
+    for x in comp.get("段", []):
+        o = old.get(x["层"])
+        chg = ""
+        if o and LF(o, "文本") != LF(x, "文本"):
+            chg = f'<span class="chg" title="{esc(T("昨日：", "Yesterday: ") + LF(o, "文本"))}" tabindex="0">{T("变", "chg")}</span>'
+        rel = f'<span class="chip rel {"t-warn" if x.get("关系类") == "背离" else ""}">{esc(LF(x, "关系"))}</span>' if x.get("关系") else ""
+        num = f' <span class="num">{esc(LF(x, "数字"))}</span>' if LF(x, "数字") else ""
+        badge = (f'<a class="lb t-{x["tone"]}" href="{U("/macro/")}#layer-{x["层"]}" data-tab="{x["层"]}"><i></i>L{x["层"]}</a>' if link
+                 else f'<span class="lb t-{x["tone"]}"><i></i>L{x["层"]}</span>')
+        out += (f'<li>{badge}<div><b>{esc(LF(x, "标签"))}</b>{chg} {esc(LF(x, "文本"))}{num} {rel}</div></li>')
+    return f'<ul class="segs">{out}</ul>'
+
+
+def comp_block(comp, prev_comp=None, log=None, full=True, frozen=False, link=True):
+    if not comp:
+        return ('<div class="glass verdict"><div class="body"><div class="lbl">' + T("综合研判", "Overall read") + '</div><div class="txt">'
+                + T(f"今日解读还没生成（每天 {sched_text()} 自动运行）。", f"Today's read has not been generated yet (runs daily at {sched_text()}).") + '</div></div></div>')
+    badges = "".join(f'<a class="chip t-{x["tone"]}" href="{U("/macro/")}#layer-{x["层"]}"><i></i>L{x["层"]} · {esc(LF(x, "短") or "—")}</a>'
+                     for x in sorted(comp.get("段", []), key=lambda x: x["层"]))
+    if comp.get("规则") != "四层合成":           # 2026-10-08 之前的日志：只有一句话（L1 × L4）
+        return (f'<div class="glass verdict"><div class="body"><div class="lbl">{T("综合研判", "Overall read")}'
+                f'{" · " + T("日志冻结值", "frozen log value") if frozen else ""}</div><div class="txt">{esc(en_fix(LF(comp, "一句话")) or "(Chinese only)")}</div>'
+                f'<div class="chips">{"".join(tone_chip(t, "neutral") for t in (LF(comp, "标签") or []))}</div></div></div>')
+    segs = (f'<details class="segd" open><summary>{T("四段分层说明", "Layer by layer")}</summary>{comp_segments(comp, prev_comp, link)}'
+            f'<p class="tnote">{esc(LF(comp, "小字"))}</p></details>') if full else ""
+    stamp = f'<div class="stamp tl">{times_line(log)}</div>' if full or frozen else ""
+    return (f'<div class="glass verdict comp"><div class="body"><div class="lbl">{T("综合研判", "Overall read")}'
+            f'{" · " + T("日志冻结值", "frozen log value") if frozen else ""}</div>'
+            f'<div class="txt">{esc(LF(comp, "一句话"))}</div><div class="chips">{badges}</div>' + segs + stamp + '</div></div>')
+
+
+def verdict_block(log, link=True):
+    """日志页：显示当天冻结的综合研判。"""
+    if not log:
+        return comp_block(None)
+    comp = log.get("综合") or {}
+    patch = f' <span class="chip t-warn">{T("补录", "Re-run")}</span>' if log.get("补录") else ""
+    blk = comp_block(comp, None, log, full=True, frozen=False, link=link)
+    if comp.get("规则") != "四层合成":
+        tags = "".join(tone_chip(f'{LF(lay, "名称")} · {LF(lay, "短")}', lay["tone"]) for lay in log["层"])
+        blk = (f'<div class="glass verdict"><div class="body"><div class="lbl">{T("综合研判", "Overall read")} · {log["日期"]}{patch}</div>'
+               f'<div class="txt">{esc(en_fix(LF(comp, "一句话")) or "(Chinese only — written before bilingual logs)")}</div><div class="chips">{tags}</div></div></div>')
+    return blk
+
+
+def l1_raw(log_or_line):
+    """L1 原始判定串（M4：折叠，供核对，内容不改）。"""
+    l1 = log_or_line if isinstance(log_or_line, str) else LF(log_or_line, "L1行")
+    if not l1:
+        return ""
+    return f'<details class="raw"><summary>{T("查看原始判定串", "Show the raw verdict string")}</summary><div class="l1line">{esc(l1)}</div></details>'
+
+
+def layer_streak(i, short, logs, as_of):
+    """与昨日比：昨天的层结论 + 已持续天数（含今天）。"""
+    prev = [lg for lg in logs if lg["日期"] < as_of]
+    yday = None
+    n = 1
+    for lg in reversed(prev):
+        lay = next((x for x in lg.get("层", []) if x["层"] == i), None)
+        if yday is None:
+            yday = lay
+        if lay and lay.get("短") == short:
+            n += 1
+        else:
+            break
+    return yday, n
+
+
+def signal_tiles(vs, jby, l2):
+    """首页四层信号灯（最新数据，不读日志冻结值）。"""
+    out = ""
+    for i, meta in R.LAYERS.items():
+        lay = vs.get(i) or {}
+        if i == 2 and l2 and l2.get("signals"):
+            sig = l2["signals"]
+            st = l2.get("state") or {}
+            cnt = lambda c: (sum(1 for x in sig if x["category"] == c and x["on"]), sum(1 for x in sig if x["category"] == c))
+            z, cf, tp = cnt("底部区"), cnt("底部确认"), cnt("顶部风险")
+            items = (f'<li><span>{T("已持续", "Duration")}</span><b>{T("第", "day ")}{st.get("days", "—")}{T(" 天", "")}</b></li>'
+                     f'<li><span>{T("底部区信号", "Bottom-zone signals")}</span><b>{z[0]}/{z[1]}</b></li>'
+                     f'<li><span>{T("底部确认", "Bottom confirmation")}</span><b>{cf[0]}/{cf[1]}</b></li>')
+        else:
+            core = [x for x in ind_layer_list(i) if x["级别"] == "核心" and jby.get(x["key"])][:3]
+            items = "".join(f'<li><span>{esc(T(x["名称"], x["EN"]))}</span><b class="t-{jby[x["key"]]["tone"]}">{esc(jby[x["key"]]["显示"])} · '
+                            f'{esc(short_zone(LF(jby[x["key"]], "区间")))}</b></li>' for x in core)
+        out += (f'<a class="card sig t-{lay.get("tone", "neutral")}" href="{U("/macro/")}#layer-{i}"><div class="n">LAYER {i} · {esc(T(meta["频率"], meta["频率EN"]))}</div>'
+                f'<div class="q">{esc(T(meta["名称"], meta["EN"]))}{CN}{esc(T(meta["问"], meta["问EN"]))}{T("？", "?")}</div><div class="v t-{lay.get("tone", "neutral")}">{esc(LF(lay, "结论") or "—")}</div>'
                 f'<ul>{items or "<li><span>" + T("数据不足", "No data") + "</span></li>"}</ul></a>')
     return f'<div class="grid g4">{out}</div>'
 
 
+def alert_text(a):
+    t = LF(a, "文本")
+    if LANG["v"] == "en" and has_cjk(t):
+        return en_fix(t) or ("Launchpad data note (details on the launchpad page, Chinese only)" if a.get("层") == "lp" or t.startswith("Launchpad") else "Data note (Chinese only)")
+    return t
+
+
+def alert_href(a):
+    if a.get("层") == "lp":
+        return U("/launchpad/")
+    if a.get("key") and a["key"] in R.IND:
+        return ind_href(a["key"])
+    if isinstance(a.get("层"), int):
+        return U("/macro/") + f"#layer-{a['层']}"
+    return None
+
+
+def changes_list(al, base_date):
+    """今日变化（H1）：按层分组，每条可点进对应详情页；没有变化时明说。"""
+    groups = [(1, "L1 " + T("宏观流动性", "Macro")), (2, "L2 " + T("周期定位", "Cycle")), (3, "L3 " + T("筹码结构", "Flows")),
+              (4, "L4 " + T("情绪衍生品", "Sentiment")), ("lp", T("发射台", "Launchpads"))]
+    out = ""
+    for g, title in groups:
+        xs = [a for a in al if a.get("层") == g]
+        if not xs:
+            continue
+        lis = ""
+        for a in xs:
+            h = alert_href(a)
+            txt = esc(alert_text(a))
+            lis += (f'<li><span class="lv {"h" if a["级别"] == "高" else "m"}">{T(a["级别"], "High" if a["级别"] == "高" else "Med")}</span>'
+                    + (f'<a href="{h}">{txt}</a>' if h else txt) + "</li>")
+        out += f'<div class="cg"><div class="cgh">{esc(title)}</div><ul class="alerts">{lis}</ul></div>'
+    other = [a for a in al if a.get("层") not in (1, 2, 3, 4, "lp")]
+    if other:
+        out += '<div class="cg"><ul class="alerts">' + "".join(f'<li>{esc(alert_text(a))}</li>' for a in other) + "</ul></div>"
+    if not out:
+        out = f'<div class="quiet">{T("四层结论与昨日相同，没有指标切换区间。", "All four layer verdicts are the same as yesterday; no gauge changed zone.")}</div>'
+    base = T(f"和 {base_date} 的日志比", f"vs the {base_date} log") if base_date else ""
+    return out, base
+
+
 def alert_board(log, title=None, share_id=None):
-    title = title or T("异动预警看台", "Alert board")
+    """日志页：当天冻结的预警（不再放跑马灯）。"""
+    title = title or T("异动预警", "Alerts")
     al = (log or {}).get("预警") or []
-    ticker_items = []
-    if log:
-        for lay in log["层"]:
-            for x in lay["读数"]:
-                if x["级别"] == "核心":
-                    ticker_items.append(f'<span>{esc(LF(x, "名称"))} <b class="t-{x["tone"]}">{esc(x["显示"])}</b> {esc(short_zone(LF(x, "区间")))}</span>')
-        lp = log.get("发射台") or {}
-        for t in (lp.get("Top") or [])[:5]:
-            ticker_items.append(f'<span>{esc(t["名称"])} {T("当日手续费", "fees")} <b>{f_usd(t["当日"])}</b> '
-                                f'{fmt_delta(t["日环比"], pct_input=True) if t.get("日环比") is not None else ""}</span>')
-    track = "".join(ticker_items)
-    ticker = f'<div class="ticker" aria-hidden="true"><div class="ticker-track">{track}{track}</div></div>' if track else ""
     lis = "".join(f'<li><span class="lv {"h" if a["级别"] == "高" else "m"}">{T(a["级别"], "High" if a["级别"] == "高" else "Med")}</span>'
-                  f'{esc(LF(a, "文本"))}</li>' for a in al)
+                  f'{esc(alert_text(a))}</li>' for a in al)
     body = f'<ul class="alerts">{lis}</ul>' if lis else ('<div class="quiet">' + T(
-        "今天没有触发预警阈值（区间切换、L1 档位切换、交易所单日 ±5,000 BTC、资金费率翻转、VIX 穿越 20、发射台异动等）。",
-        "No alert thresholds were hit today (zone changes, L1 regime change, ±5,000 BTC exchange day, funding flip, VIX crossing 20, launchpad moves).") + '</div>')
-    btn = f'<button class="btn" onclick="{share_id}()">📸 {T("生成今日长图", "Share image")}</button>' if share_id else ""
+        "当天没有触发预警阈值（区间切换、L1 档位切换、L2 状态切换 / 信号亮灭、交易所单日 ±5,000 BTC、资金费率翻转、VIX 穿越 20、发射台异动等）。",
+        "No alert thresholds were hit (zone changes, L1 regime change, L2 state / signal changes, ±5,000 BTC exchange day, funding flip, VIX crossing 20, launchpad moves).") + '</div>')
+    btn = f'<button class="btn" onclick="{share_id}()">📸 {T("生成长图", "Share image")}</button>' if share_id else ""
     return (f'<div class="card board"><div class="board-hd"><span class="dot"></span><b>{esc(title)}</b>'
-            f'<span class="stamp">{(log or {}).get("日期", "")}</span><span class="sp"></span>{btn}</div>{ticker}{body}</div>')
+            f'<span class="stamp">{(log or {}).get("日期", "")}</span><span class="sp"></span>{btn}</div>{body}</div>')
 
 
-def share_payload_home(log, cards):
-    """首页 / 日志页长图内容（纯字符串，交给 ucShare 渲染）。"""
+def share_payload_home(comp, cards, al):
+    """首页 / 日志页长图内容（纯字符串，交给 ucShare 渲染）：一句话 + 四层四段 + 关键数字 + 变化。"""
     k = "".join(f'<div class="sc-kpi"><div class="k">{esc(c[0])}</div><div class="v t-{c[4]}">{c[2]}</div></div>' for c in cards)
-    chips = "".join(f'<span class="chip t-{lay["tone"]}" style="margin:0 8px 8px 0">{esc(LF(lay, "名称"))} · {esc(LF(lay, "短"))}</span>'
-                    for lay in (log or {}).get("层", []))
-    al = "".join(f'<li>{"🔴" if a["级别"] == "高" else "🟠"} {esc(LF(a, "文本"))}</li>' for a in (log or {}).get("预警", [])[:7])
-    return (f'<div class="sc-kpis">{k}</div><div style="margin-bottom:20px">{chips}</div>'
-            + (f'<div class="sc-box"><ul class="sc-al">{al}</ul></div>' if al else ""))
+    segs = "".join(f'<li><b class="t-{x["tone"]}">L{x["层"]} · {esc(LF(x, "标签"))}</b> {esc(LF(x, "文本"))}</li>' for x in (comp or {}).get("段", []))
+    if not segs:
+        segs = "".join(f'<li>{esc(t)}</li>' for t in (LF(comp or {}, "标签") or []))
+    al_h = "".join(f'<li>{"🔴" if a["级别"] == "高" else "🟠"} {esc(alert_text(a))}</li>' for a in (al or [])[:6])
+    return (f'<div class="sc-box"><ul class="sc-al">{segs}</ul></div><div class="sc-kpis">{k}</div>'
+            + (f'<div class="sc-box"><ul class="sc-al">{al_h}</ul></div>' if al_h else ""))
 
 
 # ---------------------------------------------------------------- 首页：终端总览
 def build_home(sd, S, logs, weeks, months, rot, matrix):
-    today_log = logs[-1] if logs else None
-    as_of = today_log["日期"] if today_log else (G.get("今天") or dt.date.today().isoformat())
+    as_of = G["as_of"]
+    tlog = G.get("TODAY_LOG")
     heroes, cards = hero_cards(S, as_of, sd)
     lp_rows = ""
     if matrix:
@@ -651,7 +978,7 @@ def build_home(sd, S, logs, weeks, months, rot, matrix):
                         f'<td class="l">{ch}</td><td>{f_usd(p["当日"])}</td><td>{p["当日"]/tot*100:.1f}%</td><td>{fmt_delta(p.get("日环比"), pct_input=True)}</td></tr>')
     lp_tbl = (f'<div class="tw"><table><thead><tr><th class="l">#</th><th class="l">{T("平台", "Platform")}</th><th class="l">{T("链", "Chain")}</th>'
               f'<th>{T("当日手续费", "Fees (day)")}</th><th>{T("份额", "Share")}</th><th>{T("日环比", "DoD")}</th></tr></thead><tbody>{lp_rows}</tbody></table></div>'
-              ) if lp_rows else f'<div class="empty">{T("发射台数据待生成", "Launchpad data pending")}</div>'
+              ) if lp_rows else empty_state("none", T("发射台数据待生成", "Launchpad data pending"), T("下一次每日运行后出现。", "Appears after the next daily run."), "")
     cats = ""
     if rot:
         last = rot[max(rot)]
@@ -660,40 +987,43 @@ def build_home(sd, S, logs, weeks, months, rot, matrix):
             tone = "up" if c["24h"] >= 0 else "dn"
             cats += (f'<div class="card cat t-{tone}"><div class="nm">{esc(c["名称"])}</div>'
                      f'<div class="v t-{tone}">{c["24h"]:+.2f}%</div><div class="s">{T("市值", "Cap")} {f_usd(c["市值"])}</div></div>')
-    cats = f'<div class="grid g3">{cats}</div>' if cats else f'<div class="empty">{T("板块快照待生成", "Snapshot pending")}</div>'
+    cats = f'<div class="grid g3">{cats}</div>' if cats else empty_state("none", T("板块快照待生成", "Snapshot pending"), T("下一次每日运行后出现。", "Appears after the next daily run."), "")
     items = ""
-    for lg in reversed(logs[-6:]):
-        n = len(lg.get("预警") or [])
-        items += (f'<li><span class="d">{lg["日期"]}</span><span><a href="{U("/journal/" + lg["日期"] + "/")}">{T("每日解读", "Daily log")}</a>'
-                  f'<span class="s">{esc(LF(lg["综合"], "一句话"))}</span></span><span class="x chip">{n} {T("条预警", "alerts")}</span></li>')
+    for n, lg in enumerate(reversed(logs[-6:])):
+        cnt = len(lg.get("预警") or [])
+        fz = f'<span class="chip frz">{T("日志", "log")} · {esc((lg.get("生成时间UTC") or "")[11:16])} UTC {T("冻结", "frozen")}</span>' if n == 0 else ""
+        items += (f'<li><span class="d">{lg["日期"]}</span><span><a href="{U("/journal/" + lg["日期"] + "/")}">{T("每日解读", "Daily log")}</a> {fz}'
+                  f'<span class="s">{esc(en_fix(LF(lg["综合"], "一句话")) or "(Chinese only)")}</span></span><span class="x chip">{cnt} {T("条预警", "alerts")}</span></li>')
     for wk in reversed(weeks[-2:]):
         items += (f'<li><span class="d">{wk["标签"]}</span><span><a href="{U("/journal/week/" + wk["标签"] + "/")}">{T("周复盘", "Weekly review")}</a>'
-                  f'<span class="s">{esc(LF(wk, "一句话"))}</span></span></li>')
+                  f'<span class="s">{esc(en_fix(LF(wk, "一句话")) or "(Chinese only)")}</span></span></li>')
     for mo in reversed(months[-1:]):
         items += (f'<li><span class="d">{mo["标签"]}</span><span><a href="{U("/journal/month/" + mo["标签"] + "/")}">{T("月复盘", "Monthly review")}</a>'
-                  f'<span class="s">{esc(LF(mo, "一句话"))}</span></span></li>')
-    jl = f'<div class="card"><ul class="list">{items}</ul></div>' if items else f'<div class="empty">{T("第一篇解读日志会在下一次每日运行时写入。", "The first log will be written on the next daily run.")}</div>'
+                  f'<span class="s">{esc(en_fix(LF(mo, "一句话")) or "(Chinese only)")}</span></span></li>')
+    jl = f'<div class="card"><ul class="list">{items}</ul></div>' if items else empty_state("none", T("还没有日志", "No logs yet"), T("第一篇解读日志会在下一次每日运行时写入。", "The first log comes with the next daily run."), "")
     rp = ""
     for r in ALL_REPORTS[:3]:
         rp += (f'<a class="card rcard" href="{U("/reports/" + r["slug"] + "/")}"><span class="d">{esc(r["日期"])}</span><b>{esc(LF(r, "标题"))}</b>'
                f'<p>{esc(LF(r, "摘要"))}</p></a>')
+    comp = G["COMP"]
+    ch_html, ch_base = changes_list(G["CHANGES"], (G.get("PREV_LOG") or {}).get("日期"))
     share_obj = {"title": T("今日链上终端 · 四层研判", "Onchain terminal · 4-layer read"), "date": as_of,
-                 "sub": LF((today_log or {}).get("综合") or {}, "一句话"), "html": share_payload_home(today_log, cards),
+                 "sub": LF(comp or {}, "一句话"), "html": share_payload_home(comp, cards, G["CHANGES"]),
                  "file": f"uncleonchain-terminal-{as_of}.png"}
     reports_block = ""
     if rp:
         reports_block = (f'<h2>{T("分析报告", "Research reports")} <a class="sub" href="{U("/reports/")}">{T("全部报告 →", "All reports →")}</a></h2>'
                          f'<div class="grid g3">{rp}</div>')
     body = f"""<div class="ph"><div><div class="eyebrow">Terminal Overview</div><h1>{T("终端总览", "Terminal overview")}</h1>
-<p class="lede">{T("宏观流动性 → 周期位置 → 筹码结构 → 情绪，再落到发射台一级市场。每天 UTC 10:20 自动拉数、自动写解读日志，写入即冻结，公开可查。",
-                   "Macro liquidity → cycle position → coin flows → sentiment, down to launchpads. Data is pulled and a rule-based log is written every day at 10:20 UTC — frozen once written, public forever.")}</p></div>
-<div class="stamp">{T("解读日期", "Log date")} <b>{as_of}</b><br>{T("数据更新", "Data updated")} <b>{esc(G.get("更新") or "—")} UTC</b></div></div>
-{verdict_block(today_log)}
-<div class="grid g4">{heroes}</div>
-<h2>{T("四层信号灯", "Four-layer signals")} <span class="sub">{T("点进去看每个指标的读数、区间和全历史走势", "Click through for every reading, its zones and full history")}</span></h2>
-{signal_tiles(today_log) or '<div class="empty">' + T("宏观数据等待首次抓取。", "Macro data pending.") + '</div>'}
-<h2>{T("异动预警", "Alerts")} <span class="sub">{T("阈值规则见「口径与规则」", "Thresholds in Methodology")}</span></h2>
-{alert_board(today_log, share_id="shareHome")}
+<p class="lede">{T(f"宏观流动性 → 周期位置 → 筹码结构 → 情绪，再落到发射台一级市场。每天 {sched_text()} 自动拉数，日更写一篇解读日志，写入即冻结，公开可查。",
+                   f"Macro liquidity → cycle position → coin flows → sentiment, down to launchpads. Data refreshes daily at {sched_text()}; the daily run writes a log that is frozen once written.")}</p></div>
+<div class="stamp">{times_line(tlog)}</div></div>
+{comp_block(comp, None, tlog, full=False)}
+<h2>{T("今日变化", "What changed today")} <span class="sub">{esc(ch_base)}</span><span class="sp"></span><button class="btn" onclick="shareHome()">📸 {T("生成今日长图", "Share image")}</button></h2>
+<div class="card board changes">{ch_html}</div>
+<div class="grid g4" style="margin-top:14px">{heroes}</div>
+<h2>{T("四层信号灯", "Four-layer signals")} <span class="sub">{T("点进去看每层结论、依据和每个指标的全部历史", "Click through for each layer's verdict, evidence and every gauge's full history")}</span></h2>
+{signal_tiles(G["VS"], G["JBY"], G.get("L2"))}
 <div class="grid g2" style="margin-top:22px;align-items:start">
 <div><h2 style="margin-top:12px">{T("发射台矩阵 · 当日 Top6", "Launchpads · top 6 today")} <a class="sub" href="{U("/launchpad/")}">{T("全部", "All")} {len((matrix or {}).get("协议", []))} {T("个协议 →", "protocols →")}</a></h2>{lp_tbl}</div>
 <div><h2 style="margin-top:12px">{T("板块轮动 · 24h 领涨", "Rotation · 24h leaders")} <a class="sub" href="{U("/rotation/")}">{T("看全部 →", "See all →")}</a></h2>{cats}</div>
@@ -703,25 +1033,60 @@ def build_home(sd, S, logs, weeks, months, rot, matrix):
 {jl}"""
     js = f"<script>function shareHome(){{ucShare({json.dumps(share_obj, ensure_ascii=False)})}}</script>"
     emit("index.html", T(f"{BRAND} · 链上数据情报终端", f"{BRAND_EN} · Onchain research terminal"), body, active="home", share=True, scripts=js,
-         desc=LF((today_log or {}).get("综合") or {}, "一句话") or T(SLOGAN, SLOGAN_EN))
+         desc=LF(comp or {}, "一句话") or T(SLOGAN, SLOGAN_EN))
 
 
-# ---------------------------------------------------------------- 宏观仪表盘
-def ind_card(ind, j, as_of):
+def ind_card(ind, j, as_of, extra=""):
+    """指标卡（全站一个组件；L2 六张卡和 L1/L3/L4 同一套样式）。"""
     name = T(ind["名称"], ind["EN"])
-    lvl = T(ind["级别"], LEVEL_EN.get(ind["级别"], ind["级别"]))
-    head = f'<div class="top"><span class="nm">{esc(name)}<span class="grade">{esc(lvl)}</span>{grade_chip(ind.get("等级"))}</span>'
+    lvl = T(ind["级别"], LEVEL_EN.get(ind["级别"], ind["级别"])) + (f" · {T(ind['级别注'], ind['级别注EN'])}" if ind.get("级别注") else "")
+    head = (f'<div class="top"><span class="nm">{esc(name)}<span class="grade lv" data-tag="{esc(ind["级别"])}" tabindex="0">{esc(lvl)}</span>'
+            f'{grade_chip(ind.get("等级"))}</span>')
     obs = " obs" if ind["级别"] == "观察" else ""
+    rec = R.recording_info(G["S"], ind)
+    rec_chip = f'<span class="chip t-warn rc"><i></i>{T("记录中", "Recording")} · {rec["days"]}/{rec["required"]}</span>' if rec and not rec["done"] else ""
+    cid = f'id="card-{ind["key"]}"'
     if not j:
-        return (f'<a class="card ind{obs}" href="{ind_href(ind["key"])}">{head}</div>'
-                f'<div class="v t-neutral">—</div><div class="b">{T("等待数据源", "Awaiting source")}（{esc(ind["来源"])}）</div>'
-                f'<div class="ft"><span>{esc(ind["来源"])}</span><span class="go">{T("看说明 →", "Details →")}</span></div></a>')
+        return (f'<a class="card ind{obs}" {cid} href="{ind_href(ind["key"])}">{head}</div>'
+                f'<div class="v t-neutral">—</div><div class="b">{T("等待数据源", "Awaiting source")}{T("（", " (")}{esc(src_t(ind["来源"]))}{T("）", ")")}</div>'
+                f'<div class="ft"><span>{esc(src_t(ind["来源"]))}</span><span class="go">{T("看说明 →", "Details →")}</span></div></a>')
     stale = (f'<span class="stale">{T("滞后", "lag")} {R.days_between(j["截至"], as_of)} {T("天", "d")}</span>' if j["过期"]
-             else f'{T("截至", "as of")} {j["截至"][5:]}')
-    return (f'<a class="card ind{obs}" href="{ind_href(ind["key"])}">{head}'
-            f'{tone_chip(short_zone(LF(j, "区间")), j["tone"])}</div><div class="v">{esc(j["显示"])}</div><div class="b">{esc(LF(j, "依据"))}</div>'
+             else f'{T("截至", "as of")} {asof_txt(j["截至"], as_of)}')
+    zone = tone_chip(short_zone(LF(j, "区间")), j["tone"]) if not (rec and not rec["done"] and ind["key"] in OWN_PCT) else ""
+    return (f'<a class="card ind{obs}" {cid} href="{ind_href(ind["key"])}">{head}'
+            f'{zone}</div>{rec_chip}<div class="v">{esc(j["显示"])}</div><div class="b">{esc(LF(j, "依据"))}{extra}</div>'
             f'{spark(j["走势"], j["tone"], 240, 32, area=True)}'
             f'<div class="ft"><span>{stale}</span><span class="go">{T("全部历史 →", "Full history →")}</span></div></a>')
+
+
+def pending_card(p):
+    """待接入占位卡（M9）：和指标卡同尺寸，虚线灰卡，不可点。"""
+    return (f'<div class="card ind pendc" id="card-{p["key"]}"><div class="top"><span class="nm">{esc(T(p["名称"], p["EN"]))}</span>'
+            f'<span class="chip"><i></i>{T("待接入", "Pending")}</span></div>'
+            f'<div class="b">{esc(T(p["原因"], p["原因EN"]))}</div>'
+            f'<div class="ft"><span>{T("计划数据源", "Planned source")}{CN}{esc(T(p.get("计划", "—"), p.get("计划EN", "—")))}</span></div></div>')
+
+
+def cards_by_group(layer, as_of, extra_fn=None):
+    """按注册表的分组和顺序出卡片（M12）：组标题 + 卡片网格；待接入放最后一组。"""
+    inds = ind_layer_list(layer)
+    groups = []
+    for ind in inds:
+        if (ind["组"], ind["组EN"]) not in groups:
+            groups.append((ind["组"], ind["组EN"]))
+    out = []
+    for g in groups:
+        gi = [x for x in inds if x["组"] == g[0]]
+        cards = "".join(ind_card(x, G["JBY"].get(x["key"]), as_of, extra_fn(x) if extra_fn else "") for x in gi)
+        out.append((g, f'<div class="grid g4">{cards}</div>'))
+    return out
+
+
+def pending_block(layer):
+    ps = [p for p in R.PENDING if p["层"] == layer]
+    if not ps:
+        return ""
+    return (f'<div class="grp" id="grp-pending-{layer}">{T("待接入", "Pending")}</div><div class="grid g4">' + "".join(pending_card(p) for p in ps) + "</div>")
 
 
 def scenario_grid(v1):
@@ -810,50 +1175,166 @@ def l1_method_faq():
            """<b>Why L1 watches rates and sentiment more than money supply</b>: the real yield is the price of money, Fed net liquidity its quantity. Controlling for credit, a real-yield surge still carries −0.34 (t −3.4);
 net liquidity correlates only 0.28–0.32 with BTC and its lead has weakened since May 2024; M2's return correlation is 0.08. Liquidity is therefore only a discount condition; the signal comes from optimism and credit.""")
     qa = "".join(f'<details class="card faq"><summary>{esc(T(q, qe))}</summary><p>{esc(T(a, ae))}</p></details>' for q, qe, a, ae in FAQ)
-    return (f'<h3>{T("方法说明：价格 vs 数量", "Method note: price vs quantity")}</h3><div class="note">{pq}</div>'
+    return (f'<details class="card fold"><summary>{T("方法说明：价格 vs 数量", "Method note: price vs quantity")}</summary><div class="note" style="margin:0 14px 14px">{pq}</div></details>'
             f'<h3>{T("常见问题", "FAQ")} <span style="font-weight:400;font-size:12px;color:var(--muted)">{T("数字出处：", "Sources: ")}<a href="{U("/reports/2026-10-04-macro-vs-bitcoin/")}">{T("《宏观到底管不管比特币？》", "the macro weekend report")}</a>{T("与 BTC 全周期宏观研究", " and the BTC full-cycle macro study")}</span></h3>'
             f'<div class="faqs">{qa}</div>')
 
 
 # ---------------------------------------------------------------- L2 周期状态机（只读 data/l2/*.json 展示，规则和计算都在 l2/）
-L2_LINES = [("price", "BTC 价格", "BTC price", "ink", 2.2), ("sth_rp", "短期持有者成本", "STH cost", "s2", 1.4),
-            ("rp_3_6m", "3-6 月持币成本", "3-6M cost", "s5", 1.2), ("rp_6_12m", "6-12 月持币成本", "6-12M cost", "s8", 1.2),
-            ("tmmp", "真实市场均价", "True Market Mean", "s4", 1.4), ("ma200w", "200 周均线", "200W MA", "s7", 1.4),
-            ("rp", "全网平均成本", "Realized price", "s1", 1.4), ("lth_rp", "长期持有者成本", "LTH cost", "s3", 1.4),
-            ("cvdd", "CVDD 价格下限", "CVDD", "s9", 1.2)]
-
-
-L2_RETIRED = ("mvrv", "mvrv_z", "realized_price", "nupl", "mayer", "puell", "pi_cycle")
+L2_LINES = [("price", "BTC 价格", "BTC price", "ink", 2.0, False), ("sth_rp", "短期持有者成本", "STH cost", "s2", 1.4, False),
+            ("tmmp", "真实市场均价", "True Market Mean", "s4", 1.4, False), ("ma200w", "200 周均线", "200W MA", "s7", 1.4, False),
+            ("rp", "全网平均成本", "Realized price", "s1", 1.4, False), ("lth_rp", "长期持有者成本", "LTH cost", "s3", 1.3, True),
+            ("rp_3_6m", "3-6 月持币成本", "3-6M cost", "s5", 1.2, True), ("rp_6_12m", "6-12 月持币成本", "6-12M cost", "s8", 1.2, True),
+            ("cvdd", "CVDD 价格下限", "CVDD", "s9", 1.2, True)]
+LAYER_RULE_DATES = {1: ("2026-10-02", "2026-10-04"), 2: ("2026-10-08",)}
 
 
 def l2_state_meta(code):
     return R.L2_STATES.get(code) or ("—", "—", "", "neutral", "line2")
 
 
-def l2_chart(hist):
-    if not hist:
+def l2_chart():
+    """M8：2012-01-01 至今的价格 + 成本线 + 状态背景；历史回放和实时记录用一条竖线分开。"""
+    ser = G.get("L2S")
+    if not ser:
+        return empty_state("none", T("等待数据", "Awaiting data"), T("l2_daily.py 下一次运行后生成全历史。", "Full history appears after the next l2_daily.py run."), "")
+    if "L2CHART" not in G:
+        d0 = dt.date.fromisoformat(ser["start"])
+        start = "2012-01-01"
+        cols = {}
+        for k, *_ in L2_LINES:
+            vals = ser["series"].get(k) or []
+            cols[k] = {(d0 + dt.timedelta(days=i)).isoformat(): v for i, v in enumerate(vals) if v is not None and (d0 + dt.timedelta(days=i)).isoformat() >= start}
+        st = ser["series"].get("state") or []
+        cols["st"] = {(d0 + dt.timedelta(days=i)).isoformat(): v for i, v in enumerate(st) if v is not None and (d0 + dt.timedelta(days=i)).isoformat() >= start}
+        G["L2CHART"] = put_multi("l2_chart", cols)
+    codes = ser.get("state_codes") or R.L2_ORDER
+    states = [{"n": T(R.L2_STATES[c][0], R.L2_STATES[c][1]), "c": R.L2_STATES[c][4]} for c in codes]
+    leg = "".join(f'<span><i style="background:var(--{R.L2_STATES[c][4]})"></i>{esc(T(R.L2_STATES[c][0], R.L2_STATES[c][1]))}</span>' for c in codes)
+    live0 = (G.get("L2LIVE") or [{}])[0].get("date")
+    mk = [{"date": m["date"], "label": T("减半", "halving")} for m in ser.get("markers", []) if m.get("type") == "halving"]
+    if live0:
+        mk.append({"date": live0, "type": "live", "label": T(f"← 历史回放（样本内）｜实时记录 {live0} 起 →", f"← historical replay (in-sample) | live record from {live0} →")})
+    cfg = {"v2": True, "src": G["L2CHART"], "fmt": "price", "log": True, "ranges": ["1Y", "3Y", "CYC", "ALL"], "range": "ALL", "cyc": G.get("CYC"),
+           "stk": "st", "states": states, "markers": mk, "toggle": True, "last": False,
+           "note": T("对数坐标：同样的高度代表同样的涨跌幅。成本线 = 各类持有者的买入均价，现价在线上 = 这批人整体浮盈。点图例可以打开 / 关闭其余成本线。",
+                     "Log scale: equal heights mean equal percentage moves. A cost line is a holder group's average buy price; price above it = that group is in profit. Click the legend to toggle the other cost lines."),
+           "series": [{"k": k, "n": T(zh, en), "c": c, "w": w, "hidden": hid} for k, zh, en, c, w, hid in L2_LINES]}
+    rep = T("竖线左边是历史回放：状态机规则是用这几轮周期定的，属于样本内结果；竖线右边是网站每天实时保存的判定（", "Left of the line is a historical replay — the rules were fitted on these cycles, so it is in-sample; right of it are the daily judgements the site has saved live (")
+    rep += T(f"{live0} 起）。", f"since {live0}).") if live0 else T("还没有记录）。", "none yet).")
+    return (f'<h3 style="margin-top:0">{T("价格 + 成本线 + 周期状态（2012 年至今）", "Price + cost lines + cycle state (2012–now)")}</h3>'
+            f'<div class="l2leg">{T("背景色 = 当天状态：", "Background = state of the day: ")}{leg}</div>' + chart_div(cfg)
+            + f'<p class="tnote">{rep}</p>')
+
+
+def sig_name(x):
+    zh = x["name_zh"].replace("（本轮已出现）", "（本轮出现过即计入）")
+    en = x["name_en"].replace("(this cycle)", "(counts once seen this cycle)")
+    return T(zh, en)
+
+
+def l2_signals(l2):
+    """M7：三组可折叠，标题显示亮起数量；每条带当前读数、规则类型的实际状态、证据等级、出处，能点进对应指标。"""
+    sig = l2.get("signals") or []
+    out = ""
+    for cat, dotc in (("底部区", "l2-zone"), ("底部确认", "l2-rec"), ("顶部风险", "l2-risk")):
+        xs = [x for x in sig if x["category"] == cat]
+        lis = ""
+        for x in xs:
+            tags = [f'<span class="ev">{esc(T(x["evidence"], R.L2_EVID.get(x["evidence"], x["evidence"])))}</span>', f'<span class="ref">{esc(x.get("ref") or "")}</span>']
+            if x.get("changed_today"):
+                tags.append(f'<span class="td">{T("今日", "today")}{T("亮起" if x["on"] else "熄灭", " on" if x["on"] else " off")}</span>')
+            rule = x.get("rule") or ("cycle" if x["key"].endswith("(本轮)") else None)
+            if rule == "cycle":
+                if x.get("cycle_first") or (x["on"] and "cycle_first" not in x):
+                    d = x.get("cycle_first")
+                    tags.append(f'<span class="st on">{T("本轮已出现", "seen this cycle")}{" · " + d if d else ""}</span>')
+                else:
+                    tags.append(f'<span class="st">{T("本轮未出现", "not seen this cycle")}</span>')
+            elif rule == "mem30" and x["on"] and x.get("now_true") is False and x.get("last_true"):
+                tags.append(f'<span class="st on">{T("30 天记忆 · 最近一次满足", "30-day memory · last met")} {x["last_true"]}</span>')
+            rd = T(x.get("reading_zh") or "", x.get("reading_en") or "")
+            nm = esc(sig_name(x))
+            if x.get("metric") and x["metric"] in R.IND:
+                nm = f'<a href="{ind_href(x["metric"])}">{nm}</a>'
+            lis += (f'<li class="{"on" if x["on"] else ""}"><span class="dot" aria-label="{T("亮起" if x["on"] else "未亮", "on" if x["on"] else "off")}"></span><div><div class="nm">{nm}'
+                    f'{" <span class=rd>" + esc(rd) + "</span>" if rd else ""}</div><div class="meta">{"".join(tags)}</div>'
+                    f'<div class="nt">{esc(T(x.get("note") or "", R.L2_NOTE_EN.get(x["key"], "")))}</div></div></li>')
+        n_on = sum(1 for x in xs if x["on"])
+        out += (f'<details class="card l2sig" open style="--l2d:var(--{dotc})"><summary><b>{esc(T(cat, R.L2_CAT[cat]))}</b><span>{n_on}/{len(xs)} {T("亮起", "on")}</span></summary>'
+                f'<ul>{lis}</ul></details>')
+    return f'<div class="grid g3 sigs">{out}</div>'
+
+
+def ruler_svg(price, levels, h=460, w=440):
+    """M6：竖向对数价格轴，每条价位按真实距离摆放；现价醒目横线，现价到上下最近价位铺色带。"""
+    if not levels or not price:
         return ""
-    ds = [h["date"] for h in hist]
-    codes = {c: n for n, c in enumerate(R.L2_ORDER)}
-    ser = {k: {h["date"]: h.get(k) for h in hist} for k, *_ in L2_LINES}
-    ser["st"] = {h["date"]: codes.get(h.get("state")) for h in hist}
-    src = write_data("l2/chart.json", ds, ser)
-    states = [{"n": T(R.L2_STATES[c][0], R.L2_STATES[c][1]), "c": R.L2_STATES[c][4]} for c in R.L2_ORDER]
-    seen = [c for c in R.L2_ORDER if any(h.get("state") == c for h in hist)]
-    leg = "".join(f'<span><i style="background:var(--{R.L2_STATES[c][4]})"></i>{esc(T(R.L2_STATES[c][0], R.L2_STATES[c][1]))}</span>' for c in seen)
-    return (f'<h3 style="margin-top:0">{T("价格 + 成本线 + 周期状态（近 400 天）", "Price + cost lines + cycle state (last 400 days)")}</h3>'
-            f'<div class="l2leg">{T("背景色 = 当天状态：", "Background = state of the day: ")}{leg}</div>'
-            + chart_div({"src": src, "fmt": "price", "log": True, "ranges": ["3M", "6M", "1Y", "ALL"], "range": "ALL", "stk": "st", "states": states,
-                         "note": T("对数坐标：同样的高度代表同样的涨跌幅。成本线 = 各类持有者买入均价，现价在线上 = 这批人整体浮盈。",
-                                   "Log scale: equal heights mean equal percentage moves. A cost line is a holder group's average buy price; price above it = that group is in profit."),
-                         "series": [{"k": k, "n": T(zh, en), "c": c, "w": w} for k, zh, en, c, w in L2_LINES]}))
+    vals = [x["value"] for x in levels] + [price]
+    lo, hi = math.log10(min(vals) * 0.96), math.log10(max(vals) * 1.04)
+    top, bot = 22, h - 22
+    Y = lambda v: top + (bot - top) * (1 - (math.log10(v) - lo) / (hi - lo))
+    ax = 150
+    out = [f'<line x1="{ax}" x2="{ax}" y1="{top}" y2="{bot}" class="rax"/>']
+    above = sorted([x for x in levels if x["value"] > price], key=lambda x: x["value"])
+    below = sorted([x for x in levels if x["value"] <= price], key=lambda x: -x["value"])
+    yp = Y(price)
+    if below:
+        yb = Y(below[0]["value"])
+        out.append(f'<rect x="{ax - 40}" y="{yp:.1f}" width="80" height="{yb - yp:.1f}" class="rsafe"/>')
+        out.append(f'<text x="{ax - 46}" y="{(yp + yb) / 2 + 4:.1f}" text-anchor="end" class="rbt up">{T("安全垫", "cushion")} {below[0]["pct_from_price"]:+.1f}%</text>')
+    if above:
+        ya = Y(above[0]["value"])
+        out.append(f'<rect x="{ax - 40}" y="{ya:.1f}" width="80" height="{yp - ya:.1f}" class="rres"/>')
+        out.append(f'<text x="{ax - 46}" y="{(yp + ya) / 2 + 4:.1f}" text-anchor="end" class="rbt dn">{T("上方压力", "resistance")} {above[0]["pct_from_price"]:+.1f}%</text>')
+    # 价位标签：按高度排，离上一个标签太近就换到另一侧
+    placed = {"r": [], "l": []}
+    for x in sorted(levels, key=lambda x: -x["value"]):
+        y = Y(x["value"])
+        side = "r"
+        if any(abs(y - q) < 15 for q in placed["r"]):
+            side = "l" if not any(abs(y - q) < 15 for q in placed["l"]) else "r"
+        placed[side].append(y)
+        cls = "up" if x["value"] <= price else "dn"
+        lab = f'{esc(T(x["name_zh"], x["name_en"]))} ${x["value"]:,.0f} ({x["pct_from_price"]:+.1f}%)'
+        out.append(f'<line x1="{ax - 10}" x2="{ax + 10}" y1="{y:.1f}" y2="{y:.1f}" class="rtk {cls}"/>')
+        if side == "r":
+            out.append(f'<text x="{ax + 16}" y="{y + 4:.1f}" class="rlb">{lab}</text>')
+        else:
+            out.append(f'<text x="{ax - 16}" y="{y + 4:.1f}" text-anchor="end" class="rlb">{lab}</text>')
+    out.append(f'<line x1="{ax - 60}" x2="{w - 6}" y1="{yp:.1f}" y2="{yp:.1f}" class="rnow"/>')
+    out.append(f'<text x="{w - 6}" y="{yp - 6:.1f}" text-anchor="end" class="rnl">{T("现价", "Price")} ${price:,.0f}</text>')
+    return f'<svg viewBox="0 0 {w} {h}" class="ruler-svg" role="img" aria-label="{T("关键价位刻度尺", "Key level ruler")}">{"".join(out)}</svg>'
 
 
-def l2_section(l2, hist):
+def l2_levels(l2):
+    price = l2.get("price")
+    lv = l2.get("levels") or []
+    key6 = (l2.get("levels_above") or []) + (l2.get("levels_below") or [])
+    allv = sorted(lv, key=lambda x: -x["value"])
+    m = lambda v: "—" if v is None else f"${v:,.0f}"
+    rows = "".join(f'<tr><td class="l">{esc(T(x["name_zh"], x["name_en"]))}</td><td>{m(x["value"])}</td><td>{x["pct_from_price"]:+.1f}%</td></tr>' for x in allv)
+    return (f'<div class="ruler card"><input type="checkbox" id="rl-all" class="rtg"><label for="rl-all" class="pill">'
+            f'<span class="a">{T("展开全部 13 条", "Show all 13")}</span><span class="b">{T("只看 6 条重点", "Key 6 only")}</span></label>'
+            f'<div class="r6">{ruler_svg(price, key6)}</div><div class="r13">{ruler_svg(price, lv, h=560)}</div>'
+            f'<p class="tnote">{T("对数刻度，按真实价格距离摆放；绿色 = 现价下方的支撑，红色 = 上方的压力。价位都由 l2_daily.py 每天算好，网页只展示（均衡价格为近似值）。", "Log scale, placed by real price distance; green = supports below, red = resistance above. All levels come from l2_daily.py; the page only displays them (balanced price is approximate).")}</p></div>'
+            f'<details class="card fold"><summary>{T("13 条关键价位表", "All 13 levels (table)")}</summary><div class="tw" style="margin:0;border:0"><table><thead><tr><th class="l">{T("价位", "Level")}</th>'
+            f'<th>{T("价格", "Value")}</th><th>{T("离现价", "vs price")}</th></tr></thead><tbody>{rows}</tbody></table></div></details>')
+
+
+def l2_card_extra(ind):
+    """L2 卡片与 14 条信号保持一致：信号靠 30 天记忆仍亮、而当前读数已不满足时，卡片上写明。"""
+    for x in (G.get("L2") or {}).get("signals") or []:
+        if x.get("metric") == ind["key"] and x.get("on") and x.get("now_true") is False and x.get("last_true"):
+            return T(f"（对应信号仍亮：30 天记忆，最近一次满足 {x['last_true']}）", f" (signal still on: 30-day memory, last met {x['last_true']})")
+    return ""
+
+
+def l2_tab(l2, as_of):
     if not l2 or (l2.get("state") or {}).get("code") not in R.L2_STATES:
-        return ('<div class="pend"><b>' + T("L2 周期状态机 · 等待首次运行", "L2 cycle state machine · awaiting first run") + "</b>"
-                + T("每天北京时间 10:17 由 GitHub Actions 运行 l2/l2_daily.py 生成。", "Generated daily at 02:17 UTC by l2/l2_daily.py.") + "</div>")
-    st, cy, va = l2["state"], l2.get("cycle") or {}, l2.get("valuation") or {}
+        return empty_state("pending", T("L2 周期状态机 · 等待首次运行", "L2 cycle state machine · awaiting first run"),
+                           T(f"每天 UTC {L2_TIME} 由 GitHub Actions 运行 l2/l2_daily.py 生成。", f"Generated daily at {L2_TIME} UTC by l2/l2_daily.py."), "")
+    st, cy = l2["state"], l2.get("cycle") or {}
     zh, en, desc_en, _, col = l2_state_meta(st["code"])
     m = lambda v: "—" if v is None else f"${v:,.0f}"
     stale = (l2.get("data_status") or {}).get("stale")
@@ -862,189 +1343,295 @@ def l2_section(l2, hist):
         prev_en = next((v[1] for v in R.L2_STATES.values() if v[0] == st["previous"]), st["previous"])
         chips += f'<span class="chip l2chg">{esc(T("今日状态变化：" + st["previous"] + " → " + zh, "State changed today: " + prev_en + " → " + en))}</span>'
     if stale:
-        chips += f'<span class="chip l2stale">{T("数据延迟", "Data delayed")}</span>'
-    nums = [(T("价格", "Price"), m(l2.get("price"))),
-            (T("距历史高点", "From ATH"), f'{cy.get("drawdown_pct")}%'),
-            (T("新高已过", "ATH age"), f'{cy.get("days_since_ath")} {T("天", "d")}'),
-            (T("距本轮最低收盘", "From cycle low"), f'+{cy.get("rebound_pct")}%'),
-            (T("最低点已过", "Low age"), f'{cy.get("days_since_low")} {T("天", "d")}'),
-            (T("距上次减半", "Since halving"), f'{cy.get("days_since_halving")} {T("天", "d")}'),
-            (T("下次减半（估）", "Next halving (est.)"), cy.get("next_halving_est") or "—")]
-    nums_h = "".join(f"<span>{k}<b>{esc(v)}</b></span>" for k, v in nums)
-    summ = l2.get("summary_zh") if LANG["v"] == "zh" else R.l2_summary_en(l2)
-    # 「接下来」那一行在卡片底部单独成框，摘要里不重复
-    summ_h = "".join(f"<div>{esc(x)}</div>" for x in (summ or "").split("\n") if not x.startswith(("接下来：", "Next: ")))
+        chips += f'<span class="chip l2stale">{T("数据延迟 · 用了缓存", "Data delayed · cached")}</span>'
+    inval = ""
+    if st["code"] == "RECOVERY" and cy.get("cycle_low"):
+        inval = f'<div class="inval">{T("失效条件：收盘跌破本轮最低收盘", "Invalidation: a daily close below this cycle’s lowest close,")} <b>{m(cy["cycle_low"])}</b>{T("（退回熊市 / 熊底区）", " (back to bear / bottom zone)")}</div>'
     nxt = st.get("next_zh") if LANG["v"] == "zh" else st.get("next_en")
+    summ = l2.get("summary_zh") if LANG["v"] == "zh" else R.l2_summary_en(l2)
+    summ_h = "".join(f"<div>{esc(x)}</div>" for x in (summ or "").split("\n") if not x.startswith(("接下来：", "Next: ")))
     card = (f'<div class="card l2card" style="--l2c:var(--{col})"><div class="eb">L2 {T("周期状态机", "cycle state machine")} · {T("数据日", "data date")} {esc(l2.get("data_date") or "—")}'
             f' · {T("运行", "run")} {esc(l2.get("updated_utc") or "—")} UTC {chips}</div>'
             f'<h3 class="st">{esc(T(zh, en))} <span>· {T("第", "day ")}{st.get("days")}{T(" 天", "")}</span></h3>'
             f'<p class="desc">{esc(T(st.get("desc_zh") or "", desc_en.rstrip(".")))}{T("。自 ", ". Since ")}{esc(st.get("since") or "")}{T(" 起。", ".")}</p>'
-            f'<div class="l2nums">{nums_h}</div><div class="l2sum">{summ_h}</div>'
-            f'<div class="l2next"><b>{T("接下来看什么：", "What next: ")}</b>{esc(nxt or "")}</div></div>')
-    # 估值格
-    def pv(v, suf=""):
-        return "—" if v is None else f"{v}{suf}"
-    vals = [("MVRV", pv(va.get("mvrv")), T("价格 ÷ 全网平均成本", "price ÷ realized price")),
-            (T("价格 / 200 周均", "Price / 200W MA"), pv(va.get("price_to_200w")), T("< 1 = 底部区信号", "< 1 = bottom-zone signal")),
-            (T("盈利供应占比", "Supply in profit"), pv(va.get("psip_pct"), "%"), T("< 50% = 底部区信号", "< 50% = bottom-zone signal")),
-            (T("一年已实现盈亏比", "1y realized P/L ratio"), pv(va.get("realized_pl_ratio_1y")), T("< 1 = 亏的比赚的多", "< 1 = more losses than profits")),
-            (T("长期持有者占比（剔除 >7 年）", "LTH share ex-7y"), pv(va.get("lth_share_ex7y_pct"), "%"), T("> 75% = 底部区信号", "> 75% = bottom-zone signal")),
-            (T("绿 / 黑比", "Green / black ratio"), pv(va.get("green_black")), T("6 月-10 年成本 ÷ 0-10 年成本，≥ 1 = 底部确认", "6m–10y cost ÷ 0–10y cost; ≥1 = confirmation"))]
-    val_h = '<div class="grid g3 l2val">' + "".join(f'<div class="card"><div class="k">{k}</div><div class="v">{esc(v)}</div><div class="s">{s_}</div></div>' for k, v, s_ in vals) + "</div>"
-    # 信号三组
-    sig = l2.get("signals") or []
-    grp = ""
-    for cat, dotc in (("底部区", "l2-zone"), ("底部确认", "l2-rec"), ("顶部风险", "l2-risk")):
-        xs = [x for x in sig if x["category"] == cat]
-        lis = ""
-        for x in xs:
-            today = f'<span class="td">{T("今日", "today")}{T("亮起" if x["on"] else "熄灭", " on" if x["on"] else " off")}</span>' if x.get("changed_today") else ""
-            lis += (f'<li class="{"on" if x["on"] else ""}"><span class="dot"></span><div><div class="nm">{esc(T(x["name_zh"], x["name_en"]))}</div>'
-                    f'<div class="meta"><span class="ev">{esc(T(x["evidence"], R.L2_EVID.get(x["evidence"], x["evidence"])))}</span>'
-                    f'<span class="ref">{esc(x.get("ref") or "")}</span>{today}</div>'
-                    f'<div class="nt">{esc(T(x.get("note") or "", R.L2_NOTE_EN.get(x["key"], "")))}</div></div></li>')
-        n_on = sum(1 for x in xs if x["on"])
-        grp += (f'<div class="card l2sig" style="--l2d:var(--{dotc})"><h4>{esc(T(cat, R.L2_CAT[cat]))}<span>{n_on}/{len(xs)} {T("亮起", "on")}</span></h4>'
-                f'<ul>{lis}</ul></div>')
-    sig_h = f'<div class="grid g3">{grp}</div>'
-    # 价格梯子：上方 3 条（远→近）· 现价 · 下方 3 条（近→远）
-    def rw(x, cls):
-        return (f'<div class="rw {cls}"><span>{esc(T(x["name_zh"], x["name_en"]))}</span><span class="val">{m(x["value"])}</span>'
-                f'<span class="pc">{x["pct_from_price"]:+.1f}%</span></div>')
-    above = list(reversed(l2.get("levels_above") or []))
-    below = l2.get("levels_below") or []
-    lad = ("".join(rw(x, "up") for x in above)
-           + f'<div class="rw now"><b>{T("现价", "Price")}</b><b class="val">{m(l2.get("price"))}</b><span class="pc">—</span></div>'
-           + "".join(rw(x, "dn") for x in below))
-    allv = sorted(l2.get("levels") or [], key=lambda x: -x["value"])
-    all_rows = "".join(f'<tr><td class="l">{esc(T(x["name_zh"], x["name_en"]))}</td><td>{m(x["value"])}</td><td>{x["pct_from_price"]:+.1f}%</td></tr>' for x in allv)
-    ladder = (f'<div class="grid g2"><div class="card ladder">{lad}</div>'
-              f'<div class="card" style="padding:0"><details><summary style="cursor:pointer;padding:12px 16px;font-size:13px;font-weight:600">'
-              f'{T("全部 13 条关键价位", "All 13 key levels")}</summary><div class="tw" style="margin:0"><table><thead><tr><th class="l">{T("价位", "Level")}</th>'
-              f'<th>{T("价格", "Value")}</th><th>{T("离现价", "vs price")}</th></tr></thead><tbody>{all_rows}</tbody></table></div></details>'
-              f'<p class="tnote" style="padding:0 16px 12px;margin:0">{T("均衡价格为近似值。成本线、均线、价格下限都由 l2_daily.py 每天算好，网页只展示。", "Balanced price is approximate. All levels are computed daily by l2_daily.py; the page only displays them.")}</p></div></div>')
-    method = l2.get("method") or ""
-    method_h = (f'<p class="tnote">{esc(method)}</p>' if LANG["v"] == "zh" else
+            f'{inval}<div class="l2next"><b>{T("接下来看什么：", "What next: ")}</b>{esc(nxt or "")}</div>'
+            f'<details class="raw"><summary>{T("每日结论原文", "Daily summary text")}</summary><div class="l2sum">{summ_h}</div></details></div>')
+    nums = [(T("价格", "Price"), m(l2.get("price"))), (T("距历史高点", "From ATH"), f'{cy.get("drawdown_pct")}%'.replace("-", "−")),
+            (T("新高已过", "ATH age"), f'{cy.get("days_since_ath")} {T("天", "d")}'), (T("距本轮最低收盘", "From cycle low"), f'+{cy.get("rebound_pct")}%'),
+            (T("最低点已过", "Low age"), f'{cy.get("days_since_low")} {T("天", "d")}'), (T("距上次减半", "Since halving"), f'{cy.get("days_since_halving")} {T("天", "d")}'),
+            (T("下次减半（估）", "Next halving (est.)"), cy.get("next_halving_est") or "—")]
+    nums_h = '<div class="l2nums card">' + "".join(f"<span>{k}<b>{esc(v)}</b></span>" for k, v in nums) + "</div>"
+    groups = cards_by_group(2, as_of, l2_card_extra)
+    cards = "".join(f'<h3 id="grp-2-{n}">{esc(T(*g))}</h3>{c}' for n, (g, c) in enumerate(groups))
+    method_h = (f'<p class="tnote">{esc(l2.get("method") or "")}</p>' if LANG["v"] == "zh" else
                 '<p class="tnote">Historical replay of the state machine: one-year median forward return after "late bear → early bull" +152% (92% positive), '
                 'bear bottom zone +68% (91%), bull top-risk zone −6% (47%), bear market −36% (31%).</p>')
-    return (card + f'<h3>{T("估值与持有者", "Valuation & holders")}</h3>' + val_h
-            + f'<h3>{T("14 条信号", "14 signals")} <span class="sub" style="font-weight:400;color:var(--muted);font-size:12px">{T("实心 = 亮起；徽章 = 证据等级；§ = 研究文档章节", "filled = on; badge = evidence grade; § = study section")}</span></h3>' + sig_h
-            + f'<h3>{T("关键价位", "Key levels")}</h3>' + ladder
-            + f'<div class="card" style="padding:14px 18px;margin-top:12px">{l2_chart(hist)}</div>'
-            + method_h + f'<p class="l2disc">{esc(T(*R.L2_DISCLAIMER))}</p>')
+    rep = ""
+    rp = next((r for r in ALL_REPORTS if "cycle" in r["slug"]), None)
+    if rp:
+        rep = f'<p class="tnote">{T("相关研究：", "Related research: ")}<a href="{U("/reports/" + rp["slug"] + "/")}">{esc(LF(rp, "标题"))}</a></p>'
+    return (card + nums_h + cards
+            + f'<h3 id="l2-signals">{T("14 条信号", "14 signals")} <span class="sub">{T("实心 = 亮起；描边小标签 = 证据等级；§ = 研究文档章节", "filled = on; outlined tag = evidence grade; § = study section")}</span></h3>' + l2_signals(l2)
+            + f'<h3 id="l2-levels">{T("关键价位刻度尺", "Key level ruler")}</h3>' + l2_levels(l2)
+            + f'<div class="card chartcard" style="margin-top:12px">{l2_chart()}</div>'
+            + method_h + rep + f'<p class="l2disc">{esc(T(*R.L2_DISCLAIMER))}</p>')
+
+
+# ---------------------------------------------------------------- 每层结论区（M3）+ 判定明细（M4）
+SWITCH_L1 = {
+    "顺风": ("转为中性：乐观度 z 跌破 0，或 BAA 利差 13 周转为走阔；实际利率 13 周急升 ≥ +0.40pp 时转为中性偏谨慎，再叠加信用转紧或乐观度 z < 0 即逆风。",
+             "To neutral: optimism z drops below 0 or the BAA spread widens over 13w; a real-yield surge (≥ +0.40pp over 13w) makes it neutral-cautious, and headwind if credit tightens or optimism z < 0."),
+    "中性": ("转为顺风：乐观度 z > 0 且 BAA 13 周收窄、实际利率不急升；转为中性偏谨慎：实际利率 13 周急升 ≥ +0.40pp；转为逆风：急升叠加信用转紧或乐观度 z < 0，或流动性闸门触发。",
+             "To tailwind: optimism z > 0 with BAA narrowing and no real-yield surge; to neutral-cautious: a real-yield surge ≥ +0.40pp over 13w; to headwind: a surge plus tighter credit or optimism z < 0, or the liquidity gate."),
+    "中性偏谨慎": ("转为逆风：BAA 利差或 NFCI 的 13 周变化转为收紧，或乐观度 z 跌破 0（纳指 13 周转负 / VIX>20），或净流动性 13 周 ≤ −2.72% 且美元 13 周走强；回到中性 / 顺风：实际利率 13 周变化回到 +0.40pp 以下。",
+              "To headwind: BAA or NFCI 13w change turns tighter, or optimism z drops below 0 (Nasdaq 13w negative / VIX > 20), or net liquidity 13w ≤ −2.72% with a stronger dollar; back to neutral/tailwind: the 13w real-yield change falls back below +0.40pp."),
+    "逆风": ("回到中性偏谨慎：BAA 和 NFCI 的 13 周变化重新收窄 / 放松，且乐观度 z ≥ 0（实际利率仍急升）；回到中性或顺风：实际利率 13 周变化回到 +0.40pp 以下，且流动性闸门未触发。",
+             "Back to neutral-cautious: BAA and NFCI 13w changes ease again and optimism z ≥ 0 (with real yields still surging); back to neutral or tailwind: the 13w real-yield change falls below +0.40pp and the liquidity gate is not tripped."),
+}
+
+
+def switch_text(i, lay, l2):
+    if i == 1:
+        t = R.re_short(lay.get("结论") or "").replace("·警戒", "")
+        return T(*SWITCH_L1.get(t, ("—", "—")))
+    if i == 2:
+        st = (l2 or {}).get("state") or {}
+        return (st.get("next_zh") if LANG["v"] == "zh" else st.get("next_en")) or "—"
+    if i == 3:
+        return T("交易所 BTC 7 日净流量 < −2,000 枚 = 净流出（筹码离开交易所）；−2,000 ~ +2,000 = 进出均衡；> +2,000 = 净流入（留意抛压）。",
+                 "Exchange BTC 7-day net flow < −2,000 = outflow; −2,000 to +2,000 = balanced; > +2,000 = inflow (watch selling).")
+    sc = lay.get("分")
+    cur = f"{sc:+d}" if isinstance(sc, int) else "—"
+    return T(f"恐慌贪婪、资金费率、未平仓 7 日变化三项分数合计 ≥ 3 过热、1~2 偏热、≤ −2 偏冷，其余中性（当前合计 {cur}）。",
+             f"Fear & Greed, funding and 7-day OI change scores: total ≥ 3 hot, 1–2 warm, ≤ −2 cool, otherwise neutral (now {cur}).")
+
+
+def basis_chips(i, lay, l2):
+    jby = G["JBY"]
+
+    def chip(k):
+        j = jby.get(k)
+        if not j:
+            return ""
+        return f'<a class="chip t-{j["tone"]}" href="#card-{k}" data-hl="card-{k}"><i></i>{esc(T(j["名称"], j["名称EN"]))} {esc(j["显示"])}</a>'
+    if i == 1:
+        st = lay.get("状态") or {}
+        ks = ["real13"]
+        if (st.get("nfci") or 0) > 0:
+            ks.append("nfci13")
+        if (st.get("baa") or 0) > 0 or "nfci13" not in ks:
+            ks.append("baa13")
+        ks.append("optimism_z")
+        if lay.get("警戒"):
+            ks.append("hy13")
+        return "".join(chip(k) for k in ks[:4])
+    if i == 2:
+        sig = (l2 or {}).get("signals") or []
+        out = ""
+        for cat, en in (("底部区", "Bottom zone"), ("底部确认", "Bottom confirmation"), ("顶部风险", "Top risk")):
+            xs = [x for x in sig if x["category"] == cat]
+            if xs:
+                out += f'<a class="chip" href="#l2-signals" data-hl="l2-signals"><i></i>{T(cat, en)} {sum(1 for x in xs if x["on"])}/{len(xs)}</a>'
+        return out
+    if i == 3:
+        return chip("ex_netflow") + chip("ex_balance")
+    return "".join(chip(k) for k in ("hl_oi", "hl_funding", "fng") if jby.get(k) and jby[k]["分"] != 0) or chip("fng")
+
+
+def layer_head(i, lay, comp, logs, as_of, l2):
+    seg = next((x for x in (comp or {}).get("段", []) if x["层"] == i), None)
+    yday, n = layer_streak(i, lay.get("短"), logs, as_of)
+    if yday and yday.get("短") == lay.get("短"):
+        cmp_ = T(f"与昨日相同（已持续 {n} 天）", f"Same as yesterday ({n} days running)")
+    elif yday:
+        rc = ""
+        prev_date = next((lg["日期"] for lg in reversed(logs) if lg["日期"] < as_of), None)
+        if prev_date and any(prev_date < d <= as_of for d in LAYER_RULE_DATES.get(i, ())):
+            rc = T("（规则变更所致，见更正记录）", " (due to a rule change, see Corrections)")
+        cmp_ = T(f"昨日：{yday.get('短')} → 今日：{lay.get('短')}", f"Yesterday: {yday.get('短EN') or yday.get('短')} → today: {lay.get('短EN')}") + rc
+    else:
+        cmp_ = "—"
+    mean = esc(LF(seg, "文本")) if seg else ""
+    return (f'<div class="card lhead t-{lay.get("tone", "neutral")}"><div class="lh1"><span class="big t-{lay.get("tone", "neutral")}">{esc(LF(lay, "结论") or "—")}</span>'
+            f'<span class="mean">{mean}</span></div>'
+            f'<div class="lrow"><b>{T("主要依据", "Main evidence")}</b><span class="chips">{basis_chips(i, lay, l2) or "—"}</span></div>'
+            f'<div class="lrow"><b>{T("切换条件", "Switch conditions")}</b><span>{esc(switch_text(i, lay, l2))}</span></div>'
+            f'<div class="lrow"><b>{T("与昨日比", "Vs yesterday")}</b><span>{esc(cmp_)}</span></div></div>')
+
+
+def l1_table(rs, v1, rot):
+    """M4：L1 判定串改成小表（项目 / 读数 / 状态），原串折叠在下面。"""
+    by = {x["key"]: x for x in rs if x and x["层"] == 1}
+    rows = []
+    w = (v1.get("情境") or {}).get("较差")
+    cell_en = {"急升": "surging", "平台": "plateau", "未急升": "not surging", "强": "strong", "弱": "weak", "收窄": "narrowing", "走阔": "widening"}
+    if w:
+        rows.append((T("情境格（两表取较差）", "Scenario cell (worse of two)"), f"{w[2]:+.1f}% · {T('收涨', 'up')} {w[3]}%",
+                     T(f"{w[0]}·{w[1]}", f"{cell_en.get(w[0], w[0])} · {cell_en.get(w[1], w[1])}"), "warn" if w[2] < 0 else "up", None))
+    for k in ("real13", "optimism_z", "ndx13", "vix", "baa13", "nfci13", "hy13", "netliq13", "usd13", "stable_expay13", "stable_bullets13", "etf13"):
+        x = by.get(k)
+        if x:
+            rows.append((T(x["名称"], x["名称EN"]), x["显示"], short_zone(LF(x, "区间")), x["tone"], k))
+    if rot:
+        rows.append((T("资金轮动矩阵", "Rotation matrix"), "—", T(rot["名称"], rot["名称EN"]), rot["tone"], None))
+    trs = "".join(f'<tr><td class="l">' + (f'<a href="{ind_href(k)}">{esc(a)}</a>' if k else esc(a)) + f'</td><td>{esc(b)}</td><td class="l">{tone_chip(c, t)}</td></tr>'
+                  for a, b, c, t, k in rows)
+    l1zh, l1en = R.l1_line(rs, v1, rot)
+    return (f'<details class="card fold" open><summary>{T("判定明细", "Verdict details")}</summary><div class="tw" style="margin:0;border:0"><table><thead><tr><th class="l">{T("项目", "Item")}</th>'
+            f'<th>{T("读数", "Reading")}</th><th class="l">{T("状态", "State")}</th></tr></thead><tbody>{trs}</tbody></table></div>{l1_raw(T(l1zh, l1en))}</details>')
+
+
+L1_ANCHOR = {"乐观度 · 美股腿": ("乐观度", "Optimism"), "乐观度 · 信用腿": ("信用", "Credit"), "实际利率（状态变量）": ("实际利率", "Real yield"),
+             "流动性闸门（只打折不加仓）": ("流动性闸门", "Liquidity gate"), R.G_SC[0]: ("稳定币", "Stablecoins"), R.G_ETF[0]: ("ETF", "ETF"),
+             R.G_FUT[0]: ("期货升水", "Basis"), R.G_SEP[0]: ("单列观察", "Watched"), "联动与监控": ("联动", "Linkage"), "观察项（测过，未达可用标准）": ("观察项", "Watch-only")}
+
+
+def tag_legend():
+    """G7：两组标签的图例（宏观页 Tab 下可展开；口径页放完整版）。"""
+    lv = [("核心", "core", "进入本层结论判定。", "Feeds the layer verdict."), ("辅助", "aux", "展示、帮助理解，不进判定。", "Shown for context; not part of the verdict."),
+          ("观察", "watch", "测过但没达到可用标准，只看不用。", "Tested but not good enough; watch only."),
+          ("状态变量", "state variable", "不单独计分，决定当下落在情境格的哪一行。", "Not scored on its own; picks the row of the scenario grid.")]
+    ev = [("已验证", "自有数据实测，且过了噪声 / 稳健性检验。", "Measured on our own data and passed noise / robustness checks."),
+          ("已验证·方向", "方向稳定，但样本小或幅度不稳。", "Direction is stable, but samples are few or magnitudes unstable."),
+          ("描述读数", "只描述当下所处的位置，不定参数。", "Describes where things stand; sets no parameters."),
+          ("监控", "规模或口径还在变，先记录。", "Size or definition is still changing; recorded for now."),
+          ("观察项", "测过但没达到可用标准。", "Tested but not usable."),
+          ("假设", "机制推理，或只在部分周期成立。", "Reasoned mechanism, or holds only in some cycles."),
+          ("已证伪", "测过不成立；仍显示的是为了说明为什么不用。", "Tested and failed; shown only to explain why it is not used."),
+          ("记录中", f"自录数据不满 {R.RECORD_DAYS} 天，暂不给分位。", f"Self-recorded for fewer than {R.RECORD_DAYS} days; no percentiles yet.")]
+    a = "".join(f'<li><span class="grade lv">{esc(T(z, e))}</span>{esc(T(dz, de))}</li>' for z, e, dz, de in lv)
+    b = "".join(f'<li><span class="grade {GRADE_CLS.get(z, "")}">{esc(T(z, GRADE_EN.get(z, z)))}</span>{esc(T(dz, de))}</li>' for z, dz, de in ev)
+    c = "".join(f'<li><span class="chip t-{t}"><i></i>{esc(T(z, e))}</span>{esc(T(dz, de))}</li>' for t, z, e, dz, de in (
+        ("up", "顺风 / 偏多", "Tailwind", "历史上之后偏多，或支持风险资产。", "Historically followed by gains, or supportive."),
+        ("neutral", "中性", "Neutral", "持平、平稳、中间区。", "Flat, calm or mid-range."),
+        ("dn", "逆风 / 偏空", "Headwind", "历史上之后偏空，或压制风险资产。", "Historically followed by losses, or a drag."),
+        ("warn", "留意", "Watch", "需要留意、只观察，或描述读数 / 记录中。", "Worth watching, descriptive or still recording.")))
+    return (f'<div class="legendbox"><div><b>{T("级别（实心小标签）", "Level (solid tag)")}</b><ul>{a}</ul></div>'
+            f'<div><b>{T("证据等级（描边小标签）", "Evidence grade (outlined tag)")}</b><ul>{b}</ul></div>'
+            f'<div><b>{T("颜色（只按对 BTC 意味着什么）", "Colour (by what it means for BTC)")}</b><ul>{c}</ul></div></div>')
+
+
+SRC_EN = {"DefiLlama 稳定币": "DefiLlama stablecoins", "CoinMetrics 周期": "CoinMetrics cycle", "CoinMetrics 交易所流量": "CoinMetrics exchange flows",
+          "CoinGecko 类目": "CoinGecko categories", "ETF 资金流": "ETF flows", "CME 升水": "CME basis"}
+
+
+def src_chips(st):
+    return "".join(tone_chip(f'{T(k, SRC_EN.get(k, k))} {"✓" if v.get("ok") else "✗"} {(v.get("最新日期") or "")[5:]}', "up" if v.get("ok") else "dn")
+                   for k, v in st.items())
 
 
 def build_macro(L, S, logs):
-    log = logs[-1] if logs else None
-    as_of = log["日期"] if log else G.get("今天")
+    as_of = G["as_of"]
+    vs, comp, rs = G["VS"], G["COMP"], G["RS"]
+    prev_comp = (G.get("PREV_LOG") or {}).get("综合")
+    l2 = G.get("L2")
+    tlog = G.get("TODAY_LOG")
     st = L.get("源状态") or {}
-    src = "".join(tone_chip(f'{k} {"✓" if v.get("ok") else "✗"} {(v.get("最新日期") or "")[5:]}', "up" if v.get("ok") else "dn")
-                  for k, v in st.items())
-    rs = [R.judge(S, ind, as_of) for ind in R.INDICATORS] if as_of else []
-    rs = [x for x in rs if x]
-    jby = {x["key"]: x for x in rs}
-    v1 = R.layer_verdict(1, rs)
-    sections = ""
+    if l2:
+        st = {**st, "bitview.space (L2)": {"ok": not (l2.get("data_status") or {}).get("stale"), "最新日期": l2.get("data_date")}}
+    rot = R.rotation(S, as_of)
+    tabs, panels = "", ""
     for i, meta in R.LAYERS.items():
-        lay = R.layer_verdict(i, rs, G.get("L2"))
-        inds = [x for x in R.INDICATORS if x["层"] == i]
+        lay = vs.get(i) or {}
+        yday, _ = layer_streak(i, lay.get("短"), logs, as_of)
+        chg = f'<span class="chg" title="{esc(T("昨日：", "Yesterday: ") + str((yday or {}).get("短")))}">{T("变", "chg")}</span>' if yday and yday.get("短") != lay.get("短") else ""
+        tabs += (f'<a role="tab" id="tab-{i}" href="#layer-{i}" aria-controls="layer-{i}" data-tab="{i}" class="tab{" on" if i == 1 else ""}" aria-selected="{"true" if i == 1 else "false"}">'
+                 f'<span class="tn"><i class="dot t-{lay.get("tone", "neutral")}"></i>L{i} <em>{esc(T(meta["名称"], meta["EN"]))}</em></span>'
+                 f'<span class="ts t-{lay.get("tone", "neutral")}">{esc(LF(lay, "短") or "—")}</span>{chg}</a>')
+        head = layer_head(i, lay, comp, logs, as_of, l2)
         if i == 1:
-            groups = []
-            for ind in inds:
-                if ind["组"] not in groups:
-                    groups.append(ind["组"])
-            cards = ""
-            for g in groups:
-                gi = [x for x in inds if x["组"] == g]
-                cards += f'<div class="grp">{esc(T(g, gi[0]["组EN"]))}</div>'
-                if g == R.G_SC[0]:
-                    cards += (f'<p class="tnote" style="margin:-2px 0 10px">{T("价格先动、稳定币后增，只确认、不埋伏。", "Price moves first, stablecoins follow — confirm, never front-run.")}</p>')
-                cards += '<div class="grid g4">' + "".join(ind_card(x, jby.get(x["key"]), as_of) for x in gi) + "</div>"
-                if g == R.G_SC[0]:
-                    cards += rotation_matrix(R.rotation(S, as_of) if as_of else None)
+            groups = cards_by_group(1, as_of)
+            anchors = [(T("情境格", "Scenario"), "scen")] + [(T(*L1_ANCHOR.get(g[0], g)), f"grp-1-{n}") for n, (g, _) in enumerate(groups)]
+            n_sc = next((n for n, (g, _) in enumerate(groups) if g[0] == R.G_SC[0]), None)
+            if n_sc is not None:
+                anchors.insert(n_sc + 2, (T("资金矩阵", "Matrix"), "rotm"))
+            anchors.append((T("方法与 FAQ", "Method & FAQ"), "l1-faq"))
+            bar = '<nav class="anch" aria-label="L1">' + "".join(f'<a href="#{h}" data-anchor="{h}">{esc(t)}</a>' for t, h in anchors) + "</nav>"
+            body = ""
+            for n, (g, c) in enumerate(groups):
+                body += f'<div class="grp" id="grp-1-{n}">{esc(T(*g))}</div>'
+                if g[0] == R.G_SC[0]:
+                    body += f'<p class="tnote" style="margin:-2px 0 10px">{T("价格先动、稳定币后增，只确认、不埋伏。", "Price moves first, stablecoins follow — confirm, never front-run.")}</p>'
+                body += c
+                if g[0] == R.G_SC[0]:
+                    body += f'<div id="rotm">{rotation_matrix(rot)}</div>'
+            content = (bar + l1_table(rs, lay, rot) + f'<div class="note">{esc(T(R.L1_POSITION, R.L1_POSITION_EN))}</div>'
+                       + f'<h3 id="scen">{T("情境格：实际利率状态 × 乐观度 / 信用条件", "Scenario grid: real-yield state × optimism / credit")}</h3>{scenario_grid(lay)}'
+                       + body + pending_block(1) + f'<div id="l1-faq">{l1_method_faq()}</div>')
         elif i == 2:
-            cards = l2_section(G.get("L2"), G.get("L2H"))
+            content = l2_tab(l2, as_of) + pending_block(2)
         else:
-            cards = '<div class="grid g4">' + "".join(ind_card(x, jby.get(x["key"]), as_of) for x in inds) + "</div>"
-        pend = "".join(f'<div class="pend"><b>{esc(T(p["名称"], p["EN"]))} · {T("待接入", "pending")}</b>{esc(T(p["原因"], p["原因EN"]))}</div>'
-                       for p in R.PENDING if p["层"] == i)
-        verdict = tone_chip(LF(lay, "结论"), lay["tone"])
-        extra, chart = "", ""
-        if i == 1:
-            l1zh, l1en = R.l1_line(rs, v1)
-            switch = T("切换到「逆风」的条件：BAA 利差或 NFCI 的 13 周变化转为收紧，或乐观度 z 跌破 0（纳指 13 周转负 / VIX>20），或净流动性 13 周 ≤ −2.72% 且美元 13 周走强。",
-                       "Switch to headwind if: BAA or NFCI 13w change turns tighter, or optimism z drops below 0 (Nasdaq 13w negative / VIX>20), or net liquidity 13w ≤ −2.72% with a stronger dollar.")
-            extra = (f'<div class="note">{esc(T(R.L1_POSITION, R.L1_POSITION_EN))}</div>'
-                     f'<div class="card" style="padding:14px 18px;margin-bottom:12px"><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">'
-                     f'<b>{T("L1 档位", "L1 regime")}</b>{verdict}</div><div class="l1line">{esc(T(l1zh, l1en))}</div>'
-                     f'<p class="tnote" style="margin-top:8px">{esc(switch)}</p></div>'
-                     f'<h3>{T("情境格：实际利率状态 × 乐观度 / 信用条件", "Scenario grid: real-yield state × optimism / credit")}</h3>{scenario_grid(v1)}')
-        if i == 3 and S.get("ex_netflow"):
-            cum = R.s_cum_netflow(S)
-            src1 = write_data("macro/cum-netflow.json", sorted(cum), {"v": cum})
-            src2 = write_data("macro/exbal-level.json", sorted(S.get("ex_balance") or {}), {"v": S.get("ex_balance") or {}})
-            first = min(cum)
-            chart = (f'<h3 style="margin-top:0">{T("交易所 BTC 累计净流量 · 全部历史（向下 = 筹码持续离开交易所）", "Cumulative exchange BTC net flow · full history (down = coins leaving)")}</h3>'
-                     + chart_div({"src": src1, "fmt": "btcs", "ranges": ["1Y", "3Y", "5Y", "ALL"], "range": "ALL", "group": "l3", "zero": True,
-                                  "series": [{"k": "v", "n": T("累计净流量", "Cumulative net flow"), "c": "s1", "area": True}],
-                                  "note": T(f"从 {first} 起逐日累加流入 − 流出（CoinMetrics flash 口径）。", f"Inflow − outflow summed daily since {first}.")})
-                     + f'<h3>{T("交易所 BTC 余额 · 全部历史", "Exchange BTC balance · full history")} <a class="sub" href="{ind_href("ex_balance")}">{T("看区间与分位 →", "Zones & percentiles →")}</a></h3>'
-                     + chart_div({"src": src2, "fmt": "btc", "ranges": ["1Y", "3Y", "5Y", "ALL"], "range": "ALL", "group": "l3",
-                                  "series": [{"k": "v", "n": T("交易所余额", "Exchange balance"), "c": "s3", "area": True}]}))
-        if i == 4 and S.get("fng"):
-            src_ = write_data("macro/fng-level.json", sorted(S["fng"]), {"v": S["fng"]})
-            chart = (f'<h3 style="margin-top:0">{T("恐慌贪婪指数", "Fear & Greed index")}</h3>'
-                     + chart_div({"src": src_, "fmt": "int", "ranges": ["1Y", "3Y", "ALL"], "range": "1Y",
-                                  "lines": [{"v": 25, "label": T("恐慌", "fear"), "tone": "cool"}, {"v": 76, "label": T("贪婪", "greed"), "tone": "warn"}],
-                                  "series": [{"k": "v", "n": "F&G", "c": "s1"}]}))
-        if i == 1:
-            chart = ""
-            extra_after = l1_method_faq()
-        else:
-            extra_after = ""
-        why = "；".join(LF(lay, "依据", []) or []) if i not in (1, 2) else ""
-        sections += f"""<section class="layer" id="layer-{i}">
-<div class="layer-hd"><span class="no">L{i}</span><h2>{esc(T(meta["名称"], meta["EN"]))} <span class="sub">{esc(T(meta["问"], meta["问EN"]))}？· {esc(T(meta["频率"], meta["频率EN"]))}</span></h2>{verdict if i != 1 else ''}
-<div class="why">{esc(why)}</div></div>
-{extra}
-{cards}
-{f'<div class="grid g4" style="margin-top:12px">{pend}</div>' if pend else ''}
-{f'<div class="card" style="padding:14px 18px;margin-top:12px">{chart}</div>' if chart else ''}
-{extra_after}
-</section>"""
+            groups = cards_by_group(i, as_of)
+            content = "".join(f'<div class="grp" id="grp-{i}-{n}">{esc(T(*g))}</div>{c}' for n, (g, c) in enumerate(groups)) + pending_block(i)
+            if i == 3 and S.get("ex_netflow"):
+                cum = R.s_cum_netflow(S)
+                first = min(cum)
+                f = G["FILES"]
+                content += ('<div class="card chartcard" style="margin-top:12px">'
+                            + f'<h3 style="margin-top:0">{T("交易所 BTC 累计净流量 · 全部历史（向下 = 筹码持续离开交易所）", "Cumulative exchange BTC net flow · full history (down = coins leaving)")}</h3>'
+                            + chart_div({"v2": True, "src": f["ex_netflow"]["raw"], "fmt": "btcs", "ranges": ["1Y", "3Y", "5Y", "ALL"], "range": "ALL", "group": "l3", "zero": True,
+                                         "series": [{"k": "v", "n": T("累计净流量", "Cumulative net flow"), "c": "s1", "area": True}],
+                                         "note": T(f"从 {first} 起逐日累加流入 − 流出（CoinMetrics flash 口径）。", f"Inflow − outflow summed daily since {first}.")})
+                            + f'<h3>{T("交易所 BTC 余额 · 全部历史", "Exchange BTC balance · full history")} <a class="sub" href="{ind_href("ex_balance")}">{T("看区间与分位 →", "Zones & percentiles →")}</a></h3>'
+                            + chart_div({"v2": True, "src": f["ex_balance"]["raw"], "fmt": "btc", "log": True, "ranges": ["1Y", "3Y", "5Y", "ALL"], "range": "ALL", "group": "l3",
+                                         "series": [{"k": "v", "n": T("交易所余额", "Exchange balance"), "c": "s3"}]}) + "</div>")
+            if i == 4 and G["FILES"].get("fng", {}).get("main"):
+                content += ('<div class="card chartcard" style="margin-top:12px">' + f'<h3 style="margin-top:0">{T("恐慌贪婪指数", "Fear & Greed index")}</h3>'
+                            + chart_div({"v2": True, "src": G["FILES"]["fng"]["main"], "fmt": "int", "ranges": ["1Y", "3Y", "ALL"], "range": "1Y",
+                                         "lines": [{"v": 25, "label": T("恐慌", "fear"), "tone": "neutral"}, {"v": 76, "label": T("贪婪", "greed"), "tone": "warn"}],
+                                         "series": [{"k": "v", "n": "F&G", "c": "s1"}]}) + "</div>")
+        panels += (f'<section class="layer tabp{" on" if i == 1 else ""}" id="layer-{i}" role="tabpanel" aria-labelledby="tab-{i}" tabindex="-1">'
+                   f'<h2 class="ptitle">L{i} · {esc(T(meta["名称"], meta["EN"]))} <span class="sub">{esc(T(meta["问"], meta["问EN"]))}{T("？", "?")} · {esc(T(meta["频率"], meta["频率EN"]))}</span></h2>'
+                   f'{head}{content}</section>')
     posts = ALL_POSTS["macro"]
     plist = "".join(f'<li><span class="d">{esc(x["日期"])}</span><span><a href="{U("/macro/" + x["slug"] + "/")}">{esc(x["标题"])}</a>'
                     f'<span class="s">{esc(x["摘要"])}</span></span></li>' for x in posts)
+    deep = (f'<h2>{T("宏观深度分析", "Macro deep dives")}</h2><div class="card"><ul class="list">{plist}</ul></div>') if plist else ""   # M10：没有内容前不显示
     body = f"""<div class="ph"><div><div class="eyebrow">Macro · 4-Layer Framework</div><h1>{T("宏观四层仪表盘", "Four-layer macro dashboard")}</h1>
-<p class="lede">{T("先看宏观环境给多少风险预算（L1），再看周期走到哪一段（L2 状态机），再看筹码在谁手里（L3 交易所进出），最后看情绪会不会超调（L4）。指标卡都能点开，看这个数字的全部历史、区间规则、每个区间历史上出现的频率和「正常波动范围」。拿不到真实数据的指标标「待接入」，不拿近似值冒充。",
-                   "First how much risk budget the macro backdrop allows (L1), then where we are in the cycle (L2 state machine), who holds the coins (L3 exchange flows), and whether sentiment is overshooting (L4). Indicator cards open the full history, the zone rules, how often each zone occurred and the normal range. Anything without real data is marked pending.")}</p></div>
-<div class="stamp">{T("解读日期", "Log date")} <b>{as_of or "—"}</b><br>{T("台账更新", "Ledger updated")} <b>{esc(L.get("更新时间UTC") or "—")} UTC</b></div></div>
-{verdict_block(log)}
-<div class="src">{src}</div>
-{sections}
-<h2>{T("宏观深度分析", "Macro deep dives")}</h2>
-{f'<div class="card"><ul class="list">{plist}</ul></div>' if plist else '<div class="empty">' + T("手写的宏观深度分析会发在这里；系统性的研究报告见「分析报告」。", "Hand-written macro notes go here; full research is under Reports.") + '</div>'}"""
+<p class="lede">{T("综合研判把四层合成一句话：周期定方向，宏观管节奏，筹码和情绪用来确认和提醒。下面按层切换，每张指标卡都能点开看全部历史、区间规则和「正常波动范围」。拿不到真实数据的标「待接入」，不拿近似值冒充。",
+                   "The overall read rolls four layers into one line: the cycle sets direction, macro sets pace, flows and sentiment confirm and caution. Switch layers below; every card opens its full history, zone rules and normal range. Anything without real data is marked pending.")}</p></div></div>
+{comp_block(comp, prev_comp, tlog, full=True)}
+<div class="src">{src_chips(st)}</div>
+<div class="tabwrap"><nav class="tabs" role="tablist" aria-label="{T("四层", "Four layers")}" data-tabs>{tabs}</nav></div>
+<details class="legend-d"><summary>{T("标签说明", "What the tags mean")}</summary>{tag_legend()}</details>
+{panels}
+{deep}"""
     emit("macro/index.html", T(f"宏观四层仪表盘 · {BRAND}", f"Macro dashboard · {BRAND_EN}"), body, active="macro", chart=True,
-         desc=LF((log or {}).get("综合") or {}, "一句话") or T(PILLARS[0]["desc"], PILLARS[0]["descEN"]))
+         desc=LF(comp or {}, "一句话") or T(PILLARS[0]["desc"], PILLARS[0]["descEN"]))
 
 
 def write_indicator_data(S):
-    """每个指标的判定序列 / 原始水平 / BTC 价格写成 JSON（两种语言共用，只写一次）。"""
-    out = {}
+    """每个指标的判定序列 / 原始水平 / BTC 价格写成全历史文件（两种语言共用，只写一次）；顺带检测数据源回改。"""
+    out, revs = {}, []
     btc = S.get("btc_price") or {}
     if btc:
-        write_data("macro/btc.json", sorted(btc), {"v": btc})
+        out["_btc"] = put_series("btc_price", btc, "d", {"name_zh": "BTC 价格", "name_en": "BTC price", "unit": "USD"}, "BTC 价格", revs)
     for ind in R.INDICATORS:
         s = R.series_of(S, ind)
-        info = {"main": write_data(f"macro/{ind['key']}.json", sorted(s), {"v": s}) if s else None}
+        fq = "w" if ind.get("freq") == "w" else "d"
+        since, why, why_en = R.stats_window(S, ind)
+        meta = {"name_zh": ind["名称"], "name_en": ind["EN"], "fmt": ind["fmt"], "stats_from": since,
+                "stats_from_reason_zh": why, "stats_from_reason_en": why_en,
+                "zones": [{"max": c[0], "label_zh": c[1], "label_en": c[2], "bias": R.BIAS.get(c[3], "neutral")} for c in ind["cuts"]]}
+        ds = sorted(d for d in s if s[d] is not None)
+        if ds:
+            meta["valid_from"] = ds[0]
+        info = {"main": put_series(ind["key"], s, fq, meta, ind["名称"], revs) if s else None, "freq": fq}
         rk = ind.get("raw")
         if rk:
             rs = R.RAW_DERIVED[rk](S) if rk in R.RAW_DERIVED else (S.get(rk) or {})
             if ind["key"] == "ex_netflow":
                 rs = R.s_cum_netflow(S)
             if rs:
-                info["raw"] = write_data(f"macro/{ind['key']}-raw.json", sorted(rs), {"v": rs})
+                info["raw"] = put_series(f"{ind['key']}-level", rs, "d", {"name_zh": ind["名称"], "name_en": ind["EN"]}, ind["名称"] + "（水平）", revs)
         out[ind["key"]] = info
+    # 数据源历史回改：7 天以前的数据变动超过 0.5% 记一笔（更正记录页「数据源历史回改」小节）
+    if revs:
+        old = load(REV_PATH, []) or []
+        old += revs
+        with open(REV_PATH, "w", encoding="utf-8") as fh:
+            json.dump(old[-500:], fh, ensure_ascii=False, indent=1)
+        print(f"  数据源历史回改：{len(revs)} 条（{', '.join(r['指标'] for r in revs[:8])}）")
     return out
 
 
@@ -1061,36 +1648,57 @@ RAW_TITLE = {
 OWN_PCT = ("cme_basis", "deribit_basis")
 
 
-def zone_table(ind, j, stt):
+def zone_rules(ind):
+    """每个区间的边界文字：默认按代码「v < 上界」写；有「界」字段的（代码里用 ≤ / 分类函数判定的）照它写。"""
     fmt = R.FMT[ind["fmt"]]
+    cuts = ind["cuts"]
+    if ind.get("界"):
+        return [T(a, b) for a, b in zip(ind["界"], ind.get("界EN") or ind["界"])]
+    out, prev = [], None
+    for c in cuts:
+        ub = c[0]
+        out.append(f"< {fmt(ub)}" if prev is None else (f"{fmt(prev)} ~ {fmt(ub)}" if ub is not None else f"≥ {fmt(prev)}"))
+        prev = ub if ub is not None else prev
+    return out
+
+
+def rec_wait(rec):
+    return T(f"满 {rec['required']} 天后给出（已记录 {rec['days']} / {rec['required']} 天）",
+             f"Shown after {rec['required']} days ({rec['days']} / {rec['required']} recorded)")
+
+
+def zone_table(ind, j, stt, rec=None):
     cuts = ind["cuts"]
     if ind["key"] in OWN_PCT:
         return ('<div class="tw"><table><tbody><tr><td class="l wrap">'
-                + T("只看自身历史分位：< 20 分位 = 自身历史低位，20–80 = 中段，> 80 = 自身历史高位；样本满 90 天才给判定。",
-                    "Own-history percentile only: <20 low, 20–80 mid, >80 high; judged after 90 observations.") + "</td></tr></tbody></table></div>")
+                + T(f"只看自身历史分位：< 20 分位 = 自身历史低位，20–80 = 中段，> 80 = 自身历史高位；满 {R.RECORD_DAYS} 天后给出区间判定。",
+                    f"Own-history percentile only: <20 low, 20–80 mid, >80 high; zones are judged after {R.RECORD_DAYS} days.") + "</td></tr></tbody></table></div>")
     if len(cuts) == 1:
         return ""
+    waiting = rec and not rec["done"]
     share = {z[0]: z[3] for z in (stt or {}).get("区间占比", [])}
-    rows, prev_ub = "", None
+    rows = ""
     jz = short_zone(j["区间"]) if j else None
-    for c in cuts:
-        ub = c[0]
-        rng = (f"< {fmt(ub)}" if prev_ub is None else (f"{fmt(prev_ub)} ~ {fmt(ub)}" if ub is not None else f"≥ {fmt(prev_ub)}"))
-        prev_ub = ub if ub is not None else prev_ub
+    for c, rng in zip(cuts, zone_rules(ind)):
         pc = share.get(c[1])
         zc = short_zone(c[1])
         cur = bool(jz and (jz == zc or jz.startswith(zc) or (ind["key"] == "real13" and zc == "平台" and "平台" in jz)))
-        bar = (f'<span class="zbar" style="width:{max(2, pc * 1.4):.0f}px;background:var({TONE_VAR[c[3]]})"></span>{pc:.1f}%' if pc is not None else "—")
+        if waiting:
+            bar = ""
+        else:
+            bar = (f'<span class="zbar" style="width:{max(2, pc * 1.4):.0f}px;background:var({TONE_VAR[c[3]]})"></span>{pc:.1f}%' if pc is not None else "—")
         rows += (f'<tr class="{"cur" if cur else ""}"><td class="l">{tone_chip(T(c[1], c[2]), c[3])}{" ◀ " + T("当前", "now") if cur else ""}</td>'
-                 f'<td>{esc(rng)}</td><td class="l" style="min-width:180px">{bar}</td></tr>')
+                 f'<td>{esc(rng)}</td>' + ("" if waiting else f'<td class="l" style="min-width:180px">{bar}</td>') + '</tr>')
     if ind["key"] == "real13":
         rows += (f'<tr><td class="l wrap" colspan="3" style="color:var(--ink2)">'
                  + T("「平台」再按水平分：≥ 1.0% = 高位平台，< 1.0% = 低位平台。", "'Plateau' splits by level: ≥1.0% high, <1.0% low.") + "</td></tr>")
-    return (f'<div class="tw"><table><thead><tr><th class="l">{T("区间", "Zone")}</th><th>{T("规则（判定序列）", "Rule")}</th>'
-            f'<th class="l">{T("历史上落在这个区间的时间占比", "Share of history in this zone")}</th></tr></thead><tbody>{rows}</tbody></table></div>')
+    th3 = "" if waiting else f'<th class="l">{T("历史上落在这个区间的时间占比", "Share of history in this zone")}</th>'
+    tail = f'<p class="tnote">{T("区间判定用固定阈值，照常给出；历史占比", "Zones use fixed thresholds and are shown now; the historical share is ")}{esc(rec_wait(rec))}。</p>' if waiting else ""
+    return (f'<div class="tw"><table><thead><tr><th class="l">{T("区间", "Zone")}</th><th>{T("规则（判定序列）", "Rule")}</th>{th3}</tr></thead>'
+            f'<tbody>{rows}</tbody></table></div>{tail}')
 
 
-def range_block(S, ind, j, stt, since):
+def range_block(S, ind, j, stt, since, why=""):
     if not stt:
         return ""
     fmt = R.FMT[ind["fmt"]]
@@ -1110,27 +1718,78 @@ def range_block(S, ind, j, stt, since):
     wk = ind.get("freq") == "w"
     win = T(f"{stt['起']} ~ {stt['止']}，{stt['样本']} 个{'周' if wk else '日'}度样本",
             f"{stt['起']} – {stt['止']}, {stt['样本']} {'weekly' if wk else 'daily'} observations")
+    why_t = f"{T('起点：', 'Start: ')}{esc(why)}。" if why else ""
     return f"""<div class="stats">
 <div><div class="k">{T("当前读数", "Current")}</div><div class="v">{esc(j["显示"]) if j else "—"}</div><div class="s">{T("历史第", "Percentile")} {f"{cur_p:.0f}" if cur_p is not None else "—"}{T(" 百分位", "")}</div></div>
 <div><div class="k">{T("正常波动范围（p10–p90）", "Normal range (p10–p90)")}</div><div class="v">{esc(fmt(stt["p10"]))} ~ {esc(fmt(stt["p90"]))}</div><div class="s">{T("历史上 80% 的时间在这里", "80% of history")}</div></div>
 <div><div class="k">{T("常见区间（p25–p75）", "Typical (p25–p75)")}</div><div class="v">{esc(fmt(stt["p25"]))} ~ {esc(fmt(stt["p75"]))}</div><div class="s">{T("中位", "median")} {esc(fmt(stt["p50"]))}</div></div>
 <div><div class="k">{T("历史极值", "Extremes")}</div><div class="v">{esc(fmt(stt["min"]))} ~ {esc(fmt(stt["max"]))}</div><div class="s">{esc(win)}</div></div>
 </div>{gauge}
-<p class="tnote">{T("统计窗口：", "Window: ")}{esc(win)}{T("。L1 宏观指标按研究的方法规则只用 2018 年以后的数据（2010–2017 宏观对 BTC 没有解释力），链上周期指标用全历史。分位只描述读数在自己历史里的位置，不是买卖信号。",
-                                                ". L1 macro gauges use post-2018 data only (macro had no explanatory power over BTC in 2010–2017); on-chain cycle gauges use full history. Percentiles describe position in history — not trade signals.")}</p>"""
+<p class="tnote">{T("统计窗口：", "Window: ")}{esc(win)}。{why_t}{T("L1 宏观指标按研究的方法规则只用 2018 年以后；链上周期类从 2012 年起；百分比变化类再排除早期基数过小的时段（规则见「口径与规则 · 统计窗口」）。分位只描述读数在自己历史里的位置，不是买卖信号。",
+                                                "L1 macro gauges use post-2018 data (method rule); on-chain cycle gauges start in 2012; percentage-change gauges also drop the early small-base period (see Methodology · statistics window). Percentiles describe position in history — not trade signals.")}</p>"""
+
+
+def feedback_btn(title):
+    """G10：一键在 X 上 @ 站长，带上当前页面标题和链接。"""
+    acct = SITE_CFG.get("反馈账号", "Uncle_Onchain")
+    url = f"https://{DOMAIN}{U(G['url'])}"
+    text = T(f"@{acct} 反馈：{title} ", f"@{acct} Feedback: {title} ")
+    from urllib.parse import quote
+    href = f"https://x.com/intent/post?text={quote(text)}&url={quote(url)}"
+    return f'<a class="btn ghost fb" href="{href}" target="_blank" rel="noopener">✎ {T("反馈 / 纠错", "Feedback / report an error")}</a>'
+
+
+def rec_bar(rec):
+    if not rec:
+        return ""
+    pct = min(100, rec["days"] / rec["required"] * 100)
+    n, req = rec["days"], rec["required"]
+    since = T(f"自 {rec['since']} 起开始记录", f"recording since {rec['since']}") if rec.get("since") else ""
+    txt = T(f"已记录 {n} / {req} 天 · 满 {req} 天后给出区间判定", f"Recording · {n} / {req} days · zone judgment after {req} days")
+    if rec["done"]:
+        txt = T(f"已记录 {n} 天", f"{n} days recorded")
+    chip = f'<span class="chip t-warn"><i></i>{T("记录中", "Recording")}</span>' if not rec["done"] else ""
+    return (f'<div class="recbar">{chip}<div class="rb"><i style="width:{pct:.0f}%"></i></div>'
+            f'<span class="rt">{txt}{" · " + since if since else ""}</span></div>')
+
+
+# ---------------------------------------------------------------- 统一的空状态（G5）：图标 + 状态名 + 一句话原因 + 预计 / 条件
+EMPTY_KIND = {"pending": ("待接入", "Pending", "◌"), "recording": ("记录中", "Recording", "◔"), "delay": ("延迟", "Delayed", "⏱"),
+              "prep": ("筹备中", "In preparation", "◇"), "none": ("暂无内容", "Nothing yet", "○"), "retired": ("已停用", "Retired", "⊘")}
+
+
+def empty_state(kind, title, reason, cond, progress=None, raw=False):
+    zh, en, ic = EMPTY_KIND.get(kind, EMPTY_KIND["none"])
+    pr = f'<div class="rb"><i style="width:{progress:.0f}%"></i></div>' if progress is not None else ""
+    cond_h = (cond if raw else esc(cond)) if cond else ""
+    return (f'<div class="es es-{kind}"><span class="ic" aria-hidden="true">{ic}</span><div><b>{esc(T(zh, en))} · {esc(title)}</b>'
+            f'<p>{esc(reason)}</p>{f"<p class=c>{cond_h}</p>" if cond_h else ""}{pr}</div></div>')
+
+
+def asof_txt(d, as_of):
+    """卡片上的数据日期：超过 30 天或跨年时写完整年份（G8）。"""
+    if not d:
+        return "—"
+    if as_of and (d[:4] != as_of[:4] or R.days_between(d, as_of) > 30):
+        return d
+    return d[5:]
+
+
+def ind_layer_list(layer):
+    return sorted([x for x in R.INDICATORS if x["层"] == layer], key=lambda x: x["序"])
 
 
 def build_indicator_pages(L, S, logs, files):
-    log = logs[-1] if logs else None
-    as_of = log["日期"] if log else G.get("今天")
+    as_of = G["as_of"]
+    halv = [{"date": d, "label": T("减半", "halving")} for d in ("2012-11-28", "2016-07-09", "2020-05-11", "2024-04-20")]
     for ind in R.INDICATORS:
         key, meta = ind["key"], R.LAYERS[ind["层"]]
         name = T(ind["名称"], ind["EN"])
-        j = R.judge(S, ind, as_of) if as_of else None
-        since = stats_since(ind)
-        stt = R.history_stats(S, ind, since) or R.history_stats(S, ind)
-        if stt and since and stt["起"] < since:
-            since = None
+        j = G["JBY"].get(key)
+        rec = R.recording_info(S, ind)
+        waiting = rec and not rec["done"]
+        since, why, why_en = R.stats_window(S, ind)
+        stt = None if waiting else (R.history_stats(S, ind, since) or R.history_stats(S, ind))
         f = files.get(key) or {}
         cuts = ind["cuts"]
         lines = []
@@ -1138,52 +1797,102 @@ def build_indicator_pages(L, S, logs, files):
             for n, c in enumerate(cuts):
                 if c[0] is not None:
                     nxt = cuts[n + 1]
-                    lines.append({"v": c[0], "label": "↑ " + short_zone(T(nxt[1], nxt[2]))[:9], "tone": nxt[3]})
+                    lines.append({"v": round(c[0], 6), "label": "↑ " + short_zone(T(nxt[1], nxt[2]))[:9], "tone": nxt[3]})
         zone = [] if key in OWN_PCT or len(cuts) == 1 else [{"ub": c[0], "n": T(c[1], c[2]), "t": c[3]} for c in cuts]
-        rngs = ["1Y", "3Y", "5Y", "ALL"]
+        l2 = ind["层"] == 2
+        rngs = ["1Y", "3Y", "5Y", "ALL"] + (["CYC"] if l2 else [])
+        shade = [{"to": since, "label": T(why, why_en)}] if since else []
+        mk = halv if l2 else []
+        btc = files.get("_btc")
         charts = ""
+        fresh = T("数据源每周更新" if ind.get("freq") == "w" else "数据源每日更新", "updated weekly" if ind.get("freq") == "w" else "updated daily")
         if f.get("main"):
-            cfg = {"src": f["main"], "fmt": ind["fmt"], "ranges": rngs, "range": "ALL", "group": "d", "lines": lines, "zone": zone,
-                   "zero": ind["fmt"] in ("pcts", "pp", "xs", "btcs", "usds"),
+            cfg = {"v2": True, "src": f["main"], "fmt": ind["fmt"], "ranges": rngs, "range": "ALL", "group": "d", "lines": lines, "zone": zone,
+                   "zero": ind["fmt"] in ("pcts", "pp", "xs", "btcs", "usds"), "clip": True, "clipFrom": since, "shade": shade, "markers": mk, "btc": btc,
+                   "weekly": ind.get("freq") == "w", "cyc": G.get("CYC"), "hint": "",
                    "series": [{"k": "v", "n": name, "c": "s1", "area": ind["fmt"] in ("btcs", "usds")}]}
             if stt:
                 cfg["band"] = {k: stt[k] for k in ("p10", "p25", "p50", "p75", "p90")}
             charts += (f'<h2>{T("判定序列 · 全部历史", "Judged series · full history")} <span class="sub">{esc(T(ind["依据"], ind["依据EN"]))} · '
-                       f'{T("虚线 = 区间分界；蓝色带 = 正常波动范围（浅 p10–p90，深 p25–p75）", "dashed = zone boundaries; blue band = normal range (light p10–p90, dark p25–p75)")}</span></h2>'
-                       f'<div class="card" style="padding:14px 18px">{chart_div(cfg)}</div>')
+                       f'{T("虚线 = 区间分界；底色 = 区间（绿 = 历史上偏多 / 红 = 偏空 / 黄 = 留意）；蓝色带 = 正常波动范围；灰底 = 不计入统计", "dashed = zone boundaries; tint = zone bias (green = tailwind / red = headwind / yellow = watch); blue band = normal range; grey = excluded from statistics")}</span></h2>'
+                       f'<div class="card chartcard">{chart_div(cfg)}</div>')
         if f.get("raw"):
             rt = RAW_TITLE.get(key, (ind["名称"], ind["EN"]))
             rawfmt = "btcs" if key == "ex_netflow" else ind.get("rawfmt", "x")
-            cfg = {"src": f["raw"], "fmt": rawfmt, "ranges": rngs, "range": "ALL", "group": "d", "log": key in ("ndx13", "realized_price"),
-                   "note": T("对数坐标：同样的高度代表同样的涨跌幅，比如 1 万→2 万和 5 万→10 万一样高。", "Log scale: equal heights mean equal percentage moves — 10k→20k is as tall as 50k→100k.") if key in ("ndx13", "realized_price") else "",
-                   "zero": rawfmt in ("btcs", "usds"), "series": [{"k": "v", "n": T(rt[0], rt[1]), "c": "s3", "area": rawfmt == "btcs"}]}
+            lg = key in ("ndx13", "ex_balance") or rawfmt in ("usd", "idx") and key not in ("netliq13",)
+            cfg = {"v2": True, "src": f["raw"], "fmt": rawfmt, "ranges": rngs, "range": "ALL", "group": "d", "log": lg, "shade": shade, "markers": mk,
+                   "note": T("对数坐标：同样的高度代表同样的涨跌幅，比如 1 万→2 万和 5 万→10 万一样高。", "Log scale: equal heights mean equal percentage moves — 10k→20k is as tall as 50k→100k.") if lg else "",
+                   "zero": rawfmt in ("btcs", "usds"), "cyc": G.get("CYC"), "series": [{"k": "v", "n": T(rt[0], rt[1]), "c": "s3", "area": rawfmt == "btcs"}]}
             if key == "real13":
                 cfg["lines"] = [{"v": 1.0, "label": T("1.0% 高位线", "1.0% line"), "tone": "warn"}]
-            charts += f'<h2>{esc(T(rt[0], rt[1]))}</h2><div class="card" style="padding:14px 18px">{chart_div(cfg)}</div>'
-        if S.get("btc_price") and key != "realized_price":
-            charts += (f'<h2>{T("对照：BTC 价格（对数坐标，按涨跌幅比例显示）", "For reference: BTC price (log scale, proportional to % moves)")} <span class="sub">{T("同一时间轴，悬停联动", "same time axis, linked hover")}</span></h2>'
-                       f'<div class="card" style="padding:14px 18px">{chart_div({"src": "/data/macro/btc.json", "fmt": "price", "log": True, "ranges": rngs, "range": "ALL", "group": "d", "note": T("对数坐标：同样的高度代表同样的涨跌幅，比如 1 万→2 万和 5 万→10 万一样高。", "Log scale: equal heights mean equal percentage moves — 10k→20k is as tall as 50k→100k."), "series": [{"k": "v", "n": "BTC", "c": "s2"}]})}</div>')
+            charts += f'<h2>{esc(T(rt[0], rt[1]))}</h2><div class="card chartcard">{chart_div(cfg)}</div>'
+        if btc:
+            charts += (f'<h2>{T("对照：BTC 价格（对数坐标）", "For reference: BTC price (log scale)")} <span class="sub">{T("同一时间轴，悬停联动", "same time axis, linked hover")}</span></h2>'
+                       f'<div class="card chartcard">{chart_div({"v2": True, "src": btc, "fmt": "price", "log": True, "ranges": rngs, "range": "ALL", "group": "d", "markers": mk, "cyc": G.get("CYC"), "series": [{"k": "v", "n": "BTC", "c": "s2"}]})}</div>')
         if not f.get("main"):
-            charts = (f'<div class="empty" style="margin-top:20px">{T("这个指标还没有数据（数据源接通后的下一次每日运行会生成）。", "No data yet for this indicator; it appears after the next daily run.")}</div>'
-                      + charts)
+            charts = empty_state("pending", T("暂无数据", "No data yet"), T("数据源接通后的下一次每日运行会生成。", "Appears after the next daily run once the source is connected."), "") + charts
         head = ""
         if j:
-            head = (f'<div class="glass verdict"><div class="body"><div class="lbl">{T("当前读数", "Current reading")} · {T("截至", "as of")} {j["截至"]}'
-                    f'{" · " + T("数据滞后", "stale") if j["过期"] else ""}</div><div class="txt" style="font-family:var(--mono);font-size:26px">{esc(j["显示"])}</div>'
-                    f'<div class="chips">{tone_chip(LF(j, "区间"), j["tone"])}<span class="chip">{esc(LF(j, "依据"))}</span></div></div></div>')
-        zt = zone_table(ind, j, stt)
-        rb = range_block(S, ind, j, stt, since)
+            stale = f' · <span class="t-warn">{T("滞后", "lag")} {R.days_between(j["截至"], as_of)} {T("天", "days")}</span>' if j["过期"] else ""
+            head = (f'<div class="glass verdict"><div class="body"><div class="lbl">{T("当前读数", "Current reading")} · {T("截至", "as of")} {j["截至"]} · {fresh}{stale}</div>'
+                    f'<div class="txt" style="font-family:var(--mono);font-size:26px">{esc(j["显示"])}</div>'
+                    
+                    + ("" if (waiting and key in OWN_PCT) else f'<div class="chips">{tone_chip(LF(j, "区间"), j["tone"])}<span class="chip">{esc(LF(j, "依据"))}</span></div>')
+                    + f'{rec_bar(rec)}</div></div>')
+        itp = R.interpret(S, ind, j, stt, since) if j and not waiting else None
+        itp_h = f'<div class="card interp"><b>{T("当前解读", "What this reading means")}</b><p>{esc(T(*itp))}</p></div>' if itp else ""
+        zt = zone_table(ind, j, stt, rec)
+        rb = range_block(S, ind, j, stt, since, T(why, why_en))
+        sw = R.zone_switches(S, ind) if not waiting else []
+        sw_h = ""
+        if sw:
+            trs = "".join(f'<tr><td class="l">{x["日期"]}</td><td class="l">{esc(short_zone(T(x["从"], x["从EN"])))} → {tone_chip(short_zone(T(x["到"], x["到EN"])), x["tone"])}</td>'
+                          f'<td>{x["天数"]}{T(" 天", "d")}{T("（持续中）", " (ongoing)") if x["进行中"] else ""}</td><td>{R.FMT["price"](x["BTC"]) if x["BTC"] else "—"}</td></tr>' for x in sw)
+            sw_h = (f'<h2>{T("状态切换记录", "Zone switches")} <span class="sub">{T("最近 10 次", "last 10")}</span></h2><div class="tw"><table><thead><tr><th class="l">{T("日期", "Date")}</th>'
+                    f'<th class="l">{T("从 → 到", "From → to")}</th><th>{T("持续", "Lasted")}</th><th>{T("当时 BTC", "BTC then")}</th></tr></thead><tbody>{trs}</tbody></table></div>')
+        sib = ind_layer_list(ind["层"])
+        k = sib.index(ind)
+        prv = sib[k - 1] if k > 0 else None
+        nxt_ = sib[k + 1] if k + 1 < len(sib) else None
+        pager = (f'<div class="pager">' + (f'<a href="{ind_href(prv["key"])}">← {esc(T(prv["名称"], prv["EN"]))}</a>' if prv else "<span></span>")
+                 + f'<a href="{U("/macro/")}#layer-{ind["层"]}">{T("回到", "Back to ")} L{ind["层"]}</a>'
+                 + (f'<a href="{ind_href(nxt_["key"])}">{esc(T(nxt_["名称"], nxt_["EN"]))} →</a>' if nxt_ else "<span></span>") + "</div>")
+        lvl = T(ind["级别"], LEVEL_EN.get(ind["级别"], "")) + (f" · {T(ind['级别注'], ind['级别注EN'])}" if ind.get("级别注") else "")
+        ref = f'<span class="chip">{T("出处", "Source study")}{CN}{esc(T(ind["出处"], ind["出处EN"]))}</span>' if ind.get("出处") else ""
+        note_mvrv = (f'<div class="note">{T("2026-10-08 起按新口径展示：原单指标卡已并入 L2 状态机，这里是状态机的输入之一。见", "Shown under the new rules since 2026-10-08: the old single-gauge card was folded into the L2 state machine; this is one of its inputs. See ")}'
+                     f'<a href="{U("/corrections/")}">{T("更正记录", "Corrections")}</a>{T("。", ".")}</div>') if key == "mvrv" else ""
+        vf = ""
+        if l2 and f.get("main"):
+            ds = sorted(d for d in R.series_of(S, ind))
+            if ds:
+                vf = f'<p class="tnote">{T(f"这个指标从 {ds[0]} 起才有值（数据源起点或均线 / 滚动窗口攒满所需天数）。", f"This gauge has values from {ds[0]} (data start or the days needed to fill its window).")}</p>'
+        rec_note = ""
         body = f"""{crumbs([(T("宏观仪表盘", "Macro"), "/macro/"), (f'L{ind["层"]} · {T(meta["名称"], meta["EN"])}', f'/macro/#layer-{ind["层"]}'), (name, None)])}
+{note_mvrv}
 <div class="ph"><div><div class="eyebrow">L{ind["层"]} · {esc(T(ind.get("组") or meta["名称"], ind.get("组EN") or meta["EN"]))}</div>
 <h1>{esc(name)}</h1><p class="lede">{esc(T(ind["说明"], ind["说明EN"]))}</p>
-<div class="chips" style="margin-top:10px"><span class="chip">{T("来源", "Source")}：{esc(ind["来源"])}</span><span class="chip">{T("级别", "Level")}：{esc(T(ind["级别"], LEVEL_EN.get(ind["级别"], "")))}</span>{grade_chip(ind.get("等级"))}</div></div></div>
+<div class="chips" style="margin-top:10px"><span class="chip">{T("来源", "Source")}{CN}{esc(src_t(ind["来源"]))}</span><span class="chip">{T("级别", "Level")}{CN}{esc(lvl)}</span>{grade_chip(ind.get("等级"), ind)}{ref}</div></div></div>
 {head}
-<h2>{T("这个数字落在哪：区间规则与历史占比", "Zones: rules and how often each occurred")}</h2>{zt or '<div class="empty">' + T("只看趋势，没有区间判定。", "Trend only, no zones.") + '</div>'}
-<h2>{T("正常波动范围", "Normal range")}</h2>{rb or '<div class="empty">' + T("样本还不够，满 10 个数据点后给出。", "Not enough data yet.") + '</div>'}
+{itp_h}
+<h2>{T("这个数字落在哪：区间规则与历史占比", "Zones: rules and how often each occurred")}</h2>{zt or empty_state("none", T("只看趋势", "Trend only"), T("这个指标没有区间判定，只看走势。", "This gauge has no zones; read the trend."), "")}
+<h2>{T("正常波动范围", "Normal range")}</h2>{rb or empty_state("recording", T("历史还不够长", "History still short"), T("自录指标，从开始记录那天起逐日积累。", "Self-recorded, accumulating daily since recording began."), rec_wait(rec) if rec else T("样本不足。", "Not enough data."))}
 {charts}
-<p class="tnote" style="margin-top:20px">{T("区间规则和证据等级的出处见", "Rules and evidence grades: ")}<a href="{U("/methodology/")}">{T("口径与规则", "Methodology")}</a>{T("；规则改动记在", "; rule changes are logged in ")}<a href="{U("/corrections/")}">{T("更正记录", "Corrections")}</a>{T("。", ".")}</p>"""
+{vf}
+{sw_h}
+{pager}
+<div class="pgfoot"><p class="tnote">{T("区间规则和证据等级的出处见", "Rules and evidence grades: ")}<a href="{U("/methodology/")}">{T("口径与规则", "Methodology")}</a>{T("；规则改动记在", "; rule changes are logged in ")}<a href="{U("/corrections/")}">{T("更正记录", "Corrections")}</a>{T("。", ".")}</p>{feedback_btn(name)}</div>"""
         emit(f"macro/{key}/index.html", f"{name} · {T('宏观仪表盘', 'Macro')} · {T(BRAND, BRAND_EN)}", body, active="macro", chart=True,
-             desc=T(ind["说明"], ind["说明EN"]))
+             desc=(f"{name} {j['显示']} · {T(j['区间'], j['区间EN'])} · " if j else "") + T(ind["说明"], ind["说明EN"]))
+    # 已停用指标：轻量说明页（D5），旧推特链接不落到空页面
+    for ind in R.RETIRED:
+        name = T(ind["名称"], ind["EN"])
+        body = f"""{crumbs([(T("宏观仪表盘", "Macro"), "/macro/"), (f'L{ind["层"]} · {T(R.LAYERS[ind["层"]]["名称"], R.LAYERS[ind["层"]]["EN"])}', f'/macro/#layer-{ind["层"]}'), (name, None)])}
+<div class="ph"><div><div class="eyebrow">{T("已停用", "Retired")}</div><h1>{esc(name)}</h1></div></div>
+{empty_state("retired", T(f"这个指标已于 {ind['停用']} 停用", f"Retired on {ind['停用']}"), T(ind["原因"], ind["原因EN"]),
+             f'{T("相关内容现在在：", "Now covered in: ")}<a href="{U(ind["去处"])}">{esc(T(ind["去处名"], ind["去处名EN"]))}</a> · <a href="{U("/corrections/")}">{T("详见更正记录", "see Corrections")}</a>', raw=True)}
+<div class="pgfoot">{feedback_btn(name)}</div>"""
+        emit(f"macro/{ind['key']}/index.html", f"{name} · {T('已停用', 'Retired')} · {T(BRAND, BRAND_EN)}", body, active="macro",
+             desc=T(f"{ind['名称']} 已于 {ind['停用']} 停用：{ind['原因']}", f"{ind['EN']} was retired on {ind['停用']}: {ind['原因EN']}"))
 
 
 # ---------------------------------------------------------------- 发射台矩阵
@@ -1413,7 +2122,7 @@ def build_launchpad(sd, matrix):
 <div class="tw"><table><thead><tr><th class="l">{T("平台", "Platform")}</th><th class="l">{T("链", "Chain")}</th><th>{T("当日手续费", "Fees (day)")}</th><th>{T("日环比", "DoD")}</th><th>{T("7 日均", "7d avg")}</th><th>{T("当日协议收入", "Revenue (day)")}</th><th>{T("30 日走势", "30d trend")}</th></tr></thead><tbody>{deep_rows}</tbody></table></div>
 <div class="card" style="padding:14px 18px;margin-top:12px"><h3 style="margin-top:0">{T("深度追踪平台 · 手续费走势", "Deep-tracked platforms · fees")}</h3>{trend}</div>
 <h2 id="arc">{T("Arc 整链观察", "Arc chain watch")} <span class="sub">{T("本站链上节点自算口径（和 DefiLlama 口径不同，单独列）", "own node data (differs from DefiLlama)")}</span></h2>
-<div class="card" style="padding:14px 18px;font-size:13px;color:var(--ink2)">Arc {esc(arc.get("日期") or "")}：{T("发射台合计", "launchpads")} <b class="num">{f_usd(arc.get("发射台手续费"))}</b> ·
+<div class="card" style="padding:14px 18px;font-size:13px;color:var(--ink2)">Arc {esc(arc.get("日期") or "")}{CN}{T("发射台合计", "launchpads")} <b class="num">{f_usd(arc.get("发射台手续费"))}</b> ·
 {T("全链手续费", "chain fees")} <b class="num">{f_usd(arc.get("全链手续费"))}</b> · {T("升级条件", "upgrade condition")} {esc(arc.get("升级条件") or "—")} ·
 {len(arc.get("发射台") or [])} {T("家发射台", "launchpads")}，<a href="{U("/launchpad/platforms/arc-" + first_arc + "/")}">{T("逐个看 →", "see each →")}</a></div>"""
     lab = {"chain": {"all": T("全部生态", "All chains"), "other": T("其他链", "Other chains")}, "p": {"d1": T("当日", "Day"), "d7": T("7 日", "7d"), "d30": T("30 日", "30d")},
@@ -1732,13 +2441,24 @@ def readings_table(lay):
 
 
 def old_note(obj):
-    if obj.get("版本") == 2:
+    d = obj.get("日期") or obj.get("止") or ""
+    notes = []
+    if obj.get("版本") != 2:
+        if LANG["v"] == "en":
+            return '<div class="note">This entry was written before bilingual logs (and under the pre-2026-10-02 L1 rules), so it is shown in Chinese.</div>'
+        if obj.get("类型") == "日":
+            notes.append("本篇按 2026-10-02 之前的旧 L1 规则写成")
+    if obj.get("类型") == "日" and d and d < "2026-10-08":
+        notes.append(T("本篇的 L2 按 2026-10-08 之前的旧规则（MVRV Z-Score 区间）写成，综合研判只由 L1 和 L4 组合",
+                       "L2 in this entry follows the pre-2026-10-08 rule (MVRV Z-Score zone) and the overall read combined only L1 and L4"))
+    if not notes:
         return ""
-    if LANG["v"] == "en":
-        return '<div class="note">This entry was written before bilingual logs (and under the pre-2026-10-02 L1 rules), so it is shown in Chinese.</div>'
-    if obj.get("类型") == "日":
-        return '<div class="note">本篇按 2026-10-02 之前的旧 L1 规则写成，按冻结规则保持原样；规则变更见「更正记录」。</div>'
-    return ""
+    return f'<div class="note">{esc("；".join(notes) if LANG["v"] == "zh" else "; ".join(notes))}{T("。按冻结规则保持原样，规则变更见", ". Kept as written under the freeze rule; see ")}<a href="{U("/corrections/")}">{T("更正记录", "Corrections")}</a>{T("。", ".")}</div>'
+
+
+RULE_SEP = [("2026-10-02", "规则变更：L1 宏观层重建，此前日志按旧规则", "Rule change: L1 rebuilt; earlier logs follow the old rules"),
+            ("2026-10-04", "规则变更：L1-B 加密资金通道修订", "Rule change: L1-B crypto funding channels revised"),
+            ("2026-10-08", "规则变更：L2 改为状态机，此前的 L2 结论按旧规则（MVRV Z-Score 区间）", "Rule change: L2 became a state machine; earlier L2 verdicts follow the old rule (MVRV Z-Score zone)")]
 
 
 def build_journal(S, logs, weeks, months, sd):
@@ -1752,12 +2472,16 @@ def build_journal(S, logs, weeks, months, sd):
             l2s = lg.get("L2") if lay["层"] == 2 else None
             if l2s:
                 txt = l2s.get("摘要") if LANG["v"] == "zh" else l2s.get("摘要EN")
-                body_ = (f'<div class="card l2sum" style="padding:12px 16px;border-top:0">'
+                body_ = (f'<div class="card l2sum" style="padding:12px 16px">'
                          + "".join(f"<div>{esc(x)}</div>" for x in (txt or "").split("\n"))
                          + (f'<div class="tnote">⚠ {T("当天 L2 数据源有延迟，用了缓存。", "L2 used cached data that day.")}</div>' if l2s.get("数据延迟") else "")
                          + "</div>")
+                if lay.get("读数"):
+                    body_ += readings_table(lay)
             else:
                 body_ = readings_table(lay)
+            if lay["层"] == 1:
+                body_ += l1_raw(lg)
             layers += f'<h3>L{lay["层"]} · {esc(LF(lay, "名称"))} {tone_chip(LF(lay, "结论"), lay["tone"])}</h3>{body_}'
         lp = lg.get("发射台") or {}
         lp_html = ""
@@ -1770,25 +2494,27 @@ def build_journal(S, logs, weeks, months, sd):
                        f'<th>{T("日环比", "DoD")}</th><th>{T("赛道份额", "Share")}</th></tr></thead>'
                        f'<tbody>{trs}</tbody></table></div>' + (f'<p class="tnote">{esc(lp.get("一句话") or "")}</p>' if LANG["v"] == "zh" else ""))
         cm = commentary(lg["日期"])
-        srcs = "".join(tone_chip(f'{k} {"✓" if v.get("ok") else "✗"}', "up" if v.get("ok") else "dn") for k, v in (lg.get("数据源") or {}).items())
-        miss = f'<p class="tnote">{T("当天缺失的核心指标：", "Core indicators missing that day: ")}{esc("、".join(lg["核心缺失"]))}</p>' if lg.get("核心缺失") else ""
+        srcs = "".join(tone_chip(f'{T(k, SRC_EN.get(k, k))} {"✓" if v.get("ok") else "✗"}', "up" if v.get("ok") else "dn") for k, v in (lg.get("数据源") or {}).items())
+        nm_en = {**{x["名称"]: x["EN"] for x in R.REGISTRY}, "L2 周期状态机": "L2 cycle state machine", "BTC 未平仓合约（7 日变化）": "BTC open interest (7d change)"}
+        miss = (f'<p class="tnote">{T("当天缺失的核心指标：", "Core indicators missing that day: ")}{esc(T("、".join(lg["核心缺失"]), ", ".join(nm_en.get(x, x) for x in lg["核心缺失"])))}</p>'
+                if lg.get("核心缺失") else "")
         patch = (f'<p class="tnote">⚠ {T("本篇为补录：首次生成于", "Re-run: first generated")} {esc(lg.get("首次生成UTC") or "")} UTC'
                  f'{T("，当天数据源晚到后按冻结规则覆盖一次。", ", overwritten once after late data per the freeze rule.")}</p>') if lg.get("补录") else ""
         heroes, cards = hero_cards(S, lg["日期"], sd if lg is logs[-1] else None)
         share_obj = {"title": T(f"链上终端 · {lg['日期']} 解读", f"Onchain terminal · {lg['日期']}"), "date": lg["日期"], "sub": LF(lg["综合"], "一句话"),
-                     "html": share_payload_home(lg, cards), "file": f"uncleonchain-journal-{lg['日期']}.png"}
-        no_cm = '<div class="empty">' + T("今天没有人工点评，上面是规则化自动解读。", "No hand-written note today; the above is rule-based.") + '</div>'
+                     "html": share_payload_home(lg.get("综合"), cards, lg.get("预警")), "file": f"uncleonchain-journal-{lg['日期']}.png"}
+        no_cm = empty_state("none", T("今天没有人工点评", "No hand-written note today"), T("上面是规则化自动解读。", "The above is rule-based."), "")
         pager_prev = f'<a href="{U("/journal/" + prev_ + "/")}">← {prev_}</a>' if prev_ else '<span></span>'
         pager_next = f'<a href="{U("/journal/" + next_ + "/")}">{next_} →</a>' if next_ else '<span></span>'
         body = f"""{crumbs([(T("解读日志", "Journal"), "/journal/"), (lg["日期"], None)])}
 <div class="ph"><div><div class="eyebrow">Daily Log · {T("每日解读", "daily")}</div><h1>{lg["日期"]} {T("解读日志", "log")}</h1></div>
-<div class="stamp">{T("生成于", "Generated")} <b>{esc(lg["生成时间UTC"])} UTC</b><br>{T("写入即冻结 · 规则见「口径与规则」", "Frozen once written · rules in Methodology")}</div></div>
+<div class="stamp">{T("解读生成", "Log generated")} <b>{esc(lg["生成时间UTC"])} UTC</b><br>{T("写入即冻结 · 规则见「口径与规则」", "Frozen once written · rules in Methodology")}</div></div>
 {old_note(lg)}
-{verdict_block(lg, link=False)}
+{verdict_block(lg, link=True)}
 {patch}
 <h2>{T("大叔点评", "Uncle's note")}</h2>{f'<div class="cmt article">{cm}</div>' if cm else no_cm}
 <h2>{T("异动预警", "Alerts")}</h2>{alert_board(lg, title=T("当日预警", "Alerts of the day"), share_id="shareLog")}
-<h2>{T("四层读数", "Four-layer readings")}</h2>{layers}
+<h2>{T("四层读数", "Four-layer readings")} <span class="sub">{T("当天冻结值；最新值见宏观仪表盘", "frozen that day; latest values on the Macro dashboard")}</span></h2>{layers}
 {miss}
 {lp_html}
 <h2>{T("数据源状态", "Data sources")}</h2><div class="src">{srcs}</div>
@@ -1797,31 +2523,40 @@ def build_journal(S, logs, weeks, months, sd):
         emit(f'journal/{lg["日期"]}/index.html', f'{lg["日期"]} {T("解读日志", "log")} · {T(BRAND, BRAND_EN)}', body, active="journal", share=True,
              scripts=js, desc=LF(lg["综合"], "一句话"))
 
+    def review_note(rv):
+        hits = [(d, zh, en) for d, zh, en in RULE_SEP if rv["起"] <= d <= rv["止"]]
+        if not hits:
+            return ""
+        t = "；".join(f"{d} {zh}" for d, zh, en in hits) if LANG["v"] == "zh" else "; ".join(f"{d} {en}" for d, zh, en in hits)
+        return (f'<div class="note">{T("注：这期间有规则变更——", "Note: rules changed during this period — ")}{esc(t)}{T("。下面各层结论的切换有一部分是规则变更所致，不是市场变化（见", ". Some verdict switches below come from the rule change, not the market (see ")}'
+                f'<a href="{U("/corrections/")}">{T("更正记录", "Corrections")}</a>{T("）。", ").")}</div>')
+
     def review_page(rv, kind_slug, title):
         rows = "".join(f'<tr><td class="l">{esc(LF(x, "名称"))}</td><td>{esc(x["期初"])}</td><td>{esc(x["期末"])}</td><td>{esc(x["变化"])}</td>'
                        f'<td>{esc(x["低"])} ~ {esc(x["高"])}</td><td class="l">{esc(short_zone(LF(x, "期初区间")))} → {tone_chip(short_zone(LF(x, "期末区间")), x["tone"])}</td></tr>'
                        for x in rv["指标"])
-        vrows = "".join(f'<tr><td class="l">L{v["层"]} · {esc(LF(v, "名称"))}</td><td class="l">{esc(v["期初"])} → {esc(v["期末"])}</td>'
-                        f'<td class="l wrap">{esc("、".join(f"{k}×{n}" for k, n in v["分布"].items()) or "—")}</td>'
+        vrows = "".join(f'<tr><td class="l">L{v["层"]} · {esc(LF(v, "名称"))}</td><td class="l">{esc(en_fix(v["期初"]) or v["期初"])} → {esc(en_fix(v["期末"]) or v["期末"])}</td>'
+                        f'<td class="l wrap">{esc(T("、", ", ").join(f"{en_fix(k) or k}×{n}" for k, n in v["分布"].items()) or "—")}</td>'
                         f'<td>{v["切换次数"]}</td></tr>' for v in rv["结论"])
-        al = "".join(f'<li><span class="d">{a["日期"][5:]}</span><span class="lv {"h" if a["级别"] == "高" else "m"}">{T(a["级别"], "H" if a["级别"] == "高" else "M")}</span>{esc(LF(a, "文本"))}</li>' for a in rv["预警"])
+        al = "".join(f'<li><span class="d">{a["日期"][5:]}</span><span class="lv {"h" if a["级别"] == "高" else "m"}">{T(a["级别"], "H" if a["级别"] == "高" else "M")}</span>{esc(alert_text(a))}</li>' for a in rv["预警"])
         lp = rv.get("发射台") or {}
         prow = "".join(f'<tr><td class="l">{esc(p["名称"])}</td><td>{f_usd(p["期间"])}</td><td>{f_usd(p["上期"])}</td>'
                        f'<td>{fmt_delta(p["变化"], pct_input=True)}</td></tr>' for p in lp.get("平台") or [])
         cm = commentary(rv["标签"])
-        no_cm = '<div class="empty">' + T("人工复盘点评待补充（content/journal/" + esc(rv["标签"]) + ".md）。", "No hand-written review yet.") + '</div>'
-        no_al = '<div class="empty">' + T("期间没有触发预警。", "No alerts.") + '</div>'
+        no_cm = empty_state("none", T("人工复盘点评待补充", "No hand-written review yet"), T("规则化复盘见下方。", "The rule-based review is below."), "")
+        no_al = empty_state("none", T("期间没有触发预警", "No alerts"), T("阈值规则见「口径与规则」。", "Thresholds are in Methodology."), "")
         return f"""{crumbs([(T("解读日志", "Journal"), "/journal/"), (title, None)])}
 <div class="ph"><div><div class="eyebrow">{kind_slug.title()} Review</div><h1>{esc(title)}</h1>
 <p class="lede">{rv["起"]} ~ {rv["止"]} · {T("期间日志", "logs")} {rv["日志天数"]} {T("篇", "")}</p></div><div class="stamp">{T("生成于", "Generated")} <b>{esc(rv["生成时间UTC"])} UTC</b></div></div>
 {old_note(rv)}
-<div class="glass verdict"><div class="body"><div class="lbl">{T("一句话复盘", "Summary")}</div><div class="txt">{esc(LF(rv, "一句话"))}</div></div></div>
+{review_note(rv)}
+<div class="glass verdict"><div class="body"><div class="lbl">{T("一句话复盘", "Summary")}</div><div class="txt">{esc(en_fix(LF(rv, "一句话")) or "(Chinese only — written before bilingual logs)")}</div></div></div>
 <h2>{T("大叔点评", "Uncle's note")}</h2>{f'<div class="cmt article">{cm}</div>' if cm else no_cm}
 <h2>{T("核心指标区间变化", "Core indicators over the period")}</h2><div class="tw"><table><thead><tr><th class="l">{T("指标", "Indicator")}</th><th>{T("期初", "Start")}</th><th>{T("期末", "End")}</th><th>{T("变化", "Change")}</th><th>{T("区间低 ~ 高", "Low ~ high")}</th><th class="l">{T("区间判定", "Zone")}</th></tr></thead><tbody>{rows}</tbody></table></div>
 <h2>{T("各层结论分布", "Verdicts by layer")}</h2><div class="tw"><table><thead><tr><th class="l">{T("层", "Layer")}</th><th class="l">{T("期初 → 期末", "Start → end")}</th><th class="l">{T("分布（天数）", "Distribution (days)")}</th><th>{T("切换次数", "Switches")}</th></tr></thead><tbody>{vrows}</tbody></table></div>
 <h2>{T("发射台", "Launchpads")} <span class="sub">Top60 {f_usd(lp.get("赛道期间合计"))} · {T("较上期", "vs prior")} {fmt_delta(lp.get("赛道变化"), pct_input=True)}</span></h2>
 <div class="tw"><table><thead><tr><th class="l">{T("平台", "Platform")}</th><th>{T("期间手续费", "Fees")}</th><th>{T("上期", "Prior")}</th><th>{T("变化", "Change")}</th></tr></thead><tbody>{prow}</tbody></table></div>
-<h2>{T("期间预警", "Alerts")}（{len(rv["预警"])}）</h2>{f'<div class="card"><ul class="alerts">{al}</ul></div>' if al else no_al}"""
+<h2>{T("期间预警", "Alerts")}{T("（", " (")}{len(rv["预警"])}{T("）", ")")}</h2>{f'<div class="card"><ul class="alerts">{al}</ul></div>' if al else no_al}"""
 
     for wk in weeks:
         t_ = T(f'{wk["标签"]} 周复盘', f'{wk["标签"]} weekly review')
@@ -1829,21 +2564,47 @@ def build_journal(S, logs, weeks, months, sd):
     for mo in months:
         t_ = T(f'{mo["标签"]} 月复盘', f'{mo["标签"]} monthly review')
         emit(f'journal/month/{mo["标签"]}/index.html', f'{t_} · {T(BRAND, BRAND_EN)}', review_page(mo, "month", t_), active="journal", desc=LF(mo, "一句话"))
-    dl = "".join(f'<li><span class="d">{lg["日期"]}</span><span><a href="{U("/journal/" + lg["日期"] + "/")}">{esc(LF(lg["综合"], "一句话"))}</a>'
-                 f'<span class="s">{" ".join(tone_chip(LF(x, "短"), x["tone"]) for x in lg["层"])}</span></span>'
-                 f'<span class="x chip">{len(lg.get("预警") or [])} {T("预警", "alerts")}</span></li>' for lg in reversed(logs))
-    wl = "".join(f'<li><span class="d">{w["标签"]}</span><span><a href="{U("/journal/week/" + w["标签"] + "/")}">{esc(LF(w, "一句话"))}</a>'
-                 f'<span class="s">{w["起"]} ~ {w["止"]}</span></span></li>' for w in reversed(weeks))
-    ml = "".join(f'<li><span class="d">{m["标签"]}</span><span><a href="{U("/journal/month/" + m["标签"] + "/")}">{esc(LF(m, "一句话"))}</a></span></li>' for m in reversed(months))
-    e1 = '<div class="empty">' + T("第一篇月复盘会在下个月 1 日自动生成。", "The first monthly review comes on the 1st.") + '</div>'
-    e2 = '<div class="empty">' + T("第一篇周复盘会在下周一自动生成。", "The first weekly review comes next Monday.") + '</div>'
-    e3 = '<div class="empty">' + T("第一篇日志会在下一次每日运行时写入。", "The first log comes with the next daily run.") + '</div>'
+
+    # ---- 日志列表（P4）：按月分组；规则变更那天插分隔行；和前一天不同的层高亮；标题和前一天相同时变浅
+    by_month = {}
+    rlog = list(reversed(logs))
+    first_v2 = next((lg["日期"] for lg in logs if lg.get("版本") == 2), None)
+    place = {"2026-10-02": first_v2 or "2026-10-02"}         # L1 重建当天的日志还是旧规则写的，分隔行放到第一篇新规则日志下面
+    for n, lg in enumerate(rlog):
+        prev = rlog[n + 1] if n + 1 < len(rlog) else None
+        pl = {x["层"]: x.get("短") for x in (prev or {}).get("层", [])}
+        same = prev and LF(prev["综合"], "一句话") == LF(lg["综合"], "一句话")
+        chips = " ".join(f'<span class="chip t-{x["tone"]}{" hl" if prev and pl.get(x["层"]) != x.get("短") else ""}"><i></i>{esc(en_fix(LF(x, "短")) or "—")}</span>' for x in lg["层"])
+        line = en_fix(LF(lg["综合"], "一句话")) or "(Chinese only — written before bilingual logs)"
+        row = (f'<li class="{"same" if same else ""}"><span class="d">{lg["日期"]}<small>{T("生成", "gen.")} {esc((lg.get("生成时间UTC") or "")[11:16])} UTC</small></span>'
+               f'<span><a href="{U("/journal/" + lg["日期"] + "/")}">{esc(line)}</a>'
+               f'{" <em class=samel>" + T("同前一日", "same as the day before") + "</em>" if same else ""}<span class="s">{chips}</span></span>'
+               f'<span class="x chip">{len(lg.get("预警") or [])} {T("条预警", "alerts")}</span></li>')
+        seps = list(RULE_SEP)
+        if (lg.get("综合") or {}).get("规则") == "四层合成" and not ((prev or {}).get("综合") or {}).get("规则") == "四层合成":
+            seps.append((lg["日期"], "规则变更：综合研判改为四层合成，此前日志只由 L1 和 L4 组合", "Rule change: the overall read now combines all four layers; earlier logs combined only L1 and L4"))
+        for d, zh, en in seps:
+            pd_ = place.get(d, d)
+            anc = "2026-10-08-comp" if "四层合成" in zh else d
+            rid = "2026-10-08-comp" if "四层合成" in zh else d
+            if lg["日期"] == pd_ or (prev and prev["日期"] < pd_ < lg["日期"]):
+                row += f'<li class="rsep" id="rule-{rid}"><span class="d">{d}</span><span>⚑ {esc(T(zh, en))} · <a href="{U("/corrections/")}#rc-{anc}">{T("见更正记录", "see Corrections")}</a></span></li>'
+        by_month.setdefault(lg["日期"][:7], []).append(row)
+    cur_m = max(by_month) if by_month else None
+    dl = "".join(f'<details class="card mgrp"{" open" if m == cur_m else ""}><summary>{m} <span class="sub">{sum(1 for r in rows if "rsep" not in r)} {T("篇", "logs")}</span></summary><ul class="list">{"".join(rows)}</ul></details>'
+                 for m, rows in sorted(by_month.items(), reverse=True))
+    wl = "".join(f'<li><span class="d">{w["标签"]}</span><span><a href="{U("/journal/week/" + w["标签"] + "/")}">{esc(en_fix(LF(w, "一句话")) or "(Chinese only)")}</a>'
+                 f'<span class="s">{w["起"]} ~ {w["止"]}{T("（含规则变更）", " (includes a rule change)") if any(w["起"] <= d <= w["止"] for d, *_ in RULE_SEP) else ""}</span></span></li>' for w in reversed(weeks))
+    ml = "".join(f'<li><span class="d">{m["标签"]}</span><span><a href="{U("/journal/month/" + m["标签"] + "/")}">{esc(en_fix(LF(m, "一句话")) or "(Chinese only — written before bilingual logs)")}</a></span></li>' for m in reversed(months))
+    e1 = empty_state("none", T("还没有月复盘", "No monthly review yet"), T("第一篇月复盘会在下个月 1 日自动生成。", "The first monthly review comes on the 1st."), "")
+    e2 = empty_state("none", T("还没有周复盘", "No weekly review yet"), T("第一篇周复盘会在下周一自动生成。", "The first weekly review comes next Monday."), "")
+    e3 = empty_state("none", T("还没有日志", "No logs yet"), T("第一篇日志会在下一次每日运行时写入。", "The first log comes with the next daily run."), "")
     body = f"""<div class="ph"><div><div class="eyebrow">Journal</div><h1>{T("解读日志", "Journal")}</h1>
-<p class="lede">{T("每天 UTC 10:20 自动拉数后，按「口径与规则」里公开的区间规则写一篇解读日志：四层读数、各层结论、综合研判、发射台、异动预警。<b>写入即冻结</b>——历史日志不改，唯一例外是当天数据源晚到、重跑后核心缺失变少，会覆盖一次并标「补录」。每周一自动出上一周的周复盘，每月 1 日出上个月的月复盘。大叔的人工点评单独标注，和自动解读分开。",
-                   "Every day at 10:20 UTC a rule-based log is written from the public rules in Methodology: four-layer readings, verdicts, launchpads and alerts. <b>Frozen once written</b> — the only exception is a same-day re-run with fewer missing core inputs, marked 'Re-run'. Weekly reviews come out on Mondays, monthly ones on the 1st. Hand-written notes are kept separate.")}</p></div></div>
-<h2>{T("月复盘", "Monthly reviews")}</h2>{f'<div class="card"><ul class="list">{ml}</ul></div>' if ml else e1}
+<p class="lede">{T(f"日更每天 UTC {MAIN_TIME} 定时运行（推送代码时也会额外跑一次），按「口径与规则」里公开的规则写一篇解读日志：综合研判（四层合成）、四层读数、发射台、异动预警。<b>写入即冻结</b>——历史日志不改，唯一例外是当天数据源晚到、重跑后核心缺失变少，会覆盖一次并标「补录」。每周一出上一周的周复盘，每月 1 日出上个月的月复盘。规则变更的日子在列表里有分隔行。",
+                   f"The daily run at {MAIN_TIME} UTC (plus an extra run whenever code is pushed) writes a rule-based log from the public rules in Methodology: the overall read, four-layer readings, launchpads and alerts. <b>Frozen once written</b> — the only exception is a same-day re-run with fewer missing core inputs, marked 'Re-run'. Weekly reviews come out on Mondays, monthly ones on the 1st. Rule-change days are marked in the list.")}</p></div></div>
+<h2>{T("每日解读", "Daily logs")}</h2>{dl or e3}
 <h2>{T("周复盘", "Weekly reviews")}</h2>{f'<div class="card"><ul class="list">{wl}</ul></div>' if wl else e2}
-<h2>{T("每日解读", "Daily logs")}</h2>{f'<div class="card"><ul class="list">{dl}</ul></div>' if dl else e3}"""
+<h2>{T("月复盘", "Monthly reviews")}</h2>{f'<div class="card"><ul class="list">{ml}</ul></div>' if ml else e1}"""
     emit("journal/index.html", T(f"解读日志 · {BRAND}", f"Journal · {BRAND_EN}"), body, active="journal",
          desc=T("每日规则化解读 + 周复盘 + 月复盘，写入即冻结，公开可查。", "Daily rule-based logs plus weekly and monthly reviews, frozen once written."))
 
@@ -1855,14 +2616,14 @@ L1_RULES_ZH = """<p style="margin:0 0 8px"><b style="color:var(--ink)">L1 宏观
 <li><b>逆风</b>：实际利率急升 且（BAA / NFCI 13 周转紧 或 乐观度 z &lt; 0），或流动性闸门触发（净流动性 13 周 ≤ −2.72% 且美元 13 周走强）——框架里名义风险预算 ×0.7，两项不叠乘。</li>
 <li><b>中性</b>：其余情况。高收益利差 13 周走阔 ≥ 0.30pp 时加「警戒」（先行提示，本站阈值，未经回测）。</li></ul>
 <p style="margin:0 0 8px"><b>L1-B 加密资金通道（只确认、不预测）</b>：稳定币主线（去重 = 总量 − 支付/机构 − 生息/合成）、交易子弹（剔除 Tron，并列含 Tron 口径）、现货 ETF（趋势确认，滞后）、期货升水（CME 与 Deribit 并列）和资金轮动矩阵（ETF 13 周 × 交易子弹 13 周：共振 / 换手 / 承接 / 双撤）。和价格同向 = 确认，背离 = 提示，不进档位判定。</p>
-<p style="margin:0 0 8px">证据等级：已验证 &gt; 已验证·方向 &gt; 描述读数 &gt; 监控；只有「已验证」的指标可以直接影响仓位参数，其余只做记录。13 周变化统一按周五收盘对齐（取当周最后可得值）。阈值只用 2018 年以后的数据定。</p>"""
+<p style="margin:0 0 8px">实际利率不再是 L1 的第一指标（第一指标是乐观度），改作“状态变量”：它决定当下落在情境矩阵的哪一行，再和信用条件一起定档。每条规则「能否改交易参数」逐条照抄宏观总文档 §10.2，见下方「L1 规则清单」。13 周变化统一按周五收盘对齐（取当周最后可得值）。阈值只用 2018 年以后的数据定。</p>"""
 L1_RULES_EN = """<p style="margin:0 0 8px"><b style="color:var(--ink)">L1 Macro liquidity</b> (since 2026-10-02, based on the BTC full-cycle macro attribution study): L1 sets volatility, pacing and risk budget over weeks to months, not direction.</p>
 <ul style="margin:0 0 10px;padding-left:20px"><li><b>Tailwind</b>: optimism z &gt; 0 and the BAA spread narrowing over 13 weeks, with no real-yield surge.</li>
 <li><b>Neutral-cautious</b>: a real-yield surge (13w ≥ +0.40pp) on its own — one notch less risk budget, no adds.</li>
 <li><b>Headwind</b>: a surge plus (BAA/NFCI tightening or optimism z &lt; 0), or the liquidity gate (net liquidity 13w ≤ −2.72% with a stronger dollar) — nominal risk budget ×0.7, not compounded.</li>
 <li><b>Neutral</b>: everything else. An 'alert' tag is added when the high-yield spread widens ≥ 0.30pp over 13 weeks (early warning; this site's threshold, not back-tested).</li></ul>
 <p style="margin:0 0 8px"><b>L1-B crypto funding channels (confirm, don't predict)</b>: stablecoin main line (de-dup = total − payment − yield/synthetic), trading bullets (ex-Tron, with an incl.-Tron lens), spot ETFs (trend confirmation, lagging), futures basis (CME and Deribit side by side) and the rotation matrix (ETF 13w × trading bullets 13w). Agreement with price confirms, divergence warns; not part of the regime verdict.</p>
-<p style="margin:0 0 8px">Evidence grades: verified &gt; verified·direction &gt; descriptive &gt; monitor; only verified gauges may move position parameters. 13-week changes are aligned to Friday closes. Thresholds use post-2018 data only.</p>"""
+<p style="margin:0 0 8px">The real yield is no longer L1's first gauge (optimism is); it is a state variable that picks the row of the scenario matrix and sets the regime together with credit. Whether each rule may change trading parameters is copied rule by rule from §10.2 of the macro study — see the L1 rule list below. 13-week changes are aligned to Friday closes. Thresholds use post-2018 data only.</p>"""
 LP_RULES = {
     "zh": [("统计口径", "发射台一律用手续费（fees），不用成交量；成交量口径覆盖不全，会系统性低估份额。"),
            ("统计周期", "只报「昨天」这一个 UTC 完整日；当天数据永远不完整，不进正文。"),
@@ -1883,62 +2644,162 @@ LP_RULES = {
 }
 
 
+L1_RULE_LIST = load(os.path.join(ROOT, "config", "l1_rules.json"), {}) or {}
+
+
+DIR_EN = {"偏多": "leaning up", "防顶": "top watch", "待确认": "unconfirmed", "偏空": "leaning down"}
+TIER_EN = {"顺风": "Tailwind", "中性": "Neutral", "中性偏谨慎": "Neutral-cautious", "逆风": "Headwind", "警戒": "Alert (add-on)"}
+
+
+def comp_rules_html():
+    """综合研判怎么来（M11）：四段分工 + 一句话拼接规则 + 当前短句表（直接读 config/composite.json）。"""
+    C = R.综合.load_cfg()
+    rows2 = "".join(f"<tr><td class='l'>{esc(T(R.L2_STATES[k][0], R.L2_STATES[k][1]))}</td><td class='l'>{esc(T(v['方向'], DIR_EN.get(v['方向'], v['方向'])))}</td><td class='l wrap'>{esc(T(v['一句话'], v['一句话EN']))}</td></tr>"
+                    for k, v in C["L2"].items() if k in R.L2_STATES)
+    rows1 = "".join(f"<tr><td class='l'>{esc(T(k, TIER_EN.get(k, k)))}</td><td class='l wrap'>{esc(T(v.get('一句话') or '（不进一句话）', v.get('一句话EN') or '(not in the line)'))}</td><td class='l wrap'>{esc(T(v['分段'], v['分段EN']))}</td></tr>"
+                    for k, v in C["L1"].items() if not k.startswith("_"))
+    tiers = ("顺风", "中性", "中性偏谨慎", "逆风")
+    rows3 = "".join(f"<tr><td class='l'>{esc(T(d, DIR_EN.get(d, d)))}</td>" + "".join(f"<td class='l wrap'>{esc(T(*C['动作'][d][t]))}</td>" for t in tiers) + "</tr>" for d in ("偏多", "防顶", "待确认", "偏空"))
+    trig = "".join(f"<li>{esc(T(r['条件'], r.get('条件EN', r['条件'])))} → {esc(T(r['中文'], r['英文']))}</li>" for r in C["逆风原因"])
+    p1 = T("综合研判按研究里定下的分工四层合成：<b>L2 给方向的底色</b>；<b>L1 管节奏和风险预算</b>，不管方向；<b>L3 看筹码</b>和周期方向是一致还是背离；<b>L4 只描述短期温度</b>，不改变动作（L4 还没完成研究）。",
+           "The overall read combines four layers along the study's division of labour: <b>L2 sets the direction</b>; <b>L1 sets pace and risk budget</b>, not direction; <b>L3 checks</b> whether flows agree with the cycle; <b>L4 only describes short-term temperature</b> and never changes the action (its research is not finished).")
+    p2 = T("一句话 =「{方向句}；{但}{节奏句}，{动作}。{筹码背离提示}{短期提示}」：方向偏多而 L1 是中性偏谨慎 / 逆风，或方向偏空 / 防顶而 L1 是顺风时加「但」；动作只来自 L1 的风险预算规则和 L2 研究写定的交接原则「方向上不急于看空，节奏上不追高、按 L1 的风险预算分批」；L3 和方向背离时追加一句；L4 不是中性时追加短期温度。一句话超过 60 字先去掉短期提示，再去掉背离提示（四段里仍然完整显示）。",
+           "One line = '{direction}; {but} {pace} — {action}. {flow divergence} {short term}': 'but' is added when the direction leans up while L1 is cautious/headwind, or leans down / top-risk while L1 is a tailwind; actions come only from L1's risk-budget rules and the L2 hand-over principle ('no rush to turn bearish on direction; no chasing on pace, scale in per L1's budget'); a divergence note is added when L3 disagrees; L4 adds its temperature when not neutral. Lines over 60 characters drop the short-term note first, then the divergence note (both stay in the paragraphs).")
+    p3 = T("「节奏上不追高」只出现在「方向偏多 + L1 偏紧」的组合里（L2 研究 §4 交接原则）；「可它改变不了熊市的深度」出自宏观总文档：熊市跌多深按周期成熟度排序、和利率冲击无关。短句全文见 config/composite.json。",
+           "“No chasing” only appears when the direction leans up and L1 is tight (L2 study §4 hand-over principle); “it won't change how deep a bear market goes” comes from the macro study: bear depth ranks with cycle maturity, not rate shocks. Full phrases are in config/composite.json.")
+    th = "".join(f"<th class='l'>{esc(T(t, TIER_EN.get(t, t)))}</th>" for t in tiers)
+    return (f'<div class="card mcard"><p>{p1}</p><p>{p2}</p>'
+            f'<h4>{T("表 1 · L2 方向", "Table 1 · L2 direction")}</h4><div class="tw"><table><thead><tr><th class="l">{T("L2 状态", "L2 state")}</th><th class="l">{T("方向", "Direction")}</th><th class="l">{T("一句话用", "Line phrase")}</th></tr></thead><tbody>{rows2}</tbody></table></div>'
+            f'<h4>{T("表 2 · L1 节奏", "Table 2 · L1 pace")}</h4><div class="tw"><table><thead><tr><th class="l">{T("档位", "Regime")}</th><th class="l">{T("一句话用", "Line phrase")}</th><th class="l">{T("分段用", "Paragraph")}</th></tr></thead><tbody>{rows1}</tbody></table></div>'
+            f'<p class="tnote">{T("逆风的触发原因（多个同时成立只取最前面一条）：", "Headwind triggers (first match wins):")}</p><ul class="tnote">{trig}</ul>'
+            f'<h4>{T("表 3 · 动作（方向 × L1 档位）", "Table 3 · Action (direction × L1 regime)")}</h4><div class="tw"><table><thead><tr><th class="l">{T("方向", "Direction")}</th>{th}</tr></thead><tbody>{rows3}</tbody></table></div>'
+            f'<p class="tnote">{p3}</p></div>')
+
+
 def build_methodology():
     lp_rows = "".join(f"<tr><td class='l'>{esc(k)}</td><td class='l wrap'>{esc(v)}</td></tr>" for k, v in LP_RULES[LANG["v"]])
+    S = G["S"]
     macro = ""
     for i, meta in R.LAYERS.items():
-        trs = ""
-        for ind in [x for x in R.INDICATORS if x["层"] == i]:
-            zones = "；".join(f"{T(c[1], c[2])}" + ("" if c[0] is None else f" < {R.FMT[ind['fmt']](c[0])}") for c in ind["cuts"])
+        trs, seen_etf = "", False
+        for ind in ind_layer_list(i):
+            if ind["key"] in ("etf13", "etf28"):          # 两个窗口描述相同，合并成一行
+                if seen_etf:
+                    continue
+                seen_etf = True
+                nm = T("现货 ETF 净流入（13 周 / 4 周两个窗口）", "Spot ETF net flow (13-week and 4-week windows)")
+            else:
+                nm = T(ind["名称"], ind["EN"])
+            zr = zone_rules(ind)
+            zones = "；".join(f"{T(c[1], c[2])} {r}" for c, r in zip(ind["cuts"], zr)) if len(ind["cuts"]) > 1 else T("只看趋势", "trend only")
             if ind["key"] in OWN_PCT:
-                zones = T("自身历史分位：<20 低位 / 20–80 中段 / >80 高位（满 90 天）", "own-history percentile: <20 low / 20–80 mid / >80 high (after 90 days)")
-            trs += (f"<tr><td class='l'><a href='{ind_href(ind['key'])}'><b>{esc(T(ind['名称'], ind['EN']))}</b></a><br><span class='stamp' style='text-align:left'>{esc(ind['来源'])}</span></td>"
-                    f"<td class='l'>{esc(T(ind['级别'], LEVEL_EN.get(ind['级别'], '')))}{('<br>' + grade_chip(ind.get('等级'))) if ind.get('等级') else ''}</td>"
+                zones = T(f"自身历史分位：< 20 低位 / 20–80 中段 / > 80 高位（满 {R.RECORD_DAYS} 天）", f"own-history percentile: < 20 low / 20–80 mid / > 80 high (after {R.RECORD_DAYS} days)")
+            lvl = T(ind["级别"], LEVEL_EN.get(ind["级别"], "")) + (f" · {T(ind['级别注'], ind['级别注EN'])}" if ind.get("级别注") else "")
+            ref = f"<br><span class='stamp' style='text-align:left'>{esc(T(ind['出处'], ind['出处EN']))}</span>" if ind.get("出处") else ""
+            trs += (f"<tr><td class='l'><a href='{ind_href(ind['key'])}'><b>{esc(nm)}</b></a><br><span class='stamp' style='text-align:left'>{esc(src_t(ind['来源']))}</span>{ref}</td>"
+                    f"<td class='l'>{esc(lvl)}{('<br>' + grade_chip(ind.get('等级'), ind)) if ind.get('等级') else ''}</td>"
                     f"<td class='l wrap'>{esc(T(ind['说明'], ind['说明EN']))}</td>"
-                    f"<td class='l wrap'>{T('按', 'By ')}{esc(T(ind['依据'], ind['依据EN']))}：{esc(zones)}</td></tr>")
-        if i == 2 and not trs:
+                    f"<td class='l wrap'>{T('按', 'By ')}{esc(T(ind['依据'], ind['依据EN']))}{CN}{esc(zones)}</td></tr>")
+        if i == 2:
             trs = (f"<tr><td class='l'><a href='{U('/macro/')}#layer-2'><b>{T('L2 周期状态机', 'L2 cycle state machine')}</b></a><br><span class='stamp' style='text-align:left'>Coin Metrics · bitview.space</span></td>"
-                   f"<td class='l'>{T('核心', 'core')}</td><td class='l wrap'>{T('六个状态 + 14 条信号（底部区 6 / 底部确认 6 / 顶部风险 2）+ 13 条关键价位，每条信号带证据等级和研究文档章节。', 'Six states + 14 signals (6 bottom-zone / 6 confirmation / 2 top-risk) + 13 key levels; each signal carries its evidence grade and study section.')}</td>"
-                   f"<td class='l wrap'>{T('状态转换规则见上方「层结论怎么来」', 'Transition rules: see How layer verdicts are made above')}</td></tr>")
-        macro += (f"<h3>L{i} · {esc(T(meta['名称'], meta['EN']))}（{esc(T(meta['问'], meta['问EN']))}？）</h3><div class='tw'><table><thead><tr><th class='l'>{T('指标', 'Indicator')}</th>"
+                   f"<td class='l'>{T('层结论', 'layer verdict')}</td><td class='l wrap'>{T('六个状态 + 14 条信号（底部区 6 / 底部确认 6 / 顶部风险 2）+ 13 条关键价位，每条信号带证据等级和研究文档章节。下面 6 个指标是状态机的输入。', 'Six states + 14 signals (6 bottom-zone / 6 confirmation / 2 top-risk) + 13 key levels; each signal carries its evidence grade and study section. The six gauges below feed it.')}</td>"
+                   f"<td class='l wrap'>{T('状态转换规则见上方「层结论怎么来」', 'Transition rules: see How layer verdicts are made above')}</td></tr>") + trs
+        macro += (f"<h3>L{i} · {esc(T(meta['名称'], meta['EN']))}{T('（', ' (')}{esc(T(meta['问'], meta['问EN']))}{T('？）', '?)')}</h3><div class='tw'><table><thead><tr><th class='l'>{T('指标', 'Indicator')}</th>"
                   f"<th class='l'>{T('级别 / 证据', 'Level / evidence')}</th><th class='l'>{T('怎么读', 'How to read')}</th><th class='l'>{T('区间规则', 'Zones')}</th></tr></thead><tbody>{trs}</tbody></table></div>")
-    pend = "".join(f"<tr><td class='l'>L{p['层']}</td><td class='l'>{esc(T(p['名称'], p['EN']))}</td><td class='l wrap'>{esc(T(p['原因'], p['原因EN']))}</td></tr>" for p in R.PENDING)
+    # L1 规则清单（宏观总文档 §10.2，逐条照抄）
+    perm = L1_RULE_LIST.get("权限", {})
+    pdef = "".join(f"<li><b>{esc(T(k, {'只做系数': 'Coefficient only', '只做记录': 'Record only', '禁止使用': 'Do not use', '方法规则': 'Method rule'}[k]))}</b>{CN}{esc(T(*v))}</li>" for k, v in perm.items())
+    rrows = "".join(f"<tr><td>{esc(r['#'])}</td><td class='l wrap'><b>{esc(T(r['规则'], r['规则EN']))}</b></td><td class='l wrap'>{esc(T(r['怎么用'], r['怎么用EN']))}</td>"
+                    f"<td class='l wrap'>{esc(T(r['可靠程度'], r['可靠程度EN']))}</td><td class='l'><b>{esc(T(r['能否改交易参数'], r['能否改交易参数EN']))}</b></td></tr>"
+                    for r in L1_RULE_LIST.get("rules", []))
+    sched_rows = "".join(f"<tr><td class='l'>{esc(T(x['名称'], x['EN']))}</td><td>UTC {esc(x['时间'])}</td><td class='l wrap'>{esc(T(x['覆盖'], x['覆盖EN']))}</td><td class='l'><code>.github/workflows/{esc(x['文件'])}</code></td></tr>" for x in SCHED)
+    win_rows = ""
+    for ind in R.INDICATORS:
+        since, why, why_en = R.stats_window(S, ind)
+        ds = sorted(d for d, v in R.series_of(S, ind).items() if v is not None)
+        win_rows += (f"<tr><td class='l'><a href='{ind_href(ind['key'])}'>{esc(T(ind['名称'], ind['EN']))}</a></td><td>{ds[0] if ds else '—'}</td>"
+                     f"<td>{since or (ds[0] if ds else '—')}</td><td class='l wrap'>{esc(T(why, why_en)) or T('全部历史', 'full history')}</td></tr>")
+    pend = "".join(f"<tr><td class='l'>L{p['层']}</td><td class='l'>{esc(T(p['名称'], p['EN']))}</td><td class='l wrap'>{esc(T(p['原因'], p['原因EN']))}</td><td class='l'>{esc(T(p.get('计划', '—'), p.get('计划EN', '—')))}</td></tr>" for p in R.PENDING)
+    retired = "".join(f"<tr><td class='l'><a href='{ind_href(p['key'])}'>{esc(T(p['名称'], p['EN']))}</a></td><td>{p['停用']}</td><td class='l wrap'>{esc(T(p['原因'], p['原因EN']))}</td></tr>" for p in R.RETIRED)
     banned = "".join(f"<tr><td class='l wrap'>{esc(T(a, b))}</td><td class='l wrap'>{esc(T(c, d))}</td></tr>" for a, b, c, d in R.BANNED)
     body = f"""{crumbs([(T("口径与规则", "Methodology"), None)])}<h1>{T("口径与规则", "Methodology")}</h1>
 <p class="lede">{T("解读日志里的每一个判断都来自下面这些公开规则。规则改动会在更正记录里留痕，历史日志不跟着改。", "Every judgement in the logs comes from the public rules below. Rule changes are logged in Corrections; past logs are never rewritten.")}</p>
-<h2>{T("层结论怎么来", "How layer verdicts are made")}</h2>
-<div class="card" style="padding:16px 20px;font-size:13.5px;color:var(--ink2)">
+<nav class="anch static">{"".join(f'<a href="#{h}">{t}</a>' for t, h in ((T("层结论", "Verdicts"), "verdicts"), (T("综合研判", "Overall read"), "comp"), (T("L1 规则清单", "L1 rules"), "l1rules"), (T("标签说明", "Tags"), "legend"), (T("更新时间", "Schedule"), "schedule"), (T("统计窗口", "Stats window"), "window"), (T("指标与区间", "Indicators"), "indicators"), (T("预警阈值", "Alerts"), "alerts")))}</nav>
+<h2 id="verdicts">{T("层结论怎么来", "How layer verdicts are made")}</h2>
+<div class="card mcard">
 {T(L1_RULES_ZH, L1_RULES_EN)}
-<p style="margin:0 0 8px"><b style="color:var(--ink)">L2 {T("周期", "Cycle")}</b>：{T("规则化状态机（l2/l2_signals.py，《BTC周期层L2研究》§7）逐日推进：新高 → 牛市；减半后 480~600 天或 MVRV≥2 且价/200 周均≥2 → 牛市·顶部风险区；回撤 ≥20% → 牛市回撤·待确认（收窄到 10% 内回到牛市）；回撤 ≥35% 且新高已过 90 天、减半已过 450 天 → 熊市；熊市里底部区信号 ≥2 条 → 熊底区；离最低点 +40% 且最低点已过 90 天，或四条短期成本线连续 7 天站上且本轮出现过分龄底部确认 → 熊末→牛初；收盘跌破本轮最低收盘则退回熊市。数据：Coin Metrics 社区接口 + bitview.space。层结论 = 当天状态。",
-"A rule-based state machine (l2/l2_signals.py, L2 cycle study §7) stepped day by day: new high → bull; halving +480–600 days or MVRV ≥2 with price/200W MA ≥2 → bull top-risk; drawdown ≥20% → bull pullback (back to bull inside 10%); ≥35% with the high ≥90 days old and the halving ≥450 days old → bear; ≥2 bottom-zone signals in a bear → bottom zone; +40% from a ≥90-day-old low, or 7 days above four short-term cost lines with an age-band confirmation this cycle → late bear → early bull; a close below the cycle low reverts to bear. Data: Coin Metrics community API + bitview.space. Layer verdict = the state of the day.")}</p>
-<p style="margin:0 0 8px"><b style="color:var(--ink)">L3 {T("筹码", "Coin flows")}</b>：{T("以交易所 BTC 7 日净流量为准：净流出 = 筹码离开交易所，净流入 = 留意抛压。交易所余额 30 日变化只展示趋势。", "Based on 7-day exchange net flow: outflow = coins leaving, inflow = watch selling. Exchange balance change is shown as trend only.")}</p>
-<p style="margin:0"><b style="color:var(--ink)">L4 {T("情绪", "Sentiment")}</b>：{T("恐慌贪婪（−2~+2）、资金费率（−1~+2）、未平仓 7 日变化（−1~+1）合计 ≥3 过热、1~2 偏热、≤−2 偏冷，其余中性。", "Fear & greed (−2..+2), funding (−1..+2) and 7-day OI change (−1..+1): ≥3 hot, 1–2 warm, ≤−2 cool, otherwise neutral.")}</p></div>
-<h2>{T("异动预警阈值", "Alert thresholds")}</h2>
-<div class="card" style="padding:16px 20px;font-size:13.5px;color:var(--ink2)">{T("核心指标区间切换 · L1 档位切换 · 交易所单日 BTC 净流量 ≥ 5,000 枚 · 资金费率正负翻转 · VIX 穿越 20 · L2 周期状态切换 / L2 信号亮灭 · 发射台赛道单日 ±25% · 发射台当日第一易主 · 深度追踪平台日环比超 ±60%。",
-                                                                                      "Core zone changes · L1 regime change · ≥5,000 BTC exchange net flow in a day · funding sign flip · VIX crossing 20 · L2 state change / L2 signal on-off · launchpad sector ±25% in a day · new #1 launchpad · deep-tracked platform ±60% DoD.")}</div>
-<h2>{T("宏观四层 · 指标与区间", "Indicators and zones")}</h2>{macro}
+<p style="margin:0 0 8px"><b style="color:var(--ink)">L2 {T("周期", "Cycle")}</b>{CN}{T("规则化状态机（l2/l2_signals.py，《BTC周期层L2研究》§7）逐日推进：新高 → 牛市；减半后 480~600 天或 MVRV ≥ 2 且价/200 周均 ≥ 2 → 牛市·顶部风险区；回撤 ≥ 20% → 牛市回撤·待确认（收窄到 10% 内回到牛市）；回撤 ≥ 35% 且新高已过 90 天、减半已过 450 天 → 熊市；熊市里底部区信号 ≥ 2 条 → 熊底区；离最低点 +40% 且最低点已过 90 天，或四条短期成本线连续 7 天站上且本轮出现过分龄底部确认 → 熊末→牛初；收盘跌破本轮最低收盘则退回熊市。数据：Coin Metrics 社区接口 + bitview.space。层结论 = 当天状态。",
+"A rule-based state machine (l2/l2_signals.py, L2 cycle study §7) stepped day by day: new high → bull; halving +480–600 days or MVRV ≥ 2 with price/200W MA ≥ 2 → bull top-risk; drawdown ≥ 20% → bull pullback (back to bull inside 10%); ≥ 35% with the high ≥ 90 days old and the halving ≥ 450 days old → bear; ≥ 2 bottom-zone signals in a bear → bottom zone; +40% from a ≥ 90-day-old low, or 7 days above four short-term cost lines with an age-band confirmation this cycle → late bear → early bull; a close below the cycle low reverts to bear. Data: Coin Metrics community API + bitview.space. Layer verdict = the state of the day.")}</p>
+<p style="margin:0 0 8px"><b style="color:var(--ink)">L3 {T("筹码", "Coin flows")}</b>{CN}{T("以交易所 BTC 7 日净流量为准：< −2,000 枚 = 净流出（筹码离开交易所），> +2,000 枚 = 净流入（留意抛压），其余进出均衡。交易所余额 30 日变化只展示趋势。L3 数据维度正在重做。", "Based on 7-day exchange net flow: < −2,000 BTC = outflow, > +2,000 = inflow (watch selling), otherwise balanced. Exchange balance change is shown as trend only. L3 is being rebuilt.")}</p>
+<p style="margin:0"><b style="color:var(--ink)">L4 {T("情绪", "Sentiment")}</b>{CN}{T("恐慌贪婪（−2~+2）、资金费率（−1~+2）、未平仓 7 日变化（−1~+1）合计 ≥ 3 过热、1~2 偏热、≤ −2 偏冷，其余中性。L4 还没完成研究，只描述温度。", "Fear & greed (−2..+2), funding (−1..+2) and 7-day OI change (−1..+1): ≥ 3 hot, 1–2 warm, ≤ −2 cool, otherwise neutral. L4 research is unfinished; it only describes temperature.")}</p></div>
+<h2 id="comp">{T("综合研判怎么来", "How the overall read is made")}</h2>{comp_rules_html()}
+<h2 id="l1rules">{T("L1 规则清单（宏观总文档 §10.2，逐条照抄）", "L1 rule list (macro study §10.2, copied rule by rule)")}</h2>
+<div class="card mcard"><p>{T("「能否改交易参数」分四种：", "“May it change trading parameters” has four values:")}</p><ul>{pdef}</ul></div>
+<div class="tw" style="margin-top:10px"><table><thead><tr><th>#</th><th class="l">{T("规则", "Rule")}</th><th class="l">{T("怎么用", "How to use")}</th><th class="l">{T("可靠程度", "Reliability")}</th><th class="l">{T("能否改交易参数", "Trading parameters")}</th></tr></thead><tbody>{rrows}</tbody></table></div>
+<h2 id="legend">{T("标签说明", "What the tags mean")}</h2><p class="tnote">{T("「级别」和「证据等级」是两个维度：级别说这个指标在本层判定里起什么作用，证据等级说它在研究里被检验到什么程度。", "Level and evidence grade are two separate dimensions: level is the gauge's role in the layer verdict, evidence grade is how well the research has tested it.")}</p>{tag_legend()}
+<h2 id="schedule">{T("更新时间", "Update schedule")}</h2>
+<div class="tw"><table><thead><tr><th class="l">{T("任务", "Job")}</th><th>{T("时间", "Time")}</th><th class="l">{T("覆盖哪些数据", "Covers")}</th><th class="l">{T("配置", "Config")}</th></tr></thead><tbody>{sched_rows}</tbody></table></div>
+<p class="tnote">{esc(T(SITE_CFG.get("推送重跑", ""), SITE_CFG.get("推送重跑EN", "")))}{T("页面上「解读生成」是当天日志冻结的时间，「数据更新」是页面读数最后一次刷新的时间。", " 'Log generated' is when the day's log was frozen; 'Data updated' is when the page's readings were last refreshed.")}</p>
+<h2 id="window">{T("统计窗口", "Statistics window")}</h2>
+<div class="card mcard"><ol><li>{T("L1 宏观指标：只用 2018 年以后（方法规则：2010–2017 宏观对 BTC 没有解释力）。", "L1 macro gauges: post-2018 only (method rule: macro had no explanatory power in 2010–2017).")}</li>
+<li>{T("链上周期类（L2 估值与持有者、L3 交易所）：2012-01-01 起；有效起点更晚的取有效起点。", "On-chain cycle gauges (L2 valuation & holders, L3 exchanges): from 2012-01-01, or the first valid day if later.")}</li>
+<li>{T("百分比变化类（L1-B 稳定币系列、交易所余额 30 日变化等）：从上面的起点往后若仍有 |变化率| > 100% 的点，推迟到此后再也没有的第一天（早期基数过小）。", "Percentage-change gauges (L1-B stablecoin lines, 30-day exchange balance change, etc.): pushed to the first day after which no |change| > 100% occurs (small early base).")}</li>
+<li>{T("图上照样展示统计起点之前的数据，铺灰底并注明原因；每个详情页写明实际统计窗口。", "Earlier data stays on the charts with a grey background and a note; every indicator page states its actual window.")}</li></ol></div>
+<details class="card fold"><summary>{T("各指标的数据起点与统计起点", "Data start and statistics start per gauge")}</summary><div class="tw" style="margin:0;border:0"><table><thead><tr><th class="l">{T("指标", "Gauge")}</th><th>{T("数据起点", "Data from")}</th><th>{T("统计起点", "Stats from")}</th><th class="l">{T("原因", "Why")}</th></tr></thead><tbody>{win_rows}</tbody></table></div></details>
+<h2 id="alerts">{T("异动预警阈值", "Alert thresholds")}</h2>
+<div class="card mcard">{T("核心指标区间切换 · L1 档位切换 · L2 周期状态切换 / L2 信号亮灭 · 交易所单日 BTC 净流量 ≥ 5,000 枚 · 资金费率正负翻转 · VIX 穿越 20 · 发射台赛道单日 ±25% · 发射台当日第一易主 · 深度追踪平台日环比超 ±60%。",
+                                                                                      "Core zone changes · L1 regime change · L2 state change / L2 signal on-off · ≥ 5,000 BTC exchange net flow in a day · funding sign flip · VIX crossing 20 · launchpad sector ±25% in a day · new #1 launchpad · deep-tracked platform ±60% DoD.")}</div>
+<h2 id="indicators">{T("宏观四层 · 指标与区间", "Indicators and zones")}</h2>{macro}
 <h2>{T("研究里测过、不再使用的说法", "Claims tested and dropped")}</h2><div class="tw"><table><thead><tr><th class="l">{T("说法", "Claim")}</th><th class="l">{T("原因", "Why")}</th></tr></thead><tbody>{banned}</tbody></table></div>
-<h2>{T("框架里暂未接入的指标", "Not yet connected")}</h2><div class="tw"><table><thead><tr><th class="l">{T("层", "Layer")}</th><th class="l">{T("指标", "Indicator")}</th><th class="l">{T("原因 / 计划", "Reason / plan")}</th></tr></thead><tbody>{pend}</tbody></table></div>
+<h2>{T("框架里暂未接入的指标", "Not yet connected")}</h2><div class="tw"><table><thead><tr><th class="l">{T("层", "Layer")}</th><th class="l">{T("指标", "Indicator")}</th><th class="l">{T("原因", "Reason")}</th><th class="l">{T("计划数据源", "Planned source")}</th></tr></thead><tbody>{pend}</tbody></table></div>
+<h2>{T("已停用的指标", "Retired gauges")}</h2><div class="tw"><table><thead><tr><th class="l">{T("指标", "Gauge")}</th><th>{T("停用日", "Retired")}</th><th class="l">{T("原因", "Why")}</th></tr></thead><tbody>{retired}</tbody></table></div>
 <h2>{T("解读日志规则", "Log rules")}</h2>
-<div class="card" style="padding:16px 20px;font-size:13.5px;color:var(--ink2)">{T("日志日期 = 解读当天（UTC），每个读数带自己的数据日期（FRED 按美国工作日、NFCI 周度、交易所余额约有 2 周滞后，超过容忍天数标 ⚠）。写入即冻结；同一天重跑且核心缺失变少才覆盖一次并标「补录」。周复盘按 ISO 周（周一至周日），月复盘按自然月。人工点评放在 content/journal/，单独标注。",
-                                                                                   "Log date = UTC day of the run; each reading carries its own data date (FRED on US business days, NFCI weekly, exchange balance ~2 weeks late; stale readings get ⚠). Frozen once written; a same-day re-run only overwrites when fewer core inputs are missing, marked 'Re-run'. Weekly reviews follow ISO weeks, monthly ones calendar months.")}</div>
+<div class="card mcard">{T(f"日志日期 = 解读当天（UTC），日更每天 UTC {MAIN_TIME} 运行，每个读数带自己的数据日期（FRED 按美国工作日、NFCI 周度、交易所余额约有 2 周滞后，超过容忍天数标 ⚠）。写入即冻结；同一天重跑且核心缺失变少才覆盖一次并标「补录」。周复盘按 ISO 周（周一至周日），月复盘按自然月；切换发生在规则变更当天的，注明「规则变更所致」。人工点评放在 content/journal/，单独标注。网站其他位置展示日志内容时标「日志 · 冻结时间」，读数和最新值不同以最新值为准。",
+                                                                                   f"Log date = UTC day of the run (the daily run is at {MAIN_TIME} UTC); each reading carries its own data date (FRED on US business days, NFCI weekly, exchange balance ~2 weeks late; stale readings get ⚠). Frozen once written; a same-day re-run only overwrites when fewer core inputs are missing, marked 'Re-run'. Weekly reviews follow ISO weeks, monthly ones calendar months; switches on a rule-change day are labelled as such. Wherever log content appears elsewhere it is marked with its freeze time; the latest values win.")}</div>
 <h2>{T("发射台口径", "Launchpad conventions")}</h2><div class="tw"><table><tbody>{lp_rows}</tbody></table></div>"""
     emit("methodology/index.html", T(f"口径与规则 · {BRAND}", f"Methodology · {BRAND_EN}"), body, active="methodology")
 
 
 def build_corrections(sd, fixes):
     rows = "".join(f"<tr><td class='l'>{esc(f['日期'])}</td><td>{f['旧值']:,.0f} → {f['新值']:,.0f}</td>"
-                   f"<td class='l'>{esc(f.get('口径', ''))}</td><td>{esc(f['修正时间UTC'][:10])}</td></tr>"
+                   f"<td class='l'>{esc(T(f.get('口径', ''), {'事件': 'event'}.get(f.get('口径', ''), f.get('口径', ''))))}</td><td>{esc(f['修正时间UTC'][:10])}</td></tr>"
                    for f in sorted(fixes, key=lambda x: x["日期"], reverse=True)[:60])
-    rule_rows = "".join(f"<tr><td class='l'>{esc(c['日期'])}</td><td class='l'>{esc(T(c['范围'], c['EN范围']))}</td><td class='l wrap'>{esc(T(c['内容'], c['EN']))}</td></tr>"
-                        for c in R.RULE_CHANGES)
+    S = G["S"]
+    rule_rows = ""
+    for c in sorted(R.RULE_CHANGES, key=lambda c: c["日期"], reverse=True):
+        anc = c.get("锚") or c["日期"]
+        cl = next((v["version"] for v in CHANGELOG if any(i.get("corrections_anchor") == "#rc-" + anc for i in v["items"])), None)
+        jr = "2026-10-08-comp" if anc == "2026-10-08-comp" else c["日期"]
+        links = ((f'<br><a href="{U("/journal/")}#rule-{jr}">{T("日志分隔行", "journal marker")}</a>' if anc != "2026-10-08-stats" else "<br>")
+                 + (f' · <a href="{U("/changelog/")}#v{cl}">{T("更新日志", "changelog")} {cl}</a>' if cl else ""))
+        extra = ""
+        if anc == "2026-10-08-stats":
+            trs = ""
+            for ind in R.INDICATORS:
+                old, new = R.stats_window_old(S, ind), (R.stats_window(S, ind)[0])
+                ds = sorted(d for d, v in R.series_of(S, ind).items() if v is not None)
+                new = new or (ds[0] if ds else None)
+                if old and new and old != new:
+                    trs += f"<tr><td class='l'>{esc(T(ind['名称'], ind['EN']))}</td><td>{old}</td><td>{new}</td></tr>"
+            extra = (f'<details class="fold"><summary>{T("受影响指标：旧 → 新统计起点", "Affected gauges: old → new start")}</summary><div class="tw"><table><thead><tr><th class="l">{T("指标", "Gauge")}</th>'
+                     f'<th>{T("旧起点", "Old")}</th><th>{T("新起点", "New")}</th></tr></thead><tbody>{trs}</tbody></table></div></details>') if trs else ""
+        rule_rows += (f"<tr id='rc-{anc}'><td class='l'>{esc(c['日期'])}{links}</td><td class='l'>{esc(T(c['范围'], c['EN范围']))}</td>"
+                      f"<td class='l wrap'>{esc(T(c['内容'], c['EN']))}{extra}</td><td class='l wrap'>{esc(T(c.get('原因') or '—', c.get('原因EN') or '—'))}</td></tr>")
+    d0 = (sd or {}).get("日期") or ""
     rev = [a for a in (sd or {}).get("异常", []) if "修订" in a or "延迟" in a]
-    rn = (f"<h2>{T('近期数据源变动', 'Recent data-source changes')}</h2><div class='card'><ul class='alerts'>" + "".join(f"<li>{esc(a)}</li>" for a in rev) + "</ul></div>") if rev else ""
+    rn = (f"<h2>{T('近期数据源变动', 'Recent data-source changes')}</h2><div class='card'><ul class='alerts'>" + "".join(f"<li><span class='d'>{esc(d0)}</span>{esc(a if LANG['v'] == 'zh' else 'Launchpad source note (details on the launchpad page, Chinese only)')}</li>" for a in rev) + "</ul></div>") if rev else ""
+    revs = load(REV_PATH, []) or []
+    rv_rows = "".join(f"<tr><td class='l'>{esc(r['检测日'])}</td><td class='l'>{esc(r.get('名称') or r['指标'])}</td><td>{esc(r['起'])} ~ {esc(r['止'])}</td><td>{r['点数']}</td><td>{r['最大变动']:+.2f}%（{esc(r['日期'])}）</td></tr>"
+                      for r in reversed(revs[-80:]))
+    rv_html = (f'<div class="tw"><table><thead><tr><th class="l">{T("检测日", "Detected")}</th><th class="l">{T("指标", "Gauge")}</th><th>{T("影响区间", "Range")}</th><th>{T("点数", "Points")}</th><th>{T("最大变动", "Largest change")}</th></tr></thead><tbody>{rv_rows}</tbody></table></div>'
+               if rv_rows else empty_state("none", T("还没有检测到回改", "No revisions detected yet"), T("每天生成数据时和前一天比较：7 天以前的数据变动超过 0.5% 就记一笔。", "Every build compares with the previous files: changes over 0.5% to data more than 7 days old are logged here."), ""))
     none_ = '<tr><td class="l" colspan="4">' + T("暂无", "None") + '</td></tr>'
     body = f"""{crumbs([(T("更正记录", "Corrections"), None)])}<h1>{T("更正记录", "Corrections")}</h1>
-<p class="lede">{T("数据源事后修订、PONS 销毁口径重算、规则调整，全部留痕，不覆盖不删除。", "Source revisions, PONS burn recalculations and rule changes — all logged, nothing overwritten.")}</p>
-<h2>{T("规则变更", "Rule changes")}</h2><div class="tw"><table><thead><tr><th class="l">{T("日期", "Date")}</th><th class="l">{T("范围", "Scope")}</th><th class="l">{T("内容", "Change")}</th></tr></thead><tbody>{rule_rows}</tbody></table></div>
+<p class="lede">{T("数据源事后修订、PONS 销毁口径重算、规则调整，全部留痕，不覆盖不删除。每条规则变更写明为什么改，并链到日志里的分隔行和更新日志。", "Source revisions, PONS burn recalculations and rule changes — all logged, nothing overwritten. Each rule change says why, and links to the journal marker and the changelog.")}</p>
+<h2>{T("规则变更", "Rule changes")}</h2><div class="tw"><table><thead><tr><th class="l">{T("日期", "Date")}</th><th class="l">{T("范围", "Scope")}</th><th class="l">{T("改了什么", "What changed")}</th><th class="l">{T("原因", "Why")}</th></tr></thead><tbody>{rule_rows}</tbody></table></div>
 {rn}
+<h2>{T("数据源历史回改（自动记录）", "Source history revisions (automatic)")}</h2>
+<p class="tnote">{T("Coin Metrics、bitview 等会回头修正历史数据。解读日志里的冻结值和现在图上的值对不上时，可以在这里查。", "Coin Metrics, bitview and others revise history. When a frozen log value differs from today's chart, look here.")}</p>{rv_html}
 <h2>{T("PONS 逐日销毁重算记录", "PONS daily burn recalculations")}</h2><div class="tw"><table><thead><tr><th class="l">{T("日期", "Date")}</th><th>{T("旧值 → 新值", "Old → new")}</th><th class="l">{T("口径", "Basis")}</th><th>{T("修正时间", "Fixed")}</th></tr></thead>
 <tbody>{rows or none_}</tbody></table></div>"""
     emit("corrections/index.html", T(f"更正记录 · {BRAND}", f"Corrections · {BRAND_EN}"), body, active="corrections")
@@ -1959,6 +2820,24 @@ first how much risk budget the macro backdrop allows, then the cycle (cheap or e
     emit("about/index.html", T(f"关于 · {BRAND}", f"About · {BRAND_EN}"), body, active="about", narrow=True)
 
 
+def build_changelog():
+    blocks = ""
+    for v in CHANGELOG:
+        lis = ""
+        for i in v["items"]:
+            link = f' <a href="{U("/corrections/")}{i["corrections_anchor"]}">{T("见更正记录", "see Corrections")}</a>' if i.get("corrections_anchor") else ""
+            lis += f'<li><span class="cltag cl-{i["type"]}">{esc(T(*CL_TYPE[i["type"]]))}</span><span>{esc(T(i["zh"], i["en"]))}{link}</span></li>'
+        blocks += (f'<section class="card clv" id="v{esc(v["version"])}"><div class="clh"><b>{esc(v["version"])}</b><span class="stamp">{esc(v["date"])}'
+                   f'{" · " + T("已弹窗提示", "announced") if v.get("notify") else ""}</span></div><h3>{esc(T(v["title_zh"], v["title_en"]))}</h3><ul class="cl">{lis}</ul></section>')
+    body = f"""{crumbs([(T("更新日志", "Changelog"), None)])}<h1>{T("更新日志", "Changelog")}</h1>
+<p class="lede">{T("每一版按实际上线的内容写，新版本在最前面。「数据口径」类改动同时写进更正记录。", "Each version lists what actually shipped, newest first. Data changes are also logged in Corrections.")}</p>
+{blocks}"""
+    emit("changelog/index.html", T(f"更新日志 · {BRAND}", f"Changelog · {BRAND_EN}"), body, active="changelog")
+    if LANG["v"] == "zh":
+        with open(os.path.join(SITE, "changelog.json"), "w", encoding="utf-8") as fh:
+            json.dump(CHANGELOG, fh, ensure_ascii=False, indent=1)
+
+
 def build_404():
     emit("404.html", T(f"页面不存在 · {BRAND}", f"Not found · {BRAND_EN}"),
          f'<h1>{T("页面不存在", "Page not found")}</h1><p class="lede">{T("链接可能过期了，回", "The link may be outdated. Back to the ")}<a href="{U("/")}">{T("终端总览", "overview")}</a>{T("看看。", ".")}</p>')
@@ -1970,16 +2849,14 @@ def build_misc(logs, weeks, months):
         with open(os.path.join(SITE, "assets", k), "w", encoding="utf-8") as fh:
             fh.write(v)
     write("_headers", HEADERS)
-    # 2026-10-08 L2 改为状态机后撤掉的单指标页：旧链接（推特里可能有）跳到 L2 段落
-    write("_redirects", "".join(f"{pre}/macro/{k}/ {pre}/macro/#layer-2 301\n{pre}/macro/{k} {pre}/macro/#layer-2 301\n"
-                                for k in L2_RETIRED for pre in ("", "/en")))
-    for pre in ("", "en"):
-        for k in L2_RETIRED:
-            shutil.rmtree(os.path.join(SITE, pre, "macro", k), ignore_errors=True)
+    # 已停用指标的旧链接现在有自己的说明页（D5），不再 301 到宏观页
+    rd = os.path.join(SITE, "_redirects")
+    if os.path.exists(rd):
+        os.remove(rd)
     write("robots.txt", f"User-agent: *\nAllow: /\nSitemap: https://{DOMAIN}/sitemap.xml\n")
     urls = ["/", "/macro/", "/launchpad/", "/rotation/", "/narrative/", "/reports/", "/journal/", "/methodology/", "/corrections/", "/about/",
             "/launchpad/report/", "/launchpad/report/archive/"]
-    urls += [f"/macro/{x['key']}/" for x in R.INDICATORS]
+    urls += [f"/macro/{x['key']}/" for x in R.INDICATORS + R.RETIRED] + ["/changelog/"]
     for p in PILLARS:
         urls += [f'/{p["slug"]}/{x["slug"]}/' for x in ALL_POSTS[p["slug"]]]
     urls += [f'/reports/{r["slug"]}/' for r in ALL_REPORTS]
@@ -2011,6 +2888,31 @@ def build_misc(logs, weeks, months):
     write("CNAME", DOMAIN + "\n")
 
 
+def write_latest(S, rs):
+    """/data/latest.json（附录 C）：全站当前读数的唯一来源，迷你走势线日度 365 个点、周度 52 个点。"""
+    tlog = G.get("TODAY_LOG") or {}
+    m = {}
+    for x in rs:
+        ind = R.IND[x["key"]]
+        s = R.series_of(S, ind)
+        ds = sorted(d for d in s if s[d] is not None and d <= x["截至"])
+        wk = ind.get("freq") == "w"
+        ds = ds[-52:] if wk else [d for d in ds if R.days_between(d, x["截至"]) < 365]
+        rec = R.recording_info(S, ind)
+        m[x["key"]] = {"layer": f"L{ind['层']}", "value": r6(x["值"]), "display": x["显示"], "asof": x["截至"], "stale": x["过期"],
+                       "zone_label_zh": x["区间"], "zone_label_en": x["区间EN"], "bias": R.BIAS.get(x["tone"], "neutral"),
+                       "tier": LEVEL_EN.get(ind["级别"], ind["级别"]), "evidence": ind.get("等级"),
+                       "recording": ({"days": rec["days"], "required": rec["required"], "since": rec["since"]} if rec and not rec["done"] else None),
+                       "spark": ({"freq": "W", "dates": ds, "values": [r6(s[d]) for d in ds]} if wk else
+                                 {"freq": "D", "start": ds[0] if ds else None, "values": [r6(s.get(d)) for d in (_days(ds[0], ds[-1]) if ds else [])]})}
+    out = {"generated_at": (G.get("更新") or "").replace(" ", "T") + ":00Z", "journal_frozen_at": ((tlog.get("生成时间UTC") or "").replace(" ", "T") + ":00Z") if tlog else None,
+           "as_of": G["as_of"], "layers": {f"L{i}": {"verdict_zh": v.get("结论"), "verdict_en": v.get("结论EN"), "short_zh": v.get("短"), "short_en": v.get("短EN"),
+                                                    "bias": R.BIAS.get(v.get("tone"), "neutral")} for i, v in G["VS"].items()},
+           "composite": {"zh": (G["COMP"] or {}).get("一句话"), "en": (G["COMP"] or {}).get("一句话EN")}, "metrics": m}
+    with open(os.path.join(SITE, "data", "latest.json"), "w", encoding="utf-8") as fh:
+        json.dump(out, fh, ensure_ascii=False, separators=(",", ":"))
+
+
 def main():
     sd = load(os.path.join(BUILD, "网站素材.json"))
     if not sd:
@@ -2018,19 +2920,46 @@ def main():
         sys.exit(1)
     L, S = load_macro()
     logs, weeks, months = load_logs("日"), load_logs("周"), load_logs("月")
+    for lg in logs:
+        for lay in lg.get("层", []):
+            if lay.get("短") and lay.get("短EN"):
+                SHORT_EN.setdefault(lay["短"], lay["短EN"])
     rot = load(os.path.join(DATA, "板块台账.json"), {}) or {}
     matrix = load(os.path.join(DATA, "发射台矩阵.json"))
     fixes = load(os.path.join(DATA, "销毁修正记录.json"), []) or []
     G["今天"] = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d")
     G["L2"] = load(os.path.join(DATA, "l2", "l2_latest.json"))
-    G["L2H"] = load(os.path.join(DATA, "l2", "l2_history.json"), []) or []
-    G["更新"] = (L.get("更新时间UTC") or sd.get("生成时间UTC") or "")[:16].replace("T", " ")
+    G["L2S"] = load(os.path.join(DATA, "l2", "l2_series.json"))
+    G["L2LIVE"] = load(os.path.join(DATA, "l2", "l2_live.json"), []) or []
+    R.attach_l2(S, G["L2S"])
+    upd = [(L.get("更新时间UTC") or sd.get("生成时间UTC") or "")[:16].replace("T", " "), (G["L2"] or {}).get("updated_utc") or ""]
+    G["更新"] = max(upd)
     os.makedirs(SITE, exist_ok=True)
-    # 走势数据（两种语言共用）先写；旧版本留下的 data/ 整个清掉重写，避免残留过期文件
-    shutil.rmtree(os.path.join(SITE, "data"), ignore_errors=True)
+    # ---- 全站「当前读数」唯一来源（G3）：这一次构建里所有页面都读同一份 rs / 层结论 / 综合研判
+    as_of = G["今天"]
+    G["S"], G["as_of"] = S, as_of
+    rs = [x for x in (R.judge(S, ind, as_of) for ind in R.INDICATORS) if x]
+    G["RS"], G["JBY"] = rs, {x["key"]: x for x in rs}
+    G["VS"] = {i: R.layer_verdict(i, rs, G["L2"]) for i in R.LAYERS}
+    G["COMP"] = R.综合.compose(G["VS"], rs, G["L2"])
+    G["TODAY_LOG"] = logs[-1] if logs else None
+    G["PREV_LOG"] = next((lg for lg in reversed(logs) if lg["日期"] < as_of), None)
+    G["CHANGES"] = R.alerts(rs, G["PREV_LOG"], R.launchpad_summary(sd), G["VS"][1], G["L2"])
+    btc = S.get("btc_price") or {}
+    nov = {d: v for d, v in btc.items() if "2022-11-01" <= d <= "2022-11-30" and v}
+    G["CYC"] = min(nov, key=nov.get) if nov else "2022-11-21"
+    # 走势数据（两种语言共用）：全历史序列放 data/series/（归档按月保留，不删）；其余旧文件清掉重写
+    dd = os.path.join(SITE, "data")
+    if os.path.isdir(dd):
+        for x in os.listdir(dd):
+            if x != SERIES_DIR:
+                pth = os.path.join(dd, x)
+                shutil.rmtree(pth) if os.path.isdir(pth) else os.remove(pth)
     files = write_indicator_data(S)
+    G["FILES"] = files
+    write_latest(S, rs)
     os.makedirs(os.path.join(SITE, "data", "l2"), exist_ok=True)
-    for fn in ("l2_latest.json", "l2_history.json"):
+    for fn in ("l2_latest.json", "l2_history.json", "l2_live.json"):
         if os.path.exists(os.path.join(DATA, "l2", fn)):
             shutil.copyfile(os.path.join(DATA, "l2", fn), os.path.join(SITE, "data", "l2", fn))
     copy_report_files()
@@ -2050,6 +2979,7 @@ def main():
         build_methodology()
         build_corrections(sd, fixes)
         build_about()
+        build_changelog()
         build_404()
     LANG["v"] = "zh"
     build_misc(logs, weeks, months)
