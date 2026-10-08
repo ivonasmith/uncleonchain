@@ -23,7 +23,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      # 拿最新的 main，不用触发时的那一版：日更和 L2 排队跑，后跑的要建在先跑的提交上，否则 site/ 会冲突
       - uses: actions/checkout@v4
+        with:
+          ref: main
 
       - uses: actions/setup-python@v5
         with:
@@ -60,5 +63,5 @@ jobs:
           git add data/ site/ assets/vendor/
           git diff --cached --quiet && echo "没有变化，跳过提交" && exit 0
           git commit -m "日更 $(date -u +%Y-%m-%d)"
-          git pull --rebase --autostash origin main
+          git pull --rebase --autostash -X theirs origin main   # 万一中途有人推送：site/ 是生成物，以本次生成的为准
           git push
