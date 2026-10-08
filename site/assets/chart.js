@@ -85,6 +85,10 @@ Chart.prototype.draw=function(){
  let lastX=-99;xt.forEach(t=>{const x=X(t);if(x-lastX<54)return;lastX=x;const d=new Date(t);
   const tx=mk('text',{x:x,y:TP+ph+18,'text-anchor':'middle',class:'ax'});
   tx.textContent=spanD>300?(d.getUTCMonth()===0||spanD>1400?d.getUTCFullYear()+'':(d.getUTCFullYear()%100)+'-'+String(d.getUTCMonth()+1).padStart(2,'0')):(d.getUTCMonth()+1)+'/'+d.getUTCDate();svg.appendChild(tx)});
+ // 状态背景色：cfg.states[代码] = {n, c}，数据里 cfg.stk 序列存状态代码
+ if(c.states&&c.stk&&j.s[c.stk]){const a=j.s[c.stk];let s0=0;
+  for(let n=1;n<=idx.length;n++){if(n===idx.length||a[idx[n]]!==a[idx[s0]]){const st=c.states[a[idx[s0]]];
+   if(st){const xa=X(T0(D[idx[s0]])),xb=n<idx.length?X(T0(D[idx[n]])):L+pw;svg.appendChild(mk('rect',{x:xa,y:TP,width:Math.max(0,xb-xa),height:ph,style:`fill:var(--${st.c});opacity:.14`}))}s0=n}}}
  // 正常波动带：p10–p90 浅、p25–p75 深、中位虚线
  if(c.band&&!c.stack){const bd=c.band;
   svg.appendChild(mk('rect',{x:L,width:pw,y:Y(bd.p90),height:Math.max(0,Y(bd.p10)-Y(bd.p90)),style:'fill:var(--cool);opacity:.07'}));
@@ -125,6 +129,8 @@ Chart.prototype.draw=function(){
    const b=document.createElement('b');b.textContent=v==null?'—':F[c.fmt](v)+(c.stack&&tot[n]?'  '+(v/tot[n]*100).toFixed(1)+'%':'');r.append(ii,sp,b);self.tip.appendChild(r)});
   if(c.stack){const r=document.createElement('div');r.className='tr';const sp=document.createElement('span');sp.textContent=LANG==='zh'?'合计':'Total';
    const b=document.createElement('b');b.textContent=usd(tot[n]);r.append(document.createElement('i'),sp,b);self.tip.appendChild(r)}
+  if(c.states&&c.stk&&j.s[c.stk]){const st=c.states[j.s[c.stk][i]];if(st){const r=document.createElement('div');r.className='tr';
+   const sp=document.createElement('span');sp.textContent=st.n;sp.style.color=`var(--${st.c})`;r.append(sp);self.tip.appendChild(r)}}
   if(c.zone){const v=j.s[ser[0].k][i];if(v!=null){const z=c.zone.find(q=>q.ub==null||v<q.ub);if(z){const r=document.createElement('div');r.className='tr';
    const sp=document.createElement('span');sp.textContent=z.n;sp.style.color=`var(--${z.t==='neutral'?'ink2':z.t})`;r.append(sp);self.tip.appendChild(r)}}}
   self.tip.style.display='block';const tw=self.tip.offsetWidth;let lx=x+14;if(lx+tw>W)lx=x-tw-14;self.tip.style.left=Math.max(0,lx)+'px';self.tip.style.top=(TP+4)+'px'};

@@ -22,6 +22,7 @@ SITE_CSS = r"""
 --glass1:rgba(255,255,255,.035);--glass2:rgba(255,255,255,.01);--side:rgba(7,9,15,.92);--topbar:rgba(5,7,12,.9);--thead:#0d111b;
 --glow1:rgba(0,255,204,.07);--glow2:rgba(163,230,53,.05);--scrim:rgba(0,0,0,.55);--toast:#11161f;--grid:rgba(255,255,255,.06);
 --s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--s5:#d55181;--s6:#008300;--s7:#9085e9;--s8:#e66767;--s9:#5b6274;
+--l2-bull:#22c55e;--l2-risk:#f97316;--l2-pb:#fdba74;--l2-bear:#ef4444;--l2-zone:#a855f7;--l2-rec:#3b82f6;
 --c-solana:#c084fc;--c-robinhood:#4ade80;--c-bsc:#fbbf24;--c-base:#60a5fa;--c-arc:#22d3ee;--c-monad:#a78bfa;--c-ethereum:#94a3b8;--c-other:#4b5364;
 --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
 --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
@@ -34,6 +35,7 @@ color-scheme:dark}
 --glass1:rgba(255,255,255,.92);--glass2:rgba(255,255,255,.80);--side:rgba(255,255,255,.94);--topbar:rgba(255,255,255,.92);--thead:#f3f5f8;
 --glow1:rgba(5,150,105,.06);--glow2:rgba(132,204,22,.07);--scrim:rgba(15,23,42,.35);--toast:#ffffff;--grid:rgba(15,23,42,.07);
 --s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--s4:#eda100;--s5:#e87ba4;--s6:#008300;--s7:#4a3aa7;--s8:#e34948;--s9:#94a3b8;
+--l2-bull:#16a34a;--l2-risk:#ea580c;--l2-pb:#f59e0b;--l2-bear:#dc2626;--l2-zone:#9333ea;--l2-rec:#2563eb;
 --c-solana:#9333ea;--c-robinhood:#16a34a;--c-bsc:#b45309;--c-base:#2563eb;--c-arc:#0891b2;--c-monad:#7c3aed;--c-ethereum:#64748b;--c-other:#94a3b8;
 color-scheme:light}
 *{box-sizing:border-box}
@@ -222,6 +224,47 @@ a.ind:hover{border-color:var(--lime-bd);background:var(--card2);color:inherit}
 .src{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
 
 /* ---- FAQ ---- */
+.l2card{position:relative;padding:18px 20px 16px 24px;border-left:4px solid var(--l2c,var(--line2));margin-bottom:14px}
+.l2card .eb{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:11.5px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+.l2card h3.st{margin:8px 0 4px;font-size:22px;line-height:1.3;color:var(--l2c,var(--ink))}
+.l2card h3.st span{font-size:15px;color:var(--ink2);font-weight:500}
+.l2card .desc{color:var(--ink2);font-size:13.5px;margin:0 0 10px}
+.l2nums{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12.5px;color:var(--muted);margin:6px 0 4px}
+.l2nums b{font-family:var(--mono);color:var(--ink);font-weight:600;margin-left:4px}
+.l2sum{font-size:13px;line-height:1.75;color:var(--ink2);margin-top:10px;padding-top:10px;border-top:1px dashed var(--line2)}
+.l2sum div:first-child{color:var(--ink);font-weight:600}
+.l2next{margin-top:10px;padding:10px 12px;border-radius:10px;background:var(--wash);border:1px solid var(--line);font-size:13px;color:var(--ink2);line-height:1.7}
+.l2next b{color:var(--ink)}
+.chip.l2chg{background:var(--warn-bg);border-color:var(--warn-bd);color:var(--warn)}
+.chip.l2stale{background:var(--wash);border-color:var(--line2);color:var(--muted)}
+.l2val .v{font-family:var(--mono);font-size:20px;color:var(--ink)}
+.l2val .k{font-size:12px;color:var(--muted)}.l2val .s{font-size:11.5px;color:var(--muted);margin-top:2px}
+.l2val>div{padding:12px 14px}
+@media(max-width:640px){.grid.g3.l2val{grid-template-columns:repeat(2,minmax(0,1fr))}.l2val .v{font-size:17px}}
+.l2sig{padding:12px 14px}
+.l2sig h4{margin:0 0 8px;font-size:13px;display:flex;justify-content:space-between;gap:8px}
+.l2sig h4 span{font-weight:400;color:var(--muted);font-family:var(--mono)}
+.l2sig ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.l2sig li{display:grid;grid-template-columns:14px 1fr;gap:8px;font-size:13px;line-height:1.5}
+.l2sig .dot{width:10px;height:10px;border-radius:50%;margin-top:5px;border:1.5px solid var(--muted)}
+.l2sig li.on .dot{background:var(--l2d,var(--up));border-color:var(--l2d,var(--up))}
+.l2sig li:not(.on) .nm{color:var(--ink2)}
+.l2sig .meta{display:flex;flex-wrap:wrap;gap:4px 6px;margin-top:3px;align-items:center}
+.l2sig .ev{font-size:10.5px;padding:1px 6px;border-radius:6px;border:1px solid var(--line2);color:var(--ink2)}
+.l2sig .ref{font-size:10.5px;color:var(--muted);font-family:var(--mono)}
+.l2sig .td{font-size:10.5px;padding:1px 6px;border-radius:6px;background:var(--warn-bg);color:var(--warn);border:1px solid var(--warn-bd)}
+.l2sig .nt{font-size:12px;color:var(--muted);margin-top:2px}
+.ladder{padding:8px 0}
+.ladder .rw{display:grid;grid-template-columns:1fr auto 64px;gap:10px;padding:7px 16px;font-size:13px;align-items:center}
+.ladder .rw+.rw{border-top:1px solid var(--line)}
+.ladder .rw .val{font-family:var(--mono);color:var(--ink)}
+.ladder .rw .pc{font-family:var(--mono);text-align:right}
+.ladder .up .pc{color:var(--dn)}.ladder .dn .pc{color:var(--up)}
+.ladder .now{background:var(--lime-bg);border-top:1px solid var(--lime-bd)!important;border-bottom:1px solid var(--lime-bd)}
+.ladder .now b{color:var(--lime-ink)}
+.l2leg{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--ink2);margin:4px 0 8px}
+.l2leg i{display:inline-block;width:12px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px;opacity:.55}
+.l2disc{font-size:12px;color:var(--muted);line-height:1.7;margin:10px 2px 0}
 .faqs{display:grid;gap:8px}
 .faq summary{cursor:pointer;padding:12px 16px;font-weight:600;font-size:13.5px;list-style:none;display:flex;justify-content:space-between;gap:10px}
 .faq summary::-webkit-details-marker{display:none}
@@ -512,6 +555,10 @@ Chart.prototype.draw=function(){
  let lastX=-99;xt.forEach(t=>{const x=X(t);if(x-lastX<54)return;lastX=x;const d=new Date(t);
   const tx=mk('text',{x:x,y:TP+ph+18,'text-anchor':'middle',class:'ax'});
   tx.textContent=spanD>300?(d.getUTCMonth()===0||spanD>1400?d.getUTCFullYear()+'':(d.getUTCFullYear()%100)+'-'+String(d.getUTCMonth()+1).padStart(2,'0')):(d.getUTCMonth()+1)+'/'+d.getUTCDate();svg.appendChild(tx)});
+ // 状态背景色：cfg.states[代码] = {n, c}，数据里 cfg.stk 序列存状态代码
+ if(c.states&&c.stk&&j.s[c.stk]){const a=j.s[c.stk];let s0=0;
+  for(let n=1;n<=idx.length;n++){if(n===idx.length||a[idx[n]]!==a[idx[s0]]){const st=c.states[a[idx[s0]]];
+   if(st){const xa=X(T0(D[idx[s0]])),xb=n<idx.length?X(T0(D[idx[n]])):L+pw;svg.appendChild(mk('rect',{x:xa,y:TP,width:Math.max(0,xb-xa),height:ph,style:`fill:var(--${st.c});opacity:.14`}))}s0=n}}}
  // 正常波动带：p10–p90 浅、p25–p75 深、中位虚线
  if(c.band&&!c.stack){const bd=c.band;
   svg.appendChild(mk('rect',{x:L,width:pw,y:Y(bd.p90),height:Math.max(0,Y(bd.p10)-Y(bd.p90)),style:'fill:var(--cool);opacity:.07'}));
@@ -552,6 +599,8 @@ Chart.prototype.draw=function(){
    const b=document.createElement('b');b.textContent=v==null?'—':F[c.fmt](v)+(c.stack&&tot[n]?'  '+(v/tot[n]*100).toFixed(1)+'%':'');r.append(ii,sp,b);self.tip.appendChild(r)});
   if(c.stack){const r=document.createElement('div');r.className='tr';const sp=document.createElement('span');sp.textContent=LANG==='zh'?'合计':'Total';
    const b=document.createElement('b');b.textContent=usd(tot[n]);r.append(document.createElement('i'),sp,b);self.tip.appendChild(r)}
+  if(c.states&&c.stk&&j.s[c.stk]){const st=c.states[j.s[c.stk][i]];if(st){const r=document.createElement('div');r.className='tr';
+   const sp=document.createElement('span');sp.textContent=st.n;sp.style.color=`var(--${st.c})`;r.append(sp);self.tip.appendChild(r)}}
   if(c.zone){const v=j.s[ser[0].k][i];if(v!=null){const z=c.zone.find(q=>q.ub==null||v<q.ub);if(z){const r=document.createElement('div');r.className='tr';
    const sp=document.createElement('span');sp.textContent=z.n;sp.style.color=`var(--${z.t==='neutral'?'ink2':z.t})`;r.append(sp);self.tip.appendChild(r)}}}
   self.tip.style.display='block';const tw=self.tip.offsetWidth;let lx=x+14;if(lx+tw>W)lx=x-tw-14;self.tip.style.left=Math.max(0,lx)+'px';self.tip.style.top=(TP+4)+'px'};

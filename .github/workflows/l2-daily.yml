@@ -1,0 +1,66 @@
+# L2 周期状态机：每天北京时间 10:17（UTC 02:17）跑 l2/l2_daily.py，结果写进 data/l2/，再重出一次网站。
+# 规则和计算全在 l2/（和研究文档《BTC周期层L2研究》§7 同一份代码），网站只读 data/l2/*.json 展示。
+# UTC 10:20 的日更会把当天的 L2 状态写进解读日志。
+name: L2 周期状态机日更
+
+on:
+  schedule:
+    - cron: "17 2 * * *"
+  workflow_dispatch: {}
+  push:                       # 改了 L2 规则，推上来立刻重跑
+    branches: [main]
+    paths:
+      - "l2/**"
+      - ".github/workflows/l2-daily.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-pipeline       # 和日更共用，两边不会同时往 main 推
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # 上次取到的数据；某个数据源当天取不到时用它继续算（json 里 data_status.stale = true）
+      - name: 恢复 L2 数据缓存
+        uses: actions/cache@v4
+        with:
+          path: l2/cache
+          key: l2-cache-${{ github.run_id }}
+          restore-keys: l2-cache-
+
+      - run: pip install -r l2/requirements.txt
+
+      - name: 跑 L2 状态机
+        env:
+          L2_OUT_DIR: data/l2
+          L2_CACHE_DIR: l2/cache
+        run: python l2/l2_daily.py
+
+      - name: 重出网站（看板素材 → 网站）
+        env:
+          LP_DATA: ${{ github.workspace }}/data
+          LP_OUT: ${{ github.workspace }}/build
+        run: |
+          python3 pipeline/出看板.py
+          python3 pipeline/出网站.py
+
+      - name: 提交 data/l2 与 site/
+        run: |
+          git config user.name "uncleonchain-bot"
+          git config user.email "bot@uncleonchain.com"
+          git add data/l2 site/
+          git diff --cached --quiet && echo "没有变化，跳过提交" && exit 0
+          git commit -m "L2 日更 $(date -u +%Y-%m-%d)"
+          git pull --rebase --autostash origin main
+          git push

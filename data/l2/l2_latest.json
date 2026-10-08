@@ -1,0 +1,347 @@
+{
+ "updated_utc": "2026-10-08 09:09",
+ "data_date": "2026-10-08",
+ "state": {
+  "code": "RECOVERY",
+  "name_zh": "熊末→牛初（底部已确认）",
+  "desc_zh": "满足底部确认条件，到收复上一轮新高之前都在这个阶段",
+  "since": "2026-08-27",
+  "days": 43,
+  "previous": null,
+  "next_zh": "底部已确认，熊末→牛初。历史上之后一年中位 +152%、92% 为正，但期间出现 20~60% 回撤很常见。收盘跌破本轮最低点则退回熊市。",
+  "next_en": "Bottom confirmed. Historically +152% median 1y forward; 20–60% drawdowns along the way are common."
+ },
+ "summary_zh": "L2 周期状态：熊末→牛初（底部已确认）（自 2026-08-27 起，第 43 天）\n价格 82,983，距历史高点 -33.5%，距本轮最低收盘 +41.8%（最低点已过 100 天），距上次减半 901 天。\n底部区信号 2/6：一年已实现利润 < 已实现亏损、长期持有者占比（剔除 >7 年）> 75%。底部确认信号：离本轮最低点 +40% 且最低点已过 90 天、价格连续 7 天站上 3-6 月成本、1-3 月成本、200 日均、短期持有者成本、6-12 月成本跌破 12-18 月成本（本轮已出现）、6-12 月成本跌破 1-2 年成本（本轮已出现）。\n上方关键价位：6-12 月持币成本 88,229（+6.3%）；1-2 年持币成本 101,409（+22.2%）；历史最高收盘 124,824（+50.4%）\n下方关键价位：真实市场均价 TMMP 77,417（-6.7%）；短期持有者成本 74,222（-10.6%）；200 日均线 71,796（-13.5%）\n接下来：底部已确认，熊末→牛初。历史上之后一年中位 +152%、92% 为正，但期间出现 20~60% 回撤很常见。收盘跌破本轮最低点则退回熊市。",
+ "price": 82983.16,
+ "cycle": {
+  "ath": 124824.45,
+  "drawdown_pct": -33.5,
+  "days_since_ath": 367,
+  "cycle_low": 58525.08,
+  "rebound_pct": 41.8,
+  "days_since_low": 100,
+  "days_since_halving": 901,
+  "next_halving_est": "2028-04-10"
+ },
+ "valuation": {
+  "mvrv": 1.542,
+  "price_to_200w": 1.252,
+  "psip_pct": 68.5,
+  "realized_pl_ratio_1y": 0.897,
+  "lth_share_ex7y_pct": 75.8,
+  "green_black": 0.955
+ },
+ "counts": {
+  "bottom_zone": 2,
+  "bottom_confirm_agebands": 2
+ },
+ "signals": [
+  {
+   "key": "Z_盈利供应<50%",
+   "name_zh": "盈利供应占比 < 50%",
+   "name_en": "Percent supply in profit < 50%",
+   "category": "底部区",
+   "evidence": "已验证·方向",
+   "ref": "§3.4 #10",
+   "note": "一半以上的币处在浮亏，历轮熊底都出现过",
+   "on": false,
+   "changed_today": false
+  },
+  {
+   "key": "Z_利润365<亏损365",
+   "name_zh": "一年已实现利润 < 已实现亏损",
+   "name_en": "1y realized profit < realized loss",
+   "category": "底部区",
+   "evidence": "已验证·方向",
+   "ref": "§3.4 #3",
+   "note": "过去一年市场卖币时亏的比赚的多，属于投降式卖出",
+   "on": true,
+   "changed_today": false
+  },
+  {
+   "key": "Z_MVRV<1",
+   "name_zh": "MVRV < 1",
+   "name_en": "MVRV < 1",
+   "category": "底部区",
+   "evidence": "已证伪（固定阈值，本轮未触发）",
+   "ref": "§2.2",
+   "note": "价格低于全网平均成本",
+   "on": false,
+   "changed_today": false
+  },
+  {
+   "key": "Z_价<200周均",
+   "name_zh": "价格 < 200 周均线",
+   "name_en": "Price < 200-week MA",
+   "category": "底部区",
+   "evidence": "已验证·方向",
+   "ref": "§2.4",
+   "note": "历史上之后一年几乎都上涨",
+   "on": false,
+   "changed_today": false
+  },
+  {
+   "key": "Z_LTH占比>75%",
+   "name_zh": "长期持有者占比（剔除 >7 年）> 75%",
+   "name_en": "LTH supply share ex-7y > 75%",
+   "category": "底部区",
+   "evidence": "假设",
+   "ref": "§3.5 #21",
+   "note": "筹码集中到长期持有者手里，4 轮里 3 轮在熊底前后出现",
+   "on": true,
+   "changed_today": false
+  },
+  {
+   "key": "Z_价≤1.3×CVDD",
+   "name_zh": "价格 ≤ 1.3 × CVDD",
+   "name_en": "Price ≤ 1.3 × CVDD",
+   "category": "底部区",
+   "evidence": "已验证（价格下限）",
+   "ref": "§3.4 #12",
+   "note": "接近历史上从未跌破的价格下限",
+   "on": false,
+   "changed_today": false
+  },
+  {
+   "key": "C_底后+40%且过90天",
+   "name_zh": "离本轮最低点 +40% 且最低点已过 90 天",
+   "name_en": "+40% from cycle low and low ≥ 90 days old",
+   "category": "底部确认",
+   "evidence": "已验证·方向（4 次对 3 次）",
+   "ref": "§2.5",
+   "note": "历史上唯一一次假信号在 2014 年",
+   "on": true,
+   "changed_today": false
+  },
+  {
+   "key": "C_四大名右7天",
+   "name_zh": "价格连续 7 天站上 3-6 月成本、1-3 月成本、200 日均、短期持有者成本",
+   "name_en": "Price above 4 short-term cost lines for 7 days",
+   "category": "底部确认",
+   "evidence": "已验证·方向",
+   "ref": "§3.5 #20",
+   "note": "熊底右侧确认；需要本轮已出现过分龄底部信号才算数",
+   "on": true,
+   "changed_today": false
+  },
+  {
+   "key": "C_6-12M死叉12-18M(本轮)",
+   "name_zh": "6-12 月成本跌破 12-18 月成本（本轮已出现）",
+   "name_en": "6-12M cost < 12-18M cost (this cycle)",
+   "category": "底部确认",
+   "evidence": "已验证·方向",
+   "ref": "§3.5 #16",
+   "note": "历轮都在真实底后 −1~+31 天出现",
+   "on": true,
+   "changed_today": false
+  },
+  {
+   "key": "C_三叉第三叉(本轮)",
+   "name_zh": "6-12 月成本跌破 1-2 年成本（本轮已出现）",
+   "name_en": "6-12M cost < 1-2Y cost (this cycle)",
+   "category": "底部确认",
+   "evidence": "已验证·方向",
+   "ref": "§3.5 #17",
+   "note": "三叉筑底的第三叉，出现在真实底前后 85 天内",
+   "on": true,
+   "changed_today": false
+  },
+  {
+   "key": "C_绿黑比≥1(本轮)",
+   "name_zh": "6 月-10 年成本 ≥ 0-10 年成本（本轮已出现）",
+   "name_en": "6m-10y cost ≥ 0-10y cost (this cycle)",
+   "category": "底部确认",
+   "evidence": "已验证·方向（本轮未触发）",
+   "ref": "§3.5 #22",
+   "note": "熊市够深时才会出现",
+   "on": false,
+   "changed_today": false
+  },
+  {
+   "key": "C_STH成本<LTH成本(本轮)",
+   "name_zh": "短期持有者成本跌破长期持有者成本（本轮已出现）",
+   "name_en": "STH cost < LTH cost (this cycle)",
+   "category": "底部确认",
+   "evidence": "已验证·方向（本轮未触发）",
+   "ref": "§3.4 #1",
+   "note": "熊市够深时才会出现",
+   "on": false,
+   "changed_today": false
+  },
+  {
+   "key": "T_减半后480~600天",
+   "name_zh": "处在减半后 480~600 天",
+   "name_en": "Halving + 480~600 days",
+   "category": "顶部风险",
+   "evidence": "已验证·方向",
+   "ref": "§2.1",
+   "note": "后三轮都在减半后 525~546 天见顶",
+   "on": false,
+   "changed_today": false
+  },
+  {
+   "key": "T_MVRV≥2且价/200周均≥2",
+   "name_zh": "MVRV ≥ 2 且 价格/200 周均 ≥ 2",
+   "name_en": "MVRV ≥ 2 and Price/200WMA ≥ 2",
+   "category": "顶部风险",
+   "evidence": "已验证·方向（2018 年后）",
+   "ref": "§2.4",
+   "note": "2018 年后，之后一年中位收益为负",
+   "on": false,
+   "changed_today": false
+  }
+ ],
+ "levels": [
+  {
+   "key": "ath",
+   "name_zh": "历史最高收盘",
+   "name_en": "ATH",
+   "value": 124824.45,
+   "pct_from_price": 50.4
+  },
+  {
+   "key": "rp_1_2y",
+   "name_zh": "1-2 年持币成本",
+   "name_en": "1-2Y cost",
+   "value": 101409.29,
+   "pct_from_price": 22.2
+  },
+  {
+   "key": "rp_6_12m",
+   "name_zh": "6-12 月持币成本",
+   "name_en": "6-12M cost",
+   "value": 88228.52,
+   "pct_from_price": 6.3
+  },
+  {
+   "key": "tmmp",
+   "name_zh": "真实市场均价 TMMP",
+   "name_en": "True Market Mean",
+   "value": 77417.2,
+   "pct_from_price": -6.7
+  },
+  {
+   "key": "sth_rp",
+   "name_zh": "短期持有者成本",
+   "name_en": "STH cost",
+   "value": 74221.5,
+   "pct_from_price": -10.6
+  },
+  {
+   "key": "rp_3_6m",
+   "name_zh": "3-6 月持币成本",
+   "name_en": "3-6M cost",
+   "value": 70985.27,
+   "pct_from_price": -14.5
+  },
+  {
+   "key": "ma200d",
+   "name_zh": "200 日均线",
+   "name_en": "200D MA",
+   "value": 71795.69,
+   "pct_from_price": -13.5
+  },
+  {
+   "key": "ma200w",
+   "name_zh": "200 周均线",
+   "name_en": "200W MA",
+   "value": 66284.95,
+   "pct_from_price": -20.1
+  },
+  {
+   "key": "cyc_low",
+   "name_zh": "本轮最低收盘",
+   "name_en": "Cycle low",
+   "value": 58525.08,
+   "pct_from_price": -29.5
+  },
+  {
+   "key": "rp",
+   "name_zh": "全网平均成本（已实现价格）",
+   "name_en": "Realized price",
+   "value": 53798.18,
+   "pct_from_price": -35.2
+  },
+  {
+   "key": "lth_rp",
+   "name_zh": "长期持有者成本",
+   "name_en": "LTH cost",
+   "value": 49334.91,
+   "pct_from_price": -40.5
+  },
+  {
+   "key": "cvdd",
+   "name_zh": "CVDD 价格下限",
+   "name_en": "CVDD",
+   "value": 48287.32,
+   "pct_from_price": -41.8
+  },
+  {
+   "key": "balanced",
+   "name_zh": "均衡价格（近似）",
+   "name_en": "Balanced price (approx.)",
+   "value": 39380.41,
+   "pct_from_price": -52.5
+  }
+ ],
+ "levels_above": [
+  {
+   "key": "rp_6_12m",
+   "name_zh": "6-12 月持币成本",
+   "name_en": "6-12M cost",
+   "value": 88228.52,
+   "pct_from_price": 6.3
+  },
+  {
+   "key": "rp_1_2y",
+   "name_zh": "1-2 年持币成本",
+   "name_en": "1-2Y cost",
+   "value": 101409.29,
+   "pct_from_price": 22.2
+  },
+  {
+   "key": "ath",
+   "name_zh": "历史最高收盘",
+   "name_en": "ATH",
+   "value": 124824.45,
+   "pct_from_price": 50.4
+  }
+ ],
+ "levels_below": [
+  {
+   "key": "tmmp",
+   "name_zh": "真实市场均价 TMMP",
+   "name_en": "True Market Mean",
+   "value": 77417.2,
+   "pct_from_price": -6.7
+  },
+  {
+   "key": "sth_rp",
+   "name_zh": "短期持有者成本",
+   "name_en": "STH cost",
+   "value": 74221.5,
+   "pct_from_price": -10.6
+  },
+  {
+   "key": "ma200d",
+   "name_zh": "200 日均线",
+   "name_en": "200D MA",
+   "value": 71795.69,
+   "pct_from_price": -13.5
+  }
+ ],
+ "data_status": {
+  "stale": false,
+  "detail": {
+   "coinmetrics": "ok",
+   "bitview": "ok",
+   "bitview_missing": []
+  },
+  "notes": [
+   "sth_coindays_destroyed 改用 sth_coindays_destroyed_sum_24h",
+   "lth_coindays_destroyed 改用 lth_coindays_destroyed_sum_24h",
+   "bitview 日期偏移 0 天，与 Coin Metrics 价格中位误差 0.17%"
+  ]
+ },
+ "method": "规则化状态机，口径见《BTC周期层L2研究》§7；证据等级见各信号 evidence 字段。历史回放：熊末→牛初之后一年中位 +152%（92% 为正），熊底区 +68%（91%），顶部风险区 −6%（47%），熊市 −36%（31%）。"
+}

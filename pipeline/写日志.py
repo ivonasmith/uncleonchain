@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """解读日志 · 每日一篇 + 每周复盘 + 每月复盘（规则化自动解读，GitHub Actions 里跑，不消耗 Claude 额度）
 
-读：data/宏观台账.json（拉宏观.py）、build/网站素材.json（出看板.py，发射台部分）、已有日志
+读：data/宏观台账.json（拉宏观.py）、data/l2/l2_latest.json（l2/l2_daily.py，L2 周期状态机）、build/网站素材.json（出看板.py，发射台部分）、已有日志
 写：data/解读日志/日/<YYYY-MM-DD>.json   日期 = 解读当天（UTC）；每个读数自带「截至」数据日期
     data/解读日志/周/<YYYY-Www>.json     ISO 周（周一到周日），周一跑时补出上一周
     data/解读日志/月/<YYYY-MM>.json      每月 1 日补出上个月
@@ -47,7 +47,7 @@ def main():
     logs = all_daily()
     prev = [x for x in logs if x["日期"] < today]
     prev_log = prev[-1] if prev else None
-    new = R.daily_log(today, S, sd, prev_log, L.get("源状态"))
+    new = R.daily_log(today, S, sd, prev_log, L.get("源状态"), load("l2/l2_latest.json"))
     p = os.path.join(J, "日", f"{today}.json")
     if os.path.exists(p):
         old = read(p)
