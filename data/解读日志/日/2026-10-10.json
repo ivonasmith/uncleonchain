@@ -1,0 +1,941 @@
+{
+ "类型": "日",
+ "版本": 2,
+ "日期": "2026-10-10",
+ "生成时间UTC": "2026-10-10 10:36",
+ "综合": {
+  "规则": "四层合成",
+  "一句话": "周期底部已确认，方向偏多；但宏观逆风，节奏上不追高，风险预算打七折。短期杠杆偏热。",
+  "一句话EN": "Cycle bottom confirmed, leaning up; but macro headwind—no chasing, risk budget at 70%. Short-term leverage running warm.",
+  "段": [
+   {
+    "层": 2,
+    "标签": "方向",
+    "标签EN": "Direction",
+    "文本": "底部已经确认，这是本阶段第 45 天。历史回放里，这个阶段之后一年中位 +152%，92% 的时间收涨，但途中出现两到六成的回撤也很常见。失效条件：收盘跌破本轮最低收盘 58,525。",
+    "文本EN": "The bottom is confirmed; this is day 45 of the phase. In historical replays, the following year had a median return of +152%, positive 92% of the time, though 20–60% drawdowns along the way were common. Invalidation: a daily close below this cycle's lowest close, 58,525.",
+    "数字": "第 45 天",
+    "数字EN": "day 45",
+    "tone": "up",
+    "短": "熊末→牛初（底部已确认）",
+    "短EN": "Late bear → early bull (bottom confirmed)"
+   },
+   {
+    "层": 1,
+    "标签": "节奏",
+    "标签EN": "Pace",
+    "文本": "实际利率急升，又碰上金融条件转紧，宏观在拖后腿。风险预算打七折。另外，高收益债利差正在快速走阔；它比其他信用指标跑得快，但还没有长历史检验，先当作一声提醒。",
+    "文本EN": "Surging real yields now meet tightening financial conditions, so macro is a drag. Size the risk budget at 70%. Also, high-yield spreads are widening fast. They move ahead of other credit gauges but lack a long track record, so treat this as an early warning.",
+    "数字": "实际利率 2.87%，13 周 +0.55pp",
+    "数字EN": "real yield 2.87%, 13w +0.55pp",
+    "tone": "dn",
+    "短": "宏观逆风·警戒",
+    "短EN": "Macro headwind · alert"
+   },
+   {
+    "层": 3,
+    "标签": "筹码",
+    "标签EN": "Flows",
+    "文本": "筹码正在离开交易所（7 日净流出 16,983 BTC），持有人更愿意把币提回自己的钱包。",
+    "文本EN": "Coins are leaving exchanges (16,983 BTC net over 7 days); holders are moving coins into their own wallets.",
+    "数字": "7 日 −16,983 BTC",
+    "数字EN": "7d −16,983 BTC",
+    "tone": "up",
+    "短": "筹码流出交易所",
+    "短EN": "Coins leaving exchanges",
+    "关系": "与周期方向一致",
+    "关系EN": "Consistent with the cycle",
+    "关系类": "一致"
+   },
+   {
+    "层": 4,
+    "标签": "短期",
+    "标签EN": "Short term",
+    "文本": "杠杆和情绪在升温（恐慌贪婪指数 64）。这是一支温度计，不是方向标。",
+    "文本EN": "Leverage and sentiment are warming up (Fear & Greed 64). This is a thermometer, not a compass.",
+    "数字": "恐慌贪婪指数 64",
+    "数字EN": "Fear & Greed 64",
+    "tone": "warn",
+    "短": "情绪偏热",
+    "短EN": "Sentiment warm"
+   }
+  ],
+  "小字": "方向看周期，节奏看宏观；筹码和情绪用来确认和提醒。",
+  "小字EN": "The cycle sets the direction, macro sets the pace; flows and sentiment confirm and caution.",
+  "方向": "偏多",
+  "L1档": "逆风",
+  "标签": [
+   "宏观逆风·警戒",
+   "熊末→牛初（底部已确认）",
+   "筹码流出交易所",
+   "情绪偏热"
+  ],
+  "标签EN": [
+   "Macro headwind · alert",
+   "Late bear → early bull (bottom confirmed)",
+   "Coins leaving exchanges",
+   "Sentiment warm"
+  ]
+ },
+ "L1行": "L1：[急升·收窄｜逆风·警戒]｜乐观度z +0.23｜信用：BAA 13周Δ −0.10pp / 高收益利差 3.15%（13周 +0.46pp）｜实际利率 2.87%｜净流动性13周 −1.58% / 美元13周 +0.58%｜L1-B：主线(去重)13周 +0.66% / 交易子弹13周 −2.52% / ETF 13周 +$5.85B / 轮动格 存量换手（背离，不加仓）",
+ "L1行EN": "L1: [surging·narrowing | Headwind · alert] | optimism z +0.23 | credit: BAA 13wΔ −0.10pp / HY 3.15% (13w +0.46pp) | real yield 2.87% | net liquidity 13w −1.58% / USD 13w +0.58% | L1-B: main line (de-dup) 13w +0.66% / trading bullets 13w −2.52% / ETF 13w +$5.85B / rotation Existing money switching channels (divergence, no adds)",
+ "轮动": {
+  "格": [
+   "入",
+   "减"
+  ],
+  "名称": "存量换手（背离，不加仓）",
+  "名称EN": "Existing money switching channels (divergence, no adds)",
+  "tone": "warn",
+  "ETF13": 5848400000.0,
+  "ETF截至": "2026-10-09",
+  "子弹13": -2.519062520994264,
+  "子弹13USD": -4379126212.0,
+  "含Tron13": -0.03449691059739246,
+  "含Tron13USD": -91200000.0,
+  "子弹截至": "2026-10-09",
+  "合计USD": 1469273788.0
+ },
+ "L2": {
+  "状态": "RECOVERY",
+  "名称": "熊末→牛初（底部已确认）",
+  "名称EN": "Late bear → early bull (bottom confirmed)",
+  "起": "2026-08-27",
+  "天数": 45,
+  "数据日期": "2026-10-10",
+  "价格": 82360.12,
+  "计数": {
+   "bottom_zone": 2,
+   "bottom_confirm_agebands": 2
+  },
+  "摘要": "L2 周期状态：熊末→牛初（底部已确认）（自 2026-08-27 起，第 45 天）\n价格 82,360，距历史高点 -34.0%，距本轮最低收盘 +40.7%（最低点已过 102 天），距上次减半 903 天。\n底部区信号 2/6：一年已实现利润 < 已实现亏损、长期持有者占比（剔除 >7 年）> 75%。底部确认信号：离本轮最低点 +40% 且最低点已过 90 天、价格连续 7 天站上 3-6 月成本、1-3 月成本、200 日均、短期持有者成本、6-12 月成本跌破 12-18 月成本（本轮出现过即计入）、6-12 月成本跌破 1-2 年成本（本轮出现过即计入）。\n上方关键价位：6-12 月持币成本 87,820（+6.6%）；1-2 年持币成本 103,031（+25.1%）；历史最高收盘 124,824（+51.6%）\n下方关键价位：真实市场均价 TMMP 77,411（-6.0%）；短期持有者成本 74,273（-9.8%）；200 日均线 71,907（-12.7%）\n接下来：底部已确认，熊末→牛初。历史上之后一年中位 +152%、92% 为正，但期间出现 20~60% 回撤很常见。收盘跌破本轮最低点则退回熊市。",
+  "摘要EN": "L2 cycle state: Late bear → early bull (bottom confirmed) (since 2026-08-27, day 45)\nPrice 82,360, -34.0% from the all-time high, +40.7% from the cycle-low close (low 102 days ago), 903 days since the last halving.\nBottom-zone signals 2/6: 1y realized profit < realized loss, LTH supply share ex-7y > 75%. Bottom confirmation: +40% from cycle low and low ≥ 90 days old, Price above 4 short-term cost lines for 7 days, 6-12M cost < 12-18M cost (counts once seen this cycle), 6-12M cost < 1-2Y cost (counts once seen this cycle).\nLevels above: 6-12M cost 87,820 (+6.6%); 1-2Y cost 103,031 (+25.1%); ATH 124,824 (+51.6%)\nLevels below: True Market Mean 77,411 (-6.0%); STH cost 74,273 (-9.8%); 200D MA 71,907 (-12.7%)\nNext: Bottom confirmed. Historically +152% median 1y forward; 20–60% drawdowns along the way are common.",
+  "亮起": [
+   "Z_利润365<亏损365",
+   "Z_LTH占比>75%",
+   "C_底后+40%且过90天",
+   "C_四大名右7天",
+   "C_6-12M死叉12-18M(本轮)",
+   "C_三叉第三叉(本轮)"
+  ],
+  "数据延迟": false
+ },
+ "层": [
+  {
+   "层": 1,
+   "名称": "宏观流动性",
+   "名称EN": "Macro Liquidity",
+   "结论": "逆风·警戒",
+   "结论EN": "Headwind · alert",
+   "短": "宏观逆风·警戒",
+   "短EN": "Macro headwind · alert",
+   "tone": "dn",
+   "分": null,
+   "依据": [
+    "纳指 100 · 13 周涨跌 乐观（13 周对数涨跌 +3.49%（水平 30883.15））",
+    "VIX 恐慌指数 平稳（水平 15.41）",
+    "乐观度综合 z 乐观度强（三项 z 均值 +0.23）",
+    "BAA 信用利差 · 13 周变化 信用收窄（13 周变化 −0.10pp（水平 1.48%））",
+    "金融条件 NFCI · 13 周变化 收紧（13 周变化 +0.02（水平 −0.494））",
+    "10 年实际利率 · 四态 急升（水平 2.87%，13 周 +0.55pp）",
+    "美联储净流动性 · 13 周变化 小幅收缩（13 周变化 −1.58%（水平 $5.87T））",
+    "高收益利差 13 周 +0.46pp，快速走阔（先行提示）"
+   ],
+   "依据EN": [
+    "Nasdaq-100 · 13w change: Optimistic · 13-week log change +3.49% (level 30883.15)",
+    "VIX: Calm · level 15.41",
+    "Optimism composite z: Strong · mean of 3 z-scores +0.23",
+    "BAA credit spread · 13w change: Narrowing · 13-week change −0.10pp (level 1.48%)",
+    "NFCI · 13w change: Tightening · 13-week change +0.02 (level −0.494)",
+    "10y real yield · 4 states: Surging · level 2.87%, 13w +0.55pp",
+    "Fed net liquidity · 13w change: Mild contraction · 13-week change −1.58% (level $5.87T)",
+    "High-yield spread 13w +0.46pp, widening fast (early warning)"
+   ],
+   "状态": {
+    "实际利率": "急升",
+    "z": 0.23025363659194897,
+    "baa": -0.10000000000000009,
+    "nfci": 0.02200000000000002,
+    "hy": 0.45999999999999996,
+    "净流动性": -1.576832217133961,
+    "美元": 0.5755231162099195
+   },
+   "情境": {
+    "纳指口径": [
+     "急升",
+     "强",
+     27.1,
+     79
+    ],
+    "信用口径": [
+     "急升",
+     "收窄",
+     -3.2,
+     44
+    ],
+    "较差": [
+     "急升",
+     "收窄",
+     -3.2,
+     44
+    ]
+   },
+   "闸门": false,
+   "警戒": true,
+   "读数": [
+    {
+     "key": "ndx13",
+     "名称": "纳指 100 · 13 周涨跌",
+     "名称EN": "Nasdaq-100 · 13w change",
+     "级别": "核心",
+     "等级": "已验证",
+     "值": 3.486007156792244,
+     "显示": "+3.49%",
+     "截至": "2026-10-09",
+     "过期": false,
+     "区间": "乐观",
+     "区间EN": "Optimistic",
+     "tone": "up",
+     "依据": "13 周对数涨跌 +3.49%（水平 30883.15）",
+     "依据EN": "13-week log change +3.49% (level 30883.15)"
+    },
+    {
+     "key": "vix",
+     "名称": "VIX 恐慌指数",
+     "名称EN": "VIX",
+     "级别": "核心",
+     "等级": "已验证",
+     "值": 15.41,
+     "显示": "15.41",
+     "截至": "2026-10-08",
+     "过期": false,
+     "区间": "平稳",
+     "区间EN": "Calm",
+     "tone": "up",
+     "依据": "水平 15.41",
+     "依据EN": "level 15.41"
+    },
+    {
+     "key": "optimism_z",
+     "名称": "乐观度综合 z",
+     "名称EN": "Optimism composite z",
+     "级别": "核心",
+     "等级": "已验证·方向",
+     "值": 0.23025363659194897,
+     "显示": "+0.23",
+     "截至": "2026-10-09",
+     "过期": false,
+     "区间": "乐观度强",
+     "区间EN": "Strong",
+     "tone": "up",
+     "依据": "三项 z 均值 +0.23",
+     "依据EN": "mean of 3 z-scores +0.23"
+    },
+    {
+     "key": "baa13",
+     "名称": "BAA 信用利差 · 13 周变化",
+     "名称EN": "BAA credit spread · 13w change",
+     "级别": "核心",
+     "等级": "已验证",
+     "值": -0.10000000000000009,
+     "显示": "−0.10pp",
+     "截至": "2026-10-08",
+     "过期": false,
+     "区间": "信用收窄",
+     "区间EN": "Narrowing",
+     "tone": "up",
+     "依据": "13 周变化 −0.10pp（水平 1.48%）",
+     "依据EN": "13-week change −0.10pp (level 1.48%)"
+    },
+    {
+     "key": "nfci13",
+     "名称": "金融条件 NFCI · 13 周变化",
+     "名称EN": "NFCI · 13w change",
+     "级别": "核心",
+     "等级": "已验证·方向",
+     "值": 0.02200000000000002,
+     "显示": "+0.02",
+     "截至": "2026-10-02",
+     "过期": false,
+     "区间": "收紧",
+     "区间EN": "Tightening",
+     "tone": "dn",
+     "依据": "13 周变化 +0.02（水平 −0.494）",
+     "依据EN": "13-week change +0.02 (level −0.494)"
+    },
+    {
+     "key": "hy13",
+     "名称": "高收益利差 · 13 周变化",
+     "名称EN": "High-yield spread · 13w change",
+     "级别": "辅助",
+     "等级": "描述读数",
+     "值": 0.45999999999999996,
+     "显示": "+0.46pp",
+     "截至": "2026-10-08",
+     "过期": false,
+     "区间": "快速走阔（先行提示）",
+     "区间EN": "Widening fast (early warning)",
+     "tone": "warn",
+     "依据": "13 周变化 +0.46pp（水平 3.15%）",
+     "依据EN": "13-week change +0.46pp (level 3.15%)"
+    },
+    {
+     "key": "real13",
+     "名称": "10 年实际利率 · 四态",
+     "名称EN": "10y real yield · 4 states",
+     "级别": "核心",
+     "等级": "已验证·方向",
+     "值": 0.5500000000000003,
+     "显示": "2.87%",
+     "截至": "2026-10-08",
+     "过期": false,
+     "区间": "急升",
+     "区间EN": "Surging",
+     "tone": "dn",
+     "依据": "水平 2.87%，13 周 +0.55pp",
+     "依据EN": "level 2.87%, 13w +0.55pp"
+    },
+    {
+     "key": "netliq13",
+     "名称": "美联储净流动性 · 13 周变化",
+     "名称EN": "Fed net liquidity · 13w change",
+     "级别": "核心",
+     "等级": "已验证·方向",
+     "值": -1.576832217133961,
+     "显示": "−1.58%",
+     "截至": "2026-10-09",
+     "过期": false,
+     "区间": "小幅收缩",
+     "区间EN": "Mild contraction",
+     "tone": "neutral",
+     "依据": "13 周变化 −1.58%（水平 $5.87T）",
+     "依据EN": "13-week change −1.58% (level $5.87T)"
+    },
+    {
+     "key": "usd13",
+     "名称": "广义美元 · 13 周变化",
+     "名称EN": "Broad dollar · 13w change",
+     "级别": "辅助",
+     "等级": "已验证",
+     "值": 0.5755231162099195,
+     "显示": "+0.58%",
+     "截至": "2026-10-02",
+     "过期": false,
+     "区间": "美元走强",
+     "区间EN": "Stronger",
+     "tone": "dn",
+     "依据": "13 周变化 +0.58%（水平 121.38）",
+     "依据EN": "13-week change +0.58% (level 121.38)"
+    },
+    {
+     "key": "stable_expay13",
+     "名称": "稳定币主线（去重）· 13 周",
+     "名称EN": "Stablecoin main line (de-duplicated) · 13w",
+     "级别": "辅助",
+     "等级": "已验证·方向",
+     "值": 0.6624415302856068,
+     "显示": "+0.66%",
+     "截至": "2026-10-09",
+     "过期": false,
+     "区间": "持平",
+     "区间EN": "Flat",
+     "tone": "neutral",
+     "依据": "13 周 +0.66%，BTC 13 周 +25.3%（水平 $283.91B），52 周 +3.6%",
+     "依据EN": "13w +0.66%, BTC 13w +25.3% (level $283.91B), 52w +3.6%"
+    },
+    {
+     "key": "stable_bullets13",
+     "名称": "交易子弹 · 剔除 Tron",
+     "名称EN": "Trading bullets · ex-Tron",
+     "级别": "辅助",
+     "等级": "已验证·方向",
+     "值": -2.519062520994264,
+     "显示": "−2.52%",
+     "截至": "2026-10-09",
+     "过期": false,
+     "区间": "收缩·与价格背离（提示）",
+     "区间EN": "Contracting · diverges from price",
+     "tone": "warn",
+     "依据": "13 周 -2.52%，BTC 13 周 +25.3%（水平 $169.46B），52 周 -5.8%",
+     "依据EN": "13w -2.52%, BTC 13w +25.3% (level $169.46B), 52w -5.8%"
+    },
+    {
+     "key": "stable_core13",
+     "名称": "交易子弹 · 含 Tron（并列口径）",
+     "名称EN": "Trading bullets · incl. Tron (parallel)",
+     "级别": "辅助",
+     "等级": "描述读数",
+     "值": -0.03449691059739246,
+     "显示": "−0.03%",
+     "截至": "2026-10-09",
+     "过期": false,
+     "区间": "持平",
+     "区间EN": "Flat",
+     "tone": "neutral",
+     "依据": "13 周变化 −0.03%（水平 $264.28B），52 周 +2.5%",
+     "依据EN": "13-week change −0.03% (level $264.28B), 52w +2.5%"
+    },
+    {
+     "key": "stable_yield13",
+     "名称": "生息 / 合成稳定币 · 13 周",
+     "名称EN": "Yield / synthetic stablecoins · 13w",
+     "级别": "辅助",
+     "等级": "描述读数",
+     "值": 0.92674054506654,
+     "显示": "+0.93%",
+     "截至": "2026-10-09",
+     "过期": false,
+     "区间": "持平",
+     "区间EN": "Flat",
+     "tone": "neutral",
+     "依据": "13 周变化 +0.93%（水平 $18.06B），52 周 -29.9%",
+     "依据EN": "13-week change +0.93% (level $18.06B), 52w -29.9%"
+    },
+    {
+     "key": "etf13",
+     "名称": "现货 ETF · 近 13 周净流入",
+     "名称EN": "Spot ETF · 13-week net flow",
+     "级别": "辅助",
+     "等级": "已验证·方向",
+     "值": 5848400000.0,
+     "显示": "+$5.85B",
+     "截至": "2026-10-09",
+     "过期": false,
+     "区间": "趋势确认（滞后）· 净流入",
+     "区间EN": "Trend confirm (lagging) · inflow",
+     "tone": "up",
+     "依据": "91 天合计 +$5.85B，当日 +$21.10M",
+     "依据EN": "91-day sum +$5.85B, latest day +$21.10M"
+    },
+    {
+     "key": "etf28",
+     "名称": "现货 ETF · 近 4 周净流入",
+     "名称EN": "Spot ETF · 4-week net flow",
+     "级别": "辅助",
+     "等级": "已验证·方向",
+     "值": 1954100000.0,
+     "显示": "+$1.95B",
+     "截至": "2026-10-09",
+     "过期": false,
+     "区间": "趋势确认（滞后）· 净流入",
+     "区间EN": "Trend confirm (lagging) · inflow",
+     "tone": "up",
+     "依据": "28 天合计 +$1.95B，当日 +$21.10M",
+     "依据EN": "28-day sum +$1.95B, latest day +$21.10M"
+    },
+    {
+     "key": "cme_basis",
+     "名称": "H1 · CME 近月年化升水",
+     "名称EN": "H1 · CME front-month annualized basis",
+     "级别": "辅助",
+     "等级": "描述读数",
+     "值": 4.209,
+     "显示": "4.2%",
+     "截至": "2026-10-10",
+     "过期": false,
+     "区间": "记录中",
+     "区间EN": "Recording",
+     "tone": "warn",
+     "依据": "已记录 9 / 90 天 · 满 90 天后给出区间判定",
+     "依据EN": "9 / 90 days recorded · zone judgment after 90 days"
+    },
+    {
+     "key": "deribit_basis",
+     "名称": "H2 · Deribit 3 个月年化升水",
+     "名称EN": "H2 · Deribit 3-month annualized basis",
+     "级别": "辅助",
+     "等级": "描述读数",
+     "值": 5.318,
+     "显示": "5.3%",
+     "截至": "2026-10-10",
+     "过期": false,
+     "区间": "记录中",
+     "区间EN": "Recording",
+     "tone": "warn",
+     "依据": "已记录 12 / 90 天 · 满 90 天后给出区间判定",
+     "依据EN": "12 / 90 days recorded · zone judgment after 90 days"
+    },
+    {
+     "key": "stable_tron13",
+     "名称": "Tron 链稳定币 · 13 周",
+     "名称EN": "Stablecoins on Tron · 13w",
+     "级别": "辅助",
+     "等级": "监控",
+     "值": 4.736366358021193,
+     "显示": "+4.74%",
+     "截至": "2026-10-09",
+     "过期": false,
+     "区间": "扩张",
+     "区间EN": "Expanding",
+     "tone": "neutral",
+     "依据": "13 周变化 +4.74%（水平 $94.82B），52 周 +21.7%",
+     "依据EN": "13-week change +4.74% (level $94.82B), 52w +21.7%"
+    },
+    {
+     "key": "stable_pay13",
+     "名称": "支付 / 机构稳定币 · 13 周",
+     "名称EN": "Payment / institutional stablecoins · 13w",
+     "级别": "辅助",
+     "等级": "监控",
+     "值": 22.507076635136315,
+     "显示": "+22.51%",
+     "截至": "2026-10-09",
+     "过期": false,
+     "区间": "扩张",
+     "区间EN": "Expanding",
+     "tone": "neutral",
+     "依据": "13 周变化 +22.51%（水平 $11.34B），52 周 +170.7%",
+     "依据EN": "13-week change +22.51% (level $11.34B), 52w +170.7%"
+    },
+    {
+     "key": "btc_ndx_corr",
+     "名称": "BTC − 纳指 52 周滚动相关",
+     "名称EN": "BTC–Nasdaq 52w rolling correlation",
+     "级别": "辅助",
+     "等级": "描述读数",
+     "值": 0.3825797597009768,
+     "显示": "0.38",
+     "截至": "2026-10-09",
+     "过期": false,
+     "区间": "正常联动",
+     "区间EN": "Normal linkage",
+     "tone": "neutral",
+     "依据": "52 周相关 0.38",
+     "依据EN": "52-week correlation 0.38"
+    },
+    {
+     "key": "tokstock",
+     "名称": "美股代币化 / 稳定币市值",
+     "名称EN": "Tokenized stocks / stablecoin cap",
+     "级别": "辅助",
+     "等级": "监控",
+     "值": 0.8507466115953023,
+     "显示": "0.85%",
+     "截至": "2026-10-10",
+     "过期": false,
+     "区间": "未达纳入门槛",
+     "区间EN": "Below threshold",
+     "tone": "neutral",
+     "依据": "市值占比 0.85%",
+     "依据EN": "cap ratio 0.85%"
+    },
+    {
+     "key": "fred_t10y2y",
+     "名称": "2Y / 10Y 利差",
+     "名称EN": "2Y/10Y curve",
+     "级别": "观察",
+     "等级": "观察项",
+     "值": 0.44,
+     "显示": "0.44%",
+     "截至": "2026-10-09",
+     "过期": false,
+     "区间": "正常",
+     "区间EN": "Normal",
+     "tone": "neutral",
+     "依据": "水平 0.44%",
+     "依据EN": "level 0.44%"
+    }
+   ]
+  },
+  {
+   "层": 2,
+   "名称": "周期定位",
+   "名称EN": "Cycle Position",
+   "结论": "周期状态：熊末→牛初（底部已确认）",
+   "结论EN": "Cycle state: Late bear → early bull (bottom confirmed)",
+   "短": "熊末→牛初（底部已确认）",
+   "短EN": "Late bear → early bull (bottom confirmed)",
+   "tone": "up",
+   "分": null,
+   "依据": [
+    "自 2026-08-27 起第 45 天",
+    "底部区信号 2/6",
+    "分龄底部确认 2/4",
+    "数据截至 2026-10-10"
+   ],
+   "依据EN": [
+    "day 45 since 2026-08-27",
+    "bottom-zone signals 2/6",
+    "age-band confirmations 2/4",
+    "data as of 2026-10-10"
+   ],
+   "状态": "RECOVERY",
+   "读数": [
+    {
+     "key": "mvrv",
+     "名称": "MVRV（价格 ÷ 全网平均成本）",
+     "名称EN": "MVRV (price ÷ realized price)",
+     "级别": "核心",
+     "等级": "已验证·方向",
+     "值": 1.53088,
+     "显示": "1.531",
+     "截至": "2026-10-10",
+     "过期": false,
+     "区间": "中间区",
+     "区间EN": "Mid zone",
+     "tone": "neutral",
+     "依据": "水平 1.531",
+     "依据EN": "level 1.531"
+    },
+    {
+     "key": "price_200wma",
+     "名称": "价格 / 200 周均线",
+     "名称EN": "Price / 200-week MA",
+     "级别": "核心",
+     "等级": "已验证·方向",
+     "值": 1.24079,
+     "显示": "1.241",
+     "截至": "2026-10-10",
+     "过期": false,
+     "区间": "低估",
+     "区间EN": "Undervalued",
+     "tone": "up",
+     "依据": "比值 1.241",
+     "依据EN": "ratio 1.241"
+    },
+    {
+     "key": "psip",
+     "名称": "盈利供应占比",
+     "名称EN": "Supply in profit",
+     "级别": "核心",
+     "等级": "已验证·方向",
+     "值": 68.9165,
+     "显示": "68.9%",
+     "截至": "2026-10-10",
+     "过期": false,
+     "区间": "非底部区",
+     "区间EN": "Not a bottom zone",
+     "tone": "neutral",
+     "依据": "占比 68.9%",
+     "依据EN": "share 68.9%"
+    },
+    {
+     "key": "rpl365",
+     "名称": "一年已实现盈亏比",
+     "名称EN": "1-year realized profit / loss ratio",
+     "级别": "核心",
+     "等级": "已验证·方向",
+     "值": 0.883559,
+     "显示": "0.884",
+     "截至": "2026-10-10",
+     "过期": false,
+     "区间": "底部区信号·亮",
+     "区间EN": "Bottom-zone signal · on",
+     "tone": "up",
+     "依据": "比值 0.884",
+     "依据EN": "ratio 0.884"
+    },
+    {
+     "key": "lth_share",
+     "名称": "长期持有者占比（剔除 >7 年）",
+     "名称EN": "Long-term holder share (ex >7y)",
+     "级别": "核心",
+     "等级": "假设",
+     "值": 75.5777,
+     "显示": "75.6%",
+     "截至": "2026-10-10",
+     "过期": false,
+     "区间": "熊底区信号·亮",
+     "区间EN": "Bear-bottom signal · on",
+     "tone": "up",
+     "依据": "占比 75.6%",
+     "依据EN": "share 75.6%"
+    },
+    {
+     "key": "green_black",
+     "名称": "绿 / 黑比（6 月-10 年成本 ÷ 0-10 年成本）",
+     "名称EN": "Green / black ratio (6m–10y cost ÷ 0–10y cost)",
+     "级别": "核心",
+     "等级": "已验证·方向",
+     "值": 0.954578,
+     "显示": "0.955",
+     "截至": "2026-10-10",
+     "过期": false,
+     "区间": "未达",
+     "区间EN": "Not reached",
+     "tone": "neutral",
+     "依据": "比值 0.955",
+     "依据EN": "ratio 0.955"
+    }
+   ]
+  },
+  {
+   "层": 3,
+   "名称": "筹码结构",
+   "名称EN": "Coin Flows",
+   "结论": "筹码在离开交易所（偏囤币）",
+   "结论EN": "Coins leaving exchanges (hoarding)",
+   "短": "筹码流出交易所",
+   "短EN": "Coins leaving exchanges",
+   "tone": "up",
+   "分": 2,
+   "依据": [
+    "交易所 BTC 净流量（7 日合计） 大幅净流出（提币）（7 日合计 −16,983 BTC，当日 +4,261 BTC）",
+    "交易所 BTC 余额（30 日变化） 下降（筹码离场）（30 日变化 −1.23%（水平 2,672,866 BTC））"
+   ],
+   "依据EN": [
+    "Exchange BTC net flow (7-day sum): Heavy outflow (withdrawals) · 7-day sum −16,983 BTC, latest day +4,261 BTC",
+    "Exchange BTC balance (30d change): Falling (coins leaving) · 30-day change −1.23% (level 2,672,866 BTC)"
+   ],
+   "读数": [
+    {
+     "key": "ex_netflow",
+     "名称": "交易所 BTC 净流量（7 日合计）",
+     "名称EN": "Exchange BTC net flow (7-day sum)",
+     "级别": "核心",
+     "等级": null,
+     "值": -16982.511999999842,
+     "显示": "−16,983 BTC",
+     "截至": "2026-10-09",
+     "过期": false,
+     "区间": "大幅净流出（提币）",
+     "区间EN": "Heavy outflow (withdrawals)",
+     "tone": "up",
+     "依据": "7 日合计 −16,983 BTC，当日 +4,261 BTC",
+     "依据EN": "7-day sum −16,983 BTC, latest day +4,261 BTC"
+    },
+    {
+     "key": "ex_balance",
+     "名称": "交易所 BTC 余额（30 日变化）",
+     "名称EN": "Exchange BTC balance (30d change)",
+     "级别": "核心",
+     "等级": null,
+     "值": -1.2340268606661153,
+     "显示": "−1.23%",
+     "截至": "2026-10-09",
+     "过期": false,
+     "区间": "下降（筹码离场）",
+     "区间EN": "Falling (coins leaving)",
+     "tone": "up",
+     "依据": "30 日变化 −1.23%（水平 2,672,866 BTC）",
+     "依据EN": "30-day change −1.23% (level 2,672,866 BTC)"
+    }
+   ]
+  },
+  {
+   "层": 4,
+   "名称": "情绪衍生品",
+   "名称EN": "Sentiment & Derivatives",
+   "结论": "偏热：杠杆和情绪在升温",
+   "结论EN": "Warm: leverage and sentiment rising",
+   "短": "情绪偏热",
+   "短EN": "Sentiment warm",
+   "tone": "warn",
+   "分": 1,
+   "依据": [
+    "恐慌贪婪指数 贪婪（水平 64）",
+    "BTC 永续资金费率 偏冷（年化 4.6%）",
+    "BTC 未平仓合约（7 日变化） 平稳（7 日变化 +1.71%（水平 $3.16B））",
+    "山寨季指数（自建） 比特币偏强（占比 48.0%）"
+   ],
+   "依据EN": [
+    "Fear & Greed Index: Greed · level 64",
+    "BTC perp funding rate: Cool · annualized 4.6%",
+    "BTC open interest (7d change): Stable · 7-day change +1.71% (level $3.16B)",
+    "Altseason index (own): BTC leaning · share 48.0%"
+   ],
+   "读数": [
+    {
+     "key": "fng",
+     "名称": "恐慌贪婪指数",
+     "名称EN": "Fear & Greed Index",
+     "级别": "核心",
+     "等级": null,
+     "值": 64,
+     "显示": "64",
+     "截至": "2026-10-10",
+     "过期": false,
+     "区间": "贪婪",
+     "区间EN": "Greed",
+     "tone": "warn",
+     "依据": "水平 64",
+     "依据EN": "level 64"
+    },
+    {
+     "key": "hl_funding",
+     "名称": "BTC 永续资金费率",
+     "名称EN": "BTC perp funding rate",
+     "级别": "核心",
+     "等级": null,
+     "值": 4.567676,
+     "显示": "4.6%",
+     "截至": "2026-10-09",
+     "过期": false,
+     "区间": "偏冷",
+     "区间EN": "Cool",
+     "tone": "neutral",
+     "依据": "年化 4.6%",
+     "依据EN": "annualized 4.6%"
+    },
+    {
+     "key": "hl_oi",
+     "名称": "BTC 未平仓合约（7 日变化）",
+     "名称EN": "BTC open interest (7d change)",
+     "级别": "核心",
+     "等级": null,
+     "值": 1.7086238031346124,
+     "显示": "+1.71%",
+     "截至": "2026-10-10",
+     "过期": false,
+     "区间": "平稳",
+     "区间EN": "Stable",
+     "tone": "neutral",
+     "依据": "7 日变化 +1.71%（水平 $3.16B）",
+     "依据EN": "7-day change +1.71% (level $3.16B)"
+    },
+    {
+     "key": "altseason",
+     "名称": "山寨季指数（自建）",
+     "名称EN": "Altseason index (own)",
+     "级别": "核心",
+     "等级": null,
+     "值": 48.0,
+     "显示": "48.0%",
+     "截至": "2026-10-09",
+     "过期": false,
+     "区间": "比特币偏强",
+     "区间EN": "BTC leaning",
+     "tone": "neutral",
+     "依据": "占比 48.0%",
+     "依据EN": "share 48.0%"
+    },
+    {
+     "key": "btc_dom",
+     "名称": "BTC 市值占比",
+     "名称EN": "BTC dominance",
+     "级别": "辅助",
+     "等级": null,
+     "值": 59.61927,
+     "显示": "59.6%",
+     "截至": "2026-10-09",
+     "过期": false,
+     "区间": "只看趋势",
+     "区间EN": "Trend only",
+     "tone": "neutral",
+     "依据": "水平 59.6%",
+     "依据EN": "level 59.6%"
+    }
+   ]
+  }
+ ],
+ "发射台": {
+  "日期": "2026-10-09",
+  "赛道当日": 4603537.32,
+  "赛道日环比": 1.616794301785185,
+  "第一": "pump.fun",
+  "Top": [
+   {
+    "名称": "pump.fun",
+    "链": "Solana",
+    "当日": 2195409,
+    "日环比": -2.118701876563245,
+    "份额": 47.689610127891825
+   },
+   {
+    "名称": "Flap sh",
+    "链": "BSC + X Layer + Monad + RH",
+    "当日": 908503,
+    "日环比": -0.3545982609000853,
+    "份额": 19.734889430634613
+   },
+   {
+    "名称": "Pons V2",
+    "链": "Robinhood Chain",
+    "当日": 546127,
+    "日环比": 5.97658190511674,
+    "份额": 11.863203489789456
+   },
+   {
+    "名称": "Pons V1",
+    "链": "Robinhood Chain",
+    "当日": 15941,
+    "日环比": -45.08784016534619,
+    "份额": 0.3462771971184975
+   }
+  ],
+  "一句话": "pump.fun 2,195,409（-2.1%） ｜ Pons 合计 562,068（+3.3%） ｜ StonkFun 延迟 ｜ Flap 908,503（-0.4%）",
+  "异常": [
+   "StonkFun 数据源延迟（最后一天 2026-10-08），相关列标「延迟」，没有拿旧值顶替",
+   "赛道 Top60 分母缺 2 家（约占前一日 6%），份额偏高",
+   "Flap 分账比率 14.9%，较 7 日均 25.0% 变动超过 5 个百分点"
+  ],
+  "PONS当日销毁USD": 206809.91162121316
+ },
+ "预警": [
+  {
+   "级别": "中",
+   "文本": "BTC 永续资金费率从「正常」进入「偏冷」（9.8% → 4.6%）",
+   "文本EN": "BTC perp funding rate moved from 'Normal' to 'Cool' (9.8% → 4.6%)",
+   "层": 4,
+   "key": "hl_funding"
+  },
+  {
+   "级别": "中",
+   "文本": "发射台：StonkFun 数据源延迟（最后一天 2026-10-08），相关列标「延迟」，没有拿旧值顶替",
+   "文本EN": "Launchpad: StonkFun 数据源延迟（最后一天 2026-10-08），相关列标「延迟」，没有拿旧值顶替",
+   "层": "lp",
+   "key": null
+  },
+  {
+   "级别": "中",
+   "文本": "发射台：赛道 Top60 分母缺 2 家（约占前一日 6%），份额偏高",
+   "文本EN": "Launchpad: 赛道 Top60 分母缺 2 家（约占前一日 6%），份额偏高",
+   "层": "lp",
+   "key": null
+  },
+  {
+   "级别": "中",
+   "文本": "发射台：Flap 分账比率 14.9%，较 7 日均 25.0% 变动超过 5 个百分点",
+   "文本EN": "Launchpad: Flap 分账比率 14.9%，较 7 日均 25.0% 变动超过 5 个百分点",
+   "层": "lp",
+   "key": null
+  }
+ ],
+ "数据源": {
+  "DefiLlama 稳定币": {
+   "ok": true,
+   "最新日期": "2026-10-09"
+  },
+  "FRED": {
+   "ok": true,
+   "最新日期": "2026-10-09"
+  },
+  "Deribit": {
+   "ok": true,
+   "最新日期": "2026-10-10"
+  },
+  "CoinMetrics 周期": {
+   "ok": true,
+   "最新日期": "2026-10-09"
+  },
+  "CoinMetrics 交易所流量": {
+   "ok": true,
+   "最新日期": "2026-10-09"
+  },
+  "alternative.me": {
+   "ok": true,
+   "最新日期": "2026-10-10"
+  },
+  "Hyperliquid": {
+   "ok": true,
+   "最新日期": "2026-10-10"
+  },
+  "CoinGecko": {
+   "ok": false,
+   "最新日期": "2026-10-09"
+  },
+  "CoinGecko 类目": {
+   "ok": true,
+   "最新日期": "2026-10-10"
+  },
+  "ETF 资金流": {
+   "ok": true,
+   "最新日期": "2026-10-09"
+  },
+  "CME 升水": {
+   "ok": true,
+   "最新日期": "2026-10-10"
+  }
+ },
+ "核心缺失": []
+}
