@@ -384,6 +384,13 @@ def r(v, d=2):
     return None if v is None or (isinstance(v, float) and not np.isfinite(v)) or pd.isna(v) else round(float(v), d)
 
 
+def lv(F, c, d=2):
+    """最近一个有值的读数（Coin Metrics 交易所数据比价格晚一两天）。"""
+    if c not in F or not F[c].notna().any():
+        return None
+    return r(F[c].dropna().iloc[-1], d)
+
+
 def _sig(v):
     if v is None or pd.isna(v) or np.isinf(v):
         return None
@@ -476,7 +483,8 @@ def main():
         lines=dict(tmmp=r(f.tmmp), rp=r(f.rp), lth_rp=r(f.lth_rp)),
         sth_state=dict(sth_mvrv=r(f.sth_mvrv, 3), sth_psip=r(f.get("sth_psip"), 1), sth_sopr7=r(f.get("sth_sopr7"), 3),
                        sth_asopr7=r(f.get("sth_asopr7"), 3), trend_zone=bool(pd.notna(f.sth_mvrv) and f.sth_mvrv >= 1.3)),
-        flows=dict(ex_bal=r(f.get("ex_bal"), 0), ex_bal4w_pct=r(f.get("ex_bal4w"), 2), ex_net4w=r(f.get("ex_net4w"), 0),
+        flows=dict(ex_bal=lv(F, "ex_bal", 0), ex_bal4w_pct=lv(F, "ex_bal4w", 2), ex_net4w=lv(F, "ex_net4w", 0),
+                   ex_date=(str(F.ex_bal.dropna().index[-1].date()) if "ex_bal" in F and F.ex_bal.notna().any() else None),
                    whale=r(f.get("whale"), 0), whale4w=r(f.get("whale4w"), 0), whale4w_pct=r(f.get("whale4w_pct"), 2),
                    retail=r(f.get("retail"), 0), retail4w=r(f.get("retail4w"), 0), retail4w_pct=r(f.get("retail4w_pct"), 2)),
         chip_map=chip_map(uj, price),
