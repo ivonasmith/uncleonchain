@@ -444,14 +444,14 @@ def guide_templates():
     cur = CHANGELOG[0]["version"]
     t = sched_text()
     welcome = T(f"""<h2 id="ucg-t">欢迎来到链上大叔研究台</h2><p>这里每天自动更新一套 BTC 自上而下的四层框架数据：</p>
-<ul><li><b>L1 宏观流动性</b>：风险预算该松还是紧</li><li><b>L2 周期定位</b>：处在四年周期的哪一段</li><li><b>L3 筹码结构</b>：筹码在流入还是流出交易所</li><li><b>L4 情绪衍生品</b>：短期会不会过热超调</li></ul>
+<ul><li><b>L1 宏观流动性</b>：风险预算该松还是紧</li><li><b>L2 周期定位</b>：处在四年周期的哪一段</li><li><b>L3 筹码结构</b>：哪些价位真的有人在守、接下来波动会不会放大</li><li><b>L4 情绪衍生品</b>：短期会不会过热超调</li></ul>
 <p>每层给一个结论，最后汇总成「综合研判」。</p>
 <p><b>怎么看</b>：先看顶部的综合研判 → 切换 L1~L4 看每层结论和依据 → 点任意指标卡，看它的全部历史、区间规则和历史上落在每个区间的比例。</p>
 <p>数据每天 {esc(t)} 自动更新，解读日志写入即冻结、公开可查。每个指标都标了<a href="{U('/methodology/')}#legend">证据等级</a>；拿不到真实数据的标「待接入」，不用近似值顶替。</p>
 <p>本站还在持续迭代，很多地方不完善。发现问题或有建议，欢迎在 X 上找 <a href="{X_URL}" target="_blank" rel="noopener">@Uncle_Onchain</a>。</p>
 <p class="muted">本站只提供数据和过程记录，不构成投资建议。</p>""",
                 f"""<h2 id="ucg-t">Welcome to Uncle Onchain Terminal</h2><p>A top-down, 4-layer BTC framework, updated automatically every day:</p>
-<ul><li><b>L1 Macro Liquidity</b>: should the risk budget be loose or tight?</li><li><b>L2 Cycle Position</b>: where are we in the four-year cycle?</li><li><b>L3 Supply Structure</b>: are coins flowing into or out of exchanges?</li><li><b>L4 Sentiment &amp; Derivatives</b>: is the short term overheating?</li></ul>
+<ul><li><b>L1 Macro Liquidity</b>: should the risk budget be loose or tight?</li><li><b>L2 Cycle Position</b>: where are we in the four-year cycle?</li><li><b>L3 Supply Structure</b>: which levels are really defended, and will moves get bigger?</li><li><b>L4 Sentiment &amp; Derivatives</b>: is the short term overheating?</li></ul>
 <p>Each layer gets a verdict, and the four roll up into one overall read.</p>
 <p><b>How to use it</b>: start with the overall read at the top → switch between L1–L4 for each layer's verdict and evidence → click any metric card for its full history, zone rules and how often each zone occurred historically.</p>
 <p>Data refreshes daily at {esc(t)}; each daily log is frozen once written. Every metric carries an <a href="{U('/methodology/')}#legend">evidence grade</a>; anything we can't source for real is marked "Pending" rather than filled with a proxy.</p>
@@ -634,7 +634,8 @@ L2_TIME = next((x["时间"] for x in SCHED if x["文件"] == "l2-daily.yml"), "�
 def sched_text():
     """「每天 UTC 02:17（L2）和 10:20（日更）」这类文案，全站共用。"""
     parts = [(f"UTC {x['时间']}（{x['名称']}）", f"{x['时间']} UTC ({x['EN']})") for x in SCHED]
-    return T("、".join(p[0] for p in parts), " and ".join(p[1] for p in parts))
+    en = [p[1] for p in parts]
+    return T("、".join(p[0] for p in parts), (", ".join(en[:-1]) + " and " + en[-1]) if len(en) > 1 else "".join(en))
 
 
 def times_line(log):
@@ -752,7 +753,7 @@ def put_multi(name, start_ser, freq="d", revisions=None):
 
 # ---------------------------------------------------------------- 首页组件
 def hero_cards(S, as_of, sd):
-    """首页四张核心卡：稳定币主线 / 发射台赛道 / 交易所筹码 / 情绪。"""
+    """首页四张核心卡：稳定币主线 / 发射台赛道 / 筹码压力区（L3）/ 情绪。"""
     cards = []
     j = R.judge(S, R.IND["stable_expay13"], as_of)
     b = R.judge(S, R.IND["stable_bullets13"], as_of)
@@ -771,16 +772,16 @@ def hero_cards(S, as_of, sd):
         cards.append((T("发射台赛道当日手续费", "Launchpad fees (day)"), "Top60", f_usd(tot.get("当日")),
                       f'{fmt_delta(chg)} {T("日环比", "DoD")} · {T("截至", "as of")} {sd["日期"]}', "up" if (chg or 0) >= 0 else "dn",
                       [seq[d] for d in ds[-30:]], U("/launchpad/")))
-    f = R.reading(S, "ex_netflow", as_of, raw=True)
-    if f:
-        w = R.sum_window(S, "ex_netflow", f["截至"], 7)
-        cards.append((T("交易所 BTC 净流量", "Exchange BTC net flow"), T("流入 − 流出", "in − out"), R.f_btc(f["值"], True),
-                      T(f'7 日 {R.f_btc(w, True)} · {"净流出=提币" if (w or 0) < 0 else "净流入=潜在抛压"}',
-                        f'7d {R.f_btc(w, True)} · {"outflow = withdrawals" if (w or 0) < 0 else "inflow = potential selling"}'),
-                      "up" if (f["值"] or 0) < 0 else "dn", f["走势"][-30:], ind_href("ex_netflow")))
+    l3 = G.get("L3")
+    jp = R.judge(S, R.IND["l3_p1s"], as_of) if "l3_p1s" in R.IND else None
+    if R.l3_ok(l3):
+        a3, w3 = l3["p1s"], l3.get("warning") or {}
+        on = bool(w3.get("on"))
+        cards.append((T("上方压力区 · STH 成本 +1σ", "Pressure zone · STH cost +1σ"), "L3", f'${a3["value"]:,.0f}',
+                      T(f'离现价 {_pc(a3["pct_from_price"])} · 大波动预警{"亮" if on else "不亮"}', f'{_pc(a3["pct_from_price"])} vs price · large-move warning {"on" if on else "off"}'),
+                      "warn" if (on or l3["position"]["code"] == "in_zone") else "neutral", (jp or {}).get("走势", [])[-30:], ind_href("l3_p1s")))
     else:
-        cards.append((T("交易所 BTC 净流量", "Exchange BTC net flow"), T("流入 − 流出", "in − out"), "—", T("等待首次抓取", "Awaiting first fetch"),
-                      "neutral", [], ind_href("ex_netflow")))
+        cards.append((T("上方压力区 · STH 成本 +1σ", "Pressure zone · STH cost +1σ"), "L3", "—", T("等待首次运行", "Awaiting first run"), "neutral", [], ind_href("l3_p1s")))
     g = R.judge(S, R.IND["fng"], as_of)
     if g:
         prev7 = R.reading(S, "fng", as_of)["前7"]
@@ -796,7 +797,7 @@ def hero_cards(S, as_of, sd):
 
 
 # ---------------------------------------------------------------- 综合研判（M11）：一句话 + 四段（方向 / 节奏 / 筹码 / 短期）
-LAYER_TAB = {1: ("L1", "宏观流动性", "Macro Liquidity"), 2: ("L2", "周期定位", "Cycle Position"), 3: ("L3", "筹码结构", "Coin Flows"),
+LAYER_TAB = {1: ("L1", "宏观流动性", "Macro Liquidity"), 2: ("L2", "周期定位", "Cycle Position"), 3: ("L3", "筹码结构", "Supply Structure"),
              4: ("L4", "情绪衍生品", "Sentiment & Derivatives")}
 
 
@@ -1186,7 +1187,7 @@ L2_LINES = [("price", "BTC 价格", "BTC price", "ink", 2.0, False), ("sth_rp", 
             ("rp", "全网平均成本", "Realized price", "s1", 1.4, False), ("lth_rp", "长期持有者成本", "LTH cost", "s3", 1.3, True),
             ("rp_3_6m", "3-6 月持币成本", "3-6M cost", "s5", 1.2, True), ("rp_6_12m", "6-12 月持币成本", "6-12M cost", "s8", 1.2, True),
             ("cvdd", "CVDD 价格下限", "CVDD", "s9", 1.2, True)]
-LAYER_RULE_DATES = {1: ("2026-10-02", "2026-10-04"), 2: ("2026-10-08",)}
+LAYER_RULE_DATES = {1: ("2026-10-02", "2026-10-04"), 2: ("2026-10-08",), 3: ("2026-10-11",)}
 
 
 def l2_state_meta(code):
@@ -1377,6 +1378,204 @@ def l2_tab(l2, as_of):
             + method_h + rep + f'<p class="l2disc">{esc(T(*R.L2_DISCLAIMER))}</p>')
 
 
+# ---------------------------------------------------------------- L3 筹码层（只读 data/l3/*.json 展示，规则和计算都在 l3/l3_daily.py）
+L3_TIME = next((x["时间"] for x in SCHED if x["文件"] == "l3-daily.yml"), "02:47")
+L3_RES = {"held": ("守住", "Held", "up"), "broken": ("被突破", "Broken", "dn"), "open": ("进行中", "Ongoing", "neutral")}
+L3_NOT_SHOWN = [
+    ("「筹码墙 = 强支撑 / 强压力」", "'Supply wall = strong support / resistance'", "同距离比较，筹码墙守住率和真空区的差在各年代正负相反，2022 年后筹码墙更容易被穿过", "At equal distance the wall-vs-gap hold-rate difference flips sign across eras; since 2022 walls are crossed more easily", "§4.3"),
+    ("「真空区 / 断层必回补」", "'Gaps always get filled'", "价格更常回到筹码密集区，不是回补真空区", "Price returns to dense zones more often, not to gaps", "§4.3"),
+    ("分龄成本线（1-3M、3-6M、6-12M、1-2Y、<10Y）、<1 个月成本当支撑压力", "Age-band cost lines and <1-month cost as support/resistance", "不比对照线好，<1 个月成本明显更差", "No better than placebo lines; the <1-month cost is clearly worse", "§4.1"),
+    ("STH-SOPR / aSOPR = 1、STH 盈亏比 = 1 当多空分界", "STH-SOPR / aSOPR = 1 or STH P/L ratio = 1 as the bull/bear line", "穿越后收益和同状态普通日子没区别", "Returns after crossing match ordinary days in the same state", "§4.5"),
+    ("「交易所余额下降 / 鲸鱼增持 → 要涨」", "'Falling exchange balances / whales buying → up'", "只有同步关系，没有提前量", "Coincident only, no lead", "§4.6"),
+    ("MVRV 一年均值带、STH 成本 −1σ、MVRV 历史均值线", "MVRV one-year mean bands, STH cost −1σ, historical-mean MVRV line", "不显著", "Not significant", "§4.2"),
+    ("AVIV 价位带", "AVIV price bands", "免费数据口径复现不了", "Cannot be reproduced on free data", "§4.2"),
+    ("矿工储备", "Miner reserves", "没有提前量；数据源需要付费 token，网页不接", "No lead; the source needs a paid token, not wired", "§4.6"),
+    ("具体分析师的价位判断", "Specific analysts' price levels", "624 个价位整体不比同距离随机价位准", "624 levels were overall no more accurate than random levels at the same distance", "§4.7"),
+]
+L3_NOTE = ("只展示通过历史检验的规则。对照组是形状一样、位置不同的假线；大多数链上成本线和筹码密集区作支撑压力都不比假线强，所以只作描述。数据为 UTXO 口径，数值和 Glassnode 等平台会有差异。样本有限，所有结论最高到「已验证·方向」，不构成投资建议。",
+           "Only rules that passed historical tests are shown. The control group is placebo lines of the same shape at a different level; most on-chain cost lines and dense supply zones do no better than placebos as support or resistance, so they are descriptive only. Data is UTXO-based and will differ from Glassnode and similar platforms. Samples are limited; every conclusion is at most 'validated · direction'. Not investment advice.")
+
+
+def l3_card_extra(ind):
+    l3 = G.get("L3") or {}
+    if ind["key"] == "l3_p1s" and (l3.get("p1s") or {}).get("lo"):
+        a = l3["p1s"]
+        return T(f"；压力区 ${a['lo']:,.0f} ~ ${a['hi']:,.0f}", f"; zone ${a['lo']:,.0f}–${a['hi']:,.0f}")
+    if ind["key"] == "l3_conc" and (l3.get("warning") or {}).get("conc_date"):
+        w = l3["warning"]
+        rk = f"，2022 年以来第 {w['conc_rank_2022']} 百分位" if w.get("conc_rank_2022") is not None else ""
+        rk_en = f", {w['conc_rank_2022']}th percentile since 2022" if w.get("conc_rank_2022") is not None else ""
+        return T(f"（{w['conc_date']} 的筹码分布{rk}）", f" (URPD of {w['conc_date']}{rk_en})")
+    return ""
+
+
+def _m0(v):
+    return "—" if v is None else f"${v:,.0f}"
+
+
+def _pc(v):
+    return "—" if v is None else f"{v:+.1f}%".replace("-", "−")
+
+
+def l3_posbar(l3):
+    """价格位置条：对数横轴，标 STH 成本、+1σ 压力区（±2% 色带）、STH-MVRV 1.3、现价。"""
+    p, a, s = l3["price"], l3["p1s"], l3["sth"]
+    s13 = l3.get("sth_13")
+    pts = [x for x in (p, a["value"], s["value"], s13) if x]
+    lo, hi = math.log(min(pts) * 0.93), math.log(max(pts) * 1.05)
+    X = lambda v: (math.log(v) - lo) / (hi - lo) * 100
+    mk = lambda v, cls, zh, en, up=False: (f'<div class="pb-m {cls}{" up" if up else ""}" style="left:{X(v):.2f}%"><i></i>'
+                                            f'<span><b>{esc(T(zh, en))}</b>{_m0(v)}</span></div>')
+    zone = f'<div class="pb-zone" style="left:{X(a["lo"]):.2f}%;width:{X(a["hi"]) - X(a["lo"]):.2f}%"></div>'
+    s13m = mk(s13, "s13", "STH-MVRV 1.3（趋势区起点·假设）", "STH-MVRV 1.3 (trend zone, hypothesis)") if s13 else ""
+    return (f'<div class="card l3pos"><div class="eb">L3 {T("价格位置", "price position")} · {T("数据日", "data date")} {esc(l3.get("data_date") or "—")}'
+            f' · {T("运行", "run")} {esc(l3.get("updated_utc") or "—")} UTC'
+            + (f' <span class="chip l2stale">{T("数据延迟 · 用了缓存", "Data delayed · cached")}</span>' if (l3.get("data_status") or {}).get("stale") else "")
+            + f'</div><h3 class="st">{esc(T(l3["position"]["zh"], l3["position"]["en"]))}</h3>'
+            f'<div class="pbar">{zone}{mk(s["value"], "sth", "STH 成本", "STH cost")}{mk(a["value"], "p1s", "+1σ 压力区", "+1σ zone", True)}{s13m}'
+            f'{mk(p, "px", "现价", "Price")}</div>'
+            f'<p class="tnote">{T("色带 = +1σ 压力区（上下 2%），是一个区域，不是一根精确的线。L3 只回答价位和波动幅度，方向看 L2，节奏看 L1。", "The band is the +1σ pressure zone (±2%) — a zone, not a precise line. L3 only covers levels and move size; direction comes from L2, pace from L1.")}</p></div>')
+
+
+def l3_touch_rows(xs):
+    rows = ""
+    for x in reversed(xs):
+        zh, en, tone = L3_RES.get(x["result"], ("—", "—", "neutral"))
+        rd = f' <span class="d">{x["result_date"][5:]}</span>' if x.get("result_date") else ""
+        rows += (f'<tr><td>{x["date"]}</td><td>{_m0(x["price"])}</td><td>{_m0(x["line"])}</td>'
+                 f'<td class="l">{tone_chip(T(zh, en), tone)}{rd}</td></tr>')
+    return (f'<div class="tw"><table class="l3t"><thead><tr><th>{T("碰线日", "Touch")}</th><th>{T("收盘价", "Close")}</th><th>{T("当天线位", "Line")}</th>'
+            f'<th class="l">{T("30 天结果", "30-day result")}</th></tr></thead><tbody>{rows or "<tr><td colspan=4>—</td></tr>"}</tbody></table></div>')
+
+
+def l3_main_cards(l3):
+    a, w = l3["p1s"], l3.get("warning") or {}
+    st_tone = "warn" if l3["position"]["code"] == "in_zone" else "neutral"
+    left = (f'<div class="card l3main"><div class="top"><span class="nm">{T("上方压力区 · STH 成本 +1σ", "Pressure zone above · STH cost +1σ")}</span>{grade_chip("已验证·方向")}</div>'
+            f'<div class="v">{_m0(a["value"])} <span class="sub">{T("离现价", "vs price")} {_pc(a["pct_from_price"])}</span></div>'
+            f'<div class="b">{T("压力区", "Zone")} {_m0(a["lo"])} ~ {_m0(a["hi"])} · {tone_chip(T(a["status_zh"], a["status_en"]), st_tone)}</div>'
+            f'<p class="tnote">{esc(T(a["hold_rate_zh"], a["hold_rate_en"]))}{T("。用法：多单止盈参考、追高提醒；不当挂单位；冲过去站上 STH-MVRV 1.3 不据此做空。", ". Use: a take-profit reference and a no-chasing reminder; not an order level; no shorting once price breaks through and holds STH-MVRV 1.3.")}</p>'
+            f'<div class="sub2">{T("最近 5 次碰线（从下方碰到压力区）", "Last 5 touches (from below)")}</div>{l3_touch_rows(a.get("touches") or [])}</div>')
+    on = bool(w.get("on"))
+    vol, conc = w.get("vol30"), w.get("conc")
+    vb = min(100, (vol or 0) / 100 * 100)
+    cb = min(100, (conc or 0) / 25 * 100)
+    rk = T(f"，2022 年以来第 {w['conc_rank_2022']} 百分位", f", {w['conc_rank_2022']}th pct since 2022") if w.get("conc_rank_2022") is not None else ""
+    right = (f'<div class="card l3main l3warn{" on" if on else ""}"><div class="top"><span class="nm">{T("大波动预警", "Large-move warning")}</span>{grade_chip("已验证·方向")}</div>'
+             f'<div class="lamp"><i></i><b>{T("亮", "ON") if on else T("不亮", "Off")}</b></div>'
+             + (f'<p class="big">{esc(T(w.get("text_zh") or "", w.get("text_en") or ""))}</p>' if on else
+                f'<p class="big quiet0">{T("条件没同时满足：要 30 天波动低于 40%、且筹码集中度不低于 12%。", "Conditions not both met: 30-day volatility below 40% and supply concentration at least 12%.")}</p>')
+             + f'<div class="meter"><div class="ml"><span>{T("30 天年化波动", "30-day volatility")}</span><b>{"—" if vol is None else f"{vol:.1f}%"}</b><em>{T("低于 40% 才算", "counts below 40%")}</em></div>'
+             f'<div class="mb"><span style="width:{vb:.1f}%" class="{"ok" if vol is not None and vol < 40 else ""}"></span><i style="left:40%"></i></div></div>'
+             f'<div class="meter"><div class="ml"><span>{T("筹码集中度（现价 ±5%）", "Concentration (price ±5%)")}</span><b>{"—" if conc is None else f"{conc:.1f}%"}</b><em>{T("不低于 12% 才算", "counts at 12%+")}</em></div>'
+             f'<div class="mb"><span style="width:{cb:.1f}%" class="{"ok" if conc is not None and conc >= 12 else ""}"></span><i style="left:48%"></i></div></div>'
+             f'<p class="tnote">{T("只说幅度，不说方向：亮灯后顺着 MA200 趋势做并不更准，所以只用于「该做的风控照做」——逐笔确认止损、盯衰竭信号。", "Magnitude only, not direction: following the MA200 trend after the light is no more accurate, so it only means doing the risk control you should — confirm every stop, watch for exhaustion.")}'
+             f'{T("集中度数据日 ", " Concentration as of ")}{esc(w.get("conc_date") or "—")}{rk}{T("。", ".")}</p></div>')
+    return f'<div class="grid g2 l3mains">{left}{right}</div>'
+
+
+def l3_chipmap(l3):
+    cmap = l3.get("chip_map") or {}
+    bins = cmap.get("bins") or []
+    if not bins:
+        return empty_state("none", T("筹码分布 · 等待数据", "Supply map · awaiting data"), T("l3_daily.py 取到 URPD 后显示。", "Shown once l3_daily.py fetches a URPD."), "")
+    p = l3["price"]
+    lo, hi = math.log(bins[0]["lo"]), math.log(bins[-1]["hi"])
+    W, H, B = 1000, 220, 22
+    X = lambda v: (math.log(v) - lo) / (hi - lo) * W
+    mx = max(b["supply"] for b in bins) or 1
+    bars = ""
+    for b in bins:
+        x0, x1 = X(b["lo"]), X(b["hi"])
+        h = b["supply"] / mx * (H - B - 8)
+        cls = {"dense": "dn0", "sparse": "sp0"}.get(b["cls"], "md0")
+        bars += (f'<rect class="{cls}" x="{x0:.1f}" y="{H - B - h:.1f}" width="{max(0.5, x1 - x0 - 0.6):.1f}" height="{h:.1f}">'
+                 f'<title>${b["lo"]:,.0f} ~ ${b["hi"]:,.0f}: {b["supply"]:,.0f} BTC</title></rect>')
+    ticks = ""
+    for f in (0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3):
+        v = p * f
+        if bins[0]["lo"] * 1.03 <= v <= bins[-1]["hi"] / 1.03:
+            ticks += f'<text class="ax" x="{X(v):.1f}" y="{H - 6}" text-anchor="middle">{"$" + format(round(v, -2), ",.0f") if f != 1.0 else T("现价", "price")}</text>'
+    px = X(p)
+    svg = (f'<svg class="l3map" viewBox="0 0 {W} {H}" preserveAspectRatio="none" role="img" aria-label="{esc(T("筹码分布", "Supply distribution"))}">'
+           f'{bars}<line class="pxl" x1="{px:.1f}" x2="{px:.1f}" y1="0" y2="{H - B}"/>{ticks}</svg>')
+    walls = "；".join(f'${w["lo"]:,.0f} ~ ${w["hi"]:,.0f}（{w["supply"]:,} BTC，{w["share_pct"]}%）' for w in cmap.get("dense_ranges") or [])
+    walls_en = "; ".join(f'${w["lo"]:,.0f}–${w["hi"]:,.0f} ({w["supply"]:,} BTC, {w["share_pct"]}%)' for w in cmap.get("dense_ranges") or [])
+    leg = (f'<div class="l2leg"><span><i class="dn0"></i>{T("密集区（平滑后前 5%）", "Dense (top 5% after smoothing)")}</span>'
+           f'<span><i class="md0"></i>{T("一般", "Normal")}</span><span><i class="sp0"></i>{T("稀疏区（后 30%）", "Sparse (bottom 30%)")}</span>'
+           f'<span><i class="pxi"></i>{T("现价", "Price")}</span></div>')
+    note = T("每枚币按最后一次在链上移动时的价格分档。密集区更像「磁铁 + 换手区」，不是墙：同距离比较，筹码墙作支撑压力和真空区的差在各年代正负相反，2022 年后筹码墙更容易被穿过；「真空区必回补」也不成立。",
+             "Each coin is bucketed by the price at which it last moved. Dense zones behave like magnets and turnover areas, not walls: at equal distance the wall-vs-gap difference as support/resistance flips sign across eras, walls are crossed more easily since 2022, and “gaps always fill” does not hold.")
+    return (f'<div class="card chartcard"><h3 style="margin-top:0">{T("筹码分布（描述）· 现价 ±30%", "Supply distribution (descriptive) · price ±30%")} '
+            f'<span class="sub">URPD · {esc(cmap.get("date") or "—")} · {T("约 0.95% 一档", "~0.95% per bucket")}</span></h3>{leg}{svg}'
+            f'<p class="tnote">{T("密集区：", "Dense zones: ")}{esc(T(walls, walls_en) or "—")}。'
+            f'{note}</p></div>')
+
+
+def l3_charts():
+    ser = G.get("L3S")
+    if not ser:
+        return ""
+    if "L3CHART" not in G:
+        d0 = dt.date.fromisoformat(ser["start"])
+        start = "2012-01-01"
+
+        def col(k, f=None):
+            vals = ser["series"].get(k) or []
+            out = {}
+            for i, v in enumerate(vals):
+                d = (d0 + dt.timedelta(days=i)).isoformat()
+                if v is not None and d >= start:
+                    out[d] = f(v) if f else v
+            return out
+        p1 = col("p1s")
+        G["L3CHART"] = put_multi("l3_chart", {"price": col("price"), "sth_rp": col("sth_rp"), "p1s": p1,
+                                              "p1s_hi": {d: v * 1.02 for d, v in p1.items()}, "p1s_lo": {d: v * 0.98 for d, v in p1.items()},
+                                              "tmmp": col("tmmp"), "warn": col("warn", lambda v: int(v))})
+        G["L3VOL"] = put_multi("l3_volconc", {"vol30": col("vol30"), "conc": col("conc")})
+    states = [None, {"n": T("大波动预警亮", "Large-move warning on"), "c": "warn"}]
+    cfg = {"v2": True, "src": G["L3CHART"], "fmt": "price", "log": True, "ranges": ["1Y", "3Y", "5Y", "ALL"], "range": "1Y", "group": "l3c",
+           "stk": "warn", "states": states, "toggle": True, "last": False,
+           "note": T("对数坐标。橙色细线之间 = +1σ 压力区（上下 2%）；底色 = 当天大波动预警亮（历史日子按同一规则回算，属于样本内）。真实市场均价是 L2 的周期状态线，不作支撑压力。",
+                     "Log scale. Between the orange lines = the +1σ pressure zone (±2%); shading = days with the large-move warning on (past days recomputed with the same rule, in-sample). The true market mean is an L2 cycle-state line, not support or resistance."),
+           "series": [{"k": "price", "n": T("BTC 价格", "BTC price"), "c": "ink", "w": 2.0},
+                      {"k": "p1s", "n": T("STH 成本 +1σ（压力区）", "STH cost +1σ (pressure zone)"), "c": "warn", "w": 1.6},
+                      {"k": "p1s_hi", "n": T("压力区上沿 +2%", "Zone top +2%"), "c": "warn", "w": 0.7},
+                      {"k": "p1s_lo", "n": T("压力区下沿 −2%", "Zone bottom −2%"), "c": "warn", "w": 0.7},
+                      {"k": "sth_rp", "n": T("STH 成本（参考支撑）", "STH cost (reference support)"), "c": "s3", "w": 1.4},
+                      {"k": "tmmp", "n": T("真实市场均价（L2 状态线）", "True market mean (L2 state line)"), "c": "s9", "w": 1.0}]}
+    vcfg = {"v2": True, "src": G["L3VOL"], "fmt": "pct1", "ranges": ["1Y", "3Y", "5Y", "ALL"], "range": "1Y", "group": "l3c", "h": 220,
+            "lines": [{"v": 40, "label": T("波动 40%", "vol 40%"), "tone": "warn"}, {"v": 12, "label": T("集中度 12%", "conc 12%"), "tone": "warn"}],
+            "note": T("预警 = 30 天波动低于 40% 且集中度不低于 12%。集中度 2012 年起每周日一张筹码分布，之后每天一张。",
+                      "Warning = 30-day volatility below 40% and concentration at least 12%. Concentration uses one URPD every Sunday since 2012, daily afterwards."),
+            "series": [{"k": "vol30", "n": T("30 天年化波动", "30-day volatility"), "c": "s1"}, {"k": "conc", "n": T("筹码集中度（±5%）", "Concentration (±5%)"), "c": "s2"}]}
+    return (f'<div class="card chartcard" style="margin-top:12px"><h3 style="margin-top:0">{T("价格 + STH 成本 + 压力区 + 预警日", "Price + STH cost + pressure zone + warning days")}</h3>'
+            + chart_div(cfg) + f'<h3>{T("30 天波动与筹码集中度", "30-day volatility and supply concentration")}</h3>' + chart_div(vcfg) + "</div>")
+
+
+def l3_tab(l3, as_of):
+    if not R.l3_ok(l3):
+        return empty_state("pending", T("L3 筹码层 · 等待首次运行", "L3 supply layer · awaiting first run"),
+                           T(f"每天 UTC {L3_TIME} 由 GitHub Actions 运行 l3/l3_daily.py 生成（第一次运行会补 2012 年以来每周一张的筹码分布，可能要分几天补完）。",
+                             f"Generated daily at {L3_TIME} UTC by l3/l3_daily.py (the first runs back-fill one URPD per week since 2012 and may take a few days)."), "")
+    groups = cards_by_group(3, as_of, l3_card_extra)
+    cards = "".join(f'<h3 id="grp-3-{n}">{esc(T(*g))}</h3>{c}' for n, (g, c) in enumerate(groups))
+    sth = l3.get("sth") or {}
+    sup = (f'<details class="raw l3d"><summary>{T("STH 成本（参考支撑）最近 5 次碰线", "STH cost (reference support): last 5 touches")}</summary>'
+           f'<p class="tnote">{esc(T(sth.get("hold_rate_zh") or "", sth.get("hold_rate_en") or ""))}</p>{l3_touch_rows(sth.get("touches") or [])}</details>')
+    line = T(l3.get("daily_line_zh") or "", l3.get("daily_line_en") or "")
+    return (l3_posbar(l3) + l3_main_cards(l3) + sup + cards + l3_chipmap(l3) + l3_charts()
+            + f'<p class="tnote">{T("每日一行：", "Daily line: ")}<code>{esc(line)}</code></p>')
+
+
+def l3_tail():
+    banned = "".join(f'<li><b>{esc(T(a, b))}</b><span>{esc(T(c, d))}</span><em>{e}</em></li>' for a, b, c, d, e in L3_NOT_SHOWN)
+    rep = next((r for r in ALL_REPORTS if "l3" in r["slug"] or "supply" in r["slug"]), None)
+    rel = f'<p class="tnote">{T("相关研究：", "Related research: ")}<a href="{U("/reports/" + rep["slug"] + "/")}">{esc(LF(rep, "标题"))}</a></p>' if rep else ""
+    return (f'<details class="raw l3d" style="margin-top:14px"><summary>{T("不展示 / 不再使用的说法（研究里测过不成立）", "Not shown / no longer used (failed in the study)")}</summary><ul class="l3ban">{banned}</ul></details>'
+            + rel + f'<p class="l2disc">{esc(T(*L3_NOTE))}</p>')
+
+
 # ---------------------------------------------------------------- 每层结论区（M3）+ 判定明细（M4）
 SWITCH_L1 = {
     "顺风": ("转为中性：乐观度 z 跌破 0，或 BAA 利差 13 周转为走阔；实际利率 13 周急升 ≥ +0.40pp 时转为中性偏谨慎，再叠加信用转紧或乐观度 z < 0 即逆风。",
@@ -1398,8 +1597,12 @@ def switch_text(i, lay, l2):
         st = (l2 or {}).get("state") or {}
         return (st.get("next_zh") if LANG["v"] == "zh" else st.get("next_en")) or "—"
     if i == 3:
-        return T("交易所 BTC 7 日净流量 < −2,000 枚 = 净流出（筹码离开交易所）；−2,000 ~ +2,000 = 进出均衡；> +2,000 = 净流入（留意抛压）。",
-                 "Exchange BTC 7-day net flow < −2,000 = outflow; −2,000 to +2,000 = balanced; > +2,000 = inflow (watch selling).")
+        l3 = G.get("L3") or {}
+        a, s_ = l3.get("p1s") or {}, l3.get("sth") or {}
+        return T(f"收盘站上压力区上沿（{_m0(a.get('hi'))}）= 冲过压力区；进入 {_m0(a.get('lo'))} ~ {_m0(a.get('hi'))} = 在压力区；跌破 STH 成本（{_m0(s_.get('value'))}）= STH 成本下方。"
+                 "大波动预警：30 天波动低于 40% 且筹码集中度不低于 12% 时亮。线每天随 STH 成本移动。",
+                 f"A close above the zone top ({_m0(a.get('hi'))}) = through the zone; inside {_m0(a.get('lo'))}–{_m0(a.get('hi'))} = in the zone; below the STH cost ({_m0(s_.get('value'))}) = below STH cost. "
+                 "Large-move warning: on when 30-day volatility is below 40% and supply concentration is at least 12%. The lines move daily with the STH cost.")
     sc = lay.get("分")
     cur = f"{sc:+d}" if isinstance(sc, int) else "—"
     return T(f"恐慌贪婪、资金费率、未平仓 7 日变化三项分数合计 ≥ 3 过热、1~2 偏热、≤ −2 偏冷，其余中性（当前合计 {cur}）。",
@@ -1434,7 +1637,7 @@ def basis_chips(i, lay, l2):
                 out += f'<a class="chip" href="#l2-signals" data-hl="l2-signals"><i></i>{T(cat, en)} {sum(1 for x in xs if x["on"])}/{len(xs)}</a>'
         return out
     if i == 3:
-        return chip("ex_netflow") + chip("ex_balance")
+        return chip("l3_p1s") + chip("l3_vol30") + chip("l3_conc")
     return "".join(chip(k) for k in ("hl_oi", "hl_funding", "fng") if jby.get(k) and jby[k]["分"] != 0) or chip("fng")
 
 
@@ -1563,18 +1766,22 @@ def build_macro(L, S, logs):
         else:
             groups = cards_by_group(i, as_of)
             content = "".join(f'<div class="grp" id="grp-{i}-{n}">{esc(T(*g))}</div>{c}' for n, (g, c) in enumerate(groups)) + pending_block(i)
+            if i == 3:
+                content = l3_tab(G.get("L3"), as_of) + pending_block(3)
             if i == 3 and S.get("ex_netflow"):
                 cum = R.s_cum_netflow(S)
                 first = min(cum)
                 f = G["FILES"]
                 content += ('<div class="card chartcard" style="margin-top:12px">'
-                            + f'<h3 style="margin-top:0">{T("交易所 BTC 累计净流量 · 全部历史（向下 = 筹码持续离开交易所）", "Cumulative exchange BTC net flow · full history (down = coins leaving)")}</h3>'
+                            + f'<h3 style="margin-top:0">{T("交易所 BTC 累计净流量 · 全部历史（只作描述；向下 = 币在持续离开交易所）", "Cumulative exchange BTC net flow · full history (down = coins leaving)")}</h3>'
                             + chart_div({"v2": True, "src": f["ex_netflow"]["raw"], "fmt": "btcs", "ranges": ["1Y", "3Y", "5Y", "ALL"], "range": "ALL", "group": "l3", "zero": True,
                                          "series": [{"k": "v", "n": T("累计净流量", "Cumulative net flow"), "c": "s1", "area": True}],
                                          "note": T(f"从 {first} 起逐日累加流入 − 流出（CoinMetrics flash 口径）。", f"Inflow − outflow summed daily since {first}.")})
                             + f'<h3>{T("交易所 BTC 余额 · 全部历史", "Exchange BTC balance · full history")} <a class="sub" href="{ind_href("ex_balance")}">{T("看区间与分位 →", "Zones & percentiles →")}</a></h3>'
                             + chart_div({"v2": True, "src": f["ex_balance"]["raw"], "fmt": "btc", "log": True, "ranges": ["1Y", "3Y", "5Y", "ALL"], "range": "ALL", "group": "l3",
                                          "series": [{"k": "v", "n": T("交易所余额", "Exchange balance"), "c": "s3"}]}) + "</div>")
+            if i == 3:
+                content += l3_tail() if R.l3_ok(G.get("L3")) else ""
             if i == 4 and G["FILES"].get("fng", {}).get("main"):
                 content += ('<div class="card chartcard" style="margin-top:12px">' + f'<h3 style="margin-top:0">{T("恐慌贪婪指数", "Fear & Greed index")}</h3>'
                             + chart_div({"v2": True, "src": G["FILES"]["fng"]["main"], "fmt": "int", "ranges": ["1Y", "3Y", "ALL"], "range": "1Y",
@@ -2271,8 +2478,8 @@ RADAR = [
      "Starting from our own pipes: whale wallets on Robinhood Chain / Arc launchpads, then Solana / BSC. No guessed labels."),
     ("未发币高热度协议雷达", "Tokenless protocol radar", "DefiLlama 协议列表里「没有代币」的协议 × 手续费 / TVL 增速做筛选，找有真实收入、还没发币的项目。",
      "Protocols without a token on DefiLlama, screened by fee / TVL growth — real revenue, no token yet."),
-    ("巨鲸埋伏", "Whale positioning", "BTC 层面的交易所净流量已在宏观第三层上线；山寨币层面需要逐币持仓分布，筹备中。",
-     "BTC exchange flows are live in macro L3; altcoin holder distribution is in preparation."),
+    ("巨鲸埋伏", "Whale positioning", "BTC 层面的筹码分布、短期持有者成本和交易所流量已在宏观第三层上线；山寨币层面需要逐币持仓分布，筹备中。",
+     "BTC supply distribution, STH cost and exchange flows are live in macro L3; altcoin holder distribution is in preparation."),
 ]
 
 
@@ -2466,6 +2673,8 @@ def old_note(obj):
     if obj.get("类型") == "日" and d and d < "2026-10-08":
         notes.append(T("本篇的 L2 按 2026-10-08 之前的旧规则（MVRV Z-Score 区间）写成，综合研判只由 L1 和 L4 组合",
                        "L2 in this entry follows the pre-2026-10-08 rule (MVRV Z-Score zone) and the overall read combined only L1 and L4"))
+    if obj.get("类型") == "日" and d and d <= "2026-10-11" and not obj.get("L3"):
+        notes.append(T("本篇的 L3 按 2026-10-11 之前的旧规则（交易所 7 日净流量）写成", "L3 in this entry follows the pre-2026-10-12 rule (7-day exchange net flow)"))
     if not notes:
         return ""
     return f'<div class="note">{esc("；".join(notes) if LANG["v"] == "zh" else "; ".join(notes))}{T("。按冻结规则保持原样，规则变更见", ". Kept as written under the freeze rule; see ")}<a href="{U("/corrections/")}">{T("更正记录", "Corrections")}</a>{T("。", ".")}</div>'
@@ -2473,6 +2682,7 @@ def old_note(obj):
 
 RULE_SEP = [("2026-10-02", "规则变更：L1 宏观层重建，此前日志按旧规则", "Rule change: L1 rebuilt; earlier logs follow the old rules"),
             ("2026-10-04", "规则变更：L1-B 加密资金通道修订", "Rule change: L1-B crypto funding channels revised"),
+            ("2026-10-12", "规则变更：L3 筹码层重做（压力区位置 + 大波动预警），此前的 L3 结论按交易所 7 日净流量", "Rule change: L3 rebuilt (pressure-zone position + large-move warning); earlier L3 verdicts follow 7-day exchange net flow"),
             ("2026-10-08", "规则变更：L2 改为状态机，此前的 L2 结论按旧规则（MVRV Z-Score 区间）", "Rule change: L2 became a state machine; earlier L2 verdicts follow the old rule (MVRV Z-Score zone)")]
 
 
@@ -2600,8 +2810,8 @@ def build_journal(S, logs, weeks, months, sd):
             seps.append((lg["日期"], "规则变更：综合研判改为四层合成，此前日志只由 L1 和 L4 组合", "Rule change: the overall read now combines all four layers; earlier logs combined only L1 and L4"))
         for d, zh, en in seps:
             pd_ = place.get(d, d)
-            anc = "2026-10-08-comp" if "四层合成" in zh else d
-            rid = "2026-10-08-comp" if "四层合成" in zh else d
+            anc = "2026-10-08-comp" if "四层合成" in zh else ("2026-10-11-l3" if "L3" in zh else d)
+            rid = anc
             if lg["日期"] == pd_ or (prev and prev["日期"] < pd_ < lg["日期"]):
                 row += f'<li class="rsep" id="rule-{rid}"><span class="d">{d}</span><span>⚑ {esc(T(zh, en))} · <a href="{U("/corrections/")}#rc-{anc}">{T("见更正记录", "see Corrections")}</a></span></li>'
         by_month.setdefault(lg["日期"][:7], []).append(row)
@@ -2676,10 +2886,10 @@ def comp_rules_html():
     tiers = ("顺风", "中性", "中性偏谨慎", "逆风")
     rows3 = "".join(f"<tr><td class='l'>{esc(T(d, DIR_EN.get(d, d)))}</td>" + "".join(f"<td class='l wrap'>{esc(T(*C['动作'][d][t]))}</td>" for t in tiers) + "</tr>" for d in ("偏多", "防顶", "待确认", "偏空"))
     trig = "".join(f"<li>{esc(T(r['条件'], r.get('条件EN', r['条件'])))} → {esc(T(r['中文'], r['英文']))}</li>" for r in C["逆风原因"])
-    p1 = T("综合研判按研究里定下的分工四层合成：<b>L2 给方向的底色</b>；<b>L1 管节奏和风险预算</b>，不管方向；<b>L3 看筹码</b>和周期方向是一致还是背离；<b>L4 只描述短期温度</b>，不改变动作（L4 还没完成研究）。",
-           "The overall read combines four layers along the study's division of labour: <b>L2 sets the direction</b>; <b>L1 sets pace and risk budget</b>, not direction; <b>L3 checks</b> whether flows agree with the cycle; <b>L4 only describes short-term temperature</b> and never changes the action (its research is not finished).")
-    p2 = T("一句话 =「{方向句}；{但}{节奏句}，{动作}。{筹码背离提示}{短期提示}」：方向偏多而 L1 是中性偏谨慎 / 逆风，或方向偏空 / 防顶而 L1 是顺风时加「但」；动作只来自 L1 的风险预算规则和 L2 研究写定的交接原则「方向上不急于看空，节奏上不追高、按 L1 的风险预算分批」；L3 和方向背离时追加一句；L4 不是中性时追加短期温度。一句话超过 60 字先去掉短期提示，再去掉背离提示（四段里仍然完整显示）。",
-           "One line = '{direction}; {but} {pace} — {action}. {flow divergence} {short term}': 'but' is added when the direction leans up while L1 is cautious/headwind, or leans down / top-risk while L1 is a tailwind; actions come only from L1's risk-budget rules and the L2 hand-over principle ('no rush to turn bearish on direction; no chasing on pace, scale in per L1's budget'); a divergence note is added when L3 disagrees; L4 adds its temperature when not neutral. Lines over 60 characters drop the short-term note first, then the divergence note (both stay in the paragraphs).")
+    p1 = T("综合研判按研究里定下的分工四层合成：<b>L2 给方向的底色</b>；<b>L1 管节奏和风险预算</b>，不管方向；<b>L3 只描述价格离筹码压力区多远、波动会不会放大</b>，不给方向；<b>L4 只描述短期温度</b>，不改变动作（L4 还没完成研究）。",
+           "The overall read combines four layers along the study's division of labour: <b>L2 sets the direction</b>; <b>L1 sets pace and risk budget</b>, not direction; <b>L3 only describes how far price is from the supply pressure zone and whether moves may get bigger</b>, never direction; <b>L4 only describes short-term temperature</b> and never changes the action (its research is not finished).")
+    p2 = T("一句话 =「{方向句}；{但}{节奏句}，{动作}。{筹码提示}{短期提示}」：方向偏多而 L1 是中性偏谨慎 / 逆风，或方向偏空 / 防顶而 L1 是顺风时加「但」；动作只来自 L1 的风险预算规则和 L2 研究写定的交接原则「方向上不急于看空，节奏上不追高、按 L1 的风险预算分批」；价格在 +1σ 压力区里或大波动预警亮时追加筹码提示（2026-10-11 起；之前是「筹码和周期方向背离」提示）；L4 不是中性时追加短期温度。一句话超过 60 字先去掉短期提示，再去掉筹码提示（四段里仍然完整显示）。",
+           "One line = '{direction}; {but} {pace} — {action}. {supply note} {short term}': 'but' is added when the direction leans up while L1 is cautious/headwind, or leans down / top-risk while L1 is a tailwind; actions come only from L1's risk-budget rules and the L2 hand-over principle ('no rush to turn bearish on direction; no chasing on pace, scale in per L1's budget'); a supply note is added when price is inside the +1σ pressure zone or the large-move warning is on (since 2026-10-11; before that it was a 'flows diverge from the cycle' note); L4 adds its temperature when not neutral. Lines over 60 characters drop the short-term note first, then the supply note (both stay in the paragraphs).")
     p3 = T("「节奏上不追高」只出现在「方向偏多 + L1 偏紧」的组合里（L2 研究 §4 交接原则）；「可它改变不了熊市的深度」出自宏观总文档：熊市跌多深按周期成熟度排序、和利率冲击无关。短句全文见 config/composite.json。",
            "“No chasing” only appears when the direction leans up and L1 is tight (L2 study §4 hand-over principle); “it won't change how deep a bear market goes” comes from the macro study: bear depth ranks with cycle maturity, not rate shocks. Full phrases are in config/composite.json.")
     th = "".join(f"<th class='l'>{esc(T(t, TIER_EN.get(t, t)))}</th>" for t in tiers)
@@ -2745,7 +2955,7 @@ def build_methodology():
 {T(L1_RULES_ZH, L1_RULES_EN)}
 <p style="margin:0 0 8px"><b style="color:var(--ink)">L2 {T("周期", "Cycle")}</b>{CN}{T("规则化状态机（l2/l2_signals.py，《BTC周期层L2研究》§7）逐日推进：新高 → 牛市；减半后 480~600 天或 MVRV ≥ 2 且价/200 周均 ≥ 2 → 牛市·顶部风险区；回撤 ≥ 20% → 牛市回撤·待确认（收窄到 10% 内回到牛市）；回撤 ≥ 35% 且新高已过 90 天、减半已过 450 天 → 熊市；熊市里底部区信号 ≥ 2 条 → 熊底区；离最低点 +40% 且最低点已过 90 天，或四条短期成本线连续 7 天站上且本轮出现过分龄底部确认 → 熊末→牛初；收盘跌破本轮最低收盘则退回熊市。数据：Coin Metrics 社区接口 + bitview.space。层结论 = 当天状态。",
 "A rule-based state machine (l2/l2_signals.py, L2 cycle study §7) stepped day by day: new high → bull; halving +480–600 days or MVRV ≥ 2 with price/200W MA ≥ 2 → bull top-risk; drawdown ≥ 20% → bull pullback (back to bull inside 10%); ≥ 35% with the high ≥ 90 days old and the halving ≥ 450 days old → bear; ≥ 2 bottom-zone signals in a bear → bottom zone; +40% from a ≥ 90-day-old low, or 7 days above four short-term cost lines with an age-band confirmation this cycle → late bear → early bull; a close below the cycle low reverts to bear. Data: Coin Metrics community API + bitview.space. Layer verdict = the state of the day.")}</p>
-<p style="margin:0 0 8px"><b style="color:var(--ink)">L3 {T("筹码", "Coin flows")}</b>{CN}{T("以交易所 BTC 7 日净流量为准：< −2,000 枚 = 净流出（筹码离开交易所），> +2,000 枚 = 净流入（留意抛压），其余进出均衡。交易所余额 30 日变化只展示趋势。L3 数据维度正在重做。", "Based on 7-day exchange net flow: < −2,000 BTC = outflow, > +2,000 = inflow (watch selling), otherwise balanced. Exchange balance change is shown as trend only. L3 is being rebuilt.")}</p>
+<p style="margin:0 0 8px"><b style="color:var(--ink)">L3 {T("筹码", "Supply")}</b>{CN}{T("按价格相对短期持有者成本 +1σ 压力区（上下 2%）的位置：收盘站上上沿 = 冲过压力区，进入 ±2% = 在压力区，压力区下方到 STH 成本之间 = 压力区下方，跌破 STH 成本 = STH 成本下方；30 天波动 < 40% 且筹码集中度 ≥ 12% 时追加「大波动预警」（2026-10-11 起，此前以交易所 7 日净流量为准）。交易所流量、大户 / 散户持币只作描述。", "By price position relative to the STH cost +1σ pressure zone (±2%): a close above the top = through the zone, inside ±2% = in the zone, between the zone and the STH cost = below the zone, under the STH cost = below STH cost; a 'large-move warning' is added when 30-day volatility < 40% and supply concentration ≥ 12% (since 2026-10-11; previously the 7-day exchange net flow). Exchange flows and whale/retail holdings are descriptive only.")}</p>
 <p style="margin:0"><b style="color:var(--ink)">L4 {T("情绪", "Sentiment")}</b>{CN}{T("恐慌贪婪（−2~+2）、资金费率（−1~+2）、未平仓 7 日变化（−1~+1）合计 ≥ 3 过热、1~2 偏热、≤ −2 偏冷，其余中性。L4 还没完成研究，只描述温度。", "Fear & greed (−2..+2), funding (−1..+2) and 7-day OI change (−1..+1): ≥ 3 hot, 1–2 warm, ≤ −2 cool, otherwise neutral. L4 research is unfinished; it only describes temperature.")}</p></div>
 <h2 id="comp">{T("综合研判怎么来", "How the overall read is made")}</h2>{comp_rules_html()}
 <h2 id="l1rules">{T("L1 规则清单（宏观总文档 §10.2，逐条照抄）", "L1 rule list (macro study §10.2, copied rule by rule)")}</h2>
@@ -2757,7 +2967,7 @@ def build_methodology():
 <p class="tnote">{esc(T(SITE_CFG.get("推送重跑", ""), SITE_CFG.get("推送重跑EN", "")))}{T("页面上「解读生成」是当天日志冻结的时间，「数据更新」是页面读数最后一次刷新的时间。", " 'Log generated' is when the day's log was frozen; 'Data updated' is when the page's readings were last refreshed.")}</p>
 <h2 id="window">{T("统计窗口", "Statistics window")}</h2>
 <div class="card mcard"><ol><li>{T("L1 宏观指标：只用 2018 年以后（方法规则：2010–2017 宏观对 BTC 没有解释力）。", "L1 macro gauges: post-2018 only (method rule: macro had no explanatory power in 2010–2017).")}</li>
-<li>{T("链上周期类（L2 估值与持有者、L3 交易所）：2012-01-01 起；有效起点更晚的取有效起点。", "On-chain cycle gauges (L2 valuation & holders, L3 exchanges): from 2012-01-01, or the first valid day if later.")}</li>
+<li>{T("链上周期类（L2 估值与持有者、L3 筹码层）：2012-01-01 起；有效起点更晚的取有效起点。", "On-chain cycle gauges (L2 valuation & holders, L3 supply): from 2012-01-01, or the first valid day if later.")}</li>
 <li>{T("百分比变化类（L1-B 稳定币系列、交易所余额 30 日变化等）：从上面的起点往后若仍有 |变化率| > 100% 的点，推迟到此后再也没有的第一天（早期基数过小）。", "Percentage-change gauges (L1-B stablecoin lines, 30-day exchange balance change, etc.): pushed to the first day after which no |change| > 100% occurs (small early base).")}</li>
 <li>{T("图上照样展示统计起点之前的数据，铺灰底并注明原因；每个详情页写明实际统计窗口。", "Earlier data stays on the charts with a grey background and a note; every indicator page states its actual window.")}</li></ol></div>
 <details class="card fold"><summary>{T("各指标的数据起点与统计起点", "Data start and statistics start per gauge")}</summary><div class="tw" style="margin:0;border:0"><table><thead><tr><th class="l">{T("指标", "Gauge")}</th><th>{T("数据起点", "Data from")}</th><th>{T("统计起点", "Stats from")}</th><th class="l">{T("原因", "Why")}</th></tr></thead><tbody>{win_rows}</tbody></table></div></details>
@@ -2822,10 +3032,10 @@ def build_corrections(sd, fixes):
 
 def build_about():
     txt = T(f"""<p>写这个站的人在 web3 做了快十年，做过项目运营、产品设计，也做过 AMM DEX。现在把自己的研究方式搬到台面上：
-先看宏观环境给多少风险预算，再看周期位置（贵不贵），再看筹码结构（谁在进出交易所），再看情绪（会不会超调），最后落到发射台一级市场——每天赚多少钱、钱从哪来。</p>
+先看宏观环境给多少风险预算，再看周期位置（贵不贵），再看筹码结构（哪些价位有人在守、波动会不会放大），再看情绪（会不会超调），最后落到发射台一级市场——每天赚多少钱、钱从哪来。</p>
 <p>所有判断都按公开规则自动生成，每天一篇解读日志，写入即冻结；每周、每月再复盘一次；系统性的研究整理成分析报告。对了错了都留在这里，不做事后诸葛亮。</p>
 <p>{esc(DISCLAIMER)}</p>""", f"""<p>The author has spent close to ten years in web3 — operations, product design and an AMM DEX. This site puts the research process in public:
-first how much risk budget the macro backdrop allows, then the cycle (cheap or expensive), coin flows (who is moving coins on and off exchanges), sentiment (is it overshooting), and finally the launchpad primary market — how much money is made every day and where it comes from.</p>
+first how much risk budget the macro backdrop allows, then the cycle (cheap or expensive), supply structure (which levels are defended and whether moves will get bigger), sentiment (is it overshooting), and finally the launchpad primary market — how much money is made every day and where it comes from.</p>
 <p>Every judgement is generated from public rules; one log per day, frozen once written; weekly and monthly reviews; deeper research as reports. Right or wrong, it all stays here.</p>
 <p>{esc(DISCLAIMER_EN)}</p>""")
     body = f"""{crumbs([(T("关于", "About"), None)])}<div class="eyebrow">About</div>
@@ -2947,6 +3157,10 @@ def main():
     G["L2S"] = load(os.path.join(DATA, "l2", "l2_series.json"))
     G["L2LIVE"] = load(os.path.join(DATA, "l2", "l2_live.json"), []) or []
     R.attach_l2(S, G["L2S"])
+    G["L3"] = load(os.path.join(DATA, "l3", "l3_latest.json"))
+    G["L3S"] = load(os.path.join(DATA, "l3", "l3_series.json"))
+    G["L3H"] = load(os.path.join(DATA, "l3", "l3_history.json"), []) or []
+    R.attach_l3(S, G["L3S"])
     upd = [(L.get("更新时间UTC") or sd.get("生成时间UTC") or "")[:16].replace("T", " "), (G["L2"] or {}).get("updated_utc") or ""]
     G["更新"] = max(upd)
     os.makedirs(SITE, exist_ok=True)
@@ -2955,11 +3169,11 @@ def main():
     G["S"], G["as_of"] = S, as_of
     rs = [x for x in (R.judge(S, ind, as_of) for ind in R.INDICATORS) if x]
     G["RS"], G["JBY"] = rs, {x["key"]: x for x in rs}
-    G["VS"] = {i: R.layer_verdict(i, rs, G["L2"]) for i in R.LAYERS}
-    G["COMP"] = R.综合.compose(G["VS"], rs, G["L2"])
+    G["VS"] = {i: R.layer_verdict(i, rs, G["L2"], G["L3"]) for i in R.LAYERS}
+    G["COMP"] = R.综合.compose(G["VS"], rs, G["L2"], G["L3"])
     G["TODAY_LOG"] = logs[-1] if logs else None
     G["PREV_LOG"] = next((lg for lg in reversed(logs) if lg["日期"] < as_of), None)
-    G["CHANGES"] = R.alerts(rs, G["PREV_LOG"], R.launchpad_summary(sd), G["VS"][1], G["L2"])
+    G["CHANGES"] = R.alerts(rs, G["PREV_LOG"], R.launchpad_summary(sd), G["VS"][1], G["L2"], G["L3"])
     btc = S.get("btc_price") or {}
     nov = {d: v for d, v in btc.items() if "2022-11-01" <= d <= "2022-11-30" and v}
     G["CYC"] = min(nov, key=nov.get) if nov else "2022-11-21"
@@ -2974,6 +3188,10 @@ def main():
     G["FILES"] = files
     write_latest(S, rs)
     os.makedirs(os.path.join(SITE, "data", "l2"), exist_ok=True)
+    os.makedirs(os.path.join(SITE, "data", "l3"), exist_ok=True)
+    for fn in ("l3_latest.json", "l3_history.json"):
+        if os.path.exists(os.path.join(DATA, "l3", fn)):
+            shutil.copyfile(os.path.join(DATA, "l3", fn), os.path.join(SITE, "data", "l3", fn))
     for fn in ("l2_latest.json", "l2_history.json", "l2_live.json"):
         if os.path.exists(os.path.join(DATA, "l2", fn)):
             shutil.copyfile(os.path.join(DATA, "l2", fn), os.path.join(SITE, "data", "l2", fn))

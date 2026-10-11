@@ -4,7 +4,7 @@
 四层框架：
   第一层 宏观流动性  周到月：波动、节奏和风险预算（调速器，不是方向盘；方向看 L2）
   第二层 周期定位    周期级别：在周期哪一段（2026-10-08 起为 l2/ 状态机，这里只做展示与日志）
-  第三层 筹码结构    周/日级别：谁在进出交易所
+  第三层 筹码结构    周/日级别：哪些价位真的有人在守、波动会不会放大（l3/l3_daily.py）
   第四层 情绪衍生品  日内级别：短期会不会超调
 
 L1 自 2026-10-02 起按《L1 宏观层数据维度规格》（依据《BTC 全周期宏观相关性与归因研究》）重做：
@@ -30,7 +30,7 @@ LAYERS = {
         "频率": "周到月", "频率EN": "weeks to months"},
     2: {"名称": "周期定位", "EN": "Cycle Position", "问": "在周期哪一段", "问EN": "Where in the cycle",
         "频率": "日更 · 周期级别", "频率EN": "daily update · cycle scale"},
-    3: {"名称": "筹码结构", "EN": "Coin Flows", "问": "谁在进出交易所", "问EN": "Who is moving coins on/off exchanges",
+    3: {"名称": "筹码结构", "EN": "Supply Structure", "问": "哪些价位真的有人在守、波动会不会放大", "问EN": "Which levels are really defended, and will moves get bigger",
         "频率": "周 / 日级别", "频率EN": "weekly / daily"},
     4: {"名称": "情绪衍生品", "EN": "Sentiment & Derivatives", "问": "短期会不会超调", "问EN": "Is it about to overshoot",
         "频率": "日内级别", "频率EN": "intraday"},
@@ -514,6 +514,9 @@ G_FUT = ("L1-B 加密资金通道 · 期货升水（两条并列）", "L1-B cryp
 G_SEP = ("L1-B 加密资金通道 · 单列观察（不计入）", "L1-B crypto funding channels · watched separately (not counted)")
 G_L2V = ("估值与持有者", "Valuation & holders")
 G_PEND = ("待接入", "Pending")
+G_L3A = ("价位与预警（通过历史检验）", "Levels & warning (passed historical tests)")
+G_L3D = ("短期持有者与大户 / 散户（只作描述）", "Short-term holders, whales & retail (descriptive only)")
+G_L3E = ("交易所流量与余额（只作描述）", "Exchange flows & balance (descriptive only)")
 ETF_CUTS = [(0, "趋势确认（滞后）· 净流出", "Trend confirm (lagging) · outflow", "dn", 0),
             (None, "趋势确认（滞后）· 净流入", "Trend confirm (lagging) · inflow", "up", 0)]
 ETF_TXT = ("美国现货 BTC ETF 净流入合计。ETF 资金里有散户和基差套利资金，不等于机构看多；大幅流出后没有反弹规律，不作抄底信号。"
@@ -760,21 +763,98 @@ REGISTRY = [
      "解读": "当前 {v}。历史上升到 1 都在底部 ±60 天内；本轮最高 0.985（8/17），没到 1，原因是熊市不够深。",
      "解读EN": "Now {v}. Historically it reached 1 within ±60 days of the bottom; this cycle it peaked at 0.985 (8/17) and never got there because the bear market was not deep enough.",
      "依据": "比值", "依据EN": "ratio"},
-    # ================= 第三层：筹码结构
-    {"key": "ex_netflow", "层": 3, "组": "交易所流量与余额", "组EN": "Exchange flows & balance", "级别": "核心", "名称": "交易所 BTC 净流量（7 日合计）", "EN": "Exchange BTC net flow (7-day sum)",
-     "series": s_netflow7, "fmt": "btcs", "freq": "d", "来源": "CoinMetrics（flash 口径）", "滞后": 3, "raw": "ex_netflow", "rawfmt": "btcs",
-     "cuts": [(-10000, "大幅净流出（提币）", "Heavy outflow (withdrawals)", "up", 2), (-2000, "净流出", "Net outflow", "up", 1),
-              (2000, "进出均衡", "Balanced", "neutral", 0), (10000, "净流入", "Net inflow", "dn", -1),
-              (None, "大幅净流入（抛压）", "Heavy inflow (sell pressure)", "dn", -2)],
-     "说明": "流入 − 流出。持续净流出 = 筹码离开交易所（提币囤币），净流入 = 潜在抛压。flash 数据次日可能小幅修订。",
-     "说明EN": "Inflow − outflow. Sustained outflow = coins leaving exchanges (hoarding); inflow = potential sell pressure. Flash data may be revised slightly next day.",
+    # ================= 第三层：筹码结构 —— 层结论 = l3/l3_daily.py 的价格位置 + 大波动预警（《BTC筹码层L3研究》2026-10-11）
+    # 只有三条通过检验（STH 成本 +1σ 压力区、STH 成本参考支撑、低波动 + 集中预警），最高到「已验证·方向」；其余只作同步描述，不叫支撑 / 压力 / 信号
+    {"key": "l3_p1s", "层": 3, "组": G_L3A[0], "组EN": G_L3A[1], "级别": "核心", "等级": "已验证·方向", "等级注": "近年更强", "等级注EN": "stronger in recent years",
+     "名称": "短期持有者成本 +1σ（上方压力区）", "EN": "STH cost +1σ (pressure zone above)", "series": raw("l3_p1s_gap"), "fmt": "pcts", "freq": "d",
+     "来源": "bitview.space + Coin Metrics（l3_daily.py）", "滞后": 3, "链上": True, "出处": "L3 研究 §4.2", "出处EN": "L3 study §4.2", "raw": "l3_p1s", "rawfmt": "price",
+     "cuts": [(-2, "已冲过（收盘站上 2% 以上）", "Broken through (close > 2% above)", "neutral", 0),
+              (2, "正在压力区（±2%）", "Inside the pressure zone (±2%)", "warn", 0),
+              (None, "压力区在上方", "Pressure zone above", "neutral", 0)],
+     "界": ["< −2%", "−2% ~ +2%", "> +2%"], "界EN": ["< −2%", "−2% to +2%", "> +2%"],
+     "说明": "短期持有者（链上不动不到约 155 天的币）的平均成本 ×（过去 4 年 STH-MVRV 均值 + 1 个标准差），目前约等于 STH 成本 × 1.17。读数 = 这条线离现价多远：正数 = 线在现价上方。它是一个区域（上下 2%），不是一根精确的线。",
+     "说明EN": "The short-term holder cost basis (coins unmoved for under ~155 days) × (4-year mean of STH-MVRV + 1 standard deviation), currently about STH cost × 1.17. The reading is how far the line sits from price: positive = above price. It is a zone (±2%), not a precise line.",
+     "解读": "当前压力区离现价 {v}。2012 年以来价格从下方碰到这里 27 次，30 天内没被有效突破 63%，形状一样、位置不对的假线只有 42%；2018 年后 72% 对 44%，越到近期越强。冲过去并站上 STH-MVRV 1.3 后，历史上多是趋势延续，不据此做空。",
+     "解读EN": "The pressure zone is {v} from price. Since 2012 price came up to it 27 times and was not broken within 30 days 63% of the time, versus 42% for same-shaped placebo lines; since 2018 72% vs 44% — stronger in recent years. Once price breaks through and holds STH-MVRV 1.3, history mostly shows a continuing trend, so it is not a short signal.",
+     "依据": "压力区离现价", "依据EN": "zone vs price"},
+    {"key": "l3_sth", "层": 3, "组": G_L3A[0], "组EN": G_L3A[1], "级别": "核心", "等级": "已验证·方向", "等级注": "2018 年后接近随机", "等级注EN": "near random since 2018",
+     "名称": "短期持有者成本（参考支撑）", "EN": "STH cost (reference support)", "series": raw("l3_sth_gap"), "fmt": "pcts", "freq": "d",
+     "来源": "bitview.space（l3_daily.py）", "滞后": 3, "链上": True, "出处": "L3 研究 §4.1", "出处EN": "L3 study §4.1", "raw": "l3_sth_rp", "rawfmt": "price",
+     "cuts": [(0, "价格在上方（短期持有者整体浮盈）", "Price above (short-term holders in profit)", "neutral", 0),
+              (None, "价格在下方（短期持有者整体浮亏）", "Price below (short-term holders under water)", "neutral", 0)],
+     "界": ["< 0（线在现价下方）", "≥ 0（线在现价上方）"], "界EN": ["< 0 (line below price)", "≥ 0 (line above price)"],
+     "说明": "最近约 5 个月买入、之后没动过的币的平均成本。读数 = 这条线离现价多远：负数 = 线在现价下方。",
+     "说明EN": "Average cost of coins bought in roughly the last five months and not moved since. The reading is how far the line sits from price: negative = below price.",
+     "解读": "当前这条线离现价 {v}。全样本回落到这里后 30 天守住 60.5%（假线 38.5%），但效果几乎全在 2012~17 年；2018 年后 47% 对 41%，接近随机，只作背景参考，不加仓位权重。",
+     "解读EN": "The line is {v} from price. Across the full sample a pullback to it held for 30 days 60.5% of the time (placebo 38.5%), but almost all of that edge is from 2012–17; since 2018 it is 47% vs 41%, close to random — background only, no position weight.",
+     "依据": "成本线离现价", "依据EN": "line vs price"},
+    {"key": "l3_conc", "层": 3, "组": G_L3A[0], "组EN": G_L3A[1], "级别": "核心", "等级": "已验证·方向", "等级注": "只和低波动同时看", "等级注EN": "only together with low volatility",
+     "名称": "筹码集中度（现价 ±5%）", "EN": "Supply concentration (price ±5%)", "series": raw("l3_conc"), "fmt": "pct1", "freq": "d",
+     "来源": "bitview.space URPD（l3_daily.py）", "滞后": 9, "链上": True, "出处": "L3 研究 §4.4", "出处EN": "L3 study §4.4",
+     "cuts": [(12, "不集中（< 12%）", "Not concentrated (< 12%)", "neutral", 0), (None, "集中（≥ 12%）", "Concentrated (≥ 12%)", "warn", 0)],
+     "说明": "最新一张筹码分布（URPD，按每枚币最后一次移动时的价格分档）里，现价上下 5% 价格区间的持币量 ÷ 全部持币量（不含价格为 0 的远古币）。2012 年起每周日一张做历史，之后每天追加。12% = 2022 年以来低波动周的中位数。",
+     "说明EN": "In the latest URPD (coins bucketed by the price at which they last moved), the supply within ±5% of price ÷ total supply (excluding zero-price ancient coins). History uses one snapshot every Sunday since 2012, then one a day. 12% is the median of low-volatility weeks since 2022.",
+     "解读": "当前 {v}。单看集中度高，之后波动反而偏低（集中本身说明在横盘）；只有和低波动同时出现时，之后 30 天的绝对涨跌才明显更大。",
+     "解读EN": "Now {v}. On its own, high concentration is followed by lower volatility (it simply means a range); only together with low volatility are the next 30 days' absolute moves clearly larger.",
+     "依据": "±5% 内持币占比", "依据EN": "supply share within ±5%"},
+    {"key": "l3_vol30", "层": 3, "组": G_L3A[0], "组EN": G_L3A[1], "级别": "核心", "等级": "已验证·方向",
+     "名称": "BTC 30 天年化波动", "EN": "BTC 30-day annualized volatility", "series": raw("l3_vol30"), "fmt": "pct1", "freq": "d",
+     "来源": "Coin Metrics（l3_daily.py）", "滞后": 3, "链上": True, "出处": "L3 研究 §4.4", "出处EN": "L3 study §4.4",
+     "cuts": [(40, "低波动（< 40%）", "Low volatility (< 40%)", "warn", 0), (None, "非低波动（≥ 40%）", "Not low (≥ 40%)", "neutral", 0)],
+     "说明": "日对数收益 30 日标准差 × √365。40% ≈ 2022 年以来的下三分之一。",
+     "说明EN": "30-day standard deviation of daily log returns × √365. 40% is roughly the bottom third since 2022.",
+     "解读": "当前 {v}。低于 40% 且筹码集中度 ≥ 12% 时，大波动预警亮。",
+     "解读EN": "Now {v}. Below 40% together with supply concentration ≥ 12%, the large-move warning turns on.",
+     "依据": "年化", "依据EN": "annualized"},
+    {"key": "l3_sth_mvrv", "层": 3, "组": G_L3D[0], "组EN": G_L3D[1], "级别": "辅助", "等级": "描述读数",
+     "名称": "STH-MVRV（价格 ÷ 短期持有者成本）", "EN": "STH-MVRV (price ÷ STH cost)", "series": raw("l3_sth_mvrv"), "fmt": "x3", "freq": "d",
+     "来源": "bitview.space（l3_daily.py）", "滞后": 3, "链上": True, "出处": "L3 研究 §4.5", "出处EN": "L3 study §4.5",
+     "cuts": [(1, "短期持有者整体浮亏", "Short-term holders under water", "neutral", 0), (1.3, "短期持有者整体浮盈", "Short-term holders in profit", "neutral", 0),
+              (None, "趋势区（≥ 1.3，假设）", "Trend zone (≥ 1.3, hypothesis)", "neutral", 0)],
+     "说明": "1 = 短期持有者整体不赚不亏。站上 1.3 之后 30 天多是继续涨（动量），2018 年后只有 14 次，记为假设。",
+     "说明EN": "1 = short-term holders break even. After crossing 1.3 the next 30 days mostly kept rising (momentum); only 14 cases since 2018, so it is a hypothesis.",
+     "依据": "比值", "依据EN": "ratio"},
+    {"key": "l3_sth_psip", "层": 3, "组": G_L3D[0], "组EN": G_L3D[1], "级别": "辅助", "等级": "描述读数",
+     "名称": "短期持有者盈利供应占比", "EN": "STH supply in profit", "series": raw("l3_sth_psip"), "fmt": "pct1", "freq": "d",
+     "来源": "bitview.space（l3_daily.py）", "滞后": 3, "链上": True, "出处": "L3 研究 §4.5", "出处EN": "L3 study §4.5",
+     "cuts": [(None, "只作描述", "Descriptive only", "neutral", 0)],
+     "说明": "短期持有者手里处在浮盈的币 ÷ 短期持有者全部持币。「跌破 / 站上 50% 是多空分界」已证伪：穿越后 30 天和同状态普通日子没有区别。",
+     "说明EN": "Short-term holder coins in profit ÷ all short-term holder coins. 'Crossing 50% marks bull/bear' failed testing: the next 30 days look like any other day in the same state.",
+     "依据": "占比", "依据EN": "share"},
+    {"key": "l3_sth_sopr", "层": 3, "组": G_L3D[0], "组EN": G_L3D[1], "级别": "辅助", "等级": "描述读数",
+     "名称": "STH-SOPR（7 日均）", "EN": "STH-SOPR (7-day mean)", "series": raw("l3_sth_sopr7"), "fmt": "x3", "freq": "d",
+     "来源": "bitview.space（l3_daily.py）", "滞后": 3, "链上": True, "出处": "L3 研究 §4.5", "出处EN": "L3 study §4.5",
+     "cuts": [(None, "只作描述", "Descriptive only", "neutral", 0)],
+     "说明": "当天被卖出的短期持有者的币，卖价 ÷ 买价。「SOPR = 1 是牛市支撑、熊市压力」已证伪：穿越 1 之后的收益和同状态的普通日子没有区别。",
+     "说明EN": "For short-term holder coins spent that day, sell price ÷ buy price. 'SOPR = 1 is bull support / bear resistance' failed testing: returns after crossing 1 match ordinary days in the same state.",
+     "依据": "7 日均", "依据EN": "7-day mean"},
+    {"key": "l3_whale4w", "层": 3, "组": G_L3D[0], "组EN": G_L3D[1], "级别": "辅助", "等级": "描述读数",
+     "名称": "≥ 1,000 枚地址持币（4 周变化）", "EN": "Addresses holding ≥ 1,000 BTC (4-week change)", "series": raw("l3_whale4w_pct"), "fmt": "pcts", "freq": "d",
+     "来源": "bitview.space（l3_daily.py）", "滞后": 3, "链上": True, "出处": "L3 研究 §4.6", "出处EN": "L3 study §4.6", "raw": "l3_whale", "rawfmt": "btc",
+     "cuts": [(None, "同步描述", "Coincident description", "neutral", 0)],
+     "说明": "余额 ≥ 1,000 枚的地址合计持币的 4 周变化。地址 ≠ 实体：交易所热钱包、ETF 托管会混在里面。和未来 4 周涨跌没有稳定关系，只作同步描述，不能读成「鲸鱼增持 → 要涨」。",
+     "说明EN": "4-week change in coins held by addresses with ≥ 1,000 BTC. Addresses are not entities: exchange hot wallets and ETF custody are mixed in. No stable relation to the next 4 weeks; coincident description only, not 'whales buying → up'.",
+     "依据": "4 周变化", "依据EN": "4-week change"},
+    {"key": "l3_retail4w", "层": 3, "组": G_L3D[0], "组EN": G_L3D[1], "级别": "辅助", "等级": "描述读数",
+     "名称": "< 1 枚地址持币（4 周变化）", "EN": "Addresses holding < 1 BTC (4-week change)", "series": raw("l3_retail4w_pct"), "fmt": "pcts", "freq": "d",
+     "来源": "bitview.space（l3_daily.py）", "滞后": 3, "链上": True, "出处": "L3 研究 §4.6", "出处EN": "L3 study §4.6", "raw": "l3_retail", "rawfmt": "btc",
+     "cuts": [(None, "同步描述", "Coincident description", "neutral", 0)],
+     "说明": "余额不到 1 枚的地址（散户）合计持币的 4 周变化。2022 年后散户多在下跌时增持；对未来 4 周没有提前量。",
+     "说明EN": "4-week change in coins held by addresses with under 1 BTC (retail). Since 2022 retail tends to add during declines; no lead on the next 4 weeks.",
+     "依据": "4 周变化", "依据EN": "4-week change"},
+    {"key": "ex_netflow", "层": 3, "组": G_L3E[0], "组EN": G_L3E[1], "级别": "辅助", "等级": "描述读数", "名称": "交易所 BTC 净流量（7 日合计）", "EN": "Exchange BTC net flow (7-day sum)",
+     "series": s_netflow7, "fmt": "btcs", "freq": "d", "来源": "CoinMetrics（flash 口径）", "滞后": 3, "raw": "ex_netflow", "rawfmt": "btcs", "出处": "L3 研究 §4.6", "出处EN": "L3 study §4.6",
+     "cuts": [(-10000, "大幅净流出", "Heavy net outflow", "neutral", 0), (-2000, "净流出", "Net outflow", "neutral", 0),
+              (2000, "进出均衡", "Balanced", "neutral", 0), (10000, "净流入", "Net inflow", "neutral", 0),
+              (None, "大幅净流入", "Heavy net inflow", "neutral", 0)],
+     "说明": "流入 − 流出，负数 = 币在离开交易所。研究里交易所净流入和未来 4 周涨跌的相关在噪声线以内、方向在年代间翻转，所以只作同步描述，不读成「流出 → 要涨 / 流入 → 抛压」。flash 数据次日可能小幅修订。",
+     "说明EN": "Inflow − outflow; negative = coins leaving exchanges. In the study its correlation with the next 4 weeks sits inside the noise band and flips sign across eras, so it is a coincident description, not 'outflow → up / inflow → selling'. Flash data may be revised slightly next day.",
      "依据": "7 日合计", "依据EN": "7-day sum"},
-    {"key": "ex_balance", "层": 3, "组": "交易所流量与余额", "组EN": "Exchange flows & balance", "级别": "核心", "名称": "交易所 BTC 余额（30 日变化）", "EN": "Exchange BTC balance (30d change)",
-     "series": s_exbal30, "fmt": "pcts", "freq": "d", "来源": "CoinMetrics", "滞后": 21, "raw": "ex_balance", "rawfmt": "btc",
-     "cuts": [(-1, "下降（筹码离场）", "Falling (coins leaving)", "up", 0), (1, "持平", "Flat", "neutral", 0),
-              (None, "上升（筹码回流）", "Rising (coins returning)", "dn", 0)],
-     "说明": "交易所托管的 BTC 总量，看用户行为最直接的存量指标：长期下降 = 持币人把币提回自己钱包。免费档更新约有 2 周滞后，只看趋势，不计分。",
-     "说明EN": "Total BTC held on exchanges — the most direct stock measure of holder behaviour. A long decline = holders self-custodying. ~2-week lag on the free tier; trend only, not scored.",
+    {"key": "ex_balance", "层": 3, "组": G_L3E[0], "组EN": G_L3E[1], "级别": "辅助", "等级": "描述读数", "名称": "交易所 BTC 余额（30 日变化）", "EN": "Exchange BTC balance (30d change)",
+     "series": s_exbal30, "fmt": "pcts", "freq": "d", "来源": "CoinMetrics", "滞后": 21, "raw": "ex_balance", "rawfmt": "btc", "出处": "L3 研究 §4.6", "出处EN": "L3 study §4.6",
+     "cuts": [(-1, "下降", "Falling", "neutral", 0), (1, "持平", "Flat", "neutral", 0), (None, "上升", "Rising", "neutral", 0)],
+     "说明": "交易所托管的 BTC 总量。比较稳定的是同步关系：涨了之后余额往往下降（币被提走）；对未来没有提前量。2024 年起受 ETF 托管迁移影响，口径不连续；免费档更新约有 2 周滞后。",
+     "说明EN": "Total BTC held on exchanges. The stable relation is coincident: after rallies balances tend to fall (coins withdrawn); there is no lead. Since 2024 ETF custody migration breaks the series; ~2-week lag on the free tier.",
      "依据": "30 日变化", "依据EN": "30-day change"},
     # ================= 第四层：情绪衍生品
     {"key": "fng", "层": 4, "组": "情绪", "组EN": "Sentiment", "级别": "核心", "名称": "恐慌贪婪指数", "EN": "Fear & Greed Index", "series": raw("fng"), "fmt": "int", "freq": "d",
@@ -808,15 +888,6 @@ REGISTRY = [
      "说明": "和山寨季指数交叉验证。", "说明EN": "Cross-check for the altseason index.", "依据": "水平", "依据EN": "level"},
 
     # ================= 待接入（框架里有、暂时没有免费稳定数据源：页面上明示原因，不拿近似值冒充）
-    {"key": "urpd", "状态": "pending", "层": 3, "名称": "URPD 链上筹码分布", "EN": "URPD",
-     "原因": "Glassnode 付费指标；属于框架里标 🔧 的差异化自建方向", "原因EN": "Paid Glassnode metric; planned self-build", "计划": "bitview 自建", "计划EN": "self-build on bitview"},
-    {"key": "sth_lth_mvrv", "状态": "pending", "层": 3, "名称": "STH-MVRV / LTH-MVRV", "EN": "STH-MVRV / LTH-MVRV",
-     "原因": "需要按持有时长拆分已实现市值；L2 状态机已用 bitview 的短期 / 长期持有者成本，L3 重做时一并接入", "原因EN": "Needs realized cap by holding age; L2 already uses bitview STH/LTH cost — to be wired in the L3 rebuild",
-     "计划": "bitview.space", "计划EN": "bitview.space"},
-    {"key": "sopr", "状态": "pending", "层": 3, "名称": "STH-SOPR / aSOPR", "EN": "STH-SOPR / aSOPR", "原因": "Glassnode 付费指标", "原因EN": "Paid Glassnode metric",
-     "计划": "bitview 自建", "计划EN": "self-build on bitview"},
-    {"key": "miner_reserves", "状态": "pending", "层": 3, "名称": "矿工储备 / 非流动性供给", "EN": "Miner reserves / illiquid supply",
-     "原因": "Glassnode 付费指标", "原因EN": "Paid Glassnode metric", "计划": "待定", "计划EN": "TBD"},
     {"key": "ls_liq", "状态": "pending", "层": 4, "名称": "多空比 / 24h 爆仓", "EN": "Long/short ratio / liquidations",
      "原因": "Coinglass 接口需要 key（免费档可申请），拿到 key 即可接入", "原因EN": "Coinglass needs an API key", "计划": "Coinglass", "计划EN": "Coinglass"},
     {"key": "options", "状态": "pending", "层": 4, "名称": "期权 Put/Call · IV Skew", "EN": "Options put/call · IV skew",
@@ -851,7 +922,7 @@ INDICATORS = [x for x in REGISTRY if x["状态"] in ("live", "recording")]     #
 PENDING = [x for x in REGISTRY if x["状态"] == "pending"]
 RETIRED = [x for x in REGISTRY if x["状态"] == "retired"]
 IND = {x["key"]: x for x in INDICATORS}
-LAYER_RULE_DATES = {1: ("2026-10-02", "2026-10-04"), 2: ("2026-10-08",)}   # 各层规则变更日（复盘里注明「规则变更所致」）
+LAYER_RULE_DATES = {1: ("2026-10-02", "2026-10-04"), 2: ("2026-10-08",), 3: ("2026-10-11",)}   # 各层规则变更日（复盘里注明「规则变更所致」）
 RECORD_DAYS = 90       # 自录指标：满 90 天才给区间分位与正常波动范围（全站只用这一个门槛）
 
 # 派生「原始水平」序列（详情页第二张图用）：key → 函数
@@ -920,6 +991,27 @@ RULE_CHANGES.append(
      "EN": "On-chain cycle gauges (L2 valuation & holders, L3 exchanges) now start their statistics on 2012-01-01 (or their first valid day); percentage-change gauges (L1-B stablecoin lines, 30-day exchange balance change, etc.) are pushed further to the first day after which no |change| > 100% occurs. Earlier data stays on the charts with a grey background and a note. Old and new start dates per gauge are in the table below. Formulas, thresholds and zone rules are unchanged.",
      "原因": "早期基数极小时变化率会爆炸，把历史极值、分位和区间占比全部拉歪：交易所余额 30 日变化的历史极值显示过 +2,569,800%，稳定币主线 13 周的 p90 显示过 +128%，读者看到会以为数据有问题。",
      "原因EN": "With a tiny early base, percentage changes explode and distort the extremes, percentiles and zone shares: the 30-day exchange balance change once showed a historical extreme of +2,569,800% and the stablecoin main line a p90 of +128% — readers would assume the data was broken."})
+
+RULE_CHANGES.append(
+    {"日期": "2026-10-11", "锚": "2026-10-11-l3", "范围": "L3 筹码结构", "EN范围": "L3 Supply Structure",
+     "内容": "按《BTC筹码层L3研究》和《L3网页数据维度规格》重做：L3 层结论从「交易所 7 日净流量」改为「价格相对短期持有者成本 +1σ 压力区的位置 + 大波动预警」。"
+             "新增短期持有者成本 +1σ（上方压力区）、短期持有者成本（参考支撑）、筹码集中度、30 天波动四张主卡，筹码分布图（URPD），短期持有者状态与大户 / 散户持币描述；"
+             "交易所净流量和余额保留，但改为「只作描述」（不再计分、不再标顺风 / 逆风）。撤掉 URPD、STH-MVRV、SOPR、矿工储备的待接入卡（前三项已接入，矿工储备按研究不展示）。"
+             "数据由 l3/l3_daily.py 每天 UTC 02:47 生成。2026-10-11 及以前的日志按旧规则写成，保持原样。",
+     "EN": "Rebuilt per the L3 supply study and the L3 web spec: the L3 verdict moved from '7-day exchange net flow' to 'price position relative to the STH cost +1σ pressure zone + a large-move warning'. "
+           "Added four main gauges (STH cost +1σ pressure zone, STH cost reference support, supply concentration, 30-day volatility), a URPD supply map, and descriptive short-term-holder and whale/retail lines; "
+           "exchange net flow and balance stay but are now descriptive only (no score, no tailwind/headwind colour). Removed the pending URPD, STH-MVRV, SOPR and miner-reserve cards (the first three are now live; miner reserves are not shown per the study). "
+           "Data comes from l3/l3_daily.py daily at 02:47 UTC. Logs up to 2026-10-11 stay unchanged.",
+     "原因": "把市面上常用的筹码和成本线规则拿 16 年数据测了一遍，对照组是「形状一样、只是位置不对的假线」：大多数线不比假线强，交易所流量、大户 / 散户持币对未来 4 周也没有提前量。"
+             "通过检验的只有三条：短期持有者成本 +1σ 作压力区（碰到后 30 天不被突破 63%，假线 42%；2018 年后 72% 对 44%）、短期持有者成本作参考支撑（近年接近随机）、低波动 + 筹码集中预警大波动（只说幅度不说方向）。",
+     "原因EN": "Common supply and cost-line rules were tested on 16 years of data against same-shaped placebo lines at the wrong level: most lines did no better than placebos, and exchange flows and whale/retail holdings have no lead on the next 4 weeks. "
+               "Only three rules passed: STH cost +1σ as a pressure zone (not broken within 30 days 63% vs 42% for placebos; 72% vs 44% since 2018), STH cost as reference support (near random lately), and low volatility + concentrated supply as a large-move warning (magnitude only, not direction)."})
+RULE_CHANGES.append(
+    {"日期": "2026-10-11", "锚": "2026-10-11-comp", "范围": "综合研判", "EN范围": "Overall read",
+     "内容": "综合研判的 L3 段从「交易所流向和周期方向一致 / 背离」改为写价格相对 +1σ 压力区的位置和大波动预警；一句话里的「筹码背离」提示改为「价格在筹码压力区」「大波动预警亮」提示。短句在 config/composite.json。",
+     "EN": "The L3 paragraph of the overall read now describes price relative to the +1σ pressure zone and the large-move warning, instead of whether exchange flows agree with the cycle; the one-liner's 'flow divergence' note became 'price in the supply pressure zone' / 'large-move warning on'. Phrases live in config/composite.json.",
+     "原因": "研究发现交易所流向只和价格同步、没有提前量，拿它判断「和周期方向一致还是背离」没有依据；L3 能用的是压力区和大波动预警。",
+     "原因EN": "The study found exchange flows only move with price and have no lead, so judging whether they 'agree with the cycle' has no basis; what L3 can offer is the pressure zone and the large-move warning."})
 
 # ---------------------------------------------------------------- L2 周期状态机（规则与计算全在 l2/l2_signals.py，这里只做展示用的译名与配色）
 L2_STATES = {   # code: (中文名, 英文名, 英文一句话, 层结论 tone, 配色变量)
@@ -1226,11 +1318,13 @@ def l1_line(rs, verdict, rot=None):
 
 
 # ---------------------------------------------------------------- 层结论
-def layer_verdict(layer, rs, l2=None):
+def layer_verdict(layer, rs, l2=None, l3=None):
     if layer == 1:
         return l1_verdict(rs)
     if layer == 2:
         return l2_verdict(l2)
+    if layer == 3:
+        return l3_verdict(l3)
     rs = [x for x in rs if x and x["层"] == layer]
     core = [x for x in rs if x["级别"] == "核心" and not x["过期"]]
     if not core:
@@ -1238,15 +1332,7 @@ def layer_verdict(layer, rs, l2=None):
                 "tone": "neutral", "分": None, "依据": [], "依据EN": []}
     sc = sum(x["分"] for x in core)
     by = {x["key"]: x for x in rs}
-    if layer == 3:
-        f = by.get("ex_netflow")
-        if f and f["分"] > 0:
-            v, ve, short, se, tone = "筹码在离开交易所（偏囤币）", "Coins leaving exchanges (hoarding)", "筹码流出交易所", "Coins leaving exchanges", "up"
-        elif f and f["分"] < 0:
-            v, ve, short, se, tone = "筹码在流入交易所（留意抛压）", "Coins flowing into exchanges (watch selling)", "筹码流入交易所", "Coins entering exchanges", "dn"
-        else:
-            v, ve, short, se, tone = "交易所进出均衡", "Exchange flows balanced", "筹码进出均衡", "Flows balanced", "neutral"
-    else:
+    if True:
         if sc >= 3:
             v, ve, short, se, tone = "过热：短期超调风险高", "Overheated: high overshoot risk", "情绪过热", "Sentiment hot", "warn"
         elif sc >= 1:
@@ -1281,7 +1367,7 @@ def launchpad_summary(sd):
 
 
 # ---------------------------------------------------------------- 异动预警
-def alerts(rs, prev_log, lp, l1=None, l2=None):
+def alerts(rs, prev_log, lp, l1=None, l2=None, l3=None):
     out = []
     prev = {}
     if prev_log and prev_log.get("版本") == 2:          # 旧规则写的日志口径不同，不拿来比区间切换
@@ -1292,7 +1378,7 @@ def alerts(rs, prev_log, lp, l1=None, l2=None):
     def add(level, zh, en, layer=None, key=None):
         out.append({"级别": level, "文本": zh, "文本EN": en, "层": layer, "key": key})
     for x in rs:
-        if not x or x["过期"] or x["层"] == 2:          # L2 用状态机自己的状态切换 / 信号亮灭预警
+        if not x or x["过期"] or x["层"] in (2, 3):     # L2 / L3 用自己的状态切换预警
             continue
         p = prev.get(x["key"])
         if p and p.get("区间") != x["区间"] and x["级别"] == "核心" and x["区间"] not in ("—", "记录中"):
@@ -1333,6 +1419,16 @@ def alerts(rs, prev_log, lp, l1=None, l2=None):
         for x in l2.get("signals") or []:
             if x.get("changed_today"):
                 add("中", f"L2 信号{'亮起' if x['on'] else '熄灭'}：{x['name_zh']}", f"L2 signal {'on' if x['on'] else 'off'}: {x['name_en']}", 2, x.get("metric"))
+    if l3_ok(l3):
+        p3 = (prev_log or {}).get("L3") or {}
+        w = l3.get("warning") or {}
+        if p3 and p3.get("预警") is not None and bool(p3["预警"]) != bool(w.get("on")):
+            add("高" if w.get("on") else "中", f"L3 大波动预警{'亮起' if w.get('on') else '熄灭'}（30 天波动 {w.get('vol30')}%，集中度 {w.get('conc')}%）",
+                f"L3 large-move warning {'on' if w.get('on') else 'off'} (30d vol {w.get('vol30')}%, concentration {w.get('conc')}%)", 3, "l3_conc")
+        cur, prv = l3["position"]["code"], p3.get("位置")
+        if prv in L3_POS and prv != cur:
+            add("高" if cur in ("in_zone", "above") else "中", f"L3 价格位置：{L3_POS[prv][0]} → {L3_POS[cur][0]}（+1σ 压力区 {l3['p1s']['value']:,.0f}）",
+                f"L3 price position: {L3_POS[prv][1]} → {L3_POS[cur][1]} (+1σ zone {l3['p1s']['value']:,.0f})", 3, "l3_p1s")
     if lp:
         if lp.get("赛道日环比") is not None and abs(lp["赛道日环比"]) >= 25:
             add("中", f"发射台赛道 Top60 手续费单日 {lp['赛道日环比']:+.1f}%", f"Launchpad top-60 fees {lp['赛道日环比']:+.1f}% day over day", "lp")
@@ -1348,26 +1444,26 @@ def alerts(rs, prev_log, lp, l1=None, l2=None):
 _READ_KEYS = ("key", "名称", "名称EN", "级别", "等级", "值", "显示", "截至", "过期", "区间", "区间EN", "tone", "依据", "依据EN")
 
 
-def daily_log(date, S, sd, prev_log, sources, l2=None):
+def daily_log(date, S, sd, prev_log, sources, l2=None, l3=None):
     rs = [judge(S, ind, date) for ind in INDICATORS]
     rs = [x for x in rs if x]
-    vs = {i: layer_verdict(i, rs, l2) for i in LAYERS}
+    vs = {i: layer_verdict(i, rs, l2, l3) for i in LAYERS}
     lp = launchpad_summary(sd)
-    comp = 综合.compose(vs, rs, l2)
+    comp = 综合.compose(vs, rs, l2, l3)
     rot = rotation(S, date)
     l1zh, l1en = l1_line(rs, vs[1], rot)
     layers = []
     for i, meta in LAYERS.items():
-        extra = {k: vs[i][k] for k in ("状态", "情境", "闸门", "警戒") if k in vs[i]}
+        extra = {k: vs[i][k] for k in ("状态", "情境", "闸门", "警戒", "预警") if k in vs[i]}
         layers.append({"层": i, "名称": meta["名称"], "名称EN": meta["EN"],
                        **{k: vs[i][k] for k in ("结论", "结论EN", "短", "短EN", "tone", "分", "依据", "依据EN")}, **extra,
                        "读数": [{k: x.get(k) for k in _READ_KEYS} for x in rs if x["层"] == i]})
     return {"类型": "日", "版本": 2, "日期": date, "生成时间UTC": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M"),
-            "综合": comp, "L1行": l1zh, "L1行EN": l1en, "轮动": rot, "L2": l2_snapshot(l2), "层": layers, "发射台": lp,
-            "预警": alerts(rs, prev_log, lp, vs[1], l2),
+            "综合": comp, "L1行": l1zh, "L1行EN": l1en, "轮动": rot, "L2": l2_snapshot(l2), "L3": l3_snapshot(l3), "层": layers, "发射台": lp,
+            "预警": alerts(rs, prev_log, lp, vs[1], l2, l3),
             "数据源": {k: {"ok": v.get("ok"), "最新日期": v.get("最新日期")} for k, v in (sources or {}).items()},
             "核心缺失": [ind["名称"] for ind in INDICATORS if ind["级别"] == "核心" and not any(x["key"] == ind["key"] and not x["过期"] for x in rs)]
-            + ([] if l2 else ["L2 周期状态机"])}
+            + ([] if l2 else ["L2 周期状态机"]) + ([] if l3_ok(l3) else ["L3 筹码层"])}
 
 
 def _period_review(kind, label, start, end, S, logs, sd, prev_period):
@@ -1528,6 +1624,65 @@ def attach_l2(S, ser):
     return S
 
 
+# ---------------------------------------------------------------- L3 筹码层：把 l3_series.json 的全历史挂到 S 上
+L3_METRICS = ("p1s", "p1s_gap", "sth_rp", "sth_gap", "conc", "vol30", "sth_mvrv", "sth_psip", "sth_sopr7", "whale", "whale4w_pct", "retail", "retail4w_pct")
+
+
+def attach_l3(S, ser):
+    """data/l3/l3_series.json（l3_daily.py 输出，起点 + 逐日数组）→ S['l3_<指标>'] = {日期: 值}。"""
+    if not ser or not ser.get("start"):
+        return S
+    d0 = dt.date.fromisoformat(ser["start"])
+    for k in L3_METRICS:
+        vals = (ser.get("series") or {}).get(k) or []
+        S["l3_" + k] = {(d0 + dt.timedelta(days=i)).isoformat(): v for i, v in enumerate(vals) if v is not None}
+    return S
+
+
+L3_POS = {   # 价格位置 code: (层结论短句, 英文, tone)
+    "above": ("冲过压力区", "Through the pressure zone", "neutral"),
+    "in_zone": ("在压力区", "In the pressure zone", "warn"),
+    "between": ("压力区下方", "Below the pressure zone", "neutral"),
+    "below": ("STH 成本下方", "Below STH cost", "neutral"),
+}
+
+
+def l3_ok(l3):
+    return bool(l3 and (l3.get("position") or {}).get("code") in L3_POS and (l3.get("p1s") or {}).get("value"))
+
+
+def l3_verdict(l3):
+    """L3 层结论 = 价格位置（A4）+ 大波动预警（A3）。只描述位置和幅度，不给方向。"""
+    if not l3_ok(l3):
+        return {"层": 3, "结论": "数据不足", "结论EN": "Insufficient data", "短": "数据不足", "短EN": "No data",
+                "tone": "neutral", "分": None, "依据": [], "依据EN": []}
+    pos, w, a, b = l3["position"], l3.get("warning") or {}, l3["p1s"], l3.get("sth") or {}
+    zh, en, tone = L3_POS[pos["code"]]
+    on = bool(w.get("on"))
+    m = lambda v: "—" if v is None else f"{v:,.0f}"
+    pc = lambda v: "—" if v is None else f"{v:+.1f}%".replace("-", "\u2212")
+    basis = [f"+1σ 压力区 {m(a.get('value'))}（{pc(a.get('pct_from_price'))}）", f"STH 成本 {m(b.get('value'))}（{pc(b.get('pct_from_price'))}）",
+             f"30 天波动 {w.get('vol30')}% · 集中度 {w.get('conc')}%", f"数据截至 {l3.get('data_date')}"]
+    basis_en = [f"+1σ pressure zone {m(a.get('value'))} ({pc(a.get('pct_from_price'))})", f"STH cost {m(b.get('value'))} ({pc(b.get('pct_from_price'))})",
+                f"30d vol {w.get('vol30')}% · concentration {w.get('conc')}%", f"data as of {l3.get('data_date')}"]
+    if (l3.get("data_status") or {}).get("stale"):
+        basis.append("数据延迟")
+        basis_en.append("stale data")
+    return {"层": 3, "结论": pos["zh"] + ("；大波动预警亮" if on else ""), "结论EN": pos["en"] + ("; large-move warning on" if on else ""),
+            "短": zh + ("·大波动预警" if on else ""), "短EN": en + (" · large-move warning" if on else ""),
+            "tone": "warn" if on else tone, "分": None, "依据": basis, "依据EN": basis_en, "状态": pos["code"], "预警": on}
+
+
+def l3_snapshot(l3):
+    """写进日志的 L3 快照（写入即冻结）。"""
+    if not l3_ok(l3):
+        return None
+    w = l3.get("warning") or {}
+    return {"位置": l3["position"]["code"], "价格": l3.get("price"), "压力区": l3["p1s"].get("value"), "STH成本": (l3.get("sth") or {}).get("value"),
+            "预警": bool(w.get("on")), "波动": w.get("vol30"), "集中度": w.get("conc"), "一行": l3.get("daily_line_zh"), "一行EN": l3.get("daily_line_en"),
+            "数据日": l3.get("data_date"), "数据延迟": bool((l3.get("data_status") or {}).get("stale"))}
+
+
 # ---------------------------------------------------------------- 颜色按「对 BTC 意味着什么」（G6）：区间 tone → bias
 BIAS = {"up": "tailwind", "dn": "headwind", "warn": "watch", "neutral": "neutral", "cool": "neutral"}
 
@@ -1535,7 +1690,7 @@ BIAS = {"up": "tailwind", "dn": "headwind", "warn": "watch", "neutral": "neutral
 # 1) L1 宏观：只用 2018 年以后（方法规则）；2) 链上周期类（L2 六个、L3 交易所）：2012-01-01 起（或有效起点）；
 # 3) 百分比变化类：从上面的起点往后，若仍有 |变化率| > 100% 的点，推迟到此后再也没有的第一天（早期基数过小）。
 PCT_CHG = ("ndx13", "netliq13", "usd13", "stable_expay13", "stable_bullets13", "stable_core13", "stable_yield13",
-           "stable_tron13", "stable_pay13", "ex_balance", "hl_oi")
+           "stable_tron13", "stable_pay13", "ex_balance", "hl_oi", "l3_whale4w", "l3_retail4w")
 
 
 def stats_window(S, ind):

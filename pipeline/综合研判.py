@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """综合研判 · L1~L4 四层合成（纯函数，不联网）
 
-分工沿用研究里定下的：L2 给方向的底色；L1 管节奏和风险预算、不管方向；L3 看筹码是否支持这个方向；L4 只描述短期温度、不改变动作。
-一句话 =「{方向句}；{但}{节奏句}，{动作}。{筹码背离提示}{短期提示}」，四段固定顺序：方向 · L2 → 节奏 · L1 → 筹码 · L3 → 短期 · L4。
+分工沿用研究里定下的：L2 给方向的底色；L1 管节奏和风险预算、不管方向；L3 只描述价格离筹码压力区多远、波动会不会放大（不给方向）；L4 只描述短期温度、不改变动作。
+一句话 =「{方向句}；{但}{节奏句}，{动作}。{筹码提示}{短期提示}」，四段固定顺序：方向 · L2 → 节奏 · L1 → 筹码 · L3 → 短期 · L4。
 所有短句、动作、逆风触发原因都在 config/composite.json（附录 D 定稿），改措辞只改配置，不改代码。
 """
 import json
@@ -40,16 +40,15 @@ def headwind_reason(v1, C):
     return "宏观条件转紧", "Macro conditions have tightened"
 
 
-def l3_kind(rs):
-    by = {x["key"]: x for x in rs if x}
-    f = by.get("ex_netflow")
-    if not f or f["过期"]:
-        return None, None
-    if f["分"] > 0:
-        return "流出", f["值"]
-    if f["分"] < 0:
-        return "流入", f["值"]
-    return "均衡", f["值"]
+def l3_fill(l3):
+    m = lambda v: "—" if v is None else f"{v:,.0f}"
+    a, b, w = (l3 or {}).get("p1s") or {}, (l3 or {}).get("sth") or {}, (l3 or {}).get("warning") or {}
+    g = a.get("pct_from_price")
+    gap = "—" if g is None else f"{g:+.1f}%".replace("-", "\u2212")
+    pct = lambda v: "—" if v is None else f"{v:.1f}%"
+    return {"压力区": m(a.get("value")), "zone": m(a.get("value")), "STH成本": m(b.get("value")), "sth": m(b.get("value")),
+            "距离": gap, "gap": gap, "STH13": m((l3 or {}).get("sth_13")), "sth13": m((l3 or {}).get("sth_13")),
+            "波动": pct(w.get("vol30")), "vol": pct(w.get("vol30")), "集中度": pct(w.get("conc")), "conc": pct(w.get("conc"))}
 
 
 L4_NAME = {"hl_oi": ("未平仓合约 7 日", "open interest 7d"), "hl_funding": ("资金费率年化", "funding, annualized"),
@@ -70,8 +69,8 @@ def l4_kind(v4, rs):
     return kind, ("", "")
 
 
-def compose(vs, rs, l2):
-    """vs = {层: 层结论}；rs = 当天全部读数；l2 = l2_latest.json。返回写进日志 / 页面的综合研判。"""
+def compose(vs, rs, l2, l3=None):
+    """vs = {层: 层结论}；rs = 当天全部读数；l2 = l2_latest.json；l3 = l3_latest.json。返回写进日志 / 页面的综合研判。"""
     C = load_cfg()
     # ---- 方向 · L2
     code = ((l2 or {}).get("state") or {}).get("code")
@@ -98,15 +97,20 @@ def compose(vs, rs, l2):
     r13 = f"{real['值']:+.2f}".replace("-", "\u2212") if real else ""
     num1 = ((f"实际利率 {real['显示']}，13 周 {r13}pp", f"real yield {real['显示']}, 13w {r13}pp") if real else ("", ""))
     act = C["动作"].get(direction, C["动作"]["待确认"]).get(tier) if tier else None
-    # ---- 筹码 · L3
-    k3, v3 = l3_kind(rs)
-    d3 = C["L3"].get(k3) or C["L3"]["_缺"]
-    seg3 = (d3["分段"].format(数值=_num(v3) if v3 is not None else "—"), d3["分段EN"].format(value=_num(v3) if v3 is not None else "—"))
-    rel = None
-    if k3 and direction != "待确认":
-        rel = "一致" if direction in d3.get("一致", []) else ("背离" if direction in d3.get("背离", []) else None)
-    n3 = f"{v3:+,.0f}".replace("-", "\u2212") if v3 is not None else ""
-    num3 = ((f"7 日 {n3} BTC", f"7d {n3} BTC") if v3 is not None else ("", ""))
+    # ---- 筹码 · L3（只描述位置和幅度）
+    C3 = C["L3"]
+    code3 = ((l3 or {}).get("position") or {}).get("code")
+    warn3 = bool(((l3 or {}).get("warning") or {}).get("on"))
+    if code3 in C3["位置"] and ((l3 or {}).get("p1s") or {}).get("value"):
+        fl = l3_fill(l3)
+        d3 = C3["位置"][code3]
+        seg3 = (d3["分段"].format(**fl), d3["分段EN"].format(**fl))
+        if warn3:
+            seg3 = (seg3[0] + C3["预警"]["分段"].format(**fl), seg3[1] + " " + C3["预警"]["分段EN"].format(**fl))
+        num3 = (f"+1σ {fl['压力区']}（{fl['距离']}）", f"+1σ {fl['zone']} ({fl['gap']})")
+        hint3 = C3["一句话"]["both"] if (warn3 and code3 == "in_zone") else (C3["一句话"]["预警"] if warn3 else (C3["一句话"]["in_zone"] if code3 == "in_zone" else ["", ""]))
+    else:
+        seg3, num3, hint3 = (C3["_缺"]["分段"], C3["_缺"]["分段EN"]), ("", ""), ["", ""]
     # ---- 短期 · L4
     k4, kr = l4_kind(vs.get(4), rs)
     d4 = C["L4"].get(k4) or C["L4"]["_缺"]
@@ -120,7 +124,7 @@ def compose(vs, rs, l2):
     else:
         head = f"{d2['一句话']}；{d1['一句话']}。"
         head_en = f"{d2['一句话EN']}; {d1['一句话EN']}."
-    div = C["L3"]["背离句"] if rel == "背离" else ["", ""]
+    div = hint3
     sh = (d4.get("一句话") or "", d4.get("一句话EN") or "")
     sh = (sh[0] + "。" if sh[0] else "", (sh[1][:1].upper() + sh[1][1:] + ".") if sh[1] else "")
     cap = C.get("一句话上限", 60)
@@ -136,9 +140,9 @@ def compose(vs, rs, l2):
          "tone": (vs.get(2) or {}).get("tone", "neutral"), "短": (vs.get(2) or {}).get("短"), "短EN": (vs.get(2) or {}).get("短EN")},
         {"层": 1, "标签": "节奏", "标签EN": "Pace", "文本": seg1[0], "文本EN": seg1[1], "数字": num1[0], "数字EN": num1[1],
          "tone": v1.get("tone", "neutral"), "短": v1.get("短"), "短EN": v1.get("短EN")},
-        {"层": 3, "标签": "筹码", "标签EN": "Flows", "文本": seg3[0], "文本EN": seg3[1], "数字": num3[0], "数字EN": num3[1],
+        {"层": 3, "标签": "筹码", "标签EN": "Supply", "文本": seg3[0], "文本EN": seg3[1], "数字": num3[0], "数字EN": num3[1],
          "tone": (vs.get(3) or {}).get("tone", "neutral"), "短": (vs.get(3) or {}).get("短"), "短EN": (vs.get(3) or {}).get("短EN"),
-         "关系": C["L3"][rel][0] if rel else None, "关系EN": C["L3"][rel][1] if rel else None, "关系类": rel},
+         "关系": None, "关系EN": None, "关系类": None},
         {"层": 4, "标签": "短期", "标签EN": "Short term", "文本": seg4[0], "文本EN": seg4[1], "数字": kr[0], "数字EN": kr[1],
          "tone": (vs.get(4) or {}).get("tone", "neutral"), "短": (vs.get(4) or {}).get("短"), "短EN": (vs.get(4) or {}).get("短EN")},
     ]

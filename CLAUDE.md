@@ -25,6 +25,11 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
   缓存 `l2/cache/` 走 actions/cache，不进仓库。宏观页 L2 段、日志里的 L2 层结论 / 「L2」快照 / 状态切换预警都只读这两个 json；
   原 L2 单指标卡（MVRV / MVRV Z / Realized Price / NUPL / Mayer / Puell / Pi Cycle）2026-10-08 撤掉，旧链接 `_redirects` 301 到 /macro/#layer-2。
   本地沙箱连不上 Coin Metrics / bitview（代理拒绝），L2 首跑只能在 Actions 里验。
+- `l3/`：L3 筹码层（依据《BTC筹码层L3研究》《L3网页数据维度规格》，2026-10-11）。`.github/workflows/l3-daily.yml` 每天 UTC 02:47 跑 `l3/l3_daily.py`
+  （Coin Metrics + bitview，含 URPD `/api/urpd/all/{date}?agg=log500`）→ `data/l3/l3_latest.json`、`l3_history.json`（样本外，每天一行不回填）、`l3_series.json`（全历史）、
+  `l3_conc.json`（筹码集中度：2012 年起每周日一张种子，每次最多补 14 分钟，之后每天追加）。只有三条通过检验：STH 成本 +1σ 压力区、STH 成本参考支撑、
+  低波动 + 集中 = 大波动预警（只说幅度不说方向）；其余（筹码分布、STH 状态、交易所 / 大户 / 散户）只作描述，不许叫支撑 / 压力 / 信号。
+  L3 层结论 = 价格位置 + 预警（`宏观规则.l3_verdict`），宏观页 L3 段 `出网站.l3_tab`，卡片指标读 `R.attach_l3`。参数在 `l3_daily.py` 顶部，改参数前先改研究文档。
 - **指标注册表**（M12）= `宏观规则.REGISTRY`：每条带 层 / 组 / 序 / 状态（live · pending · retired；自录的满 90 天前自动「记录中」）/ cuts（tone 即 bias：up 顺风 · neutral · dn 逆风 · warn 留意）/
   fmt / 出处 / 界（边界文字）/ 解读。宏观页各 Tab 的卡片分组、待接入占位卡、详情页、上一个 / 下一个、口径页指标表、停用说明页全部从它生成——改层的数据维度只改注册表 + 数据。
   L2 六个「估值与持有者」指标读 `data/l2/l2_series.json`（`R.attach_l2` 挂到 S 上）。
@@ -38,7 +43,7 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
   别写死颜色）、面包屑、交互走势图（`chart_div` + /data/*.json）。指标详情页 /macro/<key>/。
 - `data/解读日志/{日,周,月}/`：写入即冻结。同日重跑且核心缺失变少才覆盖并标「补录」。
 - `content/posts/<macro|rotation|narrative>/`：手写文章（.md 或整篇 .html）；`content/journal/<日期|周|月>.md`：人工点评。
-- `content/reports/`：分析报告。大叔给排好的浅色 HTML（中文 `<slug>.html`，英文 `<slug>.en.html`），iframe 原样嵌入、不加摘要框；
+- `content/reports/`：分析报告（新报告放进来后跑 `python3 pipeline/出报告PDF.py` 生成浅色 PDF，报告页「下载 PDF」按语言给）。大叔给排好的浅色 HTML（中文 `<slug>.html`，英文 `<slug>.en.html`），iframe 原样嵌入、不加摘要框；
   深色版出网站时自动生成（颜色明度翻转），不用手调。元信息写 `<!--meta-->`，流程见目录 README。
 - `assets/`：头像、favicon、og 卡（`pipeline/做图标.py` 生成），`assets/vendor/html2canvas.min.js` 由 Actions 自托管。
 - 视觉：底 #05070c、卡片 #0b0e17、1px rgba(255,255,255,.06) 细线、涨 #00ffcc、跌 #ff3366、品牌青柠 #a3e635（只用于导航和按钮）。

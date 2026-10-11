@@ -1,0 +1,70 @@
+# L3 筹码层：每天北京时间 10:47（UTC 02:47，排在 L2 之后）跑 l3/l3_daily.py，结果写进 data/l3/，再重出一次网站。
+# 规则和计算全在 l3/（依据《BTC筹码层L3研究》与《L3网页数据维度规格》），网站只读 data/l3/*.json 展示。
+# 首次运行会补 2012 年以来每周日一张 URPD 的筹码集中度种子（每次最多 14 分钟，分几天补完）。
+name: L3 筹码层日更
+
+on:
+  schedule:
+    - cron: "47 2 * * *"
+  workflow_dispatch: {}
+  push:                       # 改了 L3 规则，推上来立刻重跑
+    branches: [main]
+    paths:
+      - "l3/**"
+      - ".github/workflows/l3-daily.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-pipeline       # 和日更、L2 共用，不会同时往 main 推
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      # 拿最新的 main（排队跑时要建在前一个任务的提交上）
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # 上次取到的数据；某个数据源当天取不到时用它继续算（json 里 data_status.stale = true）
+      - name: 恢复 L3 数据缓存
+        uses: actions/cache@v4
+        with:
+          path: l3/cache
+          key: l3-cache-${{ github.run_id }}
+          restore-keys: l3-cache-
+
+      - run: pip install -r l3/requirements.txt
+
+      - name: 跑 L3 筹码层
+        env:
+          L3_OUT_DIR: data/l3
+          L3_CACHE_DIR: l3/cache
+        run: python l3/l3_daily.py
+
+      - name: 重出网站（看板素材 → 网站）
+        env:
+          LP_DATA: ${{ github.workspace }}/data
+          LP_OUT: ${{ github.workspace }}/build
+        run: |
+          python3 pipeline/出看板.py
+          python3 pipeline/出网站.py
+
+      - name: 提交 data/l3、数据回改记录与 site/
+        run: |
+          git config user.name "uncleonchain-bot"
+          git config user.email "bot@uncleonchain.com"
+          git add data/l3 site/
+          [ -f data/data_revisions.json ] && git add data/data_revisions.json
+          git diff --cached --quiet && echo "没有变化，跳过提交" && exit 0
+          git commit -m "L3 日更 $(date -u +%Y-%m-%d)"
+          git pull --rebase --autostash -X theirs origin main   # 万一中途有人推送：site/ 是生成物，以本次生成的为准
+          git push
