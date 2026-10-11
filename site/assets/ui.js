@@ -24,14 +24,18 @@ if(innerWidth<641)document.querySelectorAll('details.segd').forEach(d=>d.removeA
  const tabs=[...bar.querySelectorAll('[role=tab]')];const KEY='uc-macro-pos';
  function panelOf(el){return el&&el.closest?el.closest('.tabp'):null}
  function act(n,focus){tabs.forEach(t=>{const on=t.dataset.tab==String(n);t.classList.toggle('on',on);t.setAttribute('aria-selected',on?'true':'false');t.tabIndex=on?0:-1;
-   const p=document.getElementById(t.getAttribute('aria-controls'));if(p)p.classList.toggle('on',on)});if(focus){const t=tabs.find(t=>t.dataset.tab==String(n));t&&t.focus()}
+   const p=document.getElementById(t.getAttribute('aria-controls'));if(p)p.classList.toggle('on',on);
+   if(on&&(t.offsetLeft<bar.scrollLeft||t.offsetLeft+t.offsetWidth>bar.scrollLeft+bar.clientWidth))bar.scrollLeft=Math.max(0,t.offsetLeft-8)});if(focus){const t=tabs.find(t=>t.dataset.tab==String(n));t&&t.focus()}
   if(window.ucBootCharts)setTimeout(()=>window.ucBootCharts(document.getElementById('layer-'+n)),30)}
  function cur(){const t=tabs.find(t=>t.classList.contains('on'));return t?t.dataset.tab:'1'}
  function go(hash,scroll){if(!hash)return false;const id=hash.slice(1);const el=document.getElementById(id);if(!el)return false;
   let n=null;const m=/^layer-(\d)$/.exec(id);if(m)n=m[1];else{const p=panelOf(el);if(p)n=p.id.split('-')[1]}
   if(!n)return false;act(n);if(scroll){if(m){const tw=document.querySelector('.tabwrap');window.scrollTo({top:Math.max(0,tw.getBoundingClientRect().top+scrollY-8)})}else setTimeout(()=>{el.scrollIntoView({block:'start'});flash(el)},40)}return true}
  function flash(el){if(!el)return;el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash')}
- tabs.forEach((t,k)=>{t.addEventListener('click',e=>{e.preventDefault();act(t.dataset.tab);history.replaceState(null,'','#layer-'+t.dataset.tab)});
+ function keep(){const tw=document.querySelector('.tabwrap');const top=tw.getBoundingClientRect().top;const st=parseFloat(getComputedStyle(tw).top)||0;
+  // Tab 栏已经吸顶（用户往下滑过）：切换后停在新面板开头；没吸顶：页面不动
+  if(top<=st+1){const a=document.getElementById('tabs-anchor');if(a)window.scrollTo({top:Math.max(0,a.getBoundingClientRect().top+scrollY-st)})}}
+ tabs.forEach((t,k)=>{t.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();act(t.dataset.tab);keep();history.replaceState(null,'','#layer-'+t.dataset.tab)});
   t.addEventListener('keydown',e=>{if(e.key!=='ArrowRight'&&e.key!=='ArrowLeft')return;e.preventDefault();const j=(k+(e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length;
    act(tabs[j].dataset.tab,true);history.replaceState(null,'','#layer-'+tabs[j].dataset.tab)})});
  // 页面里指向其他 Tab 的链接（综合研判的层徽章、依据小芯片、#l2-levels 等）

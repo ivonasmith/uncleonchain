@@ -1592,7 +1592,7 @@ def build_macro(L, S, logs):
                    "The overall read rolls four layers into one line: the cycle sets direction, macro sets pace, flows and sentiment confirm and caution. Switch layers below; every card opens its full history, zone rules and normal range. Anything without real data is marked pending.")}</p></div></div>
 {comp_block(comp, prev_comp, tlog, full=True)}
 <div class="src">{src_chips(st)}</div>
-<div class="tabwrap"><nav class="tabs" role="tablist" aria-label="{T("四层", "Four layers")}" data-tabs>{tabs}</nav></div>
+<div id="tabs-anchor"></div><div class="tabwrap"><nav class="tabs" role="tablist" aria-label="{T("四层", "Four layers")}" data-tabs>{tabs}</nav></div>
 <details class="legend-d"><summary>{T("标签说明", "What the tags mean")}</summary>{tag_legend()}</details>
 {panels}
 {deep}"""
@@ -2342,7 +2342,10 @@ def build_reports():
             scripts = ""
         else:
             # 整篇 HTML 原样放进 iframe（报告自己的样式不和站点互相干扰）；浅色用原文，深色用构建时自动换色的副本
-            content = (f'<p class="tnote" style="margin:0 0 8px;text-align:right"><a id="rf-open" href="raw.html" target="_blank" rel="noopener">{T("在新窗口全屏阅读 ↗", "Open full screen ↗")}</a></p>'
+            pdf = report_pdf(r, LANG["v"])
+            dl = (f'<a class="btn-dl" href="report.pdf" download="uncleonchain-{r["slug"]}{".en" if pdf and pdf.endswith(".en.pdf") else ""}.pdf">'
+                  f'{T("下载 PDF", "Download PDF")}</a>' if pdf else "")
+            content = (f'<p class="tnote rtools">{dl}<a id="rf-open" href="raw.html" target="_blank" rel="noopener">{T("在新窗口全屏阅读 ↗", "Open full screen ↗")}</a></p>'
                        f'<iframe id="rf" data-light="raw.html" data-dark="raw-dark.html" title="{esc(LF(r, "标题"))}" '
                        f'style="width:100%;border:1px solid var(--line);border-radius:14px;min-height:80vh;display:block;background:var(--card)"></iframe>')
             scripts = REPORT_JS
@@ -2404,6 +2407,15 @@ def strip_webfonts(html_):
     return re.sub(r'@import\s+url\([^)]*fonts\.googleapis\.com[^)]*\)\s*;?', "", html_)
 
 
+def report_pdf(r, lang):
+    """content/reports/pdf/ 里这篇报告该给哪种语言的 PDF（只有浅色版，pipeline/出报告PDF.py 生成）；英文缺就给中文。"""
+    d = os.path.join(REPORTS, "pdf")
+    for name in ([r["slug"] + ".en.pdf"] if lang == "en" else []) + [r["slug"] + ".pdf"]:
+        if os.path.exists(os.path.join(d, name)):
+            return os.path.join(d, name)
+    return None
+
+
 def copy_report_files():
     """报告原文和附件拷到 site/reports/<slug>/ 与 site/en/reports/<slug>/：raw.html（浅色原文）+ raw-dark.html（自动深色）。
     英文站有 .en.html 就用英文版，没有就用中文原文。"""
@@ -2428,6 +2440,9 @@ def copy_report_files():
                 fh.write(raw)
             with open(os.path.join(base, "raw-dark.html"), "w", encoding="utf-8") as fh:
                 fh.write(dark_report(raw))
+            pdf = report_pdf(r, lang)
+            if pdf:
+                shutil.copyfile(pdf, os.path.join(base, "report.pdf"))
 
 
 # ---------------------------------------------------------------- 解读日志

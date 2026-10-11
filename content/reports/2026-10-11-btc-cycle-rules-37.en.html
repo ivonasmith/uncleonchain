@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--meta
+标题: I Back-tested 37 Bitcoin Cycle Rules One by One: 15 Have Stopped Working
+日期: 2026-10-11
+摘要: The four-year rhythm holds but the amplitude is shrinking: 15 of 37 cycle rules have failed, and what survives are "where are we" rules. Now day 46 of late bear → early bull; invalidated by a close below 58,525.
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I Back-tested 37 Bitcoin Cycle Rules One by One: 15 Have Stopped Working</title>
+<style>
+
+:root{--ink:#1c1a17;--body:#3a352e;--faint:#9a9186;--line:#ece7e0;--paper:#fff;--down:#c02128;--up:#15628f;--neu:#8a6d1f;--wash:#faf8f5;--wash-up:#eaf2f7;--wash-down:#faebec;--wash-neu:#f6f0e0;--ink-up:#0d4568;--ink-down:#7c1519;--ink-neu:#6b551a;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--paper);color:var(--body);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;font-size:16px;line-height:1.75;}
+.wrap{max-width:860px;margin:0 auto;padding:60px 24px 90px;}
+h1,h2,h3,.dek{font-family:Georgia,"Songti SC","Times New Roman",serif;color:var(--ink);}
+.hero{position:relative;background:linear-gradient(135deg,var(--wash-up) 0%,var(--wash) 45%,var(--wash-neu) 100%);padding:30px 30px 26px 34px;margin:0 0 28px;border-radius:10px;}
+.hero::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,var(--up),var(--neu),var(--down));border-radius:10px 0 0 10px;}
+.hook{position:relative;border:1px solid rgba(21,98,143,.18);border-left:5px solid var(--up);border-radius:10px;padding:28px 32px;margin:0 0 30px;background:linear-gradient(160deg,var(--wash-up) 0%,var(--wash-neu) 100%);}
+.hook .q{font-family:Georgia,"Songti SC",serif;font-size:26px;line-height:1.35;color:var(--ink-up);margin:0 0 16px;letter-spacing:-.2px;}
+.hook p{font-size:16px;line-height:1.75;margin:0 0 14px;}
+.hook p:last-of-type{margin-bottom:0;}
+.hook .fin,.closer .fin{margin:16px 0 0;padding:14px 18px;background:#fff;border-radius:8px;border:1px solid rgba(21,98,143,.15);font-size:15.5px;line-height:1.7;}
+.kicker{display:inline-block;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-neu);background:rgba(255,255,255,.6);border:1px solid rgba(138,109,31,.25);padding:5px 11px;margin-bottom:16px;}
+h1{font-size:40px;line-height:1.25;margin:0 0 14px;}
+.dek{font-size:19px;line-height:1.6;margin:0 0 22px;color:var(--body);font-style:italic;}
+.meta{display:flex;flex-wrap:wrap;gap:10px;font-size:12.5px;margin:0;}
+.meta span{padding:5px 12px;border:1px solid var(--line);background:var(--paper);color:var(--body);}
+.meta span:nth-child(2){background:var(--wash-neu);border-color:rgba(138,109,31,.25);color:var(--ink-neu);}
+.meta span:nth-child(3){background:var(--wash-up);border-color:rgba(21,98,143,.25);color:var(--ink-up);}
+h2{font-size:26px;margin:56px 0 18px;line-height:1.4;padding-bottom:12px;border-bottom:2px solid var(--line);}
+.num{display:table;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:12px;letter-spacing:.14em;color:var(--paper);text-transform:uppercase;margin-bottom:10px;background:var(--ink);padding:3px 9px;}
+h3{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;font-size:18px;margin:32px 0 12px;color:var(--ink);font-weight:600;}
+p{margin:0 0 18px;}
+.lede{font-size:18px;line-height:1.85;margin:0 0 22px;}
+b{color:var(--ink);}
+a{color:var(--up);}
+.keys{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:32px 0;border-radius:8px;overflow:hidden;}
+.keys div{background:var(--paper);padding:20px 14px 18px;text-align:center;border-top:3px solid var(--line);}
+.keys div.k-up{border-top-color:var(--up);background:var(--wash-up);}
+.keys div.k-down{border-top-color:var(--down);background:var(--wash-down);}
+.keys div.k-neu{border-top-color:var(--neu);background:var(--wash-neu);}
+.keys b{display:block;font-family:Georgia,"Songti SC",serif;font-size:27px;color:var(--ink);}
+.keys span{display:block;font-size:12.5px;color:var(--faint);margin-top:8px;line-height:1.5;}
+.closer{position:relative;background:linear-gradient(135deg,var(--wash-down) 0%,var(--wash) 50%,var(--wash-up) 100%);padding:26px 28px 24px 32px;margin:48px 0 0;border-radius:10px;}
+.closer::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,var(--down),var(--neu),var(--up));border-radius:10px 0 0 10px;}
+.closer .lede{margin-bottom:16px;}
+.closer .lede:last-child{margin-bottom:0;}
+.q{color:var(--ink-neu);font-weight:600;}
+.hl-up{color:var(--ink-up);}
+.hl-down{color:var(--ink-down);}
+.hl-neu{color:var(--ink-neu);}
+.rule,.warn,.tip{border-left:3px solid;padding:14px 18px;margin:24px 0;background:var(--wash);font-size:15px;line-height:1.75;border-radius:0 8px 8px 0;}
+.rule{border-color:var(--neu);}
+.warn{border-color:var(--down);}
+.tip{border-color:var(--up);}
+.rule ol,.rule ul{margin:8px 0 0;padding-left:20px;}
+.rule li{margin-bottom:6px;}
+nav.toc{columns:2;column-gap:32px;border:1px solid var(--line);padding:20px 26px;margin:32px 0;background:var(--wash);font-size:14px;border-radius:8px;}
+nav.toc ol{margin:0;padding-left:20px;}
+nav.toc li{margin-bottom:9px;break-inside:avoid;}
+nav.toc a{color:var(--body);text-decoration:none;border-bottom:1px dotted var(--faint);}
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14px;}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;}
+th{color:var(--faint);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.03em;}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;}
+tr.hi{background:var(--wash);}
+caption{caption-side:bottom;text-align:left;font-size:12.5px;color:var(--faint);margin-top:8px;line-height:1.6;}
+.fig{margin:32px 0;}
+figcaption{font-size:13px;color:var(--faint);margin-bottom:10px;}
+.ax{font-size:11px;fill:var(--faint);font-family:-apple-system,sans-serif;}
+.lbl{font-size:12px;fill:var(--ink);font-family:-apple-system,sans-serif;font-weight:600;}
+.lbl2{font-size:11px;fill:var(--faint);font-family:-apple-system,sans-serif;}
+.note{font-size:11px;fill:var(--faint);font-family:-apple-system,sans-serif;}
+details{margin:22px 0;border:1px solid var(--line);padding:12px 18px;background:var(--wash);border-radius:8px;}
+summary{cursor:pointer;font-size:14px;color:var(--body);list-style:none;position:relative;padding-left:20px;}
+summary::-webkit-details-marker{display:none;}
+summary::before{content:"▸";position:absolute;left:0;color:var(--faint);}
+details[open] summary::before{content:"▾";}
+.inner{margin-top:14px;overflow-x:auto;}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0;}
+.cards>div{border:1px solid var(--line);padding:16px;border-radius:8px;}
+.cards h4{margin:0 0 8px;font-size:15px;color:var(--ink);}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12.5px;background:var(--wash);padding:2px 5px;border-radius:3px;word-break:break-all;}
+footer{position:relative;margin-top:40px;padding-top:26px;font-size:13.5px;color:var(--faint);line-height:1.85;}
+footer::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--up),var(--neu),var(--down));}
+footer .sig{display:inline-block;font-family:Georgia,"Songti SC",serif;font-size:16px;color:var(--ink);background:var(--wash);border:1px solid var(--line);padding:7px 16px;margin-bottom:16px;}
+@media(max-width:640px){
+  .keys{grid-template-columns:repeat(2,1fr);}
+  .cards{grid-template-columns:1fr;}
+  nav.toc{columns:1;}
+  h1{font-size:30px;}
+  table{font-size:13px;}
+  th,td{padding:6px 6px;}
+  .hero{padding:24px 20px 22px 26px;}
+}
+
+ul{margin:0 0 18px;padding-left:22px}
+li{margin-bottom:6px}
+.claim{margin:0 0 14px;padding:10px 16px;background:var(--wash);border-left:3px solid var(--line);color:var(--faint);font-style:italic;border-radius:0 8px 8px 0;font-size:15px;line-height:1.7}
+.claim b{color:var(--body);font-style:normal;font-size:12px;letter-spacing:.1em;margin-right:8px}
+.qtag{display:inline-block;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:12px;letter-spacing:.1em;color:#fff;background:var(--ink);padding:2px 9px;margin-right:10px;vertical-align:2px;font-weight:600}
+.qnav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 26px}
+.qnav a{font-size:12.5px;padding:4px 12px;border:1px solid var(--line);background:var(--wash);color:var(--body);text-decoration:none;border-radius:999px}
+.slot{border:2px dashed var(--line);background:var(--wash);border-radius:8px;padding:16px 20px;margin:28px 0;font-size:13.5px;color:var(--faint);line-height:1.7}
+.slot b{color:var(--ink-neu);font-size:12px;letter-spacing:.1em;margin-right:8px}
+.tw{overflow-x:auto;margin:20px 0}
+.tw table{margin:0;min-width:520px}
+
+.profile{display:flex;justify-content:space-between;align-items:flex-end;gap:28px;border:1px solid var(--ink);background:var(--paper);padding:24px 30px;margin:0 0 24px;color:var(--ink)}
+.profile .bio{flex:1;min-width:0;font-size:14px;line-height:1.9}
+.profile .bio p{margin:0}
+.profile .bio a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+.profile .id{flex:none;text-align:right}
+.profile .name{font-family:Georgia,"Songti SC","Times New Roman",serif;font-size:16px;color:var(--ink);white-space:nowrap}
+.profile .name i{font-style:normal;color:var(--faint);margin:0 9px}
+.profile .handle{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12.5px;color:var(--faint);margin-top:3px}
+@media(max-width:640px){.profile{flex-direction:column;align-items:flex-start;padding:20px 20px}.profile .id{text-align:left}}
+
+
+.big{font-family:Georgia,"Songti SC",serif;font-size:40px;font-weight:400}
+.risk{border:1px solid rgba(192,33,40,.28);border-left:5px solid var(--down);background:linear-gradient(160deg,var(--wash-down) 0%,var(--wash) 100%);border-radius:10px;padding:22px 28px;margin:0 0 30px}
+.risk.again{margin:28px 0}
+.risk h3{margin:0 0 12px;color:var(--ink-down);font-size:19px;font-family:Georgia,"Songti SC",serif}
+.risk .rtag{display:inline-block;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:11px;letter-spacing:.14em;color:#fff;background:var(--down);padding:2px 9px;margin-right:10px;vertical-align:2px;font-weight:700}
+.risk p,.risk li{font-size:15.5px;line-height:1.8}
+.risk>*:last-child{margin-bottom:0}
+.concepts{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:12px;margin:22px 0}
+.cc{border:1px solid var(--line);background:#fcfbf8;border-radius:8px;padding:12px 16px;font-size:14px;line-height:1.7;color:var(--body)}
+.cc .ct{font-weight:600;color:var(--ink);margin-bottom:3px;font-size:14px}
+.cc .ct i{font-style:normal;font-size:11px;letter-spacing:.1em;color:var(--ink-neu);background:var(--wash-neu);border:1px solid rgba(138,109,31,.25);padding:1px 7px;margin-right:8px;font-weight:600}
+.cc p{margin:0}
+.sd{display:inline-block;width:10px;height:14px;border-radius:2px;margin-right:8px;vertical-align:-2px}
+.tnote{font-size:12.5px;color:var(--faint);margin:-8px 0 18px}
+.now{border-left:5px solid var(--up);background:var(--wash-up);border-radius:0 8px 8px 0;padding:14px 20px;margin:20px 0;font-size:17px;line-height:1.7;color:var(--ink)}
+.now b{color:var(--ink-up)}
+h3 .qtag{font-size:12px}
+.lab{display:inline-block;font-size:12px;letter-spacing:.08em;color:var(--ink-neu);background:var(--wash-neu);padding:1px 8px;margin-right:6px;font-weight:600}
+li>p{margin:0 0 8px}
+nav.toc ol{list-style:none;padding-left:0}
+.tw td:first-child b{white-space:nowrap}
+.tw td .nw{white-space:nowrap}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="hero">
+<span class="kicker">Weekend Special · Cycle Layer</span>
+<h1>I Back-tested 37 Bitcoin Cycle Rules One by One: 15 Have Stopped Working</h1>
+<p class="dek">The four-year rhythm holds, the amplitude is shrinking | The rally that began June 30 is now on day 103</p>
+<div class="meta"><span>Uncle Onchain · Liquidity to Alpha</span><span>Weekend Special #3 · Cycle Layer</span><span>Data as of 2026-10-11</span></div>
+</div>
+
+<div class="risk"><h3><span class="rtag">RISK</span>Risk first: when this conclusion is void</h3><p>The call in this report is that "the $58,525 close on June 30 is most likely the low of this bear market." <b>The moment any daily close falls below $58,525, the call is void</b>, and under our rules the state goes straight back to "Bear."</p>
+<p><b>What if price drops to $60,000 but not below $58,525?</b> By definition, the June 30 close is still this bear market's low, so the bottom still stands. Call it a "retest." But note that after the previous three confirmed bottoms, the lowest pullbacks stopped 21%, 56% and 28% above the low. None came this close ($60,000 would be only 2.5% above the low). If we got there, our confidence that "the bottom is behind us" would drop noticeably, and our daily reading would carry a "bottom in doubt" flag.</p>
+<p>Even if the call is right, that does not mean price rises in a straight line. In the year after past confirmed bottoms, the maximum drawdown was 20%, 32% and 61% in the three cycles. Black swans can arrive at any time: <b>size your positions as if another drop of 30% or more is still possible.</b></p></div>
+<div class="keys">
+<div class="k-down"><b>15 / 37</b><span>Of 37 cycle rules, the number that have stopped working</span></div>
+<div class="k-up"><b>525–546 days</b><span>Halving to top, last three cycles: under 3 weeks apart, the most robust rule</span></div>
+<div class="k-neu"><b>−53%</b><span>This bear market’s max drop, vs 77%–85% in the previous three</span></div>
+<div class="k-neu"><b>1.10</b><span>This cycle’s lowest MVRV: the first bear market that never fell below 1</span></div>
+<div class="k-up"><b>6</b><span>Bottom-confirmation signals this cycle, all pointing to around June 30</span></div>
+<div class="k-down"><b>58,525</b><span>Invalidation line: one daily close below it voids “bottom confirmed”</span></div>
+</div>
+<div class="rule"><b>Three-minute summary</b><ol>
+<li><b>The timing holds; the amplitude doesn't.</b> From halving to cycle top, the last three cycles took 525 to 546 days, less than three weeks apart. But each cycle's top is less frenzied and each bottom less deep: this bear market fell only 53%, versus 77% to 85% in the previous three.</li>
+<li><b>Rules with "hard-coded numbers" are failing en masse.</b> We back-tested 37 cycle rules, drawn from the wider market and from two Chinese-language on-chain analysts, Murphy (@Murphychen888) and CryptoChan (@0xCryptoChan). 15 have stopped working, mostly fixed thresholds like "the bottom is in once MVRV drops below 1" and countdowns like "the top comes X days after two lines cross."</li>
+<li><b>What survives are "where are we" rules, not "count the days" rules.</b> For example, "this cycle's holder-cost lines have crossed, so the bottom is behind us." Six such signals this cycle point to June 30.</li>
+<li><b>Where we are now: late bear → early bull, bottom confirmed, day 46.</b> The up-leg from June 30 is 103 days old and peaked at +48%. It has passed the "89-day line" we use in our daily Hot-Coin Analysis.</li>
+<li><b>Of the two calls in our August special, one has played out and one is still ahead.</b> The $79,009 confirmation line has held. "Real acceleration waits until 15 months before the halving (mid-January 2027)" still has about 3 months to go.</li>
+</ol></div>
+<figure class="fig"><figcaption>Figure 1  Audit of 37 cycle rules: 15 hold in part or in full, 15 have stopped working, 7 are too early to tell</figcaption>
+<svg viewBox="0 0 860 228" width="100%" role="img" aria-label="Audit of 37 cycle rules: 15 hold, 15 stopped working, 7 too early to tell">
+<rect x="24.0" y="24.0" width="36.0" height="36.0" fill="#15628f" rx="4"/>
+<rect x="68.0" y="24.0" width="36.0" height="36.0" fill="#15628f" rx="4"/>
+<rect x="112.0" y="24.0" width="36.0" height="36.0" fill="#15628f" rx="4"/>
+<rect x="156.0" y="24.0" width="36.0" height="36.0" fill="#15628f" rx="4"/>
+<rect x="200.0" y="24.0" width="36.0" height="36.0" fill="#15628f" rx="4"/>
+<rect x="244.0" y="24.0" width="36.0" height="36.0" fill="#15628f" rx="4"/>
+<rect x="288.0" y="24.0" width="36.0" height="36.0" fill="#15628f" rx="4"/>
+<rect x="332.0" y="24.0" width="36.0" height="36.0" fill="#15628f" rx="4"/>
+<rect x="376.0" y="24.0" width="36.0" height="36.0" fill="#15628f" rx="4"/>
+<rect x="420.0" y="24.0" width="36.0" height="36.0" fill="#15628f" rx="4"/>
+<rect x="24.0" y="68.0" width="36.0" height="36.0" fill="#15628f" rx="4"/>
+<rect x="68.0" y="68.0" width="36.0" height="36.0" fill="#15628f" rx="4"/>
+<rect x="112.0" y="68.0" width="36.0" height="36.0" fill="#15628f" rx="4"/>
+<rect x="156.0" y="68.0" width="36.0" height="36.0" fill="#15628f" rx="4"/>
+<rect x="200.0" y="68.0" width="36.0" height="36.0" fill="#15628f" rx="4"/>
+<rect x="244.0" y="68.0" width="36.0" height="36.0" fill="#c02128" rx="4"/>
+<rect x="288.0" y="68.0" width="36.0" height="36.0" fill="#c02128" rx="4"/>
+<rect x="332.0" y="68.0" width="36.0" height="36.0" fill="#c02128" rx="4"/>
+<rect x="376.0" y="68.0" width="36.0" height="36.0" fill="#c02128" rx="4"/>
+<rect x="420.0" y="68.0" width="36.0" height="36.0" fill="#c02128" rx="4"/>
+<rect x="24.0" y="112.0" width="36.0" height="36.0" fill="#c02128" rx="4"/>
+<rect x="68.0" y="112.0" width="36.0" height="36.0" fill="#c02128" rx="4"/>
+<rect x="112.0" y="112.0" width="36.0" height="36.0" fill="#c02128" rx="4"/>
+<rect x="156.0" y="112.0" width="36.0" height="36.0" fill="#c02128" rx="4"/>
+<rect x="200.0" y="112.0" width="36.0" height="36.0" fill="#c02128" rx="4"/>
+<rect x="244.0" y="112.0" width="36.0" height="36.0" fill="#c02128" rx="4"/>
+<rect x="288.0" y="112.0" width="36.0" height="36.0" fill="#c02128" rx="4"/>
+<rect x="332.0" y="112.0" width="36.0" height="36.0" fill="#c02128" rx="4"/>
+<rect x="376.0" y="112.0" width="36.0" height="36.0" fill="#c02128" rx="4"/>
+<rect x="420.0" y="112.0" width="36.0" height="36.0" fill="#c02128" rx="4"/>
+<rect x="24.0" y="156.0" width="36.0" height="36.0" fill="#cfc8bd" rx="4"/>
+<rect x="68.0" y="156.0" width="36.0" height="36.0" fill="#cfc8bd" rx="4"/>
+<rect x="112.0" y="156.0" width="36.0" height="36.0" fill="#cfc8bd" rx="4"/>
+<rect x="156.0" y="156.0" width="36.0" height="36.0" fill="#cfc8bd" rx="4"/>
+<rect x="200.0" y="156.0" width="36.0" height="36.0" fill="#cfc8bd" rx="4"/>
+<rect x="244.0" y="156.0" width="36.0" height="36.0" fill="#cfc8bd" rx="4"/>
+<rect x="288.0" y="156.0" width="36.0" height="36.0" fill="#cfc8bd" rx="4"/>
+<text x="500" y="64" class="big" style="fill:#15628f">15</text>
+<text x="560.0" y="48.0" class="lbl" style="fill:#1c1a17">Hold, in part or in full</text>
+<text x="560.0" y="68.0" class="lbl2">mostly bottom zone / price floor / confirmation</text>
+<text x="500" y="128" class="big" style="fill:#c02128">15</text>
+<text x="560.0" y="112.0" class="lbl" style="fill:#1c1a17">Stopped working</text>
+<text x="560.0" y="132.0" class="lbl2">mostly fixed thresholds and countdowns</text>
+<text x="500" y="192" class="big" style="fill:#9a9186">7</text>
+<text x="560.0" y="176.0" class="lbl" style="fill:#1c1a17">Too early to tell</text>
+<text x="560.0" y="196.0" class="lbl2">too few samples, or depends on definitions</text>
+</svg>
+</figure>
+<nav class="toc"><ol><li><a href="#s0">What data we used</a></li><li><a href="#s1">01 The rhythm holds: tops come about 530 days after the halving</a></li><li><a href="#s2">02 The amplitude is shrinking: tops less frenzied, bottoms less deep</a></li><li><a href="#s3">03 The 37-rule audit: what stays, what breaks</a></li><li><a href="#s4">04 The eight questions retail investors ask most</a></li><li><a href="#s5">05 Where we are in the cycle now</a></li><li><a href="#s6">06 Things you can stop believing</a></li><li><a href="#s7">Limitations and disclaimers</a></li></ol></nav>
+<h2 id="s0">What data we used</h2>
+<ul>
+<li><b>Period</b>: July 2010 to October 2026, daily, about 5,900 days.</li>
+<li><b>Price and valuation</b>: Coin Metrics closing price, market cap, and realized price (the average cost of all coins).</li>
+<li><b>On-chain holder data</b>: bitview.space (the open-source Bitcoin Research Kit). It splits all bitcoin into 63 bands by how long since it last moved, and computes each band's average cost.</li>
+<li><b>Analyst rules</b>: we collected about 5,600 posts that Murphy and CryptoChan have published publicly on X and Telegram since 2021, extracted the rules that can be computed from data, and back-tested each one.</li>
+<li><b>How we validated</b>:<ul>
+<li>each rule is checked in each of the four cycles separately, not just pooled together;</li>
+<li>we use only earlier cycles' numbers to predict the next cycle and see how accurate the forecast is;</li>
+<li>we split by era (2014-17, 2018-21, 2022-26) to see whether a pattern holds, fades or reverses.</li>
+</ul>
+</li>
+</ul>
+<div class="concepts"><div class="cc"><div class="ct"><i>Concept</i>Out-of-sample test</div><p>Fix the rule using past data, then check it against a cycle that did not exist when the rule was set. Many rules look "right in all four cycles" simply because they were drawn from those four cycles. Only a hit on a cycle that played no part in setting the rule counts.</p></div></div>
+<p><b>On the analysts quoted here:</b> Some of the rules tested in this report come from public posts by two on-chain analysts, Murphy and CryptoChan, and are credited to them. Where we write that a rule has "stopped working," we mostly mean an old number no longer fits this cycle, not that the method itself is wrong. Here are their key dated calls of the past few years, checked against what happened:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Date</th>
+<th>Who</th>
+<th>The call at the time</th>
+<th>In hindsight</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="nw">2022-11-09</span></td>
+<td>Murphy</td>
+<td>Miner electricity-cost line breached; often marks an interim bottom</td>
+<td><b class="hl-up">Right</b> (price fell only another 0.9% afterwards)</td>
+</tr>
+<tr>
+<td><span class="nw">2022-12-16</span></td>
+<td>CryptoChan</td>
+<td>Realized profit/loss ratio at an all-time low; odds of a confirmed bottom rising</td>
+<td><b class="hl-up">Right</b></td>
+</tr>
+<tr>
+<td><span class="nw">2023-02</span></td>
+<td>Both</td>
+<td>The bear market is over / the bottom zone has ended</td>
+<td><b class="hl-up">Right</b></td>
+</tr>
+<tr>
+<td><span class="nw">2025-06-23</span></td>
+<td>CryptoChan</td>
+<td>Bull top between mid-September and mid-October</td>
+<td><b class="hl-up">Right</b> (topped Oct 6)</td>
+</tr>
+<tr>
+<td><span class="nw">2025-11-20</span></td>
+<td>Murphy</td>
+<td>This is an interim bear market, not a cyclical one</td>
+<td><b class="hl-down">Wrong</b> (price later fell to 58,525)</td>
+</tr>
+<tr>
+<td><span class="nw">2026-06-03</span></td>
+<td>CryptoChan</td>
+<td>Start an 81-day DCA, build 50% first</td>
+<td><b class="hl-up">Right</b> (another 8.6% drop to the bottom)</td>
+</tr>
+<tr>
+<td><span class="nw">2026-06-10</span></td>
+<td>Murphy</td>
+<td>The bottom is around $60,000</td>
+<td><b class="hl-up">Right</b></td>
+</tr>
+</tbody>
+</table></div>
+<p>This table only compares against the public record. What this report cares about is whether a method works across cycles.</p>
+<h2 id="s1"><span class="num">01</span>The rhythm holds: tops come about 530 days after the halving</h2>
+<div class="concepts"><div class="cc"><div class="ct"><i>Concept</i>Halving</div><p>Every 210,000 blocks (about four years), the new-coin reward miners receive per block is cut in half. The last four were Nov 2012, Jul 2016, May 2020 and Apr 2024; the next is expected in April 2028. The "four-year cycle" refers to the bull-and-bear loop that revolves around the halving.</p></div></div>
+<p>We find each cycle's top and bottom from closing prices using a fixed rule, with no hand-picking. A cycle top is an all-time high followed by a fall of more than 50% that lasts at least 150 days. This rules out mid-bull-market crashes like April 2013 and April 2021.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Cycle</th>
+<th>Halving date</th>
+<th>Cycle top</th>
+<th>Days from halving to top</th>
+<th>Cycle bottom</th>
+<th>Bear-market drop</th>
+<th>Bear-market length</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cycle 1</td>
+<td><span class="nw">2012-11-28</span></td>
+<td><span class="nw">2013-12-04</span></td>
+<td>371 days</td>
+<td><span class="nw">2015-01-14</span></td>
+<td>−84.5%</td>
+<td>406 days</td>
+</tr>
+<tr>
+<td>Cycle 2</td>
+<td><span class="nw">2016-07-09</span></td>
+<td><span class="nw">2017-12-16</span></td>
+<td>525 days</td>
+<td><span class="nw">2018-12-15</span></td>
+<td>−83.8%</td>
+<td>364 days</td>
+</tr>
+<tr>
+<td>Cycle 3</td>
+<td><span class="nw">2020-05-11</span></td>
+<td><span class="nw">2021-11-08</span></td>
+<td>546 days</td>
+<td><span class="nw">2022-11-09</span></td>
+<td>−76.7%</td>
+<td>366 days</td>
+</tr>
+<tr class="hi"><td>Cycle 4 (current)</td>
+<td><span class="nw">2024-04-20</span></td>
+<td><span class="nw">2025-10-06</span></td>
+<td>534 days</td>
+<td>2026-06-30 (so far)</td>
+<td>−53.1%</td>
+<td>267 days</td>
+</tr>
+</tbody>
+</table></div>
+<figure class="fig"><figcaption>Figure 2  Four cycles aligned on the halving date (price ÷ price on halving day, log scale): the last three tops fall 525 to 546 days after the halving</figcaption>
+<svg viewBox="0 0 860 392" width="100%" role="img" aria-label="Four cycles aligned on the halving date (log scale)">
+<rect x="20.0" y="22.0" width="22.0" height="4.0" fill="#b3a99b" rx="0"/>
+<text x="50.0" y="28.0" class="lbl">Cycle 1 (2012 halving)</text>
+<rect x="210.0" y="22.0" width="22.0" height="4.0" fill="#8a6d1f" rx="0"/>
+<text x="240.0" y="28.0" class="lbl">Cycle 2 (2016 halving)</text>
+<rect x="400.0" y="22.0" width="22.0" height="4.0" fill="#15628f" rx="0"/>
+<text x="430.0" y="28.0" class="lbl">Cycle 3 (2020 halving)</text>
+<rect x="590.0" y="22.0" width="22.0" height="4.0" fill="#c02128" rx="0"/>
+<text x="620.0" y="28.0" class="lbl">Cycle 4 (2024 halving)</text>
+<line x1="62.0" y1="321.5" x2="770.0" y2="321.5" stroke="#ece7e0" stroke-width="1"/>
+<text x="54.0" y="325.5" text-anchor="end" class="ax">0.3×</text>
+<line x1="62.0" y1="266.5" x2="770.0" y2="266.5" stroke="#9a9186" stroke-width="1.2"/>
+<text x="54.0" y="270.5" text-anchor="end" class="ax">1×</text>
+<line x1="62.0" y1="216.2" x2="770.0" y2="216.2" stroke="#ece7e0" stroke-width="1"/>
+<text x="54.0" y="220.2" text-anchor="end" class="ax">3×</text>
+<line x1="62.0" y1="161.2" x2="770.0" y2="161.2" stroke="#ece7e0" stroke-width="1"/>
+<text x="54.0" y="165.2" text-anchor="end" class="ax">10×</text>
+<line x1="62.0" y1="111.0" x2="770.0" y2="111.0" stroke="#ece7e0" stroke-width="1"/>
+<text x="54.0" y="115.0" text-anchor="end" class="ax">30×</text>
+<line x1="62.0" y1="56.0" x2="770.0" y2="56.0" stroke="#ece7e0" stroke-width="1"/>
+<text x="54.0" y="60.0" text-anchor="end" class="ax">100×</text>
+<line x1="108.1" y1="340.0" x2="108.1" y2="345.0" stroke="#9a9186" stroke-width="1"/>
+<text x="108.1" y="360.0" text-anchor="middle" class="ax">-400</text>
+<line x1="203.0" y1="340.0" x2="203.0" y2="345.0" stroke="#9a9186" stroke-width="1"/>
+<text x="203.0" y="360.0" text-anchor="middle" class="ax">-200</text>
+<line x1="298.0" y1="340.0" x2="298.0" y2="345.0" stroke="#9a9186" stroke-width="1"/>
+<text x="298.0" y="360.0" text-anchor="middle" class="ax">0</text>
+<line x1="393.0" y1="340.0" x2="393.0" y2="345.0" stroke="#9a9186" stroke-width="1"/>
+<text x="393.0" y="360.0" text-anchor="middle" class="ax">200</text>
+<line x1="487.9" y1="340.0" x2="487.9" y2="345.0" stroke="#9a9186" stroke-width="1"/>
+<text x="487.9" y="360.0" text-anchor="middle" class="ax">400</text>
+<line x1="582.9" y1="340.0" x2="582.9" y2="345.0" stroke="#9a9186" stroke-width="1"/>
+<text x="582.9" y="360.0" text-anchor="middle" class="ax">600</text>
+<line x1="677.9" y1="340.0" x2="677.9" y2="345.0" stroke="#9a9186" stroke-width="1"/>
+<text x="677.9" y="360.0" text-anchor="middle" class="ax">800</text>
+<text x="416.0" y="378.0" text-anchor="middle" class="ax">Days since the halving (0 = halving day)</text>
+<rect x="547.3" y="56.0" width="10.0" height="284.0" fill="#8a6d1f" fill-opacity="0.18" rx="0"/>
+<text x="552.3" y="50.0" text-anchor="middle" class="lbl2" style="fill:#8a6d1f">525–546 days</text>
+<line x1="298.0" y1="56.0" x2="298.0" y2="340.0" stroke="#9a9186" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="303.0" y="68.0" class="lbl2">Halving</text>
+<path d="M62.0,261.7 L65.3,261.1 L68.6,279.4 L72.0,275.8 L75.3,271.8 L78.6,272.2 L81.9,285.1 L85.3,291.3 L88.6,302.5 L91.9,302.5 L95.2,309.9 L98.6,308.8 L101.9,316.0 L105.2,344.9 L108.5,334.6 L111.9,327.3 L115.2,332.3 L118.5,338.5 L121.8,342.6 L125.2,331.6 L128.5,331.3 L131.8,328.7 L135.1,319.2 L138.5,315.6 L141.8,302.6 L145.1,293.1 L148.4,300.1 L151.7,300.8 L155.1,298.8 L158.4,302.4 L161.7,314.3 L165.0,313.3 L168.4,308.9 L171.7,308.2 L175.0,304.3 L178.3,309.4 L181.7,309.7 L185.0,308.5 L188.3,308.5 L191.6,306.6 L195.0,306.4 L198.3,307.2 L201.6,307.3 L204.9,306.9 L208.3,306.5 L211.6,306.5 L214.9,303.8 L218.2,300.1 L221.5,294.4 L224.9,294.9 L228.2,295.6 L231.5,291.1 L234.8,280.4 L238.2,282.0 L241.5,278.0 L244.8,271.4 L248.1,263.4 L251.5,277.1 L254.8,272.2 L258.1,271.6 L261.4,270.4 L264.8,265.8 L268.1,266.5 L271.4,264.2 L274.7,267.3 L278.1,268.0 L281.4,269.1 L284.7,271.1 L288.0,271.9 L291.4,271.8 L294.7,268.7 L298.0,266.5 L301.3,263.0 L304.6,261.7 L308.0,262.2 L311.3,262.5 L314.6,263.1 L317.9,261.2 L321.3,258.4 L324.6,250.4 L327.9,245.0 L331.2,241.7 L334.6,234.8 L337.9,226.1 L341.2,224.0 L344.5,209.1 L347.9,205.3 L351.2,191.4 L354.5,176.2 L357.8,158.3 L361.2,149.0 L364.5,174.2 L367.8,151.0 L371.1,164.0 L374.5,165.2 L377.8,166.9 L381.1,162.9 L384.4,159.0 L387.7,162.1 L391.1,168.0 L394.4,168.8 L397.7,171.4 L401.0,182.3 L404.4,178.2 L407.7,175.1 L411.0,176.6 L414.3,171.7 L417.7,172.2 L421.0,171.2 L424.3,166.1 L427.6,163.1 L431.0,161.5 L434.3,159.8 L437.6,159.9 L440.9,161.1 L444.3,169.0 L447.6,160.3 L450.9,156.0 L454.2,138.1 L457.5,139.6 L460.9,126.6 L464.2,108.1 L467.5,89.3 L470.8,67.3 L474.2,59.8 L477.5,71.7 L480.8,94.9 L484.1,83.3 L487.5,78.6 L490.8,74.6 L494.1,73.5 L497.4,74.7 L500.8,76.2 L504.1,76.7 L507.4,85.0 L510.7,87.2 L514.1,89.9 L517.4,83.9 L520.7,86.4 L524.0,88.1 L527.4,90.5 L530.7,103.2 L534.0,102.8 L537.3,94.5 L540.6,98.1 L544.0,102.2 L547.3,102.9 L550.6,102.6 L553.9,97.8 L557.3,90.5 L560.6,85.7 L563.9,86.6 L567.2,88.3 L570.6,91.9 L573.9,85.2 L577.2,87.3 L580.5,87.7 L583.9,87.4 L587.2,91.8 L590.5,90.3 L593.8,93.0 L597.2,95.9 L600.5,96.3 L603.8,99.7 L607.1,99.3 L610.5,101.4 L613.8,104.8 L617.1,109.4 L620.4,113.0 L623.7,108.1 L627.1,109.7 L630.4,115.7 L633.7,115.0 L637.0,104.9 L640.4,110.1 L643.7,111.3 L647.0,110.3 L650.3,113.8 L653.7,117.6 L657.0,117.2 L660.3,117.6 L663.6,121.0 L667.0,145.1 L670.3,133.2 L673.6,131.6 L676.9,133.4 L680.3,134.9 L683.6,131.6 L686.9,131.1 L690.2,124.8 L693.5,121.1 L696.9,127.6 L700.2,129.5 L703.5,129.4 L706.8,129.7 L710.2,134.1 L713.5,132.0 L716.8,133.6 L720.1,132.8 L723.5,131.5 L726.8,131.9 L730.1,131.3 L733.4,133.7 L736.8,133.0 L740.1,129.3 L743.4,130.7 L746.7,127.5 L750.1,125.3 L753.4,122.8 L756.7,124.1 L760.0,122.2 L763.4,123.4 L766.7,125.7 L770.0,133.3" fill="none" stroke="#b3a99b" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M62.0,309.4 L65.3,305.7 L68.6,304.5 L72.0,308.3 L75.3,309.7 L78.6,309.5 L81.9,312.6 L85.3,315.4 L88.6,314.8 L91.9,313.0 L95.2,311.6 L98.6,312.9 L101.9,312.3 L105.2,313.5 L108.5,315.0 L111.9,313.5 L115.2,311.1 L118.5,310.0 L121.8,308.4 L125.2,302.9 L128.5,305.5 L131.8,303.5 L135.1,304.8 L138.5,308.2 L141.8,308.1 L145.1,313.9 L148.4,314.1 L151.7,312.9 L155.1,312.8 L158.4,313.6 L161.7,313.2 L165.0,312.2 L168.4,311.0 L171.7,306.4 L175.0,304.5 L178.3,299.8 L181.7,290.3 L185.0,297.1 L188.3,298.1 L191.6,294.0 L195.0,290.0 L198.3,284.9 L201.6,282.3 L204.9,286.7 L208.3,285.0 L211.6,283.4 L214.9,290.2 L218.2,290.4 L221.5,291.4 L224.9,291.8 L228.2,290.0 L231.5,284.4 L234.8,285.2 L238.2,289.1 L241.5,287.6 L244.8,287.7 L248.1,286.9 L251.5,286.6 L254.8,286.7 L258.1,285.2 L261.4,283.0 L264.8,283.4 L268.1,282.3 L271.4,282.6 L274.7,284.0 L278.1,275.8 L281.4,272.2 L284.7,269.8 L288.0,259.5 L291.4,265.3 L294.7,263.0 L298.0,266.5 L301.3,265.5 L304.6,266.1 L308.0,266.2 L311.3,271.0 L314.6,271.4 L317.9,271.7 L321.3,272.6 L324.6,270.2 L327.9,268.4 L331.2,269.7 L334.6,270.0 L337.9,269.1 L341.2,268.8 L344.5,267.5 L347.9,266.3 L351.2,262.2 L354.5,262.8 L357.8,263.0 L361.2,260.0 L364.5,261.0 L367.8,259.1 L371.1,258.5 L374.5,257.7 L377.8,252.2 L381.1,248.3 L384.4,251.5 L387.7,256.0 L391.1,250.5 L394.4,250.6 L397.7,245.4 L401.0,246.4 L404.4,244.2 L407.7,240.5 L411.0,236.0 L414.3,239.5 L417.7,248.6 L421.0,248.4 L424.3,243.0 L427.6,239.2 L431.0,239.5 L434.3,236.9 L437.6,232.9 L440.9,226.2 L444.3,220.6 L447.6,214.1 L450.9,214.2 L454.2,204.1 L457.5,198.0 L460.9,202.3 L464.2,203.9 L467.5,206.7 L470.8,204.1 L474.2,215.5 L477.5,199.4 L480.8,201.4 L484.1,193.2 L487.5,185.0 L490.8,181.8 L494.1,179.8 L497.4,177.2 L500.8,179.9 L504.1,187.0 L507.4,186.2 L510.7,179.9 L514.1,178.8 L517.4,166.7 L520.7,164.8 L524.0,166.9 L527.4,155.3 L530.7,162.5 L534.0,153.1 L537.3,147.7 L540.6,137.6 L544.0,123.0 L547.3,110.8 L550.6,123.4 L553.9,129.9 L557.3,117.1 L560.6,125.6 L563.9,130.5 L567.2,136.0 L570.6,145.8 L573.9,148.9 L577.2,137.0 L580.5,143.1 L583.9,135.6 L587.2,147.6 L590.5,152.6 L593.8,148.5 L597.2,158.5 L600.5,158.7 L603.8,151.8 L607.1,147.2 L610.5,144.8 L613.8,142.6 L617.1,149.2 L620.4,150.6 L623.7,155.9 L627.1,154.0 L630.4,154.5 L633.7,161.4 L637.0,163.7 L640.4,162.2 L643.7,159.7 L647.0,163.1 L650.3,155.4 L653.7,150.8 L657.0,158.0 L660.3,162.7 L663.6,162.1 L667.0,159.7 L670.3,156.7 L673.6,163.6 L676.9,161.2 L680.3,159.9 L683.6,160.8 L686.9,161.0 L690.2,163.5 L693.5,162.0 L696.9,162.0 L700.2,162.6 L703.5,162.4 L706.8,169.0 L710.2,185.8 L713.5,181.9 L716.8,190.9 L720.1,194.0 L723.5,184.0 L726.8,185.6 L730.1,185.9 L733.4,188.1 L736.8,187.3 L740.1,188.9 L743.4,190.2 L746.7,188.1 L750.1,188.6 L753.4,182.3 L756.7,185.8 L760.0,184.6 L763.4,183.7 L766.7,183.8 L770.0,182.5" fill="none" stroke="#8a6d1f" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M62.0,305.1 L65.3,301.4 L68.6,305.4 L72.0,307.0 L75.3,308.3 L78.6,308.7 L81.9,306.3 L85.3,302.9 L88.6,303.5 L91.9,305.0 L95.2,303.1 L98.6,301.7 L101.9,302.4 L105.2,299.8 L108.5,288.7 L111.9,290.8 L115.2,287.8 L118.5,289.8 L121.8,285.3 L125.2,270.9 L128.5,269.8 L131.8,265.3 L135.1,268.7 L138.5,269.7 L141.8,262.6 L145.1,255.1 L148.4,257.0 L151.7,250.0 L155.1,255.5 L158.4,258.1 L161.7,261.8 L165.0,252.0 L168.4,253.6 L171.7,255.6 L175.0,257.9 L178.3,257.8 L181.7,258.0 L185.0,258.4 L188.3,260.9 L191.6,268.1 L195.0,268.4 L198.3,267.8 L201.6,268.5 L204.9,262.7 L208.3,262.3 L211.6,265.8 L214.9,268.7 L218.2,274.9 L221.5,273.8 L224.9,273.6 L228.2,276.6 L231.5,273.8 L234.8,274.3 L238.2,271.1 L241.5,269.0 L244.8,266.2 L248.1,264.8 L251.5,262.9 L254.8,260.1 L258.1,261.0 L261.4,261.1 L264.8,264.8 L268.1,270.3 L271.4,291.1 L274.7,279.3 L278.1,279.6 L281.4,273.9 L284.7,276.7 L288.0,276.8 L291.4,271.0 L294.7,264.9 L298.0,266.5 L301.3,260.8 L304.6,264.8 L308.0,258.6 L311.3,260.6 L314.6,262.1 L317.9,261.0 L321.3,263.4 L324.6,262.6 L327.9,263.1 L331.2,263.5 L334.6,255.0 L337.9,254.2 L341.2,251.7 L344.5,250.0 L347.9,252.1 L351.2,252.4 L354.5,257.9 L357.8,256.6 L361.2,257.5 L364.5,256.3 L367.8,256.1 L371.1,252.9 L374.5,252.2 L377.8,247.2 L381.1,245.5 L384.4,240.0 L387.7,236.0 L391.1,231.7 L394.4,228.6 L397.7,229.7 L401.0,229.5 L404.4,221.6 L407.7,214.1 L411.0,206.6 L414.3,201.9 L417.7,200.2 L421.0,205.8 L424.3,204.2 L427.6,189.7 L431.0,187.7 L434.3,182.5 L437.6,186.3 L440.9,184.1 L444.3,180.7 L447.6,182.1 L450.9,179.5 L454.2,178.6 L457.5,177.7 L460.9,181.0 L464.2,182.5 L467.5,179.8 L470.8,180.9 L474.2,192.3 L477.5,197.8 L480.8,199.3 L484.1,204.0 L487.5,195.6 L490.8,206.8 L494.1,203.1 L497.4,203.7 L500.8,204.8 L504.1,208.0 L507.4,199.2 L510.7,197.0 L514.1,189.5 L517.4,189.8 L520.7,186.3 L524.0,188.7 L527.4,183.6 L530.7,190.8 L534.0,193.0 L537.3,193.4 L540.6,186.6 L544.0,179.7 L547.3,176.2 L550.6,175.4 L553.9,176.8 L557.3,172.2 L560.6,174.9 L563.9,180.5 L567.2,179.2 L570.6,185.5 L573.9,189.0 L577.2,188.8 L580.5,185.2 L583.9,189.3 L587.2,194.1 L590.5,193.7 L593.8,200.1 L597.2,198.0 L600.5,191.9 L603.8,193.2 L607.1,199.6 L610.5,192.7 L613.8,198.3 L617.1,196.6 L620.4,195.0 L623.7,188.6 L627.1,189.1 L630.4,196.7 L633.7,195.2 L637.0,195.6 L640.4,197.8 L643.7,208.6 L647.0,209.5 L650.3,210.7 L653.7,206.7 L657.0,207.3 L660.3,222.8 L663.6,226.5 L667.0,226.2 L670.3,227.3 L673.6,227.9 L676.9,222.9 L680.3,224.5 L683.6,220.8 L686.9,219.9 L690.2,219.3 L693.5,225.0 L696.9,227.2 L700.2,228.3 L703.5,222.7 L706.8,228.9 L710.2,229.7 L713.5,228.7 L716.8,229.8 L720.1,228.9 L723.5,229.4 L726.8,226.7 L730.1,226.6 L733.4,236.3 L736.8,238.7 L740.1,237.4 L743.4,235.4 L746.7,234.7 L750.1,236.8 L753.4,235.6 L756.7,236.1 L760.0,234.8 L763.4,225.2 L766.7,221.6 L770.0,221.9" fill="none" stroke="#15628f" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M62.0,327.3 L65.3,328.3 L68.6,328.1 L72.0,329.0 L75.3,327.8 L78.6,318.0 L81.9,314.3 L85.3,313.8 L88.6,313.2 L91.9,316.2 L95.2,310.7 L98.6,313.5 L101.9,315.2 L105.2,318.9 L108.5,306.6 L111.9,305.7 L115.2,304.1 L118.5,304.9 L121.8,301.2 L125.2,305.2 L128.5,302.9 L131.8,303.4 L135.1,306.8 L138.5,306.4 L141.8,306.8 L145.1,306.4 L148.4,308.5 L151.7,307.4 L155.1,300.9 L158.4,300.8 L161.7,301.3 L165.0,301.3 L168.4,302.1 L171.7,302.7 L175.0,303.2 L178.3,302.6 L181.7,308.1 L185.0,308.2 L188.3,308.5 L191.6,308.4 L195.0,307.3 L198.3,307.3 L201.6,306.6 L204.9,304.9 L208.3,306.8 L211.6,301.8 L214.9,295.9 L218.2,294.6 L221.5,292.2 L224.9,292.7 L228.2,291.2 L231.5,289.2 L234.8,284.5 L238.2,286.1 L241.5,284.5 L244.8,286.1 L248.1,284.3 L251.5,285.4 L254.8,286.7 L258.1,286.2 L261.4,285.3 L264.8,280.4 L268.1,276.9 L271.4,277.0 L274.7,268.5 L278.1,264.0 L281.4,266.1 L284.7,266.8 L288.0,263.2 L291.4,263.6 L294.7,266.7 L298.0,266.5 L301.3,267.5 L304.6,267.2 L308.0,269.4 L311.3,265.0 L314.6,263.5 L317.9,264.5 L321.3,263.5 L324.6,265.5 L327.9,266.9 L331.2,269.4 L334.6,271.4 L337.9,270.6 L341.2,264.9 L344.5,264.3 L347.9,269.5 L351.2,269.4 L354.5,270.5 L357.8,267.1 L361.2,270.8 L364.5,274.8 L367.8,270.0 L371.1,267.5 L374.5,265.8 L377.8,268.5 L381.1,267.7 L384.4,264.1 L387.7,265.0 L391.1,263.5 L394.4,258.8 L397.7,251.2 L401.0,247.8 L404.4,248.3 L407.7,246.7 L411.0,246.1 L414.3,248.0 L417.7,249.0 L421.0,247.5 L424.3,249.2 L427.6,244.7 L431.0,244.5 L434.3,246.4 L437.6,248.3 L440.9,247.8 L444.3,248.3 L447.6,253.7 L450.9,253.5 L454.2,254.5 L457.5,254.8 L460.9,255.5 L464.2,255.0 L467.5,254.0 L470.8,254.1 L474.2,249.2 L477.5,248.6 L480.8,244.7 L484.1,245.3 L487.5,243.2 L490.8,244.6 L494.1,244.2 L497.4,244.3 L500.8,246.0 L504.1,243.5 L507.4,243.1 L510.7,239.4 L514.1,239.2 L517.4,239.1 L520.7,241.3 L524.0,239.7 L527.4,239.3 L530.7,240.2 L534.0,242.9 L537.3,242.2 L540.6,239.9 L544.0,240.0 L547.3,242.5 L550.6,237.5 L553.9,242.0 L557.3,243.5 L560.6,241.7 L563.9,242.3 L567.2,245.6 L570.6,248.8 L573.9,254.2 L577.2,251.1 L580.5,251.9 L583.9,251.4 L587.2,252.4 L590.5,252.7 L593.8,251.2 L597.2,251.3 L600.5,249.0 L603.8,251.9 L607.1,257.6 L610.5,263.5 L613.8,263.1 L617.1,264.3 L620.4,265.0 L623.7,264.8 L627.1,262.3 L630.4,263.2 L633.7,265.4 L637.0,264.8 L640.4,261.0 L643.7,259.4 L647.0,258.3 L650.3,257.6 L653.7,256.5 L657.0,258.0 L660.3,258.9 L663.6,260.6 L667.0,269.5 L670.3,266.8 L673.6,266.9 L676.9,270.1 L680.3,267.7 L683.6,267.2 L686.9,266.5 L690.2,266.9 L693.5,268.0 L696.9,266.5 L700.2,267.8 L703.5,258.6 L706.8,257.9 L710.2,257.0 L713.5,258.5 L716.8,256.2 L720.1,254.5 L723.5,254.2 L726.8,255.2" fill="none" stroke="#c02128" stroke-width="2.8" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="474.2" cy="59.8" r="5" fill="#b3a99b" stroke="#fff" stroke-width="1.5"/>
+<text x="483.2" y="63.8" class="lbl" style="fill:#7d7366">day 371</text>
+<circle cx="547.3" cy="110.8" r="5" fill="#8a6d1f" stroke="#fff" stroke-width="1.5"/>
+<text x="556.3" y="114.8" class="lbl" style="fill:#8a6d1f">day 525</text>
+<circle cx="557.3" cy="172.2" r="5" fill="#15628f" stroke="#fff" stroke-width="1.5"/>
+<text x="566.3" y="176.2" class="lbl" style="fill:#15628f">day 546</text>
+<circle cx="550.6" cy="237.5" r="5" fill="#c02128" stroke="#fff" stroke-width="1.5"/>
+<text x="559.6" y="241.5" class="lbl" style="fill:#c02128">day 534</text>
+<text x="778.0" y="137.3" class="lbl2" style="fill:#7d7366">Cycle 1 18.4×</text>
+<text x="778.0" y="186.5" class="lbl2" style="fill:#8a6d1f">Cycle 2 6.3×</text>
+<text x="778.0" y="225.9" class="lbl2" style="fill:#15628f">Cycle 3 2.7×</text>
+<text x="734.8" y="259.2" class="lbl2" style="fill:#c02128">Cycle 4 1.3×</text>
+</svg>
+</figure>
+<ul>
+<li><b>Stable:</b> from halving to top, the last three cycles took 525 to 546 days. Using only the previous cycle's day count to predict the next, the miss was 21 days for Cycle 3 and 12 days for this cycle. This is the most robust regularity in the whole study.</li>
+<li><b>Unstable:</b> bear-market length. The first three lasted about a year; this one reached its low in 267 days. Waiting for a bottom on a "bear markets last a year" basis would have meant arriving more than 3 months late.</li>
+</ul>
+<div class="tip"><b>What it means for you</b>  The most reliable thing about the cycle is roughly when the top comes, not how long the bear market lasts.</div>
+<h2 id="s2"><span class="num">02</span>The amplitude is shrinking: tops less frenzied, bottoms less deep</h2>
+<div class="concepts"><div class="cc"><div class="ct"><i>Concept</i>Realized price (average cost of all coins)</div><p>Each bitcoin is valued at the price when it last moved on-chain, and those values are averaged. Think of it as "the average buy price of all holders."</p></div><div class="cc"><div class="ct"><i>Concept</i>MVRV</div><p>Price ÷ realized price. At 2, the average holder is up 100%; below 1, the average holder is underwater.</p></div></div>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Cycle</th>
+<th>MVRV at the bull-market peak</th>
+<th>MVRV at the bear-market trough</th>
+<th>Bear-market drop</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cycle 1</td>
+<td>5.88</td>
+<td>0.56</td>
+<td>−84.5%</td>
+</tr>
+<tr>
+<td>Cycle 2</td>
+<td>4.72</td>
+<td>0.69</td>
+<td>−83.8%</td>
+</tr>
+<tr>
+<td>Cycle 3</td>
+<td>3.96</td>
+<td>0.75</td>
+<td>−76.7%</td>
+</tr>
+<tr class="hi"><td>Cycle 4 (current)</td>
+<td>2.74</td>
+<td><b>1.10</b></td>
+<td>−53.1%</td>
+</tr>
+</tbody>
+</table></div>
+<figure class="fig"><figcaption>Figure 3  MVRV since 2011: each peak lower, each trough higher, and no sub-1 reading in this entire bear market</figcaption>
+<svg viewBox="0 0 860 334" width="100%" role="img" aria-label="MVRV since 2011: each peak lower, each trough higher">
+<line x1="62.0" y1="300.0" x2="700.0" y2="300.0" stroke="#ece7e0" stroke-width="1"/>
+<text x="54.0" y="304.0" text-anchor="end" class="ax">0</text>
+<line x1="62.0" y1="260.0" x2="700.0" y2="260.0" stroke="#ece7e0" stroke-width="1"/>
+<text x="54.0" y="264.0" text-anchor="end" class="ax">1</text>
+<line x1="62.0" y1="220.0" x2="700.0" y2="220.0" stroke="#ece7e0" stroke-width="1"/>
+<text x="54.0" y="224.0" text-anchor="end" class="ax">2</text>
+<line x1="62.0" y1="180.0" x2="700.0" y2="180.0" stroke="#ece7e0" stroke-width="1"/>
+<text x="54.0" y="184.0" text-anchor="end" class="ax">3</text>
+<line x1="62.0" y1="140.0" x2="700.0" y2="140.0" stroke="#ece7e0" stroke-width="1"/>
+<text x="54.0" y="144.0" text-anchor="end" class="ax">4</text>
+<line x1="62.0" y1="100.0" x2="700.0" y2="100.0" stroke="#ece7e0" stroke-width="1"/>
+<text x="54.0" y="104.0" text-anchor="end" class="ax">5</text>
+<line x1="62.0" y1="60.0" x2="700.0" y2="60.0" stroke="#ece7e0" stroke-width="1"/>
+<text x="54.0" y="64.0" text-anchor="end" class="ax">6</text>
+<line x1="102.4" y1="300.0" x2="102.4" y2="305.0" stroke="#9a9186" stroke-width="1"/>
+<text x="102.4" y="320.0" text-anchor="middle" class="ax">2012</text>
+<line x1="183.4" y1="300.0" x2="183.4" y2="305.0" stroke="#9a9186" stroke-width="1"/>
+<text x="183.4" y="320.0" text-anchor="middle" class="ax">2014</text>
+<line x1="264.4" y1="300.0" x2="264.4" y2="305.0" stroke="#9a9186" stroke-width="1"/>
+<text x="264.4" y="320.0" text-anchor="middle" class="ax">2016</text>
+<line x1="345.4" y1="300.0" x2="345.4" y2="305.0" stroke="#9a9186" stroke-width="1"/>
+<text x="345.4" y="320.0" text-anchor="middle" class="ax">2018</text>
+<line x1="426.3" y1="300.0" x2="426.3" y2="305.0" stroke="#9a9186" stroke-width="1"/>
+<text x="426.3" y="320.0" text-anchor="middle" class="ax">2020</text>
+<line x1="507.4" y1="300.0" x2="507.4" y2="305.0" stroke="#9a9186" stroke-width="1"/>
+<text x="507.4" y="320.0" text-anchor="middle" class="ax">2022</text>
+<line x1="588.3" y1="300.0" x2="588.3" y2="305.0" stroke="#9a9186" stroke-width="1"/>
+<text x="588.3" y="320.0" text-anchor="middle" class="ax">2024</text>
+<line x1="669.4" y1="300.0" x2="669.4" y2="305.0" stroke="#9a9186" stroke-width="1"/>
+<text x="669.4" y="320.0" text-anchor="middle" class="ax">2026</text>
+<line x1="62.0" y1="260.0" x2="700.0" y2="260.0" stroke="#c02128" stroke-width="1.2" stroke-dasharray="5 4"/>
+<text x="706.0" y="264.0" class="lbl2" style="fill:#c02128">1  old “bottom line”</text>
+<line x1="62.0" y1="160.0" x2="700.0" y2="160.0" stroke="#8a6d1f" stroke-width="1.2" stroke-dasharray="5 4"/>
+<text x="706.0" y="164.0" class="lbl2" style="fill:#8a6d1f">3.5  old “top line”</text>
+<path d="M62.0,161.4 L62.8,156.7 L63.6,144.4 L64.3,135.4 L65.1,155.0 L65.9,76.3 L66.7,82.9 L67.4,138.2 L68.2,145.7 L69.0,171.7 L69.8,175.0 L70.5,199.6 L71.3,192.9 L72.1,200.0 L72.9,207.4 L73.6,169.0 L74.4,129.0 L75.2,101.3 L76.0,103.1 L76.7,84.4 L77.5,126.0 L78.3,116.3 L79.1,37.0 L79.9,155.7 L80.6,192.4 L81.4,203.8 L82.2,213.0 L83.0,218.4 L83.7,226.7 L84.5,220.0 L85.3,224.2 L86.1,250.3 L86.8,236.0 L87.6,233.4 L88.4,244.4 L89.2,249.5 L89.9,261.9 L90.7,265.5 L91.5,264.4 L92.3,266.4 L93.0,272.1 L93.8,275.2 L94.6,277.9 L95.4,277.0 L96.2,278.9 L96.9,277.9 L97.7,282.2 L98.5,279.9 L99.3,276.9 L100.0,273.3 L100.8,273.6 L101.6,265.3 L102.4,257.0 L103.1,243.9 L103.9,245.3 L104.7,251.2 L105.5,258.0 L106.2,255.9 L107.0,257.1 L107.8,264.8 L108.6,260.5 L109.3,260.9 L110.1,260.4 L110.9,257.5 L111.7,263.0 L112.5,260.4 L113.2,260.4 L114.0,259.0 L114.8,257.4 L115.6,259.7 L116.3,258.4 L117.1,259.3 L117.9,257.8 L118.7,257.1 L119.4,256.3 L120.2,254.5 L121.0,249.0 L121.8,248.2 L122.5,246.3 L123.3,245.2 L124.1,238.3 L124.9,233.7 L125.6,233.0 L126.4,220.6 L127.2,217.0 L128.0,245.3 L128.7,228.3 L129.5,232.2 L130.3,227.9 L131.1,224.8 L131.9,225.0 L132.6,225.1 L133.4,229.2 L134.2,231.0 L135.0,231.6 L135.7,237.1 L136.5,236.8 L137.3,236.8 L138.1,232.8 L138.8,228.9 L139.6,229.8 L140.4,226.8 L141.2,227.9 L141.9,228.5 L142.7,228.1 L143.5,228.4 L144.3,225.9 L145.0,219.5 L145.8,212.8 L146.6,206.8 L147.4,197.0 L148.2,192.3 L148.9,188.4 L149.7,181.8 L150.5,163.4 L151.3,169.8 L152.0,139.0 L152.8,129.4 L153.6,98.0 L154.4,208.2 L155.1,183.4 L155.9,181.5 L156.7,198.7 L157.5,201.2 L158.2,200.9 L159.0,192.9 L159.8,201.2 L160.6,220.4 L161.3,221.2 L162.1,220.2 L162.9,228.7 L163.7,241.4 L164.5,228.0 L165.2,231.0 L166.0,225.6 L166.8,224.0 L167.6,226.1 L168.3,223.2 L169.1,213.7 L169.9,203.0 L170.7,213.6 L171.4,210.5 L172.2,213.3 L173.0,211.4 L173.8,215.2 L174.5,210.1 L175.3,191.4 L176.1,186.8 L176.9,182.9 L177.6,146.6 L178.4,110.5 L179.2,88.1 L180.0,127.5 L180.8,173.1 L181.5,166.4 L182.3,204.6 L183.1,191.6 L183.9,170.5 L184.6,183.1 L185.4,186.5 L186.2,191.4 L187.0,192.8 L187.7,212.5 L188.5,220.6 L189.3,222.0 L190.1,227.7 L190.8,221.9 L191.6,223.2 L192.4,232.6 L193.2,244.4 L193.9,244.0 L194.7,248.6 L195.5,238.5 L196.3,246.2 L197.1,246.4 L197.8,246.0 L198.6,244.9 L199.4,230.0 L200.2,224.7 L200.9,222.3 L201.7,231.7 L202.5,230.8 L203.3,231.0 L204.0,227.9 L204.8,228.8 L205.6,229.6 L206.4,233.6 L207.1,234.2 L207.9,234.6 L208.7,244.6 L209.5,243.2 L210.2,246.3 L211.0,246.3 L211.8,246.4 L212.6,254.5 L213.4,257.2 L214.1,262.7 L214.9,255.8 L215.7,254.5 L216.5,258.5 L217.2,261.6 L218.0,256.8 L218.8,253.9 L219.6,256.3 L220.3,254.5 L221.1,254.6 L221.9,256.5 L222.7,260.5 L223.4,260.7 L224.2,267.0 L225.0,266.0 L225.8,272.8 L226.5,267.0 L227.3,270.2 L228.1,270.5 L228.9,269.0 L229.6,268.6 L230.4,265.4 L231.2,263.3 L232.0,261.8 L232.8,264.1 L233.5,267.4 L234.3,264.9 L235.1,267.9 L235.9,269.6 L236.6,269.9 L237.4,267.1 L238.2,267.0 L239.0,267.4 L239.7,266.9 L240.5,268.2 L241.3,268.9 L242.1,267.6 L242.8,266.0 L243.6,265.3 L244.4,262.1 L245.2,256.6 L245.9,261.6 L246.7,259.2 L247.5,260.6 L248.3,262.7 L249.1,263.6 L249.8,267.6 L250.6,267.2 L251.4,265.5 L252.2,266.9 L252.9,266.7 L253.7,266.4 L254.5,265.4 L255.3,264.1 L256.0,261.9 L256.8,258.8 L257.6,253.1 L258.4,248.4 L259.1,255.4 L259.9,255.0 L260.7,248.6 L261.5,246.0 L262.2,241.2 L263.0,241.0 L263.8,243.8 L264.6,243.0 L265.4,241.0 L266.1,249.6 L266.9,246.7 L267.7,251.5 L268.5,250.2 L269.2,246.2 L270.0,242.4 L270.8,243.4 L271.6,247.4 L272.3,246.5 L273.1,246.6 L273.9,245.1 L274.7,245.9 L275.4,246.0 L276.2,245.2 L277.0,241.2 L277.8,242.6 L278.5,242.0 L279.3,242.3 L280.1,245.1 L280.9,235.2 L281.7,230.6 L282.4,220.8 L283.2,213.6 L284.0,229.1 L284.8,226.2 L285.5,228.2 L286.3,225.2 L287.1,227.8 L287.9,232.0 L288.6,234.9 L289.4,237.4 L290.2,236.6 L291.0,237.3 L291.7,233.6 L292.5,234.2 L293.3,234.1 L294.1,235.4 L294.8,234.4 L295.6,234.1 L296.4,231.8 L297.2,231.3 L298.0,227.1 L298.7,226.0 L299.5,227.8 L300.3,225.8 L301.1,226.9 L301.8,224.3 L302.6,224.5 L303.4,223.2 L304.2,215.0 L304.9,207.9 L305.7,218.3 L306.5,226.1 L307.3,218.2 L308.0,219.6 L308.8,212.4 L309.6,214.4 L310.4,211.2 L311.1,203.5 L311.9,198.7 L312.7,203.5 L313.5,221.2 L314.3,226.0 L315.0,216.2 L315.8,209.6 L316.6,213.6 L317.4,209.2 L318.1,202.2 L318.9,196.6 L319.7,184.8 L320.5,175.1 L321.2,175.6 L322.0,166.8 L322.8,154.4 L323.6,182.5 L324.3,187.0 L325.1,188.6 L325.9,191.9 L326.7,217.1 L327.4,185.3 L328.2,194.6 L329.0,190.2 L329.8,174.8 L330.5,184.4 L331.3,182.8 L332.1,183.0 L332.9,196.0 L333.7,209.4 L334.4,211.1 L335.2,197.5 L336.0,195.4 L336.8,178.0 L337.5,178.1 L338.3,180.3 L339.1,167.2 L339.9,201.2 L340.6,174.9 L341.4,166.0 L342.2,156.0 L343.0,139.7 L343.7,129.9 L344.5,183.0 L345.3,188.5 L346.1,178.3 L346.8,199.0 L347.6,215.0 L348.4,213.8 L349.2,237.5 L350.0,237.6 L350.7,220.4 L351.5,228.2 L352.3,215.3 L353.1,229.2 L353.8,238.5 L354.6,236.5 L355.4,248.1 L356.2,246.1 L356.9,235.8 L357.7,232.8 L358.5,228.8 L359.3,227.8 L360.0,234.5 L360.8,236.4 L361.6,245.0 L362.4,242.0 L363.1,249.0 L363.9,250.7 L364.7,252.8 L365.5,250.4 L366.3,247.6 L367.0,250.2 L367.8,242.2 L368.6,236.1 L369.4,245.2 L370.1,250.5 L370.9,249.0 L371.7,247.5 L372.5,243.0 L373.2,250.9 L374.0,248.8 L374.8,247.0 L375.6,247.7 L376.3,247.9 L377.1,250.7 L377.9,248.5 L378.7,248.4 L379.4,248.2 L380.2,248.9 L381.0,254.6 L381.8,267.0 L382.6,265.4 L383.3,269.7 L384.1,272.3 L384.9,265.6 L385.7,266.3 L386.4,264.3 L387.2,268.6 L388.0,268.3 L388.8,268.1 L389.5,269.1 L390.3,266.9 L391.1,266.9 L391.9,265.6 L392.6,265.3 L393.4,264.1 L394.2,263.4 L395.0,263.3 L395.7,262.2 L396.5,252.4 L397.3,252.8 L398.1,251.7 L398.9,252.9 L399.6,247.6 L400.4,237.4 L401.2,227.9 L402.0,224.2 L402.7,226.0 L403.5,235.3 L404.3,224.4 L405.1,211.4 L405.8,214.8 L406.6,211.1 L407.4,221.6 L408.2,220.1 L408.9,228.3 L409.7,219.3 L410.5,216.9 L411.3,225.8 L412.0,227.9 L412.8,230.4 L413.6,226.8 L414.4,227.9 L415.2,229.8 L415.9,243.2 L416.7,244.5 L417.5,241.4 L418.3,242.1 L419.0,232.7 L419.8,235.5 L420.6,236.5 L421.4,240.4 L422.1,251.0 L422.9,247.4 L423.7,246.4 L424.5,249.3 L425.2,246.5 L426.0,246.9 L426.8,247.2 L427.6,241.6 L428.3,238.3 L429.1,239.2 L429.9,234.2 L430.7,229.4 L431.5,231.3 L432.2,231.4 L433.0,241.2 L433.8,244.1 L434.6,261.6 L435.3,258.0 L436.1,257.4 L436.9,250.8 L437.7,249.4 L438.4,248.1 L439.2,244.3 L440.0,236.6 L440.8,238.6 L441.5,232.0 L442.3,238.4 L443.1,234.1 L443.9,232.3 L444.6,235.3 L445.4,236.0 L446.2,237.4 L447.0,237.7 L447.7,236.4 L448.5,237.0 L449.3,232.4 L450.1,225.6 L450.9,223.0 L451.6,222.2 L452.4,224.4 L453.2,224.5 L454.0,234.0 L454.7,233.5 L455.5,230.0 L456.3,231.1 L457.1,231.9 L457.8,227.7 L458.6,227.3 L459.4,219.4 L460.2,216.3 L460.9,209.2 L461.7,208.0 L462.5,197.8 L463.3,201.6 L464.0,198.1 L464.8,201.4 L465.6,186.0 L466.4,178.6 L467.2,162.6 L467.9,161.0 L468.7,174.3 L469.5,189.4 L470.3,189.2 L471.0,174.4 L471.8,153.8 L472.6,141.7 L473.4,179.6 L474.1,167.8 L474.9,152.6 L475.7,162.4 L476.5,170.2 L477.2,168.1 L478.0,168.6 L478.8,181.6 L479.6,198.0 L480.3,184.7 L481.1,183.8 L481.9,208.6 L482.7,229.6 L483.5,227.8 L484.2,227.6 L485.0,221.0 L485.8,227.7 L486.6,229.0 L487.3,226.9 L488.1,229.1 L488.9,234.4 L489.7,227.3 L490.4,219.7 L491.2,212.2 L492.0,207.0 L492.8,203.4 L493.5,205.3 L494.3,200.8 L495.1,211.7 L495.9,210.3 L496.6,218.4 L497.4,209.4 L498.2,199.2 L499.0,189.0 L499.8,192.8 L500.5,193.6 L501.3,192.7 L502.1,192.6 L502.9,203.0 L503.6,206.5 L504.4,219.3 L505.2,218.0 L506.0,223.3 L506.7,217.1 L507.5,222.7 L508.3,231.2 L509.1,229.0 L509.8,239.7 L510.6,236.4 L511.4,229.6 L512.2,230.1 L512.9,236.1 L513.7,237.4 L514.5,236.5 L515.3,237.4 L516.1,231.8 L516.8,223.5 L517.6,224.5 L518.4,231.2 L519.2,235.4 L519.9,235.8 L520.7,237.3 L521.5,244.1 L522.3,248.0 L523.0,249.1 L523.8,250.4 L524.6,249.3 L525.4,254.2 L526.1,263.8 L526.9,262.6 L527.7,265.4 L528.5,262.4 L529.2,262.1 L530.0,258.6 L530.8,257.2 L531.6,257.5 L532.4,255.4 L533.1,260.3 L533.9,263.6 L534.7,263.0 L535.5,259.6 L536.2,263.7 L537.0,264.8 L537.8,264.2 L538.6,263.4 L539.3,263.6 L540.1,263.0 L540.9,261.0 L541.7,260.4 L542.4,268.6 L543.2,268.0 L544.0,267.5 L544.8,266.0 L545.5,265.9 L546.3,266.4 L547.1,266.2 L547.9,266.4 L548.6,265.4 L549.4,257.7 L550.2,254.1 L551.0,252.0 L551.8,253.8 L552.5,256.1 L553.3,251.0 L554.1,252.6 L554.9,254.8 L555.6,255.3 L556.4,243.3 L557.2,243.8 L558.0,243.0 L558.7,242.7 L559.5,239.1 L560.3,244.6 L561.1,241.2 L561.8,242.8 L562.6,246.5 L563.4,246.8 L564.2,244.3 L564.9,246.2 L565.7,248.7 L566.5,247.8 L567.3,239.9 L568.1,240.0 L568.8,240.8 L569.6,240.8 L570.4,241.2 L571.2,242.5 L571.9,242.9 L572.7,242.5 L573.5,248.5 L574.3,248.6 L575.0,248.8 L575.8,249.0 L576.6,247.7 L577.4,248.2 L578.1,244.9 L578.9,245.0 L579.7,246.6 L580.5,241.1 L581.2,232.8 L582.0,232.2 L582.8,229.0 L583.6,228.5 L584.4,228.8 L585.1,224.4 L585.9,218.4 L586.7,223.3 L587.5,220.8 L588.2,223.1 L589.0,221.2 L589.8,225.3 L590.6,226.5 L591.3,226.1 L592.1,225.5 L592.9,216.3 L593.7,210.8 L594.4,212.4 L595.2,197.4 L596.0,193.1 L596.8,198.3 L597.5,201.6 L598.3,198.0 L599.1,202.0 L599.9,207.8 L600.7,209.2 L601.4,212.7 L602.2,211.3 L603.0,215.2 L603.8,209.3 L604.5,207.1 L605.3,209.9 L606.1,208.3 L606.9,212.7 L607.6,217.4 L608.4,218.3 L609.2,227.1 L610.0,220.9 L610.7,212.6 L611.5,213.0 L612.3,225.7 L613.1,225.1 L613.8,225.1 L614.6,218.1 L615.4,227.2 L616.2,230.3 L617.0,225.1 L617.7,219.9 L618.5,217.8 L619.3,221.4 L620.1,222.4 L620.8,215.6 L621.6,217.3 L622.4,217.1 L623.2,204.6 L623.9,197.2 L624.7,192.6 L625.5,194.9 L626.3,194.6 L627.0,193.1 L627.8,205.3 L628.6,208.2 L629.4,204.4 L630.1,208.8 L630.9,203.6 L631.7,203.3 L632.5,208.8 L633.3,210.7 L634.0,211.1 L634.8,211.4 L635.6,213.1 L636.4,225.8 L637.1,224.2 L637.9,221.4 L638.7,224.8 L639.5,228.8 L640.2,223.8 L641.0,222.3 L641.8,215.4 L642.6,215.4 L643.3,207.9 L644.1,207.0 L644.9,205.7 L645.7,209.3 L646.4,210.1 L647.2,210.9 L648.0,215.2 L648.8,209.8 L649.5,210.6 L650.3,203.9 L651.1,207.1 L651.9,206.4 L652.7,211.0 L653.4,207.7 L654.2,209.8 L655.0,213.3 L655.8,217.8 L656.5,216.0 L657.3,213.3 L658.1,214.0 L658.9,216.6 L659.6,209.3 L660.4,216.2 L661.2,221.4 L662.0,217.6 L662.7,221.1 L663.5,225.4 L664.3,232.8 L665.1,238.4 L665.8,235.8 L666.6,236.0 L667.4,237.5 L668.2,237.0 L669.0,237.5 L669.7,234.9 L670.5,235.4 L671.3,233.0 L672.1,238.2 L672.8,244.9 L673.6,248.8 L674.4,250.0 L675.2,250.6 L675.9,251.8 L676.7,251.4 L677.5,246.5 L678.3,249.9 L679.0,251.3 L679.8,249.1 L680.6,247.8 L681.4,245.5 L682.1,242.0 L682.9,241.9 L683.7,239.3 L684.5,242.8 L685.3,243.2 L686.0,245.5 L686.8,252.8 L687.6,250.9 L688.4,252.5 L689.1,255.2 L689.9,252.0 L690.7,251.9 L691.5,251.1 L692.2,250.6 L693.0,251.9 L693.8,250.8 L694.6,252.3 L695.3,241.3 L696.1,241.4 L696.9,239.6 L697.7,242.3 L698.4,239.0 L699.2,237.0 L700.0,237.0" fill="none" stroke="#15628f" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="179.2" cy="64.8" r="4.5" fill="#c02128" stroke="#fff" stroke-width="1.5"/>
+<text x="179.2" y="54.8" text-anchor="middle" class="lbl" style="fill:#c02128">5.88<tspan class="lbl2" dx="5">2013-12</tspan></text>
+<circle cx="343.7" cy="111.2" r="4.5" fill="#c02128" stroke="#fff" stroke-width="1.5"/>
+<text x="343.7" y="101.2" text-anchor="middle" class="lbl" style="fill:#c02128">4.72<tspan class="lbl2" dx="5">2017-12</tspan></text>
+<circle cx="472.6" cy="141.6" r="4.5" fill="#c02128" stroke="#fff" stroke-width="1.5"/>
+<text x="472.6" y="131.6" text-anchor="middle" class="lbl" style="fill:#c02128">3.96<tspan class="lbl2" dx="5">2021-02</tspan></text>
+<circle cx="624.7" cy="190.4" r="4.5" fill="#c02128" stroke="#fff" stroke-width="1.5"/>
+<text x="632.7" y="184.4" text-anchor="end" class="lbl" style="fill:#c02128">2.74<tspan class="lbl2" dx="5">2024-11</tspan></text>
+<circle cx="225.8" cy="277.6" r="4.5" fill="#15628f" stroke="#fff" stroke-width="1.5"/>
+<text x="225.8" y="295.6" text-anchor="middle" class="lbl" style="fill:#15628f">0.56<tspan class="lbl2" dx="5">2015-01</tspan></text>
+<circle cx="384.1" cy="272.4" r="4.5" fill="#15628f" stroke="#fff" stroke-width="1.5"/>
+<text x="384.1" y="290.4" text-anchor="middle" class="lbl" style="fill:#15628f">0.69<tspan class="lbl2" dx="5">2018-12</tspan></text>
+<circle cx="542.4" cy="270.0" r="4.5" fill="#15628f" stroke="#fff" stroke-width="1.5"/>
+<text x="542.4" y="288.0" text-anchor="middle" class="lbl" style="fill:#15628f">0.75<tspan class="lbl2" dx="5">2022-11</tspan></text>
+<circle cx="689.1" cy="256.0" r="4.5" fill="#15628f" stroke="#fff" stroke-width="1.5"/>
+<text x="689.1" y="274.0" text-anchor="middle" class="lbl" style="fill:#15628f">1.10<tspan class="lbl2" dx="5">2026-06</tspan></text>
+<circle cx="659.6" cy="208.4" r="4.5" fill="#fff" stroke="#c02128" stroke-width="2"/>
+<line x1="659.6" y1="202.4" x2="659.6" y2="112.0" stroke="#c02128" stroke-width="1" stroke-dasharray="2 3"/>
+<text x="659.6" y="104.0" text-anchor="middle" class="lbl2" style="fill:#c02128">Oct 2025, at the price top: MVRV only 2.29</text>
+<text x="62.0" y="26.0" class="ax">MVRV (price ÷ realized price), weekly, 2011 to date</text>
+</svg>
+</figure>
+<ul>
+<li>At their hottest, valuations reached only 69% to 84% of the previous cycle's peak. At their coldest, valuations were higher each cycle.</li>
+<li><b>This is the first time in Bitcoin's history that MVRV stayed above 1 through an entire bear market:</b> the average holder was never underwater overall.</li>
+<li>So sayings like "the bottom is in only once MVRV falls below 1" and "MVRV above 3.5 means the top" never triggered this cycle. The bottom came anyway, and so did the top.</li>
+</ul>
+<figure class="fig"><figcaption>Figure 4  Drawdown curves of five bear markets: this cycle is clearly the shallowest</figcaption>
+<svg viewBox="0 0 860 392" width="100%" role="img" aria-label="Five bear-market drawdown curves: this cycle is the shallowest">
+<line x1="62.0" y1="44.0" x2="680.0" y2="44.0" stroke="#9a9186" stroke-width="1.2"/>
+<text x="54.0" y="48.0" text-anchor="end" class="ax">0</text>
+<line x1="62.0" y1="101.2" x2="680.0" y2="101.2" stroke="#ece7e0" stroke-width="1"/>
+<text x="54.0" y="105.2" text-anchor="end" class="ax">−20%</text>
+<line x1="62.0" y1="158.4" x2="680.0" y2="158.4" stroke="#ece7e0" stroke-width="1"/>
+<text x="54.0" y="162.4" text-anchor="end" class="ax">−40%</text>
+<line x1="62.0" y1="215.6" x2="680.0" y2="215.6" stroke="#ece7e0" stroke-width="1"/>
+<text x="54.0" y="219.6" text-anchor="end" class="ax">−60%</text>
+<line x1="62.0" y1="272.8" x2="680.0" y2="272.8" stroke="#ece7e0" stroke-width="1"/>
+<text x="54.0" y="276.8" text-anchor="end" class="ax">−80%</text>
+<line x1="62.0" y1="330.0" x2="680.0" y2="330.0" stroke="#ece7e0" stroke-width="1"/>
+<text x="54.0" y="334.0" text-anchor="end" class="ax">−100%</text>
+<line x1="62.0" y1="330.0" x2="62.0" y2="335.0" stroke="#9a9186" stroke-width="1"/>
+<text x="62.0" y="350.0" text-anchor="middle" class="ax">0</text>
+<line x1="150.3" y1="330.0" x2="150.3" y2="335.0" stroke="#9a9186" stroke-width="1"/>
+<text x="150.3" y="350.0" text-anchor="middle" class="ax">60</text>
+<line x1="238.6" y1="330.0" x2="238.6" y2="335.0" stroke="#9a9186" stroke-width="1"/>
+<text x="238.6" y="350.0" text-anchor="middle" class="ax">120</text>
+<line x1="326.9" y1="330.0" x2="326.9" y2="335.0" stroke="#9a9186" stroke-width="1"/>
+<text x="326.9" y="350.0" text-anchor="middle" class="ax">180</text>
+<line x1="415.1" y1="330.0" x2="415.1" y2="335.0" stroke="#9a9186" stroke-width="1"/>
+<text x="415.1" y="350.0" text-anchor="middle" class="ax">240</text>
+<line x1="503.4" y1="330.0" x2="503.4" y2="335.0" stroke="#9a9186" stroke-width="1"/>
+<text x="503.4" y="350.0" text-anchor="middle" class="ax">300</text>
+<line x1="591.7" y1="330.0" x2="591.7" y2="335.0" stroke="#9a9186" stroke-width="1"/>
+<text x="591.7" y="350.0" text-anchor="middle" class="ax">360</text>
+<line x1="680.0" y1="330.0" x2="680.0" y2="335.0" stroke="#9a9186" stroke-width="1"/>
+<text x="680.0" y="350.0" text-anchor="middle" class="ax">420</text>
+<text x="371.0" y="368.0" text-anchor="middle" class="ax">Days since the cycle top</text>
+<path d="M62.0,44.0 L69.4,137.5 L76.7,163.7 L84.1,157.5 L91.4,162.9 L98.8,177.7 L106.1,189.1 L113.5,192.3 L120.9,195.7 L128.2,195.2 L135.6,197.1 L142.9,209.7 L150.3,246.2 L157.6,236.9 L165.0,222.0 L172.4,222.4 L179.7,245.3 L187.1,248.9 L194.4,262.6 L201.8,272.3 L209.1,282.4 L216.5,274.9 L223.9,282.0 L231.2,280.4 L238.6,283.4 L245.9,290.5 L253.3,294.5 L260.6,304.7 L268.0,302.6 L275.4,297.8 L282.7,300.7 L290.1,301.9 L297.4,307.1" fill="none" stroke="#d3ccc0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M62.0,44.0 L69.4,104.2 L76.7,115.1 L84.1,157.3 L91.4,166.0 L98.8,146.7 L106.1,126.6 L113.5,123.2 L120.9,122.7 L128.2,125.9 L135.6,125.7 L142.9,130.9 L150.3,124.7 L157.6,150.7 L165.0,165.3 L172.4,170.9 L179.7,177.0 L187.1,182.5 L194.4,160.0 L201.8,168.6 L209.1,171.7 L216.5,176.2 L223.9,182.6 L231.2,206.6 L238.6,216.7 L245.9,215.9 L253.3,225.1 L260.6,208.3 L268.0,206.4 L275.4,218.7 L282.7,219.4 L290.1,219.0 L297.4,219.4 L304.8,217.4 L312.1,198.0 L319.5,184.1 L326.9,162.8 L334.2,164.5 L341.6,180.8 L348.9,176.5 L356.3,178.9 L363.6,178.6 L371.0,165.9 L378.4,173.0 L385.7,169.5 L393.1,172.7 L400.4,173.8 L407.8,180.9 L415.1,179.7 L422.5,183.3 L429.9,185.5 L437.2,198.5 L444.6,199.1 L451.9,201.0 L459.3,209.4 L466.6,209.4 L474.0,209.6 L481.4,210.9 L488.7,226.4 L496.1,226.8 L503.4,231.9 L510.8,248.7 L518.1,239.6 L525.5,230.6 L532.9,233.9 L540.2,242.9 L547.6,243.2 L554.9,246.9 L562.3,238.4 L569.6,229.6 L577.0,234.8 L584.4,235.0 L591.7,235.2 L599.1,237.1 L606.4,241.5 L613.8,240.3 L621.1,249.8 L628.5,248.6 L635.9,251.1 L643.2,258.0 L650.6,258.4 L657.9,273.5 L659.4,285.7" fill="none" stroke="#b0a79a" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M62.0,44.0 L69.4,102.3 L76.7,101.0 L84.1,127.3 L91.4,82.5 L98.8,116.4 L106.1,132.1 L113.5,144.1 L120.9,167.9 L128.2,185.0 L135.6,209.9 L142.9,203.9 L150.3,192.1 L157.6,167.8 L165.0,188.9 L172.4,170.9 L179.7,174.5 L187.1,191.5 L194.4,208.0 L201.8,200.7 L209.1,211.0 L216.5,229.2 L223.9,231.0 L231.2,230.7 L238.6,208.5 L245.9,201.3 L253.3,201.0 L260.6,195.6 L268.0,187.3 L275.4,198.4 L282.7,206.4 L290.1,206.0 L297.4,221.9 L304.8,222.6 L312.1,221.0 L319.5,220.0 L326.9,233.4 L334.2,232.0 L341.6,240.5 L348.9,239.4 L356.3,234.2 L363.6,233.0 L371.0,238.9 L378.4,221.3 L385.7,207.7 L393.1,210.2 L400.4,222.1 L407.8,238.7 L415.1,238.8 L422.5,236.8 L429.9,235.1 L437.2,226.7 L444.6,223.9 L451.9,236.7 L459.3,237.9 L466.6,238.9 L474.0,232.4 L481.4,232.8 L488.7,235.2 L496.1,234.4 L503.4,239.8 L510.8,236.2 L518.1,236.7 L525.5,236.7 L532.9,237.6 L540.2,236.2 L547.6,237.7 L554.9,250.0 L562.3,263.8 L569.6,276.1 L577.0,269.6 L584.4,278.9 L591.7,281.2 L597.6,283.7" fill="none" stroke="#8a6d1f" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M62.0,44.0 L69.4,57.3 L76.7,89.5 L84.1,85.9 L91.4,87.6 L98.8,102.7 L106.1,116.2 L113.5,131.9 L120.9,131.4 L128.2,115.3 L135.6,128.1 L142.9,129.5 L150.3,154.2 L157.6,143.8 L165.0,151.2 L172.4,181.8 L179.7,173.2 L187.1,165.8 L194.4,150.6 L201.8,150.6 L209.1,143.4 L216.5,172.9 L223.9,164.6 L231.2,150.1 L238.6,166.0 L245.9,169.9 L253.3,152.9 L260.6,149.0 L268.0,130.0 L275.4,135.5 L282.7,145.5 L290.1,160.2 L297.4,161.9 L304.8,161.7 L312.1,163.9 L319.5,166.7 L326.9,179.6 L334.2,207.1 L341.6,201.1 L348.9,201.6 L356.3,208.9 L363.6,203.7 L371.0,197.3 L378.4,209.9 L385.7,244.0 L393.1,242.4 L400.4,240.8 L407.8,248.1 L415.1,242.9 L422.5,245.4 L429.9,240.3 L437.2,232.0 L444.6,240.3 L451.9,231.1 L459.3,231.6 L466.6,228.7 L474.0,228.0 L481.4,240.5 L488.7,238.6 L496.1,246.1 L503.4,245.5 L510.8,239.5 L518.1,244.3 L525.5,247.2 L532.9,249.9 L540.2,247.3 L547.6,243.9 L554.9,247.7 L562.3,248.8 L569.6,249.0 L577.0,248.1 L584.4,241.9 L591.7,244.5 L599.1,251.6 L600.5,263.4" fill="none" stroke="#15628f" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M62.0,44.0 L69.4,75.8 L76.7,82.2 L84.1,81.0 L91.4,67.5 L98.8,79.0 L106.1,91.9 L113.5,86.9 L120.9,111.1 L128.2,130.9 L135.6,129.7 L142.9,122.4 L150.3,125.5 L157.6,119.0 L165.0,132.1 L172.4,127.7 L179.7,130.1 L187.1,127.4 L194.4,120.7 L201.8,122.6 L209.1,107.7 L216.5,118.0 L223.9,125.7 L231.2,136.3 L238.6,156.6 L245.9,168.4 L253.3,172.2 L260.6,177.9 L268.0,181.8 L275.4,176.6 L282.7,167.4 L290.1,169.9 L297.4,163.4 L304.8,168.4 L312.1,166.7 L319.5,177.3 L326.9,175.8 L334.2,165.5 L341.6,160.1 L348.9,160.7 L356.3,152.6 L363.6,156.3 L371.0,147.1 L378.4,145.2 L385.7,144.0 L393.1,154.0 L400.4,153.7 L407.8,162.0 L415.1,182.8 L422.5,185.4 L429.9,182.4 L437.2,186.0 L444.6,186.6 L451.9,193.6 L454.9,195.9 L459.3,186.7 L466.6,187.5 L474.0,187.7 L481.4,181.6 L488.7,180.9 L496.1,184.0 L503.4,184.6 L510.8,181.4 L518.1,184.8 L525.5,182.4 L532.9,153.5 L540.2,146.0 L547.6,152.7 L554.9,146.0 L562.3,153.2 L569.6,155.7 L577.0,131.8 L584.4,136.7 L591.7,135.7 L599.1,134.7 L606.4,139.6" fill="none" stroke="#c02128" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="305.4" y="319.7" class="lbl2" style="fill:#8f8577;paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round">2011</text>
+<text x="667.4" y="303.7" class="lbl2" style="fill:#8f8577;paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round">2013-15　−84.5%</text>
+<text x="605.6" y="287.7" class="lbl2" style="fill:#8a6d1f;paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round">2017-18　−83.8%</text>
+<text x="608.5" y="267.4" class="lbl2" style="fill:#15628f;paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round">2021-22　−76.7%</text>
+<text x="614.4" y="143.6" class="lbl" style="fill:#c02128;paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round">This cycle, today −33.4%</text>
+<circle cx="454.9" cy="195.9" r="5" fill="#c02128" stroke="#fff" stroke-width="1.5"/>
+<text x="450.9" y="217.9" text-anchor="end" class="lbl" style="fill:#c02128;paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round">Cycle low −53.1% (day 267)</text>
+</svg>
+</figure>
+<p><b>Why this happens:</b> the market is bigger, with ETFs, public companies and more long-term holders, so each cycle's mania and panic is weaker than the last. The logic still holds (expensive means risk, cheap means opportunity), but the numbers for "how expensive" and "how cheap" must be recalculated with each cycle.</p>
+<h2 id="s3"><span class="num">03</span>The 37-rule audit: what stays, what breaks</h2>
+<p>We grouped the 37 rules by type:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Type</th>
+<th>What it tries to answer</th>
+<th>Example</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><b>Bottom zone</b></td>
+<td>Are we near a bottom?</td>
+<td>More than half of coins at a loss; realized losses exceeding realized profits over the past year; price below the 200-week moving average</td>
+<td>Appeared near all four bottoms, so <b>direction holds</b>. But it shows up one to five months early and cannot date the bottom</td>
+</tr>
+<tr>
+<td><b>Price floor</b></td>
+<td>How low can it go?</td>
+<td>CVDD</td>
+<td>Closing price has never gone below it since 2011, so it <b>holds</b>. But it sits far below price and works only as a last line of defence</td>
+</tr>
+<tr>
+<td><b>Bottom confirmation</b></td>
+<td>Has the bottom passed?</td>
+<td>Cost lines of different holder-age groups crossing; price reclaiming several short-term cost lines at once</td>
+<td>Historically appeared 1 to 5 months around the real bottom, so <b>direction holds</b>. This cycle, 6 of them point to June 30</td>
+</tr>
+<tr>
+<td><b>Fixed thresholds</b></td>
+<td>A number that marks the top or bottom</td>
+<td>MVRV below 1 is the bottom; one group's share of supply reaching 22% is the bottom</td>
+<td><b>Fail</b> from Cycle 3 or this cycle on</td>
+</tr>
+<tr>
+<td><b>Countdowns</b></td>
+<td>How many days to the top or bottom</td>
+<td>"The top comes 648 to 694 days after two lines cross"</td>
+<td>Projecting from earlier cycles to the next, <b>most miss the window</b></td>
+</tr>
+</tbody>
+</table></div>
+<div class="concepts"><div class="cc"><div class="ct"><i>Concept</i>200-week moving average</div><p>The average closing price over the past 1,400 days. Price has rarely fallen below it; when it does, it is usually the deepest part of a bear market.</p></div><div class="cc"><div class="ct"><i>Concept</i>Supply in profit</div><p>The share of all bitcoin whose cost is below the current price, meaning coins still in profit. Below 50% means more than half of all coins are at a loss.</p></div><div class="cc"><div class="ct"><i>Concept</i>Realized profit / loss</div><p>When a coin is sold, the selling price minus the purchase price is a realized profit if positive and a realized loss if negative. "Losses exceeding profits over the past year" means the market is selling at a loss, or capitulating.</p></div><div class="cc"><div class="ct"><i>Concept</i>CVDD</div><p>A slow-moving line derived from the cumulative value of old coins when they are spent. Bitcoin's closing price has never fallen below it since data began, so it is often treated as a price floor. It currently sits around $46,000.</p></div></div>
+<h3>Why countdowns keep failing</h3>
+<p>The day ranges in these rules were all drawn by looking at the past three cycles. With three points you can always find a range that "just fits" all of them; apply it to a fourth cycle and it no longer does. A few examples:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>What it says</th>
+<th>What happened</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>After realized profit over the past year overtakes losses, days until the bull top</td>
+<td>648 to 694 days</td>
+<td>450 / 663 / 856 / 693 days: only two of four hit</td>
+</tr>
+<tr>
+<td>After long-term holders turn profitable, months until the major bull top</td>
+<td>about 24 months</td>
+<td>26-29 / 31 / 35-40 months</td>
+</tr>
+<tr>
+<td>After the share of coins held 6 to 12 months peaks, days until the top</td>
+<td>352 to 354 days</td>
+<td>551 / 353 / 0 / 83 days</td>
+</tr>
+<tr>
+<td>Days after the halving for the short-term heat gauge RHODL to peak</td>
+<td>522 to 533 days</td>
+<td>This cycle it peaked 221 days after the halving, 10 months before the price top</td>
+</tr>
+</tbody>
+</table></div>
+<p>One more problem is easy to miss: some rules target a "recovery-phase top" or a "mini top," and where such a top sits is often decided only in hindsight. If the target can be chosen, the rule can never be wrong. In our back-tests we fixed the target as "the next swing high followed by a drop of more than 15%," so our results will not exactly match the day counts the authors themselves cite.</p>
+<div class="tip"><b>What it means for you</b>  When you see a forecast precise to "day X," ask first: how many cycles was this range drawn from? Was it checked against a cycle that played no part in setting it?</div>
+<h2 id="s4"><span class="num">04</span>The eight questions retail investors ask most</h2>
+<div class="qnav"><a href="#q1">Q1  One-year bear</a><a href="#q2">Q2  MVRV below 1</a><a href="#q3">Q3  Valuation tops</a><a href="#q4">Q4  Halving overlays</a><a href="#q5">Q5  Miner cost</a><a href="#q6">Q6  Long-term holders</a><a href="#q7">Q7  Up 40%</a><a href="#q8">Q8  Next top</a></div>
+<h3 id="q1"><span class="qtag">Q1</span>Do bear markets bottom after about a year?</h3>
+<p class="claim"><b>COMMON CLAIM</b>The first three all took about a year, so just wait a year after the top.</p>
+<p><span class="lab">What the data says</span>This cycle broke it. Top to bottom took 406, 364 and 366 days in the first three; this cycle took 267. Projecting from the previous cycle misses this bottom by 99 days.</p>
+<div class="tip"><b>How to use it</b>  Judge the end of a bear market by "state" (Section 05), not by counting days.</div>
+<h3 id="q2"><span class="qtag">Q2</span>Is the real bottom only when MVRV falls below 1?</h3>
+<p class="claim"><b>COMMON CLAIM</b>When price falls below the average cost, everyone is underwater, and that is the true bottom.</p>
+<p><span class="lab">What the data says</span>It held in the first three cycles and failed this cycle.</p>
+<ul>
+<li>In the first three cycles MVRV did fall below 1, but early: 102, 26 and 149 days ahead of the real bottom, when price was still 87%, 51% and 42% above the final low.</li>
+<li>This cycle's lowest was 1.10; it never fell below 1. Anyone waiting for it would have missed the entire bottom.</li>
+</ul>
+<div class="tip"><b>How to use it</b>  Use MVRV to see how far price is from the average cost. Historically, buying when MVRV was below 1 made money over the following year 98% to 100% of the time. The undervalued zone still works; it just never showed up this cycle.</div>
+<h3 id="q3"><span class="qtag">Q3</span>Can valuation indicators still call the top?</h3>
+<p class="claim"><b>COMMON CLAIM</b>MVRV above 3.5, or the two moving averages of the Pi Cycle indicator crossing, marks the top.</p>
+<div class="concepts"><div class="cc"><div class="ct"><i>Concept</i>Pi Cycle indicator</div><p>A cycle-top signal that fires when the 111-day moving average crosses above twice the 350-day moving average.</p></div></div>
+<p><span class="lab">What the data says</span>They missed the last two cycles.</p>
+<ul>
+<li>In the first two cycles, the valuation peak and the price peak came at about the same time.</li>
+<li>In the last two, the valuation peak came <b>8 to 10 months before</b> the price top. This cycle MVRV peaked at 2.74 in November 2024; on the day price topped in October 2025, MVRV was only 2.29.</li>
+<li>Pi Cycle: in the first two cycles it called the true top to within 1 day; in 2021 it caught the April interim top, 7 months before the real one; this cycle it never crossed.</li>
+</ul>
+<div class="tip"><b>How to use it</b>  Valuation can still tell you whether things are expensive right now. Since 2018, buying with MVRV between 2 and 2.5 produced a negative median return over the next year. But "how expensive means the top" can no longer use the old numbers.</div>
+<h3 id="q4"><span class="qtag">Q4</span>Can halving overlays predict what comes next?</h3>
+<p class="claim"><b>COMMON CLAIM</b>Align each cycle by halving date; whatever day count this cycle is on, look at what the previous cycle did next.</p>
+<p><span class="lab">What the data says</span>They are good for the big turning points only, not for the path. The overlays look alike mainly because everything trends up over the long run. Using 30-day returns instead, the cycles are almost uncorrelated; this cycle against the last is −0.02, meaning no relationship.</p>
+<div class="tip"><b>How to use it</b>  Use the overlay to see roughly what season of the cycle we are in, not to predict whether next month is up or down.</div>
+<h3 id="q5"><span class="qtag">Q5</span>Is the miner cost (electricity-cost line) the bottom?</h3>
+<p class="claim"><b>COMMON CLAIM</b>When price falls to miners' production cost, miners stop selling, and that is the bottom.</p>
+<p><span class="lab">What the data says</span>It is not a fixed bottom. We estimated miners' blended cost from difficulty. At the four real bottoms, price was 0.22, 0.42, 0.80 and 1.58 times that cost. In the first three cycles price spent months below the cost line; this cycle it never came near.</p>
+<div class="tip"><b>How to use it</b>  Price approaching miner cost signals miner stress and is a useful reference, but "once it gets there it's the bottom" does not hold.</div>
+<h3 id="q6"><span class="qtag">Q6</span>Are long-term holders selling? Is the top near?</h3>
+<div class="concepts"><div class="cc"><div class="ct"><i>Concept</i>Short-term / long-term holders</div><p>A coin that has not moved on-chain for more than about 155 days (5 months) counts as held by a "long-term holder"; otherwise it is held by a "short-term holder."</p></div></div>
+<p class="claim"><b>COMMON CLAIM</b>Long-term holders starting to distribute marks the top; long-term holders selling at a loss marks the bottom.</p>
+<p><span class="lab">What the data says</span>Both are too crude.</p>
+<ul>
+<li><b>"Long-term holders start distributing" has no fixed timing.</b> We looked at the day long-term holders held the most coins; after it, they become net sellers. When that day fell:</li>
+</ul>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Cycle</th>
+<th>The day long-term holders held the most coins, relative to the halving</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cycle 1</td>
+<td>326 days after the halving</td>
+</tr>
+<tr>
+<td>Cycle 2</td>
+<td>179 days before the halving</td>
+</tr>
+<tr>
+<td>Cycle 3</td>
+<td>160 days after the halving</td>
+</tr>
+<tr class="hi"><td>Cycle 4 (current)</td>
+<td>139 days before the halving</td>
+</tr>
+</tbody>
+</table></div>
+<p>Some began selling half a year before the halving, others nearly a year after; the timing simply does not line up. A claim like "heavy distribution starts about 160 days after the halving" fits only one of the four cycles.</p>
+<ul>
+<li><b>"Long-term holders selling at a loss = bottom":</b> it has occurred 47 times since 2011, repeatedly during bear markets. It only tells you "we're in a bear market," not where the bottom is.</li>
+</ul>
+<div class="tip"><b>How to use it</b>  What is useful is how hard they sell. After the bottoms of the first three bear markets, long-term holders each had one burst of capitulation. This cycle's burst came on June 30 itself, but it was the mildest in history, consistent with "the bottom is not as deep."</div>
+<h3 id="q7"><span class="qtag">Q7</span>Once price is up 40%, is the bottom safe?</h3>
+<p class="claim"><b>COMMON CLAIM</b>A rebound of 40% or more off the low confirms the bottom.</p>
+<p><span class="lab">What the data says</span>Mostly yes, with one important exception.</p>
+<ul>
+<li>The rule: price is up 40% from the lowest close to date, and that low is at least 90 days old.</li>
+<li>It has triggered 4 times and been right 3 times. The one miss was July 2014: after rising 40%, price fell below the prior low and dropped another 72% before the real bottom.</li>
+<li>This cycle it triggered on September 28.</li>
+</ul>
+<div class="tip"><b>How to use it</b>  Bottom confirmation means "this cycle's low has most likely passed," not "price rises in a straight line from here." In the year after a confirmed bottom, Cycle 2 had a 61% drawdown (June 2019 to the March 2020 pandemic crash), Cycle 1 had 32% and Cycle 3 had 20%.</div>
+<h3 id="q8"><span class="qtag">Q8</span>Where is the next top?</h3>
+<p><span class="lab">What the data says</span>Only an order of magnitude, not a date.</p>
+<ul>
+<li><b>Timing:</b> if "top 525 to 546 days after the halving" keeps holding, and the next halving is expected in April 2028, the next top would fall around September to October 2029. That rests on only 3 samples.</li>
+<li><b>Height:</b> extrapolating from the shrinking ratio of the last three valuation tops, the next cycle's peak MVRV might reach only 1.9 to 2.3. Again only 3 ratios, so treat it as an order of magnitude.</li>
+</ul>
+<div class="tip"><b>How to use it</b>  Over the medium term, the next top's time window is still far away. For short-term moves the cycle layer cannot answer; look at macro (Special #2) and holder structure (next issue).</div>
+<h2 id="s5"><span class="num">05</span>Where we are in the cycle now</h2>
+<h3>We combined the rules that passed testing into six states</h3>
+<p>We use only the three kinds of signals that passed the tests above: bottom zone, bottom confirmation and top risk. Countdowns and fixed thresholds that have failed are not used. Each day is judged using only that day's and earlier data, with no peeking at the future.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>State</th>
+<th>In plain English</th>
+<th>Entry condition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="nw"><i class="sd" style="background:#3f9a62;opacity:.65"></i>Bull</span></td>
+<td>Making new highs</td>
+<td>Close at an all-time high</td>
+</tr>
+<tr>
+<td><span class="nw"><i class="sd" style="background:#e0832d;opacity:.65"></i>Bull · top-risk zone</span></td>
+<td>Late bull market, be careful</td>
+<td>480 to 600 days after the halving; or valuation and price are both already very high (MVRV at or above 2, and price at least 2× the 200-week moving average)</td>
+</tr>
+<tr>
+<td><span class="nw"><i class="sd" style="background:#efc08a;opacity:.65"></i>Bull pullback</span></td>
+<td>A big pullback inside a bull market, not yet confirmed as a bear</td>
+<td>Down 20% or more from the high</td>
+</tr>
+<tr>
+<td><span class="nw"><i class="sd" style="background:#c02128;opacity:.65"></i>Bear</span></td>
+<td>Bear market</td>
+<td>Down 35% or more, more than 90 days since the high, and more than 450 days since the halving</td>
+</tr>
+<tr>
+<td><span class="nw"><i class="sd" style="background:#8a5fa8;opacity:.65"></i>Bear bottom zone</span></td>
+<td>The bottom area of a bear market</td>
+<td>In a bear market, at least 2 of the 6 bottom-zone signals are lit</td>
+</tr>
+<tr class="hi"><td><span class="nw"><i class="sd" style="background:#15628f;opacity:.65"></i>Late bear → early bull</span></td>
+<td>The bottom has passed</td>
+<td>Up 40% from the low and the low is more than 90 days old; or price holds above four short-term cost lines for 7 straight days and a bottom confirmation such as a holder-age cost-line crossing has occurred</td>
+</tr>
+</tbody>
+</table></div>
+<figure class="fig"><figcaption>Figure 5  State band: the state the rules assigned each week since 2012, with Bitcoin price (log scale)</figcaption>
+<svg viewBox="0 0 860 366" width="100%" role="img" aria-label="State band: weekly state and Bitcoin price since 2012">
+<rect x="20.0" y="18.0" width="14.0" height="14.0" fill="#3f9a62" fill-opacity="0.55" rx="2"/>
+<text x="40.0" y="30.0" class="lbl2" style="fill:#3a352e">Bull</text>
+<rect x="91.0" y="18.0" width="14.0" height="14.0" fill="#e0832d" fill-opacity="0.55" rx="2"/>
+<text x="111.0" y="30.0" class="lbl2" style="fill:#3a352e">Bull · top-risk zone</text>
+<rect x="265.0" y="18.0" width="14.0" height="14.0" fill="#efc08a" fill-opacity="0.55" rx="2"/>
+<text x="285.0" y="30.0" class="lbl2" style="fill:#3a352e">Bull pullback</text>
+<rect x="394.0" y="18.0" width="14.0" height="14.0" fill="#c02128" fill-opacity="0.55" rx="2"/>
+<text x="414.0" y="30.0" class="lbl2" style="fill:#3a352e">Bear</text>
+<rect x="465.0" y="18.0" width="14.0" height="14.0" fill="#8a5fa8" fill-opacity="0.55" rx="2"/>
+<text x="485.0" y="30.0" class="lbl2" style="fill:#3a352e">Bear bottom zone</text>
+<rect x="613.0" y="18.0" width="14.0" height="14.0" fill="#15628f" fill-opacity="0.55" rx="2"/>
+<text x="633.0" y="30.0" class="lbl2" style="fill:#3a352e">Late bear → early bull</text>
+<rect x="62.0" y="64.0" width="59.6" height="266.0" fill="#efc08a" fill-opacity="0.3" rx="0"/>
+<rect x="121.2" y="64.0" width="8.4" height="266.0" fill="#3f9a62" fill-opacity="0.3" rx="0"/>
+<rect x="129.3" y="64.0" width="29.5" height="266.0" fill="#efc08a" fill-opacity="0.3" rx="0"/>
+<rect x="158.4" y="64.0" width="5.4" height="266.0" fill="#e0832d" fill-opacity="0.3" rx="0"/>
+<rect x="163.4" y="64.0" width="13.5" height="266.0" fill="#efc08a" fill-opacity="0.3" rx="0"/>
+<rect x="176.4" y="64.0" width="18.5" height="266.0" fill="#c02128" fill-opacity="0.3" rx="0"/>
+<rect x="194.5" y="64.0" width="12.4" height="266.0" fill="#15628f" fill-opacity="0.3" rx="0"/>
+<rect x="206.6" y="64.0" width="37.5" height="266.0" fill="#8a5fa8" fill-opacity="0.3" rx="0"/>
+<rect x="243.7" y="64.0" width="88.7" height="266.0" fill="#15628f" fill-opacity="0.3" rx="0"/>
+<rect x="332.0" y="64.0" width="3.4" height="266.0" fill="#e0832d" fill-opacity="0.3" rx="0"/>
+<rect x="335.1" y="64.0" width="3.4" height="266.0" fill="#efc08a" fill-opacity="0.3" rx="0"/>
+<rect x="338.1" y="64.0" width="14.5" height="266.0" fill="#e0832d" fill-opacity="0.3" rx="0"/>
+<rect x="352.1" y="64.0" width="1.4" height="266.0" fill="#efc08a" fill-opacity="0.3" rx="0"/>
+<rect x="353.1" y="64.0" width="8.4" height="266.0" fill="#e0832d" fill-opacity="0.3" rx="0"/>
+<rect x="361.2" y="64.0" width="3.4" height="266.0" fill="#efc08a" fill-opacity="0.3" rx="0"/>
+<rect x="364.2" y="64.0" width="5.4" height="266.0" fill="#e0832d" fill-opacity="0.3" rx="0"/>
+<rect x="369.2" y="64.0" width="1.4" height="266.0" fill="#efc08a" fill-opacity="0.3" rx="0"/>
+<rect x="370.2" y="64.0" width="5.4" height="266.0" fill="#e0832d" fill-opacity="0.3" rx="0"/>
+<rect x="375.2" y="64.0" width="12.4" height="266.0" fill="#efc08a" fill-opacity="0.3" rx="0"/>
+<rect x="387.3" y="64.0" width="36.5" height="266.0" fill="#c02128" fill-opacity="0.3" rx="0"/>
+<rect x="423.4" y="64.0" width="19.5" height="266.0" fill="#8a5fa8" fill-opacity="0.3" rx="0"/>
+<rect x="442.5" y="64.0" width="87.7" height="266.0" fill="#15628f" fill-opacity="0.3" rx="0"/>
+<rect x="529.8" y="64.0" width="7.4" height="266.0" fill="#e0832d" fill-opacity="0.3" rx="0"/>
+<rect x="536.8" y="64.0" width="2.4" height="266.0" fill="#efc08a" fill-opacity="0.3" rx="0"/>
+<rect x="538.8" y="64.0" width="3.4" height="266.0" fill="#e0832d" fill-opacity="0.3" rx="0"/>
+<rect x="541.9" y="64.0" width="2.4" height="266.0" fill="#efc08a" fill-opacity="0.3" rx="0"/>
+<rect x="543.9" y="64.0" width="6.4" height="266.0" fill="#e0832d" fill-opacity="0.3" rx="0"/>
+<rect x="549.9" y="64.0" width="1.4" height="266.0" fill="#efc08a" fill-opacity="0.3" rx="0"/>
+<rect x="550.9" y="64.0" width="2.4" height="266.0" fill="#e0832d" fill-opacity="0.3" rx="0"/>
+<rect x="552.9" y="64.0" width="12.4" height="266.0" fill="#efc08a" fill-opacity="0.3" rx="0"/>
+<rect x="564.9" y="64.0" width="11.4" height="266.0" fill="#c02128" fill-opacity="0.3" rx="0"/>
+<rect x="576.0" y="64.0" width="5.4" height="266.0" fill="#e0832d" fill-opacity="0.3" rx="0"/>
+<rect x="581.0" y="64.0" width="10.4" height="266.0" fill="#efc08a" fill-opacity="0.3" rx="0"/>
+<rect x="591.1" y="64.0" width="19.5" height="266.0" fill="#c02128" fill-opacity="0.3" rx="0"/>
+<rect x="610.1" y="64.0" width="32.5" height="266.0" fill="#8a5fa8" fill-opacity="0.3" rx="0"/>
+<rect x="642.2" y="64.0" width="58.6" height="266.0" fill="#15628f" fill-opacity="0.3" rx="0"/>
+<rect x="700.5" y="64.0" width="8.4" height="266.0" fill="#e0832d" fill-opacity="0.3" rx="0"/>
+<rect x="708.5" y="64.0" width="2.4" height="266.0" fill="#efc08a" fill-opacity="0.3" rx="0"/>
+<rect x="710.5" y="64.0" width="1.4" height="266.0" fill="#3f9a62" fill-opacity="0.3" rx="0"/>
+<rect x="711.5" y="64.0" width="6.4" height="266.0" fill="#e0832d" fill-opacity="0.3" rx="0"/>
+<rect x="717.5" y="64.0" width="2.4" height="266.0" fill="#efc08a" fill-opacity="0.3" rx="0"/>
+<rect x="719.5" y="64.0" width="2.4" height="266.0" fill="#3f9a62" fill-opacity="0.3" rx="0"/>
+<rect x="721.6" y="64.0" width="11.4" height="266.0" fill="#efc08a" fill-opacity="0.3" rx="0"/>
+<rect x="732.6" y="64.0" width="4.4" height="266.0" fill="#3f9a62" fill-opacity="0.3" rx="0"/>
+<rect x="736.6" y="64.0" width="15.5" height="266.0" fill="#e0832d" fill-opacity="0.3" rx="0"/>
+<rect x="751.7" y="64.0" width="9.4" height="266.0" fill="#efc08a" fill-opacity="0.3" rx="0"/>
+<rect x="760.7" y="64.0" width="28.5" height="266.0" fill="#e0832d" fill-opacity="0.3" rx="0"/>
+<rect x="788.8" y="64.0" width="11.4" height="266.0" fill="#efc08a" fill-opacity="0.3" rx="0"/>
+<rect x="799.9" y="64.0" width="18.5" height="266.0" fill="#c02128" fill-opacity="0.3" rx="0"/>
+<rect x="817.9" y="64.0" width="12.4" height="266.0" fill="#8a5fa8" fill-opacity="0.3" rx="0"/>
+<rect x="830.0" y="64.0" width="6.4" height="266.0" fill="#15628f" fill-opacity="0.3" rx="0"/>
+<line x1="62.0" y1="302.2" x2="836.0" y2="302.2" stroke="#fff" stroke-width="1" stroke-opacity=".7"/>
+<text x="54.0" y="306.2" text-anchor="end" class="ax">10</text>
+<line x1="62.0" y1="249.0" x2="836.0" y2="249.0" stroke="#fff" stroke-width="1" stroke-opacity=".7"/>
+<text x="54.0" y="253.0" text-anchor="end" class="ax">100</text>
+<line x1="62.0" y1="195.8" x2="836.0" y2="195.8" stroke="#fff" stroke-width="1" stroke-opacity=".7"/>
+<text x="54.0" y="199.8" text-anchor="end" class="ax">1,000</text>
+<line x1="62.0" y1="142.6" x2="836.0" y2="142.6" stroke="#fff" stroke-width="1" stroke-opacity=".7"/>
+<text x="54.0" y="146.6" text-anchor="end" class="ax">10,000</text>
+<line x1="62.0" y1="89.4" x2="836.0" y2="89.4" stroke="#fff" stroke-width="1" stroke-opacity=".7"/>
+<text x="54.0" y="93.4" text-anchor="end" class="ax">100,000</text>
+<line x1="62.0" y1="330.0" x2="62.0" y2="335.0" stroke="#9a9186" stroke-width="1"/>
+<text x="62.0" y="350.0" text-anchor="middle" class="ax">2012</text>
+<line x1="166.8" y1="330.0" x2="166.8" y2="335.0" stroke="#9a9186" stroke-width="1"/>
+<text x="166.8" y="350.0" text-anchor="middle" class="ax">2014</text>
+<line x1="271.5" y1="330.0" x2="271.5" y2="335.0" stroke="#9a9186" stroke-width="1"/>
+<text x="271.5" y="350.0" text-anchor="middle" class="ax">2016</text>
+<line x1="376.4" y1="330.0" x2="376.4" y2="335.0" stroke="#9a9186" stroke-width="1"/>
+<text x="376.4" y="350.0" text-anchor="middle" class="ax">2018</text>
+<line x1="481.1" y1="330.0" x2="481.1" y2="335.0" stroke="#9a9186" stroke-width="1"/>
+<text x="481.1" y="350.0" text-anchor="middle" class="ax">2020</text>
+<line x1="585.9" y1="330.0" x2="585.9" y2="335.0" stroke="#9a9186" stroke-width="1"/>
+<text x="585.9" y="350.0" text-anchor="middle" class="ax">2022</text>
+<line x1="690.6" y1="330.0" x2="690.6" y2="335.0" stroke="#9a9186" stroke-width="1"/>
+<text x="690.6" y="350.0" text-anchor="middle" class="ax">2024</text>
+<line x1="795.4" y1="330.0" x2="795.4" y2="335.0" stroke="#9a9186" stroke-width="1"/>
+<text x="795.4" y="350.0" text-anchor="middle" class="ax">2026</text>
+<path d="M62.0,316.9 L63.0,310.1 L64.0,310.3 L65.0,312.9 L66.0,316.5 L67.0,315.3 L68.0,315.9 L69.0,321.2 L70.0,318.5 L71.0,319.0 L72.0,318.7 L73.0,317.0 L74.0,320.4 L75.1,319.2 L76.1,319.2 L77.1,318.4 L78.1,317.3 L79.1,318.7 L80.1,318.0 L81.1,318.5 L82.1,317.8 L83.1,317.6 L84.1,317.2 L85.1,316.2 L86.1,313.2 L87.1,312.7 L88.1,311.7 L89.1,311.1 L90.1,308.4 L91.1,305.9 L92.1,305.3 L93.1,300.4 L94.1,298.8 L95.1,307.8 L96.1,300.9 L97.1,301.7 L98.1,299.9 L99.1,298.2 L100.1,297.6 L101.2,297.2 L102.2,298.2 L103.2,298.7 L104.2,298.6 L105.2,300.6 L106.2,300.4 L107.2,300.3 L108.2,298.6 L109.2,297.0 L110.2,297.0 L111.2,295.5 L112.2,295.5 L113.2,295.6 L114.2,295.3 L115.2,295.2 L116.2,294.1 L117.2,291.7 L118.2,288.8 L119.2,285.5 L120.2,282.1 L121.2,279.3 L122.2,276.9 L123.2,273.6 L124.2,266.9 L125.2,266.3 L126.2,256.7 L127.3,250.4 L128.3,237.7 L129.3,251.7 L130.3,245.1 L131.3,242.1 L132.3,245.5 L133.3,245.8 L134.3,245.3 L135.3,242.9 L136.3,244.3 L137.3,249.0 L138.3,249.2 L139.3,248.9 L140.3,251.6 L141.3,256.5 L142.3,251.4 L143.3,252.6 L144.3,250.7 L145.3,249.8 L146.3,250.3 L147.3,249.2 L148.3,246.1 L149.3,242.8 L150.3,245.1 L151.3,243.8 L152.4,244.2 L153.4,243.4 L154.4,244.3 L155.4,242.5 L156.4,237.2 L157.4,233.6 L158.4,231.8 L159.4,221.6 L160.4,212.5 L161.4,200.7 L162.4,196.6 L163.4,201.4 L164.4,199.2 L165.4,207.0 L166.4,203.1 L167.4,198.2 L168.4,199.7 L169.4,199.9 L170.4,200.5 L171.4,200.5 L172.4,204.4 L173.4,206.7 L174.4,207.2 L175.4,209.2 L176.4,206.1 L177.4,206.3 L178.5,209.2 L179.5,213.8 L180.5,213.8 L181.5,216.0 L182.5,211.7 L183.5,214.8 L184.5,214.9 L185.5,214.8 L186.5,214.4 L187.5,208.6 L188.5,206.5 L189.5,205.5 L190.5,208.0 L191.5,207.6 L192.5,207.6 L193.5,206.3 L194.5,206.5 L195.5,206.6 L196.5,207.9 L197.5,208.1 L198.5,208.0 L199.5,211.9 L200.5,211.4 L201.5,212.8 L202.5,212.8 L203.5,213.0 L204.6,216.9 L205.6,218.4 L206.6,221.9 L207.6,218.3 L208.6,217.6 L209.6,219.8 L210.6,221.8 L211.6,219.2 L212.6,217.5 L213.6,218.9 L214.6,218.2 L215.6,218.3 L216.6,219.6 L217.6,222.0 L218.6,222.3 L219.6,226.6 L220.6,226.1 L221.6,231.7 L222.6,227.4 L223.6,230.0 L224.6,230.3 L225.6,229.3 L226.6,229.1 L227.6,226.8 L228.6,225.6 L229.6,224.6 L230.7,226.1 L231.7,228.5 L232.7,226.8 L233.7,229.0 L234.7,230.4 L235.7,230.7 L236.7,228.7 L237.7,228.7 L238.7,229.1 L239.7,228.7 L240.7,229.8 L241.7,230.4 L242.7,229.5 L243.7,228.3 L244.7,227.9 L245.7,225.9 L246.7,222.7 L247.7,225.6 L248.7,224.1 L249.7,225.0 L250.7,226.3 L251.7,227.0 L252.7,229.9 L253.7,229.8 L254.7,228.7 L255.8,229.7 L256.8,229.6 L257.8,229.4 L258.8,228.8 L259.8,227.9 L260.8,226.6 L261.8,224.7 L262.8,221.4 L263.8,218.6 L264.8,222.1 L265.8,221.8 L266.8,218.6 L267.8,217.3 L268.8,215.0 L269.8,214.6 L270.8,215.7 L271.8,215.3 L272.8,214.3 L273.8,218.0 L274.8,216.8 L275.8,219.0 L276.8,218.4 L277.8,216.6 L278.8,214.8 L279.8,215.1 L280.8,216.7 L281.9,216.3 L282.9,216.3 L283.9,215.5 L284.9,215.8 L285.9,215.7 L286.9,215.3 L287.9,213.6 L288.9,214.0 L289.9,213.7 L290.9,213.7 L291.9,214.7 L292.9,210.6 L293.9,208.6 L294.9,205.0 L295.9,201.9 L296.9,206.4 L297.9,205.3 L298.9,205.7 L299.9,204.7 L300.9,205.3 L301.9,206.6 L302.9,207.8 L303.9,208.7 L304.9,208.3 L305.9,208.6 L306.9,207.2 L308.0,207.3 L309.0,207.1 L310.0,207.6 L311.0,207.1 L312.0,206.9 L313.0,206.0 L314.0,205.7 L315.0,204.0 L316.0,203.5 L317.0,203.9 L318.0,203.0 L319.0,203.1 L320.0,201.9 L321.0,201.8 L322.0,201.2 L323.0,198.3 L324.0,195.8 L325.0,197.9 L326.0,200.2 L327.0,197.6 L328.0,197.8 L329.0,195.4 L330.0,195.6 L331.0,194.5 L332.0,191.9 L333.1,190.1 L334.1,191.0 L335.1,195.3 L336.1,196.7 L337.1,193.5 L338.1,191.3 L339.1,192.1 L340.1,190.6 L341.1,188.3 L342.1,186.0 L343.1,182.3 L344.1,179.3 L345.1,177.3 L346.1,174.4 L347.1,170.6 L348.1,174.5 L349.1,174.6 L350.1,174.4 L351.1,174.6 L352.1,180.8 L353.1,172.4 L354.1,172.4 L355.1,168.7 L356.1,163.4 L357.1,163.3 L358.1,161.8 L359.2,160.4 L360.2,162.3 L361.2,165.5 L362.2,165.7 L363.2,161.6 L364.2,160.5 L365.2,155.6 L366.2,154.4 L367.2,153.7 L368.2,149.6 L369.2,155.1 L370.2,147.7 L371.2,144.2 L372.2,139.9 L373.2,132.5 L374.2,127.5 L375.2,134.8 L376.2,134.9 L377.2,131.4 L378.2,135.3 L379.2,139.5 L380.2,139.1 L381.2,147.0 L382.2,147.5 L383.2,141.6 L384.2,143.5 L385.3,139.4 L386.3,143.7 L387.3,147.2 L388.3,146.5 L389.3,151.5 L390.3,150.8 L391.3,146.8 L392.3,145.5 L393.3,144.0 L394.3,143.5 L395.3,145.8 L396.3,146.3 L397.3,149.7 L398.3,148.6 L399.3,151.7 L400.3,152.7 L401.3,153.8 L402.3,153.0 L403.3,151.8 L404.3,153.1 L405.3,149.5 L406.3,147.1 L407.3,150.7 L408.3,153.2 L409.3,152.6 L410.4,151.9 L411.4,149.9 L412.4,153.4 L413.4,152.5 L414.4,151.8 L415.4,152.2 L416.4,152.3 L417.4,153.7 L418.4,152.8 L419.4,152.9 L420.4,152.8 L421.4,153.1 L422.4,156.2 L423.4,164.1 L424.4,163.2 L425.4,166.6 L426.4,168.9 L427.4,164.1 L428.4,164.8 L429.4,163.5 L430.4,166.8 L431.4,166.6 L432.4,166.6 L433.4,167.4 L434.4,165.9 L435.4,166.0 L436.5,165.2 L437.5,165.0 L438.5,164.3 L439.5,163.9 L440.5,163.9 L441.5,163.2 L442.5,157.7 L443.5,157.9 L444.5,157.3 L445.5,157.9 L446.5,155.5 L447.5,151.0 L448.5,147.1 L449.5,145.7 L450.5,145.7 L451.5,148.8 L452.5,145.0 L453.5,140.8 L454.5,140.7 L455.5,139.4 L456.5,141.9 L457.5,141.3 L458.5,143.7 L459.5,140.4 L460.5,139.3 L461.5,141.8 L462.6,142.4 L463.6,143.1 L464.6,141.7 L465.6,141.9 L466.6,142.5 L467.6,147.6 L468.6,148.2 L469.6,146.9 L470.6,147.1 L471.6,143.6 L472.6,144.5 L473.6,144.9 L474.6,146.3 L475.6,151.0 L476.6,149.5 L477.6,149.1 L478.6,150.5 L479.6,149.3 L480.6,149.6 L481.6,149.7 L482.6,147.3 L483.6,145.8 L484.6,146.1 L485.6,144.2 L486.6,142.2 L487.6,142.7 L488.7,142.6 L489.7,146.2 L490.7,147.4 L491.7,157.0 L492.7,155.0 L493.7,154.8 L494.7,151.5 L495.7,150.9 L496.7,150.3 L497.7,148.7 L498.7,145.3 L499.7,145.8 L500.7,143.3 L501.7,145.5 L502.7,143.9 L503.7,143.2 L504.7,144.2 L505.7,144.3 L506.7,144.7 L507.7,144.8 L508.7,144.3 L509.7,144.5 L510.7,142.7 L511.7,140.2 L512.7,139.0 L513.8,138.6 L514.8,139.0 L515.8,139.0 L516.8,142.0 L517.8,141.8 L518.8,140.5 L519.8,140.9 L520.8,141.1 L521.8,139.6 L522.8,139.4 L523.8,136.4 L524.8,135.2 L525.8,132.5 L526.8,131.7 L527.8,128.4 L528.8,128.8 L529.8,127.3 L530.8,127.6 L531.8,122.8 L532.8,120.1 L533.8,114.8 L534.8,111.5 L535.8,112.9 L536.8,115.6 L537.8,114.9 L538.8,111.1 L539.9,105.9 L540.9,102.2 L541.9,107.6 L542.9,104.9 L543.9,101.2 L544.9,102.2 L545.9,102.9 L546.9,101.9 L547.9,101.2 L548.9,102.6 L549.9,105.9 L550.9,102.5 L551.9,101.9 L552.9,107.3 L553.9,113.8 L554.9,113.2 L555.9,113.2 L556.9,111.2 L557.9,113.2 L558.9,114.0 L559.9,113.4 L560.9,114.1 L561.9,115.9 L562.9,113.6 L563.9,110.6 L564.9,108.4 L566.0,106.8 L567.0,105.7 L568.0,105.9 L569.0,104.6 L570.0,107.2 L571.0,106.7 L572.0,108.8 L573.0,106.2 L574.0,103.3 L575.0,100.6 L576.0,100.9 L577.0,100.6 L578.0,100.0 L579.0,99.3 L580.0,101.6 L581.0,102.3 L582.0,105.7 L583.0,105.3 L584.0,106.9 L585.0,105.0 L586.0,106.7 L587.0,109.5 L588.0,108.8 L589.0,112.8 L590.0,111.7 L591.1,109.2 L592.1,109.3 L593.1,111.4 L594.1,111.9 L595.1,111.5 L596.1,111.9 L597.1,109.8 L598.1,106.9 L599.1,107.1 L600.1,109.3 L601.1,110.7 L602.1,110.8 L603.1,111.5 L604.1,114.3 L605.1,116.3 L606.1,116.9 L607.1,117.6 L608.1,117.3 L609.1,119.8 L610.1,126.0 L611.1,125.4 L612.1,127.4 L613.1,125.6 L614.1,125.6 L615.1,123.7 L616.1,123.0 L617.2,123.2 L618.2,122.1 L619.2,124.8 L620.2,126.9 L621.2,126.6 L622.2,124.6 L623.2,127.2 L624.2,128.0 L625.2,127.7 L626.2,127.2 L627.2,127.4 L628.2,127.1 L629.2,125.9 L630.2,125.5 L631.2,131.3 L632.2,131.4 L633.2,131.1 L634.2,130.2 L635.2,130.2 L636.2,130.6 L637.2,130.6 L638.2,130.9 L639.2,130.2 L640.2,125.6 L641.2,123.6 L642.2,122.6 L643.3,123.4 L644.3,124.6 L645.3,122.0 L646.3,122.8 L647.3,123.9 L648.3,124.3 L649.3,118.6 L650.3,118.8 L651.3,118.7 L652.3,118.5 L653.3,117.0 L654.3,119.1 L655.3,117.7 L656.3,118.2 L657.3,119.7 L658.3,119.8 L659.3,118.7 L660.3,119.5 L661.3,120.6 L662.3,120.2 L663.3,116.8 L664.3,116.7 L665.3,117.1 L666.3,117.0 L667.3,117.1 L668.4,117.8 L669.4,117.9 L670.4,117.8 L671.4,120.3 L672.4,120.4 L673.4,120.5 L674.4,120.7 L675.4,120.1 L676.4,120.3 L677.4,118.8 L678.4,118.8 L679.4,119.5 L680.4,117.2 L681.4,113.9 L682.4,113.6 L683.4,112.3 L684.4,112.1 L685.4,112.1 L686.4,110.6 L687.4,108.5 L688.4,109.7 L689.4,108.8 L690.4,109.3 L691.4,108.4 L692.4,109.5 L693.4,109.7 L694.5,109.4 L695.5,109.1 L696.5,106.2 L697.5,104.4 L698.5,104.6 L699.5,100.1 L700.5,98.0 L701.5,98.2 L702.5,98.5 L703.5,97.2 L704.5,97.8 L705.5,99.1 L706.5,99.3 L707.5,100.1 L708.5,99.7 L709.5,100.6 L710.5,98.9 L711.5,98.1 L712.5,98.4 L713.5,97.7 L714.5,98.8 L715.5,99.9 L716.5,100.1 L717.5,102.7 L718.5,100.8 L719.5,98.3 L720.6,98.2 L721.6,101.8 L722.6,101.6 L723.6,101.7 L724.6,99.5 L725.6,102.2 L726.6,103.3 L727.6,101.5 L728.6,99.8 L729.6,99.1 L730.6,100.1 L731.6,100.1 L732.6,98.0 L733.6,98.3 L734.6,98.0 L735.6,94.4 L736.6,91.9 L737.6,89.9 L738.6,90.0 L739.6,89.2 L740.6,88.4 L741.6,90.5 L742.6,90.9 L743.6,89.8 L744.6,90.7 L745.6,89.2 L746.7,88.7 L747.7,90.0 L748.7,90.3 L749.7,90.3 L750.7,90.3 L751.7,90.7 L752.7,94.4 L753.7,93.8 L754.7,92.9 L755.7,93.9 L756.7,95.1 L757.7,93.5 L758.7,93.1 L759.7,90.9 L760.7,90.7 L761.7,88.5 L762.7,88.0 L763.7,87.4 L764.7,88.1 L765.7,88.1 L766.7,88.1 L767.7,89.2 L768.7,87.5 L769.7,87.4 L770.7,85.4 L771.8,85.7 L772.8,85.3 L773.8,86.3 L774.8,85.3 L775.8,85.6 L776.8,86.5 L777.8,87.5 L778.8,86.9 L779.8,86.1 L780.8,86.1 L781.8,86.7 L782.8,84.5 L783.8,86.1 L784.8,87.5 L785.8,86.2 L786.8,87.1 L787.8,88.3 L788.8,90.8 L789.8,92.6 L790.8,91.7 L791.8,91.8 L792.8,92.3 L793.8,92.2 L794.8,92.4 L795.8,91.5 L796.8,91.6 L797.9,90.7 L798.9,92.7 L799.9,95.4 L800.9,97.5 L801.9,98.1 L802.9,98.4 L803.9,99.1 L804.9,98.9 L805.9,96.7 L806.9,98.3 L807.9,99.0 L808.9,98.0 L809.9,97.4 L810.9,96.4 L811.9,95.0 L812.9,94.9 L813.9,93.9 L814.9,95.3 L815.9,95.4 L816.9,96.5 L817.9,100.0 L818.9,99.1 L819.9,99.9 L820.9,101.4 L821.9,99.8 L822.9,99.8 L824.0,99.5 L825.0,99.2 L826.0,99.9 L827.0,99.4 L828.0,100.1 L829.0,95.2 L830.0,95.2 L831.0,94.4 L832.0,95.5 L833.0,94.2 L834.0,93.3 L835.0,93.1 L836.0,93.7" fill="none" stroke="#1c1a17" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M157.8,183.6 L167.8,183.6 L162.8,192.6 Z" fill="#1c1a17"/>
+<text x="162.8" y="178.6" text-anchor="middle" class="lbl2" style="fill:#1c1a17">2013-12 top</text>
+<path d="M369.1,114.5 L379.1,114.5 L374.1,123.5 Z" fill="#1c1a17"/>
+<text x="374.1" y="109.5" text-anchor="middle" class="lbl2" style="fill:#1c1a17">2017-12 top</text>
+<path d="M573.1,87.0 L583.1,87.0 L578.1,96.0 Z" fill="#1c1a17"/>
+<text x="578.1" y="82.0" text-anchor="middle" class="lbl2" style="fill:#1c1a17">2021-11 top</text>
+<path d="M777.9,71.5 L787.9,71.5 L782.9,80.5 Z" fill="#1c1a17"/>
+<text x="782.9" y="66.5" text-anchor="middle" class="lbl2" style="fill:#1c1a17">2025-10 top</text>
+<path d="M216.0,239.1 L226.0,239.1 L221.0,230.1 Z" fill="#1c1a17"/>
+<text x="221.0" y="252.1" text-anchor="middle" class="lbl2" style="fill:#1c1a17">2015-01 bottom</text>
+<path d="M421.3,181.9 L431.3,181.9 L426.3,172.9 Z" fill="#1c1a17"/>
+<text x="426.3" y="194.9" text-anchor="middle" class="lbl2" style="fill:#1c1a17">2018-12 bottom</text>
+<path d="M625.6,138.5 L635.6,138.5 L630.6,129.5 Z" fill="#1c1a17"/>
+<text x="630.6" y="151.5" text-anchor="middle" class="lbl2" style="fill:#1c1a17">2022-11 bottom</text>
+<path d="M816.2,114.4 L826.2,114.4 L821.2,105.4 Z" fill="#1c1a17"/>
+<text x="833.2" y="127.4" text-anchor="end" class="lbl2" style="fill:#1c1a17">2026-06 bottom</text>
+<text x="62.0" y="54.0" class="ax">Background = state the rules assigned that week; black line = Bitcoin weekly close (log scale, USD)</text>
+</svg>
+</figure>
+<p><b>Replaying history to test it</b>: we ran the rules over every day since 2012 and looked at how the following year went after each state.</p>
+<figure class="fig"><figcaption>Figure 6  Median return over the next year, share of the time positive, and worst case, by state (2014 to 2026 combined)</figcaption>
+<svg viewBox="0 0 860 286" width="100%" role="img" aria-label="Median next-year return, share positive and worst case by state">
+<text x="24.0" y="30.0" class="ax">State</text>
+<text x="316.1" y="30.0" text-anchor="middle" class="ax">Median return over the next year</text>
+<text x="640.0" y="30.0" text-anchor="middle" class="ax">Share positive</text>
+<text x="750.0" y="30.0" text-anchor="middle" class="ax">Worst case</text>
+<line x1="244.3" y1="44.0" x2="244.3" y2="274.0" stroke="#ece7e0" stroke-width="1"/>
+<line x1="316.1" y1="44.0" x2="316.1" y2="274.0" stroke="#9a9186" stroke-width="1.2"/>
+<line x1="387.8" y1="44.0" x2="387.8" y2="274.0" stroke="#ece7e0" stroke-width="1"/>
+<line x1="459.6" y1="44.0" x2="459.6" y2="274.0" stroke="#ece7e0" stroke-width="1"/>
+<line x1="531.3" y1="44.0" x2="531.3" y2="274.0" stroke="#ece7e0" stroke-width="1"/>
+<rect x="316.1" y="54.0" width="218.1" height="26.0" fill="#15628f" fill-opacity="0.9" rx="2"/>
+<rect x="24" y="60.0" width="10" height="14" rx="2" fill="#15628f" fill-opacity=".6"/>
+<text x="42.0" y="72.0" class="lbl" style="fill:#1c1a17">Late bear → early bull</text>
+<text x="542.2" y="72.0" text-anchor="start" class="lbl" style="fill:#15628f">+152%</text>
+<text x="640.0" y="72.0" text-anchor="middle" class="lbl">92%</text>
+<text x="750.0" y="72.0" text-anchor="middle" class="lbl" style="fill:#c02128">−69%</text>
+<rect x="316.1" y="100.0" width="97.6" height="26.0" fill="#15628f" fill-opacity="0.9" rx="2"/>
+<rect x="24" y="106.0" width="10" height="14" rx="2" fill="#8a5fa8" fill-opacity=".6"/>
+<text x="42.0" y="118.0" class="lbl" style="fill:#1c1a17">Bear bottom zone</text>
+<text x="421.7" y="118.0" text-anchor="start" class="lbl" style="fill:#15628f">+68%</text>
+<text x="640.0" y="118.0" text-anchor="middle" class="lbl">91%</text>
+<text x="750.0" y="118.0" text-anchor="middle" class="lbl" style="fill:#c02128">−37%</text>
+<rect x="307.5" y="146.0" width="8.6" height="26.0" fill="#c02128" fill-opacity="0.9" rx="2"/>
+<rect x="24" y="152.0" width="10" height="14" rx="2" fill="#e0832d" fill-opacity=".6"/>
+<text x="42.0" y="164.0" class="lbl" style="fill:#1c1a17">Bull · top-risk zone</text>
+<text x="299.5" y="164.0" text-anchor="end" class="lbl" style="fill:#c02128">−6%</text>
+<text x="640.0" y="164.0" text-anchor="middle" class="lbl">47%</text>
+<text x="750.0" y="164.0" text-anchor="middle" class="lbl" style="fill:#c02128">−84%</text>
+<rect x="274.5" y="192.0" width="41.6" height="26.0" fill="#c02128" fill-opacity="0.9" rx="2"/>
+<rect x="24" y="198.0" width="10" height="14" rx="2" fill="#efc08a" fill-opacity=".6"/>
+<text x="42.0" y="210.0" class="lbl" style="fill:#1c1a17">Bull pullback</text>
+<text x="266.5" y="210.0" text-anchor="end" class="lbl" style="fill:#c02128">−29%</text>
+<text x="640.0" y="210.0" text-anchor="middle" class="lbl">30%</text>
+<text x="750.0" y="210.0" text-anchor="middle" class="lbl" style="fill:#c02128">−79%</text>
+<rect x="264.4" y="238.0" width="51.7" height="26.0" fill="#c02128" fill-opacity="0.9" rx="2"/>
+<rect x="24" y="244.0" width="10" height="14" rx="2" fill="#c02128" fill-opacity=".6"/>
+<text x="42.0" y="256.0" class="lbl" style="fill:#1c1a17">Bear</text>
+<text x="256.4" y="256.0" text-anchor="end" class="lbl" style="fill:#c02128">−36%</text>
+<text x="640.0" y="256.0" text-anchor="middle" class="lbl">31%</text>
+<text x="750.0" y="256.0" text-anchor="middle" class="lbl" style="fill:#c02128">−69%</text>
+</svg>
+</figure>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>State</th>
+<th>Median return over the next year</th>
+<th>Share of the time it made money</th>
+<th>Worst case</th>
+</tr>
+</thead>
+<tbody>
+<tr class="hi"><td><span class="nw"><i class="sd" style="background:#15628f;opacity:.65"></i>Late bear → early bull</span></td>
+<td><b>+152%</b></td>
+<td><b>92%</b></td>
+<td>−69%</td>
+</tr>
+<tr>
+<td><span class="nw"><i class="sd" style="background:#8a5fa8;opacity:.65"></i>Bear bottom zone</span></td>
+<td>+68%</td>
+<td>91%</td>
+<td>−37%</td>
+</tr>
+<tr>
+<td><span class="nw"><i class="sd" style="background:#e0832d;opacity:.65"></i>Bull · top-risk zone</span></td>
+<td>−6%</td>
+<td>47%</td>
+<td>−84%</td>
+</tr>
+<tr>
+<td><span class="nw"><i class="sd" style="background:#efc08a;opacity:.65"></i>Bull pullback</span></td>
+<td>−29%</td>
+<td>30%</td>
+<td>−79%</td>
+</tr>
+<tr>
+<td><span class="nw"><i class="sd" style="background:#c02128;opacity:.65"></i>Bear</span></td>
+<td>−36%</td>
+<td>31%</td>
+<td>−69%</td>
+</tr>
+</tbody>
+</table></div>
+<p class="tnote">(2014 to 2026 combined. Adjacent days overlap heavily and there are only a handful of truly independent stretches, so look at direction only.)</p>
+<ul>
+<li>On the day of each of the four true tops, the rule gave "top-risk zone";</li>
+<li>the first entry into "bear bottom zone" came 1 to 5 months before the real bottom;</li>
+<li>"bottom confirmation" came 2 to 5 months after the real bottom. It does not catch the lowest point; it catches that the lowest point has passed.</li>
+</ul>
+<p><b>Known misses, stated plainly:</b></p>
+<ul>
+<li>A false bottom confirmation in July 2014, after which price broke below the prior low and went back to Bear.</li>
+<li>A 75-day false bear in August to October 2021: after falling 53% from the April high, it was classed as a bear and only turned back in mid-October; the very next day price made a new high. The market at the time was also widely calling a bear, and the rule could not tell the difference either.</li>
+<li>These thresholds were set within this research, which used these same cycles, so the replay above is "in-sample." The real test starts now: the website records the state every day, and we check it against what happens.</li>
+</ul>
+<h3>This cycle's bottom-confirmation signals</h3>
+<div class="concepts"><div class="cc"><div class="ct"><i>Concept</i>Age-band cost lines</div><p>The average cost of only those coins that last moved within a given age range. For example, the "6-12 month cost" is the average cost of those who bought 6 to 12 months ago and have not moved since. In a bear market, the newer the buyer, the lower the cost, so around the bottom these lines cross in sequence.</p></div><div class="cc"><div class="ct"><i>Concept</i>Short-term holder cost basis</div><p>The average cost of those who bought in the last 5 months or so. Price above it means recent entrants are, on the whole, in profit.</p></div><div class="cc"><div class="ct"><i>Concept</i>True market mean</div><p>The average cost of only the capital still actively trading, excluding coins untouched for years and possibly lost.</p></div></div>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>How far from the real bottom, historically</th>
+<th>This cycle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>6-12 month cost crosses below 12-18 month cost</td>
+<td>−1 to +31 days from the bottom</td>
+<td>July 15 (15 days after the bottom)</td>
+</tr>
+<tr>
+<td>Long-term holder capitulation peaks</td>
+<td>12 to 44 days after the bottom</td>
+<td>June 30 itself</td>
+</tr>
+<tr>
+<td>On-chain turnover speed (SLRV) at its low</td>
+<td>17 to 69 days before the bottom</td>
+<td>July 5 (5 days after the bottom)</td>
+</tr>
+<tr>
+<td>Three age-band cost lines cross in turn (the "triple cross")</td>
+<td>Both crosses within 85 days of the bottom</td>
+<td>June 30 falls between the second and third cross</td>
+</tr>
+<tr>
+<td>Price above four short-term cost lines at once</td>
+<td>77 to 177 days after the bottom</td>
+<td>August 27 (58 days after the bottom)</td>
+</tr>
+<tr>
+<td>Balanced price falls below long-term holder cost, then bottoms</td>
+<td>102 to 185 days later</td>
+<td>131 days later</td>
+</tr>
+</tbody>
+</table></div>
+<figure class="fig"><figcaption>Figure 7  This cycle’s bottom-confirmation signals: June 30 = 0, grey bands are the historical range vs the real bottom (the “triple cross” row in the table is not drawn)</figcaption>
+<svg viewBox="0 0 860 438" width="100%" role="img" aria-label="This cycle’s bottom-confirmation signals vs their historical ranges">
+<line x1="290.0" y1="68.0" x2="290.0" y2="390.0" stroke="#e5dfd6" stroke-width="1"/>
+<text x="290.0" y="408.0" text-anchor="middle" class="ax">−200</text>
+<line x1="357.5" y1="68.0" x2="357.5" y2="390.0" stroke="#e5dfd6" stroke-width="1"/>
+<text x="357.5" y="408.0" text-anchor="middle" class="ax">−150</text>
+<line x1="425.0" y1="68.0" x2="425.0" y2="390.0" stroke="#e5dfd6" stroke-width="1"/>
+<text x="425.0" y="408.0" text-anchor="middle" class="ax">−100</text>
+<line x1="492.5" y1="68.0" x2="492.5" y2="390.0" stroke="#e5dfd6" stroke-width="1"/>
+<text x="492.5" y="408.0" text-anchor="middle" class="ax">−50</text>
+<line x1="560.0" y1="68.0" x2="560.0" y2="390.0" stroke="#7d7366" stroke-width="1.4" stroke-dasharray="5 4"/>
+<text x="560.0" y="408.0" text-anchor="middle" class="ax">0</text>
+<line x1="627.5" y1="68.0" x2="627.5" y2="390.0" stroke="#e5dfd6" stroke-width="1"/>
+<text x="627.5" y="408.0" text-anchor="middle" class="ax">+50</text>
+<line x1="695.0" y1="68.0" x2="695.0" y2="390.0" stroke="#e5dfd6" stroke-width="1"/>
+<text x="695.0" y="408.0" text-anchor="middle" class="ax">+100</text>
+<line x1="762.5" y1="68.0" x2="762.5" y2="390.0" stroke="#e5dfd6" stroke-width="1"/>
+<text x="762.5" y="408.0" text-anchor="middle" class="ax">+150</text>
+<line x1="830.0" y1="68.0" x2="830.0" y2="390.0" stroke="#e5dfd6" stroke-width="1"/>
+<text x="830.0" y="408.0" text-anchor="middle" class="ax">+200</text>
+<text x="560.0" y="52.0" text-anchor="middle" class="lbl2" style="fill:#1c1a17">0 = June 30 (this cycle’s lowest close)</text>
+<text x="290.0" y="428.0" class="ax">← before the bottom (days)</text>
+<text x="830.0" y="428.0" text-anchor="end" class="ax">after the bottom (days) →</text>
+<text x="24.0" y="82.0" class="lbl" style="fill:#1c1a17">6–12 month cost crosses below</text>
+<text x="24.0" y="98.0" class="lbl" style="fill:#1c1a17">12–18 month cost</text>
+<rect x="558.6" y="80.0" width="43.2" height="20.0" fill="#cfc8bd" fill-opacity="0.85" rx="3"/>
+<text x="580.2" y="116.0" text-anchor="middle" class="note">History −1 to +31</text>
+<circle cx="580.2" cy="90.0" r="7.5" fill="#15628f" stroke="#fff" stroke-width="1.5"/>
+<text x="580.2" y="74.0" text-anchor="middle" class="lbl" style="fill:#15628f">This cycle +15</text>
+<text x="24.0" y="146.0" class="lbl" style="fill:#1c1a17">Long-term holder capitulation</text>
+<text x="24.0" y="162.0" class="lbl" style="fill:#1c1a17">reaches its peak</text>
+<rect x="576.2" y="144.0" width="43.2" height="20.0" fill="#cfc8bd" fill-opacity="0.85" rx="3"/>
+<text x="597.8" y="180.0" text-anchor="middle" class="note">History +12 to +44</text>
+<circle cx="560.0" cy="154.0" r="7.5" fill="#c02128" stroke="#fff" stroke-width="1.5"/>
+<text x="560.0" y="138.0" text-anchor="middle" class="lbl" style="fill:#c02128">This cycle 0</text>
+<text x="24.0" y="210.0" class="lbl" style="fill:#1c1a17">On-chain turnover speed (SLRV)</text>
+<text x="24.0" y="226.0" class="lbl" style="fill:#1c1a17">at its low</text>
+<rect x="466.9" y="208.0" width="70.2" height="20.0" fill="#cfc8bd" fill-opacity="0.85" rx="3"/>
+<text x="501.9" y="244.0" text-anchor="middle" class="note">History −69 to −17</text>
+<circle cx="566.8" cy="218.0" r="7.5" fill="#c02128" stroke="#fff" stroke-width="1.5"/>
+<text x="566.8" y="202.0" text-anchor="middle" class="lbl" style="fill:#c02128">This cycle +5</text>
+<text x="24.0" y="274.0" class="lbl" style="fill:#1c1a17">Price above four short-term</text>
+<text x="24.0" y="290.0" class="lbl" style="fill:#1c1a17">cost lines at once</text>
+<rect x="664.0" y="272.0" width="135.0" height="20.0" fill="#cfc8bd" fill-opacity="0.85" rx="3"/>
+<text x="731.5" y="308.0" text-anchor="middle" class="note">History +77 to +177</text>
+<circle cx="638.3" cy="282.0" r="7.5" fill="#c02128" stroke="#fff" stroke-width="1.5"/>
+<text x="638.3" y="266.0" text-anchor="middle" class="lbl" style="fill:#c02128">This cycle +58</text>
+<text x="24.0" y="338.0" class="lbl" style="fill:#1c1a17">Balanced price falls below LTH</text>
+<text x="24.0" y="354.0" class="lbl" style="fill:#1c1a17">cost, then bottoms (cross date)</text>
+<rect x="310.2" y="336.0" width="112.1" height="20.0" fill="#cfc8bd" fill-opacity="0.85" rx="3"/>
+<text x="366.3" y="372.0" text-anchor="middle" class="note">History −185 to −102</text>
+<circle cx="383.1" cy="346.0" r="7.5" fill="#15628f" stroke="#fff" stroke-width="1.5"/>
+<text x="383.1" y="330.0" text-anchor="middle" class="lbl" style="fill:#15628f">This cycle −131</text>
+<rect x="24.0" y="10.0" width="12.0" height="12.0" fill="#cfc8bd" fill-opacity="0.85" rx="2"/>
+<text x="42.0" y="21.0" class="lbl2">Historical range vs the real bottom</text>
+<circle cx="262.0" cy="16.0" r="6" fill="#15628f" stroke="#fff" stroke-width="1.5"/>
+<text x="274.0" y="21.0" class="lbl2">This cycle: inside range</text>
+<circle cx="446.0" cy="16.0" r="6" fill="#c02128" stroke="#fff" stroke-width="1.5"/>
+<text x="458.0" y="21.0" class="lbl2">This cycle: outside range</text>
+</svg>
+</figure>
+<p><b>Counter-evidence, shown too:</b></p>
+<ul>
+<li>The classic signal "short-term holder cost falls below long-term holder cost" did not occur this cycle. The reason is that the bear market was so shallow the two lines never came close.</li>
+<li>The "losses exceeding profits over the past year" signal has historically appeared within 44 days of the real bottom; this cycle it only appeared on September 15, 77 days late.</li>
+</ul>
+<h3>The up-leg since June 30</h3>
+<div class="concepts"><div class="cc"><div class="ct"><i>Concept</i>Up-leg / down-leg</div><p>Cut the price path into segments, switching direction whenever price reverses by more than 10%. An up segment is an up-leg and a down segment is a down-leg; as long as the pullback inside a leg stays under 10%, it is still the same leg. This is also the convention used in our daily Hot-Coin Analysis.</p></div></div>
+<p>Counting that way:</p>
+<ul>
+<li><b>This bear market had only 4 down-legs:</b> 124,824 → 84,775; 97,044 → 63,495; 74,724 → 65,967; 82,257 → 58,525 (with a rebound between each). The four earlier bear markets (2011, 2013-15, 2017-18, 2021-22) had 12, 15, 11 and 10 down-legs. Shallow and fast, which is the same thing as "the amplitude is shrinking."</li>
+<li><b>The stretch from June 30 to now is a single up-leg, and it has not broken:</b></li>
+</ul>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Reading</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Start</td>
+<td>2026-06-30, 58,525</td>
+</tr>
+<tr>
+<td>Leg age</td>
+<td>103 days</td>
+</tr>
+<tr>
+<td>High</td>
+<td>about 86,500 on September 21 (+47.8%)</td>
+</tr>
+<tr>
+<td>Max drawdown inside the leg</td>
+<td>6.9% (September 15); under 10%, so the leg has not broken</td>
+</tr>
+<tr>
+<td>Now</td>
+<td>83,084 (+42.0%, −4.0% from the high)</td>
+</tr>
+</tbody>
+</table></div>
+<figure class="fig"><figcaption>Figure 8  The up-leg since June 30 (x-axis: leg age): the high came on day 83, before the 89-day line</figcaption>
+<svg viewBox="0 0 860 366" width="100%" role="img" aria-label="The up-leg since June 30 and the 89-day line">
+<line x1="62.0" y1="281.1" x2="570.0" y2="281.1" stroke="#ece7e0" stroke-width="1"/>
+<text x="54.0" y="285.1" text-anchor="end" class="ax">60k</text>
+<line x1="62.0" y1="203.4" x2="570.0" y2="203.4" stroke="#ece7e0" stroke-width="1"/>
+<text x="54.0" y="207.4" text-anchor="end" class="ax">70k</text>
+<line x1="62.0" y1="125.7" x2="570.0" y2="125.7" stroke="#ece7e0" stroke-width="1"/>
+<text x="54.0" y="129.7" text-anchor="end" class="ax">80k</text>
+<line x1="62.0" y1="48.0" x2="570.0" y2="48.0" stroke="#ece7e0" stroke-width="1"/>
+<text x="54.0" y="52.0" text-anchor="end" class="ax">90k</text>
+<line x1="62.0" y1="320.0" x2="62.0" y2="325.0" stroke="#9a9186" stroke-width="1"/>
+<text x="62.0" y="340.0" text-anchor="middle" class="ax">0</text>
+<line x1="154.4" y1="320.0" x2="154.4" y2="325.0" stroke="#9a9186" stroke-width="1"/>
+<text x="154.4" y="340.0" text-anchor="middle" class="ax">20</text>
+<line x1="246.7" y1="320.0" x2="246.7" y2="325.0" stroke="#9a9186" stroke-width="1"/>
+<text x="246.7" y="340.0" text-anchor="middle" class="ax">40</text>
+<line x1="339.1" y1="320.0" x2="339.1" y2="325.0" stroke="#9a9186" stroke-width="1"/>
+<text x="339.1" y="340.0" text-anchor="middle" class="ax">60</text>
+<line x1="431.5" y1="320.0" x2="431.5" y2="325.0" stroke="#9a9186" stroke-width="1"/>
+<text x="431.5" y="340.0" text-anchor="middle" class="ax">80</text>
+<line x1="523.8" y1="320.0" x2="523.8" y2="325.0" stroke="#9a9186" stroke-width="1"/>
+<text x="523.8" y="340.0" text-anchor="middle" class="ax">100</text>
+<text x="316.0" y="358.0" text-anchor="middle" class="ax">Leg age (days; June 30 = 0)</text>
+<rect x="473.0" y="48.0" width="97.0" height="272.0" fill="#8a6d1f" fill-opacity="0.08" rx="0"/>
+<line x1="473.0" y1="42.0" x2="473.0" y2="320.0" stroke="#8a6d1f" stroke-width="1.4" stroke-dasharray="5 4"/>
+<text x="479.0" y="52.0" class="lbl" style="fill:#8a6d1f">89-day line (9/27)</text>
+<path d="M62.0,292.6 L66.6,280.6 L71.2,270.0 L75.9,261.2 L80.5,257.1 L85.1,253.0 L89.7,249.6 L94.3,254.3 L98.9,263.9 L103.6,256.4 L108.2,249.1 L112.8,250.9 L117.4,252.0 L122.0,264.6 L126.7,242.8 L131.3,244.1 L135.9,251.8 L140.5,250.7 L145.1,244.0 L149.7,245.0 L154.4,240.9 L159.0,231.4 L163.6,234.6 L168.2,241.6 L172.8,249.3 L177.5,247.5 L182.1,239.7 L186.7,252.2 L191.3,252.2 L195.9,250.8 L200.5,243.6 L205.2,258.8 L209.8,259.8 L214.4,254.4 L219.0,254.3 L223.6,248.8 L228.3,245.3 L232.9,248.4 L237.5,243.3 L242.1,243.0 L246.7,243.3 L251.3,250.8 L256.0,253.6 L260.6,255.0 L265.2,254.8 L269.8,258.4 L274.4,257.6 L279.1,259.2 L283.7,246.7 L288.3,244.6 L292.9,209.1 L297.5,179.6 L302.1,138.5 L306.8,148.9 L311.4,144.4 L316.0,134.3 L320.6,136.6 L325.2,133.8 L329.9,123.4 L334.5,143.5 L339.1,139.4 L343.7,143.7 L348.3,137.1 L352.9,145.9 L357.6,147.6 L362.2,116.1 L366.8,128.2 L371.4,127.1 L376.0,123.2 L380.7,132.9 L385.3,137.8 L389.9,139.6 L394.5,151.5 L399.1,147.7 L403.7,147.1 L408.4,150.9 L413.0,139.1 L417.6,159.5 L422.2,156.2 L426.8,153.8 L431.5,118.4 L436.1,115.9 L440.7,116.4 L445.3,75.2 L449.9,77.5 L454.5,91.3 L459.2,91.6 L463.8,94.1 L468.4,91.6 L473.0,91.6 L477.6,98.4 L482.3,97.2 L486.9,97.9 L491.5,88.6 L496.1,90.6 L500.7,88.1 L505.3,86.0 L510.0,78.9 L514.6,84.9 L519.2,101.1 L523.8,112.9 L528.4,107.4 L533.1,101.5 L537.7,101.7" fill="none" stroke="#15628f" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="62.0" cy="292.6" r="5" fill="#1c1a17" stroke="#fff" stroke-width="1.5"/>
+<text x="71.0" y="290.6" class="lbl2" style="fill:#1c1a17">Start 58,525</text>
+<circle cx="445.3" cy="75.2" r="5.5" fill="#c02128" stroke="#fff" stroke-width="1.5"/>
+<text x="437.3" y="63.2" text-anchor="end" class="lbl" style="fill:#c02128;paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round">High 86,505 (9/21, +47.8%)</text>
+<circle cx="417.6" cy="159.5" r="5" fill="#8a6d1f" stroke="#fff" stroke-width="1.5"/>
+<text x="408.6" y="181.5" text-anchor="end" class="lbl" style="fill:#8a6d1f;paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round">Max drawdown in leg −6.9% (9/15)</text>
+<circle cx="537.7" cy="101.7" r="5.5" fill="#15628f" stroke="#fff" stroke-width="1.5"/>
+<text x="539.7" y="125.7" text-anchor="middle" class="lbl" style="fill:#15628f">Today · day 103</text>
+<text x="539.7" y="139.7" text-anchor="middle" class="lbl2" style="fill:#15628f">83,084</text>
+<text x="620.0" y="34.0" class="lbl" style="fill:#1c1a17">Gain left after day 89</text>
+<text x="620.0" y="51.0" class="note">5 up-legs since 2019 that ran 89 days</text>
+<text x="620.0" y="86.0" class="ax">Gain left</text>
+<text x="772.0" y="86.0" class="ax">Drawdown</text>
+<text x="620.0" y="115.0" class="ax">1</text>
+<rect x="634.0" y="100.0" width="69.5" height="18.0" fill="#15628f" fill-opacity="0.9" rx="2"/>
+<text x="709.5" y="114.0" class="lbl" style="fill:#15628f">+39.7%</text>
+<text x="772.0" y="114.0" class="lbl" style="fill:#c02128">−11.2%</text>
+<text x="620.0" y="155.0" class="ax">2</text>
+<rect x="634.0" y="140.0" width="2.0" height="18.0" fill="#15628f" fill-opacity="0.9" rx="2"/>
+<text x="642.0" y="154.0" class="lbl" style="fill:#15628f">+0.9%</text>
+<text x="772.0" y="154.0" class="lbl" style="fill:#c02128">−18.9%</text>
+<text x="620.0" y="195.0" class="ax">3</text>
+<rect x="634.0" y="180.0" width="12.9" height="18.0" fill="#15628f" fill-opacity="0.9" rx="2"/>
+<text x="653.0" y="194.0" class="lbl" style="fill:#15628f">+7.4%</text>
+<text x="772.0" y="194.0" class="lbl" style="fill:#c02128">−15.7%</text>
+<text x="620.0" y="235.0" class="ax">4</text>
+<rect x="634.0" y="220.0" width="13.5" height="18.0" fill="#15628f" fill-opacity="0.9" rx="2"/>
+<text x="653.5" y="234.0" class="lbl" style="fill:#15628f">+7.7%</text>
+<text x="772.0" y="234.0" class="lbl" style="fill:#c02128">−12.6%</text>
+<text x="620.0" y="275.0" class="ax">5</text>
+<rect x="634.0" y="260.0" width="22.6" height="18.0" fill="#15628f" fill-opacity="0.9" rx="2"/>
+<text x="662.6" y="274.0" class="lbl" style="fill:#15628f">+12.9%</text>
+<text x="772.0" y="274.0" class="lbl" style="fill:#c02128">−12.2%</text>
+<text x="620.0" y="304.0" class="note">All 5 topped 2–38 days after day 89;</text>
+<text x="620.0" y="318.0" class="note">drawdown is measured from that top.</text>
+</svg>
+</figure>
+<p><b>The 89-day line</b>: one alert in our daily Hot-Coin Analysis says that once an up-leg has run 89 days, it is "reduce only, no adding." The basis: of the 5 up-legs since 2019 that ran 89 days, all topped within 2 to 38 days afterwards. The gains remaining after day 89 were +39.7%, +0.9%, +7.4%, +7.7% and +12.9%, with drawdowns of 11% to 19% after the top. This leg reached day 89 on September 27, and its high (September 21) came before day 89.</p>
+<p>Note: the 89-day line does not hold across all data since 2010; it held in all 5 cases only since 2019. We treat it as an alert, not a law.</p>
+<div class="tip"><b>What it means for you</b>  The cycle layer says the bottom has passed; the up-leg says this stretch has already run a while. The two do not contradict. The broad direction is up, but do not chase here. Wait for a pullback of 10% or more in this leg and a new leg to begin before considering adding.</div>
+<h3>Current reading (October 11, 2026)</h3>
+<div class="now"><b>State: late bear → early bull (bottom confirmed), since August 27, 2026, day 46.</b></div>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Reading</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Price</td>
+<td>83,084</td>
+</tr>
+<tr>
+<td>From this cycle's top (2025-10-06, 124,824)</td>
+<td>−33.4%, 370 days</td>
+</tr>
+<tr>
+<td>From this cycle's low (2026-06-30, 58,525)</td>
+<td>+42.0%, 103 days</td>
+</tr>
+<tr>
+<td>MVRV</td>
+<td>1.54 (the average holder is up 54%)</td>
+</tr>
+<tr>
+<td>Price ÷ 200-week moving average</td>
+<td>1.25</td>
+</tr>
+</tbody>
+</table></div>
+<figure class="fig"><figcaption>Figure 9  Price and five cost lines since June 2025</figcaption>
+<svg viewBox="0 0 860 392" width="100%" role="img" aria-label="Price and five cost lines since June 2025">
+<line x1="62.0" y1="322.4" x2="650.0" y2="322.4" stroke="#ece7e0" stroke-width="1"/>
+<text x="54.0" y="326.4" text-anchor="end" class="ax">40k</text>
+<line x1="62.0" y1="267.2" x2="650.0" y2="267.2" stroke="#ece7e0" stroke-width="1"/>
+<text x="54.0" y="271.2" text-anchor="end" class="ax">60k</text>
+<line x1="62.0" y1="212.0" x2="650.0" y2="212.0" stroke="#ece7e0" stroke-width="1"/>
+<text x="54.0" y="216.0" text-anchor="end" class="ax">80k</text>
+<line x1="62.0" y1="156.8" x2="650.0" y2="156.8" stroke="#ece7e0" stroke-width="1"/>
+<text x="54.0" y="160.8" text-anchor="end" class="ax">100k</text>
+<line x1="62.0" y1="101.6" x2="650.0" y2="101.6" stroke="#ece7e0" stroke-width="1"/>
+<text x="54.0" y="105.6" text-anchor="end" class="ax">120k</text>
+<line x1="97.5" y1="350.0" x2="97.5" y2="355.0" stroke="#9a9186" stroke-width="1"/>
+<text x="97.5" y="370.0" text-anchor="middle" class="ax">2025-07</text>
+<line x1="206.3" y1="350.0" x2="206.3" y2="355.0" stroke="#9a9186" stroke-width="1"/>
+<text x="206.3" y="370.0" text-anchor="middle" class="ax">2025-10</text>
+<line x1="315.2" y1="350.0" x2="315.2" y2="355.0" stroke="#9a9186" stroke-width="1"/>
+<text x="315.2" y="370.0" text-anchor="middle" class="ax">2026-01</text>
+<line x1="421.7" y1="350.0" x2="421.7" y2="355.0" stroke="#9a9186" stroke-width="1"/>
+<text x="421.7" y="370.0" text-anchor="middle" class="ax">2026-04</text>
+<line x1="529.3" y1="350.0" x2="529.3" y2="355.0" stroke="#9a9186" stroke-width="1"/>
+<text x="529.3" y="370.0" text-anchor="middle" class="ax">2026-07</text>
+<line x1="638.2" y1="350.0" x2="638.2" y2="355.0" stroke="#9a9186" stroke-width="1"/>
+<text x="638.2" y="370.0" text-anchor="middle" class="ax">2026-10</text>
+<line x1="62.0" y1="271.3" x2="650.0" y2="271.3" stroke="#c02128" stroke-width="1.4" stroke-dasharray="6 4"/>
+<text x="68.0" y="264.3" class="lbl" style="fill:#c02128">58,525  invalidation line</text>
+<line x1="528.1" y1="64.0" x2="528.1" y2="350.0" stroke="#9a9186" stroke-width="1" stroke-dasharray="2 3"/>
+<text x="522.1" y="60.0" text-anchor="end" class="lbl2" style="fill:#1c1a17">6/30 low</text>
+<line x1="596.8" y1="64.0" x2="596.8" y2="350.0" stroke="#9a9186" stroke-width="1" stroke-dasharray="2 3"/>
+<text x="602.8" y="60.0" text-anchor="start" class="lbl2" style="fill:#1c1a17">8/27 bottom confirmed</text>
+<path d="M62.0,140.9 L63.2,140.5 L64.4,141.7 L65.5,143.6 L66.7,152.2 L67.9,144.6 L69.1,141.1 L70.3,141.0 L71.5,128.7 L72.6,129.0 L73.8,132.9 L75.0,140.2 L76.2,140.2 L77.4,141.7 L78.6,141.6 L79.7,136.8 L80.9,144.0 L82.1,143.5 L83.3,143.8 L84.5,147.8 L85.7,152.5 L86.8,154.3 L88.0,141.6 L89.2,140.3 L90.4,136.6 L91.6,137.4 L92.8,137.2 L93.9,136.5 L95.1,133.7 L96.3,137.1 L97.5,141.4 L98.7,132.2 L99.9,130.2 L101.0,134.5 L102.2,134.0 L103.4,131.5 L104.6,134.0 L105.8,132.1 L107.0,125.3 L108.1,113.0 L109.3,108.2 L110.5,108.8 L111.7,104.6 L112.9,102.0 L114.1,107.9 L115.2,105.1 L116.4,103.0 L117.6,107.2 L118.8,107.4 L120.0,109.0 L121.2,108.7 L122.3,101.4 L123.5,105.3 L124.7,106.1 L125.9,108.4 L127.1,107.2 L128.3,103.2 L129.4,107.1 L130.6,107.5 L131.8,107.9 L133.0,113.1 L134.2,120.1 L135.4,122.2 L136.5,117.4 L137.7,114.8 L138.9,117.9 L140.1,115.3 L141.3,108.7 L142.5,110.6 L143.6,111.2 L144.8,103.8 L146.0,105.1 L147.2,101.2 L148.4,92.1 L149.5,105.7 L150.7,109.0 L151.9,108.6 L153.1,108.2 L154.3,111.8 L155.5,121.2 L156.6,117.4 L157.8,122.7 L159.0,110.4 L160.2,114.6 L161.4,119.5 L162.6,129.0 L163.7,124.0 L164.9,125.7 L166.1,122.4 L167.3,133.4 L168.5,132.7 L169.7,133.8 L170.8,132.0 L172.0,126.1 L173.2,124.3 L174.4,126.7 L175.6,127.2 L176.8,128.5 L177.9,125.6 L179.1,123.4 L180.3,125.1 L181.5,118.4 L182.7,114.2 L183.9,112.2 L185.0,112.7 L186.2,114.3 L187.4,114.2 L188.6,110.4 L189.8,111.1 L191.0,109.8 L192.1,113.7 L193.3,113.3 L194.5,114.5 L195.7,121.7 L196.9,123.5 L198.1,120.0 L199.2,131.5 L200.4,130.1 L201.6,130.2 L202.8,123.2 L204.0,117.2 L205.2,118.2 L206.3,106.0 L207.5,100.1 L208.7,95.1 L209.9,95.0 L211.1,91.9 L212.3,88.3 L213.4,97.2 L214.6,92.2 L215.8,97.2 L217.0,118.8 L218.2,126.6 L219.4,115.0 L220.5,114.5 L221.7,120.0 L222.9,126.8 L224.1,134.3 L225.3,138.5 L226.5,137.1 L227.6,132.8 L228.8,127.4 L230.0,132.8 L231.2,135.6 L232.4,129.0 L233.5,126.4 L234.7,124.7 L235.9,116.6 L237.1,117.9 L238.3,121.0 L239.5,128.6 L240.6,134.7 L241.8,130.4 L243.0,129.2 L244.2,128.1 L245.4,138.9 L246.6,153.1 L247.7,146.0 L248.9,153.4 L250.1,147.3 L251.3,150.4 L252.5,143.9 L253.7,140.0 L254.8,148.6 L256.0,152.2 L257.2,156.7 L258.4,172.0 L259.6,169.1 L260.8,172.9 L261.9,179.1 L263.1,176.6 L264.3,180.8 L265.5,192.9 L266.7,198.3 L267.9,198.8 L269.0,193.0 L270.2,188.9 L271.4,191.5 L272.6,183.2 L273.8,180.7 L275.0,181.7 L276.1,182.1 L277.3,182.7 L278.5,194.0 L279.7,180.2 L280.9,174.4 L282.1,178.3 L283.2,186.4 L284.4,186.7 L285.6,184.2 L286.8,182.5 L288.0,176.6 L289.2,178.6 L290.3,177.2 L291.5,183.5 L292.7,183.7 L293.9,189.7 L295.1,194.5 L296.3,190.6 L297.4,195.3 L298.6,197.0 L299.8,189.5 L301.0,189.1 L302.2,188.4 L303.4,188.6 L304.5,191.7 L305.7,191.0 L306.9,192.0 L308.1,191.8 L309.3,190.8 L310.5,190.6 L311.6,192.3 L312.8,188.7 L314.0,191.3 L315.2,188.0 L316.4,184.6 L317.5,182.7 L318.7,180.6 L319.9,173.5 L321.1,174.5 L322.3,181.1 L323.5,181.4 L324.6,182.9 L325.8,183.3 L327.0,182.4 L328.2,181.3 L329.4,169.8 L330.6,165.0 L331.7,169.1 L332.9,169.3 L334.1,170.3 L335.3,172.6 L336.5,177.4 L337.7,189.3 L338.8,185.5 L340.0,186.1 L341.2,185.9 L342.4,186.6 L343.6,194.2 L344.8,189.0 L345.9,186.4 L347.1,186.7 L348.3,199.5 L349.5,200.9 L350.7,215.6 L351.9,220.5 L353.0,215.5 L354.2,223.9 L355.4,231.1 L356.6,257.6 L357.8,237.8 L359.0,241.9 L360.1,238.2 L361.3,238.9 L362.5,243.2 L363.7,247.9 L364.9,250.0 L366.1,242.7 L367.2,240.2 L368.4,243.4 L369.6,243.1 L370.8,246.6 L372.0,249.6 L373.2,248.1 L374.3,245.2 L375.5,245.1 L376.7,246.4 L377.9,254.3 L379.1,255.8 L380.3,245.0 L381.4,246.4 L382.6,251.0 L383.8,248.0 L385.0,251.4 L386.2,242.6 L387.4,243.9 L388.5,232.2 L389.7,236.9 L390.9,244.5 L392.1,247.0 L393.3,250.1 L394.5,243.7 L395.6,239.9 L396.8,238.8 L398.0,238.1 L399.2,237.0 L400.4,236.5 L401.5,232.1 L402.7,226.6 L403.9,228.3 L405.1,236.1 L406.3,239.7 L407.5,238.2 L408.6,240.4 L409.8,245.1 L411.0,237.6 L412.2,237.9 L413.4,236.1 L414.6,243.1 L415.7,250.0 L416.9,249.7 L418.1,250.7 L419.3,248.8 L420.5,244.5 L421.7,244.8 L422.8,248.1 L424.0,248.2 L425.2,247.1 L426.4,242.6 L427.6,243.1 L428.8,233.9 L429.9,236.6 L431.1,234.7 L432.3,231.5 L433.5,231.0 L434.7,237.7 L435.9,226.8 L437.0,228.1 L438.2,226.5 L439.4,225.5 L440.6,220.0 L441.8,223.6 L443.0,228.8 L444.1,223.6 L445.3,222.7 L446.5,216.6 L447.7,216.9 L448.9,219.1 L450.1,218.6 L451.2,216.0 L452.4,219.6 L453.6,222.2 L454.8,223.6 L456.0,222.2 L457.2,217.2 L458.3,215.6 L459.5,215.7 L460.7,212.5 L461.9,209.4 L463.1,208.2 L464.3,212.0 L465.4,211.5 L466.6,210.2 L467.8,205.8 L469.0,207.3 L470.2,210.5 L471.4,214.0 L472.5,208.8 L473.7,214.6 L474.9,217.1 L476.1,218.9 L477.3,220.3 L478.5,220.8 L479.6,219.2 L480.8,218.6 L482.0,224.2 L483.2,221.3 L484.4,220.4 L485.5,219.6 L486.7,223.5 L487.9,227.8 L489.1,229.9 L490.3,230.4 L491.5,229.3 L492.6,229.7 L493.8,235.9 L495.0,249.1 L496.2,255.5 L497.4,257.2 L498.6,264.7 L499.7,265.1 L500.9,258.5 L502.1,258.6 L503.3,262.7 L504.5,263.2 L505.7,257.6 L506.8,257.6 L508.0,255.0 L509.2,251.7 L510.4,250.0 L511.6,251.6 L512.8,255.1 L513.9,259.4 L515.1,258.1 L516.3,255.6 L517.5,257.9 L518.7,256.4 L519.9,260.0 L521.0,264.7 L522.2,267.6 L523.4,267.3 L524.6,267.3 L525.8,268.5 L527.0,266.7 L528.1,271.3 L529.3,267.0 L530.5,263.2 L531.7,260.1 L532.9,258.7 L534.1,257.2 L535.2,256.0 L536.4,257.7 L537.6,261.1 L538.8,258.4 L540.0,255.8 L541.2,256.5 L542.3,256.8 L543.5,261.3 L544.7,253.6 L545.9,254.0 L547.1,256.8 L548.3,256.4 L549.4,254.0 L550.6,254.4 L551.8,252.9 L553.0,249.5 L554.2,250.7 L555.4,253.1 L556.5,255.9 L557.7,255.2 L558.9,252.5 L560.1,256.9 L561.3,256.9 L562.5,256.4 L563.6,253.9 L564.8,259.3 L566.0,259.6 L567.2,257.7 L568.4,257.7 L569.5,255.7 L570.7,254.5 L571.9,255.6 L573.1,253.8 L574.3,253.7 L575.5,253.8 L576.6,256.4 L577.8,257.4 L579.0,257.9 L580.2,257.8 L581.4,259.1 L582.6,258.8 L583.7,259.4 L584.9,255.0 L586.1,254.2 L587.3,241.6 L588.5,231.1 L589.7,216.5 L590.8,220.2 L592.0,218.6 L593.2,215.1 L594.4,215.9 L595.6,214.9 L596.8,211.2 L597.9,218.3 L599.1,216.8 L600.3,218.4 L601.5,216.0 L602.7,219.2 L603.9,219.8 L605.0,208.6 L606.2,212.9 L607.4,212.5 L608.6,211.1 L609.8,214.6 L611.0,216.3 L612.1,216.9 L613.3,221.2 L614.5,219.8 L615.7,219.6 L616.9,220.9 L618.1,216.7 L619.2,224.0 L620.4,222.8 L621.6,222.0 L622.8,209.4 L624.0,208.5 L625.2,208.7 L626.3,194.0 L627.5,194.9 L628.7,199.8 L629.9,199.9 L631.1,200.8 L632.3,199.9 L633.4,199.9 L634.6,202.3 L635.8,201.9 L637.0,202.1 L638.2,198.8 L639.4,199.5 L640.5,198.7 L641.7,197.9 L642.9,195.4 L644.1,197.5 L645.3,203.2 L646.5,207.4 L647.6,205.5 L648.8,203.4 L650.0,203.5" fill="none" stroke="#1c1a17" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M62.0,167.5 L63.2,166.2 L64.4,164.8 L65.5,164.6 L66.7,164.7 L67.9,164.6 L69.1,164.4 L70.3,164.3 L71.5,163.8 L72.6,163.1 L73.8,162.7 L75.0,162.6 L76.2,162.5 L77.4,162.4 L78.6,162.4 L79.7,161.8 L80.9,161.9 L82.1,161.8 L83.3,161.9 L84.5,161.9 L85.7,162.0 L86.8,162.3 L88.0,162.4 L89.2,162.1 L90.4,161.5 L91.6,161.1 L92.8,160.9 L93.9,160.8 L95.1,160.6 L96.3,160.2 L97.5,160.2 L98.7,159.9 L99.9,159.4 L101.0,158.8 L102.2,158.7 L103.4,158.5 L104.6,158.3 L105.8,158.1 L107.0,157.6 L108.1,156.9 L109.3,155.2 L110.5,154.8 L111.7,154.4 L112.9,152.4 L114.1,151.9 L115.2,148.5 L116.4,146.7 L117.6,146.0 L118.8,145.8 L120.0,145.6 L121.2,144.7 L122.3,144.0 L123.5,143.5 L124.7,143.1 L125.9,142.6 L127.1,142.2 L128.3,141.7 L129.4,141.1 L130.6,140.7 L131.8,140.4 L133.0,140.0 L134.2,140.0 L135.4,139.8 L136.5,139.7 L137.7,139.4 L138.9,139.5 L140.1,139.4 L141.3,138.6 L142.5,137.9 L143.6,137.1 L144.8,136.1 L146.0,135.5 L147.2,134.9 L148.4,134.2 L149.5,133.6 L150.7,133.2 L151.9,132.8 L153.1,132.6 L154.3,132.6 L155.5,132.6 L156.6,132.6 L157.8,132.7 L159.0,131.9 L160.2,131.7 L161.4,131.6 L162.6,131.5 L163.7,131.3 L164.9,131.3 L166.1,131.1 L167.3,131.4 L168.5,131.0 L169.7,130.7 L170.8,130.3 L172.0,130.1 L173.2,130.0 L174.4,129.6 L175.6,129.2 L176.8,128.8 L177.9,128.4 L179.1,128.1 L180.3,128.0 L181.5,127.8 L182.7,127.4 L183.9,127.1 L185.0,126.8 L186.2,126.3 L187.4,126.3 L188.6,126.0 L189.8,125.7 L191.0,125.2 L192.1,124.8 L193.3,124.3 L194.5,124.1 L195.7,124.1 L196.9,124.1 L198.1,124.1 L199.2,124.1 L200.4,124.2 L201.6,124.2 L202.8,124.0 L204.0,123.6 L205.2,123.2 L206.3,122.6 L207.5,121.7 L208.7,120.6 L209.9,120.2 L211.1,119.8 L212.3,119.2 L213.4,118.8 L214.6,118.2 L215.8,117.9 L217.0,118.0 L218.2,118.4 L219.4,118.3 L220.5,118.2 L221.7,118.9 L222.9,119.1 L224.1,119.5 L225.3,120.0 L226.5,120.0 L227.6,120.1 L228.8,120.0 L230.0,119.9 L231.2,120.4 L232.4,120.6 L233.5,120.7 L234.7,120.7 L235.9,120.5 L237.1,120.2 L238.3,120.1 L239.5,120.2 L240.6,120.6 L241.8,120.3 L243.0,120.2 L244.2,120.2 L245.4,120.6 L246.6,121.7 L247.7,122.4 L248.9,122.9 L250.1,123.8 L251.3,124.0 L252.5,123.9 L253.7,123.8 L254.8,124.1 L256.0,124.3 L257.2,125.2 L258.4,126.5 L259.6,126.6 L260.8,127.0 L261.9,128.1 L263.1,129.8 L264.3,130.8 L265.5,131.7 L266.7,134.0 L267.9,141.9 L269.0,143.6 L270.2,143.9 L271.4,144.4 L272.6,145.0 L273.8,145.2 L275.0,145.5 L276.1,145.6 L277.3,145.8 L278.5,146.6 L279.7,147.1 L280.9,147.4 L282.1,147.6 L283.2,148.4 L284.4,148.6 L285.6,148.8 L286.8,149.7 L288.0,150.0 L289.2,150.3 L290.3,150.9 L291.5,151.5 L292.7,151.8 L293.9,152.3 L295.1,153.3 L296.3,153.8 L297.4,154.3 L298.6,154.7 L299.8,155.3 L301.0,155.8 L302.2,155.9 L303.4,156.2 L304.5,156.6 L305.7,156.9 L306.9,157.1 L308.1,157.8 L309.3,158.0 L310.5,158.3 L311.6,158.6 L312.8,159.0 L314.0,159.4 L315.2,159.7 L316.4,159.9 L317.5,160.2 L318.7,160.4 L319.9,160.3 L321.1,160.3 L322.3,160.7 L323.5,161.0 L324.6,161.3 L325.8,161.7 L327.0,162.3 L328.2,162.7 L329.4,162.7 L330.6,162.5 L331.7,162.4 L332.9,162.6 L334.1,162.7 L335.3,162.9 L336.5,163.2 L337.7,163.8 L338.8,164.2 L340.0,164.6 L341.2,167.0 L342.4,167.2 L343.6,167.5 L344.8,167.9 L345.9,168.1 L347.1,168.2 L348.3,168.7 L349.5,169.5 L350.7,170.3 L351.9,170.9 L353.0,171.8 L354.2,173.0 L355.4,174.1 L356.6,177.1 L357.8,178.2 L359.0,179.2 L360.1,179.5 L361.3,180.2 L362.5,181.0 L363.7,181.7 L364.9,182.6 L366.1,183.4 L367.2,183.9 L368.4,184.3 L369.6,184.9 L370.8,185.5 L372.0,186.1 L373.2,186.8 L374.3,187.6 L375.5,187.9 L376.7,188.3 L377.9,189.2 L379.1,190.1 L380.3,190.4 L381.4,190.7 L382.6,191.3 L383.8,191.6 L385.0,192.0 L386.2,192.7 L387.4,193.1 L388.5,193.2 L389.7,193.5 L390.9,194.5 L392.1,195.1 L393.3,195.8 L394.5,196.2 L395.6,196.5 L396.8,196.9 L398.0,197.3 L399.2,197.7 L400.4,198.6 L401.5,198.9 L402.7,199.1 L403.9,199.3 L405.1,199.6 L406.3,200.0 L407.5,200.3 L408.6,200.8 L409.8,201.5 L411.0,201.8 L412.2,202.6 L413.4,202.9 L414.6,203.3 L415.7,204.4 L416.9,205.2 L418.1,205.9 L419.3,206.3 L420.5,206.8 L421.7,206.9 L422.8,207.5 L424.0,208.1 L425.2,208.6 L426.4,209.0 L427.6,209.4 L428.8,209.6 L429.9,209.5 L431.1,209.8 L432.3,210.1 L433.5,210.2 L434.7,210.6 L435.9,210.9 L437.0,210.6 L438.2,210.6 L439.4,210.8 L440.6,210.9 L441.8,211.1 L443.0,211.4 L444.1,211.6 L445.3,213.5 L446.5,213.8 L447.7,213.9 L448.9,215.2 L450.1,215.3 L451.2,215.3 L452.4,215.3 L453.6,215.4 L454.8,215.5 L456.0,215.6 L457.2,215.5 L458.3,215.7 L459.5,215.9 L460.7,216.0 L461.9,215.6 L463.1,215.4 L464.3,215.7 L465.4,215.8 L466.6,216.2 L467.8,216.2 L469.0,216.3 L470.2,216.3 L471.4,216.3 L472.5,216.4 L473.7,216.5 L474.9,216.7 L476.1,216.7 L477.3,217.0 L478.5,217.2 L479.6,217.2 L480.8,217.4 L482.0,217.7 L483.2,218.2 L484.4,218.2 L485.5,218.3 L486.7,218.5 L487.9,218.7 L489.1,219.6 L490.3,220.5 L491.5,220.9 L492.6,221.2 L493.8,221.9 L495.0,223.1 L496.2,224.3 L497.4,225.5 L498.6,227.0 L499.7,228.8 L500.9,229.0 L502.1,229.5 L503.3,230.5 L504.5,231.5 L505.7,232.2 L506.8,232.7 L508.0,233.1 L509.2,233.6 L510.4,234.1 L511.6,234.7 L512.8,234.9 L513.9,235.4 L515.1,236.1 L516.3,236.4 L517.5,236.8 L518.7,237.1 L519.9,237.6 L521.0,238.0 L522.2,239.2 L523.4,240.1 L524.6,240.2 L525.8,240.5 L527.0,241.3 L528.1,242.0 L529.3,242.3 L530.5,242.6 L531.7,242.8 L532.9,242.8 L534.1,242.8 L535.2,242.6 L536.4,242.7 L537.6,242.9 L538.8,243.0 L540.0,243.4 L541.2,243.4 L542.3,243.5 L543.5,245.0 L544.7,245.0 L545.9,245.0 L547.1,245.1 L548.3,245.3 L549.4,245.3 L550.6,245.2 L551.8,245.2 L553.0,244.9 L554.2,244.9 L555.4,245.0 L556.5,245.0 L557.7,245.1 L558.9,245.0 L560.1,245.0 L561.3,245.2 L562.5,245.2 L563.6,245.2 L564.8,245.7 L566.0,246.2 L567.2,246.4 L568.4,246.6 L569.5,246.7 L570.7,246.7 L571.9,246.7 L573.1,246.8 L574.3,246.8 L575.5,246.8 L576.6,246.9 L577.8,247.1 L579.0,247.3 L580.2,247.4 L581.4,247.8 L582.6,247.9 L583.7,248.0 L584.9,248.0 L586.1,248.0 L587.3,247.6 L588.5,246.4 L589.7,244.8 L590.8,244.5 L592.0,244.3 L593.2,242.9 L594.4,241.9 L595.6,241.2 L596.8,240.3 L597.9,239.7 L599.1,239.6 L600.3,239.5 L601.5,239.1 L602.7,238.8 L603.9,238.6 L605.0,238.0 L606.2,237.5 L607.4,237.4 L608.6,237.2 L609.8,237.1 L611.0,237.0 L612.1,236.7 L613.3,236.6 L614.5,236.6 L615.7,236.6 L616.9,236.6 L618.1,236.4 L619.2,236.5 L620.4,236.2 L621.6,236.1 L622.8,235.4 L624.0,235.2 L625.2,235.2 L626.3,234.0 L627.5,232.6 L628.7,232.5 L629.9,232.1 L631.1,231.7 L632.3,231.7 L633.4,231.7 L634.6,231.1 L635.8,230.7 L637.0,230.4 L638.2,230.1 L639.4,229.4 L640.5,229.4 L641.7,229.3 L642.9,228.7 L644.1,228.1 L645.3,228.0 L646.5,228.0 L647.6,227.8 L648.8,227.7 L650.0,227.7" fill="none" stroke="#15628f" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M62.0,242.3 L63.2,241.7 L64.4,241.2 L65.5,240.9 L66.7,240.9 L67.9,240.8 L69.1,240.6 L70.3,240.5 L71.5,240.3 L72.6,240.0 L73.8,239.7 L75.0,239.6 L76.2,239.3 L77.4,239.3 L78.6,239.2 L79.7,238.7 L80.9,238.7 L82.1,238.5 L83.3,238.4 L84.5,238.3 L85.7,238.2 L86.8,238.1 L88.0,238.0 L89.2,237.7 L90.4,237.4 L91.6,237.0 L92.8,236.6 L93.9,236.5 L95.1,236.4 L96.3,235.9 L97.5,235.8 L98.7,235.6 L99.9,235.2 L101.0,234.7 L102.2,234.7 L103.4,234.6 L104.6,234.3 L105.8,234.0 L107.0,233.5 L108.1,233.2 L109.3,232.5 L110.5,232.1 L111.7,231.9 L112.9,231.1 L114.1,230.7 L115.2,229.4 L116.4,228.6 L117.6,228.2 L118.8,228.0 L120.0,227.8 L121.2,227.4 L122.3,226.9 L123.5,226.5 L124.7,226.3 L125.9,226.0 L127.1,225.8 L128.3,225.7 L129.4,225.4 L130.6,225.1 L131.8,224.8 L133.0,224.6 L134.2,224.6 L135.4,224.5 L136.5,224.3 L137.7,224.2 L138.9,224.1 L140.1,224.0 L141.3,223.7 L142.5,223.5 L143.6,223.4 L144.8,223.2 L146.0,223.0 L147.2,222.7 L148.4,222.4 L149.5,222.0 L150.7,221.9 L151.9,221.3 L153.1,221.2 L154.3,221.2 L155.5,221.0 L156.6,220.9 L157.8,220.8 L159.0,220.5 L160.2,220.4 L161.4,220.3 L162.6,220.3 L163.7,220.2 L164.9,220.1 L166.1,219.9 L167.3,219.2 L168.5,219.1 L169.7,219.1 L170.8,218.9 L172.0,218.8 L173.2,218.7 L174.4,218.6 L175.6,218.1 L176.8,218.1 L177.9,218.0 L179.1,217.8 L180.3,217.7 L181.5,217.5 L182.7,217.3 L183.9,217.1 L185.0,217.0 L186.2,216.9 L187.4,216.7 L188.6,216.5 L189.8,216.2 L191.0,216.0 L192.1,215.7 L193.3,215.6 L194.5,215.4 L195.7,215.5 L196.9,215.3 L198.1,215.1 L199.2,214.9 L200.4,214.9 L201.6,214.8 L202.8,214.7 L204.0,214.5 L205.2,214.2 L206.3,213.5 L207.5,213.0 L208.7,212.5 L209.9,212.3 L211.1,212.1 L212.3,211.7 L213.4,211.0 L214.6,210.7 L215.8,210.3 L217.0,210.3 L218.2,210.3 L219.4,210.2 L220.5,210.1 L221.7,209.9 L222.9,209.2 L224.1,209.3 L225.3,209.2 L226.5,209.1 L227.6,209.1 L228.8,209.0 L230.0,208.8 L231.2,208.5 L232.4,208.4 L233.5,208.3 L234.7,208.2 L235.9,208.0 L237.1,207.8 L238.3,207.4 L239.5,207.2 L240.6,206.9 L241.8,206.8 L243.0,206.7 L244.2,206.6 L245.4,206.5 L246.6,206.7 L247.7,206.8 L248.9,206.8 L250.1,206.5 L251.3,206.4 L252.5,206.3 L253.7,206.1 L254.8,206.1 L256.0,206.0 L257.2,206.1 L258.4,206.4 L259.6,206.4 L260.8,206.4 L261.9,206.6 L263.1,206.7 L264.3,206.9 L265.5,207.1 L266.7,207.9 L267.9,208.6 L269.0,208.0 L270.2,208.0 L271.4,208.1 L272.6,207.9 L273.8,207.9 L275.0,207.9 L276.1,207.9 L277.3,207.9 L278.5,208.1 L279.7,208.3 L280.9,208.2 L282.1,208.2 L283.2,208.5 L284.4,208.4 L285.6,208.4 L286.8,208.6 L288.0,208.5 L289.2,208.3 L290.3,208.3 L291.5,208.4 L292.7,208.4 L293.9,208.4 L295.1,208.6 L296.3,208.7 L297.4,208.9 L298.6,208.9 L299.8,208.9 L301.0,209.1 L302.2,209.0 L303.4,209.0 L304.5,209.1 L305.7,209.1 L306.9,209.1 L308.1,209.3 L309.3,209.3 L310.5,209.3 L311.6,209.3 L312.8,209.4 L314.0,209.6 L315.2,209.6 L316.4,209.6 L317.5,209.5 L318.7,209.5 L319.9,209.3 L321.1,209.3 L322.3,209.3 L323.5,209.3 L324.6,209.4 L325.8,209.4 L327.0,209.5 L328.2,209.5 L329.4,209.3 L330.6,209.1 L331.7,209.0 L332.9,208.9 L334.1,208.9 L335.3,208.8 L336.5,208.8 L337.7,209.0 L338.8,209.1 L340.0,209.1 L341.2,210.2 L342.4,210.2 L343.6,210.2 L344.8,210.2 L345.9,210.2 L347.1,210.2 L348.3,210.3 L349.5,210.5 L350.7,210.7 L351.9,210.8 L353.0,211.1 L354.2,211.5 L355.4,212.0 L356.6,213.2 L357.8,213.6 L359.0,213.9 L360.1,213.9 L361.3,214.1 L362.5,214.3 L363.7,214.5 L364.9,214.8 L366.1,215.0 L367.2,214.9 L368.4,214.9 L369.6,215.0 L370.8,215.1 L372.0,215.3 L373.2,215.3 L374.3,215.6 L375.5,215.5 L376.7,215.5 L377.9,215.7 L379.1,216.0 L380.3,216.0 L381.4,216.1 L382.6,216.2 L383.8,216.2 L385.0,216.2 L386.2,216.2 L387.4,216.2 L388.5,216.2 L389.7,216.2 L390.9,216.5 L392.1,216.5 L393.3,216.5 L394.5,216.5 L395.6,216.5 L396.8,216.7 L398.0,216.8 L399.2,216.8 L400.4,216.8 L401.5,216.8 L402.7,216.7 L403.9,216.7 L405.1,216.8 L406.3,216.9 L407.5,217.0 L408.6,216.9 L409.8,216.9 L411.0,216.9 L412.2,217.1 L413.4,217.1 L414.6,217.2 L415.7,217.4 L416.9,217.4 L418.1,217.4 L419.3,217.5 L420.5,217.6 L421.7,217.6 L422.8,217.7 L424.0,217.7 L425.2,217.7 L426.4,217.7 L427.6,217.6 L428.8,217.7 L429.9,217.6 L431.1,217.5 L432.3,217.5 L433.5,217.4 L434.7,217.4 L435.9,217.3 L437.0,217.3 L438.2,217.3 L439.4,217.3 L440.6,217.2 L441.8,217.2 L443.0,217.2 L444.1,217.2 L445.3,217.3 L446.5,217.3 L447.7,217.3 L448.9,217.7 L450.1,217.7 L451.2,217.6 L452.4,217.6 L453.6,217.6 L454.8,217.7 L456.0,217.7 L457.2,217.6 L458.3,217.6 L459.5,217.5 L460.7,217.3 L461.9,217.2 L463.1,217.1 L464.3,217.1 L465.4,217.0 L466.6,217.0 L467.8,216.9 L469.0,216.9 L470.2,216.8 L471.4,216.8 L472.5,216.8 L473.7,216.8 L474.9,216.8 L476.1,216.8 L477.3,216.8 L478.5,216.9 L479.6,216.9 L480.8,216.9 L482.0,217.0 L483.2,217.0 L484.4,217.0 L485.5,216.9 L486.7,217.0 L487.9,217.1 L489.1,217.4 L490.3,217.6 L491.5,217.6 L492.6,217.6 L493.8,217.7 L495.0,218.2 L496.2,218.6 L497.4,219.0 L498.6,219.3 L499.7,219.4 L500.9,219.4 L502.1,219.5 L503.3,219.6 L504.5,219.8 L505.7,219.9 L506.8,219.9 L508.0,219.9 L509.2,219.9 L510.4,219.9 L511.6,220.0 L512.8,220.0 L513.9,220.1 L515.1,220.2 L516.3,220.1 L517.5,220.1 L518.7,220.1 L519.9,220.2 L521.0,220.3 L522.2,220.6 L523.4,220.9 L524.6,220.8 L525.8,220.9 L527.0,221.1 L528.1,221.4 L529.3,221.5 L530.5,221.6 L531.7,221.6 L532.9,221.6 L534.1,221.5 L535.2,221.6 L536.4,221.6 L537.6,221.6 L538.8,221.6 L540.0,221.8 L541.2,221.8 L542.3,221.8 L543.5,222.2 L544.7,222.3 L545.9,222.4 L547.1,222.5 L548.3,222.5 L549.4,222.5 L550.6,222.5 L551.8,222.5 L553.0,222.3 L554.2,222.4 L555.4,222.4 L556.5,222.4 L557.7,222.4 L558.9,222.4 L560.1,222.4 L561.3,222.4 L562.5,222.4 L563.6,222.5 L564.8,222.7 L566.0,223.1 L567.2,223.1 L568.4,223.3 L569.5,223.4 L570.7,223.5 L571.9,223.5 L573.1,223.6 L574.3,223.5 L575.5,223.5 L576.6,223.5 L577.8,223.6 L579.0,223.7 L580.2,223.7 L581.4,223.8 L582.6,223.7 L583.7,223.8 L584.9,223.8 L586.1,223.8 L587.3,223.8 L588.5,223.7 L589.7,223.4 L590.8,223.2 L592.0,223.2 L593.2,222.8 L594.4,222.6 L595.6,222.5 L596.8,222.4 L597.9,222.3 L599.1,222.3 L600.3,222.2 L601.5,222.1 L602.7,222.1 L603.9,222.1 L605.0,221.9 L606.2,221.8 L607.4,221.7 L608.6,221.7 L609.8,221.6 L611.0,221.6 L612.1,221.6 L613.3,221.5 L614.5,221.5 L615.7,221.4 L616.9,221.4 L618.1,221.3 L619.2,221.4 L620.4,221.4 L621.6,221.4 L622.8,221.3 L624.0,221.2 L625.2,221.1 L626.3,220.8 L627.5,220.4 L628.7,220.3 L629.9,220.3 L631.1,220.2 L632.3,220.1 L633.4,220.0 L634.6,220.0 L635.8,219.9 L637.0,219.8 L638.2,219.8 L639.4,219.5 L640.5,219.5 L641.7,219.4 L642.9,219.2 L644.1,219.2 L645.3,219.2 L646.5,219.2 L647.6,219.2 L648.8,219.1 L650.0,219.1" fill="none" stroke="#8a6d1f" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M62.0,300.3 L63.2,300.2 L64.4,300.1 L65.5,300.0 L66.7,299.8 L67.9,299.7 L69.1,299.6 L70.3,299.5 L71.5,299.3 L72.6,299.2 L73.8,299.1 L75.0,299.0 L76.2,298.9 L77.4,298.7 L78.6,298.6 L79.7,298.5 L80.9,298.4 L82.1,298.3 L83.3,298.2 L84.5,298.0 L85.7,297.9 L86.8,297.8 L88.0,297.7 L89.2,297.6 L90.4,297.5 L91.6,297.4 L92.8,297.3 L93.9,297.2 L95.1,297.0 L96.3,296.9 L97.5,296.8 L98.7,296.7 L99.9,296.6 L101.0,296.5 L102.2,296.3 L103.4,296.2 L104.6,296.1 L105.8,296.0 L107.0,295.9 L108.1,295.7 L109.3,295.6 L110.5,295.4 L111.7,295.3 L112.9,295.2 L114.1,295.0 L115.2,294.9 L116.4,294.7 L117.6,294.6 L118.8,294.5 L120.0,294.3 L121.2,294.2 L122.3,294.0 L123.5,293.9 L124.7,293.7 L125.9,293.6 L127.1,293.4 L128.3,293.3 L129.4,293.1 L130.6,293.0 L131.8,292.8 L133.0,292.7 L134.2,292.6 L135.4,292.4 L136.5,292.3 L137.7,292.2 L138.9,292.0 L140.1,291.9 L141.3,291.8 L142.5,291.7 L143.6,291.6 L144.8,291.4 L146.0,291.3 L147.2,291.2 L148.4,291.0 L149.5,290.9 L150.7,290.8 L151.9,290.7 L153.1,290.6 L154.3,290.5 L155.5,290.4 L156.6,290.3 L157.8,290.2 L159.0,290.1 L160.2,290.0 L161.4,289.9 L162.6,289.8 L163.7,289.7 L164.9,289.6 L166.1,289.5 L167.3,289.4 L168.5,289.3 L169.7,289.2 L170.8,289.1 L172.0,289.0 L173.2,288.9 L174.4,288.8 L175.6,288.7 L176.8,288.6 L177.9,288.5 L179.1,288.4 L180.3,288.4 L181.5,288.3 L182.7,288.2 L183.9,288.1 L185.0,288.0 L186.2,287.9 L187.4,287.8 L188.6,287.6 L189.8,287.5 L191.0,287.4 L192.1,287.3 L193.3,287.2 L194.5,287.1 L195.7,287.0 L196.9,286.9 L198.1,286.7 L199.2,286.6 L200.4,286.5 L201.6,286.4 L202.8,286.3 L204.0,286.2 L205.2,286.1 L206.3,286.0 L207.5,285.8 L208.7,285.7 L209.9,285.6 L211.1,285.4 L212.3,285.3 L213.4,285.1 L214.6,285.0 L215.8,284.8 L217.0,284.7 L218.2,284.6 L219.4,284.5 L220.5,284.3 L221.7,284.2 L222.9,284.1 L224.1,284.0 L225.3,283.8 L226.5,283.7 L227.6,283.6 L228.8,283.5 L230.0,283.4 L231.2,283.2 L232.4,283.1 L233.5,283.0 L234.7,282.9 L235.9,282.8 L237.1,282.6 L238.3,282.5 L239.5,282.4 L240.6,282.3 L241.8,282.1 L243.0,282.0 L244.2,281.9 L245.4,281.8 L246.6,281.7 L247.7,281.5 L248.9,281.4 L250.1,281.3 L251.3,281.2 L252.5,281.1 L253.7,280.9 L254.8,280.8 L256.0,280.7 L257.2,280.6 L258.4,280.5 L259.6,280.4 L260.8,280.3 L261.9,280.2 L263.1,280.1 L264.3,280.0 L265.5,279.9 L266.7,279.8 L267.9,279.7 L269.0,279.6 L270.2,279.5 L271.4,279.4 L272.6,279.3 L273.8,279.2 L275.0,279.1 L276.1,279.0 L277.3,278.9 L278.5,278.8 L279.7,278.7 L280.9,278.6 L282.1,278.5 L283.2,278.4 L284.4,278.3 L285.6,278.2 L286.8,278.1 L288.0,278.0 L289.2,277.9 L290.3,277.8 L291.5,277.7 L292.7,277.6 L293.9,277.5 L295.1,277.4 L296.3,277.3 L297.4,277.3 L298.6,277.2 L299.8,277.1 L301.0,277.0 L302.2,276.9 L303.4,276.8 L304.5,276.7 L305.7,276.6 L306.9,276.5 L308.1,276.4 L309.3,276.3 L310.5,276.2 L311.6,276.1 L312.8,276.0 L314.0,275.9 L315.2,275.9 L316.4,275.8 L317.5,275.7 L318.7,275.5 L319.9,275.4 L321.1,275.3 L322.3,275.2 L323.5,275.1 L324.6,275.0 L325.8,274.9 L327.0,274.8 L328.2,274.7 L329.4,274.6 L330.6,274.5 L331.7,274.4 L332.9,274.3 L334.1,274.2 L335.3,274.1 L336.5,274.0 L337.7,273.9 L338.8,273.8 L340.0,273.7 L341.2,273.6 L342.4,273.5 L343.6,273.5 L344.8,273.4 L345.9,273.3 L347.1,273.2 L348.3,273.1 L349.5,273.1 L350.7,273.0 L351.9,272.9 L353.0,272.9 L354.2,272.8 L355.4,272.7 L356.6,272.7 L357.8,272.7 L359.0,272.6 L360.1,272.5 L361.3,272.5 L362.5,272.4 L363.7,272.4 L364.9,272.3 L366.1,272.3 L367.2,272.2 L368.4,272.2 L369.6,272.1 L370.8,272.0 L372.0,272.0 L373.2,271.9 L374.3,271.9 L375.5,271.8 L376.7,271.8 L377.9,271.7 L379.1,271.7 L380.3,271.6 L381.4,271.6 L382.6,271.5 L383.8,271.5 L385.0,271.4 L386.2,271.3 L387.4,271.3 L388.5,271.2 L389.7,271.1 L390.9,271.1 L392.1,271.0 L393.3,271.0 L394.5,270.9 L395.6,270.8 L396.8,270.7 L398.0,270.6 L399.2,270.6 L400.4,270.5 L401.5,270.4 L402.7,270.3 L403.9,270.2 L405.1,270.1 L406.3,270.1 L407.5,270.0 L408.6,269.9 L409.8,269.8 L411.0,269.7 L412.2,269.7 L413.4,269.6 L414.6,269.5 L415.7,269.4 L416.9,269.4 L418.1,269.3 L419.3,269.2 L420.5,269.1 L421.7,269.1 L422.8,269.0 L424.0,268.9 L425.2,268.9 L426.4,268.8 L427.6,268.7 L428.8,268.6 L429.9,268.5 L431.1,268.5 L432.3,268.4 L433.5,268.3 L434.7,268.2 L435.9,268.1 L437.0,268.0 L438.2,267.9 L439.4,267.8 L440.6,267.7 L441.8,267.6 L443.0,267.5 L444.1,267.3 L445.3,267.2 L446.5,267.1 L447.7,267.0 L448.9,266.9 L450.1,266.8 L451.2,266.7 L452.4,266.6 L453.6,266.4 L454.8,266.3 L456.0,266.2 L457.2,266.1 L458.3,266.0 L459.5,265.9 L460.7,265.8 L461.9,265.6 L463.1,265.5 L464.3,265.4 L465.4,265.3 L466.6,265.2 L467.8,265.1 L469.0,264.9 L470.2,264.8 L471.4,264.7 L472.5,264.6 L473.7,264.5 L474.9,264.3 L476.1,264.2 L477.3,264.1 L478.5,264.0 L479.6,263.9 L480.8,263.8 L482.0,263.7 L483.2,263.6 L484.4,263.5 L485.5,263.4 L486.7,263.3 L487.9,263.2 L489.1,263.1 L490.3,263.0 L491.5,262.9 L492.6,262.8 L493.8,262.7 L495.0,262.6 L496.2,262.5 L497.4,262.4 L498.6,262.4 L499.7,262.3 L500.9,262.2 L502.1,262.1 L503.3,262.1 L504.5,262.0 L505.7,261.9 L506.8,261.8 L508.0,261.7 L509.2,261.7 L510.4,261.6 L511.6,261.5 L512.8,261.4 L513.9,261.3 L515.1,261.3 L516.3,261.2 L517.5,261.1 L518.7,261.0 L519.9,260.9 L521.0,260.8 L522.2,260.8 L523.4,260.7 L524.6,260.6 L525.8,260.5 L527.0,260.5 L528.1,260.4 L529.3,260.3 L530.5,260.2 L531.7,260.1 L532.9,260.0 L534.1,260.0 L535.2,259.9 L536.4,259.8 L537.6,259.7 L538.8,259.6 L540.0,259.5 L541.2,259.4 L542.3,259.4 L543.5,259.3 L544.7,259.2 L545.9,259.1 L547.1,259.0 L548.3,258.9 L549.4,258.9 L550.6,258.8 L551.8,258.7 L553.0,258.6 L554.2,258.5 L555.4,258.4 L556.5,258.3 L557.7,258.2 L558.9,258.1 L560.1,258.0 L561.3,257.9 L562.5,257.9 L563.6,257.8 L564.8,257.7 L566.0,257.6 L567.2,257.5 L568.4,257.4 L569.5,257.3 L570.7,257.3 L571.9,257.2 L573.1,257.1 L574.3,257.0 L575.5,256.9 L576.6,256.8 L577.8,256.7 L579.0,256.6 L580.2,256.5 L581.4,256.5 L582.6,256.4 L583.7,256.3 L584.9,256.2 L586.1,256.1 L587.3,256.0 L588.5,255.9 L589.7,255.8 L590.8,255.7 L592.0,255.6 L593.2,255.4 L594.4,255.3 L595.6,255.2 L596.8,255.1 L597.9,255.0 L599.1,254.9 L600.3,254.8 L601.5,254.6 L602.7,254.5 L603.9,254.4 L605.0,254.3 L606.2,254.2 L607.4,254.1 L608.6,253.9 L609.8,253.8 L611.0,253.7 L612.1,253.6 L613.3,253.5 L614.5,253.4 L615.7,253.2 L616.9,253.1 L618.1,253.0 L619.2,252.9 L620.4,252.8 L621.6,252.6 L622.8,252.5 L624.0,252.4 L625.2,252.3 L626.3,252.1 L627.5,252.0 L628.7,251.9 L629.9,251.7 L631.1,251.6 L632.3,251.5 L633.4,251.3 L634.6,251.2 L635.8,251.1 L637.0,250.9 L638.2,250.8 L639.4,250.7 L640.5,250.5 L641.7,250.4 L642.9,250.3 L644.1,250.1 L645.3,250.0 L646.5,249.9 L647.6,249.7 L648.8,249.6 L650.0,249.5" fill="none" stroke="#6c6459" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="6 4"/>
+<path d="M62.0,304.1 L63.2,303.8 L64.4,303.5 L65.5,303.2 L66.7,303.2 L67.9,303.1 L69.1,303.1 L70.3,303.0 L71.5,302.9 L72.6,302.6 L73.8,302.5 L75.0,302.4 L76.2,302.2 L77.4,302.2 L78.6,302.1 L79.7,301.9 L80.9,301.8 L82.1,301.7 L83.3,301.7 L84.5,301.6 L85.7,301.5 L86.8,301.5 L88.0,301.4 L89.2,301.2 L90.4,301.0 L91.6,300.7 L92.8,300.4 L93.9,300.4 L95.1,300.3 L96.3,300.0 L97.5,299.8 L98.7,299.7 L99.9,299.5 L101.0,298.2 L102.2,298.2 L103.4,298.1 L104.6,297.9 L105.8,297.7 L107.0,297.4 L108.1,297.2 L109.3,296.7 L110.5,296.4 L111.7,296.3 L112.9,295.7 L114.1,295.5 L115.2,294.6 L116.4,294.0 L117.6,293.8 L118.8,293.6 L120.0,293.5 L121.2,293.3 L122.3,292.9 L123.5,292.6 L124.7,292.4 L125.9,292.2 L127.1,292.1 L128.3,292.0 L129.4,291.8 L130.6,291.6 L131.8,291.4 L133.0,291.2 L134.2,291.2 L135.4,291.2 L136.5,291.1 L137.7,291.0 L138.9,290.9 L140.1,290.8 L141.3,290.6 L142.5,290.5 L143.6,290.4 L144.8,290.4 L146.0,290.2 L147.2,290.0 L148.4,289.8 L149.5,289.6 L150.7,289.5 L151.9,289.0 L153.1,289.0 L154.3,289.0 L155.5,288.8 L156.6,288.7 L157.8,288.7 L159.0,288.5 L160.2,288.4 L161.4,288.4 L162.6,288.3 L163.7,288.3 L164.9,288.2 L166.1,288.1 L167.3,287.4 L168.5,287.4 L169.7,287.4 L170.8,287.3 L172.0,287.2 L173.2,287.2 L174.4,287.1 L175.6,286.7 L176.8,286.7 L177.9,286.7 L179.1,286.6 L180.3,286.5 L181.5,286.4 L182.7,286.2 L183.9,286.1 L185.0,286.0 L186.2,286.0 L187.4,285.8 L188.6,285.7 L189.8,285.5 L191.0,285.4 L192.1,285.1 L193.3,285.0 L194.5,285.0 L195.7,285.0 L196.9,284.8 L198.1,284.7 L199.2,284.5 L200.4,284.5 L201.6,284.5 L202.8,284.4 L204.0,284.3 L205.2,284.1 L206.3,283.6 L207.5,283.2 L208.7,282.9 L209.9,282.8 L211.1,282.6 L212.3,282.4 L213.4,281.8 L214.6,281.6 L215.8,281.3 L217.0,281.3 L218.2,281.3 L219.4,281.2 L220.5,281.2 L221.7,281.0 L222.9,280.4 L224.1,280.5 L225.3,280.4 L226.5,280.3 L227.6,280.3 L228.8,280.3 L230.0,280.1 L231.2,279.9 L232.4,279.8 L233.5,279.7 L234.7,279.7 L235.9,279.5 L237.1,279.3 L238.3,279.0 L239.5,278.8 L240.6,278.6 L241.8,278.6 L243.0,278.5 L244.2,278.4 L245.4,278.3 L246.6,278.4 L247.7,278.4 L248.9,278.4 L250.1,278.0 L251.3,278.0 L252.5,277.9 L253.7,277.8 L254.8,277.8 L256.0,277.7 L257.2,277.8 L258.4,277.9 L259.6,277.9 L260.8,277.9 L261.9,278.0 L263.1,277.9 L264.3,278.1 L265.5,278.2 L266.7,278.6 L267.9,278.2 L269.0,277.3 L270.2,277.3 L271.4,277.3 L272.6,277.1 L273.8,277.1 L275.0,277.1 L276.1,277.2 L277.3,277.2 L278.5,277.3 L279.7,277.4 L280.9,277.3 L282.1,277.3 L283.2,277.4 L284.4,277.4 L285.6,277.4 L286.8,277.5 L288.0,277.4 L289.2,277.2 L290.3,277.2 L291.5,277.3 L292.7,277.3 L293.9,277.3 L295.1,277.5 L296.3,277.5 L297.4,277.5 L298.6,277.6 L299.8,277.6 L301.0,277.7 L302.2,277.7 L303.4,277.6 L304.5,277.7 L305.7,277.7 L306.9,277.7 L308.1,277.8 L309.3,277.8 L310.5,277.9 L311.6,277.9 L312.8,277.9 L314.0,278.0 L315.2,278.0 L316.4,278.0 L317.5,278.0 L318.7,278.0 L319.9,277.9 L321.1,277.9 L322.3,277.8 L323.5,277.8 L324.6,277.9 L325.8,277.9 L327.0,277.9 L328.2,277.9 L329.4,277.8 L330.6,277.7 L331.7,277.6 L332.9,277.6 L334.1,277.5 L335.3,277.5 L336.5,277.5 L337.7,277.6 L338.8,277.7 L340.0,277.7 L341.2,278.3 L342.4,278.4 L343.6,278.4 L344.8,278.4 L345.9,278.4 L347.1,278.4 L348.3,278.5 L349.5,278.6 L350.7,278.7 L351.9,278.8 L353.0,278.9 L354.2,279.2 L355.4,279.5 L356.6,280.2 L357.8,280.5 L359.0,280.6 L360.1,280.6 L361.3,280.8 L362.5,280.9 L363.7,281.1 L364.9,281.2 L366.1,281.3 L367.2,281.3 L368.4,281.3 L369.6,281.4 L370.8,281.5 L372.0,281.6 L373.2,281.7 L374.3,281.8 L375.5,281.8 L376.7,281.8 L377.9,282.0 L379.1,282.1 L380.3,282.2 L381.4,282.2 L382.6,282.3 L383.8,282.3 L385.0,282.3 L386.2,282.4 L387.4,282.4 L388.5,282.4 L389.7,282.4 L390.9,282.5 L392.1,282.6 L393.3,282.6 L394.5,282.6 L395.6,282.6 L396.8,282.8 L398.0,282.8 L399.2,282.8 L400.4,282.8 L401.5,282.8 L402.7,282.8 L403.9,282.8 L405.1,282.8 L406.3,282.9 L407.5,282.9 L408.6,282.9 L409.8,282.9 L411.0,282.9 L412.2,283.0 L413.4,283.0 L414.6,283.1 L415.7,283.2 L416.9,283.3 L418.1,283.3 L419.3,283.4 L420.5,283.4 L421.7,283.4 L422.8,283.5 L424.0,283.5 L425.2,283.5 L426.4,283.5 L427.6,283.5 L428.8,283.5 L429.9,283.5 L431.1,283.5 L432.3,283.4 L433.5,283.4 L434.7,283.4 L435.9,283.4 L437.0,283.3 L438.2,283.4 L439.4,283.3 L440.6,283.3 L441.8,283.3 L443.0,283.3 L444.1,283.3 L445.3,283.3 L446.5,283.3 L447.7,283.3 L448.9,283.5 L450.1,283.5 L451.2,283.5 L452.4,283.5 L453.6,283.5 L454.8,283.6 L456.0,283.6 L457.2,283.5 L458.3,283.5 L459.5,283.5 L460.7,283.3 L461.9,283.3 L463.1,283.2 L464.3,283.2 L465.4,283.2 L466.6,283.2 L467.8,283.2 L469.0,283.1 L470.2,283.1 L471.4,283.1 L472.5,283.1 L473.7,283.1 L474.9,283.1 L476.1,283.1 L477.3,283.2 L478.5,283.2 L479.6,283.3 L480.8,283.3 L482.0,283.3 L483.2,283.3 L484.4,283.3 L485.5,283.3 L486.7,283.4 L487.9,283.4 L489.1,283.6 L490.3,283.7 L491.5,283.7 L492.6,283.8 L493.8,283.9 L495.0,284.1 L496.2,284.4 L497.4,284.6 L498.6,284.8 L499.7,284.9 L500.9,284.9 L502.1,284.9 L503.3,285.0 L504.5,285.1 L505.7,285.2 L506.8,285.3 L508.0,285.3 L509.2,285.3 L510.4,285.3 L511.6,285.3 L512.8,285.3 L513.9,285.4 L515.1,285.5 L516.3,285.5 L517.5,285.4 L518.7,285.4 L519.9,285.5 L521.0,285.6 L522.2,285.8 L523.4,285.9 L524.6,285.9 L525.8,285.9 L527.0,286.1 L528.1,286.3 L529.3,286.3 L530.5,286.4 L531.7,286.4 L532.9,286.4 L534.1,286.4 L535.2,286.4 L536.4,286.4 L537.6,286.4 L538.8,286.4 L540.0,286.6 L541.2,286.6 L542.3,286.6 L543.5,286.8 L544.7,286.9 L545.9,286.9 L547.1,286.9 L548.3,287.0 L549.4,287.0 L550.6,286.9 L551.8,286.9 L553.0,286.9 L554.2,286.9 L555.4,286.9 L556.5,286.9 L557.7,286.9 L558.9,286.9 L560.1,286.9 L561.3,286.9 L562.5,286.9 L563.6,286.9 L564.8,287.0 L566.0,287.1 L567.2,287.1 L568.4,287.2 L569.5,287.2 L570.7,287.3 L571.9,287.3 L573.1,287.3 L574.3,287.3 L575.5,287.3 L576.6,287.3 L577.8,287.3 L579.0,287.4 L580.2,287.4 L581.4,287.5 L582.6,287.5 L583.7,287.5 L584.9,287.5 L586.1,287.5 L587.3,287.5 L588.5,287.4 L589.7,287.2 L590.8,287.1 L592.0,287.1 L593.2,286.8 L594.4,286.7 L595.6,286.6 L596.8,286.5 L597.9,286.5 L599.1,286.5 L600.3,286.4 L601.5,286.4 L602.7,286.4 L603.9,286.3 L605.0,286.3 L606.2,286.2 L607.4,286.2 L608.6,286.1 L609.8,286.1 L611.0,286.1 L612.1,286.0 L613.3,286.0 L614.5,286.0 L615.7,286.0 L616.9,286.0 L618.1,286.0 L619.2,286.0 L620.4,286.0 L621.6,286.0 L622.8,285.9 L624.0,285.8 L625.2,285.8 L626.3,285.6 L627.5,285.3 L628.7,285.2 L629.9,285.2 L631.1,285.1 L632.3,285.1 L633.4,285.1 L634.6,285.0 L635.8,284.9 L637.0,284.9 L638.2,284.8 L639.4,284.7 L640.5,284.7 L641.7,284.6 L642.9,284.5 L644.1,284.4 L645.3,284.4 L646.5,284.4 L647.6,284.3 L648.8,284.3 L650.0,284.3" fill="none" stroke="#8a5fa8" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M62.0,338.3 L63.2,338.2 L64.4,338.2 L65.5,338.1 L66.7,338.0 L67.9,337.6 L69.1,337.4 L70.3,337.3 L71.5,336.8 L72.6,336.7 L73.8,336.8 L75.0,336.7 L76.2,336.6 L77.4,336.4 L78.6,336.3 L79.7,336.2 L80.9,336.1 L82.1,336.0 L83.3,335.8 L84.5,335.6 L85.7,335.4 L86.8,335.2 L88.0,335.0 L89.2,335.0 L90.4,335.0 L91.6,334.8 L92.8,334.7 L93.9,334.7 L95.1,334.6 L96.3,334.4 L97.5,334.4 L98.7,334.3 L99.9,333.8 L101.0,333.1 L102.2,332.8 L103.4,332.7 L104.6,332.6 L105.8,332.5 L107.0,332.4 L108.1,332.4 L109.3,332.4 L110.5,332.3 L111.7,332.2 L112.9,332.1 L114.1,332.1 L115.2,333.0 L116.4,333.3 L117.6,333.3 L118.8,333.2 L120.0,333.1 L121.2,333.0 L122.3,333.0 L123.5,332.9 L124.7,332.9 L125.9,332.6 L127.1,332.5 L128.3,332.3 L129.4,332.1 L130.6,332.2 L131.8,332.1 L133.0,332.1 L134.2,332.0 L135.4,331.9 L136.5,331.8 L137.7,331.8 L138.9,331.8 L140.1,331.8 L141.3,331.6 L142.5,331.5 L143.6,331.2 L144.8,330.8 L146.0,330.8 L147.2,330.9 L148.4,331.0 L149.5,331.1 L150.7,331.2 L151.9,331.0 L153.1,330.9 L154.3,330.9 L155.5,331.0 L156.6,331.1 L157.8,331.1 L159.0,331.1 L160.2,331.1 L161.4,331.0 L162.6,330.9 L163.7,330.9 L164.9,330.9 L166.1,331.2 L167.3,331.6 L168.5,331.4 L169.7,331.2 L170.8,331.1 L172.0,331.1 L173.2,331.1 L174.4,331.1 L175.6,331.2 L176.8,331.2 L177.9,331.1 L179.1,331.0 L180.3,331.1 L181.5,331.2 L182.7,331.2 L183.9,331.3 L185.0,331.3 L186.2,331.2 L187.4,331.2 L188.6,331.3 L189.8,331.4 L191.0,331.4 L192.1,331.3 L193.3,331.0 L194.5,330.9 L195.7,330.7 L196.9,330.7 L198.1,330.8 L199.2,330.8 L200.4,330.7 L201.6,330.8 L202.8,330.6 L204.0,330.4 L205.2,330.3 L206.3,330.5 L207.5,330.6 L208.7,330.7 L209.9,330.7 L211.1,330.6 L212.3,330.5 L213.4,330.6 L214.6,330.6 L215.8,330.6 L217.0,330.5 L218.2,330.5 L219.4,330.3 L220.5,330.1 L221.7,330.5 L222.9,330.6 L224.1,330.4 L225.3,330.2 L226.5,330.0 L227.6,329.6 L228.8,329.1 L230.0,329.2 L231.2,329.2 L232.4,329.2 L233.5,329.0 L234.7,328.8 L235.9,328.6 L237.1,328.4 L238.3,328.5 L239.5,328.7 L240.6,328.8 L241.8,327.3 L243.0,327.1 L244.2,327.0 L245.4,327.0 L246.6,327.2 L247.7,327.5 L248.9,327.7 L250.1,327.7 L251.3,327.5 L252.5,327.3 L253.7,327.3 L254.8,327.4 L256.0,327.6 L257.2,327.6 L258.4,327.7 L259.6,327.6 L260.8,327.5 L261.9,327.5 L263.1,328.0 L264.3,328.1 L265.5,328.2 L266.7,328.1 L267.9,331.6 L269.0,331.6 L270.2,331.4 L271.4,331.4 L272.6,331.6 L273.8,331.2 L275.0,331.1 L276.1,330.9 L277.3,330.7 L278.5,330.7 L279.7,330.7 L280.9,331.0 L282.1,330.9 L283.2,330.7 L284.4,330.3 L285.6,330.2 L286.8,329.7 L288.0,329.8 L289.2,330.0 L290.3,329.6 L291.5,329.3 L292.7,329.0 L293.9,328.4 L295.1,327.8 L296.3,328.0 L297.4,328.3 L298.6,327.9 L299.8,327.5 L301.0,327.9 L302.2,327.8 L303.4,327.5 L304.5,327.6 L305.7,327.6 L306.9,327.4 L308.1,327.1 L309.3,326.8 L310.5,326.6 L311.6,326.5 L312.8,326.6 L314.0,326.9 L315.2,326.8 L316.4,326.7 L317.5,326.1 L318.7,325.8 L319.9,325.7 L321.1,325.6 L322.3,326.0 L323.5,325.9 L324.6,325.9 L325.8,325.7 L327.0,325.1 L328.2,324.8 L329.4,324.8 L330.6,324.7 L331.7,324.7 L332.9,324.4 L334.1,324.1 L335.3,323.7 L336.5,323.4 L337.7,323.3 L338.8,323.1 L340.0,323.0 L341.2,322.9 L342.4,322.6 L343.6,322.4 L344.8,321.9 L345.9,321.6 L347.1,321.7 L348.3,321.4 L349.5,321.2 L350.7,320.9 L351.9,320.6 L353.0,320.6 L354.2,320.5 L355.4,320.6 L356.6,320.9 L357.8,320.9 L359.0,320.7 L360.1,320.4 L361.3,320.2 L362.5,320.1 L363.7,320.2 L364.9,320.0 L366.1,319.8 L367.2,319.3 L368.4,318.9 L369.6,318.6 L370.8,318.4 L372.0,318.4 L373.2,318.0 L374.3,317.8 L375.5,317.5 L376.7,317.1 L377.9,316.8 L379.1,316.7 L380.3,316.7 L381.4,316.5 L382.6,316.4 L383.8,316.2 L385.0,315.9 L386.2,315.5 L387.4,315.2 L388.5,315.2 L389.7,315.1 L390.9,314.9 L392.1,314.6 L393.3,314.1 L394.5,313.9 L395.6,313.7 L396.8,313.9 L398.0,313.9 L399.2,313.6 L400.4,312.9 L401.5,312.6 L402.7,312.4 L403.9,312.3 L405.1,312.3 L406.3,312.2 L407.5,312.2 L408.6,311.7 L409.8,311.3 L411.0,311.1 L412.2,311.0 L413.4,310.9 L414.6,310.7 L415.7,310.3 L416.9,309.9 L418.1,309.4 L419.3,309.4 L420.5,309.3 L421.7,309.3 L422.8,309.2 L424.0,308.8 L425.2,308.4 L426.4,308.0 L427.6,307.7 L428.8,307.6 L429.9,307.6 L431.1,307.4 L432.3,307.2 L433.5,306.9 L434.7,306.7 L435.9,306.4 L437.0,306.6 L438.2,306.7 L439.4,306.5 L440.6,306.0 L441.8,305.8 L443.0,305.6 L444.1,305.2 L445.3,301.2 L446.5,300.4 L447.7,300.3 L448.9,300.3 L450.1,300.2 L451.2,300.2 L452.4,300.1 L453.6,300.1 L454.8,300.3 L456.0,300.3 L457.2,300.2 L458.3,300.1 L459.5,299.9 L460.7,299.5 L461.9,299.5 L463.1,299.5 L464.3,299.3 L465.4,299.2 L466.6,298.9 L467.8,298.8 L469.0,298.7 L470.2,298.6 L471.4,298.7 L472.5,298.5 L473.7,298.5 L474.9,298.4 L476.1,298.4 L477.3,298.4 L478.5,298.4 L479.6,298.4 L480.8,298.4 L482.0,298.3 L483.2,298.0 L484.4,298.0 L485.5,297.9 L486.7,297.9 L487.9,297.9 L489.1,298.0 L490.3,297.8 L491.5,297.6 L492.6,297.4 L493.8,297.4 L495.0,297.6 L496.2,297.7 L497.4,297.7 L498.6,297.6 L499.7,296.9 L500.9,296.9 L502.1,296.7 L503.3,296.5 L504.5,296.3 L505.7,296.2 L506.8,296.1 L508.0,296.0 L509.2,295.8 L510.4,295.6 L511.6,295.6 L512.8,295.6 L513.9,295.6 L515.1,295.4 L516.3,295.3 L517.5,295.1 L518.7,295.0 L519.9,295.1 L521.0,295.1 L522.2,295.0 L523.4,295.1 L524.6,295.1 L525.8,295.0 L527.0,295.0 L528.1,295.1 L529.3,295.2 L530.5,295.2 L531.7,295.1 L532.9,295.1 L534.1,294.9 L535.2,294.9 L536.4,294.9 L537.6,294.9 L538.8,294.8 L540.0,294.9 L541.2,294.8 L542.3,294.7 L543.5,294.7 L544.7,294.8 L545.9,294.9 L547.1,294.9 L548.3,294.9 L549.4,294.9 L550.6,294.8 L551.8,294.8 L553.0,294.8 L554.2,294.9 L555.4,294.9 L556.5,294.9 L557.7,294.8 L558.9,294.8 L560.1,294.8 L561.3,294.8 L562.5,294.8 L563.6,294.9 L564.8,295.0 L566.0,295.2 L567.2,295.2 L568.4,295.4 L569.5,295.5 L570.7,295.6 L571.9,295.6 L573.1,295.6 L574.3,295.6 L575.5,295.6 L576.6,295.5 L577.8,295.6 L579.0,295.7 L580.2,295.6 L581.4,295.5 L582.6,295.5 L583.7,295.5 L584.9,295.5 L586.1,295.6 L587.3,295.7 L588.5,295.8 L589.7,295.9 L590.8,295.8 L592.0,295.8 L593.2,295.8 L594.4,296.0 L595.6,296.1 L596.8,296.2 L597.9,296.3 L599.1,296.3 L600.3,296.3 L601.5,296.3 L602.7,296.4 L603.9,296.5 L605.0,296.5 L606.2,296.6 L607.4,296.6 L608.6,296.6 L609.8,296.5 L611.0,296.5 L612.1,296.6 L613.3,296.6 L614.5,296.5 L615.7,296.5 L616.9,296.5 L618.1,296.4 L619.2,296.4 L620.4,296.6 L621.6,296.6 L622.8,296.6 L624.0,296.5 L625.2,296.4 L626.3,296.3 L627.5,296.4 L628.7,296.4 L629.9,296.4 L631.1,296.4 L632.3,296.4 L633.4,296.2 L634.6,296.4 L635.8,296.5 L637.0,296.6 L638.2,296.5 L639.4,296.5 L640.5,296.4 L641.7,296.3 L642.9,296.3 L644.1,296.6 L645.3,296.6 L646.5,296.7 L647.6,296.8 L648.8,296.7 L650.0,296.7" fill="none" stroke="#3f9a62" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
+<line x1="650.0" y1="203.5" x2="658.0" y2="203.5" stroke="#1c1a17" stroke-width="1"/>
+<text x="661.0" y="207.5" class="lbl2" style="fill:#1c1a17" font-weight="600">Price 83,084</text>
+<line x1="650.0" y1="227.7" x2="658.0" y2="233.1" stroke="#15628f" stroke-width="1"/>
+<text x="661.0" y="237.1" class="lbl2" style="fill:#15628f">Short-term holder cost 74,307</text>
+<line x1="650.0" y1="219.1" x2="658.0" y2="219.1" stroke="#8a6d1f" stroke-width="1"/>
+<text x="661.0" y="223.1" class="lbl2" style="fill:#8a6d1f">True market mean 77,439</text>
+<line x1="650.0" y1="249.5" x2="658.0" y2="249.5" stroke="#6c6459" stroke-width="1"/>
+<text x="661.0" y="253.5" class="lbl2" style="fill:#6c6459">200-week MA 66,424</text>
+<line x1="650.0" y1="284.3" x2="658.0" y2="284.3" stroke="#8a5fa8" stroke-width="1"/>
+<text x="661.0" y="288.3" class="lbl2" style="fill:#8a5fa8">Realized price 53,810</text>
+<line x1="650.0" y1="296.7" x2="658.0" y2="298.3" stroke="#3f9a62" stroke-width="1"/>
+<text x="661.0" y="302.3" class="lbl2" style="fill:#3f9a62">Long-term holder cost 49,304</text>
+<circle cx="528.1" cy="271.3" r="4.5" fill="#1c1a17" stroke="#fff" stroke-width="1.5"/>
+<circle cx="596.8" cy="211.2" r="4.5" fill="#1c1a17" stroke="#fff" stroke-width="1.5"/>
+<text x="62.0" y="30.0" class="ax">Price (black) and five cost lines, daily, June 2025 to date (USD)</text>
+</svg>
+</figure>
+<p>Cost lines below price, nearest first:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Line</th>
+<th>Level</th>
+<th>From current price</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>True market mean</td>
+<td>77,439</td>
+<td>−6.8%</td>
+</tr>
+<tr>
+<td>Short-term holder cost basis</td>
+<td>74,307</td>
+<td>−10.6%</td>
+</tr>
+<tr>
+<td>200-week moving average</td>
+<td>66,424</td>
+<td>−20.1%</td>
+</tr>
+<tr class="hi"><td><b>This cycle's lowest close (invalidation line)</b></td>
+<td><b>58,525</b></td>
+<td><b>−29.6%</b></td>
+</tr>
+<tr>
+<td>Realized price (average cost of all coins)</td>
+<td>53,810</td>
+<td>−35.2%</td>
+</tr>
+<tr>
+<td>Long-term holder cost basis</td>
+<td>49,304</td>
+<td>−40.7%</td>
+</tr>
+</tbody>
+</table></div>
+<div class="risk again"><h3><span class="rtag">INVALIDATION</span>When this call is void</h3><ul>
+<li><b>A daily close below 58,525</b> → "bottom confirmed" is void and the state returns to Bear. Historically, in the "Bear" state, the median return over the following year was −36%, and it made money only 31% of the time.</li>
+<li><b>An earlier warning</b>: a close back below the short-term holder cost basis (about 74,000) and the true market mean (about 77,000) means recent entrants are, on the whole, underwater. This does not change the state, but it calls for more caution.</li>
+<li><b>"Bottom in doubt"</b>: a close back below the 200-week moving average (about 66,000, roughly 13% above the low). After the previous three confirmed bottoms, the deepest pullbacks stopped 21% to 56% above the low; falling to this level would already be closer to the bottom than any of them. By the rules June 30 would still be the low, but the "bottom" would look more like a support being tested again and again than a starting point left far behind. (This one is a judgment call, not a rule measured from data.)</li>
+<li><b>About "wicks"</b>: all price levels in this report are based on daily closes; intraday spikes do not count. The 58,525 on June 30 is a closing price, not a single wick. Likewise, if price dips below 58,525 intraday in future but closes back above it, that does not count as a break.</li>
+<li><b>Black swans ignore rules</b>: on March 12, 2020, the pandemic crash, Bitcoin closed down 37% in a single day, nearly a year after the Cycle 2 bottom had been confirmed, and it still never broke the 2018 low. Even if the bottom is real, it can first be driven through a psychological level. So size positions to withstand a drawdown of more than 30%.</li>
+</ul></div>
+<h3>Reconciling with the August special</h3>
+<p>The August 22 special, <em>The Overlooked Truth: The Bull Market Starts 15 Months Before the Halving</em>, made two calls that can now be checked:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>What we said then</th>
+<th>Now</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A close above 79,009 that holds for two weeks makes the "bottom has been found" reading valid</td>
+<td><b class="hl-up">Played out</b>: closes have stayed above 79,009 since September 18, reaching two weeks on October 2</td>
+</tr>
+<tr>
+<td>Real acceleration waits until about 15 months before the halving (from January 16, 2027); until then it is "up and down, not much net progress"</td>
+<td><b class="hl-neu">Still ahead</b>: 97 days to January 16, 2027</td>
+</tr>
+</tbody>
+</table></div>
+<div class="tip"><b>Reading the two together</b>  The bottom has most likely passed, but by historical rhythm we are still in the "grind" phase. That is why this issue's "bottom confirmed" and that issue's "don't FOMO now" do not contradict each other.</div>
+<h3>Reading the cycle layer and the macro layer together</h3>
+<p>The conclusion of Special #2 was: <b>macro governs tempo and risk, not direction.</b> This issue supplies the other half: <b>the base color of direction comes from the cycle.</b></p>
+<ul>
+<li>The cycle layer (this issue) answers "what season of the cycle are we in": late bear → early bull, so no rush to be bearish.</li>
+<li>The macro layer (Special #2) answers "how big is the risk over the next few weeks": when real rates spike and credit spreads widen at the same time, cut exposure even if the cycle is up.</li>
+<li>The up-leg (our daily Hot-Coin Analysis) answers "how far along is this stretch": it is already past the 89-day line, so reduce only, no adding.</li>
+</ul>
+<h2 id="s6"><span class="num">06</span>Things you can stop believing</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>The claim</th>
+<th>What the data says</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bear markets bottom after about a year</td>
+<td>First three: 364 to 406 days; this cycle: 267 days</td>
+</tr>
+<tr>
+<td>MVRV below 1 is the bottom</td>
+<td>This cycle's low was 1.10 and it never went below 1, yet the bottom came</td>
+</tr>
+<tr>
+<td>MVRV above 3.5 is the top</td>
+<td>This cycle's peak was 2.74; in the last two cycles the valuation top came 8 to 10 months before the price top</td>
+</tr>
+<tr>
+<td>Halving overlays predict what happens next</td>
+<td>The correlation of 30-day returns between this cycle and the last is −0.02</td>
+</tr>
+<tr>
+<td>"Top or bottom in X days" countdowns</td>
+<td>Projected from earlier cycles to the next, most miss the window</td>
+</tr>
+<tr>
+<td>Miner cost is the bottom</td>
+<td>At the four bottoms, price was 0.22 to 1.58 times miner cost</td>
+</tr>
+<tr>
+<td>Long-term holders selling at a loss is the bottom</td>
+<td>Occurred 47 times since 2011, repeatedly in bear markets</td>
+</tr>
+<tr>
+<td>95%+ of coins in profit is the top</td>
+<td>22 occurrences, scattered across every phase of bull markets</td>
+</tr>
+<tr>
+<td>A 40% bounce means the bottom is safe</td>
+<td>Wrong 1 time in 4; even when right, drawdowns of 20% to 60% often follow within the year</td>
+</tr>
+</tbody>
+</table></div>
+<p><b>Still standing</b> (in direction only; just 4 cycles):</p>
+<ul>
+<li>tops come 525 to 546 days after the halving;</li>
+<li>the undervalued zone (MVRV below 1, price below 1.5× the 200-week moving average) is nearly always followed by a gain over the next year;</li>
+<li>since 2018, the median return over the next year after overvalued zones is negative;</li>
+<li>the closing price has never fallen below CVDD;</li>
+<li>cost-line crossings between holder-age groups can confirm a bottom 1 to 5 months after it.</li>
+</ul>
+<h2 id="s7">Limitations and disclaimers</h2>
+<ul>
+<li>There are only 4 independent cycle samples. Every conclusion tops out at "direction holds," not a law.</li>
+<li>The six-state rules come from this research, and the historical replay is in-sample. Out-of-sample testing starts in October 2026.</li>
+<li>The 58,525 on June 30 is the lowest close so far. If price closes below it, this report's "bottom confirmed" call is void.</li>
+<li>On-chain cost data comes from bitview.space and is computed from individual unspent bitcoin outputs (UTXOs). Paid platforms such as Glassnode mostly compute by address or entity, so the same cost line can differ by several thousand to ten thousand dollars. This report compares structure and timing, not exact levels, so its numbers may differ from those on the two analysts' charts.</li>
+<li>Analyst rules are collated from public content, and we standardized the target definition in back-testing (the next swing high followed by a drop of more than 15%), so results may differ from the day counts the authors themselves cite.</li>
+<li>This is market-structure research, not investment advice, and does not represent the author's actual holdings.</li>
+</ul>
+
+<footer>
+<div class="profile">
+<div class="bio">
+<p>Product-minded: I follow who is paying.</p>
+<p>Macro liquidity → BTC holder structure → sector rotation → launchpads / low-base narratives</p>
+<p>Public trading plan Monday to Friday — wrong calls included</p>
+<p>Data and post-mortems only; not investment advice</p>
+<p><a href="https://t.co/6SCycHXsC4">uncleonchain.com</a></p>
+</div>
+<div class="id">
+<div class="name">Uncle Onchain<i>｜</i>Liquidity to Alpha</div>
+<div class="handle">@Uncle_Onchain</div>
+</div>
+</div>
+<p><b>Data sources:</b> Coin Metrics community data, bitview.space (Bitcoin Research Kit), BGeometrics; public posts by Murphy (@Murphychen888) and CryptoChan (@0xCryptoChan), 2021 to 2026.</p>
+<p><b>Past specials:</b> <a href="https://uncleonchain.com/reports/">https://uncleonchain.com/reports/</a></p>
+</footer>
+
+</div>
+</body>
+</html>

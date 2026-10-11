@@ -276,7 +276,18 @@ a.ind:hover{border-color:var(--lime-bd);background:var(--card2);color:inherit}
 
 
 /* ---- 综合研判（四层合成） ---- */
-.verdict.comp .txt{font-size:18px}
+.verdict.comp .txt{font-size:20px;line-height:1.55;margin:10px 0 16px}
+.verdict.comp .chips{margin-bottom:6px}
+.verdict.comp .segd{margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
+.verdict.comp .segs{gap:0}
+.verdict.comp .segs li{padding:12px 0;border-top:1px dashed var(--line);line-height:1.75}
+.verdict.comp .segs li:first-child{border-top:none;padding-top:2px}
+.verdict.comp .segd>.tnote{margin-top:12px}
+.verdict.comp .stamp{margin-top:14px}
+.rtools{display:flex;justify-content:flex-end;align-items:center;gap:14px;margin:0 0 10px}
+.btn-dl{display:inline-flex;align-items:center;gap:6px;font:600 12.5px/1 var(--sans);padding:8px 13px;border-radius:8px;border:1px solid var(--lime-bd);color:var(--lime-ink);background:var(--lime-bg);text-decoration:none;min-height:34px}
+.btn-dl:before{content:"↓";font-weight:700}
+.btn-dl:hover{filter:brightness(1.1);color:var(--lime-ink)}
 .segd{margin-top:10px}.segd>summary{cursor:pointer;font-size:12px;color:var(--muted);padding:4px 0;list-style:none}
 .segd>summary::-webkit-details-marker{display:none}.segd>summary:before{content:"▸ ";}.segd[open]>summary:before{content:"▾ "}
 @media(min-width:641px){.segd>summary{display:none}}
@@ -294,26 +305,30 @@ a.chip,a.lb{text-decoration:none}
 .grade.g-x{color:var(--dn);border-color:var(--dn-bd)}
 .grade.lv{color:var(--ink2);background:var(--wash)}
 /* ---- 四层 Tab ---- */
-.tabwrap{position:sticky;top:0;z-index:15;background:var(--bg);margin:18px -4px 0;padding:8px 4px 0;border-bottom:1px solid var(--line)}
+.tabwrap{position:sticky;top:0;z-index:15;background:var(--bg);margin:22px -4px 0;padding:10px 4px 10px}
 @media(max-width:960px){.tabwrap{top:49px}}
-.tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+.tabs{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:6px;border:1px solid var(--line2);border-radius:14px;background:var(--card2)}
 .tabs::-webkit-scrollbar{display:none}
-.tab{flex:1 0 auto;min-width:150px;display:flex;flex-direction:column;gap:3px;padding:9px 12px;border:1px solid var(--line);border-bottom:none;border-radius:10px 10px 0 0;
-text-decoration:none;color:var(--ink2);background:var(--card);position:relative;min-height:44px}
-.tab:hover{color:var(--ink);background:var(--card2)}
-.tab.on{background:var(--card2);color:var(--ink);box-shadow:inset 0 2px 0 var(--lime)}
-.tab .tn{font:600 12.5px/1.3 var(--sans);display:flex;align-items:center;gap:6px;white-space:nowrap}
-.tab .tn em{font-style:normal;font-weight:500;color:var(--muted)}
-.tab .ts{font-size:12px;white-space:nowrap}
+.tab{flex:1 0 auto;min-width:160px;display:flex;flex-direction:column;gap:5px;padding:12px 14px;border:1px solid transparent;border-radius:10px;
+text-decoration:none;color:var(--ink2);background:transparent;position:relative;min-height:58px;transition:background .15s,border-color .15s}
+.tab:hover{color:var(--ink);background:var(--hover);border-color:var(--line2)}
+.tab.on{background:var(--card);color:var(--ink);border-color:var(--lime-bd);box-shadow:inset 0 3px 0 var(--lime),0 6px 18px rgba(0,0,0,.18)}
+.tab .tn{font:700 15px/1.3 var(--sans);display:flex;align-items:center;gap:7px;white-space:nowrap}
+.tab .tn em{font-style:normal;font-weight:500;color:var(--muted);font-size:13px}
+.tab .ts{font-size:12.5px;white-space:nowrap}
 .tab .dot{width:8px;height:8px;border-radius:50%;background:currentColor;flex:none}
 .tab .chg{position:absolute;top:6px;right:8px;margin:0}
-@media(max-width:640px){.tab{min-width:118px;padding:8px 10px}.tab .tn em{display:none}}
+@media(max-width:640px){.tab{min-width:124px;padding:10px 11px;min-height:54px}.tab .tn{font-size:14px}.tab .tn em{display:none}}
 .tabp:focus{outline:none}
 html.js .tabp{display:none}html.js .tabp.on{display:block}
 .tabp{margin-top:18px}
 .tabp .ptitle{margin-top:6px}
 .legend-d{margin:10px 0 0;font-size:12.5px}
-.legend-d summary{cursor:pointer;color:var(--ink2);display:inline-block;padding:4px 0}
+.legend-d summary{cursor:pointer;color:var(--ink2);display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border:1px solid var(--line2);border-radius:999px;list-style:none;min-height:30px}
+.legend-d summary::-webkit-details-marker{display:none}
+.legend-d summary:before{content:"";width:6px;height:6px;border-right:1.6px solid currentColor;border-bottom:1.6px solid currentColor;transform:rotate(-45deg);transition:transform .15s;margin-right:2px}
+.legend-d[open] summary:before{transform:rotate(45deg) translate(-1px,-1px)}
+.legend-d summary:hover{color:var(--ink);border-color:var(--ink2)}
 .legendbox{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:8px;padding:12px 14px;border:1px dashed var(--line2);border-radius:10px;background:var(--wash)}
 .legendbox ul{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:6px}
 .legendbox li{display:flex;gap:8px;align-items:baseline;color:var(--ink2);font-size:12px}
@@ -653,14 +668,18 @@ if(innerWidth<641)document.querySelectorAll('details.segd').forEach(d=>d.removeA
  const tabs=[...bar.querySelectorAll('[role=tab]')];const KEY='uc-macro-pos';
  function panelOf(el){return el&&el.closest?el.closest('.tabp'):null}
  function act(n,focus){tabs.forEach(t=>{const on=t.dataset.tab==String(n);t.classList.toggle('on',on);t.setAttribute('aria-selected',on?'true':'false');t.tabIndex=on?0:-1;
-   const p=document.getElementById(t.getAttribute('aria-controls'));if(p)p.classList.toggle('on',on)});if(focus){const t=tabs.find(t=>t.dataset.tab==String(n));t&&t.focus()}
+   const p=document.getElementById(t.getAttribute('aria-controls'));if(p)p.classList.toggle('on',on);
+   if(on&&(t.offsetLeft<bar.scrollLeft||t.offsetLeft+t.offsetWidth>bar.scrollLeft+bar.clientWidth))bar.scrollLeft=Math.max(0,t.offsetLeft-8)});if(focus){const t=tabs.find(t=>t.dataset.tab==String(n));t&&t.focus()}
   if(window.ucBootCharts)setTimeout(()=>window.ucBootCharts(document.getElementById('layer-'+n)),30)}
  function cur(){const t=tabs.find(t=>t.classList.contains('on'));return t?t.dataset.tab:'1'}
  function go(hash,scroll){if(!hash)return false;const id=hash.slice(1);const el=document.getElementById(id);if(!el)return false;
   let n=null;const m=/^layer-(\d)$/.exec(id);if(m)n=m[1];else{const p=panelOf(el);if(p)n=p.id.split('-')[1]}
   if(!n)return false;act(n);if(scroll){if(m){const tw=document.querySelector('.tabwrap');window.scrollTo({top:Math.max(0,tw.getBoundingClientRect().top+scrollY-8)})}else setTimeout(()=>{el.scrollIntoView({block:'start'});flash(el)},40)}return true}
  function flash(el){if(!el)return;el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash')}
- tabs.forEach((t,k)=>{t.addEventListener('click',e=>{e.preventDefault();act(t.dataset.tab);history.replaceState(null,'','#layer-'+t.dataset.tab)});
+ function keep(){const tw=document.querySelector('.tabwrap');const top=tw.getBoundingClientRect().top;const st=parseFloat(getComputedStyle(tw).top)||0;
+  // Tab 栏已经吸顶（用户往下滑过）：切换后停在新面板开头；没吸顶：页面不动
+  if(top<=st+1){const a=document.getElementById('tabs-anchor');if(a)window.scrollTo({top:Math.max(0,a.getBoundingClientRect().top+scrollY-st)})}}
+ tabs.forEach((t,k)=>{t.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();act(t.dataset.tab);keep();history.replaceState(null,'','#layer-'+t.dataset.tab)});
   t.addEventListener('keydown',e=>{if(e.key!=='ArrowRight'&&e.key!=='ArrowLeft')return;e.preventDefault();const j=(k+(e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length;
    act(tabs[j].dataset.tab,true);history.replaceState(null,'','#layer-'+tabs[j].dataset.tab)})});
  // 页面里指向其他 Tab 的链接（综合研判的层徽章、依据小芯片、#l2-levels 等）
