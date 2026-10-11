@@ -1,0 +1,588 @@
+{
+ "updated_utc": "2026-10-11 16:47",
+ "data_date": "2026-10-11",
+ "price": 83450.81,
+ "position": {
+  "code": "between",
+  "zh": "在 STH 成本和 +1σ 压力区之间",
+  "en": "Between the STH cost and the +1σ pressure zone"
+ },
+ "p1s": {
+  "value": 86941.97,
+  "lo": 85203.13,
+  "hi": 88680.81,
+  "pct_from_price": 4.2,
+  "k": 1.17,
+  "status_zh": "在下方",
+  "status_en": "below",
+  "touches": [
+   {
+    "date": "2024-11-27",
+    "price": 95989.08,
+    "line": 96338.18,
+    "result": "held",
+    "result_date": null
+   },
+   {
+    "date": "2025-05-21",
+    "price": 109704.86,
+    "line": 111006.28,
+    "result": "held",
+    "result_date": null
+   },
+   {
+    "date": "2025-07-10",
+    "price": 115873.9,
+    "line": 118195.43,
+    "result": "held",
+    "result_date": null
+   },
+   {
+    "date": "2026-08-21",
+    "price": 78359.17,
+    "line": 79255.87,
+    "result": "held",
+    "result_date": null
+   },
+   {
+    "date": "2026-10-01",
+    "price": 84777.24,
+    "line": 85834.85,
+    "result": "open",
+    "result_date": null
+   }
+  ],
+  "n_touches": 28,
+  "hold_rate_zh": "碰到后 30 天不被突破 63%（对照 42%）；2018 年后 72%（对照 44%）",
+  "hold_rate_en": "Not broken within 30 days of a touch 63% of the time (placebo 42%); since 2018 72% (44%)",
+  "evidence": "已验证·方向"
+ },
+ "sth": {
+  "value": 74303.52,
+  "pct_from_price": -11.0,
+  "touches": [
+   {
+    "date": "2024-06-18",
+    "price": 65112.12,
+    "line": 64463.81,
+    "result": "broken",
+    "result_date": "2024-06-26"
+   },
+   {
+    "date": "2024-09-30",
+    "price": 63260.04,
+    "line": 62758.78,
+    "result": "held",
+    "result_date": null
+   },
+   {
+    "date": "2025-02-24",
+    "price": 91869.65,
+    "line": 93126.7,
+    "result": "broken",
+    "result_date": "2025-02-27"
+   },
+   {
+    "date": "2025-08-25",
+    "price": 110089.53,
+    "line": 109156.14,
+    "result": "held",
+    "result_date": null
+   },
+   {
+    "date": "2025-09-22",
+    "price": 112727.71,
+    "line": 111830.21,
+    "result": "broken",
+    "result_date": "2025-10-18"
+   }
+  ],
+  "n_touches": 38,
+  "hold_rate_zh": "回落到这里后 30 天守住 60.5%（对照 38.5%）；2018 年后 47%（对照 41%），接近随机",
+  "hold_rate_en": "Held within 30 days of a pullback 60.5% (placebo 38.5%); since 2018 47% (41%) — close to random",
+  "evidence": "已验证·方向（近年衰减）"
+ },
+ "sth_13": 96594.58,
+ "warning": {
+  "on": true,
+  "vol30": 37.8,
+  "vol_th": 40.0,
+  "conc": 15.4,
+  "conc_th": 12.0,
+  "conc_date": "2026-10-11",
+  "conc_rank_2022": 87,
+  "evidence": "已验证·方向",
+  "text_zh": "接下来 30 天大概率出现 15% 左右的单边，方向不定。只说幅度，不说方向。",
+  "text_en": "A one-way move of about 15% within 30 days is more likely than usual; direction unknown. Magnitude only, not direction."
+ },
+ "lines": {
+  "tmmp": 77448.64,
+  "rp": 53819.08,
+  "lth_rp": 49310.65
+ },
+ "sth_state": {
+  "sth_mvrv": 1.123,
+  "sth_psip": 83.2,
+  "sth_sopr7": 1.001,
+  "sth_asopr7": 1.005,
+  "trend_zone": false
+ },
+ "flows": {
+  "ex_bal": null,
+  "ex_bal4w_pct": null,
+  "ex_net4w": null,
+  "whale": 7172602.0,
+  "whale4w": -14528.0,
+  "whale4w_pct": -0.2,
+  "retail": 1396035.0,
+  "retail4w": 477.0,
+  "retail4w_pct": 0.03
+ },
+ "chip_map": {
+  "date": "2026-10-11",
+  "close": 83450.81,
+  "total_supply": 18244066,
+  "bins": [
+   {
+    "lo": 57987.58,
+    "hi": 58538.46,
+    "supply": 37241.0,
+    "cls": "mid"
+   },
+   {
+    "lo": 58538.46,
+    "hi": 59094.58,
+    "supply": 47799.8,
+    "cls": "mid"
+   },
+   {
+    "lo": 59094.58,
+    "hi": 59655.98,
+    "supply": 64746.8,
+    "cls": "mid"
+   },
+   {
+    "lo": 59655.98,
+    "hi": 60222.71,
+    "supply": 97661.9,
+    "cls": "mid"
+   },
+   {
+    "lo": 60222.71,
+    "hi": 60794.83,
+    "supply": 72128.3,
+    "cls": "mid"
+   },
+   {
+    "lo": 60794.83,
+    "hi": 61372.38,
+    "supply": 90223.0,
+    "cls": "mid"
+   },
+   {
+    "lo": 61372.38,
+    "hi": 61955.41,
+    "supply": 140931.8,
+    "cls": "mid"
+   },
+   {
+    "lo": 61955.41,
+    "hi": 62543.99,
+    "supply": 270629.7,
+    "cls": "mid"
+   },
+   {
+    "lo": 62543.99,
+    "hi": 63138.16,
+    "supply": 370692.4,
+    "cls": "dense"
+   },
+   {
+    "lo": 63138.16,
+    "hi": 63737.97,
+    "supply": 366326.0,
+    "cls": "dense"
+   },
+   {
+    "lo": 63737.97,
+    "hi": 64343.48,
+    "supply": 297552.5,
+    "cls": "dense"
+   },
+   {
+    "lo": 64343.48,
+    "hi": 64954.75,
+    "supply": 157425.9,
+    "cls": "mid"
+   },
+   {
+    "lo": 64954.75,
+    "hi": 65571.82,
+    "supply": 83137.6,
+    "cls": "mid"
+   },
+   {
+    "lo": 65571.82,
+    "hi": 66194.75,
+    "supply": 140558.2,
+    "cls": "mid"
+   },
+   {
+    "lo": 66194.75,
+    "hi": 66823.6,
+    "supply": 179805.6,
+    "cls": "mid"
+   },
+   {
+    "lo": 66823.6,
+    "hi": 67458.42,
+    "supply": 109893.0,
+    "cls": "mid"
+   },
+   {
+    "lo": 67458.42,
+    "hi": 68099.28,
+    "supply": 122703.9,
+    "cls": "mid"
+   },
+   {
+    "lo": 68099.28,
+    "hi": 68746.22,
+    "supply": 116858.6,
+    "cls": "mid"
+   },
+   {
+    "lo": 68746.22,
+    "hi": 69399.31,
+    "supply": 117546.7,
+    "cls": "mid"
+   },
+   {
+    "lo": 69399.31,
+    "hi": 70058.6,
+    "supply": 90846.5,
+    "cls": "mid"
+   },
+   {
+    "lo": 70058.6,
+    "hi": 70724.16,
+    "supply": 71413.1,
+    "cls": "mid"
+   },
+   {
+    "lo": 70724.16,
+    "hi": 71396.04,
+    "supply": 124543.9,
+    "cls": "mid"
+   },
+   {
+    "lo": 71396.04,
+    "hi": 72074.3,
+    "supply": 86214.7,
+    "cls": "mid"
+   },
+   {
+    "lo": 72074.3,
+    "hi": 72759.01,
+    "supply": 41501.4,
+    "cls": "mid"
+   },
+   {
+    "lo": 72759.01,
+    "hi": 73450.22,
+    "supply": 79916.3,
+    "cls": "mid"
+   },
+   {
+    "lo": 73450.22,
+    "hi": 74147.99,
+    "supply": 69958.7,
+    "cls": "mid"
+   },
+   {
+    "lo": 74147.99,
+    "hi": 74852.4,
+    "supply": 68480.7,
+    "cls": "mid"
+   },
+   {
+    "lo": 74852.4,
+    "hi": 75563.5,
+    "supply": 56899.5,
+    "cls": "mid"
+   },
+   {
+    "lo": 75563.5,
+    "hi": 76281.35,
+    "supply": 146066.1,
+    "cls": "mid"
+   },
+   {
+    "lo": 76281.35,
+    "hi": 77006.02,
+    "supply": 207144.3,
+    "cls": "mid"
+   },
+   {
+    "lo": 77006.02,
+    "hi": 77737.58,
+    "supply": 253692.7,
+    "cls": "mid"
+   },
+   {
+    "lo": 77737.58,
+    "hi": 78476.09,
+    "supply": 223291.9,
+    "cls": "mid"
+   },
+   {
+    "lo": 78476.09,
+    "hi": 79221.61,
+    "supply": 116824.2,
+    "cls": "mid"
+   },
+   {
+    "lo": 79221.61,
+    "hi": 79974.22,
+    "supply": 114075.1,
+    "cls": "mid"
+   },
+   {
+    "lo": 79974.22,
+    "hi": 80733.97,
+    "supply": 127271.9,
+    "cls": "mid"
+   },
+   {
+    "lo": 80733.97,
+    "hi": 81500.94,
+    "supply": 169189.9,
+    "cls": "mid"
+   },
+   {
+    "lo": 81500.94,
+    "hi": 82275.2,
+    "supply": 142605.3,
+    "cls": "mid"
+   },
+   {
+    "lo": 82275.2,
+    "hi": 83056.82,
+    "supply": 294401.8,
+    "cls": "mid"
+   },
+   {
+    "lo": 83056.82,
+    "hi": 83845.86,
+    "supply": 274324.3,
+    "cls": "dense"
+   },
+   {
+    "lo": 83845.86,
+    "hi": 84642.39,
+    "supply": 796290.9,
+    "cls": "dense"
+   },
+   {
+    "lo": 84642.39,
+    "hi": 85446.5,
+    "supply": 421613.8,
+    "cls": "dense"
+   },
+   {
+    "lo": 85446.5,
+    "hi": 86258.24,
+    "supply": 253400.4,
+    "cls": "mid"
+   },
+   {
+    "lo": 86258.24,
+    "hi": 87077.69,
+    "supply": 54931.3,
+    "cls": "mid"
+   },
+   {
+    "lo": 87077.69,
+    "hi": 87904.93,
+    "supply": 276109.0,
+    "cls": "mid"
+   },
+   {
+    "lo": 87904.93,
+    "hi": 88740.03,
+    "supply": 40360.5,
+    "cls": "mid"
+   },
+   {
+    "lo": 88740.03,
+    "hi": 89583.06,
+    "supply": 42453.3,
+    "cls": "mid"
+   },
+   {
+    "lo": 89583.06,
+    "hi": 90434.1,
+    "supply": 214668.2,
+    "cls": "mid"
+   },
+   {
+    "lo": 90434.1,
+    "hi": 91293.22,
+    "supply": 164528.1,
+    "cls": "mid"
+   },
+   {
+    "lo": 91293.22,
+    "hi": 92160.5,
+    "supply": 191554.0,
+    "cls": "mid"
+   },
+   {
+    "lo": 92160.5,
+    "hi": 93036.03,
+    "supply": 96513.2,
+    "cls": "mid"
+   },
+   {
+    "lo": 93036.03,
+    "hi": 93919.87,
+    "supply": 70590.9,
+    "cls": "mid"
+   },
+   {
+    "lo": 93919.87,
+    "hi": 94812.11,
+    "supply": 105227.4,
+    "cls": "mid"
+   },
+   {
+    "lo": 94812.11,
+    "hi": 95712.83,
+    "supply": 140227.2,
+    "cls": "mid"
+   },
+   {
+    "lo": 95712.83,
+    "hi": 96622.1,
+    "supply": 149315.1,
+    "cls": "mid"
+   },
+   {
+    "lo": 96622.1,
+    "hi": 97540.01,
+    "supply": 78312.9,
+    "cls": "mid"
+   },
+   {
+    "lo": 97540.01,
+    "hi": 98466.64,
+    "supply": 60781.7,
+    "cls": "mid"
+   },
+   {
+    "lo": 98466.64,
+    "hi": 99402.07,
+    "supply": 74575.7,
+    "cls": "mid"
+   },
+   {
+    "lo": 99402.07,
+    "hi": 100346.39,
+    "supply": 46404.6,
+    "cls": "mid"
+   },
+   {
+    "lo": 100346.39,
+    "hi": 101299.68,
+    "supply": 115962.9,
+    "cls": "mid"
+   },
+   {
+    "lo": 101299.68,
+    "hi": 102262.03,
+    "supply": 70194.0,
+    "cls": "mid"
+   },
+   {
+    "lo": 102262.03,
+    "hi": 103233.52,
+    "supply": 48470.4,
+    "cls": "mid"
+   },
+   {
+    "lo": 103233.52,
+    "hi": 104214.24,
+    "supply": 129924.9,
+    "cls": "mid"
+   },
+   {
+    "lo": 104214.24,
+    "hi": 105204.27,
+    "supply": 145334.8,
+    "cls": "mid"
+   },
+   {
+    "lo": 105204.27,
+    "hi": 106203.71,
+    "supply": 241926.3,
+    "cls": "mid"
+   },
+   {
+    "lo": 106203.71,
+    "hi": 107212.65,
+    "supply": 129307.1,
+    "cls": "mid"
+   },
+   {
+    "lo": 107212.65,
+    "hi": 108231.17,
+    "supply": 178520.1,
+    "cls": "mid"
+   },
+   {
+    "lo": 108231.17,
+    "hi": 109259.36,
+    "supply": 79082.4,
+    "cls": "mid"
+   }
+  ],
+  "dense_ranges": [
+   {
+    "lo": 62543.99,
+    "hi": 64343.48,
+    "supply": 1034571,
+    "share_pct": 5.67
+   },
+   {
+    "lo": 83056.82,
+    "hi": 85446.5,
+    "supply": 1492229,
+    "share_pct": 8.18
+   }
+  ]
+ },
+ "daily_line_zh": "L3：STH 成本 74,304｜+1σ 压力区 86,942（+4.2%）｜大波动预警 亮（波动 38%，集中度 15.4%）",
+ "daily_line_en": "L3: STH cost 74,304 | +1σ pressure zone 86,942 (+4.2%) | large-move warning ON (vol 38%, concentration 15.4%)",
+ "data_status": {
+  "stale": false,
+  "detail": {
+   "coinmetrics": "ok",
+   "bitview": "ok",
+   "bitview_missing": [],
+   "urpd": "ok"
+  },
+  "notes": [
+   "bitview 日期偏移 0 天，与 Coin Metrics 价格中位误差 0.17%",
+   "筹码集中度种子：本次补 771 张，还差 0 张"
+  ]
+ },
+ "params": {
+  "sigma_window_days": 1460,
+  "vol_threshold": 40.0,
+  "conc_threshold": 12.0,
+  "zone": 0.02,
+  "break_": 0.03,
+  "look_days": 30
+ },
+ "method": "依据《BTC筹码层L3研究》（2026-10-11）：只有 STH 成本 +1σ（压力区）、STH 成本（参考支撑）、低波动 + 筹码集中（大波动预警）三条通过检验，最高到「已验证·方向」；其余只作同步描述。数据为 UTXO 口径，和 Glassnode 等平台数值会有差异。"
+}
