@@ -1,0 +1,208 @@
+{
+ "layer": "L4",
+ "updated_utc": "2026-10-22 16:07",
+ "data_date": "2026-10-21",
+ "conclusion": {
+  "level": "偏热",
+  "one_liner_zh": "短期杠杆和情绪偏热",
+  "paragraph_zh": "杠杆—、情绪中性（恐慌贪婪指数 63.0，过去两年第 69 分位）。这是一支温度计，不是方向标：费率高、恐慌贪婪极值、OI 堆积都没有通过检验，不改动作。",
+  "key_reading_zh": "恐慌贪婪指数 63.0，过去两年第 69 分位",
+  "leverage_band_zh": null,
+  "sentiment_band_zh": "中性",
+  "composite_pct": 69.0
+ },
+ "signal": {
+  "on": false,
+  "value_pct": null,
+  "data_date": null,
+  "days_on": 0,
+  "since": null,
+  "l2_state": "熊末→牛初（底部已确认）",
+  "funding_source": null,
+  "use_zh": "资金费率数据延迟，今天不判断。最近一次为负：2026-05-22",
+  "name_zh": "资金费率 30 日均转负（空头拥挤）",
+  "name_en": "30-day avg funding below zero (crowded shorts)",
+  "grade": "已验证·方向",
+  "stat_zh": "31 次独立事件，之后 30 天上涨 74%（同年代同周期状态对照 58%，p=0.054），平均多涨 7.8 个百分点，回撤更浅；三个年代方向一致，72 组参数 68 组同向。L2 为熊市时效果弱（8 次 50%）",
+  "rule_zh": "不开新空；L2 不在熊市时，允许在 L1 风险预算内分批加。不放大风险预算",
+  "ref": "§4.1、§5.1"
+ },
+ "thermometer": [
+  {
+   "key": "fund_ma30",
+   "name_zh": "资金费率 30 日均（年化）",
+   "name_en": "Funding 30d avg (ann.)",
+   "value": null,
+   "unit": "%",
+   "data_date": null,
+   "pct_730d": null,
+   "band_zh": null,
+   "band_en": null,
+   "grade": "描述",
+   "stat_zh": "费率高不预示回调：高分位之后方向在年代间翻转（2018-21 超额 −14.3，2022-26 +7.6）"
+  },
+  {
+   "key": "fund_ma7",
+   "name_zh": "资金费率 7 日均（年化）",
+   "name_en": "Funding 7d avg (ann.)",
+   "value": null,
+   "unit": "%",
+   "data_date": null,
+   "pct_730d": null,
+   "band_zh": null,
+   "band_en": null,
+   "grade": "描述",
+   "stat_zh": "同上，7 日均噪声更大"
+  },
+  {
+   "key": "qbasis",
+   "name_zh": "季度合约年化升水",
+   "name_en": "Quarterly basis (ann.)",
+   "value": null,
+   "unit": "%",
+   "data_date": null,
+   "pct_730d": null,
+   "band_zh": null,
+   "band_en": null,
+   "grade": "描述",
+   "stat_zh": "升水高不是顶部信号（9 次超额 +6.0）"
+  },
+  {
+   "key": "cme_prem",
+   "name_zh": "CME 升水",
+   "name_en": "CME premium",
+   "value": -0.1,
+   "unit": "%",
+   "data_date": "2026-10-21",
+   "pct_730d": 10.0,
+   "band_zh": "偏冷",
+   "band_en": "cool",
+   "grade": "描述",
+   "stat_zh": "升水高之后无超额（42 次 −0.2）"
+  },
+  {
+   "key": "agg_oi_chg7",
+   "name_zh": "全市场 OI 7 日变化（BTC 计）",
+   "name_en": "Aggregated OI 7d change (BTC)",
+   "value": null,
+   "unit": "%",
+   "data_date": null,
+   "pct_730d": null,
+   "band_zh": null,
+   "band_en": null,
+   "grade": "描述",
+   "stat_zh": "OI 快速堆积之后没有更深回撤，快速出清之后也没有反弹"
+  },
+  {
+   "key": "agg_oi_mcap",
+   "name_zh": "全市场 OI ÷ 市值",
+   "name_en": "Aggregated OI / market cap",
+   "value": null,
+   "unit": "%",
+   "data_date": null,
+   "pct_730d": null,
+   "band_zh": null,
+   "band_en": null,
+   "grade": "描述",
+   "stat_zh": "杠杆率高样本太少（8 次）"
+  },
+  {
+   "key": "fng",
+   "name_zh": "恐慌贪婪指数",
+   "name_en": "Fear & Greed",
+   "value": 63.0,
+   "unit": "",
+   "data_date": "2026-10-21",
+   "pct_730d": 69.0,
+   "band_zh": "中性",
+   "band_en": "normal",
+   "grade": "描述",
+   "stat_zh": "极值反着做不成立：极度贪婪之后反而偏强"
+  },
+  {
+   "key": "dvol",
+   "name_zh": "DVOL（30 天隐含波动）",
+   "name_en": "DVOL (30d implied vol)",
+   "value": 37.1,
+   "unit": "",
+   "data_date": "2026-10-21",
+   "pct_730d": 15.0,
+   "band_zh": "偏冷",
+   "band_en": "cool",
+   "grade": "描述",
+   "stat_zh": "低隐含波动之后不是大行情，反而更平静"
+  }
+ ],
+ "watch": [
+  {
+   "key": "big_liq",
+   "on": false,
+   "name_zh": "大清算日之后偏强",
+   "name_en": "Strength after big liquidation days",
+   "grade": "假设",
+   "stat_zh": "单日清算 ÷ 全市场 OI 进入过去两年高 10%：25 次，之后 30 天上涨 72%（对照 51%，p=0.03）。只有 2022 年后数据，清算数据被交易所低估"
+  },
+  {
+   "key": "cme_low",
+   "on": false,
+   "name_zh": "CME 升水低之后偏弱",
+   "name_en": "Weakness after low CME premium",
+   "grade": "假设",
+   "stat_zh": "进入低 10%：2022-26 年 23 次，上涨 30%（对照 53%）；2018-21 年没有这个现象"
+  },
+  {
+   "key": "qbasis_low",
+   "on": false,
+   "name_zh": "季度合约贴水 / 低升水之后偏强",
+   "name_en": "Strength after low/negative quarterly basis",
+   "grade": "假设",
+   "stat_zh": "升水 < 0：7 次，上涨 71%（对照 49%）；低 10% 分位 2024 年后 12 次 75%"
+  },
+  {
+   "key": "dvol_low",
+   "on": false,
+   "name_zh": "低隐含波动之后略偏弱",
+   "name_en": "Slightly weaker after low DVOL",
+   "grade": "假设",
+   "stat_zh": "DVOL 低 10%：24 次，上涨 42%（对照 58%），之后波动更小"
+  },
+  {
+   "key": "elr_low",
+   "on": false,
+   "name_zh": "预计杠杆率低之后偏强",
+   "name_en": "Strength after low estimated leverage",
+   "grade": "假设",
+   "stat_zh": "聚合 OI ÷ 交易所余额低 10%：10 次，上涨 80%（对照 58%），只有 2022 年后"
+  },
+  {
+   "key": "lev_drop",
+   "on": false,
+   "name_zh": "CME 杠杆基金大幅加空之后偏弱",
+   "name_en": "Weakness after leveraged funds add shorts",
+   "grade": "假设",
+   "stat_zh": "净头寸 4 周变化低 10%：13 次，上涨 31%（对照 52%）；可能主要反映基差套利盘进出"
+  }
+ ],
+ "summary_zh": "L4 情绪与衍生品（数据截至 2026-10-21）\n信号：资金费率 30 日均 —（年化）→ 不亮。资金费率数据延迟，今天不判断。最近一次为负：2026-05-22\n温度：杠杆—、情绪中性（恐慌贪婪指数 63.0，过去两年第 69 分位）。这是一支温度计，不是方向标：费率高、恐慌贪婪极值、OI 堆积都没有通过检验，不改动作。\n观察项（假设，不改动作）：无",
+ "method_zh": "分位 = 今天的值在过去 730 天里排第几（只用当时以前的数据）。≥90 过热、70~90 偏热、30~70 中性、10~30 偏冷、≤10 极冷。只有“资金费率 30 日均转负”一条通过检验、会改动作；其余是描述。依据《BTC情绪衍生品层L4研究》",
+ "data_status": {
+  "stale": true,
+  "detail": {
+   "price": "ok",
+   "coinalyze": "stale",
+   "qbasis": "ok",
+   "cme": "ok",
+   "fng": "ok",
+   "dvol": "ok",
+   "cftc": "ok",
+   "funding": "stale"
+  },
+  "notes": [
+   "coinalyze 取不到：没有 COINALYZE_KEY",
+   "资金费率源 Coinalyze·Binance BTCUSDT 取不到：没有 COINALYZE_KEY",
+   "资金费率源 BitMEX XBTUSD 取不到：https://www.bitmex.com/api/v1/funding → HTTP 403",
+   "资金费率源 OKX BTC-USDT-SWAP 和历史重叠不足 30 天，无法校准，不用",
+   "资金费率源 Deribit BTC-PERPETUAL 取不到：数据太少"
+  ]
+ }
+}
