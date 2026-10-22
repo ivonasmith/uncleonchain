@@ -1055,7 +1055,7 @@ def ind_card(ind, j, as_of, extra=""):
     lvl = T(ind["级别"], LEVEL_EN.get(ind["级别"], ind["级别"])) + (f" · {T(ind['级别注'], ind['级别注EN'])}" if ind.get("级别注") else "")
     head = (f'<div class="top"><span class="nm">{esc(name)}<span class="grade lv" data-tag="{esc(ind["级别"])}" tabindex="0">{esc(lvl)}</span>'
             f'{grade_chip(ind.get("等级"))}</span>')
-    obs = " obs" if ind["级别"] == "观察" else ""
+    obs = (" obs" if ind["级别"] == "观察" else "") + (" core" if ind["级别"] == "核心" else " aux")
     rec = R.recording_info(G["S"], ind)
     rec_chip = f'<span class="chip t-warn rc"><i></i>{T("记录中", "Recording")} · {rec["days"]}/{rec["required"]}</span>' if rec and not rec["done"] else ""
     cid = f'id="card-{ind["key"]}"'
@@ -1081,17 +1081,28 @@ def pending_card(p):
 
 
 def cards_by_group(layer, as_of, extra_fn=None):
-    """按注册表的分组和顺序出卡片（M12）：组标题 + 卡片网格；待接入放最后一组。"""
+    """按注册表的分组和顺序出卡片（M12）。视觉层级：核心指标用完整卡片；辅助 / 观察 / 描述用紧凑小卡；
+    整组都不是核心的，合并折叠成最后一组「辅助与观察（不进本层判定）」。"""
     inds = ind_layer_list(layer)
     groups = []
     for ind in inds:
         if (ind["组"], ind["组EN"]) not in groups:
             groups.append((ind["组"], ind["组EN"]))
-    out = []
+    out, folded, n_fold = [], "", 0
     for g in groups:
         gi = [x for x in inds if x["组"] == g[0]]
-        cards = "".join(ind_card(x, G["JBY"].get(x["key"]), as_of, extra_fn(x) if extra_fn else "") for x in gi)
-        out.append((g, f'<div class="grid g4">{cards}</div>'))
+        core = [x for x in gi if x["级别"] == "核心"]
+        aux = [x for x in gi if x["级别"] != "核心"]
+        card = lambda x: ind_card(x, G["JBY"].get(x["key"]), as_of, extra_fn(x) if extra_fn else "")
+        aux_h = f'<div class="grid g4 auxgrid">{"".join(card(x) for x in aux)}</div>' if aux else ""
+        if core:
+            out.append((g, f'<div class="grid g4">{"".join(card(x) for x in core)}</div>' + aux_h))
+        else:
+            folded += f'<div class="auxg">{esc(T(*g))}</div>' + aux_h
+            n_fold += len(aux)
+    if folded:
+        out.append((("辅助与观察（不进本层判定）", "Auxiliary & watch (not in the verdict)"),
+                    f'<details class="auxfold"><summary>{T(f"展开 {n_fold} 项", f"Show {n_fold} items")}</summary>{folded}</details>'))
     return out
 
 

@@ -372,6 +372,19 @@ h1 .info:hover::after,h1 .info:focus::after{left:0;transform:none;font-weight:40
 .uc-bar .uc-info{margin-left:auto}
 .uc-bar .uc-info:hover::after,.uc-bar .uc-info:focus::after{left:auto;right:0;transform:none}
 .srcd{margin:-2px 0 12px}.srcd>summary{list-style:none;cursor:pointer;display:inline-block}.srcd>summary::-webkit-details-marker{display:none}.srcd .src{margin-top:8px}
+
+/* ---- 四层面板视觉层级：核心突出、辅助弱化 ---- */
+.card.ind.core{border-color:var(--line2);box-shadow:inset 3px 0 0 var(--lime-bd)}
+.card.ind.core .v{font-size:24px}
+.card.ind.aux{padding:12px 14px;background:transparent;border-style:dashed}
+.card.ind.aux .v{font-size:16px;color:var(--ink2)}
+.card.ind.aux .nm{font-size:12.5px;font-weight:500;color:var(--ink2)}
+.card.ind.aux svg{display:none}.card.ind.aux .b{font-size:11.5px;color:var(--muted)}
+.card.ind.aux .ft{margin-top:4px}
+.auxgrid{margin-top:10px}
+.auxfold>summary{cursor:pointer;font-size:12.5px;color:var(--muted);padding:6px 0;list-style:none}
+.auxfold>summary::-webkit-details-marker{display:none}.auxfold>summary:before{content:"▸ "}.auxfold[open]>summary:before{content:"▾ "}
+.auxg{font-size:12px;color:var(--muted);margin:14px 0 2px;letter-spacing:.04em}
 /* ---- 发射台活动温度 ---- */
 .cyctag{font:500 12px var(--sans);padding:4px 10px;border-radius:999px;border:1px solid var(--line2);text-decoration:none;color:var(--ink2);margin-left:8px;white-space:nowrap}
 .cyctag b{color:var(--ink);font-family:var(--mono)}
