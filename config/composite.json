@@ -231,29 +231,46 @@
   }
  },
  "L4": {
+  "_说明": "L4 依据《BTC情绪衍生品层L4研究》（规格 §5）。只有「信号」一档进动作；其余四档是温度描述。{档杠杆}{档情绪}{关键读数} 运行时填入。",
+  "信号": {
+   "一句话": "资金费率转负，空头拥挤：短期不追空",
+   "一句话EN": "funding has turned negative — shorts are crowded; don't chase shorts",
+   "分段": "{段落}",
+   "分段EN": "30-day average funding is {value} (annualized), negative for {days} days: shorts are crowded (validated · direction). Use: no new shorts; when L2 is not in a bear market, scaling in within the L1 budget is allowed. The risk budget does not grow."
+  },
   "过热": {
-   "一句话": "短期杠杆过热",
-   "一句话EN": "short-term leverage overheated",
-   "分段": "杠杆和情绪都已过热（{关键读数}）。这是一支温度计，不是方向标。",
-   "分段EN": "Leverage and sentiment are running hot ({reading}). This is a thermometer, not a compass."
+   "一句话": "短期杠杆和情绪过热",
+   "一句话EN": "short-term leverage and sentiment running hot",
+   "分段": "杠杆{档杠杆}、情绪{档情绪}（{关键读数}）。这是一支温度计，不是方向标。",
+   "分段EN": "Short-term leverage and sentiment running hot ({reading}). A thermometer, not a compass."
   },
   "偏热": {
-   "一句话": "短期杠杆偏热",
-   "一句话EN": "short-term leverage running warm",
-   "分段": "杠杆和情绪在升温（{关键读数}）。这是一支温度计，不是方向标。",
-   "分段EN": "Leverage and sentiment are warming up ({reading}). This is a thermometer, not a compass."
+   "一句话": "短期杠杆和情绪偏热",
+   "一句话EN": "short-term leverage and sentiment running warm",
+   "分段": "杠杆{档杠杆}、情绪{档情绪}（{关键读数}）。这是一支温度计，不是方向标。",
+   "分段EN": "Short-term leverage and sentiment running warm ({reading}). A thermometer, not a compass."
   },
   "中性": {
    "一句话": "",
    "一句话EN": "",
-   "分段": "短期情绪和杠杆都在常温区。",
-   "分段EN": "Short-term sentiment and leverage are at normal temperature."
+   "分段": "短期温度中性：杠杆{档杠杆}、情绪{档情绪}。只作描述。",
+   "分段EN": "Short-term temperature is normal."
   },
   "偏冷": {
    "一句话": "短期情绪偏冷",
-   "一句话EN": "short-term sentiment cold",
-   "分段": "情绪低迷，杠杆正在出清（{关键读数}）。",
-   "分段EN": "Sentiment is subdued and leverage is being flushed out ({reading})."
+   "一句话EN": "short-term sentiment cool",
+   "分段": "杠杆{档杠杆}、情绪{档情绪}（{关键读数}）。这是一支温度计，不是方向标。",
+   "分段EN": "Short-term sentiment is cool ({reading})."
+  },
+  "动作": {
+   "信号": [
+    "，不开新空",
+    "; no new shorts"
+   ],
+   "信号非熊市": [
+    "，允许在 L1 预算内分批加",
+    "; scaling in within the L1 budget is allowed"
+   ]
   },
   "_缺": {
    "一句话": "",

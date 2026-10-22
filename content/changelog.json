@@ -1,5 +1,25 @@
 [
  {
+  "version": "2026.10.22",
+  "date": "2026-10-22",
+  "notify": true,
+  "title_zh": "L4 情绪衍生品层重做 + 事件日历上线",
+  "title_en": "L4 sentiment layer rebuilt + event calendar",
+  "items": [
+   {
+    "type": "data",
+    "zh": "L4 换成检验过的版本：只有「资金费率 30 日均转负」（空头拥挤）一条会改动作；其余 8 个读数按过去两年分位只描述温度；撤掉旧的恐慌贪婪 / 资金费率 / 未平仓打分",
+    "en": "L4 now uses the tested version: only '30-day average funding below zero' (crowded shorts) changes the action; eight other readings describe temperature by two-year percentile; the old Fear & Greed / funding / OI score is retired",
+    "corrections_anchor": "#rc-2026-10-22-l4"
+   },
+   {
+    "type": "new",
+    "zh": "事件日历：美联储议息、CPI、非农公布前后 BTC 一般会晃多大（已单独检验，只说幅度不说方向），以及 Web3 行业会议与代币事件汇总；首页加「未来 7 天」",
+    "en": "Event calendar: how much BTC typically swings around FOMC, CPI and payrolls (individually tested; magnitude, not direction), plus a digest of Web3 conferences and token events; 'Next 7 days' on the home page"
+   }
+  ]
+ },
+ {
   "version": "2026.10.11",
   "date": "2026-10-11",
   "notify": true,

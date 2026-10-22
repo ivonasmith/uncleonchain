@@ -357,6 +357,64 @@ details.fold>summary,details.raw>summary{cursor:pointer;padding:10px 14px;font-s
 details.raw>summary{padding:6px 0;font-weight:500;font-size:12px}
 details.fold .l1line,details.raw .l1line{margin:0 14px 12px}
 .inval{margin:6px 0 4px;font-size:13px;color:var(--ink2)}
+/* ---- 事件日历 ---- */
+.calnext{margin:-4px 0 12px;font-size:13px}.calnext a{color:var(--ink2);text-decoration:none;border-bottom:1px dashed var(--line2)}
+.caltabs{position:static;margin-top:10px}
+.caltabs .tab.w3t.on{border-color:var(--cool-bd);box-shadow:inset 0 3px 0 var(--cool)}
+.calp{display:none;margin-top:16px}.calp.on{display:block}
+.calp.w3p{border-left:3px dashed var(--cool-bd);padding-left:16px}
+.calintro{max-width:none}
+.calbig{padding:18px 20px;border-left:4px solid var(--warn);margin:12px 0}
+.calbig .eb{font-size:11.5px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.calbig .row1{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.calbig h3{margin:6px 0;font-size:22px}
+.calbig .cd{font:700 22px var(--mono);color:var(--warn);margin:4px 0}
+.calbig .tz{font-size:12.5px;color:var(--muted)}.calbig .tz b{color:var(--ink);font-family:var(--mono);font-weight:600}
+.calbig .imp,.calbig .use{font-size:14px;line-height:1.75;color:var(--ink2);margin:10px 0 0}.calbig b{color:var(--ink)}
+table.calimp tr.faint td{opacity:.55}
+.cmp{display:flex;align-items:center;gap:8px;margin:3px 0;min-width:180px}.cmp span{height:8px;border-radius:99px;display:block}
+.cmp .a{background:var(--warn)}.cmp .n{background:var(--line2)}.cmp em{font-style:normal;font-size:11.5px;color:var(--muted);white-space:nowrap}
+.grade.dashed{border-style:dashed}
+.callist{display:grid;gap:6px}
+.calrow{border:1px solid var(--line);border-radius:10px;background:var(--card)}
+.calrow summary{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:10px 14px;cursor:pointer;list-style:none;font-size:13px}
+.calrow summary::-webkit-details-marker{display:none}
+.calrow .d,.calrow .t{font-family:var(--mono);color:var(--muted);font-size:12px}.calrow .lv{font-size:12px;color:var(--ink2)}.calrow em{margin-left:auto;font-style:normal;font-size:12px;color:var(--muted)}
+.calrow.faint{opacity:.6}.calrow .body{padding:0 14px 12px;font-size:13px;color:var(--ink2);line-height:1.75}.calrow .body p{margin:6px 0}
+.calhome ul{list-style:none;margin:0;padding:6px 4px;display:grid;gap:2px}
+.calhome li a{display:flex;gap:10px;align-items:center;padding:8px 10px;border-radius:8px;text-decoration:none;color:var(--ink2);font-size:13px}
+.calhome li a:hover{background:var(--hover)}.calhome .d{font-family:var(--mono);font-size:12px;color:var(--muted);min-width:96px}.calhome b{color:var(--ink);font-weight:600}
+.w3f{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:10px 0 14px}
+.w3s{background:var(--card);border:1px solid var(--line2);color:var(--ink);border-radius:8px;padding:7px 10px;font-size:13px;min-width:200px}
+.w3imp{font-size:12.5px;color:var(--ink2)}
+.w3wrap h4{margin:16px 0 6px;font-size:12px;color:var(--muted);letter-spacing:.06em}
+.w3l{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.w3l li{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card);font-size:13px}
+.w3l li.imp3 b{font-weight:800}.w3l li b{font-weight:500;color:var(--ink)}.w3l li a{text-decoration:none}
+.w3l .d{font-family:var(--mono);font-size:12px;color:var(--muted);min-width:96px}.w3l .cat{font-size:11px;padding:2px 7px;border-radius:6px;border:1px solid var(--cool-bd);color:var(--cool)}
+.w3l .coin{font:600 11px var(--mono);padding:2px 6px;border-radius:5px;background:var(--cool-bg);color:var(--ink)}.w3l .city{font-size:12px;color:var(--muted)}.w3l small{margin-left:auto;font-size:11px;color:var(--muted)}
+/* ---- L4 情绪衍生品 ---- */
+.l4head{border-left-color:var(--cool)}
+.l4nums{display:flex;flex-wrap:wrap;gap:6px 22px;font-size:12.5px;color:var(--muted);margin-top:8px}
+.l4nums b{color:var(--ink);font-size:15px;margin-left:6px}
+.l4para{font-size:14px;line-height:1.75;color:var(--ink2);margin:8px 0 4px}
+.l4sig.on{border-color:var(--up-bd)}.l4sig.on .lamp i{background:var(--up);box-shadow:0 0 0 4px var(--up-bg),0 0 18px var(--up)}.l4sig.on .lamp b{color:var(--up)}
+.l4sig.stale{opacity:.7}.l4sig.stale .lamp i{background:var(--line2)}
+.lamp .dd{font-size:12.5px;color:var(--muted);margin-left:4px}
+.zbar{position:relative;width:100%;height:10px;border-radius:99px;background:var(--wash);border:1px solid var(--line);margin:10px 0 2px}
+.zbar .neg{position:absolute;left:0;top:0;bottom:0;background:var(--up-bg);border-radius:99px 0 0 99px}
+.zbar .z{position:absolute;top:-5px;bottom:-5px;width:2px;background:var(--ink2)}
+.zbar .pt{position:absolute;top:50%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:var(--ink);box-shadow:0 0 0 3px var(--card)}
+.zlab{position:relative;width:100%;height:16px;font:11px var(--mono);color:var(--muted)}.zlab span{position:absolute}.zlab span:first-child{left:0}.zlab span:last-child{right:0}.zlab span:nth-child(2){transform:translateX(-50%)}
+.l4t .v{font-size:20px}
+.pbar4{position:relative;width:100%;height:8px;border-radius:99px;margin:10px 0 4px;background:linear-gradient(90deg,var(--cool-bg) 0 30%,var(--wash) 30% 70%,var(--warn-bg) 70% 100%);border:1px solid var(--line)}
+.pbar4 i{position:absolute;top:-3px;bottom:-3px;width:1px;background:var(--line2)}
+.pbar4 b{position:absolute;top:50%;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:var(--ink);box-shadow:0 0 0 2px var(--card)}
+.l4why{font-size:11.5px;color:var(--muted);line-height:1.6;margin:8px 0 0;border-top:1px dashed var(--line);padding-top:8px}
+.l4watch ul{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:6px}
+.l4watch li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 10px;font-size:12.5px;color:var(--ink2);padding:8px 0;border-top:1px dashed var(--line)}
+.l4watch li b{color:var(--ink2);font-weight:600}.l4watch li.on b{color:var(--ink)}
+.l4watch li em{grid-column:1/-1;font-style:normal;font-size:11px;color:var(--muted)}.l4watch li .s{grid-column:1/-1;font-size:12px;color:var(--muted)}
+.obsfold{opacity:.9}
 /* ---- L3 筹码层 ---- */
 .l3pos{padding:16px 20px 12px;margin-bottom:14px;border-left:4px solid var(--warn)}
 .l3pos .eb{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:11.5px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}

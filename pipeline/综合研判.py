@@ -51,26 +51,8 @@ def l3_fill(l3):
             "波动": pct(w.get("vol30")), "vol": pct(w.get("vol30")), "集中度": pct(w.get("conc")), "conc": pct(w.get("conc"))}
 
 
-L4_NAME = {"hl_oi": ("未平仓合约 7 日", "open interest 7d"), "hl_funding": ("资金费率年化", "funding, annualized"),
-           "fng": ("恐慌贪婪指数", "Fear & Greed")}
-
-
-def l4_kind(v4, rs):
-    short = (v4 or {}).get("短") or ""
-    kind = {"情绪过热": "过热", "情绪偏热": "偏热", "情绪中性": "中性", "情绪偏冷": "偏冷"}.get(short)
-    if not kind:
-        return None, ("", "")
-    by = {x["key"]: x for x in rs if x and x["层"] == 4}
-    want = 1 if kind in ("过热", "偏热") else (-1 if kind == "偏冷" else 0)
-    for k in ("hl_oi", "hl_funding", "fng"):           # 关键读数优先级：未平仓合约 7 日变化 > 资金费率 > 恐慌贪婪
-        x = by.get(k)
-        if x and not x["过期"] and want and (x["分"] > 0) == (want > 0) and x["分"] != 0:
-            return kind, (f"{L4_NAME[k][0]} {x['显示']}", f"{L4_NAME[k][1]} {x['显示']}")
-    return kind, ("", "")
-
-
-def compose(vs, rs, l2, l3=None):
-    """vs = {层: 层结论}；rs = 当天全部读数；l2 = l2_latest.json；l3 = l3_latest.json。返回写进日志 / 页面的综合研判。"""
+def compose(vs, rs, l2, l3=None, l4=None):
+    """vs = {层: 层结论}；rs = 当天全部读数；l2/l3/l4 = 各层 *_latest.json。返回写进日志 / 页面的综合研判。"""
     C = load_cfg()
     # ---- 方向 · L2
     code = ((l2 or {}).get("state") or {}).get("code")
@@ -111,10 +93,23 @@ def compose(vs, rs, l2, l3=None):
         hint3 = C3["一句话"]["both"] if (warn3 and code3 == "in_zone") else (C3["一句话"]["预警"] if warn3 else (C3["一句话"]["in_zone"] if code3 == "in_zone" else ["", ""]))
     else:
         seg3, num3, hint3 = (C3["_缺"]["分段"], C3["_缺"]["分段EN"]), ("", ""), ["", ""]
-    # ---- 短期 · L4
-    k4, kr = l4_kind(vs.get(4), rs)
-    d4 = C["L4"].get(k4) or C["L4"]["_缺"]
-    seg4 = (d4["分段"].format(关键读数=kr[0]), d4["分段EN"].format(reading=kr[1]))
+    # ---- 短期 · L4（只有「信号」一档进动作，其余是温度描述）
+    c4 = (l4 or {}).get("conclusion") or {}
+    k4 = c4.get("level")
+    d4 = C["L4"].get(k4) if k4 in ("信号", "过热", "偏热", "中性", "偏冷") else C["L4"]["_缺"]
+    sg4 = (l4 or {}).get("signal") or {}
+    kr = (c4.get("key_reading_zh") or "", c4.get("key_reading_zh") or "")
+    v4 = sg4.get("value_pct")
+    fill4 = {"段落": c4.get("paragraph_zh") or "", "档杠杆": c4.get("leverage_band_zh") or "—", "档情绪": c4.get("sentiment_band_zh") or "—",
+             "关键读数": kr[0], "reading": kr[1] if kr[1] and not any("\u4e00" <= ch <= "\u9fff" for ch in kr[1]) else "see the L4 tab",
+             "value": "—" if v4 is None else f"{v4:+.1f}%".replace("-", "\u2212"), "days": sg4.get("days_on", "—")}
+    seg4 = (d4["分段"].format(**fill4), d4["分段EN"].format(**fill4))
+    num4 = ((f"资金费率 30 日均 {fill4['value']}", f"funding 30d avg {fill4['value']}") if v4 is not None else ("", ""))
+    if k4 == "信号" and act:                     # 信号亮：动作追加「不开新空」；L2 不在熊市时再追加「允许在 L1 预算内分批加」
+        a4 = C["L4"]["动作"]["信号"]
+        if code != "BEAR":
+            a4 = [a4[0] + C["L4"]["动作"]["信号非熊市"][0], a4[1] + C["L4"]["动作"]["信号非熊市"][1]]
+        act = [act[0] + a4[0], act[1] + a4[1]]
     # ---- 一句话（确定性拼接）
     but = (direction == "偏多" and tier in ("中性偏谨慎", "逆风")) or (direction in ("偏空", "防顶") and tier == "顺风")
     if act:
@@ -143,7 +138,7 @@ def compose(vs, rs, l2, l3=None):
         {"层": 3, "标签": "筹码", "标签EN": "Supply", "文本": seg3[0], "文本EN": seg3[1], "数字": num3[0], "数字EN": num3[1],
          "tone": (vs.get(3) or {}).get("tone", "neutral"), "短": (vs.get(3) or {}).get("短"), "短EN": (vs.get(3) or {}).get("短EN"),
          "关系": None, "关系EN": None, "关系类": None},
-        {"层": 4, "标签": "短期", "标签EN": "Short term", "文本": seg4[0], "文本EN": seg4[1], "数字": kr[0], "数字EN": kr[1],
+        {"层": 4, "标签": "短期", "标签EN": "Short term", "文本": seg4[0], "文本EN": seg4[1], "数字": num4[0], "数字EN": num4[1],
          "tone": (vs.get(4) or {}).get("tone", "neutral"), "短": (vs.get(4) or {}).get("短"), "短EN": (vs.get(4) or {}).get("短EN")},
     ]
     tags = [x.get("短") for x in (vs.get(i, {}) for i in (1, 2, 3, 4)) if x.get("短") and x.get("短") != "数据不足"]

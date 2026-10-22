@@ -49,7 +49,7 @@ def main():
     logs = all_daily()
     prev = [x for x in logs if x["日期"] < today]
     prev_log = prev[-1] if prev else None
-    new = R.daily_log(today, S, sd, prev_log, L.get("源状态"), load("l2/l2_latest.json"), load("l3/l3_latest.json"))
+    new = R.daily_log(today, S, sd, prev_log, L.get("源状态"), load("l2/l2_latest.json"), load("l3/l3_latest.json"), load("l4/l4_latest.json"))
     p = os.path.join(J, "日", f"{today}.json")
     if os.path.exists(p):
         old = read(p)

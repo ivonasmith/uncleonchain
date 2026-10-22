@@ -517,6 +517,7 @@ G_PEND = ("待接入", "Pending")
 G_L3A = ("价位与预警（通过历史检验）", "Levels & warning (passed historical tests)")
 G_L3D = ("短期持有者与大户 / 散户（只作描述）", "Short-term holders, whales & retail (descriptive only)")
 G_L3E = ("交易所流量与余额（只作描述）", "Exchange flows & balance (descriptive only)")
+G_L4R = ("山寨轮动观察（不属于 L4 研究，不进判定）", "Altcoin rotation (outside the L4 study, not in the verdict)")
 ETF_CUTS = [(0, "趋势确认（滞后）· 净流出", "Trend confirm (lagging) · outflow", "dn", 0),
             (None, "趋势确认（滞后）· 净流入", "Trend confirm (lagging) · inflow", "up", 0)]
 ETF_TXT = ("美国现货 BTC ETF 净流入合计。ETF 资金里有散户和基差套利资金，不等于机构看多；大幅流出后没有反弹规律，不作抄底信号。"
@@ -857,43 +858,32 @@ REGISTRY = [
      "说明EN": "Total BTC held on exchanges. The stable relation is coincident: after rallies balances tend to fall (coins withdrawn); there is no lead. Since 2024 ETF custody migration breaks the series; ~2-week lag on the free tier.",
      "依据": "30 日变化", "依据EN": "30-day change"},
     # ================= 第四层：情绪衍生品
-    {"key": "fng", "层": 4, "组": "情绪", "组EN": "Sentiment", "级别": "核心", "名称": "恐慌贪婪指数", "EN": "Fear & Greed Index", "series": raw("fng"), "fmt": "int", "freq": "d",
-     "来源": "alternative.me", "滞后": 2,
-     "cuts": [(25, "极度恐慌", "Extreme fear", "neutral", -2), (45, "恐慌", "Fear", "neutral", -1), (56, "中性", "Neutral", "neutral", 0),
-              (76, "贪婪", "Greed", "warn", 1), (None, "极度贪婪", "Extreme greed", "warn", 2)],
-     "说明": "综合波动、成交、社媒、搜索的情绪温度计。", "说明EN": "Sentiment thermometer from volatility, volume, social and search data.",
-     "依据": "水平", "依据EN": "level"},
-    {"key": "hl_funding", "层": 4, "组": "杠杆", "组EN": "Leverage", "级别": "核心", "名称": "BTC 永续资金费率", "EN": "BTC perp funding rate", "series": raw("hl_funding"), "fmt": "pct1",
-     "freq": "d", "来源": "Hyperliquid（日均年化）", "滞后": 2,
-     "cuts": [(-5, "空头拥挤（易轧空）", "Shorts crowded (squeeze-prone)", "warn", -1), (5, "偏冷", "Cool", "neutral", 0), (20, "正常", "Normal", "neutral", 0),
-              (40, "多头偏热", "Longs warm", "warn", 1), (None, "多头极度拥挤", "Longs crowded", "warn", 2)],
-     "说明": "多空谁在付钱。含约 11% 年化的基准利息（和币安 0.01%/8h 同量级），所以「正常」不是 0。",
-     "说明EN": "Who pays whom. Includes ~11% annualized base interest (same order as Binance 0.01%/8h), so 'normal' is not zero.",
-     "依据": "年化", "依据EN": "annualized"},
-    {"key": "hl_oi", "自录": True, "层": 4, "组": "杠杆", "组EN": "Leverage", "级别": "核心", "名称": "BTC 未平仓合约（7 日变化）", "EN": "BTC open interest (7d change)", "series": s_oi7, "fmt": "pcts",
-     "freq": "d", "来源": "Hyperliquid", "滞后": 2, "raw": "hl_oi", "rawfmt": "usd",
-     "cuts": [(-15, "去杠杆", "Deleveraging", "neutral", -1), (15, "平稳", "Stable", "neutral", 0), (None, "杠杆快速堆积", "Leverage piling up", "warn", 1)],
-     "说明": "链上最大永续所的 BTC 未平仓名义价值，看 7 日变化判断杠杆在堆还是在出清。单一交易所口径。",
-     "说明EN": "BTC open interest on the largest on-chain perp venue; the 7-day change shows leverage building or flushing. Single venue.",
-     "依据": "7 日变化", "依据EN": "7-day change"},
-    {"key": "altseason", "自录": True, "层": 4, "组": "轮动", "组EN": "Rotation", "级别": "核心", "名称": "山寨季指数（自建）", "EN": "Altseason index (own)", "series": raw("altseason"), "fmt": "pct1",
+    {"key": "altseason", "自录": True, "层": 4, "组": G_L4R[0], "组EN": G_L4R[1], "级别": "观察", "名称": "山寨季指数（自建）", "EN": "Altseason index (own)", "series": raw("altseason"), "fmt": "pct1",
      "freq": "d", "来源": "CoinGecko（自算）", "滞后": 2,
      "cuts": [(25, "比特币季", "Bitcoin season", "neutral", 0), (50, "比特币偏强", "BTC leaning", "neutral", 0), (75, "山寨偏强", "Alts leaning", "warn", 0),
               (None, "山寨季", "Altseason", "warn", 0)],
      "说明": "市值前 50（剔除稳定币、包装币、质押衍生品）里 30 日涨幅跑赢 BTC 的占比。原版用 90 日，没有免费接口，这里是自建口径。",
      "说明EN": "Share of the top-50 coins (ex stablecoins, wrapped and staked derivatives) beating BTC over 30 days. Own construction.",
      "依据": "占比", "依据EN": "share"},
-    {"key": "btc_dom", "自录": True, "层": 4, "组": "轮动", "组EN": "Rotation", "级别": "辅助", "名称": "BTC 市值占比", "EN": "BTC dominance", "series": raw("btc_dom"), "fmt": "pct1", "freq": "d",
+    {"key": "btc_dom", "自录": True, "层": 4, "组": G_L4R[0], "组EN": G_L4R[1], "级别": "观察", "名称": "BTC 市值占比", "EN": "BTC dominance", "series": raw("btc_dom"), "fmt": "pct1", "freq": "d",
      "来源": "CoinGecko", "滞后": 2, "cuts": [(None, "只看趋势", "Trend only", "neutral", 0)],
      "说明": "和山寨季指数交叉验证。", "说明EN": "Cross-check for the altseason index.", "依据": "水平", "依据EN": "level"},
 
     # ================= 待接入（框架里有、暂时没有免费稳定数据源：页面上明示原因，不拿近似值冒充）
-    {"key": "ls_liq", "状态": "pending", "层": 4, "名称": "多空比 / 24h 爆仓", "EN": "Long/short ratio / liquidations",
-     "原因": "Coinglass 接口需要 key（免费档可申请），拿到 key 即可接入", "原因EN": "Coinglass needs an API key", "计划": "Coinglass", "计划EN": "Coinglass"},
-    {"key": "options", "状态": "pending", "层": 4, "名称": "期权 Put/Call · IV Skew", "EN": "Options put/call · IV skew",
-     "原因": "Deribit 免费可取，v2 接入", "原因EN": "Free on Deribit; next version", "计划": "Deribit", "计划EN": "Deribit"},
 
     # ================= 已停用（旧链接给说明页，不让推特链接落到空页面）
+    {"key": "fng", "状态": "retired", "层": 4, "名称": "恐慌贪婪指数", "EN": "Fear & Greed Index", "停用": "2026-10-22",
+     "原因": "L4 换成检验过的版本：恐慌贪婪改为温度计里的一张描述卡（过去两年分位），不再单独计分；「恐慌是买点、贪婪是卖点」用我们的口径检验不成立",
+     "原因EN": "L4 now uses the tested version: Fear & Greed is one descriptive thermometer card (two-year percentile), no longer scored; 'fear is a buy, greed is a sell' did not hold in our tests",
+     "去处": "/macro/#layer-4", "去处名": "L4 情绪衍生品 → 温度计", "去处名EN": "L4 Sentiment → thermometer"},
+    {"key": "hl_funding", "状态": "retired", "层": 4, "名称": "BTC 永续资金费率（Hyperliquid）", "EN": "BTC perp funding (Hyperliquid)", "停用": "2026-10-22",
+     "原因": "单一交易所的当日费率不稳定；改用 Binance 永续（备用 BitMEX / OKX / Deribit）的 30 日均和 7 日均，其中「30 日均转负」是 L4 唯一通过检验的信号",
+     "原因EN": "A single venue's daily rate is noisy; replaced by the 30-day and 7-day averages of the Binance perp (BitMEX / OKX / Deribit as backups) — '30-day average below zero' is the only L4 signal that passed testing",
+     "去处": "/macro/#layer-4", "去处名": "L4 情绪衍生品 → 信号主卡", "去处名EN": "L4 Sentiment → signal card"},
+    {"key": "hl_oi", "状态": "retired", "层": 4, "名称": "BTC 未平仓合约 7 日变化（Hyperliquid）", "EN": "BTC open interest 7d change (Hyperliquid)", "停用": "2026-10-22",
+     "原因": "单一交易所口径；改用 12 个主流永续合约的全市场 OI（7 日变化与 OI ÷ 市值），只作描述：「OI 堆积会瀑布、出清就是底」检验不成立",
+     "原因EN": "Single-venue; replaced by aggregated OI across 12 major perps (7-day change and OI ÷ market cap), descriptive only: 'OI build-ups cause cascades, flushes mark bottoms' did not hold",
+     "去处": "/macro/#layer-4", "去处名": "L4 情绪衍生品 → 温度计", "去处名EN": "L4 Sentiment → thermometer"},
     {"key": "mvrv_z", "状态": "retired", "层": 2, "名称": "MVRV Z-Score", "EN": "MVRV Z-Score", "停用": "2026-10-08",
      "原因": "和 MVRV 同源，固定阈值在本轮失灵（本轮熊市 MVRV 最低只到 1.10，从没跌破 1）", "原因EN": "Same source as MVRV; fixed thresholds failed this cycle (MVRV bottomed at 1.10 and never broke 1)",
      "去处": "/macro/mvrv/", "去处名": "L2 周期定位 → MVRV", "去处名EN": "L2 Cycle → MVRV"},
@@ -922,7 +912,7 @@ INDICATORS = [x for x in REGISTRY if x["状态"] in ("live", "recording")]     #
 PENDING = [x for x in REGISTRY if x["状态"] == "pending"]
 RETIRED = [x for x in REGISTRY if x["状态"] == "retired"]
 IND = {x["key"]: x for x in INDICATORS}
-LAYER_RULE_DATES = {1: ("2026-10-02", "2026-10-04"), 2: ("2026-10-08",), 3: ("2026-10-11",)}   # 各层规则变更日（复盘里注明「规则变更所致」）
+LAYER_RULE_DATES = {1: ("2026-10-02", "2026-10-04"), 2: ("2026-10-08",), 3: ("2026-10-11",), 4: ("2026-10-22",)}   # 各层规则变更日（复盘里注明「规则变更所致」）
 RECORD_DAYS = 90       # 自录指标：满 90 天才给区间分位与正常波动范围（全站只用这一个门槛）
 
 # 派生「原始水平」序列（详情页第二张图用）：key → 函数
@@ -1012,6 +1002,21 @@ RULE_CHANGES.append(
      "EN": "The L3 paragraph of the overall read now describes price relative to the +1σ pressure zone and the large-move warning, instead of whether exchange flows agree with the cycle; the one-liner's 'flow divergence' note became 'price in the supply pressure zone' / 'large-move warning on'. Phrases live in config/composite.json.",
      "原因": "研究发现交易所流向只和价格同步、没有提前量，拿它判断「和周期方向一致还是背离」没有依据；L3 能用的是压力区和大波动预警。",
      "原因EN": "The study found exchange flows only move with price and have no lead, so judging whether they 'agree with the cycle' has no basis; what L3 can offer is the pressure zone and the large-move warning."})
+
+RULE_CHANGES.append(
+    {"日期": "2026-10-22", "锚": "2026-10-22-l4", "范围": "L4 情绪衍生品", "EN范围": "L4 Sentiment & Derivatives",
+     "内容": "按《BTC情绪衍生品层L4研究》和《L4网页数据维度规格》重做：L4 层结论改读 l4/l4_daily.py 的结论档（信号 / 过热 / 偏热 / 中性 / 偏冷）。"
+             "唯一会改动作的规则是「资金费率 30 日均转负」（空头拥挤，已验证·方向）：亮时不开新空，L2 不在熊市时允许在 L1 预算内分批加。"
+             "其余 8 个读数（费率 30 / 7 日均、季度合约升水、CME 升水、全市场 OI 7 日变化、OI ÷ 市值、恐慌贪婪、DVOL）只作温度描述，按过去 730 天分位分档；6 个观察项是假设、不改动作。"
+             "撤掉旧温度计（Hyperliquid 资金费率、Hyperliquid 未平仓 7 日变化、恐慌贪婪三项打分）；山寨季指数与 BTC 市值占比降为观察项、不进判定。2026-10-22 及以前的日志按旧规则写成，保持原样。",
+     "EN": "Rebuilt per the L4 study and web spec: the L4 verdict now reads l4/l4_daily.py's level (signal / hot / warm / normal / cool). "
+           "The only action-changing rule is '30-day average funding below zero' (crowded shorts, validated · direction): no new shorts, and when L2 is not in a bear market, scaling in within the L1 budget is allowed. "
+           "The other eight readings (funding 30/7-day, quarterly basis, CME premium, aggregated OI 7-day change, OI ÷ market cap, Fear & Greed, DVOL) are temperature descriptions banded by their 730-day percentile; six watch items are hypotheses and change nothing. "
+           "Retired the old thermometer (Hyperliquid funding, Hyperliquid OI 7-day change and a Fear & Greed score); the altseason index and BTC dominance became watch items outside the verdict. Logs up to 2026-10-22 stay unchanged.",
+     "原因": "旧温度计（未平仓 7 日变化 > 资金费率 > 恐慌贪婪）没有经过检验。研究用 2018 年以来的数据逐条测了常见说法：费率高要回调、恐慌是买点 / 贪婪是卖点、OI 堆积会瀑布、低隐含波动是大行情前夜，都不成立；"
+             "只有资金费率 30 日均转负通过：31 次独立事件，之后 30 天上涨 74%（同年代同周期状态对照 58%），回撤更浅，三个年代方向一致。",
+     "原因EN": "The old thermometer (OI 7-day change > funding > Fear & Greed) was never tested. The study tested the common claims on data since 2018 — high funding means a pullback, fear is a buy and greed a sell, OI build-ups cause cascades, low implied vol precedes big moves — and none held. "
+               "Only 30-day average funding below zero passed: 31 independent events, up 74% of the time over the next 30 days (58% for the same era and cycle state), with shallower drawdowns and the same direction in all three eras."})
 
 # ---------------------------------------------------------------- L2 周期状态机（规则与计算全在 l2/l2_signals.py，这里只做展示用的译名与配色）
 L2_STATES = {   # code: (中文名, 英文名, 英文一句话, 层结论 tone, 配色变量)
@@ -1318,13 +1323,15 @@ def l1_line(rs, verdict, rot=None):
 
 
 # ---------------------------------------------------------------- 层结论
-def layer_verdict(layer, rs, l2=None, l3=None):
+def layer_verdict(layer, rs, l2=None, l3=None, l4=None):
     if layer == 1:
         return l1_verdict(rs)
     if layer == 2:
         return l2_verdict(l2)
     if layer == 3:
         return l3_verdict(l3)
+    if layer == 4:
+        return l4_verdict(l4)
     rs = [x for x in rs if x and x["层"] == layer]
     core = [x for x in rs if x["级别"] == "核心" and not x["过期"]]
     if not core:
@@ -1367,7 +1374,7 @@ def launchpad_summary(sd):
 
 
 # ---------------------------------------------------------------- 异动预警
-def alerts(rs, prev_log, lp, l1=None, l2=None, l3=None):
+def alerts(rs, prev_log, lp, l1=None, l2=None, l3=None, l4=None):
     out = []
     prev = {}
     if prev_log and prev_log.get("版本") == 2:          # 旧规则写的日志口径不同，不拿来比区间切换
@@ -1378,7 +1385,7 @@ def alerts(rs, prev_log, lp, l1=None, l2=None, l3=None):
     def add(level, zh, en, layer=None, key=None):
         out.append({"级别": level, "文本": zh, "文本EN": en, "层": layer, "key": key})
     for x in rs:
-        if not x or x["过期"] or x["层"] in (2, 3):     # L2 / L3 用自己的状态切换预警
+        if not x or x["过期"] or x["层"] in (2, 3, 4):  # L2 / L3 / L4 用自己的状态切换预警
             continue
         p = prev.get(x["key"])
         if p and p.get("区间") != x["区间"] and x["级别"] == "核心" and x["区间"] not in ("—", "记录中"):
@@ -1401,11 +1408,14 @@ def alerts(rs, prev_log, lp, l1=None, l2=None, l3=None):
         if raw_ is not None and abs(raw_) >= 5000:
             add("中", f"交易所单日 BTC 净{'流出' if raw_ < 0 else '流入'} {abs(raw_):,.0f} 枚",
                 f"Exchanges saw a one-day net {'outflow' if raw_ < 0 else 'inflow'} of {abs(raw_):,.0f} BTC", 3, "ex_netflow")
-    fu = by.get("hl_funding")
-    pf = prev.get("hl_funding")
-    if fu and pf and (fu["值"] < 0) != (pf["值"] < 0):
-        add("高", f"BTC 资金费率翻{'负' if fu['值'] < 0 else '正'}（{pf['显示']} → {fu['显示']}）",
-            f"BTC funding flipped {'negative' if fu['值'] < 0 else 'positive'} ({pf['显示']} → {fu['显示']})", 4, "hl_funding")
+    if l4_ok(l4):
+        p4 = (prev_log or {}).get("L4") or {}
+        sg = l4.get("signal") or {}
+        if p4 and p4.get("信号") is not None and bool(p4["信号"]) != bool(sg.get("on")):
+            add("高", f"L4 资金费率 30 日均{'转负，信号亮起' if sg.get('on') else '回到 0 以上，信号熄灭'}（{sg.get('value_pct')}%）",
+                f"L4 30-day funding {'turned negative — signal on' if sg.get('on') else 'back above zero — signal off'} ({sg.get('value_pct')}%)", 4)
+        elif p4.get("档") in L4_LEVELS and p4["档"] != l4["conclusion"]["level"]:
+            add("中", f"L4 短期温度：{p4['档']} → {l4['conclusion']['level']}", f"L4 short-term temperature: {L4_LEVELS[p4['档']][3]} → {L4_LEVELS[l4['conclusion']['level']][3]}", 4)
     vx = by.get("vix")
     pv = prev.get("vix")
     if vx and pv and (vx["值"] >= 20) != (pv["值"] >= 20) and not vx["过期"]:
@@ -1444,26 +1454,26 @@ def alerts(rs, prev_log, lp, l1=None, l2=None, l3=None):
 _READ_KEYS = ("key", "名称", "名称EN", "级别", "等级", "值", "显示", "截至", "过期", "区间", "区间EN", "tone", "依据", "依据EN")
 
 
-def daily_log(date, S, sd, prev_log, sources, l2=None, l3=None):
+def daily_log(date, S, sd, prev_log, sources, l2=None, l3=None, l4=None):
     rs = [judge(S, ind, date) for ind in INDICATORS]
     rs = [x for x in rs if x]
-    vs = {i: layer_verdict(i, rs, l2, l3) for i in LAYERS}
+    vs = {i: layer_verdict(i, rs, l2, l3, l4) for i in LAYERS}
     lp = launchpad_summary(sd)
-    comp = 综合.compose(vs, rs, l2, l3)
+    comp = 综合.compose(vs, rs, l2, l3, l4)
     rot = rotation(S, date)
     l1zh, l1en = l1_line(rs, vs[1], rot)
     layers = []
     for i, meta in LAYERS.items():
-        extra = {k: vs[i][k] for k in ("状态", "情境", "闸门", "警戒", "预警") if k in vs[i]}
+        extra = {k: vs[i][k] for k in ("状态", "情境", "闸门", "警戒", "预警", "信号") if k in vs[i]}
         layers.append({"层": i, "名称": meta["名称"], "名称EN": meta["EN"],
                        **{k: vs[i][k] for k in ("结论", "结论EN", "短", "短EN", "tone", "分", "依据", "依据EN")}, **extra,
                        "读数": [{k: x.get(k) for k in _READ_KEYS} for x in rs if x["层"] == i]})
     return {"类型": "日", "版本": 2, "日期": date, "生成时间UTC": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M"),
-            "综合": comp, "L1行": l1zh, "L1行EN": l1en, "轮动": rot, "L2": l2_snapshot(l2), "L3": l3_snapshot(l3), "层": layers, "发射台": lp,
-            "预警": alerts(rs, prev_log, lp, vs[1], l2, l3),
+            "综合": comp, "L1行": l1zh, "L1行EN": l1en, "轮动": rot, "L2": l2_snapshot(l2), "L3": l3_snapshot(l3), "L4": l4_snapshot(l4), "层": layers, "发射台": lp,
+            "预警": alerts(rs, prev_log, lp, vs[1], l2, l3, l4),
             "数据源": {k: {"ok": v.get("ok"), "最新日期": v.get("最新日期")} for k, v in (sources or {}).items()},
             "核心缺失": [ind["名称"] for ind in INDICATORS if ind["级别"] == "核心" and not any(x["key"] == ind["key"] and not x["过期"] for x in rs)]
-            + ([] if l2 else ["L2 周期状态机"]) + ([] if l3_ok(l3) else ["L3 筹码层"])}
+            + ([] if l2 else ["L2 周期状态机"]) + ([] if l3_ok(l3) else ["L3 筹码层"]) + ([] if l4_ok(l4) else ["L4 情绪衍生品层"])}
 
 
 def _period_review(kind, label, start, end, S, logs, sd, prev_period):
@@ -1683,6 +1693,51 @@ def l3_snapshot(l3):
             "数据日": l3.get("data_date"), "数据延迟": bool((l3.get("data_status") or {}).get("stale"))}
 
 
+# ---------------------------------------------------------------- L4 情绪衍生品层（规则与计算全在 l4/l4_daily.py，这里只读 l4_latest.json）
+L4_LEVELS = {   # 结论档: (层结论短句, 英文, tone, 英文档名)
+    "信号": ("空头拥挤·资金费率转负", "Crowded shorts · funding below zero", "up", "signal"),
+    "过热": ("短期温度过热", "Short-term temperature hot", "warn", "hot"),
+    "偏热": ("短期温度偏热", "Short-term temperature warm", "warn", "warm"),
+    "中性": ("短期温度中性", "Short-term temperature normal", "neutral", "normal"),
+    "偏冷": ("短期温度偏冷", "Short-term temperature cool", "neutral", "cool"),
+}
+BAND_EN = {"过热": "hot", "偏热": "warm", "中性": "normal", "偏冷": "cool", "极冷": "cold"}
+
+
+def l4_ok(l4):
+    return bool(l4 and (l4.get("conclusion") or {}).get("level") in L4_LEVELS)
+
+
+def l4_verdict(l4):
+    """L4 层结论 = l4_latest.json 的 conclusion.level（信号 / 过热 / 偏热 / 中性 / 偏冷）。只改节奏，不改风险预算和方向。"""
+    if not l4_ok(l4):
+        return {"层": 4, "结论": "数据不足", "结论EN": "Insufficient data", "短": "数据不足", "短EN": "No data",
+                "tone": "neutral", "分": None, "依据": [], "依据EN": []}
+    c, sg = l4["conclusion"], l4.get("signal") or {}
+    zh, en, tone, _ = L4_LEVELS[c["level"]]
+    v = sg.get("value_pct")
+    vs_ = "—" if v is None else f"{v:+.1f}%".replace("-", "\u2212")
+    basis = [f"资金费率 30 日均 {vs_}（年化）", f"杠杆{c.get('leverage_band_zh') or '—'} · 情绪{c.get('sentiment_band_zh') or '—'}",
+             f"综合分位 {c.get('composite_pct')}", f"数据截至 {l4.get('data_date')}"]
+    basis_en = [f"funding 30d avg {vs_} (ann.)", f"leverage {BAND_EN.get(c.get('leverage_band_zh'), '—')} · sentiment {BAND_EN.get(c.get('sentiment_band_zh'), '—')}",
+                f"composite percentile {c.get('composite_pct')}", f"data as of {l4.get('data_date')}"]
+    if (l4.get("data_status") or {}).get("stale"):
+        basis.append("部分数据延迟")
+        basis_en.append("some data delayed")
+    return {"层": 4, "结论": zh, "结论EN": en, "短": zh, "短EN": en, "tone": tone, "分": None, "依据": basis, "依据EN": basis_en,
+            "状态": c["level"], "信号": bool(sg.get("on"))}
+
+
+def l4_snapshot(l4):
+    """写进日志的 L4 快照（写入即冻结）。"""
+    if not l4_ok(l4):
+        return None
+    c, sg = l4["conclusion"], l4.get("signal") or {}
+    return {"档": c["level"], "信号": bool(sg.get("on")), "费率30日均": sg.get("value_pct"), "连续天数": sg.get("days_on"),
+            "杠杆档": c.get("leverage_band_zh"), "情绪档": c.get("sentiment_band_zh"), "综合分位": c.get("composite_pct"),
+            "关键读数": c.get("key_reading_zh"), "数据日": l4.get("data_date"), "数据延迟": bool((l4.get("data_status") or {}).get("stale"))}
+
+
 # ---------------------------------------------------------------- 颜色按「对 BTC 意味着什么」（G6）：区间 tone → bias
 BIAS = {"up": "tailwind", "dn": "headwind", "warn": "watch", "neutral": "neutral", "cool": "neutral"}
 
@@ -1690,7 +1745,7 @@ BIAS = {"up": "tailwind", "dn": "headwind", "warn": "watch", "neutral": "neutral
 # 1) L1 宏观：只用 2018 年以后（方法规则）；2) 链上周期类（L2 六个、L3 交易所）：2012-01-01 起（或有效起点）；
 # 3) 百分比变化类：从上面的起点往后，若仍有 |变化率| > 100% 的点，推迟到此后再也没有的第一天（早期基数过小）。
 PCT_CHG = ("ndx13", "netliq13", "usd13", "stable_expay13", "stable_bullets13", "stable_core13", "stable_yield13",
-           "stable_tron13", "stable_pay13", "ex_balance", "hl_oi", "l3_whale4w", "l3_retail4w")
+           "stable_tron13", "stable_pay13", "ex_balance", "l3_whale4w", "l3_retail4w")
 
 
 def stats_window(S, ind):

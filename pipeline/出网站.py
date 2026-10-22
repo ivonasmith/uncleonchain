@@ -110,6 +110,7 @@ PILLARS = [
 
 ICON = {
     "home": '<path d="M2.5 2.5h4.5v4.5H2.5zM9 2.5h4.5v4.5H9zM2.5 9h4.5v4.5H2.5zM9 9h4.5v4.5H9z"/>',
+    "calendar": '<path d="M2.5 3.5h11v10h-11z"/><path d="M2.5 6.5h11M5.5 2v3M10.5 2v3M5 9h1.5M7.75 9h1.5M10.5 9H12M5 11.5h1.5M7.75 11.5h1.5"/>',
     "macro": '<path d="M1.5 10.5c1.6-3.2 3.2-3.2 4.8 0s3.2 3.2 4.8 0c.9-1.8 1.9-2.6 2.9-2.2M1.5 5.5c1.6-3.2 3.2-3.2 4.8 0s3.2 3.2 4.8 0"/>',
     "launchpad": '<path d="M3 14V8.5M8 14V2.5M13 14V6"/><path d="M1.5 14h13"/>',
     "rotation": '<path d="M13.2 6A5.5 5.5 0 0 0 3.1 5.4M2.8 10a5.5 5.5 0 0 0 10.1.6M13.4 2.6v3.5H9.9M2.6 13.4V9.9h3.5"/>',
@@ -121,7 +122,7 @@ ICON = {
     "about": '<circle cx="8" cy="5.2" r="2.8"/><path d="M2.5 14c.9-2.9 2.9-4.2 5.5-4.2s4.6 1.3 5.5 4.2"/>',
 }
 NAV_MAIN = [("home", "/", "终端总览", "Overview"), ("macro", "/macro/", "宏观仪表盘", "Macro"),
-            ("launchpad", "/launchpad/", "发射台矩阵", "Launchpads"), ("rotation", "/rotation/", "板块轮动", "Rotation"),
+            ("calendar", "/calendar/", "事件日历", "Calendar"), ("launchpad", "/launchpad/", "发射台矩阵", "Launchpads"), ("rotation", "/rotation/", "板块轮动", "Rotation"),
             ("narrative", "/narrative/", "叙事埋伏", "Narratives"), ("reports", "/reports/", "分析报告", "Reports"),
             ("journal", "/journal/", "解读日志", "Journal")]
 NAV_MORE = [("methodology", "/methodology/", "口径与规则", "Methodology"), ("corrections", "/corrections/", "更正记录", "Corrections"),
@@ -782,13 +783,16 @@ def hero_cards(S, as_of, sd):
                       "warn" if (on or l3["position"]["code"] == "in_zone") else "neutral", (jp or {}).get("走势", [])[-30:], ind_href("l3_p1s")))
     else:
         cards.append((T("上方压力区 · STH 成本 +1σ", "Pressure zone · STH cost +1σ"), "L3", "—", T("等待首次运行", "Awaiting first run"), "neutral", [], ind_href("l3_p1s")))
-    g = R.judge(S, R.IND["fng"], as_of)
-    if g:
-        prev7 = R.reading(S, "fng", as_of)["前7"]
-        cards.append((T("恐慌贪婪指数", "Fear & Greed"), "alternative.me", g["显示"],
-                      f'{LF(g, "区间")} · {T("7 日前", "7d ago")} {prev7 if prev7 is not None else "—"}', g["tone"], g["走势"][-30:], ind_href("fng")))
+    l4 = G.get("L4")
+    if R.l4_ok(l4):
+        sg, c4 = l4.get("signal") or {}, l4["conclusion"]
+        v = sg.get("value_pct")
+        lv = R.L4_LEVELS[c4["level"]]
+        cards.append((T("BTC 短期杠杆与情绪温度", "BTC short-term leverage & sentiment"), "L4", esc(T(c4["level"], lv[3].capitalize())),
+                      T(f'资金费率 30 日均 {"—" if v is None else f"{v:+.2f}%"} · 信号{"亮" if sg.get("on") else "不亮"}', f'Funding 30d avg {"—" if v is None else f"{v:+.2f}%"} · signal {"on" if sg.get("on") else "off"}'),
+                      lv[2], [x.get("fund_ma30") for x in (G.get("L4H") or [])[-30:] if x.get("fund_ma30") is not None], U("/macro/") + "#layer-4"))
     else:
-        cards.append((T("恐慌贪婪指数", "Fear & Greed"), "alternative.me", "—", T("等待首次抓取", "Awaiting first fetch"), "neutral", [], ind_href("fng")))
+        cards.append((T("BTC 短期杠杆与情绪温度", "BTC short-term leverage & sentiment"), "L4", "—", T("等待首次运行", "Awaiting first run"), "neutral", [], U("/macro/") + "#layer-4"))
     out = ""
     for k, tag, v, s, tone, sp, href in cards:
         out += (f'<a class="glass hero" href="{href}"><div class="k">{esc(k)}<span>{esc(tag)}</span></div>'
@@ -879,7 +883,14 @@ def signal_tiles(vs, jby, l2):
     out = ""
     for i, meta in R.LAYERS.items():
         lay = vs.get(i) or {}
-        if i == 2 and l2 and l2.get("signals"):
+        l4 = G.get("L4")
+        if i == 4 and R.l4_ok(l4):
+            sg, c4 = l4.get("signal") or {}, l4["conclusion"]
+            v = sg.get("value_pct")
+            items = (f'<li><span>{T("资金费率 30 日均", "Funding 30d avg")}</span><b class="t-{"up" if sg.get("on") else "neutral"}">{"—" if v is None else f"{v:+.2f}%".replace("-", chr(0x2212))} · {T("信号亮", "signal on") if sg.get("on") else T("信号不亮", "signal off")}</b></li>'
+                     f'<li><span>{T("杠杆", "Leverage")}</span><b>{esc(T(c4.get("leverage_band_zh") or "—", R.BAND_EN.get(c4.get("leverage_band_zh"), "—")))}</b></li>'
+                     f'<li><span>{T("情绪", "Sentiment")}</span><b>{esc(T(c4.get("sentiment_band_zh") or "—", R.BAND_EN.get(c4.get("sentiment_band_zh"), "—")))}</b></li>')
+        elif i == 2 and l2 and l2.get("signals"):
             sig = l2["signals"]
             st = l2.get("state") or {}
             cnt = lambda c: (sum(1 for x in sig if x["category"] == c and x["on"]), sum(1 for x in sig if x["category"] == c))
@@ -1025,6 +1036,7 @@ def build_home(sd, S, logs, weeks, months, rot, matrix):
 <div class="grid g4" style="margin-top:14px">{heroes}</div>
 <h2>{T("四层信号灯", "Four-layer signals")} <span class="sub">{T("点进去看每层结论、依据和每个指标的全部历史", "Click through for each layer's verdict, evidence and every gauge's full history")}</span></h2>
 {signal_tiles(G["VS"], G["JBY"], G.get("L2"))}
+{cal_home_card(G.get("CAL"))}
 <div class="grid g2" style="margin-top:22px;align-items:start">
 <div><h2 style="margin-top:12px">{T("发射台矩阵 · 当日 Top6", "Launchpads · top 6 today")} <a class="sub" href="{U("/launchpad/")}">{T("全部", "All")} {len((matrix or {}).get("协议", []))} {T("个协议 →", "protocols →")}</a></h2>{lp_tbl}</div>
 <div><h2 style="margin-top:12px">{T("板块轮动 · 24h 领涨", "Rotation · 24h leaders")} <a class="sub" href="{U("/rotation/")}">{T("看全部 →", "See all →")}</a></h2>{cats}</div>
@@ -1380,6 +1392,7 @@ def l2_tab(l2, as_of):
 
 # ---------------------------------------------------------------- L3 筹码层（只读 data/l3/*.json 展示，规则和计算都在 l3/l3_daily.py）
 L3_TIME = next((x["时间"] for x in SCHED if x["文件"] == "l3-daily.yml"), "02:47")
+L4_TIME = next((x["时间"] for x in SCHED if x["文件"] == "l4-daily.yml"), "03:17")
 L3_RES = {"held": ("守住", "Held", "up"), "broken": ("被突破", "Broken", "dn"), "open": ("进行中", "Ongoing", "neutral")}
 L3_NOT_SHOWN = [
     ("「筹码墙 = 强支撑 / 强压力」", "'Supply wall = strong support / resistance'", "同距离比较，筹码墙守住率和真空区的差在各年代正负相反，2022 年后筹码墙更容易被穿过", "At equal distance the wall-vs-gap hold-rate difference flips sign across eras; since 2022 walls are crossed more easily", "§4.3"),
@@ -1576,6 +1589,146 @@ def l3_tail():
             + rel + f'<p class="l2disc">{esc(T(*L3_NOTE))}</p>')
 
 
+# ---------------------------------------------------------------- L4 情绪衍生品层（只读 data/l4/*.json 展示，规则和计算都在 l4/l4_daily.py）
+L4_LEV = ("fund_ma30", "fund_ma7", "qbasis", "cme_prem", "agg_oi_chg7", "agg_oi_mcap")
+L4_SEN = ("fng", "dvol")
+L4_STAT_EN = {
+    "fund_ma30": "High funding does not predict pullbacks: after high percentiles the direction flips across eras (2018-21 excess −14.3, 2022-26 +7.6)",
+    "fund_ma7": "Same as above; the 7-day average is noisier",
+    "qbasis": "A high basis is not a top signal (9 cases, excess +6.0)",
+    "cme_prem": "No excess return after a high premium (42 cases, −0.2)",
+    "agg_oi_chg7": "Fast OI build-ups were not followed by deeper drawdowns, nor fast flushes by rebounds",
+    "agg_oi_mcap": "Too few high-leverage samples (8)",
+    "fng": "Fading extremes does not work: extreme greed was followed by strength, if anything",
+    "dvol": "Low implied vol was followed by calmer markets, not big moves",
+}
+L4_WATCH_EN = {
+    "big_liq": "Liquidations ÷ aggregated OI in the top 10% of two years: 25 cases, up 72% over 30 days (control 51%, p=0.03). Data only since 2022; exchanges under-report liquidations",
+    "cme_low": "Bottom 10%: 23 cases in 2022-26, up 30% (control 53%); not seen in 2018-21",
+    "qbasis_low": "Basis < 0: 7 cases, up 71% (control 49%); bottom-10% percentile since 2024: 12 cases, 75%",
+    "dvol_low": "DVOL bottom 10%: 24 cases, up 42% (control 58%), calmer afterwards",
+    "elr_low": "Aggregated OI ÷ exchange balance bottom 10%: 10 cases, up 80% (control 58%), only since 2022",
+    "lev_drop": "Net position 4-week change bottom 10%: 13 cases, up 31% (control 52%); may mostly reflect basis-trade flows",
+}
+L4_NOTE = ("只有「资金费率 30 日均转负」一条通过了历史检验，会改变动作；其余读数只描述温度。费率高要回调、恐慌是买点、OI 堆积会瀑布、低波动是大行情前夜，这些常见说法用我们的口径检验都不成立。分位 = 今天的值在过去两年里排第几。样本有限，最高到「已验证·方向」，不构成投资建议。",
+           "Only '30-day average funding below zero' passed historical testing and changes the action; every other reading only describes temperature. 'High funding means a pullback', 'fear is a buy', 'OI build-ups cause cascades', 'low volatility precedes big moves' — common claims that did not hold in our tests. Percentile = where today's value ranks over the past two years. Samples are limited; the highest grade is 'validated · direction'. Not investment advice.")
+L4_BAND_TONE = {"过热": "warn", "偏热": "warn", "中性": "neutral", "偏冷": "cool", "极冷": "cool"}
+
+
+def l4_fmt(x):
+    v, u = x.get("value"), x.get("unit") or ""
+    if v is None:
+        return "—"
+    s_ = f"{v:,.2f}" if abs(v) < 10 and u == "%" else (f"{v:,.1f}" if u == "%" else f"{v:,.1f}".rstrip("0").rstrip("."))
+    return (s_ + u).replace("-", "−") if s_.startswith("-") else s_ + u
+
+
+def l4_last_neg():
+    for h in reversed(G.get("L4H") or []):
+        if h.get("fund_ma30") is not None and h["fund_ma30"] < 0:
+            return h["date"]
+    return None
+
+
+def l4_signal_card(l4):
+    sg = l4.get("signal") or {}
+    det = (l4.get("data_status") or {}).get("detail") or {}
+    stale = det.get("funding") not in (None,) and not str(det.get("funding", "")).startswith("ok")
+    on = bool(sg.get("on")) and not stale
+    v = sg.get("value_pct")
+    # 0 线刻度：−10% ~ +30% 年化映射到 0~100
+    pos = None if v is None else max(0.0, min(100.0, (v + 10) / 40 * 100))
+    zero = 25.0
+    if stale:
+        state = f'<div class="lamp"><i></i><b>{T("今天不判断", "No call today")}</b></div><p class="big quiet0">{T("资金费率数据延迟，今天不判断，不拿旧值顶替。", "Funding data is delayed; no call today and no stale value substituted.")}</p>'
+    elif on:
+        state = (f'<div class="lamp"><i></i><b>{T("亮", "ON")}</b><span class="dd">{T("已连续", "for")} {sg.get("days_on")} {T("天", "days")}{T("（自 ", " (since ")}{esc(sg.get("since") or "—")}{T("）", ")")}</span></div>'
+                 f'<p class="big">{esc(T(sg.get("use_zh") or "", "No new shorts; when L2 is not in a bear market, scaling in within the L1 budget is allowed. The risk budget does not grow."))}</p>')
+    else:
+        ln = l4_last_neg()
+        state = (f'<div class="lamp"><i></i><b>{T("不亮", "Off")}</b><span class="dd">{T("最近一次为负：", "Last negative: ")}{esc(ln or T("近 400 天没有", "none in 400 days"))}</span></div>'
+                 f'<p class="big quiet0">{T("资金费率 30 日均在 0 以上，不改动作。", "The 30-day average is above zero; no change to the action.")}</p>')
+    bar = ""
+    if pos is not None:
+        bar = (f'<div class="zbar"><span class="neg" style="width:{zero}%"></span><i class="z" style="left:{zero}%"></i><b class="pt" style="left:{pos:.1f}%"></b></div>'
+               f'<div class="zlab"><span>−10%</span><span style="left:{zero}%">0</span><span>+30%</span></div>')
+    src = sg.get("funding_source") or det.get("funding") or "—"
+    return (f'<div class="card l3main l3warn l4sig{" on" if on else ""}{" stale" if stale else ""}"><div class="top"><span class="nm">{esc(T(sg.get("name_zh") or "资金费率 30 日均转负（空头拥挤）", sg.get("name_en") or "30-day avg funding below zero (crowded shorts)"))}</span>{grade_chip("已验证·方向")}</div>'
+            f'<div class="v">{"—" if v is None else (f"{v:+.2f}%".replace("-", chr(0x2212)))} <span class="sub">{T("30 日均 · 年化", "30-day avg · annualized")}</span></div>{bar}{state}'
+            f'<p class="tnote">{esc(T(sg.get("stat_zh") or "", "31 independent events: up 74% of the time over the next 30 days (same era & cycle-state control 58%, p=0.054), 7.8 pp more on average, with shallower drawdowns; same direction in all three eras, 68 of 72 parameter sets agree. Weak when L2 is in a bear market (8 cases, 50%)."))}'
+            f'{T(" 数据源：", " Source: ")}{esc(src)}{T("；数据日 ", "; data date ")}{esc(sg.get("data_date") or l4.get("data_date") or "—")}</p></div>')
+
+
+def l4_thermo(x):
+    p = x.get("pct_730d")
+    band = x.get("band_zh") or "—"
+    tone = L4_BAND_TONE.get(band, "neutral")
+    ticks = "".join(f'<i style="left:{t}%"></i>' for t in (10, 30, 70, 90))
+    if p is None:
+        pbar = f'<div class="b">{T("历史不足两年，暂不给分位", "Less than two years of history; no percentile yet")}</div>'
+    else:
+        pbar = f'<div class="pbar4">{ticks}<b style="left:{p:.0f}%"></b></div><div class="b">{T("过去两年第", "2-year percentile ")} {p:.0f}{T(" 分位", "")}</div>'
+    stale = x.get("value") is None
+    return (f'<div class="card ind l4t{" pendc" if stale else ""}"><div class="top"><span class="nm">{esc(T(x["name_zh"], x.get("name_en") or x["name_zh"]))}</span>'
+            f'{tone_chip(T(band, x.get("band_en") or band), tone) if not stale else ""}</div>'
+            f'<div class="v">{esc(l4_fmt(x))}</div>{pbar if not stale else "<div class=b>" + T("数据延迟 · 截至 ", "Data delayed · as of ") + esc(x.get("data_date") or "—") + "</div>"}'
+            f'<div class="ft"><span>{grade_chip("描述读数")}</span></div><p class="l4why">{esc(T(x.get("stat_zh") or "", L4_STAT_EN.get(x["key"], "")))}</p></div>')
+
+
+def l4_chart():
+    h = G.get("L4H") or []
+    if len(h) < 30:
+        return ""
+    if "L4CHART" not in G:
+        G["L4CHART"] = put_multi("l4_chart", {"price": {x["date"]: x.get("price") for x in h}, "sig": {x["date"]: (1 if x.get("signal") or (x.get("fund_ma30") is not None and x["fund_ma30"] < 0) else 0) for x in h},
+                                              "f30": {x["date"]: x.get("fund_ma30") for x in h}, "f7": {x["date"]: x.get("fund_ma7") for x in h}})
+    live = "2026-10-22"
+    mk = [{"date": live, "type": "live", "label": T(f"← 研究回放 ｜ 实时记录 {live} 起 →", f"← research replay | live from {live} →")}]
+    states = [None, {"n": T("资金费率 30 日均为负", "30-day funding below zero"), "c": "up"}]
+    c1 = {"v2": True, "src": G["L4CHART"], "fmt": "price", "log": True, "ranges": ["1Y", "ALL"], "range": "ALL", "group": "l4c", "stk": "sig", "states": states,
+          "markers": mk, "last": False, "series": [{"k": "price", "n": T("BTC 价格", "BTC price"), "c": "ink", "w": 1.8}],
+          "note": T("底色 = 资金费率 30 日均为负的日子（信号亮）。", "Shading = days when the 30-day average funding was below zero (signal on).")}
+    c2 = {"v2": True, "src": G["L4CHART"], "fmt": "pct1", "ranges": ["1Y", "ALL"], "range": "ALL", "group": "l4c", "zero": True, "h": 200, "markers": mk,
+          "series": [{"k": "f30", "n": T("资金费率 30 日均（年化）", "Funding 30-day avg (ann.)"), "c": "s1", "w": 1.8}, {"k": "f7", "n": T("7 日均", "7-day avg"), "c": "s9", "w": 1.0}]}
+    return (f'<div class="card chartcard" style="margin-top:12px"><h3 style="margin-top:0">{T("价格 + 资金费率 30 日均", "Price + 30-day average funding")}</h3>'
+            + chart_div(c1) + chart_div(c2) + "</div>")
+
+
+def l4_tab(l4, as_of):
+    if not R.l4_ok(l4):
+        return empty_state("pending", T("L4 情绪衍生品层 · 等待首次运行", "L4 sentiment layer · awaiting first run"),
+                           T(f"每天 UTC {L4_TIME} 由 GitHub Actions 运行 l4/l4_daily.py 生成。", f"Generated daily at {L4_TIME} UTC by l4/l4_daily.py."), "")
+    c = l4["conclusion"]
+    th = {x["key"]: x for x in l4.get("thermometer") or []}
+    lev = "".join(l4_thermo(th[k]) for k in L4_LEV if k in th)
+    sen = "".join(l4_thermo(th[k]) for k in L4_SEN if k in th)
+    ws = sorted(l4.get("watch") or [], key=lambda x: not x.get("on"))
+    watch = "".join(f'<li class="{"on" if x.get("on") else ""}"><b>{esc(T(x["name_zh"], x.get("name_en") or x["name_zh"]))}</b>'
+                    f'<span class="chip{" t-warn" if x.get("on") else ""}"><i></i>{T("亮", "on") if x.get("on") else T("未亮", "off")}</span>'
+                    f'<em>{T("假设 · 不改动作", "hypothesis · no action")}</em><span class="s">{esc(T(x.get("stat_zh") or "", L4_WATCH_EN.get(x["key"], "")))}</span></li>' for x in ws)
+    n_on = sum(1 for x in ws if x.get("on"))
+    head = (f'<div class="card l3pos l4head"><div class="eb">L4 {T("BTC 短期杠杆与情绪温度", "BTC short-term leverage & sentiment temperature")} · {T("数据日", "data date")} {esc(l4.get("data_date") or "—")}'
+            f' · {T("运行", "run")} {esc(l4.get("updated_utc") or "—")} UTC'
+            + (f' <span class="chip l2stale">{T("部分数据延迟", "Some data delayed")}</span>' if (l4.get("data_status") or {}).get("stale") else "")
+            + f'</div><div class="l4nums"><span>{T("杠杆", "Leverage")}<b>{esc(T(c.get("leverage_band_zh") or "—", R.BAND_EN.get(c.get("leverage_band_zh"), "—")))}</b></span>'
+            f'<span>{T("情绪", "Sentiment")}<b>{esc(T(c.get("sentiment_band_zh") or "—", R.BAND_EN.get(c.get("sentiment_band_zh"), "—")))}</b></span>'
+            f'<span>{T("综合分位", "Composite pct")}<b>{c.get("composite_pct", "—")}</b></span></div></div>')
+    faq = [(T("分位怎么算？", "How is the percentile computed?"), T("今天的值在过去 730 天里排第几，只用当时以前的数据；≥90 过热、70~90 偏热、30~70 中性、10~30 偏冷、≤10 极冷。分档是描述，阈值是判断，不是检验出来的。", "Where today's value ranks over the past 730 days, using only data available at the time; ≥90 hot, 70–90 warm, 30–70 normal, 10–30 cool, ≤10 cold. The bands are descriptive; the cut-offs are judgement, not test results.")),
+           (T("为什么费率高不算信号？", "Why isn't high funding a signal?"), T("高分位之后的方向在年代之间翻转（2018-21 超额 −14.3 个百分点，2022-26 +7.6），站不住。只有费率转负（空头拥挤）之后偏强、三个年代方向一致。", "After high percentiles the direction flips across eras (2018-21 excess −14.3 pp, 2022-26 +7.6) — it does not hold. Only negative funding (crowded shorts) was followed by strength, consistently in all three eras.")),
+           (T("为什么替换掉旧温度计？", "Why replace the old thermometer?"), T("旧版（未平仓 7 日变化 > 资金费率 > 恐慌贪婪打分）没有经过检验，而且是单一交易所口径。新版每个读数都测过，测不出优势的只作描述。", "The old version (OI 7-day change > funding > Fear & Greed score) was never tested and used a single venue. Every reading in the new version was tested; those without an edge are descriptive only.")),
+           (T("数据源和换源", "Sources and fallbacks"), T("资金费率：Coinalyze 的 Binance 永续，取不到依次换 BitMEX、OKX、Deribit，换源时用重叠日子自动校准；季度升水 Deribit；CME 升水 Yahoo + Coinbase；全市场 OI 与清算 Coinalyze；恐慌贪婪 alternative.me；DVOL Deribit。", "Funding: Binance perp via Coinalyze, then BitMEX, OKX, Deribit, auto-calibrated on overlapping days; quarterly basis from Deribit; CME premium from Yahoo + Coinbase; aggregated OI and liquidations from Coinalyze; Fear & Greed from alternative.me; DVOL from Deribit."))]
+    faq_h = "".join(f'<details class="faq card"><summary>{esc(q)}</summary><p>{esc(a)}</p></details>' for q, a in faq)
+    return (head + f'<div class="grid g2 l3mains">{l4_signal_card(l4)}<div class="card l3main"><div class="top"><span class="nm">{T("今天怎么读", "How to read today")}</span></div>'
+            f'<p class="l4para">{esc(T(c.get("paragraph_zh") or "", R.综合.load_cfg()["L4"].get(c["level"], {}).get("分段EN", "").format(value="—", days="—", reading=c.get("key_reading_zh") or "")))}</p>'
+            f'<p class="tnote">{esc(T(c.get("key_reading_zh") or "", ""))}</p></div></div>'
+            + f'<h3 id="grp-4-0">{T("温度计 · 杠杆（只作描述）", "Thermometer · leverage (descriptive)")}</h3><div class="grid g3">{lev}</div>'
+            + f'<h3 id="grp-4-1">{T("温度计 · 情绪（只作描述）", "Thermometer · sentiment (descriptive)")}</h3><div class="grid g3">{sen}</div>'
+            + f'<details class="raw l3d l4watch"><summary>{T(f"观察项（假设，不改动作）· 亮 {n_on}/{len(ws)}", f"Watch items (hypotheses, no action) · {n_on}/{len(ws)} on")}</summary><ul>{watch}</ul></details>'
+            + l4_chart()
+            + f'<details class="raw l3d"><summary>{T("方法与 FAQ", "Method & FAQ")}</summary><div class="faqs" style="margin-top:8px">{faq_h}</div></details>'
+            + f'<p class="l2disc">{esc(T(*L4_NOTE))}</p>')
+
+
 # ---------------------------------------------------------------- 每层结论区（M3）+ 判定明细（M4）
 SWITCH_L1 = {
     "顺风": ("转为中性：乐观度 z 跌破 0，或 BAA 利差 13 周转为走阔；实际利率 13 周急升 ≥ +0.40pp 时转为中性偏谨慎，再叠加信用转紧或乐观度 z < 0 即逆风。",
@@ -1603,10 +1756,8 @@ def switch_text(i, lay, l2):
                  "大波动预警：30 天波动低于 40% 且筹码集中度不低于 12% 时亮。线每天随 STH 成本移动。",
                  f"A close above the zone top ({_m0(a.get('hi'))}) = through the zone; inside {_m0(a.get('lo'))}–{_m0(a.get('hi'))} = in the zone; below the STH cost ({_m0(s_.get('value'))}) = below STH cost. "
                  "Large-move warning: on when 30-day volatility is below 40% and supply concentration is at least 12%. The lines move daily with the STH cost.")
-    sc = lay.get("分")
-    cur = f"{sc:+d}" if isinstance(sc, int) else "—"
-    return T(f"恐慌贪婪、资金费率、未平仓 7 日变化三项分数合计 ≥ 3 过热、1~2 偏热、≤ −2 偏冷，其余中性（当前合计 {cur}）。",
-             f"Fear & Greed, funding and 7-day OI change scores: total ≥ 3 hot, 1–2 warm, ≤ −2 cool, otherwise neutral (now {cur}).")
+    return T("资金费率 30 日均跌破 0 = 信号（空头拥挤，唯一会改动作的一条）；否则按杠杆分位（费率 30 日均、OI ÷ 市值的平均）和情绪分位（恐慌贪婪）再平均：≥ 85 过热、65~85 偏热、≤ 35 偏冷、其余中性。分档是描述，不是检验出来的。",
+             "30-day average funding below zero = signal (crowded shorts — the only action-changing rule); otherwise the leverage percentile (funding 30-day avg and OI ÷ market cap) and the sentiment percentile (Fear & Greed) are averaged: ≥ 85 hot, 65–85 warm, ≤ 35 cool, otherwise normal. The bands describe; they were not tested.")
 
 
 def basis_chips(i, lay, l2):
@@ -1638,7 +1789,14 @@ def basis_chips(i, lay, l2):
         return out
     if i == 3:
         return chip("l3_p1s") + chip("l3_vol30") + chip("l3_conc")
-    return "".join(chip(k) for k in ("hl_oi", "hl_funding", "fng") if jby.get(k) and jby[k]["分"] != 0) or chip("fng")
+    l4 = G.get("L4") or {}
+    if not R.l4_ok(l4):
+        return ""
+    sg = l4.get("signal") or {}
+    v = sg.get("value_pct")
+    out = f'<a class="chip t-{"up" if sg.get("on") else "neutral"}" href="#layer-4"><i></i>{T("资金费率 30 日均", "Funding 30d avg")} {"—" if v is None else f"{v:+.2f}%".replace("-", chr(0x2212))}</a>'
+    c = l4["conclusion"]
+    return out + f'<span class="chip"><i></i>{T("杠杆", "Leverage")} {esc(T(c.get("leverage_band_zh") or "—", R.BAND_EN.get(c.get("leverage_band_zh"), "—")))} · {T("情绪", "sentiment")} {esc(T(c.get("sentiment_band_zh") or "—", R.BAND_EN.get(c.get("sentiment_band_zh"), "—")))}</span>'
 
 
 def layer_head(i, lay, comp, logs, as_of, l2):
@@ -1782,7 +1940,10 @@ def build_macro(L, S, logs):
                                          "series": [{"k": "v", "n": T("交易所余额", "Exchange balance"), "c": "s3"}]}) + "</div>")
             if i == 3:
                 content += l3_tail() if R.l3_ok(G.get("L3")) else ""
-            if i == 4 and G["FILES"].get("fng", {}).get("main"):
+            if i == 4:
+                obs = content
+                content = l4_tab(G.get("L4"), as_of) + (f'<details class="raw l3d obsfold"><summary>{T("山寨轮动观察（不属于 L4 研究，不进判定）", "Altcoin rotation watch (outside the L4 study, not in the verdict)")}</summary>{obs}</details>' if obs.strip() else "")
+            if False:
                 content += ('<div class="card chartcard" style="margin-top:12px">' + f'<h3 style="margin-top:0">{T("恐慌贪婪指数", "Fear & Greed index")}</h3>'
                             + chart_div({"v2": True, "src": G["FILES"]["fng"]["main"], "fmt": "int", "ranges": ["1Y", "3Y", "ALL"], "range": "1Y",
                                          "lines": [{"v": 25, "label": T("恐慌", "fear"), "tone": "neutral"}, {"v": 76, "label": T("贪婪", "greed"), "tone": "warn"}],
@@ -1798,6 +1959,7 @@ def build_macro(L, S, logs):
 <p class="lede">{T("综合研判把四层合成一句话：周期定方向，宏观管节奏，筹码和情绪用来确认和提醒。下面按层切换，每张指标卡都能点开看全部历史、区间规则和「正常波动范围」。拿不到真实数据的标「待接入」，不拿近似值冒充。",
                    "The overall read rolls four layers into one line: the cycle sets direction, macro sets pace, flows and sentiment confirm and caution. Switch layers below; every card opens its full history, zone rules and normal range. Anything without real data is marked pending.")}</p></div></div>
 {comp_block(comp, prev_comp, tlog, full=True)}
+{cal_next_line(G.get("CAL"))}
 <div class="src">{src_chips(st)}</div>
 <div id="tabs-anchor"></div><div class="tabwrap"><nav class="tabs" role="tablist" aria-label="{T("四层", "Four layers")}" data-tabs>{tabs}</nav></div>
 <details class="legend-d"><summary>{T("标签说明", "What the tags mean")}</summary>{tag_legend()}</details>
@@ -2483,6 +2645,180 @@ RADAR = [
 ]
 
 
+# ---------------------------------------------------------------- 事件日历（只读 data/cal/cal_latest.json；规则和检验在 cal/）
+CAL_GRADE = {"已验证·波动": ("g-v", "Validated · volatility"), "已证伪": ("g-x", "Falsified"), "未检验": ("g-o", "Untested")}
+
+
+def cal_grade(g):
+    cls, en = CAL_GRADE.get(g, ("", g))
+    return f'<span class="grade {cls}{" dashed" if g == "未检验" else ""}">{esc(T(g, en))}</span>'
+
+
+def cal_next_line(cal):
+    """宏观页综合研判下面那一行：下一个 BTC 事件。"""
+    b = (cal or {}).get("btc") or {}
+    ev = next((e for e in b.get("events") or [] if e.get("emphasis") and (e.get("days_until") or 0) >= 0), None)
+    if not ev:
+        return ""
+    zh = b.get("next_zh") or ""
+    d = ev.get("days_until")
+    en = f'Next: {ev.get("title_en")}, {"today" if d == 0 else f"in {d} day" + ("s" if d != 1 else "")} ({ev.get("time_utc")} UTC)'
+    return f'<p class="calnext"><a href="{U("/calendar/")}">{esc(T(zh, en))} →</a></p>'
+
+
+def cal_home_card(cal):
+    xs = (cal or {}).get("next7") or []
+    if not xs:
+        return ""
+    rows = ""
+    for x in xs[:6]:
+        btc = x.get("tab") == "btc"
+        badge = cal_grade(x.get("grade")) if btc else f'<span class="grade g-o">{T("行业动向", "Industry")}</span>'
+        when = (x.get("time_bj") or x.get("date") or "")[5:]
+        rows += (f'<li><a href="{U("/calendar/")}#{"btc" if btc else "web3"}"><span class="d">{esc(when)}{T(" 北京", " BJT") if btc and x.get("time_bj") else ""}</span>'
+                 f'<b>{esc(T(x.get("title_zh") or x.get("title") or "", x.get("title_en") or x.get("title") or ""))}</b>{badge}</a></li>')
+    return (f'<h2>{T("未来 7 天", "Next 7 days")} <a class="sub" href="{U("/calendar/")}">{T("事件日历 →", "Calendar →")}</a></h2>'
+            f'<div class="card calhome"><ul>{rows}</ul></div>')
+
+
+def build_calendar():
+    cal = G.get("CAL")
+    cr = crumbs([(T("事件日历", "Event calendar"), None)])
+    if not cal:
+        body = cr + empty_state("pending", T("事件日历 · 等待首次运行", "Event calendar · awaiting first run"), T("cal/cal_daily.py 每天运行后显示。", "Shown after cal/cal_daily.py runs."), "")
+        emit("calendar/index.html", T(f"事件日历 · {BRAND}", f"Event calendar · {BRAND_EN}"), body, active="calendar")
+        return
+    b, w = cal.get("btc") or {}, cal.get("web3") or {}
+    evs = b.get("events") or []
+    nxt = next((e for e in evs if e.get("emphasis") and (e.get("days_until") or 0) >= 0), None)
+    big = ""
+    if nxt:
+        im = nxt.get("impact") or {}
+        usd = T(f"按现价约 ±${im['usd_typ']:,.0f}" if im.get("usd_typ") else "", f"about ±${im['usd_typ']:,.0f} at today's price" if im.get("usd_typ") else "")
+        big = (f'<div class="card calbig"><div class="eb">{T("下一个已检验事件", "Next tested event")}</div>'
+               f'<div class="row1"><h3>{esc(T(nxt["title_zh"], nxt["title_en"]))}</h3>{cal_grade(nxt.get("grade"))}</div>'
+               f'<div class="cd" data-utc="{esc(nxt.get("time_utc") or "")}">—</div>'
+               f'<div class="tz">{T("北京时间", "Beijing")} <b>{esc(nxt.get("time_bj") or "—")}</b> · {T("美东", "US Eastern")} <b>{esc(nxt.get("time_et") or "—")}</b> · UTC <b>{esc(nxt.get("time_utc") or "—")}</b></div>'
+               f'<p class="imp"><b>{T("这次大概会晃多少：", "How much it may swing: ")}</b>{esc(T(im.get("text_zh") or "", im.get("text_en") or ""))} {esc(usd)}</p>'
+               f'<p class="use"><b>{T("怎么用：", "How to use it: ")}</b>{esc(T(nxt.get("use_zh") or "", nxt.get("use_en") or ""))}</p></div>')
+    # 会晃多大（幅度表）
+    it = b.get("impact_table") or []
+    mx = max([x.get("range_2h_typ_pct") or 0 for x in it] + [x.get("range_2h_normal_pct") or 0 for x in it] + [0.1])
+    rows = ""
+    for x in it:
+        typ, nor = x.get("range_2h_typ_pct"), x.get("range_2h_normal_pct")
+        lv = x.get("level_zh") or "—"
+        tone = {"大": "warn", "中": "cool", "不放大": "neutral"}.get(lv, "neutral")
+        rows += (f'<tr class="{"faint" if x.get("grade") == "已证伪" else ""}"><td class="l"><b>{esc(T(x["title_zh"], x["title_en"]))}</b> {cal_grade(x.get("grade"))}</td>'
+                 f'<td class="l">{tone_chip(T(lv, x.get("level_en") or lv), tone)}</td>'
+                 f'<td class="l"><div class="cmp"><span class="a" style="width:{(typ or 0) / mx * 100:.0f}%"></span><em>{T("公布时", "release")} {typ}%</em></div>'
+                 f'<div class="cmp"><span class="n" style="width:{(nor or 0) / mx * 100:.0f}%"></span><em>{T("平时", "normal")} {nor}%</em></div></td>'
+                 f'<td>{x.get("range_2h_big_pct")}%</td><td>{x.get("range_2h_max_pct")}%</td></tr>')
+    table = (f'<div class="tw"><table class="calimp"><thead><tr><th class="l">{T("事件", "Event")}</th><th class="l">{T("波动影响", "Volatility")}</th>'
+             f'<th class="l">{T("公布那两小时一般差多少 vs 平时", "Typical 2h range vs normal")}</th><th>{T("十次有一次超过", "1 in 10 above")}</th><th>{T("2022 年来最大", "Max since 2022")}</th></tr></thead><tbody>{rows}</tbody></table></div>'
+             f'<p class="tnote">{esc(T(b.get("impact_note_zh") or "", "“High-low range” = how far BTC’s highest trade sits above its lowest in that window, up or down. 2.7% at $80,000 is about $2,000+ of swing."))}</p>')
+    # 列表
+    li = ""
+    for e in evs:
+        im = e.get("impact") or {}
+        faint = e.get("grade") == "已证伪"
+        bj = (e.get("time_bj") or e.get("date") or "")
+        note = T("（常见说法，数据不支持）", " (a common belief the data does not support)") if faint else ""
+        usd = (T(f"，按现价约 ±${im['usd_typ']:,.0f}", f", about ±${im['usd_typ']:,.0f} at today's price") if im.get("usd_typ") else "")
+        src = f' · <a href="{esc(e["source_url"])}" target="_blank" rel="noopener">{T("官方来源", "official source")} ↗</a>' if e.get("source_url") else ""
+        li += (f'<details class="calrow{" faint" if faint else ""}"><summary><span class="d">{esc(bj[:10])}</span><span class="t">{esc(bj[11:16])}</span>'
+               f'<b>{esc(T(e["title_zh"], e["title_en"]))}{note}</b>{cal_grade(e.get("grade"))}<span class="lv">{esc(T(im.get("level_zh") or "—", im.get("level_en") or "—"))}</span>'
+               f'<em>{T(str(e.get("days_until")) + " 天后", "in " + str(e.get("days_until")) + "d")}</em></summary>'
+               f'<div class="body"><p>{esc(T(im.get("text_zh") or "", im.get("text_en") or ""))}{esc(usd)}</p><p>{esc(T(e.get("what_zh") or "", e.get("what_en") or ""))}</p>'
+               f'<p><b>{T("怎么用：", "How to use it: ")}</b>{esc(T(e.get("use_zh") or "", e.get("use_en") or ""))}{src}</p></div></details>')
+    # 方法表（按类型取一条的 stats）
+    seen, mrows = set(), ""
+    for e in evs:
+        st = e.get("stats") or {}
+        if e["type"] in seen or not st:
+            continue
+        seen.add(e["type"])
+        pct = lambda v: "—" if v is None else f"{v * 100:.0f}%"
+        mrows += (f'<tr><td class="l">{esc(T(e["title_zh"], e["title_en"]))}</td><td>{st.get("n", "—")}</td><td>{st.get("h2_ratio", "—")}</td><td>{pct(st.get("h2_share"))}</td>'
+                  f'<td>{st.get("day_ratio", "—")}</td><td>{st.get("pre3_ratio", "—")}</td><td>{pct(st.get("up1_share"))}</td></tr>')
+    method = (f'<details class="raw l3d"><summary>{T("方法与检验结果", "Method & test results")}</summary><p class="tnote">{esc(T(b.get("method_zh") or "", "Control: same weekday, within ±9 weeks, no other event, same time window. Range = high ÷ low. Eras 2015-17, 2018-21 and 2022-26 tested separately. Option expiry: Deribit, last Friday of the month, 08:00 UTC. Data: Coinbase BTC-USD hourly."))}'
+              f' {esc(T(b.get("stats_asof_zh") or "", ""))}</p>'
+              f'<div class="tw"><table><thead><tr><th class="l">{T("事件（2022 年以来）", "Event (since 2022)")}</th><th>{T("次数", "n")}</th><th>{T("2 小时振幅 ÷ 平时", "2h range ÷ normal")}</th><th>{T("放大比例", "share wider")}</th>'
+              f'<th>{T("当天 ÷ 平时", "day ÷ normal")}</th><th>{T("前 3 天 ÷ 平时", "prior 3d ÷ normal")}</th><th>{T("次日上涨比例", "next day up")}</th></tr></thead><tbody>{mrows}</tbody></table></div></details>')
+    btc_tab = (f'<p class="lede calintro">{esc(T(b.get("intro_zh") or "", b.get("intro_en") or ""))}</p>{big}'
+               f'<h3>{T("会晃多大", "How big the swings are")}</h3>{table}<h3>{T("全部已录入事件", "All scheduled events")}</h3><div class="callist">{li}</div>{method}')
+    # Web3
+    wev = w.get("events") or []
+    cats = w.get("categories") or []
+    src_links = " · ".join(f'<a href="{esc(s["url"])}" target="_blank" rel="noopener">{esc(s["name"])}</a>' for s in w.get("sources") or [])
+    if wev:
+        TOKEN = {"代币事件", "解锁", "上所", "升级", "治理投票", "空投"}
+        cat_en = {c["zh"]: c["en"] for c in cats}
+        def wrow(e):
+            dd = e.get("date_start") or ""
+            de = e.get("date_end") or ""
+            span = dd[5:] + (f" → {de[5:]}" if de and de != dd else "")
+            coins = "".join(f'<span class="coin">{esc(c)}</span>' for c in e.get("coins") or [])
+            grp = "token" if e.get("category") in TOKEN else "event"
+            srcs = ", ".join(e.get("sources") or [e.get("source") or ""])
+            return (f'<li class="w3 imp{e.get("importance", 1)}" data-g="{grp}" data-imp="{e.get("importance", 1)}" data-coins="{esc(" ".join(e.get("coins") or []).lower())}">'
+                    f'<span class="d">{esc(span)}</span><span class="cat">{esc(T(e.get("category") or "", e.get("category_en") or cat_en.get(e.get("category"), "")))}</span>'
+                    f'<a href="{esc(e.get("url") or "#")}" target="_blank" rel="noopener"><b>{esc(e.get("title") or "")}</b></a>{coins}'
+                    f'<span class="city">{esc(e.get("city") or "")}</span><small>{esc(srcs)}</small></li>')
+        ongoing = [e for e in wev if e.get("ongoing")]
+        weeks = {}
+        for e in wev:
+            if e.get("ongoing"):
+                continue
+            d0 = dt.date.fromisoformat(e["date_start"])
+            wk = (d0 - dt.timedelta(days=d0.weekday())).isoformat()
+            weeks.setdefault(wk, []).append(e)
+        lst = ""
+        if ongoing:
+            lst += f'<h4>{T("正在进行", "Ongoing")}</h4><ul class="w3l">{"".join(wrow(e) for e in ongoing)}</ul>'
+        for wk in sorted(weeks):
+            lst += f'<h4>{T(f"{wk[5:]} 这一周", f"Week of {wk[5:]}")}</h4><ul class="w3l">{"".join(wrow(e) for e in weeks[wk])}</ul>'
+        filt = (f'<div class="w3f"><div class="fg"><button class="pill on" data-f="all">{T("全部", "All")}</button><button class="pill" data-f="event">{T("行业活动", "Industry events")}</button>'
+                f'<button class="pill" data-f="token">{T("代币事件", "Token events")}</button></div>'
+                f'<input type="search" class="w3s" placeholder="{T("按代币搜索，如 ETH", "Search a token, e.g. ETH")}"><label class="w3imp"><input type="checkbox"> {T("只看重要", "Important only")}</label></div>')
+        web3_body = filt + f'<div class="w3wrap">{lst}</div>'
+    else:
+        web3_body = f'<div class="empty">{T("行业日历暂时取不到。", "The industry calendar is unavailable right now.")}</div>'
+    web3_tab = (f'<p class="lede calintro">{esc(T(w.get("intro_zh") or "", w.get("intro_en") or ""))}</p>'
+                f'<p class="tnote">{T("来源：", "Sources: ")}{src_links}</p>{web3_body}')
+    upd = T(f"生成于 {cal.get('generated_utc')} UTC", f"Generated {cal.get('generated_utc')} UTC")
+    body = (cr + f'<div class="ph"><div><div class="eyebrow">Event Calendar</div><h1>{T("事件日历", "Event calendar")}</h1>'
+            f'<p class="lede">{T("两张表分开看：比特币大事件是单独检验过波动的；Web3 行业动向只是汇总，没有做过价格检验。", "Two separate views: BTC events were individually tested for volatility; Web3 industry events are a digest with no price testing.")} <span class="tnote">{esc(upd)}</span></p></div></div>'
+            f'<div class="tabwrap caltabs"><nav class="tabs" role="tablist">'
+            f'<a role="tab" href="#btc" data-ct="btc" class="tab on"><span class="tn">{T("比特币大事件", "Bitcoin events")}</span><span class="ts">{T("已单独检验", "individually tested")}</span></a>'
+            f'<a role="tab" href="#web3" data-ct="web3" class="tab w3t"><span class="tn">{T("Web3 行业动向", "Web3 industry")}</span><span class="ts">{T("汇总 · 未做价格检验", "digest · not price-tested")}</span></a></nav></div>'
+            f'<section class="calp on" id="cal-btc">{btc_tab}</section><section class="calp w3p" id="cal-web3">{web3_tab}</section>')
+    emit("calendar/index.html", T(f"事件日历 · {BRAND}", f"Event calendar · {BRAND_EN}"), body, active="calendar", scripts=CAL_JS,
+         desc=T("美联储议息、CPI、非农公布前后 BTC 会晃多大（已检验），以及 Web3 行业会议与代币事件汇总。", "How much BTC swings around FOMC, CPI and payrolls (tested), plus a digest of Web3 conferences and token events."))
+
+
+CAL_JS = r"""<script>
+(function(){
+const tabs=[...document.querySelectorAll('[data-ct]')];
+function show(k){tabs.forEach(t=>t.classList.toggle('on',t.dataset.ct===k));document.querySelectorAll('.calp').forEach(p=>p.classList.toggle('on',p.id==='cal-'+k))}
+tabs.forEach(t=>t.addEventListener('click',e=>{e.preventDefault();show(t.dataset.ct);history.replaceState(null,'','#'+t.dataset.ct)}));
+if(location.hash==='#web3')show('web3');
+const cd=document.querySelector('.calbig .cd');
+function tick(){if(!cd||!cd.dataset.utc)return;const t=Date.parse(cd.dataset.utc.replace(' ','T')+':00Z')-Date.now();
+ const zh=document.documentElement.lang.startsWith('zh');if(t<=0){cd.textContent=zh?'正在公布 / 已公布':'Released';return}
+ const d=Math.floor(t/864e5),h=Math.floor(t%864e5/36e5),m=Math.floor(t%36e5/6e4);cd.textContent=zh?`还有 ${d} 天 ${h} 小时 ${m} 分`:`${d}d ${h}h ${m}m to go`}
+tick();setInterval(tick,30000);
+const wrap=document.querySelector('.w3wrap');if(!wrap)return;let g='all';
+const s=document.querySelector('.w3s'),imp=document.querySelector('.w3imp input');
+function apply(){const q=(s.value||'').trim().toLowerCase();wrap.querySelectorAll('li.w3').forEach(li=>{
+ const ok=(g==='all'||li.dataset.g===g)&&(!q||li.dataset.coins.includes(q)||li.textContent.toLowerCase().includes(q))&&(!imp.checked||+li.dataset.imp>=2);li.style.display=ok?'':'none'});
+ wrap.querySelectorAll('ul.w3l').forEach(u=>{const any=[...u.children].some(c=>c.style.display!=='none');u.style.display=any?'':'none';if(u.previousElementSibling)u.previousElementSibling.style.display=any?'':'none'})}
+document.querySelectorAll('.w3f [data-f]').forEach(b=>b.addEventListener('click',()=>{g=b.dataset.f;document.querySelectorAll('.w3f [data-f]').forEach(x=>x.classList.toggle('on',x===b));apply()}));
+s.addEventListener('input',apply);imp.addEventListener('change',apply);
+})();
+</script>"""
+
+
 def build_narrative():
     cards = "".join(f'<div class="pend"><b>{esc(T(t, te))} · {T("筹备中", "in preparation")}</b>{esc(T(d, de))}</div>' for t, te, d, de in RADAR)
     body = f"""<div class="ph"><div><div class="eyebrow">Narrative Radar</div><h1>{T("叙事埋伏", "Narrative radar")}</h1>
@@ -2956,7 +3292,7 @@ def build_methodology():
 <p style="margin:0 0 8px"><b style="color:var(--ink)">L2 {T("周期", "Cycle")}</b>{CN}{T("规则化状态机（l2/l2_signals.py，《BTC周期层L2研究》§7）逐日推进：新高 → 牛市；减半后 480~600 天或 MVRV ≥ 2 且价/200 周均 ≥ 2 → 牛市·顶部风险区；回撤 ≥ 20% → 牛市回撤·待确认（收窄到 10% 内回到牛市）；回撤 ≥ 35% 且新高已过 90 天、减半已过 450 天 → 熊市；熊市里底部区信号 ≥ 2 条 → 熊底区；离最低点 +40% 且最低点已过 90 天，或四条短期成本线连续 7 天站上且本轮出现过分龄底部确认 → 熊末→牛初；收盘跌破本轮最低收盘则退回熊市。数据：Coin Metrics 社区接口 + bitview.space。层结论 = 当天状态。",
 "A rule-based state machine (l2/l2_signals.py, L2 cycle study §7) stepped day by day: new high → bull; halving +480–600 days or MVRV ≥ 2 with price/200W MA ≥ 2 → bull top-risk; drawdown ≥ 20% → bull pullback (back to bull inside 10%); ≥ 35% with the high ≥ 90 days old and the halving ≥ 450 days old → bear; ≥ 2 bottom-zone signals in a bear → bottom zone; +40% from a ≥ 90-day-old low, or 7 days above four short-term cost lines with an age-band confirmation this cycle → late bear → early bull; a close below the cycle low reverts to bear. Data: Coin Metrics community API + bitview.space. Layer verdict = the state of the day.")}</p>
 <p style="margin:0 0 8px"><b style="color:var(--ink)">L3 {T("筹码", "Supply")}</b>{CN}{T("按价格相对短期持有者成本 +1σ 压力区（上下 2%）的位置：收盘站上上沿 = 冲过压力区，进入 ±2% = 在压力区，压力区下方到 STH 成本之间 = 压力区下方，跌破 STH 成本 = STH 成本下方；30 天波动 < 40% 且筹码集中度 ≥ 12% 时追加「大波动预警」（2026-10-11 起，此前以交易所 7 日净流量为准）。交易所流量、大户 / 散户持币只作描述。", "By price position relative to the STH cost +1σ pressure zone (±2%): a close above the top = through the zone, inside ±2% = in the zone, between the zone and the STH cost = below the zone, under the STH cost = below STH cost; a 'large-move warning' is added when 30-day volatility < 40% and supply concentration ≥ 12% (since 2026-10-11; previously the 7-day exchange net flow). Exchange flows and whale/retail holdings are descriptive only.")}</p>
-<p style="margin:0"><b style="color:var(--ink)">L4 {T("情绪", "Sentiment")}</b>{CN}{T("恐慌贪婪（−2~+2）、资金费率（−1~+2）、未平仓 7 日变化（−1~+1）合计 ≥ 3 过热、1~2 偏热、≤ −2 偏冷，其余中性。L4 还没完成研究，只描述温度。", "Fear & greed (−2..+2), funding (−1..+2) and 7-day OI change (−1..+1): ≥ 3 hot, 1–2 warm, ≤ −2 cool, otherwise neutral. L4 research is unfinished; it only describes temperature.")}</p></div>
+<p style="margin:0"><b style="color:var(--ink)">L4 {T("情绪", "Sentiment")}</b>{CN}{T("读 l4/l4_daily.py 的结论档：资金费率 30 日均跌破 0 = 信号（空头拥挤，唯一会改动作的规则，已验证·方向）；否则按杠杆和情绪的过去 730 天分位分为过热 / 偏热 / 中性 / 偏冷，只作描述（2026-10-22 起，此前是恐慌贪婪 + 资金费率 + 未平仓三项打分）。", "Reads the level from l4/l4_daily.py: 30-day average funding below zero = signal (crowded shorts, the only action-changing rule, validated · direction); otherwise leverage and sentiment 730-day percentiles band it as hot / warm / normal / cool, descriptive only (since 2026-10-22; previously a Fear & Greed + funding + OI score).")}</p></div>
 <h2 id="comp">{T("综合研判怎么来", "How the overall read is made")}</h2>{comp_rules_html()}
 <h2 id="l1rules">{T("L1 规则清单（宏观总文档 §10.2，逐条照抄）", "L1 rule list (macro study §10.2, copied rule by rule)")}</h2>
 <div class="card mcard"><p>{T("「能否改交易参数」分四种：", "“May it change trading parameters” has four values:")}</p><ul>{pdef}</ul></div>
@@ -3079,7 +3415,7 @@ def build_misc(logs, weeks, months):
     if os.path.exists(rd):
         os.remove(rd)
     write("robots.txt", f"User-agent: *\nAllow: /\nSitemap: https://{DOMAIN}/sitemap.xml\n")
-    urls = ["/", "/macro/", "/launchpad/", "/rotation/", "/narrative/", "/reports/", "/journal/", "/methodology/", "/corrections/", "/about/",
+    urls = ["/", "/macro/", "/calendar/", "/launchpad/", "/rotation/", "/narrative/", "/reports/", "/journal/", "/methodology/", "/corrections/", "/about/",
             "/launchpad/report/", "/launchpad/report/archive/"]
     urls += [f"/macro/{x['key']}/" for x in R.INDICATORS + R.RETIRED] + ["/changelog/"]
     for p in PILLARS:
@@ -3161,6 +3497,9 @@ def main():
     G["L3S"] = load(os.path.join(DATA, "l3", "l3_series.json"))
     G["L3H"] = load(os.path.join(DATA, "l3", "l3_history.json"), []) or []
     R.attach_l3(S, G["L3S"])
+    G["L4"] = load(os.path.join(DATA, "l4", "l4_latest.json"))
+    G["L4H"] = load(os.path.join(DATA, "l4", "l4_history.json"), []) or []
+    G["CAL"] = load(os.path.join(DATA, "cal", "cal_latest.json"))
     upd = [(L.get("更新时间UTC") or sd.get("生成时间UTC") or "")[:16].replace("T", " "), (G["L2"] or {}).get("updated_utc") or ""]
     G["更新"] = max(upd)
     os.makedirs(SITE, exist_ok=True)
@@ -3169,11 +3508,11 @@ def main():
     G["S"], G["as_of"] = S, as_of
     rs = [x for x in (R.judge(S, ind, as_of) for ind in R.INDICATORS) if x]
     G["RS"], G["JBY"] = rs, {x["key"]: x for x in rs}
-    G["VS"] = {i: R.layer_verdict(i, rs, G["L2"], G["L3"]) for i in R.LAYERS}
-    G["COMP"] = R.综合.compose(G["VS"], rs, G["L2"], G["L3"])
+    G["VS"] = {i: R.layer_verdict(i, rs, G["L2"], G["L3"], G["L4"]) for i in R.LAYERS}
+    G["COMP"] = R.综合.compose(G["VS"], rs, G["L2"], G["L3"], G["L4"])
     G["TODAY_LOG"] = logs[-1] if logs else None
     G["PREV_LOG"] = next((lg for lg in reversed(logs) if lg["日期"] < as_of), None)
-    G["CHANGES"] = R.alerts(rs, G["PREV_LOG"], R.launchpad_summary(sd), G["VS"][1], G["L2"], G["L3"])
+    G["CHANGES"] = R.alerts(rs, G["PREV_LOG"], R.launchpad_summary(sd), G["VS"][1], G["L2"], G["L3"], G["L4"])
     btc = S.get("btc_price") or {}
     nov = {d: v for d, v in btc.items() if "2022-11-01" <= d <= "2022-11-30" and v}
     G["CYC"] = min(nov, key=nov.get) if nov else "2022-11-21"
@@ -3188,6 +3527,11 @@ def main():
     G["FILES"] = files
     write_latest(S, rs)
     os.makedirs(os.path.join(SITE, "data", "l2"), exist_ok=True)
+    for sub, fns in (("l4", ("l4_latest.json", "l4_history.json")), ("cal", ("cal_latest.json",))):
+        os.makedirs(os.path.join(SITE, "data", sub), exist_ok=True)
+        for fn in fns:
+            if os.path.exists(os.path.join(DATA, sub, fn)):
+                shutil.copyfile(os.path.join(DATA, sub, fn), os.path.join(SITE, "data", sub, fn))
     os.makedirs(os.path.join(SITE, "data", "l3"), exist_ok=True)
     for fn in ("l3_latest.json", "l3_history.json"):
         if os.path.exists(os.path.join(DATA, "l3", fn)):
@@ -3206,6 +3550,7 @@ def main():
         build_launchpad_report(sd)
         build_rotation(rot)
         build_narrative()
+        build_calendar()
         build_posts()
         build_reports()
         build_journal(S, logs, weeks, months, sd)
