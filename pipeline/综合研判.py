@@ -100,7 +100,7 @@ def compose(vs, rs, l2, l3=None, l4=None):
     sg4 = (l4 or {}).get("signal") or {}
     kr = (c4.get("key_reading_zh") or "", c4.get("key_reading_zh") or "")
     v4 = sg4.get("value_pct")
-    fill4 = {"段落": c4.get("paragraph_zh") or "", "档杠杆": c4.get("leverage_band_zh") or "—", "档情绪": c4.get("sentiment_band_zh") or "—",
+    fill4 = {"段落": c4.get("paragraph_zh") or "", "档杠杆": c4.get("leverage_band_zh") or "数据暂缺", "档情绪": c4.get("sentiment_band_zh") or "数据暂缺",
              "关键读数": kr[0], "reading": kr[1] if kr[1] and not any("\u4e00" <= ch <= "\u9fff" for ch in kr[1]) else "see the L4 tab",
              "value": "—" if v4 is None else f"{v4:+.1f}%".replace("-", "\u2212"), "days": sg4.get("days_on", "—")}
     seg4 = (d4["分段"].format(**fill4), d4["分段EN"].format(**fill4))

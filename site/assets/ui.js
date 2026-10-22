@@ -1,4 +1,8 @@
 
+// 页面导语收进标题旁的 ⓘ：页面只留结论，方法和背景 hover / 点按再看（无 JS 时照常显示原文）
+document.querySelectorAll('.ph p.lede:not(.keep)').forEach(p=>{const h=p.parentElement.querySelector('h1');if(!h||!p.textContent.trim())return;
+ const b=document.createElement('button');b.type='button';b.className='info';b.textContent='i';b.setAttribute('aria-label',document.documentElement.lang.startsWith('zh')?'说明':'About this page');
+ b.dataset.tip=p.textContent.trim();h.appendChild(b);p.remove()});
 (function(){
 const root=document.documentElement;
 function setT(t){root.setAttribute('data-theme',t);try{localStorage.setItem('uc-theme',t)}catch(e){}

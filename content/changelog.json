@@ -3,8 +3,8 @@
   "version": "2026.10.22",
   "date": "2026-10-22",
   "notify": true,
-  "title_zh": "L4 情绪衍生品层重做 + 事件日历上线",
-  "title_en": "L4 sentiment layer rebuilt + event calendar",
+  "title_zh": "L4 重做 + 事件日历 + 发射台活动温度 + 交易所与 ETF 持币",
+  "title_en": "L4 rebuilt, event calendar, launchpad activity temperature, exchange + ETF holdings",
   "items": [
    {
     "type": "data",
@@ -16,6 +16,16 @@
     "type": "new",
     "zh": "事件日历：美联储议息、CPI、非农公布前后 BTC 一般会晃多大（已单独检验，只说幅度不说方向），以及 Web3 行业会议与代币事件汇总；首页加「未来 7 天」",
     "en": "Event calendar: how much BTC typically swings around FOMC, CPI and payrolls (individually tested; magnitude, not direction), plus a digest of Web3 conferences and token events; 'Next 7 days' on the home page"
+   },
+   {
+    "type": "new",
+    "zh": "发射台新增「发射台活动温度 · 周期全览」（历史研究版，快照截至 2026-10-17，非实时）：赛道手续费合计的温度仪表、试行阶段、这一轮走到哪里、历史持续区间；新增「钱在哪」，看手续费份额在各链、各平台之间怎么分",
+    "en": "New 'Launchpad activity temperature · cycle atlas' (historical research release, snapshot through 2026-10-17, not live): a dial for sector-wide fees, provisional stages, where this round stands and historical durations; plus 'Where the money is' — fee share by chain and by platform"
+   },
+   {
+    "type": "new",
+    "zh": "L3 新增现货 ETF 持币和「交易所 + ETF 合计」：看交易所流出的币是去了 ETF，还是去了链上自托管",
+    "en": "L3 adds spot ETF holdings and 'exchanges + ETFs combined': did coins leaving exchanges go into ETFs or into on-chain self-custody?"
    }
   ]
  },

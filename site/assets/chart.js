@@ -45,7 +45,7 @@ Chart.prototype.init=function(){
  this.plot=document.createElement('div');this.plot.className='uc-plot';this.plot.style.minHeight=this.H()+'px';el.appendChild(this.plot);
  this.tip=document.createElement('div');this.tip.className='uc-tip';this.plot.appendChild(this.tip);
  this.leg=document.createElement('div');this.leg.className='legend';if(c.v2)el.appendChild(this.leg);else bar.appendChild(this.leg);
- if(c.note){const n=document.createElement('div');n.className='uc-note';n.textContent=c.note;el.appendChild(n)}
+ if(c.note){const n=document.createElement('button');n.type='button';n.className='info uc-info';n.textContent='i';n.setAttribute('aria-label',ZH?'图表说明':'Chart notes');n.dataset.tip=c.note;bar.appendChild(n)}
  if(c.group){(groups[c.group]=groups[c.group]||[]).push(this)}
  this.fetch();
  let t;new ResizeObserver(()=>{clearTimeout(t);t=setTimeout(()=>self.data&&self.draw(),80)}).observe(this.plot);

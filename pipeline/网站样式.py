@@ -22,6 +22,7 @@ SITE_CSS = r"""
 --glass1:rgba(255,255,255,.035);--glass2:rgba(255,255,255,.01);--side:rgba(7,9,15,.92);--topbar:rgba(5,7,12,.9);--thead:#0d111b;
 --glow1:rgba(0,255,204,.07);--glow2:rgba(163,230,53,.05);--scrim:rgba(0,0,0,.55);--toast:#11161f;--grid:rgba(255,255,255,.06);
 --s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--s5:#d55181;--s6:#008300;--s7:#9085e9;--s8:#e66767;--s9:#5b6274;
+--cyc-t1:#6b9fdc;--cyc-t2:#5bb8c9;--cyc-t3:#c9b458;--cyc-t4:#e78b64;--cyc-t5:#df666f;--cyc-winter:#6b9fdc;--cyc-spring:#4bbca7;--cyc-summer:#f4b44f;--cyc-autumn:#e78b64;--cyc-steady:#8b94a5;
 --l2-bull:#22c55e;--l2-risk:#f97316;--l2-pb:#fdba74;--l2-bear:#ef4444;--l2-zone:#a855f7;--l2-rec:#3b82f6;
 --c-solana:#c084fc;--c-robinhood:#4ade80;--c-bsc:#fbbf24;--c-base:#60a5fa;--c-arc:#22d3ee;--c-monad:#a78bfa;--c-ethereum:#94a3b8;--c-other:#4b5364;
 --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
@@ -35,6 +36,7 @@ color-scheme:dark}
 --glass1:rgba(255,255,255,.92);--glass2:rgba(255,255,255,.80);--side:rgba(255,255,255,.94);--topbar:rgba(255,255,255,.92);--thead:#f3f5f8;
 --glow1:rgba(5,150,105,.06);--glow2:rgba(132,204,22,.07);--scrim:rgba(15,23,42,.35);--toast:#ffffff;--grid:rgba(15,23,42,.07);
 --s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--s4:#eda100;--s5:#e87ba4;--s6:#008300;--s7:#4a3aa7;--s8:#e34948;--s9:#94a3b8;
+--cyc-t1:#2f6fbf;--cyc-t2:#1f8a9a;--cyc-t3:#9a7b12;--cyc-t4:#c2552a;--cyc-t5:#b8323f;--cyc-winter:#2f6fbf;--cyc-spring:#16806d;--cyc-summer:#a86b00;--cyc-autumn:#c2552a;--cyc-steady:#5f6b7d;
 --l2-bull:#16a34a;--l2-risk:#ea580c;--l2-pb:#f59e0b;--l2-bear:#dc2626;--l2-zone:#9333ea;--l2-rec:#2563eb;
 --c-solana:#9333ea;--c-robinhood:#16a34a;--c-bsc:#b45309;--c-base:#2563eb;--c-arc:#0891b2;--c-monad:#7c3aed;--c-ethereum:#64748b;--c-other:#94a3b8;
 color-scheme:light}
@@ -357,6 +359,26 @@ details.fold>summary,details.raw>summary{cursor:pointer;padding:10px 14px;font-s
 details.raw>summary{padding:6px 0;font-weight:500;font-size:12px}
 details.fold .l1line,details.raw .l1line{margin:0 14px 12px}
 .inval{margin:6px 0 4px;font-size:13px;color:var(--ink2)}
+.exetf-line{font-size:13.5px;line-height:1.7;color:var(--ink2);margin:4px 0 8px;padding:8px 12px;border-radius:8px;background:var(--wash);border:1px solid var(--line)}
+
+/* ---- 说明收进 ⓘ（hover / 点按显示），页面只留结论 ---- */
+.info{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;border:1px solid var(--line2);background:transparent;color:var(--muted);
+font:italic 700 11px/1 Georgia,serif;cursor:help;position:relative;vertical-align:middle;margin-left:8px;padding:0;-webkit-appearance:none;appearance:none}
+.info:hover,.info:focus{color:var(--ink);border-color:var(--ink2);outline:none}
+.info:hover::after,.info:focus::after{content:attr(data-tip);position:absolute;z-index:40;left:50%;top:calc(100% + 8px);transform:translateX(-50%);width:max-content;max-width:min(420px,80vw);
+padding:10px 12px;border-radius:10px;background:var(--toast);border:1px solid var(--line2);color:var(--ink2);font:400 12.5px/1.65 var(--sans);text-align:left;white-space:normal;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+h1 .info{width:20px;height:20px;font-size:12px;margin-left:10px}
+h1 .info:hover::after,h1 .info:focus::after{left:0;transform:none;font-weight:400}
+.uc-bar .uc-info{margin-left:auto}
+.uc-bar .uc-info:hover::after,.uc-bar .uc-info:focus::after{left:auto;right:0;transform:none}
+.srcd{margin:-2px 0 12px}.srcd>summary{list-style:none;cursor:pointer;display:inline-block}.srcd>summary::-webkit-details-marker{display:none}.srcd .src{margin-top:8px}
+/* ---- 发射台活动温度 ---- */
+.cyctag{font:500 12px var(--sans);padding:4px 10px;border-radius:999px;border:1px solid var(--line2);text-decoration:none;color:var(--ink2);margin-left:8px;white-space:nowrap}
+.cyctag b{color:var(--ink);font-family:var(--mono)}
+.cycentry{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;padding:14px 18px;margin:18px 0;text-decoration:none;color:var(--ink2)}
+.cycentry b{color:var(--ink)}.cycentry span{font-family:var(--mono);font-size:13px}.cycentry em{margin-left:auto;font-style:normal;color:var(--lime-ink)}
+.mwcard{padding:16px 18px}.mwcard h4{margin:14px 0 6px;font-size:13px;color:var(--ink2)}
+.chainleg.mw span em{font-style:normal;font-size:11px;margin-left:4px;color:var(--muted)}
 /* ---- 事件日历 ---- */
 .calnext{margin:-4px 0 12px;font-size:13px}.calnext a{color:var(--ink2);text-decoration:none;border-bottom:1px dashed var(--line2)}
 .caltabs{position:static;margin-top:10px}
@@ -749,6 +771,10 @@ HEAD_JS = ("(function(){document.documentElement.classList.add('js');try{var t=l
            "document.documentElement.setAttribute('data-theme',t)}catch(e){}})();")
 
 UI_JS = r"""
+// 页面导语收进标题旁的 ⓘ：页面只留结论，方法和背景 hover / 点按再看（无 JS 时照常显示原文）
+document.querySelectorAll('.ph p.lede:not(.keep)').forEach(p=>{const h=p.parentElement.querySelector('h1');if(!h||!p.textContent.trim())return;
+ const b=document.createElement('button');b.type='button';b.className='info';b.textContent='i';b.setAttribute('aria-label',document.documentElement.lang.startsWith('zh')?'说明':'About this page');
+ b.dataset.tip=p.textContent.trim();h.appendChild(b);p.remove()});
 (function(){
 const root=document.documentElement;
 function setT(t){root.setAttribute('data-theme',t);try{localStorage.setItem('uc-theme',t)}catch(e){}
@@ -922,7 +948,7 @@ Chart.prototype.init=function(){
  this.plot=document.createElement('div');this.plot.className='uc-plot';this.plot.style.minHeight=this.H()+'px';el.appendChild(this.plot);
  this.tip=document.createElement('div');this.tip.className='uc-tip';this.plot.appendChild(this.tip);
  this.leg=document.createElement('div');this.leg.className='legend';if(c.v2)el.appendChild(this.leg);else bar.appendChild(this.leg);
- if(c.note){const n=document.createElement('div');n.className='uc-note';n.textContent=c.note;el.appendChild(n)}
+ if(c.note){const n=document.createElement('button');n.type='button';n.className='info uc-info';n.textContent='i';n.setAttribute('aria-label',ZH?'图表说明':'Chart notes');n.dataset.tip=c.note;bar.appendChild(n)}
  if(c.group){(groups[c.group]=groups[c.group]||[]).push(this)}
  this.fetch();
  let t;new ResizeObserver(()=>{clearTimeout(t);t=setTimeout(()=>self.data&&self.draw(),80)}).observe(this.plot);

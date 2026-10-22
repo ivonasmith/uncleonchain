@@ -232,6 +232,22 @@ def fetch_etf():
     return {"etf_flow": out}, {"口径": "美国现货 BTC ETF 合计日度净流入（Farside，单位换算成美元）", "最新": max(out)}
 
 
+# ---------------------------------------------------------------- 第三层：现货 ETF 持币（BTC 枚数）
+def fetch_etf_hold():
+    """美国现货 BTC ETF 合计净资产 ÷ 当天 BTC 参考价 = ETF 持币枚数。
+    来源 The Commoner Bitcoin ETF Tracker by TFTC（CC BY 4.0，汇总 SoSoValue 与发行方披露），每天一行。"""
+    j = json.loads(text("https://www.tftc.io/bitcoin-etf-flows/data.json", timeout=60))
+    out = {}
+    for r in j.get("days") or []:
+        tna, px = r.get("totalNetAssetsUsd"), r.get("btcCloseUsd")
+        if tna and px:
+            out[r["date"]] = float(tna) / float(px)
+    if len(out) < 100:
+        raise RuntimeError(f"ETF 持币只解析出 {len(out)} 天")
+    return {"etf_btc": out}, {"口径": "美国现货 BTC ETF 合计净资产 ÷ 当天 BTC 参考价（约 21:00 UTC）", "来源": "The Commoner Bitcoin ETF Tracker by TFTC（CC BY 4.0）",
+                              "最新": max(out), "最新值": round(out[max(out)])}
+
+
 # ---------------------------------------------------------------- 第一层：CME 近月年化升水（Yahoo）
 MCODE = "FGHJKMNQUVXZ"
 
@@ -540,6 +556,7 @@ def main():
     run("DefiLlama 稳定币", fetch_stables)
     run("FRED", fetch_fred)
     run("ETF 资金流", fetch_etf)
+    run("ETF 持币", fetch_etf_hold)
     run("Deribit", fetch_basis, replace=False)
     run("CME 升水", fetch_cme, replace=False)
     run("CoinMetrics 周期", fetch_cycle)

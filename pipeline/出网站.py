@@ -789,7 +789,8 @@ def hero_cards(S, as_of, sd):
         v = sg.get("value_pct")
         lv = R.L4_LEVELS[c4["level"]]
         cards.append((T("BTC 短期杠杆与情绪温度", "BTC short-term leverage & sentiment"), "L4", esc(T(c4["level"], lv[3].capitalize())),
-                      T(f'资金费率 30 日均 {"—" if v is None else f"{v:+.2f}%"} · 信号{"亮" if sg.get("on") else "不亮"}', f'Funding 30d avg {"—" if v is None else f"{v:+.2f}%"} · signal {"on" if sg.get("on") else "off"}'),
+                      (T("资金费率数据延迟 · 信号今天不判断", "Funding data delayed · no signal call today") if R.l4_funding_stale(l4) else
+                       T(f'资金费率 30 日均 {"—" if v is None else f"{v:+.2f}%"} · 信号{"亮" if sg.get("on") else "不亮"}', f'Funding 30d avg {"—" if v is None else f"{v:+.2f}%"} · signal {"on" if sg.get("on") else "off"}')),
                       lv[2], [x.get("fund_ma30") for x in (G.get("L4H") or [])[-30:] if x.get("fund_ma30") is not None], U("/macro/") + "#layer-4"))
     else:
         cards.append((T("BTC 短期杠杆与情绪温度", "BTC short-term leverage & sentiment"), "L4", "—", T("等待首次运行", "Awaiting first run"), "neutral", [], U("/macro/") + "#layer-4"))
@@ -833,7 +834,7 @@ def comp_block(comp, prev_comp=None, log=None, full=True, frozen=False, link=Tru
                 f'{" · " + T("日志冻结值", "frozen log value") if frozen else ""}</div><div class="txt">{esc(en_fix(LF(comp, "一句话")) or "(Chinese only)")}</div>'
                 f'<div class="chips">{"".join(tone_chip(t, "neutral") for t in (LF(comp, "标签") or []))}</div></div></div>')
     segs = (f'<details class="segd" open><summary>{T("四段分层说明", "Layer by layer")}</summary>{comp_segments(comp, prev_comp, link)}'
-            f'<p class="tnote">{esc(LF(comp, "小字"))}</p></details>') if full else ""
+            f'</details>') if full else ""
     stamp = f'<div class="stamp tl">{times_line(log)}</div>' if full or frozen else ""
     return (f'<div class="glass verdict comp"><div class="body"><div class="lbl">{T("综合研判", "Overall read")}'
             f'{" · " + T("日志冻结值", "frozen log value") if frozen else ""}</div>'
@@ -887,7 +888,7 @@ def signal_tiles(vs, jby, l2):
         if i == 4 and R.l4_ok(l4):
             sg, c4 = l4.get("signal") or {}, l4["conclusion"]
             v = sg.get("value_pct")
-            items = (f'<li><span>{T("资金费率 30 日均", "Funding 30d avg")}</span><b class="t-{"up" if sg.get("on") else "neutral"}">{"—" if v is None else f"{v:+.2f}%".replace("-", chr(0x2212))} · {T("信号亮", "signal on") if sg.get("on") else T("信号不亮", "signal off")}</b></li>'
+            items = (f'<li><span>{T("资金费率 30 日均", "Funding 30d avg")}</span><b class="t-{"up" if sg.get("on") else "neutral"}">{T("数据延迟 · 今天不判断", "delayed · no call today") if R.l4_funding_stale(l4) else ("—" if v is None else f"{v:+.2f}%".replace("-", chr(0x2212))) + " · " + (T("信号亮", "signal on") if sg.get("on") else T("信号不亮", "signal off"))}</b></li>'
                      f'<li><span>{T("杠杆", "Leverage")}</span><b>{esc(T(c4.get("leverage_band_zh") or "—", R.BAND_EN.get(c4.get("leverage_band_zh"), "—")))}</b></li>'
                      f'<li><span>{T("情绪", "Sentiment")}</span><b>{esc(T(c4.get("sentiment_band_zh") or "—", R.BAND_EN.get(c4.get("sentiment_band_zh"), "—")))}</b></li>')
         elif i == 2 and l2 and l2.get("signals"):
@@ -1027,8 +1028,7 @@ def build_home(sd, S, logs, weeks, months, rot, matrix):
         reports_block = (f'<h2>{T("分析报告", "Research reports")} <a class="sub" href="{U("/reports/")}">{T("全部报告 →", "All reports →")}</a></h2>'
                          f'<div class="grid g3">{rp}</div>')
     body = f"""<div class="ph"><div><div class="eyebrow">Terminal Overview</div><h1>{T("终端总览", "Terminal overview")}</h1>
-<p class="lede">{T(f"宏观流动性 → 周期位置 → 筹码结构 → 情绪，再落到发射台一级市场。每天 {sched_text()} 自动拉数，日更写一篇解读日志，写入即冻结，公开可查。",
-                   f"Macro liquidity → cycle position → coin flows → sentiment, down to launchpads. Data refreshes daily at {sched_text()}; the daily run writes a log that is frozen once written.")}</p></div>
+</div>
 <div class="stamp">{times_line(tlog)}</div></div>
 {comp_block(comp, None, tlog, full=False)}
 <h2>{T("今日变化", "What changed today")} <span class="sub">{esc(ch_base)}</span><span class="sp"></span><button class="btn" onclick="shareHome()">📸 {T("生成今日长图", "Share image")}</button></h2>
@@ -1038,7 +1038,7 @@ def build_home(sd, S, logs, weeks, months, rot, matrix):
 {signal_tiles(G["VS"], G["JBY"], G.get("L2"))}
 {cal_home_card(G.get("CAL"))}
 <div class="grid g2" style="margin-top:22px;align-items:start">
-<div><h2 style="margin-top:12px">{T("发射台矩阵 · 当日 Top6", "Launchpads · top 6 today")} <a class="sub" href="{U("/launchpad/")}">{T("全部", "All")} {len((matrix or {}).get("协议", []))} {T("个协议 →", "protocols →")}</a></h2>{lp_tbl}</div>
+<div><h2 style="margin-top:12px">{T("发射台矩阵 · 当日 Top6", "Launchpads · top 6 today")} {cycle_tag()} <a class="sub" href="{U("/launchpad/")}">{T("全部", "All")} {len((matrix or {}).get("协议", []))} {T("个协议 →", "protocols →")}</a></h2>{lp_tbl}</div>
 <div><h2 style="margin-top:12px">{T("板块轮动 · 24h 领涨", "Rotation · 24h leaders")} <a class="sub" href="{U("/rotation/")}">{T("看全部 →", "See all →")}</a></h2>{cats}</div>
 </div>
 {reports_block}
@@ -1581,6 +1581,50 @@ def l3_tab(l3, as_of):
             + f'<p class="tnote">{T("每日一行：", "Daily line: ")}<code>{esc(line)}</code></p>')
 
 
+def exetf_block(S):
+    """交易所 + 现货 ETF 持币：堆叠图 + 最近 30 天「交易所流出的币去哪了」一句描述（不推方向）。"""
+    ex, etf, tot = S.get("ex_balance") or {}, S.get("etf_btc") or {}, R.s_exetf(S)
+    if not etf or not tot:
+        return ""
+    d1 = max(tot)
+    d0 = R.shift(d1, -30)
+    k0 = max([d for d in tot if d <= d0] or [None]) if any(d <= d0 for d in tot) else None
+    line = ""
+    if k0:
+        eds = sorted(etf)
+        def etf_at(d):
+            i = R.bisect.bisect_right(eds, d) - 1
+            return etf[eds[i]] if i >= 0 else None
+        dex, detf = ex[d1] - ex[k0], etf_at(d1) - etf_at(k0)
+        dtot = dex + detf
+        f = lambda v: f"{v:+,.0f}".replace("-", "\u2212")
+        if dex < 0 and detf > 0:
+            share = min(100, detf / -dex * 100)
+            zh = (f"{k0} → {d1}：交易所 {f(dex)} 枚，同期 ETF {f(detf)} 枚，合计 {f(dtot)} 枚。交易所流出的币里约 {share:.0f}% 的量和 ETF 增持对得上"
+                  + ("；合计也在减少，其余多半去了链上自托管。" if dtot < 0 else "。"))
+            en = (f"{k0} → {d1}: exchanges {f(dex)} BTC, ETFs {f(detf)} BTC, combined {f(dtot)} BTC. About {share:.0f}% of the exchange outflow is matched by ETF buying"
+                  + ("; the total fell too, so the rest most likely went to on-chain self-custody." if dtot < 0 else "."))
+        else:
+            zh = f"{k0} → {d1}：交易所 {f(dex)} 枚，ETF {f(detf)} 枚，合计 {f(dtot)} 枚。"
+            en = f"{k0} → {d1}: exchanges {f(dex)} BTC, ETFs {f(detf)} BTC, combined {f(dtot)} BTC."
+        line = f'<p class="exetf-line">{esc(T(zh, en))}</p>'
+    if "EXETF" not in G:
+        eds = sorted(etf)
+        ff = {}
+        for d in sorted(ex):
+            if d < "2023-10-01":
+                continue
+            i = R.bisect.bisect_right(eds, d) - 1
+            ff[d] = etf[eds[i]] if i >= 0 and R.days_between(eds[i], d) <= 4 else (0 if d < eds[0] else None)
+        G["EXETF"] = put_multi("exetf_chart", {"ex": {d: v for d, v in ex.items() if d >= "2023-10-01"}, "etf": ff})
+    cfg = {"v2": True, "src": G["EXETF"], "fmt": "btc", "stack": True, "ranges": ["1Y", "ALL"], "range": "ALL", "group": "l3",
+           "series": [{"k": "ex", "n": T("交易所余额", "Exchange balance"), "c": "s3"}, {"k": "etf", "n": T("现货 ETF 持币", "Spot ETF holdings"), "c": "s1"}],
+           "note": T("ETF 持币 = 合计净资产 ÷ 当天 BTC 参考价（TFTC · The Commoner ETF Tracker，CC BY 4.0）；交易所余额来自 CoinMetrics，免费档约晚 2~3 周。只作同步描述。",
+                     "ETF holdings = total net assets ÷ that day's BTC reference price (TFTC · The Commoner ETF Tracker, CC BY 4.0); exchange balances from CoinMetrics, ~2–3 weeks late on the free tier. Coincident description only.")}
+    return (f'<div class="card chartcard" style="margin-top:12px"><h3 style="margin-top:0">{T("交易所 + 现货 ETF 持币 · 链上和链下合起来看", "Exchanges + spot ETFs · on- and off-chain together")} '
+            f'<span class="sub">{T("合计", "Total")} {tot[d1]:,.0f} BTC · {d1}</span></h3>' + line + chart_div(cfg) + "</div>")
+
+
 def l3_tail():
     banned = "".join(f'<li><b>{esc(T(a, b))}</b><span>{esc(T(c, d))}</span><em>{e}</em></li>' for a, b, c, d, e in L3_NOT_SHOWN)
     rep = next((r for r in ALL_REPORTS if "l3" in r["slug"] or "supply" in r["slug"]), None)
@@ -1876,6 +1920,14 @@ SRC_EN = {"DefiLlama 稳定币": "DefiLlama stablecoins", "CoinMetrics 周期": 
           "CoinGecko 类目": "CoinGecko categories", "ETF 资金流": "ETF flows", "CME 升水": "CME basis"}
 
 
+def src_summary(st):
+    ok = sum(1 for v in st.values() if v.get("ok"))
+    bad = [k for k, v in st.items() if not v.get("ok")]
+    tone = "up" if not bad else "warn"
+    head = T(f"数据源 {ok}/{len(st)} 正常", f"Data sources {ok}/{len(st)} OK") + (T("：" + "、".join(bad) + " 延迟", ": " + ", ".join(SRC_EN.get(k, k) for k in bad) + " delayed") if bad else "")
+    return f'<details class="srcd"><summary>{tone_chip(head, tone)}</summary><div class="src">{src_chips(st)}</div></details>'
+
+
 def src_chips(st):
     return "".join(tone_chip(f'{T(k, SRC_EN.get(k, k))} {"✓" if v.get("ok") else "✗"} {(v.get("最新日期") or "")[5:]}', "up" if v.get("ok") else "dn")
                    for k, v in st.items())
@@ -1938,6 +1990,7 @@ def build_macro(L, S, logs):
                             + f'<h3>{T("交易所 BTC 余额 · 全部历史", "Exchange BTC balance · full history")} <a class="sub" href="{ind_href("ex_balance")}">{T("看区间与分位 →", "Zones & percentiles →")}</a></h3>'
                             + chart_div({"v2": True, "src": f["ex_balance"]["raw"], "fmt": "btc", "log": True, "ranges": ["1Y", "3Y", "5Y", "ALL"], "range": "ALL", "group": "l3",
                                          "series": [{"k": "v", "n": T("交易所余额", "Exchange balance"), "c": "s3"}]}) + "</div>")
+                content += exetf_block(S)
             if i == 3:
                 content += l3_tail() if R.l3_ok(G.get("L3")) else ""
             if i == 4:
@@ -1960,7 +2013,7 @@ def build_macro(L, S, logs):
                    "The overall read rolls four layers into one line: the cycle sets direction, macro sets pace, flows and sentiment confirm and caution. Switch layers below; every card opens its full history, zone rules and normal range. Anything without real data is marked pending.")}</p></div></div>
 {comp_block(comp, prev_comp, tlog, full=True)}
 {cal_next_line(G.get("CAL"))}
-<div class="src">{src_chips(st)}</div>
+{src_summary(st)}
 <div id="tabs-anchor"></div><div class="tabwrap"><nav class="tabs" role="tablist" aria-label="{T("四层", "Four layers")}" data-tabs>{tabs}</nav></div>
 <details class="legend-d"><summary>{T("标签说明", "What the tags mean")}</summary>{tag_legend()}</details>
 {panels}
@@ -2239,7 +2292,7 @@ def build_indicator_pages(L, S, logs, files):
         body = f"""{crumbs([(T("宏观仪表盘", "Macro"), "/macro/"), (f'L{ind["层"]} · {T(meta["名称"], meta["EN"])}', f'/macro/#layer-{ind["层"]}'), (name, None)])}
 {note_mvrv}
 <div class="ph"><div><div class="eyebrow">L{ind["层"]} · {esc(T(ind.get("组") or meta["名称"], ind.get("组EN") or meta["EN"]))}</div>
-<h1>{esc(name)}</h1><p class="lede">{esc(T(ind["说明"], ind["说明EN"]))}</p>
+<h1>{esc(name)}</h1><p class="lede keep">{esc(T(ind["说明"], ind["说明EN"]))}</p>
 <div class="chips" style="margin-top:10px"><span class="chip">{T("来源", "Source")}{CN}{esc(src_t(ind["来源"]))}</span><span class="chip">{T("级别", "Level")}{CN}{esc(lvl)}</span>{grade_chip(ind.get("等级"), ind)}{ref}</div></div></div>
 {head}
 {itp_h}
@@ -2296,6 +2349,111 @@ def launchpad_history(matrix):
         rows.append({"名称": names.get(s, s) if s != "_other" else T("其他", "Other"), "c": f"s{k + 1}" if s != "_other" else "s9",
                      "今": a, "昨": b, "变": a - b, "份额今": a / t1 * 100 if t1 else None, "份额昨": b / t0 * 100 if t0 else None})
     return path, {"cfg": cfg_series, "d1": d1, "d0": d0, "t1": t1, "t0": t0, "rows": rows, "起": ds[0], "天数": len(ds)}
+
+
+# ---------------------------------------------------------------- 发射台：钱在哪（按链 / 按平台的份额，读矩阵日更数据；周期页和矩阵页同一套配色）
+def _proto_chain(p):
+    c30 = p.get("分链30日") or {}
+    if c30:
+        k = max(c30, key=c30.get)
+    else:
+        k = CHAIN_KEY.get((p.get("链") or ["other"])[0], "other")
+    return k if k in MAIN_CHAINS else "other"
+
+
+def money_where(matrix):
+    hist = (matrix or {}).get("历史") or {}
+    ds = sorted(d for d in hist if hist[d])
+    if len(ds) < 40:
+        return ""
+    names = {p["slug"]: p["名称"] for p in matrix["协议"]}
+    pch = {p["slug"]: _proto_chain(p) for p in matrix["协议"]}
+    agg90 = {}
+    for d in ds[-90:]:
+        for s, v in hist[d].items():
+            agg90[s] = agg90.get(s, 0) + (v or 0)
+    top = [s for s, _ in sorted(agg90.items(), key=lambda x: -x[1])[:8]]          # 和矩阵页汇总图同一个排序 → 同一套平台色
+    pcol = {s: f"s{k + 1}" for k, s in enumerate(top)}
+
+    def window(end_i):
+        w = ds[max(0, end_i - 6):end_i + 1]
+        by_p, by_c = {}, {}
+        for d in w:
+            for s, v in hist[d].items():
+                v = v or 0
+                key = s if s in pcol else "_other"
+                by_p[key] = by_p.get(key, 0) + v
+                c = pch.get(s, "other")
+                by_c[c] = by_c.get(c, 0) + v
+        return by_p, by_c, w
+    n = len(ds) - 1
+    p_now, c_now, w_now = window(n)
+    p_old, c_old, _ = window(n - 30)
+    tn, to = sum(p_now.values()) or 1, sum(p_old.values()) or 1
+
+    def bar(now, old, keys, col, name):
+        segs, leg = "", ""
+        for k in keys:
+            a = now.get(k, 0) / tn * 100
+            b = old.get(k, 0) / to * 100
+            d = a - b
+            segs += f'<i style="width:{a:.2f}%;background:var(--{col(k)})" title="{esc(name(k))} {a:.1f}%"></i>'
+            leg += (f'<span><i style="background:var(--{col(k)})"></i>{esc(name(k))} <b>{a:.1f}%</b>'
+                    f'<em class="{"t-up" if d >= 0.05 else "t-dn" if d <= -0.05 else ""}">{d:+.1f}pp</em></span>')
+        return f'<div class="chainbar">{segs}</div><div class="chainleg mw">{leg}</div>'
+    ch_keys = [k for k in ["solana", "bsc", "robinhood", "base"] if c_now.get(k)] + ["other"]
+    c_now2 = {k: c_now.get(k, 0) for k in ch_keys[:-1]}
+    c_now2["other"] = tn - sum(c_now2.values())
+    c_old2 = {k: c_old.get(k, 0) for k in ch_keys[:-1]}
+    c_old2["other"] = to - sum(c_old2.values())
+    chain_bar = bar(c_now2, c_old2, ch_keys, lambda k: "c-" + k, lambda k: chain_name(k) if k != "other" else T("其他", "Other"))
+    plat_bar = bar(p_now, p_old, top + ["_other"], lambda k: pcol.get(k, "s9"), lambda k: names.get(k, k) if k != "_other" else T("其他", "Other"))
+    # 近 90 天按链份额堆叠图
+    cs = {k: {} for k in ch_keys}
+    for d in ds[-90:]:
+        row = {}
+        for s, v in hist[d].items():
+            c = pch.get(s, "other")
+            c = c if c in ch_keys else "other"
+            row[c] = row.get(c, 0) + (v or 0)
+        for k in ch_keys:
+            cs[k][d] = row.get(k, 0)
+    src = write_data("launchpad/chain_share90.json", ds[-90:], cs)
+    cfg = {"src": src, "fmt": "usd", "stack": True, "mode": "pct", "ranges": ["ALL"], "range": "ALL",
+           "series": [{"k": k, "n": chain_name(k) if k != "other" else T("其他", "Other"), "c": "c-" + k} for k in ch_keys]}
+    return (f'<section id="money"><h2>{T("钱在哪", "Where the money is")} <span class="sub">{T("近 7 日手续费份额 · 括号外是和 30 天前比变了几个百分点", "7-day fee share · change vs 30 days earlier in pp")}</span></h2>'
+            f'<div class="card mwcard"><div class="stamp">{T("数据日", "Data date")} <b>{ds[-1]}</b> · {T("矩阵日更（DefiLlama Launchpad 逐日手续费）", "matrix daily data (DefiLlama Launchpad daily fees)")}</div>'
+            f'<h4>{T("按链", "By chain")}</h4>{chain_bar}<h4>{T("按平台（前 8 名 + 其他）", "By platform (top 8 + other)")}</h4>{plat_bar}'
+            f'<h4>{T("近 90 天按链份额", "Chain share, last 90 days")}</h4>{chart_div(cfg)}'
+            f'<p class="tnote">{T("份额只说明钱在各链、各平台之间怎么分；赛道整体冷暖看上面的仪表。多链协议按近 30 日手续费最多的那条链归类。", "Shares only show how money splits across chains and platforms; for the sector as a whole, read the dial above. Multi-chain protocols are assigned to their largest chain by 30-day fees.")}</p></div></section>')
+
+
+def cycle_summary():
+    """发射台活动温度（冻结快照）：温度数值 · 档位 · 阶段 · 截至日期。首页标签、矩阵页入口卡共用。"""
+    p = os.path.join(ROOT, "content", "cycle", "snapshot.json")
+    if not os.path.exists(p):
+        return None
+    try:
+        import 周期观察 as CO
+        import 周期仪表盘 as CD
+        s = load(p)["series"]["fees"]
+        r = CO.reading(s["points"])
+        st = CD.state(r)
+        x = r["position"]
+        band = (None if x is None else ("低温", "Low") if x <= 20 else ("偏凉", "Cool") if x < 40 else ("温和", "Moderate") if x < 60 else ("偏热", "Warm") if x < 80 else ("高热", "High"))
+        return {"temp": x, "band": band, "stage": (st[1], st[2]), "date": r["date"]}
+    except Exception as e:  # noqa —— 快照读不了不影响其他页面
+        print("周期快照摘要失败：", e)
+        return None
+
+
+def cycle_tag():
+    c = G.get("CYC_SUM")
+    if not c or c["temp"] is None:
+        return ""
+    t = max(0, min(100, c["temp"]))
+    return (f'<a class="cyctag" href="{U("/launchpad/cycle/")}">{T("发射台活动温度", "Launchpad activity temperature")} <b>{t:.1f}</b> {esc(T(*c["band"]))} · '
+            f'{esc(T(*c["stage"]))}{T("（截至 ", " (as of ")}{c["date"][5:]}{T("）", ")")} →</a>')
 
 
 def breakdown_html(bk):
@@ -2473,6 +2631,7 @@ def build_launchpad(sd, matrix):
                    f"All {len(matrix['协议'])} protocols in DefiLlama's Launchpad category: the sector-wide trend first (is money flowing in, and between which venues), then the cross-chain ranking with market share. Fees, UTC full days.")}</p></div>
 <div class="stamp">{T("数据截至", "Data as of")} <b>{matrix["日期"]}</b>{T("（UTC 完整日）", " (UTC)")}<br>{T("生成", "Generated")} <b>{esc(matrix.get("生成时间UTC", "")[:16].replace("T", " "))} UTC</b></div></div>
 <div class="grid g5" id="lpk">{kh}</div>
+<a class="card cycentry" href="{U('/launchpad/cycle/')}"><b>{T("发射台活动温度 · 周期全览（历史研究版）", "Launchpad activity temperature · cycle atlas (historical research)")}</b><span>{cycle_tag() and esc(T(f"{max(0, min(100, G['CYC_SUM']['temp'])):.1f} · {G['CYC_SUM']['band'][0]} · {G['CYC_SUM']['stage'][0]} · 截至 {G['CYC_SUM']['date']}", f"{max(0, min(100, G['CYC_SUM']['temp'])):.1f} · {G['CYC_SUM']['band'][1]} · {G['CYC_SUM']['stage'][1]} · as of {G['CYC_SUM']['date']}"))}</span><em>{T("打开 →", "Open →")}</em></a>
 {total_html}
 <div class="card" style="padding:14px 16px;margin-top:22px"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:12.5px"><b>{T("生态份额 · 当日手续费按链拆分", "Chain share · today's fees by chain")}</b><span class="stamp">{T("多链协议按 DefiLlama 分链数据精确拆分", "Multi-chain protocols split by DefiLlama's per-chain data")}</span></div>
 <div class="chainbar">{bar}</div><div class="chainleg">{leg}</div></div>
@@ -3108,7 +3267,7 @@ def build_journal(S, logs, weeks, months, sd):
         no_al = empty_state("none", T("期间没有触发预警", "No alerts"), T("阈值规则见「口径与规则」。", "Thresholds are in Methodology."), "")
         return f"""{crumbs([(T("解读日志", "Journal"), "/journal/"), (title, None)])}
 <div class="ph"><div><div class="eyebrow">{kind_slug.title()} Review</div><h1>{esc(title)}</h1>
-<p class="lede">{rv["起"]} ~ {rv["止"]} · {T("期间日志", "logs")} {rv["日志天数"]} {T("篇", "")}</p></div><div class="stamp">{T("生成于", "Generated")} <b>{esc(rv["生成时间UTC"])} UTC</b></div></div>
+<p class="lede keep">{rv["起"]} ~ {rv["止"]} · {T("期间日志", "logs")} {rv["日志天数"]} {T("篇", "")}</p></div><div class="stamp">{T("生成于", "Generated")} <b>{esc(rv["生成时间UTC"])} UTC</b></div></div>
 {old_note(rv)}
 {review_note(rv)}
 <div class="glass verdict"><div class="body"><div class="lbl">{T("一句话复盘", "Summary")}</div><div class="txt">{esc(en_fix(LF(rv, "一句话")) or "(Chinese only — written before bilingual logs)")}</div></div></div>
@@ -3284,7 +3443,7 @@ def build_methodology():
     retired = "".join(f"<tr><td class='l'><a href='{ind_href(p['key'])}'>{esc(T(p['名称'], p['EN']))}</a></td><td>{p['停用']}</td><td class='l wrap'>{esc(T(p['原因'], p['原因EN']))}</td></tr>" for p in R.RETIRED)
     banned = "".join(f"<tr><td class='l wrap'>{esc(T(a, b))}</td><td class='l wrap'>{esc(T(c, d))}</td></tr>" for a, b, c, d in R.BANNED)
     body = f"""{crumbs([(T("口径与规则", "Methodology"), None)])}<h1>{T("口径与规则", "Methodology")}</h1>
-<p class="lede">{T("解读日志里的每一个判断都来自下面这些公开规则。规则改动会在更正记录里留痕，历史日志不跟着改。", "Every judgement in the logs comes from the public rules below. Rule changes are logged in Corrections; past logs are never rewritten.")}</p>
+<p class="lede keep">{T("解读日志里的每一个判断都来自下面这些公开规则。规则改动会在更正记录里留痕，历史日志不跟着改。", "Every judgement in the logs comes from the public rules below. Rule changes are logged in Corrections; past logs are never rewritten.")}</p>
 <nav class="anch static">{"".join(f'<a href="#{h}">{t}</a>' for t, h in ((T("层结论", "Verdicts"), "verdicts"), (T("综合研判", "Overall read"), "comp"), (T("L1 规则清单", "L1 rules"), "l1rules"), (T("标签说明", "Tags"), "legend"), (T("更新时间", "Schedule"), "schedule"), (T("统计窗口", "Stats window"), "window"), (T("指标与区间", "Indicators"), "indicators"), (T("预警阈值", "Alerts"), "alerts")))}</nav>
 <h2 id="verdicts">{T("层结论怎么来", "How layer verdicts are made")}</h2>
 <div class="card mcard">
@@ -3356,7 +3515,7 @@ def build_corrections(sd, fixes):
                if rv_rows else empty_state("none", T("还没有检测到回改", "No revisions detected yet"), T("每天生成数据时和前一天比较：7 天以前的数据变动超过 0.5% 就记一笔。", "Every build compares with the previous files: changes over 0.5% to data more than 7 days old are logged here."), ""))
     none_ = '<tr><td class="l" colspan="4">' + T("暂无", "None") + '</td></tr>'
     body = f"""{crumbs([(T("更正记录", "Corrections"), None)])}<h1>{T("更正记录", "Corrections")}</h1>
-<p class="lede">{T("数据源事后修订、PONS 销毁口径重算、规则调整，全部留痕，不覆盖不删除。每条规则变更写明为什么改，并链到日志里的分隔行和更新日志。", "Source revisions, PONS burn recalculations and rule changes — all logged, nothing overwritten. Each rule change says why, and links to the journal marker and the changelog.")}</p>
+<p class="lede keep">{T("数据源事后修订、PONS 销毁口径重算、规则调整，全部留痕，不覆盖不删除。每条规则变更写明为什么改，并链到日志里的分隔行和更新日志。", "Source revisions, PONS burn recalculations and rule changes — all logged, nothing overwritten. Each rule change says why, and links to the journal marker and the changelog.")}</p>
 <h2>{T("规则变更", "Rule changes")}</h2><div class="tw"><table><thead><tr><th class="l">{T("日期", "Date")}</th><th class="l">{T("范围", "Scope")}</th><th class="l">{T("改了什么", "What changed")}</th><th class="l">{T("原因", "Why")}</th></tr></thead><tbody>{rule_rows}</tbody></table></div>
 {rn}
 <h2>{T("数据源历史回改（自动记录）", "Source history revisions (automatic)")}</h2>
@@ -3391,7 +3550,7 @@ def build_changelog():
         blocks += (f'<section class="card clv" id="v{esc(v["version"])}"><div class="clh"><b>{esc(v["version"])}</b><span class="stamp">{esc(v["date"])}'
                    f'{" · " + T("已弹窗提示", "announced") if v.get("notify") else ""}</span></div><h3>{esc(T(v["title_zh"], v["title_en"]))}</h3><ul class="cl">{lis}</ul></section>')
     body = f"""{crumbs([(T("更新日志", "Changelog"), None)])}<h1>{T("更新日志", "Changelog")}</h1>
-<p class="lede">{T("每一版按实际上线的内容写，新版本在最前面。「数据口径」类改动同时写进更正记录。", "Each version lists what actually shipped, newest first. Data changes are also logged in Corrections.")}</p>
+<p class="lede keep">{T("每一版按实际上线的内容写，新版本在最前面。「数据口径」类改动同时写进更正记录。", "Each version lists what actually shipped, newest first. Data changes are also logged in Corrections.")}</p>
 {blocks}"""
     emit("changelog/index.html", T(f"更新日志 · {BRAND}", f"Changelog · {BRAND_EN}"), body, active="changelog")
     if LANG["v"] == "zh":
@@ -3401,7 +3560,7 @@ def build_changelog():
 
 def build_404():
     emit("404.html", T(f"页面不存在 · {BRAND}", f"Not found · {BRAND_EN}"),
-         f'<h1>{T("页面不存在", "Page not found")}</h1><p class="lede">{T("链接可能过期了，回", "The link may be outdated. Back to the ")}<a href="{U("/")}">{T("终端总览", "overview")}</a>{T("看看。", ".")}</p>')
+         f'<h1>{T("页面不存在", "Page not found")}</h1><p class="lede keep">{T("链接可能过期了，回", "The link may be outdated. Back to the ")}<a href="{U("/")}">{T("终端总览", "overview")}</a>{T("看看。", ".")}</p>')
 
 
 def build_misc(logs, weeks, months):
@@ -3497,6 +3656,7 @@ def main():
     G["L3S"] = load(os.path.join(DATA, "l3", "l3_series.json"))
     G["L3H"] = load(os.path.join(DATA, "l3", "l3_history.json"), []) or []
     R.attach_l3(S, G["L3S"])
+    G["CYC_SUM"] = cycle_summary()
     G["L4"] = load(os.path.join(DATA, "l4", "l4_latest.json"))
     G["L4H"] = load(os.path.join(DATA, "l4", "l4_history.json"), []) or []
     G["CAL"] = load(os.path.join(DATA, "cal", "cal_latest.json"))
@@ -3546,6 +3706,9 @@ def main():
         build_macro(L, S, logs)
         build_indicator_pages(L, S, logs, files)
         build_launchpad(sd, matrix)
+        from 周期观察 import build as build_cycle
+        globals()["CYCLE_MONEY"] = money_where(matrix)
+        build_cycle(globals())
         build_launchpad_platforms(sd)
         build_launchpad_report(sd)
         build_rotation(rot)

@@ -420,6 +420,28 @@ def s_exbal30(S):
     return _memo(S, "exbal30", lambda: daily_back(S.get("ex_balance") or {}, 30))
 
 
+def s_exetf(S):
+    """交易所余额 + 现货 ETF 持币（BTC）。ETF 只有交易日，周末沿用最近 4 天内的值；只在两边都有数的日子出数。"""
+    def f():
+        ex, etf = S.get("ex_balance") or {}, S.get("etf_btc") or {}
+        eds = sorted(etf)
+        out = {}
+        for d in sorted(ex):
+            i = bisect.bisect_right(eds, d) - 1
+            if i >= 0 and days_between(eds[i], d) <= 4 and ex[d] is not None:
+                out[d] = ex[d] + etf[eds[i]]
+        return out
+    return _memo(S, "exetf", f)
+
+
+def s_etf30(S):
+    return _memo(S, "etf30", lambda: daily_back(S.get("etf_btc") or {}, 30, "diff"))
+
+
+def s_exetf30(S):
+    return _memo(S, "exetf30", lambda: daily_back(s_exetf(S), 30, "diff"))
+
+
 def s_oi7(S):
     return _memo(S, "oi7", lambda: daily_back(S.get("hl_oi") or {}, 7, tol=2))
 
@@ -516,7 +538,7 @@ G_L2V = ("估值与持有者", "Valuation & holders")
 G_PEND = ("待接入", "Pending")
 G_L3A = ("价位与预警（通过历史检验）", "Levels & warning (passed historical tests)")
 G_L3D = ("短期持有者与大户 / 散户（只作描述）", "Short-term holders, whales & retail (descriptive only)")
-G_L3E = ("交易所流量与余额（只作描述）", "Exchange flows & balance (descriptive only)")
+G_L3E = ("交易所与现货 ETF 持币（只作描述）", "Exchange & spot-ETF holdings (descriptive only)")
 G_L4R = ("山寨轮动观察（不属于 L4 研究，不进判定）", "Altcoin rotation (outside the L4 study, not in the verdict)")
 ETF_CUTS = [(0, "趋势确认（滞后）· 净流出", "Trend confirm (lagging) · outflow", "dn", 0),
             (None, "趋势确认（滞后）· 净流入", "Trend confirm (lagging) · inflow", "up", 0)]
@@ -857,6 +879,18 @@ REGISTRY = [
      "说明": "交易所托管的 BTC 总量。比较稳定的是同步关系：涨了之后余额往往下降（币被提走）；对未来没有提前量。2024 年起受 ETF 托管迁移影响，口径不连续；免费档更新约有 2 周滞后。",
      "说明EN": "Total BTC held on exchanges. The stable relation is coincident: after rallies balances tend to fall (coins withdrawn); there is no lead. Since 2024 ETF custody migration breaks the series; ~2-week lag on the free tier.",
      "依据": "30 日变化", "依据EN": "30-day change"},
+    {"key": "etf_hold", "层": 3, "组": G_L3E[0], "组EN": G_L3E[1], "级别": "辅助", "等级": "描述读数", "名称": "现货 ETF 持币（30 日变化）", "EN": "Spot ETF holdings (30d change)",
+     "series": s_etf30, "fmt": "btcs", "freq": "d", "来源": "TFTC · The Commoner ETF Tracker（CC BY 4.0）", "滞后": 6, "raw": "etf_btc", "rawfmt": "btc", "链上": False,
+     "cuts": [(None, "同步描述", "Coincident description", "neutral", 0)],
+     "说明": "美国现货 BTC ETF 合计净资产 ÷ 当天 BTC 参考价，折成 BTC 枚数（2024-01 上市起）。ETF 里的币也在交易，只是不在链上交易所：以前只看交易所余额，现在要连 ETF 一起看。",
+     "说明EN": "US spot BTC ETF total net assets ÷ that day's BTC reference price, in BTC (since the January 2024 launch). Coins in ETFs still trade, just not on on-chain exchanges — exchange balances alone now miss part of the picture.",
+     "依据": "30 日变化", "依据EN": "30-day change"},
+    {"key": "exetf_sum", "层": 3, "组": G_L3E[0], "组EN": G_L3E[1], "级别": "辅助", "等级": "描述读数", "名称": "交易所 + ETF 合计（30 日变化）", "EN": "Exchanges + ETFs combined (30d change)",
+     "series": s_exetf30, "fmt": "btcs", "freq": "d", "来源": "CoinMetrics + TFTC", "滞后": 25, "raw": "exetf", "rawfmt": "btc", "链上": False,
+     "cuts": [(None, "同步描述", "Coincident description", "neutral", 0)],
+     "说明": "交易所余额 + 现货 ETF 持币。交易所流出、合计不变 = 流出的币大体去了 ETF；合计也在减少 = 有币离开了「交易所 + ETF」这两个托管池，多半转去链上自托管（地址 ≠ 实体）。交易所余额免费档约晚 2~3 周，合计跟着晚。",
+     "说明EN": "Exchange balance + spot ETF holdings. Exchanges falling while the total holds = the coins mostly went into ETFs; the total falling too = coins left both custodial pools, most likely into on-chain self-custody (addresses are not entities). The free exchange balance lags 2–3 weeks, so the total does too.",
+     "依据": "30 日变化", "依据EN": "30-day change"},
     # ================= 第四层：情绪衍生品
     {"key": "altseason", "自录": True, "层": 4, "组": G_L4R[0], "组EN": G_L4R[1], "级别": "观察", "名称": "山寨季指数（自建）", "EN": "Altseason index (own)", "series": raw("altseason"), "fmt": "pct1",
      "freq": "d", "来源": "CoinGecko（自算）", "滞后": 2,
@@ -916,7 +950,7 @@ LAYER_RULE_DATES = {1: ("2026-10-02", "2026-10-04"), 2: ("2026-10-08",), 3: ("20
 RECORD_DAYS = 90       # 自录指标：满 90 天才给区间分位与正常波动范围（全站只用这一个门槛）
 
 # 派生「原始水平」序列（详情页第二张图用）：key → 函数
-RAW_DERIVED = {"netliq": s_netliq, "stable_expay": s_stable_expay, "stable_bullets": s_stable_bullets}
+RAW_DERIVED = {"exetf": s_exetf, "netliq": s_netliq, "stable_expay": s_stable_expay, "stable_bullets": s_stable_bullets}
 
 # 研究里测过不成立 / 不可复现，网页和日志里一律不用（L1 规格 §2.2）
 BANNED = [
@@ -1706,6 +1740,12 @@ BAND_EN = {"过热": "hot", "偏热": "warm", "中性": "normal", "偏冷": "coo
 
 def l4_ok(l4):
     return bool(l4 and (l4.get("conclusion") or {}).get("level") in L4_LEVELS)
+
+
+def l4_funding_stale(l4):
+    """资金费率底层数据没取到（或超过 5 天没更新）：信号今天不判断。"""
+    f = str((((l4 or {}).get("data_status") or {}).get("detail") or {}).get("funding", "ok"))
+    return not f.startswith("ok")
 
 
 def l4_verdict(l4):
