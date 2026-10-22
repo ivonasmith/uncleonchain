@@ -1,6 +1,6 @@
 {
   "version": "presentation-stages-v1",
-  "scope": "fees only; provisional descriptive rules",
+  "scope": "fees only; descriptive rules",
   "rules_in_priority_order": [
     "missing: unknown",
     "weekly change <= -0.10: autumn",
@@ -7433,6 +7433,22 @@
     {
       "date": "2026-10-17",
       "state": "autumn"
+    },
+    {
+      "date": "2026-10-18",
+      "state": "autumn"
+    },
+    {
+      "date": "2026-10-19",
+      "state": "autumn"
+    },
+    {
+      "date": "2026-10-20",
+      "state": "autumn"
+    },
+    {
+      "date": "2026-10-21",
+      "state": "autumn"
     }
   ],
   "runs": [
@@ -8837,8 +8853,8 @@
     {
       "state": "autumn",
       "start": "2026-10-08",
-      "end": "2026-10-17",
-      "days": 10
+      "end": "2026-10-21",
+      "days": 14
     }
   ],
   "duration_inclusion": "all non-unknown runs excluding first and last; not independent market cycles"
