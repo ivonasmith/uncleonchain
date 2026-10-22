@@ -1,0 +1,71 @@
+# L4 情绪衍生品层：每天北京时间 11:17（UTC 03:17，排在 L2 02:17、L3 02:47 之后，要读当天的 L2 状态）跑 l4/l4_daily.py，
+# 结果写进 data/l4/，再重出一次网站。规则和计算全在 l4/（依据《BTC情绪衍生品层L4研究》与《L4网页数据维度规格》），网站只读 data/l4/*.json。
+# 需要仓库 Secret：COINALYZE_KEY（已配置）。
+name: L4 情绪衍生品层日更
+
+on:
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch: {}
+  push:
+    branches: [main]
+    paths:
+      - "l4/**"
+      - ".github/workflows/l4-daily.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-pipeline       # 和日更、L2、L3 共用，不会同时往 main 推
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # 累积面板和资金费率换源校准记录；某个源当天取不到时用它继续算（data_status.stale = true）
+      - name: 恢复 L4 数据缓存
+        uses: actions/cache@v4
+        with:
+          path: l4/cache
+          key: l4-cache-${{ github.run_id }}
+          restore-keys: l4-cache-
+
+      - run: pip install -r l4/requirements.txt
+
+      - name: 跑 L4 情绪衍生品层
+        env:
+          L4_OUT_DIR: data/l4
+          L4_CACHE_DIR: l4/cache
+          L4_L2_JSON: data/l2/l2_latest.json
+          COINALYZE_KEY: ${{ secrets.COINALYZE_KEY }}
+        run: python l4/l4_daily.py
+
+      - name: 重出网站（看板素材 → 网站）
+        env:
+          LP_DATA: ${{ github.workspace }}/data
+          LP_OUT: ${{ github.workspace }}/build
+        run: |
+          python3 pipeline/出看板.py
+          python3 pipeline/出网站.py
+
+      - name: 提交 data/l4 与 site/
+        run: |
+          git config user.name "uncleonchain-bot"
+          git config user.email "bot@uncleonchain.com"
+          git add data/l4 site/
+          [ -f data/data_revisions.json ] && git add data/data_revisions.json
+          git diff --cached --quiet && echo "没有变化，跳过提交" && exit 0
+          git commit -m "L4 日更 $(date -u +%Y-%m-%d)"
+          git pull --rebase --autostash -X theirs origin main
+          git push

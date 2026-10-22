@@ -1,0 +1,70 @@
+# 事件日历：每天北京时间 08:37（UTC 00:37）跑 cal/cal_daily.py → data/cal/cal_latest.json，再重出一次网站。
+# BTC 分区读 cal/btc_events.csv + cal/ev_stats.json（检验结果，半年重测一次）；Web3 分区聚合 Luma、CryptoEvents、IndustryEvents、Web3Voyager、CoinMarketCal、Coindar。
+# 可选 Secret：COINMARKETCAL_KEY、COINDAR_KEY（没有就跳过这两家）。
+name: 事件日历日更
+
+on:
+  schedule:
+    - cron: "37 0 * * *"
+  workflow_dispatch: {}
+  push:
+    branches: [main]
+    paths:
+      - "cal/**"
+      - ".github/workflows/cal-daily.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-pipeline
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # 各站上次成功的结果 + 详情页缓存；某站当天抓不到时用上次结果
+      - name: 恢复日历缓存
+        uses: actions/cache@v4
+        with:
+          path: cal/cache
+          key: cal-cache-${{ github.run_id }}
+          restore-keys: cal-cache-
+
+      - run: pip install -r cal/requirements.txt
+
+      - name: 跑事件日历
+        env:
+          CAL_OUT_DIR: data/cal
+          CAL_CACHE_DIR: cal/cache
+          COINMARKETCAL_KEY: ${{ secrets.COINMARKETCAL_KEY }}
+          COINDAR_KEY: ${{ secrets.COINDAR_KEY }}
+        run: python cal/cal_daily.py
+
+      - name: 重出网站（看板素材 → 网站）
+        env:
+          LP_DATA: ${{ github.workspace }}/data
+          LP_OUT: ${{ github.workspace }}/build
+        run: |
+          python3 pipeline/出看板.py
+          python3 pipeline/出网站.py
+
+      - name: 提交 data/cal 与 site/
+        run: |
+          git config user.name "uncleonchain-bot"
+          git config user.email "bot@uncleonchain.com"
+          git add data/cal site/
+          git diff --cached --quiet && echo "没有变化，跳过提交" && exit 0
+          git commit -m "日历日更 $(date -u +%Y-%m-%d)"
+          git pull --rebase --autostash -X theirs origin main
+          git push
