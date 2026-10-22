@@ -34,7 +34,8 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
   层结论读 `conclusion.level`（过热 / 偏热 / 中性 / 偏冷）+ 信号；`data_status` 非 ok 或 funding stale 时「今天不判断」。资金费率要 repo secret `COINALYZE_KEY`（BitMEX 在 Actions 里 403）。
   fng / hl_funding / hl_oi 已 retired；altseason、btc_dom 降为 L4 观察。宏观页 `l4_tab`。
 - `cal/`：事件日历。`cal-daily.yml` 每天 UTC 00:37 跑 `cal/cal_daily.py` → `data/cal/cal_latest.json`；页面 /calendar/、首页卡片、宏观页综合研判下「下一个：…」。CoinMarketCal / Coindar 没 key 就「未接入」。
-- 发射台周期页 /launchpad/cycle/（`pipeline/周期仪表盘.py`、`周期观察.py`，快照在 `content/cycle/`）：历史研究版，冻结在 2026-10-17；全站统一叫「发射台活动温度」；颜色用 `--cyc-*` 变量；「钱在哪」= `出网站.money_where`。
+- 发射台活动温度（`pipeline/周期观察.py` 数据与热潮识别、`周期仪表盘.py` 展示）：每日更新。序列 = 研究快照 `content/cycle/snapshot.json`（截至 2026-10-17，sha256 在 manifest）+ 之后接 `发射台矩阵.json`「历史」的类目合计；热潮规则重算快照区间 27 轮逐字段对上（对不上会打 ⚠️）。
+  仪表盘 `周期仪表盘.hero` 放在矩阵页最上面（先看温度再看细节），周期页 /launchpad/cycle/ 看这一轮、各阶段时长、历史；全站统一叫「发射台活动温度」，颜色用 `--cyc-*` 变量，文案要大白话。「钱在哪」= `出网站.money_where`。
 - 交易所 + ETF 持币：`拉宏观.fetch_etf_hold`（TFTC data.json，`totalNetAssetsUsd / btcCloseUsd`）→ `etf_btc`；注册表 `etf_hold` / `exetf_sum` 在 L3「交易所与现货 ETF 持币」组，只作描述。
 - **所有 workflow 共用 concurrency 组 `daily-pipeline`**：排队中的会被新排进来的取消，手动触发一次只排一个。本地出网站会删掉 `site/data/launchpad/*`，提交前 `git checkout -- site/data/launchpad`。别用 git stash（出过丢改动的事）。
 - **指标注册表**（M12）= `宏观规则.REGISTRY`：每条带 层 / 组 / 序 / 状态（live · pending · retired；自录的满 90 天前自动「记录中」）/ cuts（tone 即 bias：up 顺风 · neutral · dn 逆风 · warn 留意）/

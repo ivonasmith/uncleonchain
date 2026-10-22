@@ -1,194 +1,194 @@
 [
- {
-  "version": "2026.10.22",
-  "date": "2026-10-22",
-  "notify": true,
-  "title_zh": "L4 重做 + 事件日历 + 发射台活动温度 + 交易所与 ETF 持币",
-  "title_en": "L4 rebuilt, event calendar, launchpad activity temperature, exchange + ETF holdings",
-  "items": [
-   {
-    "type": "data",
-    "zh": "L4 换成检验过的版本：只有「资金费率 30 日均转负」（空头拥挤）一条会改动作；其余 8 个读数按过去两年分位只描述温度；撤掉旧的恐慌贪婪 / 资金费率 / 未平仓打分",
-    "en": "L4 now uses the tested version: only '30-day average funding below zero' (crowded shorts) changes the action; eight other readings describe temperature by two-year percentile; the old Fear & Greed / funding / OI score is retired",
-    "corrections_anchor": "#rc-2026-10-22-l4"
-   },
-   {
-    "type": "new",
-    "zh": "事件日历：美联储议息、CPI、非农公布前后 BTC 一般会晃多大（已单独检验，只说幅度不说方向），以及 Web3 行业会议与代币事件汇总；首页加「未来 7 天」",
-    "en": "Event calendar: how much BTC typically swings around FOMC, CPI and payrolls (individually tested; magnitude, not direction), plus a digest of Web3 conferences and token events; 'Next 7 days' on the home page"
-   },
-   {
-    "type": "new",
-    "zh": "发射台新增「发射台活动温度 · 周期全览」（历史研究版，快照截至 2026-10-17，非实时）：赛道手续费合计的温度仪表、试行阶段、这一轮走到哪里、历史持续区间；新增「钱在哪」，看手续费份额在各链、各平台之间怎么分",
-    "en": "New 'Launchpad activity temperature · cycle atlas' (historical research release, snapshot through 2026-10-17, not live): a dial for sector-wide fees, provisional stages, where this round stands and historical durations; plus 'Where the money is' — fee share by chain and by platform"
-   },
-   {
-    "type": "new",
-    "zh": "L3 新增现货 ETF 持币和「交易所 + ETF 合计」：看交易所流出的币是去了 ETF，还是去了链上自托管",
-    "en": "L3 adds spot ETF holdings and 'exchanges + ETFs combined': did coins leaving exchanges go into ETFs or into on-chain self-custody?"
-   }
-  ]
- },
- {
-  "version": "2026.10.11",
-  "date": "2026-10-11",
-  "notify": true,
-  "title_zh": "L3 筹码层重做 + 周末特辑第 3 期 + 报告可下载 PDF",
-  "title_en": "L3 supply layer rebuilt, weekend special #3 and report PDFs",
-  "items": [
-   {
-    "type": "new",
-    "zh": "L3 筹码层按新研究重做：短期持有者成本 +1σ 上方压力区、短期持有者成本参考支撑、筹码集中度 + 30 天波动的「大波动预警」，每张卡都能点进去看全部历史；新增价格位置条、筹码分布图和最近几次碰线记录",
-    "en": "L3 rebuilt on new research: the STH cost +1σ pressure zone, STH cost as reference support and a large-move warning from supply concentration + 30-day volatility, each with a full-history page; plus a price-position bar, a supply map and recent touch records"
-   },
-   {
-    "type": "data",
-    "zh": "L3 层结论从「交易所 7 日净流量」改为「价格相对压力区的位置 + 大波动预警」；交易所流量和大户 / 散户持币保留，改为只作描述",
-    "en": "The L3 verdict moved from 7-day exchange net flow to price position vs the pressure zone + the large-move warning; exchange flows and whale/retail holdings stay as descriptive lines",
-    "corrections_anchor": "#rc-2026-10-11-l3"
-   },
-   {
-    "type": "data",
-    "zh": "综合研判的 L3 段改写价格位置和大波动预警，不再判断筹码和周期方向「一致 / 背离」",
-    "en": "The overall read's L3 paragraph now covers price position and the large-move warning instead of flow/cycle agreement",
-    "corrections_anchor": "#rc-2026-10-11-comp"
-   },
-   {
-    "type": "new",
-    "zh": "《37 条比特币周期规则，我挨个回测了一遍：15 条已经失灵》中英文版上线",
-    "en": "New report: 'I Back-tested 37 Bitcoin Cycle Rules One by One: 15 Have Stopped Working' (Chinese and English)"
-   },
-   {
-    "type": "new",
-    "zh": "报告页可以下载 PDF：按你正在看的语言下载，统一为浅色版，方便阅读和打印",
-    "en": "Reports can be downloaded as PDF in the language you are reading, always in the light layout for reading and printing"
-   },
-   {
-    "type": "improve",
-    "zh": "宏观仪表盘：综合研判的结论和分层说明拉开间距；四层 Tab 加大、加底色，点击时页面不再跳动；「标签说明」加展开箭头",
-    "en": "Macro dashboard: more breathing room in the overall read; bigger, clearer layer tabs that no longer jump the page when clicked; an arrow on 'What the tags mean'"
-   }
-  ]
- },
- {
-  "version": "2026.10.08",
-  "date": "2026-10-08",
-  "notify": true,
-  "title_zh": "宏观仪表盘改版：四层切换 + 四层综合研判 + 周期层指标卡",
-  "title_en": "Macro dashboard redesign: layer tabs, a four-layer overall read and cycle gauges",
-  "items": [
-   {
-    "type": "new",
-    "zh": "宏观仪表盘改为 L1~L4 标签切换，每个标签直接显示该层结论、主要依据、切换条件和与昨日比",
-    "en": "The macro dashboard now switches between L1–L4 tabs; each shows the layer verdict, main evidence, switch conditions and the change from yesterday"
-   },
-   {
-    "type": "new",
-    "zh": "综合研判改为四层合成：方向看 L2 周期，节奏看 L1 宏观，筹码和情绪负责确认与提醒",
-    "en": "The overall read now combines all four layers: the cycle sets direction, macro sets pace, flows and sentiment confirm and caution"
-   },
-   {
-    "type": "new",
-    "zh": "L2 周期层改为状态机；「估值与持有者」6 个指标可点进去看全部历史、区间规则和状态解读；关键价位改为刻度尺；周期状态图扩展到 2012 年至今",
-    "en": "L2 is now a state machine; its six valuation & holder gauges open full histories, zone rules and interpretations; key levels are drawn as a ruler; the cycle chart now starts in 2012"
-   },
-   {
-    "type": "new",
-    "zh": "新手说明、更新日志、反馈入口（一键在 X 上 @ 站长）",
-    "en": "A guide, this changelog and a feedback button (one click to mention us on X)"
-   },
-   {
-    "type": "improve",
-    "zh": "指标详情页支持 1 年 / 3 年 / 5 年 / 全部切换，展示数据源能提供的最长历史，新增当前解读、状态切换记录和上一个 / 下一个指标",
-    "en": "Indicator pages switch between 1Y / 3Y / 5Y / All, show the longest history each source offers, and add an interpretation, zone-switch history and previous / next links"
-   },
-   {
-    "type": "fix",
-    "zh": "首页与宏观页同一指标数值不一致：首页改读最新数据，日志摘要标明冻结时间",
-    "en": "The same gauge showed different numbers on the home and macro pages: the home page now reads the latest data and log excerpts are marked with their freeze time"
-   },
-   {
-    "type": "fix",
-    "zh": "L2 信号同时写「本轮已出现」和「本轮未触发」的矛盾：名字里改写规则类型，另起标签写实际情况",
-    "en": "L2 signals no longer say both 'seen this cycle' and 'not triggered': the rule type moves into the name and the actual status gets its own tag"
-   },
-   {
-    "type": "data",
-    "zh": "链上类和百分比变化类指标调整统计起点，排除早期基数过小的时段",
-    "en": "On-chain and percentage-change gauges get new statistics windows that drop the early small-base period",
-    "corrections_anchor": "#rc-2026-10-08-stats"
-   },
-   {
-    "type": "data",
-    "zh": "综合研判规则改为四层合成",
-    "en": "The overall read now combines all four layers",
-    "corrections_anchor": "#rc-2026-10-08-comp"
-   },
-   {
-    "type": "data",
-    "zh": "L2 周期层改为状态机，下线单指标估值卡（MVRV Z-Score、NUPL、Mayer、Puell、Pi Cycle 等，旧链接有停用说明页）",
-    "en": "L2 became a state machine and the single-gauge valuation cards were retired (MVRV Z-Score, NUPL, Mayer, Puell, Pi Cycle…; old links now explain where they went)",
-    "corrections_anchor": "#rc-2026-10-08"
-   }
-  ]
- },
- {
-  "version": "2026.10.05",
-  "date": "2026-10-05",
-  "notify": false,
-  "title_zh": "周末特辑英文版 + 网站提速",
-  "title_en": "English weekend report + faster pages",
-  "items": [
-   {
-    "type": "new",
-    "zh": "《宏观到底管不管比特币？》英文版上线",
-    "en": "English edition of 'Does Macro Actually Move Bitcoin?'"
-   },
-   {
-    "type": "improve",
-    "zh": "去掉国内常打不开的 Google Fonts，样式和脚本独立缓存，悬停预取，点击响应更快",
-    "en": "Dropped Google Fonts, cached styles and scripts separately and prefetch on hover for faster clicks"
-   }
-  ]
- },
- {
-  "version": "2026.10.04",
-  "date": "2026-10-04",
-  "notify": false,
-  "title_zh": "L1-B 加密资金通道 + 分析报告板块",
-  "title_en": "L1-B crypto funding channels + reports",
-  "items": [
-   {
-    "type": "data",
-    "zh": "「L1.5」改名「L1-B 加密资金通道（只确认、不预测）」，稳定币主线改为去重口径，新增 ETF 13 周与资金轮动矩阵",
-    "en": "'L1.5' became 'L1-B crypto funding channels'; the stablecoin main line is de-duplicated; ETF 13-week flows and the rotation matrix were added",
-    "corrections_anchor": "#rc-2026-10-04"
-   },
-   {
-    "type": "new",
-    "zh": "分析报告板块上线，报告自动生成深色版",
-    "en": "Reports section with automatic dark versions"
-   }
-  ]
- },
- {
-  "version": "2026.10.02",
-  "date": "2026-10-02",
-  "notify": false,
-  "title_zh": "L1 宏观层重建 + 中英双语",
-  "title_en": "L1 rebuild + bilingual site",
-  "items": [
-   {
-    "type": "data",
-    "zh": "L1 宏观流动性按《L1 宏观层数据维度规格》重建：乐观度第一、实际利率四态与情境格、流动性闸门",
-    "en": "L1 rebuilt per the L1 spec: optimism first, real-yield states and the scenario grid, liquidity gate",
-    "corrections_anchor": "#rc-2026-10-02"
-   },
-   {
-    "type": "new",
-    "zh": "中英双语、深浅主题、指标详情页全历史与正常波动范围",
-    "en": "Bilingual site, light/dark themes, full-history indicator pages with normal ranges"
-   }
-  ]
- }
+  {
+    "version": "2026.10.22",
+    "date": "2026-10-22",
+    "notify": true,
+    "title_zh": "L4 重做 + 事件日历 + 发射台活动温度 + 交易所与 ETF 持币",
+    "title_en": "L4 rebuilt, event calendar, launchpad activity temperature, exchange + ETF holdings",
+    "items": [
+      {
+        "type": "data",
+        "zh": "L4 换成检验过的版本：只有「资金费率 30 日均转负」（空头拥挤）一条会改动作；其余 8 个读数按过去两年分位只描述温度；撤掉旧的恐慌贪婪 / 资金费率 / 未平仓打分",
+        "en": "L4 now uses the tested version: only '30-day average funding below zero' (crowded shorts) changes the action; eight other readings describe temperature by two-year percentile; the old Fear & Greed / funding / OI score is retired",
+        "corrections_anchor": "#rc-2026-10-22-l4"
+      },
+      {
+        "type": "new",
+        "zh": "事件日历：美联储议息、CPI、非农公布前后 BTC 一般会晃多大（已单独检验，只说幅度不说方向），以及 Web3 行业会议与代币事件汇总；首页加「未来 7 天」",
+        "en": "Event calendar: how much BTC typically swings around FOMC, CPI and payrolls (individually tested; magnitude, not direction), plus a digest of Web3 conferences and token events; 'Next 7 days' on the home page"
+      },
+      {
+        "type": "new",
+        "zh": "发射台活动温度（MEME 发射台赛道冷热）放到发射台矩阵页最上面，每日更新：温度仪表、当前阶段（寒冬 / 回暖 / 盛夏 / 退潮 / 盘整）、这一轮热潮走到哪、各阶段一般持续几天；新增「钱在哪」，看手续费份额在各链、各平台之间怎么分。研究快照截至 2026-10-17，之后每天接矩阵页的同一类目数据，热潮按同一套规则每天重算",
+        "en": "Launchpad activity temperature (how hot MEME launchpads are) now leads the launchpad matrix page and updates daily: the dial, current stage (Winter / Warming / Summer / Cooling / Steady), where this wave stands and how long stages usually last; plus 'Where the money is' — fee share by chain and platform. The research snapshot runs to 2026-10-17; after that the same category total is pulled daily and waves are recomputed with the same rules"
+      },
+      {
+        "type": "new",
+        "zh": "L3 新增现货 ETF 持币和「交易所 + ETF 合计」：看交易所流出的币是去了 ETF，还是去了链上自托管",
+        "en": "L3 adds spot ETF holdings and 'exchanges + ETFs combined': did coins leaving exchanges go into ETFs or into on-chain self-custody?"
+      }
+    ]
+  },
+  {
+    "version": "2026.10.11",
+    "date": "2026-10-11",
+    "notify": true,
+    "title_zh": "L3 筹码层重做 + 周末特辑第 3 期 + 报告可下载 PDF",
+    "title_en": "L3 supply layer rebuilt, weekend special #3 and report PDFs",
+    "items": [
+      {
+        "type": "new",
+        "zh": "L3 筹码层按新研究重做：短期持有者成本 +1σ 上方压力区、短期持有者成本参考支撑、筹码集中度 + 30 天波动的「大波动预警」，每张卡都能点进去看全部历史；新增价格位置条、筹码分布图和最近几次碰线记录",
+        "en": "L3 rebuilt on new research: the STH cost +1σ pressure zone, STH cost as reference support and a large-move warning from supply concentration + 30-day volatility, each with a full-history page; plus a price-position bar, a supply map and recent touch records"
+      },
+      {
+        "type": "data",
+        "zh": "L3 层结论从「交易所 7 日净流量」改为「价格相对压力区的位置 + 大波动预警」；交易所流量和大户 / 散户持币保留，改为只作描述",
+        "en": "The L3 verdict moved from 7-day exchange net flow to price position vs the pressure zone + the large-move warning; exchange flows and whale/retail holdings stay as descriptive lines",
+        "corrections_anchor": "#rc-2026-10-11-l3"
+      },
+      {
+        "type": "data",
+        "zh": "综合研判的 L3 段改写价格位置和大波动预警，不再判断筹码和周期方向「一致 / 背离」",
+        "en": "The overall read's L3 paragraph now covers price position and the large-move warning instead of flow/cycle agreement",
+        "corrections_anchor": "#rc-2026-10-11-comp"
+      },
+      {
+        "type": "new",
+        "zh": "《37 条比特币周期规则，我挨个回测了一遍：15 条已经失灵》中英文版上线",
+        "en": "New report: 'I Back-tested 37 Bitcoin Cycle Rules One by One: 15 Have Stopped Working' (Chinese and English)"
+      },
+      {
+        "type": "new",
+        "zh": "报告页可以下载 PDF：按你正在看的语言下载，统一为浅色版，方便阅读和打印",
+        "en": "Reports can be downloaded as PDF in the language you are reading, always in the light layout for reading and printing"
+      },
+      {
+        "type": "improve",
+        "zh": "宏观仪表盘：综合研判的结论和分层说明拉开间距；四层 Tab 加大、加底色，点击时页面不再跳动；「标签说明」加展开箭头",
+        "en": "Macro dashboard: more breathing room in the overall read; bigger, clearer layer tabs that no longer jump the page when clicked; an arrow on 'What the tags mean'"
+      }
+    ]
+  },
+  {
+    "version": "2026.10.08",
+    "date": "2026-10-08",
+    "notify": true,
+    "title_zh": "宏观仪表盘改版：四层切换 + 四层综合研判 + 周期层指标卡",
+    "title_en": "Macro dashboard redesign: layer tabs, a four-layer overall read and cycle gauges",
+    "items": [
+      {
+        "type": "new",
+        "zh": "宏观仪表盘改为 L1~L4 标签切换，每个标签直接显示该层结论、主要依据、切换条件和与昨日比",
+        "en": "The macro dashboard now switches between L1–L4 tabs; each shows the layer verdict, main evidence, switch conditions and the change from yesterday"
+      },
+      {
+        "type": "new",
+        "zh": "综合研判改为四层合成：方向看 L2 周期，节奏看 L1 宏观，筹码和情绪负责确认与提醒",
+        "en": "The overall read now combines all four layers: the cycle sets direction, macro sets pace, flows and sentiment confirm and caution"
+      },
+      {
+        "type": "new",
+        "zh": "L2 周期层改为状态机；「估值与持有者」6 个指标可点进去看全部历史、区间规则和状态解读；关键价位改为刻度尺；周期状态图扩展到 2012 年至今",
+        "en": "L2 is now a state machine; its six valuation & holder gauges open full histories, zone rules and interpretations; key levels are drawn as a ruler; the cycle chart now starts in 2012"
+      },
+      {
+        "type": "new",
+        "zh": "新手说明、更新日志、反馈入口（一键在 X 上 @ 站长）",
+        "en": "A guide, this changelog and a feedback button (one click to mention us on X)"
+      },
+      {
+        "type": "improve",
+        "zh": "指标详情页支持 1 年 / 3 年 / 5 年 / 全部切换，展示数据源能提供的最长历史，新增当前解读、状态切换记录和上一个 / 下一个指标",
+        "en": "Indicator pages switch between 1Y / 3Y / 5Y / All, show the longest history each source offers, and add an interpretation, zone-switch history and previous / next links"
+      },
+      {
+        "type": "fix",
+        "zh": "首页与宏观页同一指标数值不一致：首页改读最新数据，日志摘要标明冻结时间",
+        "en": "The same gauge showed different numbers on the home and macro pages: the home page now reads the latest data and log excerpts are marked with their freeze time"
+      },
+      {
+        "type": "fix",
+        "zh": "L2 信号同时写「本轮已出现」和「本轮未触发」的矛盾：名字里改写规则类型，另起标签写实际情况",
+        "en": "L2 signals no longer say both 'seen this cycle' and 'not triggered': the rule type moves into the name and the actual status gets its own tag"
+      },
+      {
+        "type": "data",
+        "zh": "链上类和百分比变化类指标调整统计起点，排除早期基数过小的时段",
+        "en": "On-chain and percentage-change gauges get new statistics windows that drop the early small-base period",
+        "corrections_anchor": "#rc-2026-10-08-stats"
+      },
+      {
+        "type": "data",
+        "zh": "综合研判规则改为四层合成",
+        "en": "The overall read now combines all four layers",
+        "corrections_anchor": "#rc-2026-10-08-comp"
+      },
+      {
+        "type": "data",
+        "zh": "L2 周期层改为状态机，下线单指标估值卡（MVRV Z-Score、NUPL、Mayer、Puell、Pi Cycle 等，旧链接有停用说明页）",
+        "en": "L2 became a state machine and the single-gauge valuation cards were retired (MVRV Z-Score, NUPL, Mayer, Puell, Pi Cycle…; old links now explain where they went)",
+        "corrections_anchor": "#rc-2026-10-08"
+      }
+    ]
+  },
+  {
+    "version": "2026.10.05",
+    "date": "2026-10-05",
+    "notify": false,
+    "title_zh": "周末特辑英文版 + 网站提速",
+    "title_en": "English weekend report + faster pages",
+    "items": [
+      {
+        "type": "new",
+        "zh": "《宏观到底管不管比特币？》英文版上线",
+        "en": "English edition of 'Does Macro Actually Move Bitcoin?'"
+      },
+      {
+        "type": "improve",
+        "zh": "去掉国内常打不开的 Google Fonts，样式和脚本独立缓存，悬停预取，点击响应更快",
+        "en": "Dropped Google Fonts, cached styles and scripts separately and prefetch on hover for faster clicks"
+      }
+    ]
+  },
+  {
+    "version": "2026.10.04",
+    "date": "2026-10-04",
+    "notify": false,
+    "title_zh": "L1-B 加密资金通道 + 分析报告板块",
+    "title_en": "L1-B crypto funding channels + reports",
+    "items": [
+      {
+        "type": "data",
+        "zh": "「L1.5」改名「L1-B 加密资金通道（只确认、不预测）」，稳定币主线改为去重口径，新增 ETF 13 周与资金轮动矩阵",
+        "en": "'L1.5' became 'L1-B crypto funding channels'; the stablecoin main line is de-duplicated; ETF 13-week flows and the rotation matrix were added",
+        "corrections_anchor": "#rc-2026-10-04"
+      },
+      {
+        "type": "new",
+        "zh": "分析报告板块上线，报告自动生成深色版",
+        "en": "Reports section with automatic dark versions"
+      }
+    ]
+  },
+  {
+    "version": "2026.10.02",
+    "date": "2026-10-02",
+    "notify": false,
+    "title_zh": "L1 宏观层重建 + 中英双语",
+    "title_en": "L1 rebuild + bilingual site",
+    "items": [
+      {
+        "type": "data",
+        "zh": "L1 宏观流动性按《L1 宏观层数据维度规格》重建：乐观度第一、实际利率四态与情境格、流动性闸门",
+        "en": "L1 rebuilt per the L1 spec: optimism first, real-yield states and the scenario grid, liquidity gate",
+        "corrections_anchor": "#rc-2026-10-02"
+      },
+      {
+        "type": "new",
+        "zh": "中英双语、深浅主题、指标详情页全历史与正常波动范围",
+        "en": "Bilingual site, light/dark themes, full-history indicator pages with normal ranges"
+      }
+    ]
+  }
 ]

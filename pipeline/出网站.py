@@ -2440,22 +2440,26 @@ def money_where(matrix):
 
 
 def cycle_summary():
-    """发射台活动温度（冻结快照）：温度数值 · 档位 · 阶段 · 截至日期。首页标签、矩阵页入口卡共用。"""
-    p = os.path.join(ROOT, "content", "cycle", "snapshot.json")
-    if not os.path.exists(p):
+    """发射台活动温度（每日）：温度数值 · 档位 · 阶段 · 数据日期。首页标签、矩阵页共用。"""
+    c = G.get("CYC_DATA")
+    if not c:
         return None
-    try:
-        import 周期观察 as CO
-        import 周期仪表盘 as CD
-        s = load(p)["series"]["fees"]
-        r = CO.reading(s["points"])
-        st = CD.state(r)
-        x = r["position"]
-        band = (None if x is None else ("低温", "Low") if x <= 20 else ("偏凉", "Cool") if x < 40 else ("温和", "Moderate") if x < 60 else ("偏热", "Warm") if x < 80 else ("高热", "High"))
-        return {"temp": x, "band": band, "stage": (st[1], st[2]), "date": r["date"]}
-    except Exception as e:  # noqa —— 快照读不了不影响其他页面
-        print("周期快照摘要失败：", e)
-        return None
+    import 周期观察 as CO
+    import 周期仪表盘 as CD
+    r = CO.reading(c[0]["series"]["fees"]["points"])
+    st = CD.state(r)
+    return {"temp": r["position"], "band": CD.band(r["position"]), "stage": (st[1], st[2]), "date": r["date"]}
+
+
+def cycle_hero():
+    """矩阵页顶部：先看赛道温度，再看细节。"""
+    c = G.get("CYC_DATA")
+    if not c:
+        return ""
+    import 周期观察 as CO
+    import 周期仪表盘 as CD
+    more = f'<a class="cd-more" href="{U("/launchpad/cycle/")}">{T("这一轮走到哪、各阶段一般持续多久 →", "Where this wave stands and how long stages last →")}</a>'
+    return CD.hero(c[0], CO.reading, T, esc, more)
 
 
 def cycle_tag():
@@ -2641,8 +2645,8 @@ def build_launchpad(sd, matrix):
 <p class="lede">{T(f"DefiLlama Launchpad 类目全部 {len(matrix['协议'])} 个协议：先看全网汇总趋势（赛道水多没多、资金在哪些平台之间挪），再看跨链排行和每个平台的市场份额。口径统一用手续费（fees），日期是 UTC 完整日。",
                    f"All {len(matrix['协议'])} protocols in DefiLlama's Launchpad category: the sector-wide trend first (is money flowing in, and between which venues), then the cross-chain ranking with market share. Fees, UTC full days.")}</p></div>
 <div class="stamp">{T("数据截至", "Data as of")} <b>{matrix["日期"]}</b>{T("（UTC 完整日）", " (UTC)")}<br>{T("生成", "Generated")} <b>{esc(matrix.get("生成时间UTC", "")[:16].replace("T", " "))} UTC</b></div></div>
+{cycle_hero()}
 <div class="grid g5" id="lpk">{kh}</div>
-<a class="card cycentry" href="{U('/launchpad/cycle/')}"><b>{T("发射台活动温度 · 周期全览（历史研究版）", "Launchpad activity temperature · cycle atlas (historical research)")}</b><span>{cycle_tag() and esc(T(f"{max(0, min(100, G['CYC_SUM']['temp'])):.1f} · {G['CYC_SUM']['band'][0]} · {G['CYC_SUM']['stage'][0]} · 截至 {G['CYC_SUM']['date']}", f"{max(0, min(100, G['CYC_SUM']['temp'])):.1f} · {G['CYC_SUM']['band'][1]} · {G['CYC_SUM']['stage'][1]} · as of {G['CYC_SUM']['date']}"))}</span><em>{T("打开 →", "Open →")}</em></a>
 {total_html}
 <div class="card" style="padding:14px 16px;margin-top:22px"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:12.5px"><b>{T("生态份额 · 当日手续费按链拆分", "Chain share · today's fees by chain")}</b><span class="stamp">{T("多链协议按 DefiLlama 分链数据精确拆分", "Multi-chain protocols split by DefiLlama's per-chain data")}</span></div>
 <div class="chainbar">{bar}</div><div class="chainleg">{leg}</div></div>
@@ -3667,6 +3671,12 @@ def main():
     G["L3S"] = load(os.path.join(DATA, "l3", "l3_series.json"))
     G["L3H"] = load(os.path.join(DATA, "l3", "l3_history.json"), []) or []
     R.attach_l3(S, G["L3S"])
+    try:
+        import 周期观察 as CO
+        G["CYC_DATA"] = CO.live_data(ROOT, matrix) if matrix else None
+    except Exception as e:  # noqa —— 周期数据坏了不影响其他页面
+        print("周期数据失败：", e)
+        G["CYC_DATA"] = None
     G["CYC_SUM"] = cycle_summary()
     G["L4"] = load(os.path.join(DATA, "l4", "l4_latest.json"))
     G["L4H"] = load(os.path.join(DATA, "l4", "l4_history.json"), []) or []
@@ -3719,7 +3729,8 @@ def main():
         build_launchpad(sd, matrix)
         from 周期观察 import build as build_cycle
         globals()["CYCLE_MONEY"] = money_where(matrix)
-        build_cycle(globals())
+        if G.get("CYC_DATA"):
+            build_cycle(globals())
         build_launchpad_platforms(sd)
         build_launchpad_report(sd)
         build_rotation(rot)
