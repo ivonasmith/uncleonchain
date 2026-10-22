@@ -1,0 +1,29 @@
+# 临时探测：从 GitHub 机房测几个数据源能不能取到（只打印，不提交）。用完删除。
+name: 临时数据源探测
+on:
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: ETF 持仓候选源
+        run: |
+          set +e
+          echo "== CoinMetrics catalog (ETF 相关指标)"; curl -sS --max-time 40 "https://community-api.coinmetrics.io/v4/catalog-all/asset-metrics?assets=btc&page_size=10000" | python3 -c "import sys,json;d=json.load(sys.stdin);ms=[m['metric'] for x in d.get('data',[]) for m in x.get('metrics',[])];print(len(ms));print([m for m in ms if 'ETF' in m.upper() or 'Fund' in m or 'Inst' in m][:50])"
+          echo "== CoinMetrics community metrics for btc"; curl -sS --max-time 40 "https://community-api.coinmetrics.io/v4/catalog/asset-metrics?assets=btc" | python3 -c "import sys,json;d=json.load(sys.stdin);ms=[m['metric'] for x in d.get('data',[]) for m in x.get('metrics',[])];print(len(ms));print([m for m in ms if 'ETF' in m.upper() or 'Ex' in m][:80])"
+          echo "== TFTC"; curl -sS --max-time 30 -o t.json -w "%{http_code} %{size_download}\n" https://www.tftc.io/bitcoin-etf-flows/data.json; head -c 1500 t.json; echo
+          echo "== GitHub repo TheBitcoinHalvingApp"; curl -sS --max-time 30 https://api.github.com/repos/TheBitcoinHalvingApp/bitcoin-etf-holdings/contents | head -c 2500; echo
+          echo "== bitbo"; curl -sS --max-time 30 -A "Mozilla/5.0" -o b.html -w "%{http_code} %{size_download}\n" https://bitbo.io/treasuries/us-etfs/; grep -o '[0-9,]\{7,\} BTC' b.html | head -5
+          echo "== newhedge"; curl -sS --max-time 30 -A "Mozilla/5.0" -o n.html -w "%{http_code} %{size_download}\n" https://newhedge.io/bitcoin/spot-bitcoin-etf-holdings
+      - name: 日历网页源
+        run: |
+          set +e
+          for u in "https://api.lu.ma/discover/category/get-page?slug=crypto" https://cryptoevents.global/ https://www.industryevents.com/events/industry/blockchain https://web3voyager.com/; do
+            echo "== $u"; curl -sS --max-time 30 -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124 Safari/537.36" -o p.html -w "%{http_code} %{size_download}\n" "$u"
+            head -c 400 p.html | tr '\n' ' '; echo
+            grep -o 'href="[^"]*"' p.html | sort -u | grep -i "event\|conference\|summit" | head -25
+            grep -c 'application/ld+json' p.html
+          done
