@@ -48,8 +48,11 @@ jobs:
           L4_OUT_DIR: data/l4
           L4_CACHE_DIR: l4/cache
           L4_L2_JSON: data/l2/l2_latest.json
-          COINALYZE_KEY: ${{ secrets.COINALYZE_KEY }}
-        run: python l4/l4_daily.py
+          # Secret 优先；误加成 Variable 也能读到
+          COINALYZE_KEY: ${{ secrets.COINALYZE_KEY || vars.COINALYZE_KEY }}
+        run: |
+          if [ -n "$COINALYZE_KEY" ]; then echo "COINALYZE_KEY 已读到"; else echo "COINALYZE_KEY 为空：仓库 Settings → Secrets and variables → Actions → Repository secrets 里没有这个名字"; fi
+          python l4/l4_daily.py
 
       - name: 重出网站（看板素材 → 网站）
         env:
