@@ -7453,6 +7453,10 @@
     {
       "date": "2026-10-22",
       "state": "autumn"
+    },
+    {
+      "date": "2026-10-23",
+      "state": "steady"
     }
   ],
   "runs": [
@@ -8859,6 +8863,12 @@
       "start": "2026-10-08",
       "end": "2026-10-22",
       "days": 15
+    },
+    {
+      "state": "steady",
+      "start": "2026-10-23",
+      "end": "2026-10-23",
+      "days": 1
     }
   ],
   "duration_inclusion": "all non-unknown runs excluding first and last; not independent market cycles"
