@@ -352,15 +352,85 @@ def web3_events():
     keep.sort(key=lambda x: (x["date_start"], -x["importance"], x["title"]))
     return keep
 
+# ---------------- 代币解锁（单独一个 Tab：比特币大事件 | 代币解锁 | Web3 行业动向）----------------
+# 数据 = ① cal/unlocks.csv（有出处的人工核对条目）+ ② CoinMarketCal / Coindar 里分类为「解锁」的事件（有 key 才有）。
+# DefiLlama 的解锁接口是付费的（2026-10-25 实测返回 402），不用。拿不到的数量/价值留空，页面写「数量待核」，不估算。
+WATCH = ["BTC", "ETH", "SOL", "XRP", "BNB", "UNI", "CAKE", "HYPE", "ENA", "TAO", "RAY", "DOGE", "LDO", "ARB", "NEAR", "ZEC", "JUP", "AAVE", "WLD", "SUI", "INJ"]
+UNLOCK_USD_M, UNLOCK_PCT = 20.0, 2.0          # 「重要」线：单次价值 ≥ 2,000 万美元，或占流通量 ≥ 2%
+UNLOCK_CSV = os.path.join(HERE, "unlocks.csv")
+
+def _num(x):
+    try: return float(str(x).strip().replace(",", ""))
+    except Exception: return None
+
+def unlocks(w3):
+    lo, hi = TODAY, TODAY + dt.timedelta(days=WEB3_DAYS)
+    rows, n_csv, n_src, asof = {}, 0, 0, ""
+    try:
+        lines = [l for l in open(UNLOCK_CSV, encoding="utf-8") if l.strip() and not l.lstrip().startswith("#")]
+        for r in csv.DictReader(lines):
+            try: d = dt.date.fromisoformat(r["date"].strip())
+            except Exception: continue
+            asof = max(asof, (r.get("asof") or "").strip())
+            if not (lo <= d <= hi): continue
+            sym = r["symbol"].strip().upper()
+            rows[(d.isoformat(), sym)] = dict(date=d.isoformat(), symbol=sym, name=(r.get("name") or "").strip(), usd_m=_num(r.get("usd_m")), pct_circ=_num(r.get("pct_circ")),
+                amount=(r.get("amount") or "").strip(), kind=(r.get("kind") or "").strip(), kind_en=(r.get("kind_en") or "").strip(), status=(r.get("status") or "forecast").strip() or "forecast",
+                hot=(r.get("hot") or "").strip() == "1", sources=[dict(name=(r.get("source_name") or "").strip(), name_en=(r.get("source_name_en") or "").strip(), url=(r.get("source_url") or "").strip())])
+            n_csv += 1
+    except FileNotFoundError:
+        status["notes"].append("cal/unlocks.csv 不存在")
+    for e in w3:
+        if e.get("category") != "解锁" or e.get("date_start") is None: continue
+        sym = (e.get("coins") or [""])[0].upper() or re.split(r"\s*[·|:-]\s*", e.get("title", ""))[0].strip().upper()[:12]
+        k = (e["date_start"], sym)
+        src = dict(name=e.get("source", ""), url=e.get("url", ""))
+        if k in rows:
+            if src["name"] not in [x["name"] for x in rows[k]["sources"]]: rows[k]["sources"].append(src)
+            rows[k]["hot"] = rows[k]["hot"] or e.get("importance", 1) >= 2
+        else:
+            rows[k] = dict(date=e["date_start"], symbol=sym, name="", usd_m=None, pct_circ=None, amount="", kind="", status="forecast", hot=e.get("importance", 1) >= 2, sources=[src])
+            n_src += 1
+    out = []
+    for r in rows.values():
+        d = dt.date.fromisoformat(r["date"])
+        reasons = []
+        if r["usd_m"] is not None and r["usd_m"] >= UNLOCK_USD_M: reasons.append("value")
+        if r["pct_circ"] is not None and r["pct_circ"] >= UNLOCK_PCT: reasons.append("pct")
+        if r["symbol"] in WATCH: reasons.append("watch")
+        if r["hot"]: reasons.append("hot")
+        out.append(dict(r, days_until=(d - TODAY).days, important=bool(reasons), reasons=reasons, watch=r["symbol"] in WATCH))
+    out.sort(key=lambda x: (x["date"], not x["important"], x["symbol"]))
+    status["detail"]["代币解锁"] = f"人工表 {n_csv} 条 + 数据源 {n_src} 条"
+    if asof:
+        try:
+            age = (TODAY - dt.date.fromisoformat(asof)).days
+            if age > 10: status["notes"].append(f"代币解锁人工表已 {age} 天没更新（cal/unlocks.csv 最新核对日 {asof}）")
+        except Exception: pass
+    return dict(
+        title_zh="代币解锁", title_en="Token unlocks",
+        intro_zh="未来 60 天里值得留意的代币解锁。解锁就是之前锁定的代币按计划释放，市场上可能多出一批卖出压力，但不是必跌信号：这里没有检验过解锁对价格的影响，只告诉你什么时候、大概多大。"
+                 "日期和数量多为预测值，以项目方公告为准。",
+        intro_en="Token unlocks worth watching over the next 60 days. An unlock releases tokens that were locked on schedule, which can add selling pressure, but it is not a sure drop. "
+                 "We have not tested how unlocks affect prices; this page only says when and roughly how big. Dates and amounts are mostly forecasts. Check the project's own announcement.",
+        rule_zh=f"「重要」的标准：单次解锁价值 ≥ {UNLOCK_USD_M*100:,.0f} 万美元，或占流通量 ≥ {UNLOCK_PCT:g}%，或属于我们跟踪的 {len(WATCH)} 个币，或数据源标为热门。",
+        rule_en=f"'Important' means: one unlock worth at least ${UNLOCK_USD_M:,.0f}M, or at least {UNLOCK_PCT:g}% of circulating supply, or one of the {len(WATCH)} coins we track, or flagged hot by a data source.",
+        source_note_zh="来源：Tokenomist、各项目公告（人工核对，每条标明出处，每周日更新）；CoinMarketCal、Coindar 接入后自动补充。拿不到的数量写「数量待核」，不估算。",
+        source_note_en="Sources: Tokenomist and project announcements (checked by hand, each with its source, updated Sundays); CoinMarketCal and Coindar are added automatically once connected. Missing amounts say 'amount TBC', never estimated.",
+        watch=WATCH, sources=[dict(name="Tokenomist", url="https://tokenomist.ai/"), dict(name="CoinMarketCal", url="https://coinmarketcal.com/"), dict(name="Coindar", url="https://coindar.org/")],
+        events=out)
+
 # ---------------- 组装 ----------------
 def main():
-    btc = btc_events(); w3 = web3_events()
+    btc = btc_events(); w3 = web3_events(); ul = unlocks(w3)
     card = [dict(date=e["date"], days_until=e["days_until"], tab="btc", title_zh=e["title_zh"], title_en=e["title_en"],
                  time_bj=e.get("time_bj", ""), grade=e["grade"])
             for e in btc if e["days_until"] <= CARD_DAYS and e["emphasis"]]
     card += [dict(date=e["date_start"], days_until=e["days_until"], tab="web3", title_zh=e["title"], title_en=e["title"],
                   time_bj="", grade="行业动向", category=e["category"])
              for e in w3 if e["days_until"] <= CARD_DAYS and e["importance"] >= 3]
+    card += [dict(date=e["date"], days_until=e["days_until"], tab="unlock", title_zh=f'{e["symbol"]} 解锁', title_en=f'{e["symbol"]} unlock', time_bj="", grade="代币解锁", category="解锁")
+             for e in ul["events"] if e["days_until"] <= CARD_DAYS and e["important"]]
     card.sort(key=lambda x: (x["date"], x["tab"]))
     nxt = next((e for e in btc if e["emphasis"]), None)
     res = {
@@ -391,12 +461,13 @@ def main():
             "sources": [{"name": k, "url": v} for k, v in SITE.items()],
             "events": w3,
         },
+        "unlocks": ul,
         "next7": card,
         "data_status": status,
     }
     os.makedirs(OUT, exist_ok=True)
     json.dump(res, open(os.path.join(OUT, "cal_latest.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
-    print(f"cal_latest.json：BTC {len(btc)} 条，Web3 {len(w3)} 条，未来 7 天 {len(card)} 条；状态 {status}")
+    print(f"cal_latest.json：BTC {len(btc)} 条，解锁 {len(ul['events'])} 条，Web3 {len(w3)} 条，未来 7 天 {len(card)} 条；状态 {status}")
 
 if __name__ == "__main__":
     main()

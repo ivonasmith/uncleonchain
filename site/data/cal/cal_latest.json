@@ -2356,6 +2356,26 @@
    "title_en": "FOMC rate decision",
    "time_bj": "2026-10-29 02:00",
    "grade": "已验证·波动"
+  },
+  {
+   "date": "2026-10-29",
+   "days_until": 4,
+   "tab": "unlock",
+   "title_zh": "FF 解锁",
+   "title_en": "FF unlock",
+   "time_bj": "",
+   "grade": "代币解锁",
+   "category": "解锁"
+  },
+  {
+   "date": "2026-11-01",
+   "days_until": 7,
+   "tab": "unlock",
+   "title_zh": "SUI 解锁",
+   "title_en": "SUI unlock",
+   "time_bj": "",
+   "grade": "代币解锁",
+   "category": "解锁"
   }
  ],
  "data_status": {
@@ -2367,8 +2387,108 @@
    "IndustryEvents": "ok（19 条）",
    "Web3Voyager": "ok（74 条）",
    "CoinMarketCal": "未接入（没有 COINMARKETCAL_KEY）",
-   "Coindar": "未接入（没有 COINDAR_KEY）"
+   "Coindar": "未接入（没有 COINDAR_KEY）",
+   "代币解锁": "人工表 2 条 + 数据源 0 条"
   },
   "notes": []
+ },
+ "unlocks": {
+  "title_zh": "代币解锁",
+  "title_en": "Token unlocks",
+  "intro_zh": "未来 60 天里值得留意的代币解锁。解锁就是之前锁定的代币按计划释放，市场上可能多出一批卖出压力，但不是必跌信号：这里没有检验过解锁对价格的影响，只告诉你什么时候、大概多大。日期和数量多为预测值，以项目方公告为准。",
+  "intro_en": "Token unlocks worth watching over the next 60 days. An unlock releases tokens that were locked on schedule, which can add selling pressure, but it is not a sure drop. We have not tested how unlocks affect prices; this page only says when and roughly how big. Dates and amounts are mostly forecasts. Check the project's own announcement.",
+  "rule_zh": "「重要」的标准：单次解锁价值 ≥ 2,000 万美元，或占流通量 ≥ 2%，或属于我们跟踪的 21 个币，或数据源标为热门。",
+  "rule_en": "'Important' means: one unlock worth at least $20M, or at least 2% of circulating supply, or one of the 21 coins we track, or flagged hot by a data source.",
+  "source_note_zh": "来源：Tokenomist、各项目公告（人工核对，每条标明出处，每周日更新）；CoinMarketCal、Coindar 接入后自动补充。拿不到的数量写「数量待核」，不估算。",
+  "source_note_en": "Sources: Tokenomist and project announcements (checked by hand, each with its source, updated Sundays); CoinMarketCal and Coindar are added automatically once connected. Missing amounts say 'amount TBC', never estimated.",
+  "watch": [
+   "BTC",
+   "ETH",
+   "SOL",
+   "XRP",
+   "BNB",
+   "UNI",
+   "CAKE",
+   "HYPE",
+   "ENA",
+   "TAO",
+   "RAY",
+   "DOGE",
+   "LDO",
+   "ARB",
+   "NEAR",
+   "ZEC",
+   "JUP",
+   "AAVE",
+   "WLD",
+   "SUI",
+   "INJ"
+  ],
+  "sources": [
+   {
+    "name": "Tokenomist",
+    "url": "https://tokenomist.ai/"
+   },
+   {
+    "name": "CoinMarketCal",
+    "url": "https://coinmarketcal.com/"
+   },
+   {
+    "name": "Coindar",
+    "url": "https://coindar.org/"
+   }
+  ],
+  "events": [
+   {
+    "date": "2026-10-29",
+    "symbol": "FF",
+    "name": "",
+    "usd_m": 27.38,
+    "pct_circ": null,
+    "amount": "",
+    "kind": "",
+    "kind_en": "",
+    "status": "forecast",
+    "hot": false,
+    "sources": [
+     {
+      "name": "KuCoin 十月解锁汇总（10-01 发布，Tokenomist 预测）",
+      "name_en": "KuCoin October unlock roundup (published Oct 1; Tokenomist forecast)",
+      "url": "https://www.kucoin.com/news/insight/HYPE/6abdb79b38a264000791fd68"
+     }
+    ],
+    "days_until": 4,
+    "important": true,
+    "reasons": [
+     "value"
+    ],
+    "watch": false
+   },
+   {
+    "date": "2026-11-01",
+    "symbol": "SUI",
+    "name": "Sui",
+    "usd_m": null,
+    "pct_circ": null,
+    "amount": "",
+    "kind": "社区储备（Community Reserve）",
+    "kind_en": "Community Reserve",
+    "status": "forecast",
+    "hot": false,
+    "sources": [
+     {
+      "name": "Tokenomist",
+      "name_en": "Tokenomist",
+      "url": "https://tokenomist.ai/sui"
+     }
+    ],
+    "days_until": 7,
+    "important": true,
+    "reasons": [
+     "watch"
+    ],
+    "watch": true
+   }
+  ]
  }
 }

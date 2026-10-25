@@ -1,0 +1,7 @@
+# 代币解锁 · 人工核对表（有 CoinMarketCal / Coindar key 后，数据源自动补充；这张表用来放有明确出处的条目，每周日更新）
+# 规则：每条必须有出处；拿不到的数量/价值留空（页面写「数量待核」），不估算、不编。
+# 列：date=UTC 日期；symbol；name=全名（可空）；usd_m=解锁价值（百万美元）；pct_circ=占流通量 %；amount=数量（带单位，可空）；kind / kind_en=类型（中/英，可空）
+#     status=forecast（预测值）/confirmed（项目方已确认）；hot=1 表示数据源标为热门；source_name / source_name_en / source_url=出处（中/英名称、链接）；asof=核对日期
+date,symbol,name,usd_m,pct_circ,amount,kind,kind_en,status,hot,source_name,source_name_en,source_url,asof
+2026-10-29,FF,,27.38,,,,,forecast,,KuCoin 十月解锁汇总（10-01 发布，Tokenomist 预测）,KuCoin October unlock roundup (published Oct 1; Tokenomist forecast),https://www.kucoin.com/news/insight/HYPE/6abdb79b38a264000791fd68,2026-10-25
+2026-11-01,SUI,Sui,,,,社区储备（Community Reserve）,Community Reserve,forecast,,Tokenomist,Tokenomist,https://tokenomist.ai/sui,2026-10-25

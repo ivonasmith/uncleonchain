@@ -2847,9 +2847,11 @@ def cal_home_card(cal):
     rows = ""
     for x in xs[:6]:
         btc = x.get("tab") == "btc"
-        badge = cal_grade(x.get("grade")) if btc else f'<span class="grade g-o">{T("行业动向", "Industry")}</span>'
+        tabk = x.get("tab") or "web3"
+        badge = (cal_grade(x.get("grade")) if btc else f'<span class="grade g-o">{T("代币解锁", "Unlock")}</span>' if tabk == "unlock"
+                 else f'<span class="grade g-o">{T("行业动向", "Industry")}</span>')
         when = (x.get("time_bj") or x.get("date") or "")[5:]
-        rows += (f'<li><a href="{U("/calendar/")}#{"btc" if btc else "web3"}"><span class="d">{esc(when)}{T(" 北京", " BJT") if btc and x.get("time_bj") else ""}</span>'
+        rows += (f'<li><a href="{U("/calendar/")}#{tabk}"><span class="d">{esc(when)}{T(" 北京", " BJT") if btc and x.get("time_bj") else ""}</span>'
                  f'<b>{esc(T(x.get("title_zh") or x.get("title") or "", x.get("title_en") or x.get("title") or ""))}</b>{badge}</a></li>')
     return (f'<h2>{T("未来 7 天", "Next 7 days")} <a class="sub" href="{U("/calendar/")}">{T("事件日历 →", "Calendar →")}</a></h2>'
             f'<div class="card calhome"><ul>{rows}</ul></div>')
@@ -2922,11 +2924,11 @@ def build_calendar():
     btc_tab = (f'<p class="lede calintro">{esc(T(b.get("intro_zh") or "", b.get("intro_en") or ""))}</p>{big}'
                f'<h3>{T("会晃多大", "How big the swings are")}</h3>{table}<h3>{T("全部已录入事件", "All scheduled events")}</h3><div class="callist">{li}</div>{method}')
     # Web3
-    wev = w.get("events") or []
+    wev = [e for e in (w.get("events") or []) if e.get("category") != "解锁"]   # 解锁单独成 Tab
     cats = w.get("categories") or []
     src_links = " · ".join(f'<a href="{esc(s["url"])}" target="_blank" rel="noopener">{esc(s["name"])}</a>' for s in w.get("sources") or [])
     if wev:
-        TOKEN = {"代币事件", "解锁", "上所", "升级", "治理投票", "空投"}
+        TOKEN = {"代币事件", "上所", "升级", "治理投票", "空投"}
         cat_en = {c["zh"]: c["en"] for c in cats}
         def wrow(e):
             dd = e.get("date_start") or ""
@@ -2960,15 +2962,54 @@ def build_calendar():
         web3_body = f'<div class="empty">{T("行业日历暂时取不到。", "The industry calendar is unavailable right now.")}</div>'
     web3_tab = (f'<p class="lede calintro">{esc(T(w.get("intro_zh") or "", w.get("intro_en") or ""))}</p>'
                 f'<p class="tnote">{T("来源：", "Sources: ")}{src_links}</p>{web3_body}')
+    # 代币解锁
+    u = cal.get("unlocks") or {}
+    uev = u.get("events") or []
+    def uamt(e):
+        parts = []
+        if e.get("usd_m") is not None:
+            parts.append(T(f"约 ${e['usd_m']:,.1f}M", f"~${e['usd_m']:,.1f}M"))
+        if e.get("pct_circ") is not None:
+            parts.append(T(f"占流通 {e['pct_circ']:g}%", f"{e['pct_circ']:g}% of circ."))
+        if e.get("amount"):
+            parts.append(esc(e["amount"]))
+        return " · ".join(parts) if parts else T("数量待核", "amount TBC")
+    def urow(e):
+        srcs = " · ".join(f'<a href="{esc(x["url"])}" target="_blank" rel="noopener">{esc(T(x.get("name") or "", x.get("name_en") or x.get("name") or "") or T("来源", "source"))} ↗</a>' if x.get("url") else esc(T(x.get("name") or "", x.get("name_en") or x.get("name") or "")) for x in e.get("sources") or [])
+        nm = f'<span class="city">{esc(e["name"])}</span>' if e.get("name") else ""
+        kind = f'<span class="city">{esc(T(e["kind"], e.get("kind_en") or e["kind"]))}</span>' if e.get("kind") else ""
+        badge = f'<span class="cat">{T("预测值", "forecast")}</span>' if e.get("status") != "confirmed" else f'<span class="cat">{T("已确认", "confirmed")}</span>'
+        star = f'<span class="coin">{T("跟踪币", "tracked")}</span>' if e.get("watch") else ""
+        imp = 3 if e.get("important") else 1
+        dd = e.get("days_until")
+        when = T("今天", "today") if dd == 0 else T(f"{dd} 天后", f"in {dd}d")
+        return (f'<li class="ul imp{imp}" data-imp="{2 if e.get("important") else 1}" data-coins="{esc((e.get("symbol") or "").lower())}">'
+                f'<span class="d">{esc(e["date"][5:])} · {when}</span>{badge}<b>{esc(e.get("symbol") or "")}</b>{star}{nm}'
+                f'<span class="ulamt">{uamt(e)}</span>{kind}<small>{srcs}</small></li>')
+    if uev:
+        uweeks = {}
+        for e in uev:
+            d0 = dt.date.fromisoformat(e["date"])
+            uweeks.setdefault((d0 - dt.timedelta(days=d0.weekday())).isoformat(), []).append(e)
+        ulst = "".join(f'<h4>{T(f"{wk[5:]} 这一周", f"Week of {wk[5:]}")}</h4><ul class="w3l">{"".join(urow(e) for e in uweeks[wk])}</ul>' for wk in sorted(uweeks))
+        ufilt = (f'<div class="w3f"><input type="search" class="w3s uls" placeholder="{T("按代币搜索，如 SUI", "Search a token, e.g. SUI")}">'
+                 f'<label class="w3imp ulimp"><input type="checkbox"> {T("只看重要", "Important only")}</label></div>')
+        unlock_body = ufilt + f'<div class="ulwrap">{ulst}</div>'
+    else:
+        unlock_body = f'<div class="empty">{T("未来 60 天暂时没有已核实的解锁。", "No verified unlocks in the next 60 days.")}</div>'
+    unlock_tab = (f'<p class="lede calintro">{esc(T(u.get("intro_zh") or "", u.get("intro_en") or ""))}</p>'
+                  f'<p class="tnote">{esc(T(u.get("rule_zh") or "", u.get("rule_en") or ""))}</p>'
+                  f'<p class="tnote">{esc(T(u.get("source_note_zh") or "", u.get("source_note_en") or ""))}</p>{unlock_body}')
     upd = T(f"生成于 {cal.get('generated_utc')} UTC", f"Generated {cal.get('generated_utc')} UTC")
     body = (cr + f'<div class="ph"><div><div class="eyebrow">Event Calendar</div><h1>{T("事件日历", "Event calendar")}</h1>'
-            f'<p class="lede">{T("两张表分开看：比特币大事件是单独检验过波动的；Web3 行业动向只是汇总，没有做过价格检验。", "Two separate views: BTC events were individually tested for volatility; Web3 industry events are a digest with no price testing.")} <span class="tnote">{esc(upd)}</span></p></div></div>'
+            f'<p class="lede">{T("三张表分开看：比特币大事件是单独检验过波动的；代币解锁和 Web3 行业动向只是汇总，没有做过价格检验。", "Three separate views: BTC events were individually tested for volatility; token unlocks and Web3 industry events are digests with no price testing.")} <span class="tnote">{esc(upd)}</span></p></div></div>'
             f'<div class="tabwrap caltabs"><nav class="tabs" role="tablist">'
             f'<a role="tab" href="#btc" data-ct="btc" class="tab on"><span class="tn">{T("比特币大事件", "Bitcoin events")}</span><span class="ts">{T("已单独检验", "individually tested")}</span></a>'
+            f'<a role="tab" href="#unlock" data-ct="unlock" class="tab w3t"><span class="tn">{T("代币解锁", "Token unlocks")}</span><span class="ts">{T("汇总 · 未做价格检验", "digest · not price-tested")}</span></a>'
             f'<a role="tab" href="#web3" data-ct="web3" class="tab w3t"><span class="tn">{T("Web3 行业动向", "Web3 industry")}</span><span class="ts">{T("汇总 · 未做价格检验", "digest · not price-tested")}</span></a></nav></div>'
-            f'<section class="calp on" id="cal-btc">{btc_tab}</section><section class="calp w3p" id="cal-web3">{web3_tab}</section>')
+            f'<section class="calp on" id="cal-btc">{btc_tab}</section><section class="calp w3p" id="cal-unlock">{unlock_tab}</section><section class="calp w3p" id="cal-web3">{web3_tab}</section>')
     emit("calendar/index.html", T(f"事件日历 · {BRAND}", f"Event calendar · {BRAND_EN}"), body, active="calendar", scripts=CAL_JS,
-         desc=T("美联储议息、CPI、非农公布前后 BTC 会晃多大（已检验），以及 Web3 行业会议与代币事件汇总。", "How much BTC swings around FOMC, CPI and payrolls (tested), plus a digest of Web3 conferences and token events."))
+         desc=T("美联储议息、CPI、非农公布前后 BTC 会晃多大（已检验），以及代币解锁、Web3 行业会议与代币事件汇总。", "How much BTC swings around FOMC, CPI and payrolls (tested), plus token unlocks and a digest of Web3 conferences and token events."))
 
 
 CAL_JS = r"""<script>
@@ -2976,12 +3017,18 @@ CAL_JS = r"""<script>
 const tabs=[...document.querySelectorAll('[data-ct]')];
 function show(k){tabs.forEach(t=>t.classList.toggle('on',t.dataset.ct===k));document.querySelectorAll('.calp').forEach(p=>p.classList.toggle('on',p.id==='cal-'+k))}
 tabs.forEach(t=>t.addEventListener('click',e=>{e.preventDefault();show(t.dataset.ct);history.replaceState(null,'','#'+t.dataset.ct)}));
-if(location.hash==='#web3')show('web3');
+{const h=location.hash.slice(1);if(h==='web3'||h==='unlock')show(h)}
 const cd=document.querySelector('.calbig .cd');
 function tick(){if(!cd||!cd.dataset.utc)return;const t=Date.parse(cd.dataset.utc.replace(' ','T')+':00Z')-Date.now();
  const zh=document.documentElement.lang.startsWith('zh');if(t<=0){cd.textContent=zh?'正在公布 / 已公布':'Released';return}
  const d=Math.floor(t/864e5),h=Math.floor(t%864e5/36e5),m=Math.floor(t%36e5/6e4);cd.textContent=zh?`还有 ${d} 天 ${h} 小时 ${m} 分`:`${d}d ${h}h ${m}m to go`}
 tick();setInterval(tick,30000);
+const ulw=document.querySelector('.ulwrap');
+if(ulw){const us=document.querySelector('.uls'),ui=document.querySelector('.ulimp input');
+ function uapply(){const q=(us.value||'').trim().toLowerCase();ulw.querySelectorAll('li.ul').forEach(li=>{
+  const ok=(!q||li.dataset.coins.includes(q)||li.textContent.toLowerCase().includes(q))&&(!ui.checked||+li.dataset.imp>=2);li.style.display=ok?'':'none'});
+  ulw.querySelectorAll('ul.w3l').forEach(u=>{const any=[...u.children].some(c=>c.style.display!=='none');u.style.display=any?'':'none';if(u.previousElementSibling)u.previousElementSibling.style.display=any?'':'none'})}
+ us.addEventListener('input',uapply);ui.addEventListener('change',uapply)}
 const wrap=document.querySelector('.w3wrap');if(!wrap)return;let g='all';
 const s=document.querySelector('.w3s'),imp=document.querySelector('.w3imp input');
 function apply(){const q=(s.value||'').trim().toLowerCase();wrap.querySelectorAll('li.w3').forEach(li=>{

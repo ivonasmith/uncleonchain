@@ -426,6 +426,7 @@ table.calimp tr.faint td{opacity:.55}
 .w3l li{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card);font-size:13px}
 .w3l li.imp3 b{font-weight:800}.w3l li b{font-weight:500;color:var(--ink)}.w3l li a{text-decoration:none}
 .w3l .d{font-family:var(--mono);font-size:12px;color:var(--muted);min-width:96px}.w3l .cat{font-size:11px;padding:2px 7px;border-radius:6px;border:1px solid var(--cool-bd);color:var(--cool)}
+.w3l .ulamt{font:600 13px var(--mono);color:var(--ink)}.w3l li.ul.imp1 .ulamt{font-weight:500;color:var(--muted)}
 .w3l .coin{font:600 11px var(--mono);padding:2px 6px;border-radius:5px;background:var(--cool-bg);color:var(--ink)}.w3l .city{font-size:12px;color:var(--muted)}.w3l small{margin-left:auto;font-size:11px;color:var(--muted)}
 /* ---- L4 情绪衍生品 ---- */
 .l4head{border-left-color:var(--cool)}
