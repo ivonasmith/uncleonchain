@@ -1,6 +1,6 @@
 {
- "generated_utc": "2026-10-25 01:13",
- "today": "2026-10-25",
+ "generated_utc": "2026-10-26 01:25",
+ "today": "2026-10-26",
  "btc": {
   "title_zh": "比特币大事件（已单独检验）",
   "title_en": "BTC events (individually tested)",
@@ -74,12 +74,12 @@
   "impact_note_zh": "“最高价和最低价差多少”= 那段时间里 BTC 最高成交价比最低成交价高出百分之几，不分涨跌。比如 2.7% 在 BTC 8 万美元时约等于上下晃 2,000 多美元。",
   "stats_asof_zh": "检验数据截至 2026-10-12（Coinbase 小时线），每半年（1 月、7 月）用新数据重测一次，样本每半年约增加 25 次。",
   "intro_en": "Only events we have tested one by one on hourly BTC data since 2015. Fed decisions, CPI and payrolls widen the 2-hour range after release (since 2022), but direction is unpredictable and the days before are not more volatile.",
-  "next_zh": "下一个：美联储议息决议，3 天后（北京时间 2026-10-29 02:00）",
+  "next_zh": "下一个：美联储议息决议，2 天后（北京时间 2026-10-29 02:00）",
   "events": [
    {
     "type": "FOMC",
     "date": "2026-10-28",
-    "days_until": 3,
+    "days_until": 2,
     "title_zh": "美联储议息决议",
     "title_en": "FOMC rate decision",
     "time_utc": "2026-10-28 18:00",
@@ -95,7 +95,7 @@
     "impact": {
      "level_zh": "大",
      "level_en": "High",
-     "text_zh": "公布那两个小时，BTC 最高价和最低价一般差 2.7%（约 $2,180），平时同一时段只有 1.1%；四次里有一次超过 3.8%，十次里有一次超过 6.3%（约 $5,080），2022 年以来最大一次 10.2%。全天最高到最低一般 4.2%（平时 3.4%）。",
+     "text_zh": "公布那两个小时，BTC 最高价和最低价一般差 2.7%（约 $2,160），平时同一时段只有 1.1%；四次里有一次超过 3.8%，十次里有一次超过 6.3%（约 $5,040），2022 年以来最大一次 10.2%。全天最高到最低一般 4.2%（平时 3.4%）。",
      "text_en": "In the 2 hours after the release, BTC's high-low range is typically 2.7% (normal: 1.1%); 1 in 4 times above 3.8%, 1 in 10 above 6.3%, largest since 2022 10.2%.",
      "range_2h_typ_pct": 2.7,
      "range_2h_big_pct": 6.3,
@@ -103,9 +103,9 @@
      "range_2h_normal_pct": 1.1,
      "range_day_typ_pct": 4.2,
      "range_day_normal_pct": 3.4,
-     "usd_typ": 2178,
-     "usd_big": 5083,
-     "price_ref": 80685
+     "usd_typ": 2162,
+     "usd_big": 5045,
+     "price_ref": 80073
     },
     "stats": {
      "n": 37,
@@ -134,7 +134,7 @@
    {
     "type": "未检验",
     "date": "2026-11-03",
-    "days_until": 9,
+    "days_until": 8,
     "title_zh": "美国中期选举",
     "title_en": "US midterm elections",
     "grade": "未检验",
@@ -148,7 +148,7 @@
    {
     "type": "NFP",
     "date": "2026-11-06",
-    "days_until": 12,
+    "days_until": 11,
     "title_zh": "美国非农就业",
     "title_en": "US nonfarm payrolls",
     "time_utc": "2026-11-06 13:30",
@@ -164,7 +164,7 @@
     "impact": {
      "level_zh": "中",
      "level_en": "Medium",
-     "text_zh": "公布那两个小时，BTC 最高价和最低价一般差 2.0%（约 $1,610），平时同一时段只有 1.3%；四次里有一次超过 2.5%，十次里有一次超过 3.0%（约 $2,420），2022 年以来最大一次 4.7%。全天最高到最低一般 3.9%（平时 4.0%）。",
+     "text_zh": "公布那两个小时，BTC 最高价和最低价一般差 2.0%（约 $1,600），平时同一时段只有 1.3%；四次里有一次超过 2.5%，十次里有一次超过 3.0%（约 $2,400），2022 年以来最大一次 4.7%。全天最高到最低一般 3.9%（平时 4.0%）。",
      "text_en": "In the 2 hours after the release, BTC's high-low range is typically 2.0% (normal: 1.3%); 1 in 4 times above 2.5%, 1 in 10 above 3.0%, largest since 2022 4.7%.",
      "range_2h_typ_pct": 2.0,
      "range_2h_big_pct": 3.0,
@@ -172,9 +172,9 @@
      "range_2h_normal_pct": 1.3,
      "range_day_typ_pct": 3.9,
      "range_day_normal_pct": 4.0,
-     "usd_typ": 1614,
-     "usd_big": 2421,
-     "price_ref": 80685
+     "usd_typ": 1601,
+     "usd_big": 2402,
+     "price_ref": 80073
     },
     "stats": {
      "n": 57,
@@ -203,7 +203,7 @@
    {
     "type": "CPI",
     "date": "2026-11-10",
-    "days_until": 16,
+    "days_until": 15,
     "title_zh": "美国 CPI",
     "title_en": "US CPI",
     "time_utc": "2026-11-10 13:30",
@@ -219,7 +219,7 @@
     "impact": {
      "level_zh": "大",
      "level_en": "High",
-     "text_zh": "公布那两个小时，BTC 最高价和最低价一般差 2.5%（约 $2,020），平时同一时段只有 1.3%；四次里有一次超过 3.5%，十次里有一次超过 4.9%（约 $3,950），2022 年以来最大一次 9.0%。全天最高到最低一般 4.6%（平时 3.5%）。",
+     "text_zh": "公布那两个小时，BTC 最高价和最低价一般差 2.5%（约 $2,000），平时同一时段只有 1.3%；四次里有一次超过 3.5%，十次里有一次超过 4.9%（约 $3,920），2022 年以来最大一次 9.0%。全天最高到最低一般 4.6%（平时 3.5%）。",
      "text_en": "In the 2 hours after the release, BTC's high-low range is typically 2.5% (normal: 1.3%); 1 in 4 times above 3.5%, 1 in 10 above 4.9%, largest since 2022 9.0%.",
      "range_2h_typ_pct": 2.5,
      "range_2h_big_pct": 4.9,
@@ -227,9 +227,9 @@
      "range_2h_normal_pct": 1.3,
      "range_day_typ_pct": 4.6,
      "range_day_normal_pct": 3.5,
-     "usd_typ": 2017,
-     "usd_big": 3954,
-     "price_ref": 80685
+     "usd_typ": 2002,
+     "usd_big": 3924,
+     "price_ref": 80073
     },
     "stats": {
      "n": 56,
@@ -258,7 +258,7 @@
    {
     "type": "NFP",
     "date": "2026-12-04",
-    "days_until": 40,
+    "days_until": 39,
     "title_zh": "美国非农就业",
     "title_en": "US nonfarm payrolls",
     "time_utc": "2026-12-04 13:30",
@@ -274,7 +274,7 @@
     "impact": {
      "level_zh": "中",
      "level_en": "Medium",
-     "text_zh": "公布那两个小时，BTC 最高价和最低价一般差 2.0%（约 $1,610），平时同一时段只有 1.3%；四次里有一次超过 2.5%，十次里有一次超过 3.0%（约 $2,420），2022 年以来最大一次 4.7%。全天最高到最低一般 3.9%（平时 4.0%）。",
+     "text_zh": "公布那两个小时，BTC 最高价和最低价一般差 2.0%（约 $1,600），平时同一时段只有 1.3%；四次里有一次超过 2.5%，十次里有一次超过 3.0%（约 $2,400），2022 年以来最大一次 4.7%。全天最高到最低一般 3.9%（平时 4.0%）。",
      "text_en": "In the 2 hours after the release, BTC's high-low range is typically 2.0% (normal: 1.3%); 1 in 4 times above 2.5%, 1 in 10 above 3.0%, largest since 2022 4.7%.",
      "range_2h_typ_pct": 2.0,
      "range_2h_big_pct": 3.0,
@@ -282,9 +282,9 @@
      "range_2h_normal_pct": 1.3,
      "range_day_typ_pct": 3.9,
      "range_day_normal_pct": 4.0,
-     "usd_typ": 1614,
-     "usd_big": 2421,
-     "price_ref": 80685
+     "usd_typ": 1601,
+     "usd_big": 2402,
+     "price_ref": 80073
     },
     "stats": {
      "n": 57,
@@ -313,7 +313,7 @@
    {
     "type": "FOMC",
     "date": "2026-12-09",
-    "days_until": 45,
+    "days_until": 44,
     "title_zh": "美联储议息决议",
     "title_en": "FOMC rate decision",
     "time_utc": "2026-12-09 19:00",
@@ -329,7 +329,7 @@
     "impact": {
      "level_zh": "大",
      "level_en": "High",
-     "text_zh": "公布那两个小时，BTC 最高价和最低价一般差 2.7%（约 $2,180），平时同一时段只有 1.1%；四次里有一次超过 3.8%，十次里有一次超过 6.3%（约 $5,080），2022 年以来最大一次 10.2%。全天最高到最低一般 4.2%（平时 3.4%）。",
+     "text_zh": "公布那两个小时，BTC 最高价和最低价一般差 2.7%（约 $2,160），平时同一时段只有 1.1%；四次里有一次超过 3.8%，十次里有一次超过 6.3%（约 $5,040），2022 年以来最大一次 10.2%。全天最高到最低一般 4.2%（平时 3.4%）。",
      "text_en": "In the 2 hours after the release, BTC's high-low range is typically 2.7% (normal: 1.1%); 1 in 4 times above 3.8%, 1 in 10 above 6.3%, largest since 2022 10.2%.",
      "range_2h_typ_pct": 2.7,
      "range_2h_big_pct": 6.3,
@@ -337,9 +337,9 @@
      "range_2h_normal_pct": 1.1,
      "range_day_typ_pct": 4.2,
      "range_day_normal_pct": 3.4,
-     "usd_typ": 2178,
-     "usd_big": 5083,
-     "price_ref": 80685
+     "usd_typ": 2162,
+     "usd_big": 5045,
+     "price_ref": 80073
     },
     "stats": {
      "n": 37,
@@ -368,7 +368,7 @@
    {
     "type": "CPI",
     "date": "2026-12-10",
-    "days_until": 46,
+    "days_until": 45,
     "title_zh": "美国 CPI",
     "title_en": "US CPI",
     "time_utc": "2026-12-10 13:30",
@@ -384,7 +384,7 @@
     "impact": {
      "level_zh": "大",
      "level_en": "High",
-     "text_zh": "公布那两个小时，BTC 最高价和最低价一般差 2.5%（约 $2,020），平时同一时段只有 1.3%；四次里有一次超过 3.5%，十次里有一次超过 4.9%（约 $3,950），2022 年以来最大一次 9.0%。全天最高到最低一般 4.6%（平时 3.5%）。",
+     "text_zh": "公布那两个小时，BTC 最高价和最低价一般差 2.5%（约 $2,000），平时同一时段只有 1.3%；四次里有一次超过 3.5%，十次里有一次超过 4.9%（约 $3,920），2022 年以来最大一次 9.0%。全天最高到最低一般 4.6%（平时 3.5%）。",
      "text_en": "In the 2 hours after the release, BTC's high-low range is typically 2.5% (normal: 1.3%); 1 in 4 times above 3.5%, 1 in 10 above 4.9%, largest since 2022 9.0%.",
      "range_2h_typ_pct": 2.5,
      "range_2h_big_pct": 4.9,
@@ -392,9 +392,9 @@
      "range_2h_normal_pct": 1.3,
      "range_day_typ_pct": 4.6,
      "range_day_normal_pct": 3.5,
-     "usd_typ": 2017,
-     "usd_big": 3954,
-     "price_ref": 80685
+     "usd_typ": 2002,
+     "usd_big": 3924,
+     "price_ref": 80073
     },
     "stats": {
      "n": 56,
@@ -419,6 +419,61 @@
      "day_pct_normal": 3.5
     },
     "source_url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+   },
+   {
+    "type": "期权季度交割",
+    "date": "2026-12-25",
+    "days_until": 60,
+    "title_zh": "BTC 期权季度交割",
+    "title_en": "BTC quarterly options expiry",
+    "time_utc": "2026-12-25 08:00",
+    "time_bj": "2026-12-25 16:00",
+    "time_et": "",
+    "grade": "已证伪",
+    "tested": true,
+    "emphasis": false,
+    "what_zh": "常见说法“交割日大波动”，数据不支持：2022 年以来 19 次，交割那两个小时 BTC 最高到最低一般拉开 0.7%，和平时同一时段（0.8%）一样；当天全天 3.8%，平时 4.0%。",
+    "what_en": "The 'expiry-day volatility' story doesn't hold: since 2022 (19 expiries) the 2-hour high-low range is 0.7%, same as a normal day (0.8%).",
+    "use_zh": "不需要为交割日调整动作。",
+    "use_en": "No action needed for expiry day.",
+    "impact": {
+     "level_zh": "不放大",
+     "level_en": "None",
+     "text_zh": "交割那两个小时，最高到最低一般差 0.7%，和平时一样。",
+     "text_en": "Typical 2-hour high-low range 0.7%, same as normal.",
+     "range_2h_typ_pct": 0.7,
+     "range_2h_big_pct": 1.7,
+     "range_2h_max_pct": 2.5,
+     "range_2h_normal_pct": 0.8,
+     "range_day_typ_pct": 3.8,
+     "range_day_normal_pct": 4.0,
+     "usd_typ": 561,
+     "usd_big": 1361,
+     "price_ref": 80073
+    },
+    "stats": {
+     "n": 19,
+     "since": "2022-01",
+     "h2_ratio": 0.88,
+     "h2_share": 0.47,
+     "day_ratio": 0.83,
+     "next_day_ratio": 0.79,
+     "pre3_ratio": 0.7,
+     "up1_share": 0.58,
+     "up1_p": 0.648,
+     "old_era_h2_ratio": 1.05,
+     "h2_pct_med": 0.7,
+     "h2_pct_p75": 1.2,
+     "h2_pct_p90": 1.7,
+     "h2_pct_max": 2.5,
+     "h2_pct_normal": 0.8,
+     "move2h_pct_med": 0.4,
+     "move2h_pct_p90": 1.2,
+     "day_pct_med": 3.8,
+     "day_pct_p90": 5.3,
+     "day_pct_normal": 4.0
+    },
+    "source_url": "https://www.deribit.com/"
    }
   ],
   "method_zh": "对照组：同一星期几、前后 9 周内、没有其他事件的日子的同一时段。振幅 = 区间最高 ÷ 最低。年代分 2015-17、2018-21、2022-26 分别看。期权交割：Deribit 每月最后一个周五 08:00 UTC。数据：Coinbase BTC-USD 小时线。"
@@ -490,24 +545,6 @@
   ],
   "events": [
    {
-    "date_start": "2026-10-05",
-    "date_end": "2026-10-25",
-    "category": "黑客松",
-    "category_en": "Hackathon",
-    "title": "IEEE ClimateChain Global Hackathon Oct 5–25, 2026 • 🏠 Your Home ONLINE Hackathon",
-    "coins": [],
-    "city": "",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/ieee-climatechain-global-hackathon",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
     "date_start": "2026-10-11",
     "date_end": "2026-11-01",
     "category": "会议",
@@ -544,96 +581,6 @@
     "ongoing": true
    },
    {
-    "date_start": "2026-10-23",
-    "date_end": "2026-10-25",
-    "category": "黑客松",
-    "category_en": "Hackathon",
-    "title": "Encode London Hackathon and Conference",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/encode-london-hackathon-conference-26-10",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-10-24",
-    "date_end": "2026-10-25",
-    "category": "黑客松",
-    "category_en": "Hackathon",
-    "title": "XRP Ledger Hackathon NYC Oct 24–25, 2026 • United States NA Hackathon XRP Live",
-    "coins": [],
-    "city": "",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/xrp-ledger-hackathon-nyc",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-10-25",
-    "date_end": "2026-10-25",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "BITDEVS SWITZERLAND – Socratic Seminar #4",
-    "coins": [],
-    "city": "Lugano",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/bitdevs-switzerland--socratic-seminar-4",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-10-25",
-    "date_end": "2026-10-25",
-    "category": "黑客松",
-    "category_en": "Hackathon",
-    "title": "Oxford and Cambridge AI Race Oct 25, 2026 • United Kingdom EUR Hackathon Solana",
-    "coins": [],
-    "city": "",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/oxford-and-cambridge-ai-race",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-10-25",
-    "date_end": "2026-10-25",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Stablecoin Summit",
-    "coins": [],
-    "city": "Lugano",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/stablecoin-summit",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
     "date_start": "2026-10-26",
     "date_end": "2026-10-28",
     "category": "会议",
@@ -648,8 +595,8 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 1,
-    "ongoing": false
+    "days_until": 0,
+    "ongoing": true
    },
    {
     "date_start": "2026-10-26",
@@ -666,8 +613,8 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 1,
-    "ongoing": false
+    "days_until": 0,
+    "ongoing": true
    },
    {
     "date_start": "2026-10-26",
@@ -684,8 +631,8 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 1,
-    "ongoing": false
+    "days_until": 0,
+    "ongoing": true
    },
    {
     "date_start": "2026-10-26",
@@ -702,8 +649,8 @@
     "sources": [
      "CryptoEvents"
     ],
-    "days_until": 1,
-    "ongoing": false
+    "days_until": 0,
+    "ongoing": true
    },
    {
     "date_start": "2026-10-27",
@@ -720,7 +667,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 2,
+    "days_until": 1,
     "ongoing": false
    },
    {
@@ -738,7 +685,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 2,
+    "days_until": 1,
     "ongoing": false
    },
    {
@@ -756,7 +703,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 2,
+    "days_until": 1,
     "ongoing": false
    },
    {
@@ -774,7 +721,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 2,
+    "days_until": 1,
     "ongoing": false
    },
    {
@@ -792,7 +739,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 2,
+    "days_until": 1,
     "ongoing": false
    },
    {
@@ -810,7 +757,7 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 2,
+    "days_until": 1,
     "ongoing": false
    },
    {
@@ -828,7 +775,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 2,
+    "days_until": 1,
     "ongoing": false
    },
    {
@@ -846,7 +793,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 2,
+    "days_until": 1,
     "ongoing": false
    },
    {
@@ -864,7 +811,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 2,
+    "days_until": 1,
     "ongoing": false
    },
    {
@@ -882,7 +829,7 @@
     "sources": [
      "CryptoEvents"
     ],
-    "days_until": 2,
+    "days_until": 1,
     "ongoing": false
    },
    {
@@ -900,7 +847,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 2,
+    "days_until": 1,
     "ongoing": false
    },
    {
@@ -918,7 +865,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 3,
+    "days_until": 2,
     "ongoing": false
    },
    {
@@ -936,7 +883,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 3,
+    "days_until": 2,
     "ongoing": false
    },
    {
@@ -954,7 +901,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 3,
+    "days_until": 2,
     "ongoing": false
    },
    {
@@ -972,7 +919,7 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 3,
+    "days_until": 2,
     "ongoing": false
    },
    {
@@ -990,7 +937,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 3,
+    "days_until": 2,
     "ongoing": false
    },
    {
@@ -1008,7 +955,7 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 3,
+    "days_until": 2,
     "ongoing": false
    },
    {
@@ -1026,7 +973,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 3,
+    "days_until": 2,
     "ongoing": false
    },
    {
@@ -1044,7 +991,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 3,
+    "days_until": 2,
     "ongoing": false
    },
    {
@@ -1062,7 +1009,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 3,
+    "days_until": 2,
     "ongoing": false
    },
    {
@@ -1080,7 +1027,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 3,
+    "days_until": 2,
     "ongoing": false
    },
    {
@@ -1098,7 +1045,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 3,
+    "days_until": 2,
     "ongoing": false
    },
    {
@@ -1116,7 +1063,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 3,
+    "days_until": 2,
     "ongoing": false
    },
    {
@@ -1134,7 +1081,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 3,
+    "days_until": 2,
     "ongoing": false
    },
    {
@@ -1152,7 +1099,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 3,
+    "days_until": 2,
     "ongoing": false
    },
    {
@@ -1170,7 +1117,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 3,
+    "days_until": 2,
     "ongoing": false
    },
    {
@@ -1188,7 +1135,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 3,
+    "days_until": 2,
     "ongoing": false
    },
    {
@@ -1206,7 +1153,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 4,
+    "days_until": 3,
     "ongoing": false
    },
    {
@@ -1224,7 +1171,7 @@
     "sources": [
      "CryptoEvents"
     ],
-    "days_until": 4,
+    "days_until": 3,
     "ongoing": false
    },
    {
@@ -1242,7 +1189,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 4,
+    "days_until": 3,
     "ongoing": false
    },
    {
@@ -1260,7 +1207,7 @@
     "sources": [
      "CryptoEvents"
     ],
-    "days_until": 4,
+    "days_until": 3,
     "ongoing": false
    },
    {
@@ -1278,7 +1225,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 4,
+    "days_until": 3,
     "ongoing": false
    },
    {
@@ -1296,7 +1243,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 5,
+    "days_until": 4,
     "ongoing": false
    },
    {
@@ -1314,7 +1261,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 5,
+    "days_until": 4,
     "ongoing": false
    },
    {
@@ -1332,7 +1279,7 @@
     "sources": [
      "CryptoEvents"
     ],
-    "days_until": 5,
+    "days_until": 4,
     "ongoing": false
    },
    {
@@ -1350,7 +1297,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 5,
+    "days_until": 4,
     "ongoing": false
    },
    {
@@ -1358,7 +1305,7 @@
     "date_end": "2026-10-31",
     "category": "黑客松",
     "category_en": "Hackathon",
-    "title": "TUM Blockchain & AI Hackathon Oct 30–31, 2026 • Germany EUR Hackathon Multichain",
+    "title": "TUM Blockchain & AI Hackathon Oct 30–31, 2026 • Germany EUR Hackathon",
     "coins": [],
     "city": "",
     "importance": 1,
@@ -1368,25 +1315,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 5,
-    "ongoing": false
-   },
-   {
-    "date_start": "2026-10-31",
-    "date_end": "2026-12-06",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Arbitrum Open House Dubai: Online Buildathon Oct 31 – Dec 6, 2026 • 🏠 Your Home",
-    "coins": [],
-    "city": "",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/arbitrum-open-house-dubai-26-10",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 6,
+    "days_until": 4,
     "ongoing": false
    },
    {
@@ -1404,7 +1333,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 6,
+    "days_until": 5,
     "ongoing": false
    },
    {
@@ -1422,7 +1351,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 6,
+    "days_until": 5,
     "ongoing": false
    },
    {
@@ -1440,7 +1369,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 7,
+    "days_until": 6,
     "ongoing": false
    },
    {
@@ -1458,7 +1387,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 7,
+    "days_until": 6,
     "ongoing": false
    },
    {
@@ -1476,7 +1405,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 7,
+    "days_until": 6,
     "ongoing": false
    },
    {
@@ -1494,7 +1423,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 7,
+    "days_until": 6,
     "ongoing": false
    },
    {
@@ -1512,7 +1441,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 7,
+    "days_until": 6,
     "ongoing": false
    },
    {
@@ -1530,7 +1459,7 @@
     "sources": [
      "CryptoEvents"
     ],
-    "days_until": 7,
+    "days_until": 6,
     "ongoing": false
    },
    {
@@ -1548,7 +1477,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 7,
+    "days_until": 6,
     "ongoing": false
    },
    {
@@ -1566,7 +1495,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 7,
+    "days_until": 6,
     "ongoing": false
    },
    {
@@ -1574,7 +1503,7 @@
     "date_end": "2026-11-14",
     "category": "黑客松",
     "category_en": "Hackathon",
-    "title": "NEAR Hackathon Nov 1–14, 2026 • 🏠 Your Home ONLINE Hackathon",
+    "title": "NEAR Hackathon Nov 1–14, 2026 • 🏠 Your Home ONLINE Hackathon Near Next",
     "coins": [],
     "city": "",
     "importance": 1,
@@ -1584,7 +1513,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 7,
+    "days_until": 6,
     "ongoing": false
    },
    {
@@ -1602,7 +1531,7 @@
     "sources": [
      "CryptoEvents"
     ],
-    "days_until": 7,
+    "days_until": 6,
     "ongoing": false
    },
    {
@@ -1620,7 +1549,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 7,
+    "days_until": 6,
     "ongoing": false
    },
    {
@@ -1638,7 +1567,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 7,
+    "days_until": 6,
     "ongoing": false
    },
    {
@@ -1646,7 +1575,7 @@
     "date_end": "2026-11-12",
     "category": "黑客松",
     "category_en": "Hackathon",
-    "title": "Solana Hacker House - London Nov 1–12, 2026 • United Kingdom EUR Hackathon",
+    "title": "Solana Hacker House - London Nov 1–12, 2026 • United Kingdom EUR Hackathon Solan",
     "coins": [],
     "city": "",
     "importance": 1,
@@ -1656,7 +1585,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 7,
+    "days_until": 6,
     "ongoing": false
    },
    {
@@ -1674,7 +1603,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 7,
+    "days_until": 6,
     "ongoing": false
    },
    {
@@ -1692,7 +1621,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 7,
+    "days_until": 6,
     "ongoing": false
    },
    {
@@ -1710,7 +1639,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 8,
+    "days_until": 7,
     "ongoing": false
    },
    {
@@ -1728,7 +1657,25 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 8,
+    "days_until": 7,
+    "ongoing": false
+   },
+   {
+    "date_start": "2026-11-02",
+    "date_end": "2026-12-09",
+    "category": "黑客松",
+    "category_en": "Hackathon",
+    "title": "Concordium Trusted Agents Hackathon Nov 2 – Dec 9, 2026 • 🏠 Your Home ONLINE Hac",
+    "coins": [],
+    "city": "",
+    "importance": 1,
+    "source": "Web3Voyager",
+    "url": "https://web3voyager.com/event/concordium-trusted-agents-hackathon",
+    "note": "",
+    "sources": [
+     "Web3Voyager"
+    ],
+    "days_until": 7,
     "ongoing": false
    },
    {
@@ -1746,7 +1693,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 8,
+    "days_until": 7,
     "ongoing": false
    },
    {
@@ -1764,7 +1711,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 8,
+    "days_until": 7,
     "ongoing": false
    },
    {
@@ -1782,7 +1729,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 8,
+    "days_until": 7,
     "ongoing": false
    },
    {
@@ -1800,7 +1747,25 @@
     "sources": [
      "CryptoEvents"
     ],
-    "days_until": 8,
+    "days_until": 7,
+    "ongoing": false
+   },
+   {
+    "date_start": "2026-11-02",
+    "date_end": "2026-11-06",
+    "category": "会议",
+    "category_en": "Conference",
+    "title": "Nov 2-6 2026 Hong Kong FinTech Week x StartmeupHK Festival 2026 Hong Kong Hong K",
+    "coins": [],
+    "city": "",
+    "importance": 1,
+    "source": "CryptoEvents",
+    "url": "https://cryptoevents.global/hong-kong-fintech-week-x-startmeuphk-festival-2026/",
+    "note": "",
+    "sources": [
+     "CryptoEvents"
+    ],
+    "days_until": 7,
     "ongoing": false
    },
    {
@@ -1818,7 +1783,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 8,
+    "days_until": 7,
     "ongoing": false
    },
    {
@@ -1836,7 +1801,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 8,
+    "days_until": 7,
     "ongoing": false
    },
    {
@@ -1854,7 +1819,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 8,
+    "days_until": 7,
     "ongoing": false
    },
    {
@@ -1872,7 +1837,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 8,
+    "days_until": 7,
     "ongoing": false
    },
    {
@@ -1890,7 +1855,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 8,
+    "days_until": 7,
     "ongoing": false
    },
    {
@@ -1908,7 +1873,7 @@
     "sources": [
      "Luma"
     ],
-    "days_until": 9,
+    "days_until": 8,
     "ongoing": false
    },
    {
@@ -1926,7 +1891,61 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 9,
+    "days_until": 8,
+    "ongoing": false
+   },
+   {
+    "date_start": "2026-11-03",
+    "date_end": "2026-11-03",
+    "category": "会议",
+    "category_en": "Conference",
+    "title": "AI Economic Forum Mumbai 2026",
+    "coins": [],
+    "city": "Mumbai",
+    "importance": 1,
+    "source": "Web3Voyager",
+    "url": "https://web3voyager.com/event/ai-economic-forum-mumbai-2026",
+    "note": "",
+    "sources": [
+     "Web3Voyager"
+    ],
+    "days_until": 8,
+    "ongoing": false
+   },
+   {
+    "date_start": "2026-11-03",
+    "date_end": "2026-11-03",
+    "category": "会议",
+    "category_en": "Conference",
+    "title": "BORN UP – Devcon Mumbai Community Networking Meetup",
+    "coins": [],
+    "city": "Mumbai",
+    "importance": 1,
+    "source": "Web3Voyager",
+    "url": "https://web3voyager.com/event/born-up-devcon-mumbai-community-networking-26-11-03",
+    "note": "",
+    "sources": [
+     "Web3Voyager"
+    ],
+    "days_until": 8,
+    "ongoing": false
+   },
+   {
+    "date_start": "2026-11-03",
+    "date_end": "2026-11-06",
+    "category": "会议",
+    "category_en": "Conference",
+    "title": "Devcon 8 India",
+    "coins": [],
+    "city": "Mumbai",
+    "importance": 1,
+    "source": "Web3Voyager",
+    "url": "https://web3voyager.com/event/devcon-8-india-26-11",
+    "note": "",
+    "sources": [
+     "Web3Voyager"
+    ],
+    "days_until": 8,
     "ongoing": false
    },
    {
@@ -1944,7 +1963,43 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 9,
+    "days_until": 8,
+    "ongoing": false
+   },
+   {
+    "date_start": "2026-11-03",
+    "date_end": "2026-11-06",
+    "category": "会议",
+    "category_en": "Conference",
+    "title": "Media Accelerator & Startup Cohort",
+    "coins": [],
+    "city": "Mumbai",
+    "importance": 1,
+    "source": "Web3Voyager",
+    "url": "https://web3voyager.com/event/media-accelerator-startup-cohort-26-11-03",
+    "note": "",
+    "sources": [
+     "Web3Voyager"
+    ],
+    "days_until": 8,
+    "ongoing": false
+   },
+   {
+    "date_start": "2026-11-03",
+    "date_end": "2026-11-03",
+    "category": "会议",
+    "category_en": "Conference",
+    "title": "Nov 3 2026 ETF Investor Forum 2026 New York, NY Hosted by Anthony Pompliano, the",
+    "coins": [],
+    "city": "",
+    "importance": 1,
+    "source": "CryptoEvents",
+    "url": "https://cryptoevents.global/etf-investor-forum-2026/",
+    "note": "",
+    "sources": [
+     "CryptoEvents"
+    ],
+    "days_until": 8,
     "ongoing": false
    },
    {
@@ -1962,7 +2017,61 @@
     "sources": [
      "CryptoEvents"
     ],
-    "days_until": 9,
+    "days_until": 8,
+    "ongoing": false
+   },
+   {
+    "date_start": "2026-11-03",
+    "date_end": "2026-11-03",
+    "category": "会议",
+    "category_en": "Conference",
+    "title": "Ready for the Run @ Mumbai",
+    "coins": [],
+    "city": "Mumbai",
+    "importance": 1,
+    "source": "Web3Voyager",
+    "url": "https://web3voyager.com/event/ready-run-mumbai-26-11-03",
+    "note": "",
+    "sources": [
+     "Web3Voyager"
+    ],
+    "days_until": 8,
+    "ongoing": false
+   },
+   {
+    "date_start": "2026-11-03",
+    "date_end": "2026-11-03",
+    "category": "会议",
+    "category_en": "Conference",
+    "title": "The Money House",
+    "coins": [],
+    "city": "Mumbai",
+    "importance": 1,
+    "source": "Web3Voyager",
+    "url": "https://web3voyager.com/event/money-house-26-11-03",
+    "note": "",
+    "sources": [
+     "Web3Voyager"
+    ],
+    "days_until": 8,
+    "ongoing": false
+   },
+   {
+    "date_start": "2026-11-03",
+    "date_end": "2026-11-06",
+    "category": "会议",
+    "category_en": "Conference",
+    "title": "World of DeSci @DEVCON VIII, India",
+    "coins": [],
+    "city": "Mumbai",
+    "importance": 1,
+    "source": "Web3Voyager",
+    "url": "https://web3voyager.com/event/world-desci-devcon-viii-india-26-11-03",
+    "note": "",
+    "sources": [
+     "Web3Voyager"
+    ],
+    "days_until": 8,
     "ongoing": false
    },
    {
@@ -1980,7 +2089,7 @@
     "sources": [
      "Luma"
     ],
-    "days_until": 11,
+    "days_until": 10,
     "ongoing": false
    },
    {
@@ -1998,7 +2107,7 @@
     "sources": [
      "CryptoEvents"
     ],
-    "days_until": 11,
+    "days_until": 10,
     "ongoing": false
    },
    {
@@ -2016,43 +2125,7 @@
     "sources": [
      "CryptoEvents"
     ],
-    "days_until": 11,
-    "ongoing": false
-   },
-   {
-    "date_start": "2026-11-05",
-    "date_end": "2026-11-07",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Nov 5-7 2026 ETHGlobal Mumbai 2026 Mumbai Running alongside Devcon 8, ETHGlobal",
-    "coins": [],
-    "city": "",
-    "importance": 1,
-    "source": "CryptoEvents",
-    "url": "https://cryptoevents.global/ethglobal-mumbai-2026/",
-    "note": "",
-    "sources": [
-     "CryptoEvents"
-    ],
-    "days_until": 11,
-    "ongoing": false
-   },
-   {
-    "date_start": "2026-11-06",
-    "date_end": "2026-11-06",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Nov 6 2026 Pragma Mumbai 2026 Mumbai Pragma Mumbai by ETHGlobal is bring togethe",
-    "coins": [],
-    "city": "",
-    "importance": 1,
-    "source": "CryptoEvents",
-    "url": "https://cryptoevents.global/pragma-mumbai-2026/",
-    "note": "",
-    "sources": [
-     "CryptoEvents"
-    ],
-    "days_until": 12,
+    "days_until": 10,
     "ongoing": false
    },
    {
@@ -2070,7 +2143,7 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 12,
+    "days_until": 11,
     "ongoing": false
    },
    {
@@ -2088,7 +2161,7 @@
     "sources": [
      "Luma"
     ],
-    "days_until": 16,
+    "days_until": 15,
     "ongoing": false
    },
    {
@@ -2106,7 +2179,7 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 18,
+    "days_until": 17,
     "ongoing": false
    },
    {
@@ -2125,7 +2198,7 @@
      "IndustryEvents",
      "Web3Voyager"
     ],
-    "days_until": 19,
+    "days_until": 18,
     "ongoing": false
    },
    {
@@ -2143,7 +2216,7 @@
     "sources": [
      "CryptoEvents"
     ],
-    "days_until": 21,
+    "days_until": 20,
     "ongoing": false
    },
    {
@@ -2161,7 +2234,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 21,
+    "days_until": 20,
     "ongoing": false
    },
    {
@@ -2179,7 +2252,7 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 25,
+    "days_until": 24,
     "ongoing": false
    },
    {
@@ -2197,7 +2270,7 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 26,
+    "days_until": 25,
     "ongoing": false
    },
    {
@@ -2215,7 +2288,7 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 31,
+    "days_until": 30,
     "ongoing": false
    },
    {
@@ -2233,7 +2306,7 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 32,
+    "days_until": 31,
     "ongoing": false
    },
    {
@@ -2251,7 +2324,7 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 33,
+    "days_until": 32,
     "ongoing": false
    },
    {
@@ -2269,7 +2342,7 @@
     "sources": [
      "Luma"
     ],
-    "days_until": 34,
+    "days_until": 33,
     "ongoing": false
    },
    {
@@ -2288,7 +2361,7 @@
      "Luma",
      "IndustryEvents"
     ],
-    "days_until": 37,
+    "days_until": 36,
     "ongoing": false
    },
    {
@@ -2306,7 +2379,7 @@
     "sources": [
      "Luma"
     ],
-    "days_until": 40,
+    "days_until": 39,
     "ongoing": false
    },
    {
@@ -2324,7 +2397,7 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 46,
+    "days_until": 45,
     "ongoing": false
    },
    {
@@ -2342,7 +2415,25 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 47,
+    "days_until": 46,
+    "ongoing": false
+   },
+   {
+    "date_start": "2026-12-25",
+    "date_end": "2026-12-25",
+    "category": "会议",
+    "category_en": "Conference",
+    "title": "iCrypto Awards 2026",
+    "coins": [],
+    "city": "Dubai",
+    "importance": 1,
+    "source": "IndustryEvents",
+    "url": "https://www.industryevents.com/events/icrypto-awards-2026",
+    "note": "",
+    "sources": [
+     "IndustryEvents"
+    ],
+    "days_until": 60,
     "ongoing": false
    }
   ]
@@ -2350,7 +2441,7 @@
  "next7": [
   {
    "date": "2026-10-28",
-   "days_until": 3,
+   "days_until": 2,
    "tab": "btc",
    "title_zh": "美联储议息决议",
    "title_en": "FOMC rate decision",
