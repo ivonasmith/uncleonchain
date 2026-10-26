@@ -267,6 +267,15 @@ def load_posts(slug):
 ALL_POSTS = {p["slug"]: load_posts(p["slug"]) for p in PILLARS}
 
 
+# 报告分类（报告页顶部的筛选按钮；报告 meta 里写「分类: BTC」，可写多个，逗号隔开）
+REPORT_CATS = ["BTC", "MEME", "RWA", "AI Agent"]
+REPORT_FILTER_JS = """<script>(function(){var bs=document.querySelectorAll('#rcats .pill'),cs=document.querySelectorAll('#rlist .rcard'),em=document.getElementById('rempty');
+function go(c){var n=0;bs.forEach(function(b){b.classList.toggle('on',b.dataset.c===c)});cs.forEach(function(x){var ok=c==='all'||(' '+x.dataset.cat+' ').indexOf(' '+c+' ')>=0;x.style.display=ok?'':'none';if(ok)n++});
+em.style.display=n?'none':'';}
+bs.forEach(function(b){b.addEventListener('click',function(){go(b.dataset.c);history.replaceState(null,'',b.dataset.c==='all'?location.pathname:'#'+encodeURIComponent(b.dataset.c))})});
+var h=decodeURIComponent(location.hash.slice(1));go([].some.call(bs,function(b){return b.dataset.c===h})?h:'all');})();</script>"""
+
+
 def load_reports():
     """content/reports/ 下的分析报告：<slug>.html（整篇原样，英文版 <slug>.en.html）/ <slug>.md /
     <slug>/index.html（带图片等附件的文件夹，英文版 index.en.html）。"""
@@ -303,6 +312,7 @@ def load_reports():
             meta.setdefault("标题EN", em.get("标题"))
             meta.setdefault("摘要EN", em.get("摘要"))
         meta["标签列表"] = [x.strip() for x in re.split(r"[,，、]", meta.get("标签") or "") if x.strip()]
+        meta["分类列表"] = [x.strip() for x in re.split(r"[,，、]", meta.get("分类") or "") if x.strip() in REPORT_CATS]
         out.append(meta)
     out.sort(key=lambda p: p["日期"], reverse=True)
     return out
@@ -3039,8 +3049,12 @@ def build_reports():
         tags = "".join(f'<span class="chip">{esc(t)}</span>' for t in r["标签列表"])
         if LANG["v"] == "en" and not r.get("en_src") and r["kind"] != "md":
             tags = '<span class="chip t-warn">中文</span>' + tags
-        lst += (f'<a class="card rcard" href="{U("/reports/" + r["slug"] + "/")}"><span class="d">{esc(r["日期"])}</span><b>{esc(LF(r, "标题"))}</b>'
+        cat = " ".join(c.replace(" ", "_") for c in r["分类列表"])
+        lst += (f'<a class="card rcard" data-cat="{esc(cat)}" href="{U("/reports/" + r["slug"] + "/")}"><span class="d">{esc(r["日期"])}</span><b>{esc(LF(r, "标题"))}</b>'
                 f'<p>{esc(LF(r, "摘要"))}</p>{f"<div class=chips>{tags}</div>" if tags else ""}</a>')
+    n = {c: sum(1 for r in ALL_REPORTS if c in r["分类列表"]) for c in REPORT_CATS}
+    pills = (f'<button class="pill on" data-c="all">{T("全部", "All")}<small>{len(ALL_REPORTS)}</small></button>'
+             + "".join(f'<button class="pill" data-c="{c.replace(" ", "_")}">{c}<small>{n[c]}</small></button>' for c in REPORT_CATS))
     how = T("周度节奏的深度报告：针对一个方向或议题做全方位分析，给出可以拿来做决策依据的结论。报告原样排版、跟随站点深浅色；写作当时的判断发布后不改，后续修正另起一篇。",
             "Weekly deep-dive reports: one theme analysed end to end, with conclusions usable as decision inputs. Original layout, following the site's light/dark theme. Frozen once published; corrections go in a new report.")
     zh_only = [r for r in ALL_REPORTS if not r.get("en_src") and r["kind"] != "md"]
@@ -3049,8 +3063,10 @@ def build_reports():
     body = f"""<div class="ph"><div><div class="eyebrow">Research Reports</div><h1>{T("分析报告", "Research reports")}</h1>
 <p class="lede">{esc(how)}</p></div></div>
 {en_note}
-{f'<div class="grid g2">{lst}</div>' if lst else empty}"""
-    emit("reports/index.html", T(f"分析报告 · {BRAND}", f"Research reports · {BRAND_EN}"), body, active="reports", desc=how)
+<div class="fbar" id="rcats" role="group" aria-label="{T("按分类筛选", "Filter by category")}">{pills}</div>
+{f'<div class="grid g2" id="rlist">{lst}</div>' if lst else empty}
+<div class="empty" id="rempty" style="display:none">{T("这个分类还没有报告，写好就发在这里。", "No reports in this category yet.")}</div>"""
+    emit("reports/index.html", T(f"分析报告 · {BRAND}", f"Research reports · {BRAND_EN}"), body, active="reports", desc=how, scripts=REPORT_FILTER_JS)
     for r in ALL_REPORTS:
         cr = crumbs([(T("分析报告", "Reports"), "/reports/"), (LF(r, "标题"), None)])
         note = ZH_ONLY if LANG["v"] == "en" and not r.get("en_src") else ""

@@ -52,7 +52,7 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
 - `data/解读日志/{日,周,月}/`：写入即冻结。同日重跑且核心缺失变少才覆盖并标「补录」。
 - `content/posts/<macro|rotation|narrative>/`：手写文章（.md 或整篇 .html）；`content/journal/<日期|周|月>.md`：人工点评。
 - `content/reports/`：分析报告（新报告放进来后跑 `python3 pipeline/出报告PDF.py` 生成浅色 PDF，报告页「下载 PDF」按语言给）。大叔给排好的浅色 HTML（中文 `<slug>.html`，英文 `<slug>.en.html`），iframe 原样嵌入、不加摘要框；
-  深色版出网站时自动生成（颜色明度翻转），不用手调。元信息写 `<!--meta-->`，流程见目录 README。
+  深色版出网站时自动生成（颜色明度翻转），不用手调。元信息写 `<!--meta-->`（含 `分类:` BTC / MEME / RWA / AI Agent，报告页按它筛选），流程见目录 README。
 - `assets/`：头像、favicon、og 卡（`pipeline/做图标.py` 生成），`assets/vendor/html2canvas.min.js` 由 Actions 自托管。
 - 呈现原则（2026-10-22 减法）：方法论放使用指南或 ⓘ 悬浮说明（页头 `p.lede` 自动变 ⓘ，要平铺的写 `lede keep`；图表 `note` 也变 ⓘ）。
   各层卡片按注册表 level 分层：核心 = 大卡 + 青柠左边线；辅助 = 虚线小卡无走势；没有核心的组折进「辅助与观察（不进本层判定）」。
