@@ -36,6 +36,13 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
 - `cal/`：事件日历。`cal-daily.yml` 每天 UTC 00:37 跑 `cal/cal_daily.py` → `data/cal/cal_latest.json`；页面 /calendar/、首页卡片、宏观页综合研判下「下一个：…」。CoinMarketCal / Coindar 没 key 就「未接入」。
 - 发射台活动温度（`pipeline/周期观察.py` 数据与热潮识别、`周期仪表盘.py` 展示）：每日更新。序列 = 研究快照 `content/cycle/snapshot.json`（截至 2026-10-17，sha256 在 manifest）+ 之后接 `发射台矩阵.json`「历史」的类目合计；热潮规则重算快照区间 27 轮逐字段对上（对不上会打 ⚠️）。
   仪表盘 `周期仪表盘.hero` 放在矩阵页最上面（先看温度再看细节），周期页 /launchpad/cycle/ 看这一轮、各阶段时长、历史；全站统一叫「发射台活动温度」，颜色用 `--cyc-*` 变量，文案要大白话。「钱在哪」= `出网站.money_where`。
+- 发射台长周期（2026-10-29）：`周期观察.long_view` / `coverage`。全部历史 2021-09-18 起只作背景，比高低只用可比段（`COMPARABLE_FROM` = 2024-03-01，pump.fun 开始报数；之前只有 1–6 家融资型平台报数）；
+  长周期读数只作描述（距最高、常态下沿 Q05 的倍数、可比段最低），不合成分数、不贴季节。近期温度仍是 730 天 Q05–Q95（≥365 天）。覆盖 < 95% 时第一屏提示。
+- AI Agent 页 /ai-agent/（`出网站.build_ai_agent`）：读 `public/ai-agent/monitor/core_series.json`（交接包 `tools/agent-id` 导出，原样页面也发布在 /ai-agent/monitor/）。
+  日更要 self-hosted runner（标签 agent-id）+ 私有运行目录（种子不进仓库）+ repo secret `AGENT_ID_PROXY` / variable `AGENT_ID_RUNTIME`，模板在 `tools/agent-id/handoff/agent-id-daily.yml.template`，**没装进 .github/workflows**；
+  现在由大叔电脑上 Codex 的 monitor-agent-id 定时任务采集，切换前不要启用模板（单时钟）。U = 没取到完整数据，不当 0。
+- 时间口径（2026-10-29）：数据一律按 UTC 完整日（UTC 0 点收盘）对齐，价格用收盘价（L2 / L3 已改：只取 < 今天的日子）；页面钟点用 `出网站.TT`（中文北京时间 / 英文美东），
+  收盘时刻 `TCLOSE`，UTC 日截止 `TDAY`。别再写裸「UTC hh:mm」。
 - 交易所 + ETF 持币：`拉宏观.fetch_etf_hold`（TFTC data.json，`totalNetAssetsUsd / btcCloseUsd`）→ `etf_btc`；注册表 `etf_hold` / `exetf_sum` 在 L3「交易所与现货 ETF 持币」组，只作描述。
 - **所有 workflow 共用 concurrency 组 `daily-pipeline`**：排队中的会被新排进来的取消，手动触发一次只排一个。本地出网站会删掉 `site/data/launchpad/*`，提交前 `git checkout -- site/data/launchpad`。别用 git stash（出过丢改动的事）。
 - **指标注册表**（M12）= `宏观规则.REGISTRY`：每条带 层 / 组 / 序 / 状态（live · pending · retired；自录的满 90 天前自动「记录中」）/ cuts（tone 即 bias：up 顺风 · neutral · dn 逆风 · warn 留意）/

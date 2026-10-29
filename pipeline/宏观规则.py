@@ -1912,3 +1912,11 @@ def interpret(S, ind, j, stt, since):
 def re_short(z):
     import re as _re
     return _re.sub(r"（.*?）|\(.*?\)", "", z or "").split("·与价格")[0].strip()
+
+
+RULE_CHANGES.append(
+    {"日期": "2026-10-29", "锚": "2026-10-29-close", "范围": "L2 / L3 价格口径", "EN范围": "L2 / L3 price basis",
+     "原因": "L2、L3 原来在 Coin Metrics 还没出当天数据时，会用 bitview 在脚本运行那一刻的盘中价补上，所以刻度尺上的「现价」其实是 UTC 02:50 左右的盘中价，和一整天后的页面、和日更里的其他数据不在同一个时间点。全站统一改为 UTC 0 点收盘价。",
+     "原因EN": "When Coin Metrics had not yet published the day, L2 and L3 used bitview's intraday price at run time, so the ruler's 'price' was a ~02:50 UTC intraday price, out of step with the rest of the site. Everything now uses the 00:00 UTC close.",
+     "内容": "L2、L3 只用已收盘的 UTC 完整日：数据日从「运行当天」变为「前一天」，价格 = 该日 UTC 0 点收盘价；刻度尺、价格位置条改标「收盘价 + 收盘时刻」。L3 样本外记录写入后不改：2026-10-29 及以前各行是运行时的价格，之后各行是收盘价。",
+     "EN": "L2 and L3 now use only closed UTC days: the data date moves from the run day to the previous day, and price = that day's 00:00 UTC close; the ruler and price bar now read 'close + close time'. L3's out-of-sample log is never rewritten: rows up to 2026-10-29 used the run-time price, later rows use the close."})

@@ -1,0 +1,354 @@
+{
+  "schema_version": 1,
+  "proxy": null,
+  "proxy_status": "由部署Runner配置AGENT_ID_PROXY，未配置禁止联网",
+  "confirmations": 15,
+  "rpc": "https://rpc-bsc.blockmachine.io",
+  "block_rpc": "https://bsc-dataseed.binance.org",
+  "backfill_observed_start": "2026-10-19",
+  "start_status": "已完整读取部署起空前缀，首条注册UTC 2026-10-19；截至2026-10-27全序列对账PASS，详见data/reconciliation.json",
+  "claimed_agent_id_launch": "2026-10-20",
+  "registry": {
+    "address": "0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F",
+    "deployment_block": 127950748,
+    "source_url": "https://sourcify.dev/server/v2/contract/56/0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F?fields=all",
+    "event_names": [
+      "Registered",
+      "AdminRegistered",
+      "Transfer"
+    ],
+    "bootstrap_source_file": "raw/registry_source.json"
+  },
+  "rpc_log_chunk": 10000,
+  "max_adaptive_depth": 3,
+  "platforms": [
+    {
+      "id": "Four.Meme-Agent",
+      "enabled": false,
+      "reason": "代理已取得exact_match；实际实现0x02d714Cb43d1544Abe1fFc2405ec00b7235B7F26源码在API及官方full_match存档均404，模板门禁/历史升级未完成核验",
+      "address": "0xebe7b6C1089D9F72aD07f34E36d898e44E5e27f3",
+      "source_url": "https://sourcify.dev/server/v2/contract/56/0xebe7b6C1089D9F72aD07f34E36d898e44E5e27f3?fields=all"
+    },
+    {
+      "id": "Flap-Agent",
+      "enabled": false,
+      "reason": "已发现Agent专属工厂和门户；工厂API及full_match存档404，未取得已验证源码和事件全集",
+      "address": "0xC55820f24015bE7c4f18949D9e1363A3609B300e",
+      "source_url": "https://sourcify.dev/server/v2/contract/56/0xC55820f24015bE7c4f18949D9e1363A3609B300e?fields=all"
+    },
+    {
+      "id": "Gang-V2",
+      "enabled": false,
+      "reason": "源码API及官方full_match存档404；BscScan此前被拦，不能确认源码和创建/交易事件全集",
+      "address": "0x1B8F3f69DFa0a7F63d308C7EB0Fd38D8b099966E",
+      "source_url": "https://sourcify.dev/server/v2/contract/56/0x1B8F3f69DFa0a7F63d308C7EB0Fd38D8b099966E?fields=all"
+    },
+    {
+      "id": "Gang-V3",
+      "enabled": false,
+      "reason": "README称2026-10-27合并部署（E4）；源码API404，BscScan被拦；不将README当历史链上证明",
+      "address": "0x15CFD2dc8278Fb87a1783ef42111618E20874365",
+      "source_url": "https://sourcify.dev/server/v2/contract/56/0x15CFD2dc8278Fb87a1783ef42111618E20874365?fields=all"
+    },
+    {
+      "id": "Gang-FairMintPad",
+      "enabled": false,
+      "reason": "旧FairMintPad与新GangLaunchpad打新分开核验；不与曲线代币混算"
+    },
+    {
+      "id": "Gang-Soft",
+      "enabled": false,
+      "reason": "当前API有61币索引（E3快照），源码API404；不回填成历史日末状态",
+      "address": "0x4E6f13c8A453c1b8b4E20b590082bb233a5b80d7",
+      "source_url": "https://sourcify.dev/server/v2/contract/56/0x4E6f13c8A453c1b8b4E20b590082bb233a5b80d7?fields=all"
+    },
+    {
+      "id": "AgentPad",
+      "enabled": true,
+      "reason": "工厂已匹配exact_match；创建者有ID豁免，不称纯ID集合；交易与毕业事件在子币，单列缺口",
+      "address": "0xb31e99882d23377a9Ea360f1C065AD7b53Fb8Ec5",
+      "source_url": "https://sourcify.dev/server/v2/contract/56/0xb31e99882d23377a9Ea360f1C065AD7b53Fb8Ec5?fields=all",
+      "deployment_block": 128989097,
+      "events": {
+        "TokenCreated": {
+          "role": "create",
+          "fields": {
+            "address": "token",
+            "creator": "creator",
+            "name": "name",
+            "symbol": "symbol"
+          }
+        }
+      },
+      "complete_trade_universe": false
+    },
+    {
+      "id": "Ospad",
+      "enabled": false,
+      "reason": "待唯一产品及验证合约"
+    },
+    {
+      "id": "GWEI",
+      "enabled": false,
+      "reason": "用户提供代币地址的Sourcify返回404，尚未核对发射台与门禁关系"
+    },
+    {
+      "id": "BADGE",
+      "enabled": false,
+      "reason": "公开API名单可读取，工厂源码和门禁尚未验证；只作为来源快照"
+    }
+  ],
+  "noncurve": [
+    {
+      "id": "Ptah-Relic",
+      "enabled": false,
+      "reason": "原Relic项目独立留缺口，不与POA卡混算"
+    },
+    {
+      "id": "HashDroids",
+      "enabled": true,
+      "reason": "本次Sourcify creation/runtime exact_match，源码mine读取指定Registry",
+      "address": "0x49718F13F9318dFAC9638Cd0a79a25BBBe4649A9",
+      "source_url": "https://sourcify.dev/server/v2/contract/56/0x49718F13F9318dFAC9638Cd0a79a25BBBe4649A9?fields=all",
+      "deployment_block": 129252310,
+      "activity_event": "Mined",
+      "actor_field": "miner"
+    },
+    {
+      "id": "Bgent",
+      "enabled": false,
+      "reason": "所给地址已匹配ERC20源码，无注册表门禁；挖矿/铸造实际入口仍待发现"
+    },
+    {
+      "id": "BNCB-claim",
+      "enabled": false,
+      "reason": "待核验金库代理/实现与Claim事件"
+    },
+    {
+      "id": "Ptah-POA",
+      "enabled": true,
+      "address": "0xD87ADb2E47979d6cb323896B1A9320E0dd132213",
+      "source_url": "https://sourcify.dev/server/v2/contract/56/0xD87ADb2E47979d6cb323896B1A9320E0dd132213?fields=all",
+      "source_policy": "sourcify_match",
+      "deployment_block": 129687816,
+      "activity_event": "Minted",
+      "actor_field": "to",
+      "aux_events": [
+        "SeriesChosen",
+        "SeriesPriceSet",
+        "MintOpenSet"
+      ],
+      "reason": "源码creation/runtime均match、非exact_match，非代理；需实际不可变handleRegistry及requireHandle核验；BscScan被拦，不作为其已验证证明"
+    }
+  ],
+  "snapshot_sources": [
+    {
+      "id": "Gang-project-index",
+      "url": "https://gang.fun/api/tokens?offset=0&limit=50",
+      "pagination": "gang"
+    },
+    {
+      "id": "BADGE-project-index",
+      "url": "https://badgepad.family/api/tokens",
+      "pagination": "array"
+    },
+    {
+      "id": "BADGE-RWA-project-index",
+      "url": "https://badgepad.family/api/rwa/tokens",
+      "pagination": "array"
+    }
+  ],
+  "rules_pages": [
+    {
+      "id": "binance-wallet",
+      "url": "https://developers.binance.com/en/docs/products/agentic-wallet/welcome",
+      "grade": "E2"
+    },
+    {
+      "id": "binance-controls",
+      "url": "https://www.binance.com/en/blog/tech/7276731523787720812",
+      "grade": "E2"
+    },
+    {
+      "id": "agent-id-claim",
+      "url": "https://web3.binance.com/en/agent-id",
+      "grade": "E2"
+    },
+    {
+      "id": "four-docs",
+      "url": "https://four.meme",
+      "grade": "E2"
+    },
+    {
+      "id": "four-releases",
+      "url": "https://api.github.com/repos/four-meme-community/four-meme-ai/releases",
+      "grade": "E4"
+    },
+    {
+      "id": "gang-readme",
+      "url": "https://raw.githubusercontent.com/gangfun/gang-launchpad/main/README.md",
+      "grade": "E4"
+    },
+    {
+      "id": "gang-releases",
+      "url": "https://api.github.com/repos/gangfun/gang-launchpad/releases",
+      "grade": "E4"
+    },
+    {
+      "id": "flap-docs",
+      "url": "https://docs.flap.sh",
+      "grade": "E2"
+    },
+    {
+      "id": "agentpad-docs",
+      "url": "https://agentpad.trade/",
+      "grade": "E2"
+    },
+    {
+      "id": "ptah-poa-docs",
+      "url": "https://ptah.trade/poa",
+      "grade": "E2"
+    }
+  ],
+  "discovery_url": "https://api.github.com/search/code?q=0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F",
+  "discovery_grade": "E4",
+  "bnb_klines_url": "https://api.binance.com/api/v3/klines",
+  "gecko_base": "https://api.geckoterminal.com/api/v2",
+  "definitions": {
+    "D0": "毕业所在UTC日收盘；D1/D3/D7为该UTC日期加1/3/7日；未闭合日U",
+    "price_currency": "GeckoTerminal 同一池、同一base资产的USD日线，不跨池拼接；毕业价须另有链上或项目明确报价，不用日开盘冒充毕业价",
+    "active_id_wallets": "当日已验证门禁产品活动地址中，在活动区块前已持有Registry ID的地址数；公开命名按用户要求保留，身份字段使用agent_id_holders",
+    "sequence_name_proxy": "同UTC日同非空前缀出现至少3个连续数字后缀，所涉名字数/当日全部注册名字数，E4启发式",
+    "median_raised": "当日创建队列各币在当日UTC末区块的实收BNB中位数；非BNB计价不混算",
+    "taxed_share": "当日创建队列中buy_tax_bps或sell_tax_bps>0的币数/完整当日创建币数；池费不视为代币税",
+    "dev_prebuy_share": "当日创建币中创建交易内有开发者预购的币数/当日创建币数；记录分子分母",
+    "zero_policy": "仅完整读取的计数/成交总和可为0；空分母比例U",
+    "snapshot_policy": "当前状态快照不写成历史日末状态；不同来源分别输出，不能拼接",
+    "agentpad_volume": "Buy.bnbIn + Sell.(bnbOut+fee)，统一为不含平台交易费的曲线成交BNB；ERC20转账税0与1%曲线交易费分开记录",
+    "agentpad_graduation_price": "已核源码CurveMath.spotPrice(SOLD_CAP)的整数结果：79999999999 wei/1e18代币，BNB价格7.9999999999e-8；DEX初始注池bnb/tokens另列，不等于链上首笔成交",
+    "hashdroids_speed": "最近一个完整UTC日的24h铸造量/24，不是即时滚动24h",
+    "observed_activation_lower_bound": "只包含已核且当日完整读取产品中的已证Agent ID参与者；生态全集未覆盖，不能替代全生态active_id_wallets/activation_rate"
+  },
+  "proxy_origin": "environment_verified_by_HTTP_200_and_BSC_chain_probe; user_port_is_not_assumed",
+  "bootstrap_provenance": "raw/bootstrap与raw/http保存实际请求；网络使用本执行环境实测代理，与用户电脑7980无关",
+  "mint_candidates_file": "mint_candidates.json",
+  "mint_source_checks_file": "data/mint_source_checks.json",
+  "previous_rpc": "https://rpc-bsc.48.club",
+  "mint_rpc": "https://rpc-bsc.blockmachine.io",
+  "agentpad_child_adapter": true,
+  "source_selection": "Blockmachine已独立核验chainId56、早期区块及注册事件；全序列独立重算，不拼接48.club日行。旧源保存在data/source_series/。",
+  "rpc_discovery_raw": "raw/resume_repo_src_engine_buy_agent_id_ca.mjs.json",
+  "rpc_validation_raw": "data/resume_archive_probe.json",
+  "prefetch_daily_logs": true,
+  "rpc_rate_note": "服务返回每分钟60CU，单节点串行间隔1.2秒；JSON-RPC限流按retry_after_ms退避，最多重试3次；max_blocks=10000已实际核验。",
+  "pending_discoveries": [
+    {
+      "address": "0x10ED43C718714eb63d5aA57B78B54704E256024E",
+      "discovered_date": "2026-10-27",
+      "url": "https://api.github.com/repos/MetaverseX24/agent-id-trade-community/git/blobs/55f2f8a90c7e34386b94f5a94ec922782e102831",
+      "raw": "raw/http/cd6e88d1b02034e08502128a929a0cde0fcaa909b0d19c120222ed60eef5fcba.json",
+      "grade": "E4",
+      "enabled": false,
+      "reason": "通过公开仓库文件读取发现；不是GitHub代码搜索结果。未核验实现/门禁/历史事件全集前不启用"
+    },
+    {
+      "address": "0x18Aa6C93f1887a243fdc348C9A77F5136555174a",
+      "discovered_date": "2026-10-27",
+      "url": "https://api.github.com/repos/MetaverseX24/agent-id-trade-community/git/blobs/55f2f8a90c7e34386b94f5a94ec922782e102831",
+      "raw": "raw/http/cd6e88d1b02034e08502128a929a0cde0fcaa909b0d19c120222ed60eef5fcba.json",
+      "grade": "E4",
+      "enabled": false,
+      "reason": "通过公开仓库文件读取发现；不是GitHub代码搜索结果。未核验实现/门禁/历史事件全集前不启用"
+    },
+    {
+      "address": "0x1B8F3f69DFa0a7F63d308C7EB0Fd38D8b099966E",
+      "discovered_date": "2026-10-27",
+      "url": "https://api.github.com/repos/MetaverseX24/agent-id-trade-community/git/blobs/55f2f8a90c7e34386b94f5a94ec922782e102831",
+      "raw": "raw/http/cd6e88d1b02034e08502128a929a0cde0fcaa909b0d19c120222ed60eef5fcba.json",
+      "grade": "E4",
+      "enabled": false,
+      "reason": "通过公开仓库文件读取发现；不是GitHub代码搜索结果。未核验实现/门禁/历史事件全集前不启用"
+    },
+    {
+      "address": "0x49387D2E6cbF8FefE856e3FBc3E98a01aC3af062",
+      "discovered_date": "2026-10-27",
+      "url": "https://api.github.com/repos/MetaverseX24/agent-id-trade-community/git/blobs/55f2f8a90c7e34386b94f5a94ec922782e102831",
+      "raw": "raw/http/cd6e88d1b02034e08502128a929a0cde0fcaa909b0d19c120222ed60eef5fcba.json",
+      "grade": "E4",
+      "enabled": false,
+      "reason": "通过公开仓库文件读取发现；不是GitHub代码搜索结果。未核验实现/门禁/历史事件全集前不启用"
+    },
+    {
+      "address": "0x4E6f13c8A453c1b8b4E20b590082bb233a5b80d7",
+      "discovered_date": "2026-10-27",
+      "url": "https://api.github.com/repos/MetaverseX24/agent-id-trade-community/git/blobs/55f2f8a90c7e34386b94f5a94ec922782e102831",
+      "raw": "raw/http/cd6e88d1b02034e08502128a929a0cde0fcaa909b0d19c120222ed60eef5fcba.json",
+      "grade": "E4",
+      "enabled": false,
+      "reason": "通过公开仓库文件读取发现；不是GitHub代码搜索结果。未核验实现/门禁/历史事件全集前不启用"
+    },
+    {
+      "address": "0x60aee38576035E757deD30fF8db8A8DA476430C1",
+      "discovered_date": "2026-10-27",
+      "url": "https://api.github.com/repos/MetaverseX24/agent-id-trade-community/git/blobs/55f2f8a90c7e34386b94f5a94ec922782e102831",
+      "raw": "raw/http/cd6e88d1b02034e08502128a929a0cde0fcaa909b0d19c120222ed60eef5fcba.json",
+      "grade": "E4",
+      "enabled": false,
+      "reason": "通过公开仓库文件读取发现；不是GitHub代码搜索结果。未核验实现/门禁/历史事件全集前不启用"
+    },
+    {
+      "address": "0xC55820f24015bE7c4f18949D9e1363A3609B300e",
+      "discovered_date": "2026-10-27",
+      "url": "https://api.github.com/repos/MetaverseX24/agent-id-trade-community/git/blobs/55f2f8a90c7e34386b94f5a94ec922782e102831",
+      "raw": "raw/http/cd6e88d1b02034e08502128a929a0cde0fcaa909b0d19c120222ed60eef5fcba.json",
+      "grade": "E4",
+      "enabled": false,
+      "reason": "通过公开仓库文件读取发现；不是GitHub代码搜索结果。未核验实现/门禁/历史事件全集前不启用"
+    },
+    {
+      "address": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+      "discovered_date": "2026-10-27",
+      "url": "https://api.github.com/repos/MetaverseX24/agent-id-trade-community/git/blobs/55f2f8a90c7e34386b94f5a94ec922782e102831",
+      "raw": "raw/http/cd6e88d1b02034e08502128a929a0cde0fcaa909b0d19c120222ed60eef5fcba.json",
+      "grade": "E4",
+      "enabled": false,
+      "reason": "通过公开仓库文件读取发现；不是GitHub代码搜索结果。未核验实现/门禁/历史事件全集前不启用"
+    },
+    {
+      "address": "0xF81C4E51c48466c6025B0165b1Ea0F6978c712cb",
+      "discovered_date": "2026-10-27",
+      "url": "https://api.github.com/repos/MetaverseX24/agent-id-trade-community/git/blobs/55f2f8a90c7e34386b94f5a94ec922782e102831",
+      "raw": "raw/http/cd6e88d1b02034e08502128a929a0cde0fcaa909b0d19c120222ed60eef5fcba.json",
+      "grade": "E4",
+      "enabled": false,
+      "reason": "通过公开仓库文件读取发现；不是GitHub代码搜索结果。未核验实现/门禁/历史事件全集前不启用"
+    },
+    {
+      "address": "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+      "discovered_date": "2026-10-27",
+      "url": "https://api.github.com/repos/MetaverseX24/agent-id-trade-community/git/blobs/55f2f8a90c7e34386b94f5a94ec922782e102831",
+      "raw": "raw/http/cd6e88d1b02034e08502128a929a0cde0fcaa909b0d19c120222ed60eef5fcba.json",
+      "grade": "E4",
+      "enabled": false,
+      "reason": "通过公开仓库文件读取发现；不是GitHub代码搜索结果。未核验实现/门禁/历史事件全集前不启用"
+    },
+    {
+      "address": "0xe2cE6ab80874Fa9Fa2aAE65D277Dd6B8e65C9De0",
+      "discovered_date": "2026-10-27",
+      "url": "https://api.github.com/repos/MetaverseX24/agent-id-trade-community/git/blobs/55f2f8a90c7e34386b94f5a94ec922782e102831",
+      "raw": "raw/http/cd6e88d1b02034e08502128a929a0cde0fcaa909b0d19c120222ed60eef5fcba.json",
+      "grade": "E4",
+      "enabled": false,
+      "reason": "通过公开仓库文件读取发现；不是GitHub代码搜索结果。未核验实现/门禁/历史事件全集前不启用"
+    },
+    {
+      "address": "0xebe7b6C1089D9F72aD07f34E36d898e44E5e27f3",
+      "discovered_date": "2026-10-27",
+      "url": "https://api.github.com/repos/MetaverseX24/agent-id-trade-community/git/blobs/55f2f8a90c7e34386b94f5a94ec922782e102831",
+      "raw": "raw/http/cd6e88d1b02034e08502128a929a0cde0fcaa909b0d19c120222ed60eef5fcba.json",
+      "grade": "E4",
+      "enabled": false,
+      "reason": "通过公开仓库文件读取发现；不是GitHub代码搜索结果。未核验实现/门禁/历史事件全集前不启用"
+    }
+  ]
+}

@@ -2,5 +2,7 @@
   Cache-Control: public, max-age=2592000
 /data/*
   Cache-Control: public, max-age=3600
+/ai-agent/monitor/*
+  Cache-Control: public, max-age=0, must-revalidate
 /*
   X-Content-Type-Options: nosniff

@@ -1,0 +1,185 @@
+{
+  "schema_version": 1,
+  "data_through_utc": "2026-10-28",
+  "generated_utc": "2026-10-29T00:35:36.618120+00:00",
+  "source_read_through_utc": "2026-10-29T00:29:19.488608+00:00",
+  "rows": [
+    {
+      "date": "2026-10-19",
+      "cumulative_ids": 1,
+      "new_ids": 1,
+      "trading_addresses": 0,
+      "volume_bnb": "0",
+      "new_launches": 0,
+      "graduated": 0,
+      "scope": [
+        "AgentPad"
+      ],
+      "start_block": 128454491,
+      "end_block": 128646422,
+      "rpc": "https://rpc-bsc.blockmachine.io",
+      "grade": "E1",
+      "event_reconciliation": "PASS"
+    },
+    {
+      "date": "2026-10-20",
+      "cumulative_ids": 31455,
+      "new_ids": 31454,
+      "trading_addresses": 0,
+      "volume_bnb": "0",
+      "new_launches": 0,
+      "graduated": 0,
+      "scope": [
+        "AgentPad"
+      ],
+      "start_block": 128646423,
+      "end_block": 128838304,
+      "rpc": "https://rpc-bsc.blockmachine.io",
+      "grade": "E1",
+      "event_reconciliation": "PASS"
+    },
+    {
+      "date": "2026-10-21",
+      "cumulative_ids": 45239,
+      "new_ids": 13784,
+      "trading_addresses": 0,
+      "volume_bnb": "0",
+      "new_launches": 0,
+      "graduated": 0,
+      "scope": [
+        "AgentPad"
+      ],
+      "start_block": 128838305,
+      "end_block": 129030232,
+      "rpc": "https://rpc-bsc.blockmachine.io",
+      "grade": "E1",
+      "event_reconciliation": "PASS"
+    },
+    {
+      "date": "2026-10-22",
+      "cumulative_ids": 75757,
+      "new_ids": 30518,
+      "trading_addresses": 134,
+      "volume_bnb": "29.62460048925760163",
+      "new_launches": 2,
+      "graduated": 0,
+      "scope": [
+        "AgentPad"
+      ],
+      "start_block": 129030233,
+      "end_block": 129222151,
+      "rpc": "https://rpc-bsc.blockmachine.io",
+      "grade": "E1",
+      "event_reconciliation": "PASS"
+    },
+    {
+      "date": "2026-10-23",
+      "cumulative_ids": 90148,
+      "new_ids": 14391,
+      "trading_addresses": 423,
+      "volume_bnb": "38.121445143043320733",
+      "new_launches": 9,
+      "graduated": 1,
+      "scope": [
+        "AgentPad"
+      ],
+      "start_block": 129222152,
+      "end_block": 129414101,
+      "rpc": "https://rpc-bsc.blockmachine.io",
+      "grade": "E1",
+      "event_reconciliation": "PASS"
+    },
+    {
+      "date": "2026-10-24",
+      "cumulative_ids": 96586,
+      "new_ids": 6438,
+      "trading_addresses": 5,
+      "volume_bnb": "0.268651187850219896",
+      "new_launches": 0,
+      "graduated": 0,
+      "scope": [
+        "AgentPad"
+      ],
+      "start_block": 129414102,
+      "end_block": 129606056,
+      "rpc": "https://rpc-bsc.blockmachine.io",
+      "grade": "E1",
+      "event_reconciliation": "PASS"
+    },
+    {
+      "date": "2026-10-25",
+      "cumulative_ids": 103208,
+      "new_ids": 6622,
+      "trading_addresses": 3,
+      "volume_bnb": "0.079636247465368126",
+      "new_launches": 0,
+      "graduated": 0,
+      "scope": [
+        "AgentPad"
+      ],
+      "start_block": 129606057,
+      "end_block": 129797837,
+      "rpc": "https://rpc-bsc.blockmachine.io",
+      "grade": "E1",
+      "event_reconciliation": "PASS"
+    },
+    {
+      "date": "2026-10-26",
+      "cumulative_ids": 113586,
+      "new_ids": 10378,
+      "trading_addresses": 0,
+      "volume_bnb": "0",
+      "new_launches": 0,
+      "graduated": 0,
+      "scope": [
+        "AgentPad"
+      ],
+      "start_block": 129797838,
+      "end_block": 129989706,
+      "rpc": "https://rpc-bsc.blockmachine.io",
+      "grade": "E1",
+      "event_reconciliation": "PASS"
+    },
+    {
+      "date": "2026-10-27",
+      "cumulative_ids": 124659,
+      "new_ids": 11073,
+      "trading_addresses": 3,
+      "volume_bnb": "0.329036838478907688",
+      "new_launches": 1,
+      "graduated": 0,
+      "scope": [
+        "AgentPad"
+      ],
+      "start_block": 129989707,
+      "end_block": 130181609,
+      "rpc": "https://rpc-bsc.blockmachine.io",
+      "grade": "E1",
+      "event_reconciliation": "PASS"
+    },
+    {
+      "date": "2026-10-28",
+      "cumulative_ids": 132038,
+      "new_ids": 7379,
+      "trading_addresses": 1,
+      "volume_bnb": "0.000013267326732672",
+      "new_launches": 0,
+      "graduated": 0,
+      "scope": [
+        "AgentPad"
+      ],
+      "start_block": 130181610,
+      "end_block": 130373470,
+      "rpc": "https://rpc-bsc.blockmachine.io",
+      "grade": "E1",
+      "event_reconciliation": "PASS"
+    }
+  ],
+  "coverage": "注册为完整注册表；交易/发币为scope列出的完整已核平台子集，不代表全生态",
+  "definitions": {
+    "trading_addresses": "当日买卖事件独立参与地址；不是只买入地址，不含单纯铸造/领取，不是Agentic Wallet总数",
+    "volume_bnb": "已核曲线买卖成交额，扣除平台费；不含二级DEX及其他未核平台",
+    "new_launches": "已核工厂当日创建数；不表示每个创建者均受ID门禁",
+    "missing": "null显示U，图上断点；完整读取的零显示0"
+  }
+}

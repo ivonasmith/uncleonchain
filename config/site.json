@@ -2,6 +2,13 @@
  "_说明": "全站配置。定时任务的时间不在这里写死：出网站时从 .github/workflows/ 里的 cron 读出来，页面文案（含欢迎弹窗）一律引用这里生成的结果。",
  "定时任务": [
   {
+   "文件": "cal-daily.yml",
+   "名称": "事件日历",
+   "EN": "Event calendar",
+   "覆盖": "美联储议息 / CPI / 非农等 BTC 宏观事件与 Web3 行业动向；跑完重出网站",
+   "覆盖EN": "FOMC / CPI / payrolls and other BTC macro events plus Web3 industry events; rebuilds the site"
+  },
+  {
    "文件": "l2-daily.yml",
    "名称": "L2 周期状态机",
    "EN": "L2 cycle state machine",
@@ -16,6 +23,13 @@
    "覆盖EN": "STH cost +1σ pressure zone, STH cost, supply concentration and 30-day volatility (large-move warning), supply map, short-term holder and whale/retail lines (Coin Metrics + bitview.space); rebuilds the site"
   },
   {
+   "文件": "l4-daily.yml",
+   "名称": "L4 情绪衍生品",
+   "EN": "L4 sentiment & derivatives",
+   "覆盖": "资金费率 30 日均信号、8 个温度读数、6 个观察项（Coinalyze 等）；跑完重出网站",
+   "覆盖EN": "30-day funding signal, eight temperature readings and six watch items (Coinalyze etc.); rebuilds the site"
+  },
+  {
    "文件": "daily.yml",
    "名称": "日更",
    "EN": "Daily run",
@@ -26,5 +40,6 @@
  ],
  "推送重跑": "改了脚本、文章或配置推上来时，会立刻额外跑一次（所以个别日志的生成时间早于定时时间）。",
  "推送重跑EN": "Pushing code, posts or config triggers an extra run right away (so some logs are generated before the scheduled time).",
- "反馈账号": "Uncle_Onchain"
+ "反馈账号": "Uncle_Onchain",
+ "_时间": "所有数据按 UTC 完整日（UTC 0 点收盘，北京时间 08:00）对齐；定时任务在收盘后分批跑，页面上的时刻中文站写北京时间、英文站写美东时间。"
 }

@@ -1,5 +1,40 @@
 [
   {
+    "version": "2026.10.29",
+    "date": "2026-10-29",
+    "notify": true,
+    "title_zh": "发射台长周期位置 · AI Agent 页 · 时间与价格口径统一 · pools.trade 报告",
+    "title_en": "Launchpad long-run position · AI Agent page · unified time and price basis · pools.trade report",
+    "items": [
+      {
+        "type": "new",
+        "zh": "发射台活动温度第一屏改成两个尺度：近 2 年温度（仪表盘，0 ≈ 近 2 年常态下沿）+ 长周期位置（全部历史小图、比可比段最高低多少、是常态下沿的几倍）；周期页加全部历史大图（全部 / 2 年 / 1 年、线性 / 对数）",
+        "en": "Launchpad activity temperature now shows two scales: the 2-year temperature dial and a long-run position card (full-history sparkline, distance from the comparable peak, multiple of the normal lower edge); the cycles page adds a full-history chart (All / 2Y / 1Y, linear / log)"
+      },
+      {
+        "type": "new",
+        "zh": "「已在这个阶段 N 天」下面直接显示这个阶段一般持续几天和进度条；底部改写扫描覆盖：DefiLlama 收录的全部发射台、几条链、计入部分占类目手续费多少",
+        "en": "'In this stage for N days' now shows the stage's usual duration with a progress bar; the footer states coverage: all launchpads DefiLlama lists, how many chains, and the share of category fees counted"
+      },
+      {
+        "type": "new",
+        "zh": "新增 AI Agent 页：币安 Agent ID 生态六项核心数据（累计 / 新增 Agent ID、交易地址、曲线成交额、新发币、毕业），交易类数据目前只覆盖 AgentPad",
+        "en": "New AI Agent page: six core Binance Agent ID metrics (cumulative / new IDs, trading addresses, curve volume, launches, graduations); trading metrics cover AgentPad only for now"
+      },
+      {
+        "type": "data",
+        "zh": "时间与价格口径统一：所有数据按 UTC 0 点收盘的完整日对齐，L2 刻度尺、L3 价格位置改用收盘价并写明收盘时刻；页面钟点中文站写北京时间、英文站写美东时间",
+        "en": "Unified time and price basis: data aligns to full UTC days closing at 00:00 UTC; the L2 ruler and L3 price bar use that close and show its time; clock times read Beijing time (Chinese) / US Eastern (English)",
+        "corrections_anchor": "#rc-2026-10-29-close"
+      },
+      {
+        "type": "new",
+        "zh": "补发报告《2,263 场众筹，55 场毕业，无人赚钱：pools.trade 拆解报告》（2026-08-18 写成）",
+        "en": "Published the pools.trade teardown report (written 2026-08-18; Chinese only)"
+      }
+    ]
+  },
+  {
     "version": "2026.10.26",
     "date": "2026-10-26",
     "notify": true,

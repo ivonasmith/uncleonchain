@@ -924,7 +924,7 @@ function usd(v){const a=Math.abs(v),s=v<0?'−':'';return a>=1e12?s+'$'+(a/1e12)
 const sg=v=>v>0?'+':'';
 const F={usd:usd,usds:v=>sg(v)+usd(v),pct:v=>M(v.toFixed(2))+'%',pct1:v=>M(v.toFixed(1))+'%',pcts:v=>sg(v)+M(v.toFixed(2))+'%',
  pp:v=>sg(v)+M(v.toFixed(2))+'pp',x:v=>M(v.toFixed(2)),xs:v=>sg(v)+M(v.toFixed(2)),x3:v=>M(v.toFixed(3)),int:v=>M(Math.round(v)+''),idx:v=>M(nfmt(v,2)),
- btc:v=>M(nfmt(Math.round(v),0))+' BTC',btcs:v=>sg(v)+M(nfmt(Math.round(v),0))+' BTC',price:v=>'$'+nfmt(Math.round(v),0)};
+ btc:v=>M(nfmt(Math.round(v),0))+' BTC',bnb:v=>(Math.abs(v)<1?String(+v.toFixed(6)):nfmt(v,2))+' BNB',btcs:v=>sg(v)+M(nfmt(Math.round(v),0))+' BTC',price:v=>'$'+nfmt(Math.round(v),0)};
 function axfmt(f,v){if(f==='usd'||f==='usds'||f==='price'){return usd(v)}
  if(f==='btc'||f==='btcs'){const a=Math.abs(v);return M(a>=1e6?(v/1e6).toFixed(2)+'M':a>=1e3?(v/1e3).toFixed(0)+'K':Math.round(v)+'')}
  if(f.startsWith('pct')||f==='pp')return M(Math.abs(v)<10?v.toFixed(1):v.toFixed(0))+(f==='pp'?'':'%');
@@ -933,8 +933,8 @@ function nice(lo,hi,n){const span=hi-lo||Math.abs(hi)||1,step0=span/n,mag=Math.p
  const step=(r<1.5?1:r<3?2:r<7?5:10)*mag;const a=Math.floor(lo/step)*step,out=[];for(let v=a;v<=hi+step*.5;v+=step)if(v>=lo-step*.01)out.push(+v.toPrecision(12));return out}
 const T0=d=>Date.UTC(+d.slice(0,4),+d.slice(5,7)-1,+d.slice(8,10));
 const D0=t=>new Date(t).toISOString().slice(0,10);
-const RANGES={'1M':31,'3M':92,'6M':183,'1Y':366,'3Y':1096,'5Y':1827,'ALL':0,'CYC':-1};
-const RL={zh:{'1M':'1 月','3M':'3 月','6M':'6 月','1Y':'1 年','3Y':'3 年','5Y':'5 年','ALL':'全部','CYC':'本轮'},en:{'1M':'1M','3M':'3M','6M':'6M','1Y':'1Y','3Y':'3Y','5Y':'5Y','ALL':'All','CYC':'This cycle'}};
+const RANGES={'7D':7,'1M':31,'3M':92,'6M':183,'1Y':366,'2Y':731,'3Y':1096,'5Y':1827,'ALL':0,'CYC':-1};
+const RL={zh:{'7D':'近 7 天','1M':'1 月','3M':'3 月','6M':'6 月','1Y':'1 年','2Y':'2 年','3Y':'3 年','5Y':'5 年','ALL':'全部','CYC':'本轮'},en:{'7D':'7D','1M':'1M','3M':'3M','6M':'6M','1Y':'1Y','2Y':'2Y','3Y':'3Y','5Y':'5Y','ALL':'All','CYC':'This cycle'}};
 const groups={},cache={};
 // 数据：旧格式 {d,s}；新格式（附录 C）{start|dates, values, level, extra}，可以是「归档 + 本月」两份拼起来
 function norm(j){if(j.d)return j;let d=j.dates;const n=(j.values||[]).length||Object.values(j.extra||{}).reduce((a,x)=>Math.max(a,x.length),0);
@@ -957,6 +957,9 @@ Chart.prototype.init=function(){
  if(c.stack){const g=document.createElement('div');g.className='fg';
   [['abs',ZH?'金额':'Amount'],['pct',ZH?'份额 %':'Share %']].forEach(([m,l])=>{const b=document.createElement('button');
    b.className='pill';b.textContent=l;b.dataset.m=m;b.onclick=()=>{self.mode=m;self.draw()};g.appendChild(b)});bar.appendChild(g)}
+ if(c.logt){const g=document.createElement('div');g.className='fg';
+  [[0,ZH?'线性':'Linear'],[1,ZH?'对数':'Log']].forEach(([m,l])=>{const b=document.createElement('button');b.className='pill';b.textContent=l;b.dataset.lg=m;
+   b.onclick=()=>{c.log=!!m;self.draw()};g.appendChild(b)});bar.appendChild(g)}
  el.appendChild(bar);
  this.plot=document.createElement('div');this.plot.className='uc-plot';this.plot.style.minHeight=this.H()+'px';el.appendChild(this.plot);
  this.tip=document.createElement('div');this.tip.className='uc-tip';this.plot.appendChild(this.tip);
@@ -985,6 +988,7 @@ Chart.prototype.draw=function(){
  this.plot.querySelectorAll('.uc-empty').forEach(x=>x.remove());
  this.bar.querySelectorAll('.pill[data-r]').forEach(b=>b.classList.toggle('on',b.dataset.r===this.range));
  this.bar.querySelectorAll('.pill[data-m]').forEach(b=>b.classList.toggle('on',b.dataset.m===this.mode));
+ this.bar.querySelectorAll('.pill[data-lg]').forEach(b=>b.classList.toggle('on',(b.dataset.lg==='1')===!!c.log));
  const D=j.d,N=D.length;if(!N){this.msg(ZH?'暂无数据':'No data');return}
  const last=T0(D[N-1]);let lo0=0;
  if(this.range==='CYC'&&c.cyc)lo0=T0(c.cyc);else if(RANGES[this.range]>0)lo0=last-RANGES[this.range]*864e5;

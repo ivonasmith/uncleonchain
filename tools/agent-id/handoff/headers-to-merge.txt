@@ -1,0 +1,7 @@
+# Merge these into the EXISTING Cloudflare _headers; don't overwrite other rules.
+/ai-agent/monitor/
+  Cache-Control: public, max-age=0, must-revalidate
+/ai-agent/monitor/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+/ai-agent/monitor/*.json
+  Cache-Control: public, max-age=0, must-revalidate

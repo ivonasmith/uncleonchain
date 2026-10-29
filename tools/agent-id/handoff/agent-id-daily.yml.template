@@ -1,0 +1,46 @@
+# Integration template: install only during the single-scheduler cutover.
+name: Agent ID daily data
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '20 0 * * *'
+permissions:
+  contents: write
+concurrency:
+  group: agent-id-daily
+  cancel-in-progress: false
+jobs:
+  update:
+    runs-on: [self-hosted, agent-id]
+    timeout-minutes: 60
+    env:
+      AGENT_ID_PROXY: ${{ secrets.AGENT_ID_PROXY }}
+      AGENT_ID_RUNTIME: ${{ vars.AGENT_ID_RUNTIME }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: true
+      - name: Require preconfigured persistent runner
+        shell: bash
+        run: |
+          test -n "$AGENT_ID_RUNTIME"
+          test -n "$AGENT_ID_PROXY"
+          test -f "$AGENT_ID_RUNTIME/state.json"
+          python3 -c "import matplotlib,numpy,PIL"
+      - name: Collect yesterday, test, verify and export
+        shell: bash
+        run: |
+          python3 tools/agent-id/update_daily.py --runtime "$AGENT_ID_RUNTIME" --output public/ai-agent/monitor
+      - name: Publish generated customer files to repository
+        shell: bash
+        run: |
+          git config user.name 'agent-id-monitor[bot]'
+          git config user.email 'agent-id-monitor@users.noreply.github.com'
+          git add -- public/ai-agent/monitor
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'data: update Agent ID customer trends'
+          git pull --rebase
+          git push
+# Cloudflare's existing Git integration deploys the committed public files.
+# No wallet keys, Cloudflare API tokens, private raw evidence or state are committed.

@@ -189,9 +189,12 @@ def load_or_fetch():
 
 
 def build_raw(cm, bv):
+    # 全站统一口径（2026-10-29）：只用已收盘的 UTC 完整日（UTC 0 点收盘价），不用运行时刻的盘中价
+    today = pd.Timestamp(os.environ.get("L2_TODAY") or datetime.now(timezone.utc).date())
     idx = cm.PriceUSD.dropna().index
-    if len(bv) and "bv_price" in bv:     # Coin Metrics 当天还没更新时，用 bitview 价格补最后一两天
-        extra = bv.bv_price[bv.index > idx.max()].dropna()
+    idx = idx[idx < today]
+    if len(bv) and "bv_price" in bv:     # Coin Metrics 还没更新到昨天时，用 bitview 的昨日收盘补
+        extra = bv.bv_price[(bv.index > idx.max()) & (bv.index < today)].dropna()
         idx = idx.union(extra.index[:2])
     bv = bv.reindex(idx)
     raw = pd.DataFrame(index=idx)

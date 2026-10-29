@@ -85,6 +85,61 @@ def T(zh, en):
     return en if LANG["v"] == "en" else zh
 
 
+# 时间显示（2026-10-29 定）：数据一律按 UTC 完整日（UTC 0 点收盘）；页面上的时刻中文站写北京时间、英文站写美东时间
+from zoneinfo import ZoneInfo                                             # noqa: E402
+BJ_TZ, ET_TZ = ZoneInfo("Asia/Shanghai"), ZoneInfo("America/New_York")
+MON_EN = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
+
+def _utc(s):
+    s = str(s or "").strip().replace("T", " ").replace("Z", "")[:16]
+    try:
+        if len(s) == 5:                                   # 只有「HH:MM」（定时任务）：按今天换算，夏令时随日期
+            d = dt.datetime.now(dt.timezone.utc).date()
+            return dt.datetime.fromisoformat(f"{d} {s}").replace(tzinfo=dt.timezone.utc)
+        return dt.datetime.fromisoformat(s).replace(tzinfo=dt.timezone.utc)
+    except ValueError:
+        return None
+
+
+def _en_clock(x):
+    return f"{(x.hour % 12) or 12}:{x.minute:02d} {'AM' if x.hour < 12 else 'PM'}"
+
+
+def TT(s, date=True):
+    """UTC 时刻 → 中文「北京时间 10-29 18:20」/ 英文「Oct 29, 6:20 AM ET」。date=False 只写钟点（定时任务）。"""
+    t = _utc(s)
+    if t is None:
+        return esc(s or "—")
+    b, e = t.astimezone(BJ_TZ), t.astimezone(ET_TZ)
+    zh = "北京时间 " + (b.strftime("%m-%d %H:%M") if date else b.strftime("%H:%M"))
+    en = ((f"{MON_EN[e.month - 1]} {e.day}, " if date else "") + _en_clock(e) + " ET")
+    return T(zh, en)
+
+
+def TCLOSE(d):
+    """数据日 D 的收盘时刻 = D+1 日 UTC 0 点：中文「10-28 收盘（北京时间 10-29 08:00）」/ 英文「Oct 28 close (8:00 PM ET)」。"""
+    try:
+        day = dt.date.fromisoformat(str(d)[:10])
+    except ValueError:
+        return esc(d or "—")
+    t = dt.datetime.combine(day + dt.timedelta(days=1), dt.time(0), dt.timezone.utc)
+    b, e = t.astimezone(BJ_TZ), t.astimezone(ET_TZ)
+    return T(f"{day.strftime('%m-%d')} 收盘（北京时间 {b.strftime('%m-%d %H:%M')}）", f"{MON_EN[day.month - 1]} {day.day} close ({_en_clock(e)} ET)")
+
+
+
+def TDAY(d):
+    """数据日 D（UTC 完整日）的截止时刻：中文「截至北京时间 10-29 08:00」/ 英文「through Oct 28, 8:00 PM ET」。"""
+    try:
+        day = dt.date.fromisoformat(str(d)[:10])
+    except ValueError:
+        return esc(d or "—")
+    t = dt.datetime.combine(day + dt.timedelta(days=1), dt.time(0), dt.timezone.utc)
+    b, e = t.astimezone(BJ_TZ), t.astimezone(ET_TZ)
+    return T(f"截至北京时间 {b.strftime('%m-%d %H:%M')}", f"through {MON_EN[e.month - 1]} {e.day}, {_en_clock(e)} ET")
+
+
 def U(path):
     """站内链接按当前语言加前缀。"""
     return ("/en" + path) if LANG["v"] == "en" and path.startswith("/") else path
@@ -113,6 +168,7 @@ ICON = {
     "calendar": '<path d="M2.5 3.5h11v10h-11z"/><path d="M2.5 6.5h11M5.5 2v3M10.5 2v3M5 9h1.5M7.75 9h1.5M10.5 9H12M5 11.5h1.5M7.75 11.5h1.5"/>',
     "macro": '<path d="M1.5 10.5c1.6-3.2 3.2-3.2 4.8 0s3.2 3.2 4.8 0c.9-1.8 1.9-2.6 2.9-2.2M1.5 5.5c1.6-3.2 3.2-3.2 4.8 0s3.2 3.2 4.8 0"/>',
     "launchpad": '<path d="M3 14V8.5M8 14V2.5M13 14V6"/><path d="M1.5 14h13"/>',
+    "aiagent": '<rect x="3" y="4.5" width="10" height="8.5" rx="2"/><path d="M8 2v2.5M6 8.2v1M10 8.2v1M1.5 8.5v2M14.5 8.5v2"/>',
     "rotation": '<path d="M13.2 6A5.5 5.5 0 0 0 3.1 5.4M2.8 10a5.5 5.5 0 0 0 10.1.6M13.4 2.6v3.5H9.9M2.6 13.4V9.9h3.5"/>',
     "narrative": '<circle cx="8" cy="8" r="6"/><circle cx="8" cy="8" r="2.4"/><path d="M8 8l4.2-4.2"/>',
     "reports": '<path d="M3 1.8h7l3 3v9.4H3z"/><path d="M10 1.8v3h3M5.5 11.5V9.5M8 11.5V7.5M10.5 11.5V8.5"/>',
@@ -122,7 +178,7 @@ ICON = {
     "about": '<circle cx="8" cy="5.2" r="2.8"/><path d="M2.5 14c.9-2.9 2.9-4.2 5.5-4.2s4.6 1.3 5.5 4.2"/>',
 }
 NAV_MAIN = [("home", "/", "终端总览", "Overview"), ("macro", "/macro/", "宏观仪表盘", "Macro"),
-            ("calendar", "/calendar/", "事件日历", "Calendar"), ("launchpad", "/launchpad/", "发射台矩阵", "Launchpads"), ("rotation", "/rotation/", "板块轮动", "Rotation"),
+            ("calendar", "/calendar/", "事件日历", "Calendar"), ("launchpad", "/launchpad/", "发射台矩阵", "Launchpads"), ("aiagent", "/ai-agent/", "AI Agent", "AI Agent"), ("rotation", "/rotation/", "板块轮动", "Rotation"),
             ("narrative", "/narrative/", "叙事埋伏", "Narratives"), ("reports", "/reports/", "分析报告", "Reports"),
             ("journal", "/journal/", "解读日志", "Journal")]
 NAV_MORE = [("methodology", "/methodology/", "口径与规则", "Methodology"), ("corrections", "/corrections/", "更正记录", "Corrections"),
@@ -362,7 +418,7 @@ def nav_html(active):
 <a class="brand" href="{U('/')}"><img class="av" src="/assets/avatar-96.png" alt="{T('链上大叔', 'Uncle Onchain')}"><span><b>{esc(T(BRAND, BRAND_EN))}</b><i>UNCLE ONCHAIN · TERMINAL</i></span></a>
 <div class="tools">{lang}{thm}</div>
 <nav class="snav"><div class="sgrp">Terminal</div>{main}<div class="sgrp">Records</div>{more}</nav>
-<div class="sfoot"><div class="live"><i></i>{T('数据更新', 'Updated')} {esc(upd)} UTC</div>
+<div class="sfoot"><div class="live"><i></i>{T('数据更新', 'Updated')} {TT(upd)}</div>
 <a href="{X_URL}" target="_blank" rel="noopener">𝕏 {esc(TWITTER)}</a> <a class="sfb" href="#" data-feedback>✎ {T('反馈 / 纠错', 'Feedback')}</a><p>{esc(T(DISCLAIMER, DISCLAIMER_EN))}</p></div>
 </aside><label for="navtg" class="scrim"></label>"""
 
@@ -389,6 +445,8 @@ HEADERS = """/assets/*
   Cache-Control: public, max-age=2592000
 /data/*
   Cache-Control: public, max-age=3600
+/ai-agent/monitor/*
+  Cache-Control: public, max-age=0, must-revalidate
 /*
   X-Content-Type-Options: nosniff
 """
@@ -643,8 +701,8 @@ L2_TIME = next((x["时间"] for x in SCHED if x["文件"] == "l2-daily.yml"), "�
 
 
 def sched_text():
-    """「每天 UTC 02:17（L2）和 10:20（日更）」这类文案，全站共用。"""
-    parts = [(f"UTC {x['时间']}（{x['名称']}）", f"{x['时间']} UTC ({x['EN']})") for x in SCHED]
+    """「北京时间 10:17（L2）、18:20（日更）」这类文案（英文站写美东时间），全站共用。"""
+    parts = [(f"{TT(x['时间'], False)}（{x['名称']}）", f"{TT(x['时间'], False)} ({x['EN']})") for x in SCHED]
     en = [p[1] for p in parts]
     return T("、".join(p[0] for p in parts), (", ".join(en[:-1]) + " and " + en[-1]) if len(en) > 1 else "".join(en))
 
@@ -652,7 +710,7 @@ def sched_text():
 def times_line(log):
     """「解读生成 … · 数据更新 …」：区分日志冻结时间和页面读数的刷新时间。"""
     gen = (log or {}).get("生成时间UTC")
-    return (T("解读生成", "Log generated") + f" <b>{esc(gen or '—')} UTC</b> · " + T("数据更新", "Data updated") + f" <b>{esc(G.get('更新') or '—')} UTC</b>")
+    return (T("解读生成", "Log generated") + f" <b>{TT(gen)}</b> · " + T("数据更新", "Data updated") + f" <b>{TT(G.get('更新'))}</b>")
 
 
 def stats_since(ind):
@@ -789,7 +847,7 @@ def hero_cards(S, as_of, sd):
         a3, w3 = l3["p1s"], l3.get("warning") or {}
         on = bool(w3.get("on"))
         cards.append((T("上方压力区 · STH 成本 +1σ", "Pressure zone · STH cost +1σ"), "L3", f'${a3["value"]:,.0f}',
-                      T(f'离现价 {_pc(a3["pct_from_price"])} · 大波动预警{"亮" if on else "不亮"}', f'{_pc(a3["pct_from_price"])} vs price · large-move warning {"on" if on else "off"}'),
+                      T(f'离收盘价 {_pc(a3["pct_from_price"])} · 大波动预警{"亮" if on else "不亮"}', f'{_pc(a3["pct_from_price"])} vs price · large-move warning {"on" if on else "off"}'),
                       "warn" if (on or l3["position"]["code"] == "in_zone") else "neutral", (jp or {}).get("走势", [])[-30:], ind_href("l3_p1s")))
     else:
         cards.append((T("上方压力区 · STH 成本 +1σ", "Pressure zone · STH cost +1σ"), "L3", "—", T("等待首次运行", "Awaiting first run"), "neutral", [], ind_href("l3_p1s")))
@@ -1014,7 +1072,7 @@ def build_home(sd, S, logs, weeks, months, rot, matrix):
     items = ""
     for n, lg in enumerate(reversed(logs[-6:])):
         cnt = len(lg.get("预警") or [])
-        fz = f'<span class="chip frz">{T("日志", "log")} · {esc((lg.get("生成时间UTC") or "")[11:16])} UTC {T("冻结", "frozen")}</span>' if n == 0 else ""
+        fz = f'<span class="chip frz">{T("日志", "log")} · {TT(lg.get("生成时间UTC"))} {T("冻结", "frozen")}</span>' if n == 0 else ""
         items += (f'<li><span class="d">{lg["日期"]}</span><span><a href="{U("/journal/" + lg["日期"] + "/")}">{T("每日解读", "Daily log")}</a> {fz}'
                   f'<span class="s">{esc(en_fix(LF(lg["综合"], "一句话")) or "(Chinese only)")}</span></span><span class="x chip">{cnt} {T("条预警", "alerts")}</span></li>')
     for wk in reversed(weeks[-2:]):
@@ -1300,7 +1358,7 @@ def l2_signals(l2):
     return f'<div class="grid g3 sigs">{out}</div>'
 
 
-def ruler_svg(price, levels, h=460, w=440):
+def ruler_svg(price, levels, h=460, w=440, date=None):
     """M6：竖向对数价格轴，每条价位按真实距离摆放；现价醒目横线，现价到上下最近价位铺色带。"""
     if not levels or not price:
         return ""
@@ -1337,7 +1395,9 @@ def ruler_svg(price, levels, h=460, w=440):
         else:
             out.append(f'<text x="{ax - 16}" y="{y + 4:.1f}" text-anchor="end" class="rlb">{lab}</text>')
     out.append(f'<line x1="{ax - 60}" x2="{w - 6}" y1="{yp:.1f}" y2="{yp:.1f}" class="rnow"/>')
-    out.append(f'<text x="{w - 6}" y="{yp - 6:.1f}" text-anchor="end" class="rnl">{T("现价", "Price")} ${price:,.0f}</text>')
+    out.append(f'<text x="{w - 6}" y="{yp - 6:.1f}" text-anchor="end" class="rnl">{T("收盘价", "Close")} ${price:,.0f}</text>')
+    if date:
+        out.append(f'<text x="{w - 6}" y="{yp - 26:.1f}" text-anchor="end" class="rlb" style="font-size:11px;opacity:.8">{TCLOSE(date)}</text>')
     return f'<svg viewBox="0 0 {w} {h}" class="ruler-svg" role="img" aria-label="{T("关键价位刻度尺", "Key level ruler")}">{"".join(out)}</svg>'
 
 
@@ -1350,10 +1410,10 @@ def l2_levels(l2):
     rows = "".join(f'<tr><td class="l">{esc(T(x["name_zh"], x["name_en"]))}</td><td>{m(x["value"])}</td><td>{x["pct_from_price"]:+.1f}%</td></tr>' for x in allv)
     return (f'<div class="ruler card"><input type="checkbox" id="rl-all" class="rtg"><label for="rl-all" class="pill">'
             f'<span class="a">{T("展开全部 13 条", "Show all 13")}</span><span class="b">{T("只看 6 条重点", "Key 6 only")}</span></label>'
-            f'<div class="r6">{ruler_svg(price, key6)}</div><div class="r13">{ruler_svg(price, lv, h=560)}</div>'
-            f'<p class="tnote">{T("对数刻度，按真实价格距离摆放；绿色 = 现价下方的支撑，红色 = 上方的压力。价位都由 l2_daily.py 每天算好，网页只展示（均衡价格为近似值）。", "Log scale, placed by real price distance; green = supports below, red = resistance above. All levels come from l2_daily.py; the page only displays them (balanced price is approximate).")}</p></div>'
+            f'<div class="r6">{ruler_svg(price, key6, date=l2.get("data_date"))}</div><div class="r13">{ruler_svg(price, lv, h=560, date=l2.get("data_date"))}</div>'
+            f'<p class="tnote">{T("价格用", "Price = ")}{TCLOSE(l2.get("data_date"))}{T("，括号里的百分比都相对这个收盘价。对数刻度，按真实价格距离摆放；绿色 = 收盘价下方的支撑，红色 = 上方的压力。价位都由 l2_daily.py 每天算好，网页只展示（均衡价格为近似值）。", "; the percentages are measured from this close. Log scale, placed by real price distance; green = supports below, red = resistance above. All levels come from l2_daily.py; the page only displays them (balanced price is approximate).")}</p></div>'
             f'<details class="card fold"><summary>{T("13 条关键价位表", "All 13 levels (table)")}</summary><div class="tw" style="margin:0;border:0"><table><thead><tr><th class="l">{T("价位", "Level")}</th>'
-            f'<th>{T("价格", "Value")}</th><th>{T("离现价", "vs price")}</th></tr></thead><tbody>{rows}</tbody></table></div></details>')
+            f'<th>{T("价格", "Value")}</th><th>{T("离收盘价", "vs close")}</th></tr></thead><tbody>{rows}</tbody></table></div></details>')
 
 
 def l2_card_extra(ind):
@@ -1367,7 +1427,7 @@ def l2_card_extra(ind):
 def l2_tab(l2, as_of):
     if not l2 or (l2.get("state") or {}).get("code") not in R.L2_STATES:
         return empty_state("pending", T("L2 周期状态机 · 等待首次运行", "L2 cycle state machine · awaiting first run"),
-                           T(f"每天 UTC {L2_TIME} 由 GitHub Actions 运行 l2/l2_daily.py 生成。", f"Generated daily at {L2_TIME} UTC by l2/l2_daily.py."), "")
+                           T(f"每天{TT(L2_TIME, False)}由 GitHub Actions 运行 l2/l2_daily.py 生成。", f"Generated daily at {TT(L2_TIME, False)} by l2/l2_daily.py."), "")
     st, cy = l2["state"], l2.get("cycle") or {}
     zh, en, desc_en, _, col = l2_state_meta(st["code"])
     m = lambda v: "—" if v is None else f"${v:,.0f}"
@@ -1385,7 +1445,7 @@ def l2_tab(l2, as_of):
     summ = l2.get("summary_zh") if LANG["v"] == "zh" else R.l2_summary_en(l2)
     summ_h = "".join(f"<div>{esc(x)}</div>" for x in (summ or "").split("\n") if not x.startswith(("接下来：", "Next: ")))
     card = (f'<div class="card l2card" style="--l2c:var(--{col})"><div class="eb">L2 {T("周期状态机", "cycle state machine")} · {T("数据日", "data date")} {esc(l2.get("data_date") or "—")}'
-            f' · {T("运行", "run")} {esc(l2.get("updated_utc") or "—")} UTC {chips}</div>'
+            f' · {T("运行", "run")} {TT(l2.get("updated_utc"))} {chips}</div>'
             f'<h3 class="st">{esc(T(zh, en))} <span>· {T("第", "day ")}{st.get("days")}{T(" 天", "")}</span></h3>'
             f'<p class="desc">{esc(T(st.get("desc_zh") or "", desc_en.rstrip(".")))}{T("。自 ", ". Since ")}{esc(st.get("since") or "")}{T(" 起。", ".")}</p>'
             f'{inval}<div class="l2next"><b>{T("接下来看什么：", "What next: ")}</b>{esc(nxt or "")}</div>'
@@ -1463,11 +1523,11 @@ def l3_posbar(l3):
     zone = f'<div class="pb-zone" style="left:{X(a["lo"]):.2f}%;width:{X(a["hi"]) - X(a["lo"]):.2f}%"></div>'
     s13m = mk(s13, "s13", "STH-MVRV 1.3（趋势区起点·假设）", "STH-MVRV 1.3 (trend zone, hypothesis)") if s13 else ""
     return (f'<div class="card l3pos"><div class="eb">L3 {T("价格位置", "price position")} · {T("数据日", "data date")} {esc(l3.get("data_date") or "—")}'
-            f' · {T("运行", "run")} {esc(l3.get("updated_utc") or "—")} UTC'
+            f' · {T("运行", "run")} {TT(l3.get("updated_utc"))}'
             + (f' <span class="chip l2stale">{T("数据延迟 · 用了缓存", "Data delayed · cached")}</span>' if (l3.get("data_status") or {}).get("stale") else "")
             + f'</div><h3 class="st">{esc(T(l3["position"]["zh"], l3["position"]["en"]))}</h3>'
             f'<div class="pbar">{zone}{mk(s["value"], "sth", "STH 成本", "STH cost")}{mk(a["value"], "p1s", "+1σ 压力区", "+1σ zone", True)}{s13m}'
-            f'{mk(p, "px", "现价", "Price")}</div>'
+            f'{mk(p, "px", "收盘价", "Close")}</div><p class="tnote" style="margin-top:4px">{T("价格用", "Price = ")}{TCLOSE(l3.get("data_date"))}</p>'
             f'<p class="tnote">{T("色带 = +1σ 压力区（上下 2%），是一个区域，不是一根精确的线。L3 只回答价位和波动幅度，方向看 L2，节奏看 L1。", "The band is the +1σ pressure zone (±2%) — a zone, not a precise line. L3 only covers levels and move size; direction comes from L2, pace from L1.")}</p></div>')
 
 
@@ -1486,7 +1546,7 @@ def l3_main_cards(l3):
     a, w = l3["p1s"], l3.get("warning") or {}
     st_tone = "warn" if l3["position"]["code"] == "in_zone" else "neutral"
     left = (f'<div class="card l3main"><div class="top"><span class="nm">{T("上方压力区 · STH 成本 +1σ", "Pressure zone above · STH cost +1σ")}</span>{grade_chip("已验证·方向")}</div>'
-            f'<div class="v">{_m0(a["value"])} <span class="sub">{T("离现价", "vs price")} {_pc(a["pct_from_price"])}</span></div>'
+            f'<div class="v">{_m0(a["value"])} <span class="sub">{T("离收盘价", "vs close")} {_pc(a["pct_from_price"])}</span></div>'
             f'<div class="b">{T("压力区", "Zone")} {_m0(a["lo"])} ~ {_m0(a["hi"])} · {tone_chip(T(a["status_zh"], a["status_en"]), st_tone)}</div>'
             f'<p class="tnote">{esc(T(a["hold_rate_zh"], a["hold_rate_en"]))}{T("。用法：多单止盈参考、追高提醒；不当挂单位；冲过去站上 STH-MVRV 1.3 不据此做空。", ". Use: a take-profit reference and a no-chasing reminder; not an order level; no shorting once price breaks through and holds STH-MVRV 1.3.")}</p>'
             f'<div class="sub2">{T("最近 5 次碰线（从下方碰到压力区）", "Last 5 touches (from below)")}</div>{l3_touch_rows(a.get("touches") or [])}</div>')
@@ -1590,8 +1650,8 @@ def l3_charts():
 def l3_tab(l3, as_of):
     if not R.l3_ok(l3):
         return empty_state("pending", T("L3 筹码层 · 等待首次运行", "L3 supply layer · awaiting first run"),
-                           T(f"每天 UTC {L3_TIME} 由 GitHub Actions 运行 l3/l3_daily.py 生成（第一次运行会补 2012 年以来每周一张的筹码分布，可能要分几天补完）。",
-                             f"Generated daily at {L3_TIME} UTC by l3/l3_daily.py (the first runs back-fill one URPD per week since 2012 and may take a few days)."), "")
+                           T(f"每天{TT(L3_TIME, False)}由 GitHub Actions 运行 l3/l3_daily.py 生成（第一次运行会补 2012 年以来每周一张的筹码分布，可能要分几天补完）。",
+                             f"Generated daily at {TT(L3_TIME, False)} by l3/l3_daily.py (the first runs back-fill one URPD per week since 2012 and may take a few days)."), "")
     groups = cards_by_group(3, as_of, l3_card_extra)
     cards = "".join(f'<h3 id="grp-3-{n}">{esc(T(*g))}</h3>{c}' for n, (g, c) in enumerate(groups))
     sth = l3.get("sth") or {}
@@ -1762,7 +1822,7 @@ def l4_chart():
 def l4_tab(l4, as_of):
     if not R.l4_ok(l4):
         return empty_state("pending", T("L4 情绪衍生品层 · 等待首次运行", "L4 sentiment layer · awaiting first run"),
-                           T(f"每天 UTC {L4_TIME} 由 GitHub Actions 运行 l4/l4_daily.py 生成。", f"Generated daily at {L4_TIME} UTC by l4/l4_daily.py."), "")
+                           T(f"每天{TT(L4_TIME, False)}由 GitHub Actions 运行 l4/l4_daily.py 生成。", f"Generated daily at {TT(L4_TIME, False)} by l4/l4_daily.py."), "")
     c = l4["conclusion"]
     th = {x["key"]: x for x in l4.get("thermometer") or []}
     lev = "".join(l4_thermo(th[k]) for k in L4_LEV if k in th)
@@ -1773,7 +1833,7 @@ def l4_tab(l4, as_of):
                     f'<em>{T("假设 · 不改动作", "hypothesis · no action")}</em><span class="s">{esc(T(x.get("stat_zh") or "", L4_WATCH_EN.get(x["key"], "")))}</span></li>' for x in ws)
     n_on = sum(1 for x in ws if x.get("on"))
     head = (f'<div class="card l3pos l4head"><div class="eb">L4 {T("BTC 短期杠杆与情绪温度", "BTC short-term leverage & sentiment temperature")} · {T("数据日", "data date")} {esc(l4.get("data_date") or "—")}'
-            f' · {T("运行", "run")} {esc(l4.get("updated_utc") or "—")} UTC'
+            f' · {T("运行", "run")} {TT(l4.get("updated_utc"))}'
             + (f' <span class="chip l2stale">{T("部分数据延迟", "Some data delayed")}</span>' if (l4.get("data_status") or {}).get("stale") else "")
             + f'</div><div class="l4nums"><span>{T("杠杆", "Leverage")}<b>{esc(T(c.get("leverage_band_zh") or "—", R.BAND_EN.get(c.get("leverage_band_zh"), "—")))}</b></span>'
             f'<span>{T("情绪", "Sentiment")}<b>{esc(T(c.get("sentiment_band_zh") or "—", R.BAND_EN.get(c.get("sentiment_band_zh"), "—")))}</b></span>'
@@ -2468,8 +2528,8 @@ def cycle_hero():
         return ""
     import 周期观察 as CO
     import 周期仪表盘 as CD
-    more = f'<a class="cd-more" href="{U("/launchpad/cycle/")}">{T("这一轮走到哪、各阶段一般持续多久 →", "Where this wave stands and how long stages last →")}</a>'
-    return CD.hero(c[0], CO.reading, T, esc, more)
+    more = f'<a class="cd-more" href="{U("/launchpad/cycle/")}">{T("全部历史大图、这一轮走到哪、各阶段一般持续多久 →", "Full-history chart, this wave and stage durations →")}</a>'
+    return CD.hero(c[0], CO.reading, T, esc, more, TDAY(c[0]['cutoff']))
 
 
 def cycle_tag():
@@ -2654,7 +2714,7 @@ def build_launchpad(sd, matrix):
     body = f"""<div class="ph"><div><div class="eyebrow">Launchpad Matrix</div><h1>{T("发射台矩阵", "Launchpad matrix")}</h1>
 <p class="lede">{T(f"DefiLlama Launchpad 类目全部 {len(matrix['协议'])} 个协议：先看全网汇总趋势（赛道水多没多、资金在哪些平台之间挪），再看跨链排行和每个平台的市场份额。口径统一用手续费（fees），日期是 UTC 完整日。",
                    f"All {len(matrix['协议'])} protocols in DefiLlama's Launchpad category: the sector-wide trend first (is money flowing in, and between which venues), then the cross-chain ranking with market share. Fees, UTC full days.")}</p></div>
-<div class="stamp">{T("数据截至", "Data as of")} <b>{matrix["日期"]}</b>{T("（UTC 完整日）", " (UTC)")}<br>{T("生成", "Generated")} <b>{esc(matrix.get("生成时间UTC", "")[:16].replace("T", " "))} UTC</b></div></div>
+<div class="stamp">{T("数据截至", "Data as of")} <b>{matrix["日期"]}</b>{T("（UTC 完整日）", " (UTC)")}<br>{T("生成", "Generated")} <b>{TT(matrix.get("生成时间UTC"))}</b></div></div>
 {cycle_hero()}
 <div class="grid g5" id="lpk">{kh}</div>
 {total_html}
@@ -2865,6 +2925,76 @@ def cal_home_card(cal):
             f'<div class="card calhome"><ul>{rows}</ul></div>')
 
 
+AGENT_DIR = os.path.join(ROOT, "public", "ai-agent", "monitor")      # tools/agent-id 的导出目录（交接包原样）
+AGENT_METRICS = [  # 键、中文、英文、格式、覆盖范围
+    ("cumulative_ids", "累计 Agent ID", "Cumulative Agent IDs", "int", "reg"),
+    ("new_ids", "当日新增 Agent ID", "New Agent IDs", "int", "reg"),
+    ("trading_addresses", "当日交易地址", "Trading addresses", "int", "pad"),
+    ("volume_bnb", "当日曲线成交额", "Curve volume", "bnb", "pad"),
+    ("new_launches", "当日新发币", "New launches", "int", "pad"),
+    ("graduated", "当日毕业币", "Graduations", "int", "pad"),
+]
+
+
+def build_ai_agent():
+    """AI Agent：币安 Agent ID 生态六项核心数据（交接包 tools/agent-id 导出的 core_series.json）。"""
+    cr = crumbs([("AI Agent", None)])
+    src = os.path.join(AGENT_DIR, "core_series.json")
+    d = load(src)
+    if not d or not d.get("rows"):
+        body = cr + empty_state("pending", T("AI Agent · 等待数据", "AI Agent · awaiting data"), T("tools/agent-id 导出后显示。", "Shown after tools/agent-id exports data."), "")
+        emit("ai-agent/index.html", f"AI Agent · {T(BRAND, BRAND_EN)}", body, active="aiagent")
+        return
+    # 原始客户页与数据一并发布，方便核查下载
+    dst = os.path.join(SITE, "ai-agent", "monitor")
+    if LANG["v"] == "zh" and os.path.isdir(AGENT_DIR):
+        shutil.rmtree(dst, ignore_errors=True)
+        shutil.copytree(AGENT_DIR, dst, ignore=shutil.ignore_patterns(".*"))
+    health = load(os.path.join(AGENT_DIR, "health.json")) or {}
+    rows = d["rows"]
+    num = lambda v: None if v is None or v == "" else float(v)
+    dates = [r["date"] for r in rows]
+    thru = d.get("data_through_utc") or dates[-1]
+    yday = (dt.datetime.now(dt.timezone.utc).date() - dt.timedelta(days=1)).isoformat()
+    lag = (dt.date.fromisoformat(yday) - dt.date.fromisoformat(thru)).days
+    plats = " / ".join(health.get("complete_platforms") or ["AgentPad"])
+    scope = {"reg": T("完整注册表", "Full registry"), "pad": T(f"仅 {plats}", f"{plats} only")}
+    cards, charts = "", ""
+    for k, zh, en, f, sc in AGENT_METRICS:
+        vals = [num(r.get(k)) for r in rows]
+        cur, prev = vals[-1], (vals[-2] if len(vals) > 1 else None)
+        fmt = (lambda v: "U" if v is None else ((f"{v:.6f}".rstrip("0").rstrip(".") or "0") + " BNB" if v < 1 else f"{v:,.2f} BNB")) if f == "bnb" else (lambda v: "U" if v is None else f"{v:,.0f}")
+        chg = ""
+        if cur is not None and prev is not None and k != "cumulative_ids":
+            dv = cur - prev
+            chg = T("较前一日 ", "vs prior day ") + (("+" if dv > 0 else "") + (f"{dv:,.6f}".rstrip("0").rstrip(".") if f == "bnb" else f"{dv:,.0f}"))
+        elif k == "cumulative_ids" and cur is not None and prev is not None:
+            chg = T("较前一日 ", "vs prior day ") + f"+{cur - prev:,.0f}"
+        cards += (f'<div class="glass hero"><div class="k">{esc(T(zh, en))} <span class="chip{" t-warn" if sc == "pad" else ""}">{esc(scope[sc])}</span></div>'
+                  f'<div class="v" style="font-size:22px">{fmt(cur)}</div><div class="s">{esc(chg)}</div></div>')
+        path = write_data(f"ai-agent/{k}.json", dates, {"v": {r["date"]: num(r.get(k)) for r in rows}})
+        charts += (f'<div class="card" style="padding:14px 16px"><h3 style="margin:0 0 6px;font-size:15px">{esc(T(zh, en))} <span class="sub" style="font-weight:400;color:var(--muted)">{esc(scope[sc])}</span></h3>'
+                   + chart_div({"src": path, "fmt": "bnb" if f == "bnb" else "int", "ranges": ["7D", "1M", "ALL"], "range": "ALL", "group": "aiagent", "gaps": True, "h": 200,
+                                "zero": True, "series": [{"k": "v", "n": T(zh, en), "c": "s1", "area": True}]}) + '</div>')
+    stale = (f' <span class="chip t-warn">{T(f"已 {lag} 天未更新", f"{lag} days behind")}</span>' if lag > 1 else "")
+    defs = d.get("definitions") or {}
+    body = f"""{cr}<div class="ph"><div><div class="eyebrow">AI Agent</div><h1>{T("AI Agent · 币安 Agent ID 生态", "AI Agent · Binance Agent ID ecosystem")}</h1>
+<p class="lede">{T("注册、交易地址、成交额与发币的每日趋势；只发布已经结束的 UTC 完整日，拿不到完整数据的日子标 U，不当 0。", "Daily registrations, trading addresses, volume and launches. Only finished UTC days are published; days without complete data show U, never 0.")}</p></div>
+<div class="stamp">{T("数据截至", "Data through")} <b>{esc(thru)}</b>{stale}<br>{TDAY(thru)}</div></div>
+<div class="note">{T(f"注册量来自完整的 Agent ID 注册表；交易地址、成交额、新发币和毕业目前只覆盖已核实的 {plats}，不代表全生态。", f"Registrations come from the full Agent ID registry; trading, volume, launches and graduations cover only the verified {plats} so far, not the whole ecosystem.")}</div>
+<div class="grid g3" style="margin:14px 0 22px">{cards}</div>
+<h2>{T("每日趋势", "Daily trends")}</h2><div class="grid g2">{charts}</div>
+<details class="card fold" style="margin-top:18px"><summary>{T("数据范围说明", "Scope and definitions")}</summary><ul class="tnote">
+<li>{T("注册量来自完整 Agent ID 注册表；它不等于币安 Agentic Wallet 总量。", "Registrations come from the full Agent ID registry; this is not the number of Binance Agentic Wallets.")}</li>
+<li>{T("交易地址 = 当日实际买卖的独立地址，不含仅铸造或领取的地址；同一地址同日多笔只算一次。", "Trading addresses = unique addresses that actually bought or sold that day; mint/claim-only addresses excluded; counted once per day.")}</li>
+<li>{T("成交额是已核平台曲线上的买卖金额（BNB，扣除平台费），不含二级 DEX；新发币 = 已核工厂当日创建数。", "Volume is buy/sell on the verified bonding curves (BNB, net of platform fees), excluding secondary DEX trading; launches = tokens created by verified factories that day.")}</li>
+<li>{T("所有日期为 UTC 日；U 表示没取得完整数据，图上断开；0 表示完整读取后确实为 0。", "All dates are UTC days; U = incomplete data (gap in the chart); 0 = fully read and truly zero.")}</li>
+<li>{T("采集状态", "Collection status")}: {esc(health.get("collection_status") or "—")} · {T("身份对账", "Identity reconciliation")}: {esc(health.get("identity_reconciliation") or "—")} · <a href="/ai-agent/monitor/core_series.json" download>{T("下载数据", "Download data")}</a></li>
+</ul></details>"""
+    emit("ai-agent/index.html", f"AI Agent · {T(BRAND, BRAND_EN)}", body, active="aiagent", chart=True,
+         desc=T("币安 Agent ID 生态：累计与新增 Agent ID、交易地址、曲线成交额、新发币与毕业的每日趋势。", "Binance Agent ID ecosystem: IDs, trading addresses, curve volume, launches and graduations, daily."))
+
+
 def build_calendar():
     cal = G.get("CAL")
     cr = crumbs([(T("事件日历", "Event calendar"), None)])
@@ -2970,7 +3100,7 @@ def build_calendar():
         web3_body = f'<div class="empty">{T("行业日历暂时取不到。", "The industry calendar is unavailable right now.")}</div>'
     web3_tab = (f'<p class="lede calintro">{esc(T(w.get("intro_zh") or "", w.get("intro_en") or ""))}</p>'
                 f'<p class="tnote">{T("来源：", "Sources: ")}{src_links}</p>{web3_body}')
-    upd = T(f"生成于 {cal.get('generated_utc')} UTC", f"Generated {cal.get('generated_utc')} UTC")
+    upd = T("生成于 ", "Generated ") + TT(cal.get('generated_utc'))
     body = (cr + f'<div class="ph"><div><div class="eyebrow">Event Calendar</div><h1>{T("事件日历", "Event calendar")}</h1>'
             f'<p class="lede">{T("两张表分开看：比特币大事件是单独检验过波动的；Web3 行业动向只是汇总，没有做过价格检验。", "Two separate views: BTC events were individually tested for volatility; Web3 industry events are a digest with no price testing.")} <span class="tnote">{esc(upd)}</span></p></div></div>'
             f'<div class="tabwrap caltabs"><nav class="tabs" role="tablist">'
@@ -3249,7 +3379,7 @@ def build_journal(S, logs, weeks, months, sd):
         nm_en = {**{x["名称"]: x["EN"] for x in R.REGISTRY}, "L2 周期状态机": "L2 cycle state machine", "BTC 未平仓合约（7 日变化）": "BTC open interest (7d change)"}
         miss = (f'<p class="tnote">{T("当天缺失的核心指标：", "Core indicators missing that day: ")}{esc(T("、".join(lg["核心缺失"]), ", ".join(nm_en.get(x, x) for x in lg["核心缺失"])))}</p>'
                 if lg.get("核心缺失") else "")
-        patch = (f'<p class="tnote">⚠ {T("本篇为补录：首次生成于", "Re-run: first generated")} {esc(lg.get("首次生成UTC") or "")} UTC'
+        patch = (f'<p class="tnote">⚠ {T("本篇为补录：首次生成于", "Re-run: first generated")} {TT(lg.get("首次生成UTC"))}'
                  f'{T("，当天数据源晚到后按冻结规则覆盖一次。", ", overwritten once after late data per the freeze rule.")}</p>') if lg.get("补录") else ""
         heroes, cards = hero_cards(S, lg["日期"], sd if lg is logs[-1] else None)
         share_obj = {"title": T(f"链上终端 · {lg['日期']} 解读", f"Onchain terminal · {lg['日期']}"), "date": lg["日期"], "sub": LF(lg["综合"], "一句话"),
@@ -3259,7 +3389,7 @@ def build_journal(S, logs, weeks, months, sd):
         pager_next = f'<a href="{U("/journal/" + next_ + "/")}">{next_} →</a>' if next_ else '<span></span>'
         body = f"""{crumbs([(T("解读日志", "Journal"), "/journal/"), (lg["日期"], None)])}
 <div class="ph"><div><div class="eyebrow">Daily Log · {T("每日解读", "daily")}</div><h1>{lg["日期"]} {T("解读日志", "log")}</h1></div>
-<div class="stamp">{T("解读生成", "Log generated")} <b>{esc(lg["生成时间UTC"])} UTC</b><br>{T("写入即冻结 · 规则见「口径与规则」", "Frozen once written · rules in Methodology")}</div></div>
+<div class="stamp">{T("解读生成", "Log generated")} <b>{TT(lg["生成时间UTC"])}</b><br>{T("写入即冻结 · 规则见「口径与规则」", "Frozen once written · rules in Methodology")}</div></div>
 {old_note(lg)}
 {verdict_block(lg, link=True)}
 {patch}
@@ -3298,7 +3428,7 @@ def build_journal(S, logs, weeks, months, sd):
         no_al = empty_state("none", T("期间没有触发预警", "No alerts"), T("阈值规则见「口径与规则」。", "Thresholds are in Methodology."), "")
         return f"""{crumbs([(T("解读日志", "Journal"), "/journal/"), (title, None)])}
 <div class="ph"><div><div class="eyebrow">{kind_slug.title()} Review</div><h1>{esc(title)}</h1>
-<p class="lede keep">{rv["起"]} ~ {rv["止"]} · {T("期间日志", "logs")} {rv["日志天数"]} {T("篇", "")}</p></div><div class="stamp">{T("生成于", "Generated")} <b>{esc(rv["生成时间UTC"])} UTC</b></div></div>
+<p class="lede keep">{rv["起"]} ~ {rv["止"]} · {T("期间日志", "logs")} {rv["日志天数"]} {T("篇", "")}</p></div><div class="stamp">{T("生成于", "Generated")} <b>{TT(rv["生成时间UTC"])}</b></div></div>
 {old_note(rv)}
 {review_note(rv)}
 <div class="glass verdict"><div class="body"><div class="lbl">{T("一句话复盘", "Summary")}</div><div class="txt">{esc(en_fix(LF(rv, "一句话")) or "(Chinese only — written before bilingual logs)")}</div></div></div>
@@ -3327,7 +3457,7 @@ def build_journal(S, logs, weeks, months, sd):
         same = prev and LF(prev["综合"], "一句话") == LF(lg["综合"], "一句话")
         chips = " ".join(f'<span class="chip t-{x["tone"]}{" hl" if prev and pl.get(x["层"]) != x.get("短") else ""}"><i></i>{esc(en_fix(LF(x, "短")) or "—")}</span>' for x in lg["层"])
         line = en_fix(LF(lg["综合"], "一句话")) or "(Chinese only — written before bilingual logs)"
-        row = (f'<li class="{"same" if same else ""}"><span class="d">{lg["日期"]}<small>{T("生成", "gen.")} {esc((lg.get("生成时间UTC") or "")[11:16])} UTC</small></span>'
+        row = (f'<li class="{"same" if same else ""}"><span class="d">{lg["日期"]}<small>{T("生成", "gen.")} {TT(lg.get("生成时间UTC"))}</small></span>'
                f'<span><a href="{U("/journal/" + lg["日期"] + "/")}">{esc(line)}</a>'
                f'{" <em class=samel>" + T("同前一日", "same as the day before") + "</em>" if same else ""}<span class="s">{chips}</span></span>'
                f'<span class="x chip">{len(lg.get("预警") or [])} {T("条预警", "alerts")}</span></li>')
@@ -3351,8 +3481,8 @@ def build_journal(S, logs, weeks, months, sd):
     e2 = empty_state("none", T("还没有周复盘", "No weekly review yet"), T("第一篇周复盘会在下周一自动生成。", "The first weekly review comes next Monday."), "")
     e3 = empty_state("none", T("还没有日志", "No logs yet"), T("第一篇日志会在下一次每日运行时写入。", "The first log comes with the next daily run."), "")
     body = f"""<div class="ph"><div><div class="eyebrow">Journal</div><h1>{T("解读日志", "Journal")}</h1>
-<p class="lede">{T(f"日更每天 UTC {MAIN_TIME} 定时运行（推送代码时也会额外跑一次），按「口径与规则」里公开的规则写一篇解读日志：综合研判（四层合成）、四层读数、发射台、异动预警。<b>写入即冻结</b>——历史日志不改，唯一例外是当天数据源晚到、重跑后核心缺失变少，会覆盖一次并标「补录」。每周一出上一周的周复盘，每月 1 日出上个月的月复盘。规则变更的日子在列表里有分隔行。",
-                   f"The daily run at {MAIN_TIME} UTC (plus an extra run whenever code is pushed) writes a rule-based log from the public rules in Methodology: the overall read, four-layer readings, launchpads and alerts. <b>Frozen once written</b> — the only exception is a same-day re-run with fewer missing core inputs, marked 'Re-run'. Weekly reviews come out on Mondays, monthly ones on the 1st. Rule-change days are marked in the list.")}</p></div></div>
+<p class="lede">{T(f"日更每天{TT(MAIN_TIME, False)}定时运行（推送代码时也会额外跑一次），按「口径与规则」里公开的规则写一篇解读日志：综合研判（四层合成）、四层读数、发射台、异动预警。<b>写入即冻结</b>——历史日志不改，唯一例外是当天数据源晚到、重跑后核心缺失变少，会覆盖一次并标「补录」。每周一出上一周的周复盘，每月 1 日出上个月的月复盘。规则变更的日子在列表里有分隔行。",
+                   f"The daily run at {TT(MAIN_TIME, False)} (plus an extra run whenever code is pushed) writes a rule-based log from the public rules in Methodology: the overall read, four-layer readings, launchpads and alerts. <b>Frozen once written</b> — the only exception is a same-day re-run with fewer missing core inputs, marked 'Re-run'. Weekly reviews come out on Mondays, monthly ones on the 1st. Rule-change days are marked in the list.")}</p></div></div>
 <h2>{T("每日解读", "Daily logs")}</h2>{dl or e3}
 <h2>{T("周复盘", "Weekly reviews")}</h2>{f'<div class="card"><ul class="list">{wl}</ul></div>' if wl else e2}
 <h2>{T("月复盘", "Monthly reviews")}</h2>{f'<div class="card"><ul class="list">{ml}</ul></div>' if ml else e1}"""
@@ -3463,7 +3593,7 @@ def build_methodology():
     rrows = "".join(f"<tr><td>{esc(r['#'])}</td><td class='l wrap'><b>{esc(T(r['规则'], r['规则EN']))}</b></td><td class='l wrap'>{esc(T(r['怎么用'], r['怎么用EN']))}</td>"
                     f"<td class='l wrap'>{esc(T(r['可靠程度'], r['可靠程度EN']))}</td><td class='l'><b>{esc(T(r['能否改交易参数'], r['能否改交易参数EN']))}</b></td></tr>"
                     for r in L1_RULE_LIST.get("rules", []))
-    sched_rows = "".join(f"<tr><td class='l'>{esc(T(x['名称'], x['EN']))}</td><td>UTC {esc(x['时间'])}</td><td class='l wrap'>{esc(T(x['覆盖'], x['覆盖EN']))}</td><td class='l'><code>.github/workflows/{esc(x['文件'])}</code></td></tr>" for x in SCHED)
+    sched_rows = "".join(f"<tr><td class='l'>{esc(T(x['名称'], x['EN']))}</td><td>{TT(x['时间'], False)}<br><small>UTC {esc(x['时间'])}</small></td><td class='l wrap'>{esc(T(x['覆盖'], x['覆盖EN']))}</td><td class='l'><code>.github/workflows/{esc(x['文件'])}</code></td></tr>" for x in SCHED)
     win_rows = ""
     for ind in R.INDICATORS:
         since, why, why_en = R.stats_window(S, ind)
@@ -3489,6 +3619,7 @@ def build_methodology():
 <div class="tw" style="margin-top:10px"><table><thead><tr><th>#</th><th class="l">{T("规则", "Rule")}</th><th class="l">{T("怎么用", "How to use")}</th><th class="l">{T("可靠程度", "Reliability")}</th><th class="l">{T("能否改交易参数", "Trading parameters")}</th></tr></thead><tbody>{rrows}</tbody></table></div>
 <h2 id="legend">{T("标签说明", "What the tags mean")}</h2><p class="tnote">{T("「级别」和「证据等级」是两个维度：级别说这个指标在本层判定里起什么作用，证据等级说它在研究里被检验到什么程度。", "Level and evidence grade are two separate dimensions: level is the gauge's role in the layer verdict, evidence grade is how well the research has tested it.")}</p>{tag_legend()}
 <h2 id="schedule">{T("更新时间", "Update schedule")}</h2>
+<div class="card mcard"><p>{T("时间口径（2026-10-29 统一）：所有数据按 UTC 完整日对齐，一天在 UTC 0 点收盘（北京时间 08:00；美东夏令时前一天 20:00、冬令时 19:00）。价格一律用收盘价，不用脚本运行那一刻的盘中价；页面上的钟点中文站写北京时间，英文站写美东时间。定时任务在收盘后分批跑（数据源出数有先后），所以运行时刻不同，但读的是同一个收盘日。", "Time basis (unified 2026-10-29): all data is aligned to full UTC days, each closing at 00:00 UTC (8:00 Beijing; 8:00 PM ET the previous day in summer, 7:00 PM in winter). Prices always use that close, never an intraday price at run time. Clock times on the site are shown in US Eastern time on the English site and Beijing time on the Chinese site. Jobs run in batches after the close because sources publish at different times, but they all read the same closing day.")}</p></div>
 <div class="tw"><table><thead><tr><th class="l">{T("任务", "Job")}</th><th>{T("时间", "Time")}</th><th class="l">{T("覆盖哪些数据", "Covers")}</th><th class="l">{T("配置", "Config")}</th></tr></thead><tbody>{sched_rows}</tbody></table></div>
 <p class="tnote">{esc(T(SITE_CFG.get("推送重跑", ""), SITE_CFG.get("推送重跑EN", "")))}{T("页面上「解读生成」是当天日志冻结的时间，「数据更新」是页面读数最后一次刷新的时间。", " 'Log generated' is when the day's log was frozen; 'Data updated' is when the page's readings were last refreshed.")}</p>
 <h2 id="window">{T("统计窗口", "Statistics window")}</h2>
@@ -3505,8 +3636,8 @@ def build_methodology():
 <h2>{T("框架里暂未接入的指标", "Not yet connected")}</h2><div class="tw"><table><thead><tr><th class="l">{T("层", "Layer")}</th><th class="l">{T("指标", "Indicator")}</th><th class="l">{T("原因", "Reason")}</th><th class="l">{T("计划数据源", "Planned source")}</th></tr></thead><tbody>{pend}</tbody></table></div>
 <h2>{T("已停用的指标", "Retired gauges")}</h2><div class="tw"><table><thead><tr><th class="l">{T("指标", "Gauge")}</th><th>{T("停用日", "Retired")}</th><th class="l">{T("原因", "Why")}</th></tr></thead><tbody>{retired}</tbody></table></div>
 <h2>{T("解读日志规则", "Log rules")}</h2>
-<div class="card mcard">{T(f"日志日期 = 解读当天（UTC），日更每天 UTC {MAIN_TIME} 运行，每个读数带自己的数据日期（FRED 按美国工作日、NFCI 周度、交易所余额约有 2 周滞后，超过容忍天数标 ⚠）。写入即冻结；同一天重跑且核心缺失变少才覆盖一次并标「补录」。周复盘按 ISO 周（周一至周日），月复盘按自然月；切换发生在规则变更当天的，注明「规则变更所致」。人工点评放在 content/journal/，单独标注。网站其他位置展示日志内容时标「日志 · 冻结时间」，读数和最新值不同以最新值为准。",
-                                                                                   f"Log date = UTC day of the run (the daily run is at {MAIN_TIME} UTC); each reading carries its own data date (FRED on US business days, NFCI weekly, exchange balance ~2 weeks late; stale readings get ⚠). Frozen once written; a same-day re-run only overwrites when fewer core inputs are missing, marked 'Re-run'. Weekly reviews follow ISO weeks, monthly ones calendar months; switches on a rule-change day are labelled as such. Wherever log content appears elsewhere it is marked with its freeze time; the latest values win.")}</div>
+<div class="card mcard">{T(f"日志日期 = 解读当天（UTC 日期），日更每天{TT(MAIN_TIME, False)}运行，每个读数带自己的数据日期（FRED 按美国工作日、NFCI 周度、交易所余额约有 2 周滞后，超过容忍天数标 ⚠）。写入即冻结；同一天重跑且核心缺失变少才覆盖一次并标「补录」。周复盘按 ISO 周（周一至周日），月复盘按自然月；切换发生在规则变更当天的，注明「规则变更所致」。人工点评放在 content/journal/，单独标注。网站其他位置展示日志内容时标「日志 · 冻结时间」，读数和最新值不同以最新值为准。",
+                                                                                   f"Log date = UTC day of the run (the daily run is at {TT(MAIN_TIME, False)}); each reading carries its own data date (FRED on US business days, NFCI weekly, exchange balance ~2 weeks late; stale readings get ⚠). Frozen once written; a same-day re-run only overwrites when fewer core inputs are missing, marked 'Re-run'. Weekly reviews follow ISO weeks, monthly ones calendar months; switches on a rule-change day are labelled as such. Wherever log content appears elsewhere it is marked with its freeze time; the latest values win.")}</div>
 <h2>{T("发射台口径", "Launchpad conventions")}</h2><div class="tw"><table><tbody>{lp_rows}</tbody></table></div>"""
     emit("methodology/index.html", T(f"口径与规则 · {BRAND}", f"Methodology · {BRAND_EN}"), body, active="methodology")
 
@@ -3605,7 +3736,7 @@ def build_misc(logs, weeks, months):
     if os.path.exists(rd):
         os.remove(rd)
     write("robots.txt", f"User-agent: *\nAllow: /\nSitemap: https://{DOMAIN}/sitemap.xml\n")
-    urls = ["/", "/macro/", "/calendar/", "/launchpad/", "/rotation/", "/narrative/", "/reports/", "/journal/", "/methodology/", "/corrections/", "/about/",
+    urls = ["/", "/macro/", "/calendar/", "/launchpad/", "/ai-agent/", "/rotation/", "/narrative/", "/reports/", "/journal/", "/methodology/", "/corrections/", "/about/",
             "/launchpad/report/", "/launchpad/report/archive/"]
     urls += [f"/macro/{x['key']}/" for x in R.INDICATORS + R.RETIRED] + ["/changelog/"]
     for p in PILLARS:
@@ -3752,6 +3883,7 @@ def main():
         build_rotation(rot)
         build_narrative()
         build_calendar()
+        build_ai_agent()
         build_posts()
         build_reports()
         build_journal(S, logs, weeks, months, sd)
