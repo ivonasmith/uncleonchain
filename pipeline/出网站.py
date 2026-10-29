@@ -1396,8 +1396,6 @@ def ruler_svg(price, levels, h=460, w=440, date=None):
             out.append(f'<text x="{ax - 16}" y="{y + 4:.1f}" text-anchor="end" class="rlb">{lab}</text>')
     out.append(f'<line x1="{ax - 60}" x2="{w - 6}" y1="{yp:.1f}" y2="{yp:.1f}" class="rnow"/>')
     out.append(f'<text x="{w - 6}" y="{yp - 6:.1f}" text-anchor="end" class="rnl">{T("收盘价", "Close")} ${price:,.0f}</text>')
-    if date:
-        out.append(f'<text x="{w - 6}" y="{yp - 26:.1f}" text-anchor="end" class="rlb" style="font-size:11px;opacity:.8">{TCLOSE(date)}</text>')
     return f'<svg viewBox="0 0 {w} {h}" class="ruler-svg" role="img" aria-label="{T("关键价位刻度尺", "Key level ruler")}">{"".join(out)}</svg>'
 
 
@@ -1410,7 +1408,7 @@ def l2_levels(l2):
     rows = "".join(f'<tr><td class="l">{esc(T(x["name_zh"], x["name_en"]))}</td><td>{m(x["value"])}</td><td>{x["pct_from_price"]:+.1f}%</td></tr>' for x in allv)
     return (f'<div class="ruler card"><input type="checkbox" id="rl-all" class="rtg"><label for="rl-all" class="pill">'
             f'<span class="a">{T("展开全部 13 条", "Show all 13")}</span><span class="b">{T("只看 6 条重点", "Key 6 only")}</span></label>'
-            f'<div class="r6">{ruler_svg(price, key6, date=l2.get("data_date"))}</div><div class="r13">{ruler_svg(price, lv, h=560, date=l2.get("data_date"))}</div>'
+            f'<p class="tnote" style="margin:0 0 4px"><b>{T("收盘价", "Close")} ${price:,.0f}</b> · {TCLOSE(l2.get("data_date"))}</p><div class="r6">{ruler_svg(price, key6, date=l2.get("data_date"))}</div><div class="r13">{ruler_svg(price, lv, h=560, date=l2.get("data_date"))}</div>'
             f'<p class="tnote">{T("价格用", "Price = ")}{TCLOSE(l2.get("data_date"))}{T("，括号里的百分比都相对这个收盘价。对数刻度，按真实价格距离摆放；绿色 = 收盘价下方的支撑，红色 = 上方的压力。价位都由 l2_daily.py 每天算好，网页只展示（均衡价格为近似值）。", "; the percentages are measured from this close. Log scale, placed by real price distance; green = supports below, red = resistance above. All levels come from l2_daily.py; the page only displays them (balanced price is approximate).")}</p></div>'
             f'<details class="card fold"><summary>{T("13 条关键价位表", "All 13 levels (table)")}</summary><div class="tw" style="margin:0;border:0"><table><thead><tr><th class="l">{T("价位", "Level")}</th>'
             f'<th>{T("价格", "Value")}</th><th>{T("离收盘价", "vs close")}</th></tr></thead><tbody>{rows}</tbody></table></div></details>')
