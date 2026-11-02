@@ -1,5 +1,5 @@
 {
-  "version": "presentation-stages-v1",
+  "version": "presentation-stages-v2",
   "scope": "fees only; descriptive rules",
   "rules_in_priority_order": [
     "missing: unknown",
@@ -7,6 +7,8 @@
     "position >= 70: summer",
     "weekly change >= 0.10: spring",
     "position <= 20: winter",
+    "14-day change <= -0.10 and weekly change < 0: drift_down",
+    "14-day change >= 0.10 and weekly change > 0: drift_up",
     "otherwise: steady"
   ],
   "daily": [
@@ -4380,7 +4382,7 @@
     },
     {
       "date": "2024-09-14",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2024-09-15",
@@ -5088,7 +5090,7 @@
     },
     {
       "date": "2025-03-10",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2025-03-11",
@@ -5128,11 +5130,11 @@
     },
     {
       "date": "2025-03-20",
-      "state": "steady"
+      "state": "drift_up"
     },
     {
       "date": "2025-03-21",
-      "state": "steady"
+      "state": "drift_up"
     },
     {
       "date": "2025-03-22",
@@ -5140,7 +5142,7 @@
     },
     {
       "date": "2025-03-23",
-      "state": "steady"
+      "state": "drift_up"
     },
     {
       "date": "2025-03-24",
@@ -5160,7 +5162,7 @@
     },
     {
       "date": "2025-03-28",
-      "state": "steady"
+      "state": "drift_up"
     },
     {
       "date": "2025-03-29",
@@ -5216,7 +5218,7 @@
     },
     {
       "date": "2025-04-11",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2025-04-12",
@@ -5264,7 +5266,7 @@
     },
     {
       "date": "2025-04-23",
-      "state": "steady"
+      "state": "drift_up"
     },
     {
       "date": "2025-04-24",
@@ -5276,15 +5278,15 @@
     },
     {
       "date": "2025-04-26",
-      "state": "steady"
+      "state": "drift_up"
     },
     {
       "date": "2025-04-27",
-      "state": "steady"
+      "state": "drift_up"
     },
     {
       "date": "2025-04-28",
-      "state": "steady"
+      "state": "drift_up"
     },
     {
       "date": "2025-04-29",
@@ -5440,15 +5442,15 @@
     },
     {
       "date": "2025-06-06",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2025-06-07",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2025-06-08",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2025-06-09",
@@ -5456,11 +5458,11 @@
     },
     {
       "date": "2025-06-10",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2025-06-11",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2025-06-12",
@@ -5520,11 +5522,11 @@
     },
     {
       "date": "2025-06-26",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2025-06-27",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2025-06-28",
@@ -5576,7 +5578,7 @@
     },
     {
       "date": "2025-07-10",
-      "state": "steady"
+      "state": "drift_up"
     },
     {
       "date": "2025-07-11",
@@ -5768,7 +5770,7 @@
     },
     {
       "date": "2025-08-27",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2025-08-28",
@@ -5832,7 +5834,7 @@
     },
     {
       "date": "2025-09-12",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2025-09-13",
@@ -5872,7 +5874,7 @@
     },
     {
       "date": "2025-09-22",
-      "state": "steady"
+      "state": "drift_up"
     },
     {
       "date": "2025-09-23",
@@ -6008,31 +6010,31 @@
     },
     {
       "date": "2025-10-26",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2025-10-27",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2025-10-28",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2025-10-29",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2025-10-30",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2025-10-31",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2025-11-01",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2025-11-02",
@@ -6132,11 +6134,11 @@
     },
     {
       "date": "2025-11-26",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2025-11-27",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2025-11-28",
@@ -6200,7 +6202,7 @@
     },
     {
       "date": "2025-12-13",
-      "state": "steady"
+      "state": "drift_up"
     },
     {
       "date": "2025-12-14",
@@ -6260,15 +6262,15 @@
     },
     {
       "date": "2025-12-28",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2025-12-29",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2025-12-30",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2025-12-31",
@@ -6484,27 +6486,27 @@
     },
     {
       "date": "2026-02-22",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2026-02-23",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2026-02-24",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2026-02-25",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2026-02-26",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2026-02-27",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2026-02-28",
@@ -6548,7 +6550,7 @@
     },
     {
       "date": "2026-03-10",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2026-03-11",
@@ -6556,15 +6558,15 @@
     },
     {
       "date": "2026-03-12",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2026-03-13",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2026-03-14",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2026-03-15",
@@ -6736,7 +6738,7 @@
     },
     {
       "date": "2026-04-26",
-      "state": "steady"
+      "state": "drift_up"
     },
     {
       "date": "2026-04-27",
@@ -6804,15 +6806,15 @@
     },
     {
       "date": "2026-05-13",
-      "state": "steady"
+      "state": "drift_up"
     },
     {
       "date": "2026-05-14",
-      "state": "steady"
+      "state": "drift_up"
     },
     {
       "date": "2026-05-15",
-      "state": "steady"
+      "state": "drift_up"
     },
     {
       "date": "2026-05-16",
@@ -7096,7 +7098,7 @@
     },
     {
       "date": "2026-07-25",
-      "state": "steady"
+      "state": "drift_up"
     },
     {
       "date": "2026-07-26",
@@ -7176,7 +7178,7 @@
     },
     {
       "date": "2026-08-14",
-      "state": "steady"
+      "state": "drift_up"
     },
     {
       "date": "2026-08-15",
@@ -7184,15 +7186,15 @@
     },
     {
       "date": "2026-08-16",
-      "state": "steady"
+      "state": "drift_up"
     },
     {
       "date": "2026-08-17",
-      "state": "steady"
+      "state": "drift_up"
     },
     {
       "date": "2026-08-18",
-      "state": "steady"
+      "state": "drift_up"
     },
     {
       "date": "2026-08-19",
@@ -7452,47 +7454,47 @@
     },
     {
       "date": "2026-10-22",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2026-10-23",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2026-10-24",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2026-10-25",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2026-10-26",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2026-10-27",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2026-10-28",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2026-10-29",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2026-10-30",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2026-10-31",
-      "state": "steady"
+      "state": "drift_down"
     },
     {
       "date": "2026-11-01",
-      "state": "steady"
+      "state": "drift_down"
     }
   ],
   "runs": [
@@ -8277,10 +8279,16 @@
       "days": 13
     },
     {
-      "state": "steady",
+      "state": "drift_down",
       "start": "2024-09-14",
+      "end": "2024-09-14",
+      "days": 1
+    },
+    {
+      "state": "steady",
+      "start": "2024-09-15",
       "end": "2024-09-24",
-      "days": 11
+      "days": 10
     },
     {
       "state": "spring",
@@ -8373,7 +8381,7 @@
       "days": 19
     },
     {
-      "state": "steady",
+      "state": "drift_down",
       "start": "2025-03-10",
       "end": "2025-03-10",
       "days": 1
@@ -8387,8 +8395,44 @@
     {
       "state": "steady",
       "start": "2025-03-18",
+      "end": "2025-03-19",
+      "days": 2
+    },
+    {
+      "state": "drift_up",
+      "start": "2025-03-20",
+      "end": "2025-03-21",
+      "days": 2
+    },
+    {
+      "state": "steady",
+      "start": "2025-03-22",
+      "end": "2025-03-22",
+      "days": 1
+    },
+    {
+      "state": "drift_up",
+      "start": "2025-03-23",
+      "end": "2025-03-23",
+      "days": 1
+    },
+    {
+      "state": "steady",
+      "start": "2025-03-24",
+      "end": "2025-03-27",
+      "days": 4
+    },
+    {
+      "state": "drift_up",
+      "start": "2025-03-28",
+      "end": "2025-03-28",
+      "days": 1
+    },
+    {
+      "state": "steady",
+      "start": "2025-03-29",
       "end": "2025-04-02",
-      "days": 16
+      "days": 5
     },
     {
       "state": "autumn",
@@ -8397,10 +8441,16 @@
       "days": 8
     },
     {
-      "state": "steady",
+      "state": "drift_down",
       "start": "2025-04-11",
+      "end": "2025-04-11",
+      "days": 1
+    },
+    {
+      "state": "steady",
+      "start": "2025-04-12",
       "end": "2025-04-12",
-      "days": 2
+      "days": 1
     },
     {
       "state": "spring",
@@ -8409,10 +8459,22 @@
       "days": 10
     },
     {
-      "state": "steady",
+      "state": "drift_up",
       "start": "2025-04-23",
+      "end": "2025-04-23",
+      "days": 1
+    },
+    {
+      "state": "steady",
+      "start": "2025-04-24",
+      "end": "2025-04-25",
+      "days": 2
+    },
+    {
+      "state": "drift_up",
+      "start": "2025-04-26",
       "end": "2025-04-28",
-      "days": 6
+      "days": 3
     },
     {
       "state": "spring",
@@ -8439,10 +8501,28 @@
       "days": 16
     },
     {
-      "state": "steady",
+      "state": "drift_down",
       "start": "2025-06-06",
+      "end": "2025-06-08",
+      "days": 3
+    },
+    {
+      "state": "steady",
+      "start": "2025-06-09",
+      "end": "2025-06-09",
+      "days": 1
+    },
+    {
+      "state": "drift_down",
+      "start": "2025-06-10",
+      "end": "2025-06-11",
+      "days": 2
+    },
+    {
+      "state": "steady",
+      "start": "2025-06-12",
       "end": "2025-06-16",
-      "days": 11
+      "days": 5
     },
     {
       "state": "autumn",
@@ -8451,10 +8531,16 @@
       "days": 9
     },
     {
-      "state": "steady",
+      "state": "drift_down",
       "start": "2025-06-26",
+      "end": "2025-06-27",
+      "days": 2
+    },
+    {
+      "state": "steady",
+      "start": "2025-06-28",
       "end": "2025-06-28",
-      "days": 3
+      "days": 1
     },
     {
       "state": "spring",
@@ -8463,7 +8549,7 @@
       "days": 11
     },
     {
-      "state": "steady",
+      "state": "drift_up",
       "start": "2025-07-10",
       "end": "2025-07-10",
       "days": 1
@@ -8535,7 +8621,7 @@
       "days": 9
     },
     {
-      "state": "steady",
+      "state": "drift_down",
       "start": "2025-08-27",
       "end": "2025-08-27",
       "days": 1
@@ -8559,10 +8645,16 @@
       "days": 7
     },
     {
-      "state": "steady",
+      "state": "drift_down",
       "start": "2025-09-12",
+      "end": "2025-09-12",
+      "days": 1
+    },
+    {
+      "state": "steady",
+      "start": "2025-09-13",
       "end": "2025-09-14",
-      "days": 3
+      "days": 2
     },
     {
       "state": "spring",
@@ -8571,7 +8663,7 @@
       "days": 7
     },
     {
-      "state": "steady",
+      "state": "drift_up",
       "start": "2025-09-22",
       "end": "2025-09-22",
       "days": 1
@@ -8607,7 +8699,7 @@
       "days": 9
     },
     {
-      "state": "steady",
+      "state": "drift_down",
       "start": "2025-10-26",
       "end": "2025-11-01",
       "days": 7
@@ -8619,10 +8711,16 @@
       "days": 24
     },
     {
-      "state": "steady",
+      "state": "drift_down",
       "start": "2025-11-26",
+      "end": "2025-11-27",
+      "days": 2
+    },
+    {
+      "state": "steady",
+      "start": "2025-11-28",
       "end": "2025-11-29",
-      "days": 4
+      "days": 2
     },
     {
       "state": "spring",
@@ -8631,10 +8729,16 @@
       "days": 13
     },
     {
-      "state": "steady",
+      "state": "drift_up",
       "start": "2025-12-13",
+      "end": "2025-12-13",
+      "days": 1
+    },
+    {
+      "state": "steady",
+      "start": "2025-12-14",
       "end": "2025-12-17",
-      "days": 5
+      "days": 4
     },
     {
       "state": "autumn",
@@ -8643,10 +8747,16 @@
       "days": 10
     },
     {
-      "state": "steady",
+      "state": "drift_down",
       "start": "2025-12-28",
+      "end": "2025-12-30",
+      "days": 3
+    },
+    {
+      "state": "steady",
+      "start": "2025-12-31",
       "end": "2026-01-01",
-      "days": 5
+      "days": 2
     },
     {
       "state": "spring",
@@ -8679,7 +8789,7 @@
       "days": 15
     },
     {
-      "state": "steady",
+      "state": "drift_down",
       "start": "2026-02-22",
       "end": "2026-02-27",
       "days": 6
@@ -8691,7 +8801,7 @@
       "days": 10
     },
     {
-      "state": "steady",
+      "state": "drift_down",
       "start": "2026-03-10",
       "end": "2026-03-10",
       "days": 1
@@ -8703,10 +8813,16 @@
       "days": 1
     },
     {
-      "state": "steady",
+      "state": "drift_down",
       "start": "2026-03-12",
+      "end": "2026-03-14",
+      "days": 3
+    },
+    {
+      "state": "steady",
+      "start": "2026-03-15",
       "end": "2026-03-26",
-      "days": 15
+      "days": 12
     },
     {
       "state": "spring",
@@ -8745,7 +8861,7 @@
       "days": 10
     },
     {
-      "state": "steady",
+      "state": "drift_up",
       "start": "2026-04-26",
       "end": "2026-04-26",
       "days": 1
@@ -8763,10 +8879,16 @@
       "days": 7
     },
     {
-      "state": "steady",
+      "state": "drift_up",
       "start": "2026-05-13",
+      "end": "2026-05-15",
+      "days": 3
+    },
+    {
+      "state": "steady",
+      "start": "2026-05-16",
       "end": "2026-05-20",
-      "days": 8
+      "days": 5
     },
     {
       "state": "winter",
@@ -8831,8 +8953,14 @@
     {
       "state": "steady",
       "start": "2026-07-19",
+      "end": "2026-07-24",
+      "days": 6
+    },
+    {
+      "state": "drift_up",
+      "start": "2026-07-25",
       "end": "2026-07-25",
-      "days": 7
+      "days": 1
     },
     {
       "state": "spring",
@@ -8855,8 +8983,26 @@
     {
       "state": "steady",
       "start": "2026-08-12",
+      "end": "2026-08-13",
+      "days": 2
+    },
+    {
+      "state": "drift_up",
+      "start": "2026-08-14",
+      "end": "2026-08-14",
+      "days": 1
+    },
+    {
+      "state": "steady",
+      "start": "2026-08-15",
+      "end": "2026-08-15",
+      "days": 1
+    },
+    {
+      "state": "drift_up",
+      "start": "2026-08-16",
       "end": "2026-08-18",
-      "days": 7
+      "days": 3
     },
     {
       "state": "spring",
@@ -8901,11 +9047,11 @@
       "days": 14
     },
     {
-      "state": "steady",
+      "state": "drift_down",
       "start": "2026-10-22",
       "end": "2026-11-01",
       "days": 11
     }
   ],
-  "duration_inclusion": "all non-unknown runs excluding first and last; not independent market cycles"
+  "duration_inclusion": "all non-unknown runs excluding first and last and runs of <= 2 days; not independent market cycles"
 }

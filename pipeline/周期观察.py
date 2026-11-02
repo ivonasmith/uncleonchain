@@ -37,10 +37,12 @@ def reading(points):
     score = 100 * (value - lo) / (hi - lo) if value is not None and lo is not None and hi > lo else None
     old = previous(7)
     delta = value / old - 1 if value is not None and old is not None and old > 0 else None
+    old14 = previous(14)
+    delta14 = value / old14 - 1 if value is not None and old14 is not None and old14 > 0 else None
     recent = [previous(n) for n in range(1, 29)]
     base = quantile(recent, .5) if all(v is not None for v in recent) else None
     pulse = value / base if value is not None and base is not None and base > 0 else None
-    return dict(date=day,value=value,low=lo,high=hi,position=score,direction_change=delta,pulse=pulse,reference_days=len(history))
+    return dict(date=day,value=value,low=lo,high=hi,position=score,direction_change=delta,change14=delta14,pulse=pulse,reference_days=len(history))
 
 
 def detect_events(points):

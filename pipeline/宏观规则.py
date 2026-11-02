@@ -1920,3 +1920,10 @@ RULE_CHANGES.append(
      "原因EN": "When Coin Metrics had not yet published the day, L2 and L3 used bitview's intraday price at run time, so the ruler's 'price' was a ~02:50 UTC intraday price, out of step with the rest of the site. Everything now uses the 00:00 UTC close.",
      "内容": "L2、L3 只用已收盘的 UTC 完整日：数据日从「运行当天」变为「前一天」，价格 = 该日 UTC 0 点收盘价；刻度尺、价格位置条改标「收盘价 + 收盘时刻」。L3 样本外记录写入后不改：2026-10-29 及以前各行是运行时的价格，之后各行是收盘价。",
      "EN": "L2 and L3 now use only closed UTC days: the data date moves from the run day to the previous day, and price = that day's 00:00 UTC close; the ruler and price bar now read 'close + close time'. L3's out-of-sample log is never rewritten: rows up to 2026-10-29 used the run-time price, later rows use the close."})
+
+RULE_CHANGES.append(
+    {"日期": "2026-11-02", "锚": "2026-11-02-lpstage", "范围": "发射台活动温度 · 阶段", "EN范围": "Launchpad activity temperature · stages",
+     "原因": "旧规则只看单周涨跌有没有过 ±10%，没过就一律叫「盘整（变化不大）」。2026-10-22 起活动连续两周慢慢往下走（7 日平均 $3.73M → $3.39M，温度 41.6 → 35.3），每周都没跌满 10%，页面却一直写「变化不大」，和实际不符。另外「一般持续几天」把门槛附近来回跳 1 天的段也算一次，范围被压短。",
+     "原因EN": "The old rule only checked whether the weekly change crossed ±10%; anything else was 'Steady (flat)'. From 2026-10-22 activity slid for two weeks ($3.73M → $3.39M 7-day average, temperature 41.6 → 35.3) without any single week falling 10%, yet the page kept saying 'flat'. Also, one-day threshold flickers counted as stretches and pulled 'usually lasts' too short.",
+     "内容": "阶段新增「缓慢降温 / 缓慢升温」：前四条（退潮 / 盛夏 / 回暖 / 寒冬）都不满足时，近 14 天累计跌超 10% 且近一周仍在跌 = 缓慢降温，累计涨超 10% 且近一周仍在涨 = 缓慢升温，其余才是盘整。「一般持续几天」不计 ≤2 天的段，不足 5 次不给范围。历史每日阶段按新规则重算（1,871 天里 65 天的标签变了），stages.json 版本升为 v2。",
+     "EN": "Added Slow cooling / Slow warming: when none of Cooling / Summer / Warming / Winter applies, a 14-day change ≤ −10% with the week still falling is Slow cooling, ≥ +10% with the week still rising is Slow warming; only the rest is Steady. 'Usually lasts' now skips stretches of ≤ 2 days and gives no range below 5 stretches. Daily stages were recomputed under the new rule (65 of 1,871 days changed label); stages.json is now v2."})

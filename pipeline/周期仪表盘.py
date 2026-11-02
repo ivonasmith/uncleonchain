@@ -9,7 +9,11 @@ STAGES = [('winter','寒冬','Winter','var(--cyc-winter)','冷清，也还没回
           ('spring','回暖','Warming','var(--cyc-spring)','近一周明显回升','Clearly picking up this week'),
           ('summer','盛夏','Summer','var(--cyc-summer)','很热，还没明显回落','Hot, not yet fading'),
           ('autumn','退潮','Cooling','var(--cyc-autumn)','近一周明显回落','Clearly fading this week'),
-          ('steady','盘整','Steady','var(--cyc-steady)','不冷不热，变化不大','Middling and flat')]
+          ('drift_down','缓慢降温','Slow cooling','var(--cyc-drift-dn)','没有一周大跌，但两周累计在降','No sharp weekly drop, but down over two weeks'),
+          ('drift_up','缓慢升温','Slow warming','var(--cyc-drift-up)','没有一周大涨，但两周累计在升','No sharp weekly rise, but up over two weeks'),
+          ('steady','盘整','Steady','var(--cyc-steady)','不冷不热，两周变化不大','Middling, flat over two weeks')]
+MIN_RUNS = 5    # 少于 5 次不给「一般持续」
+SHORT_RUN = 2   # 「一般持续」不计 ≤2 天的段（门槛附近来回跳）
 STAGE = {s[0]: s for s in STAGES}
 
 STYLE = '''<style>.cd-hero{display:grid;grid-template-columns:minmax(240px,1fr) 1.7fr;gap:28px;padding:24px;margin:0 0 22px}.cd-gauge{text-align:center;max-width:320px;margin:auto}.cd-gauge svg{width:100%;display:block}.cd-score{font-size:46px;font-weight:750;line-height:1.1;font-family:var(--mono)}.cd-score small{font-size:15px;font-weight:400;color:var(--muted)}.cd-gauge>b{display:block;font-size:19px;margin:6px 0 4px}.cd-gauge>small{display:block;color:var(--muted);font-size:12px}
@@ -24,7 +28,10 @@ def state(r):
     x, d = r['position'], r['direction_change']
     if x is None or d is None:
         return ('unknown','待积累','Insufficient history', 'var(--cyc-steady)')
-    code = 'autumn' if d <= -.10 else 'summer' if x >= 70 else 'spring' if d >= .10 else 'winter' if x <= 20 else 'steady'
+    d14 = r.get('change14')
+    code = ('autumn' if d <= -.10 else 'summer' if x >= 70 else 'spring' if d >= .10 else 'winter' if x <= 20
+            else 'drift_down' if d14 is not None and d14 <= -.10 and d < 0
+            else 'drift_up' if d14 is not None and d14 >= .10 and d > 0 else 'steady')
     return STAGE[code][:4]
 
 
@@ -137,17 +144,17 @@ def hero(data, reading, T, esc, link='', close=''):
             chips.append(f'<span class="cd-st" style="--season:{color}" title="{esc(T(szh,sen))}">{T(zh,en)}</span>')
     age = stage_age(P, reading, ph[0])
     _, done = stage_runs(P, reading)
-    durs = sorted(v['days'] for v in done if v['state'] == ph[0])
-    if durs:
+    durs = sorted(v['days'] for v in done if v['state'] == ph[0] and v['days'] > SHORT_RUN)
+    if len(durs) >= MIN_RUNS:
         lo_d, hi_d = q(durs, .25), q(durs, .75)
         fill = min(100, 100 * age / max(hi_d, 1)); mark = 100 * lo_d / max(hi_d, 1)
         typical = (f'<small>{T(f"这个阶段一般持续 {lo_d:.0f}–{hi_d:.0f} 天", f"Usually lasts {lo_d:.0f}–{hi_d:.0f} days")}</small>'
-                   f'<span class="cd-prog" title="{esc(T(f"过去 {len(durs)} 次的中间一半", f"Middle half of the past {len(durs)} stretches"))}"><i style="width:{fill:.0f}%"></i><em style="left:{mark:.0f}%"></em></span>'
+                   f'<span class="cd-prog" title="{esc(T(f"过去 {len(durs)} 次（不计 ≤{SHORT_RUN} 天的来回跳动）的中间一半", f"Middle half of the past {len(durs)} stretches (blips of ≤{SHORT_RUN} days excluded)"))}"><i style="width:{fill:.0f}%"></i><em style="left:{mark:.0f}%"></em></span>'
                    + (f'<small class="cd-over">{T("已超过一般时长", "Longer than usual")}</small>' if age > hi_d else ''))
     else:
         typical = f'<small>{T("历史次数不够，不给一般时长", "Too few past stretches")}</small>'
-    tip = esc(T('阶段由「温度高低」和「近一周涨跌」按固定规则自动判定：近一周跌超 10% 为退潮；否则温度 ≥70 为盛夏；否则近一周涨超 10% 为回暖；否则温度 ≤20 为寒冬；其余为盘整。阶段是阅读标签，不按固定顺序轮转，也不是买卖信号。',
-                'Stage = level + weekly direction, by fixed rules: weekly change ≤ −10% is Cooling; else temperature ≥ 70 is Summer; else change ≥ +10% is Warming; else temperature ≤ 20 is Winter; otherwise Steady. A reading label, not a fixed sequence or a trading signal.'))
+    tip = esc(T('阶段由「温度高低」和「近一周涨跌」按固定规则自动判定：近一周跌超 10% 为退潮；否则温度 ≥70 为盛夏；否则近一周涨超 10% 为回暖；否则温度 ≤20 为寒冬；否则近两周累计跌超 10% 且近一周仍在跌为缓慢降温，累计涨超 10% 且近一周仍在涨为缓慢升温；其余为盘整。阶段是阅读标签，不按固定顺序轮转，也不是买卖信号。',
+                'Stage = level + weekly direction, by fixed rules: weekly change ≤ −10% is Cooling; else temperature ≥ 70 is Summer; else change ≥ +10% is Warming; else temperature ≤ 20 is Winter; else a two-week change ≤ −10% with the week still falling is Slow cooling, ≥ +10% with the week still rising is Slow warming; otherwise Steady. A reading label, not a fixed sequence or a trading signal.'))
     pulse = '—' if r['pulse'] is None else f"{r['pulse']:.2f}"
     dtxt = '—' if d is None else f'{d:+.1%}'
     # 覆盖：扫了多少发射台、多少链，计入的占类目手续费多少
@@ -196,24 +203,24 @@ def dashboard(data, reading, T, esc, artifact_dir, money_html='', close='', hist
             runs[-1]['end']=date;runs[-1]['days']+=1
     valid_runs=[v for v in runs if v['state']!='unknown']
     complete_runs=valid_runs[1:-1] if len(valid_runs)>2 else []
-    (artifact_dir/'stages.json').write_text(json.dumps({'version':'presentation-stages-v1','scope':'fees only; descriptive rules','rules_in_priority_order':['missing: unknown','weekly change <= -0.10: autumn','position >= 70: summer','weekly change >= 0.10: spring','position <= 20: winter','otherwise: steady'],'daily':[{'date':date,'state':st[0]} for date,st in all_sequence],'runs':runs,'duration_inclusion':'all non-unknown runs excluding first and last; not independent market cycles'},ensure_ascii=False,indent=2))
+    (artifact_dir/'stages.json').write_text(json.dumps({'version':'presentation-stages-v2','scope':'fees only; descriptive rules','rules_in_priority_order':['missing: unknown','weekly change <= -0.10: autumn','position >= 70: summer','weekly change >= 0.10: spring','position <= 20: winter','14-day change <= -0.10 and weekly change < 0: drift_down','14-day change >= 0.10 and weekly change > 0: drift_up','otherwise: steady'],'daily':[{'date':date,'state':st[0]} for date,st in all_sequence],'runs':runs,'duration_inclusion':'all non-unknown runs excluding first and last and runs of <= 2 days; not independent market cycles'},ensure_ascii=False,indent=2))
 
     def q(vals, p):
         h=(len(vals)-1)*p;i=int(h);return vals[i]+(vals[min(i+1,len(vals)-1)]-vals[i])*(h-i)
 
     def rng(vals):
-        return f'{q(vals,.25):.0f}–{q(vals,.75):.0f}' if vals else '—'
+        return f'{q(vals,.25):.0f}–{q(vals,.75):.0f}' if len(vals) >= MIN_RUNS else '—'
 
     first_year = complete_runs[0]['start'][:4] if complete_runs else s['first'][:4]
     stage_rows=[]
     for code,zh,en,color,szh,sen in STAGES:
-        vals=sorted(v['days'] for v in complete_runs if v['state']==code)
+        vals=sorted(v['days'] for v in complete_runs if v['state']==code and v['days']>SHORT_RUN)
         now = f' <span class="tag" style="color:{color}">{T("现在","now")}</span>' if code==phase[0] else ''
-        stage_rows.append(f'<tr><td class="l"><b style="color:{color}">{T(zh,en)}</b>{now}<br><small style="color:var(--muted)">{T(szh,sen)}</small></td><td>{T(f"{len(vals)} 次", f"{len(vals)}")}</td><td><b>{rng(vals)}</b> {T("天","days")}</td></tr>')
+        stage_rows.append(f'<tr><td class="l"><b style="color:{color}">{T(zh,en)}</b>{now}<br><small style="color:var(--muted)">{T(szh,sen)}</small></td><td>{T(f"{len(vals)} 次", f"{len(vals)}")}</td><td>{("<b>" + rng(vals) + "</b> " + T("天","days")) if len(vals) >= MIN_RUNS else T("次数太少","Too few")}</td></tr>')
     stage_table=(f'<div class="card cycle-box" style="margin:14px 0"><h3 style="margin-top:0">{T("每个阶段一般持续几天？","How long does each stage usually last?")}</h3>'
                  f'<div style="overflow:auto"><table><thead><tr><th class="l">{T("阶段","Stage")}</th><th>{T(f"{first_year} 年以来出现过","Times since " + first_year)}</th><th>{T("一般持续","Usually lasts")}</th></tr></thead><tbody>{"".join(stage_rows)}</tbody></table></div>'
-                 + '<p class="tnote">' + T('「一般持续」= 把每次持续的天数从短到长排好，去掉最短和最长的各四分之一，剩下那一半落在这个范围。阶段在门槛附近来回一两天也会算一次，所以天数整体偏短。只说明过去，不代表这一次还剩几天。',
-                                          '"Usually lasts" = the middle half of all past durations (shortest and longest quarter removed). Brief threshold crossings count as separate stretches, so durations skew short. Describes the past, not how long this one has left.') + '</p></div>')
+                 + '<p class="tnote">' + T('「一般持续」= 把每次持续的天数从短到长排好，去掉最短和最长的各四分之一，剩下那一半落在这个范围。只持续 1–2 天的段多是在门槛附近来回跳，不计入（次数也不算）；不足 5 次的不给范围。只说明过去，不代表这一次还剩几天。',
+                                          '"Usually lasts" = the middle half of all past durations (shortest and longest quarter removed). Stretches of 1–2 days are mostly threshold flicker and are left out (from the count too); fewer than 5 stretches get no range. Describes the past, not how long this one has left.') + '</p></div>')
 
     episodes=s['events']; latest=episodes[-1] if episodes else None
     ended=[e for e in episodes if e['status']=='ended']
@@ -246,5 +253,5 @@ def dashboard(data, reading, T, esc, artifact_dir, money_html='', close='', hist
 <section id="phase-position"><h2>{T('这一轮走到哪了？','Where is this wave?')}</h2><div class="card cycle-box">{episode}<b>{T('近 180 天每天的阶段','Stage for each of the last 180 days')}</b><div style="display:flex;height:22px;border-radius:6px;overflow:hidden;margin:12px 0 8px" aria-label="{T('阶段轨迹','Stage trail')}">{strips}</div><div style="font-size:12px;color:var(--muted)">{legend}<span>{seq180[0][0]} → {seq180[-1][0]}</span></div></div>{stage_table}{rhythm}</section>
 {{MONEY}}
 <section id="opportunity"><h2>{T('这种环境下，新币机会能留多久？','How long do new-token opportunities last in this environment?')}</h2><div class="cd-evidence"><div class="card"><small>{T('研究样本','Research sample')}</small><p><strong>1,060 + 299</strong></p><p>{T('1,060 个随机抽的新币，加 299 个按冷热环境补的样本，两组分开看，不合起来冒充全市场胜率。','1,060 randomly drawn new tokens plus 299 added per environment, analysed separately rather than pooled into a market-wide win rate.')}</p></div><div class="card"><b>{T('已经看到的','What we see so far')}</b><p>{T('不同冷热环境下，新币的成交集中在上线后多久并不一样，没有统一的「6 小时规律」。','How quickly a new token’s trading concentrates differs by environment; there is no universal “six-hour rule”.')}</p></div><div class="card"><b>{T('还没验证的','Not yet verified')}</b><p>{T('扣掉成本后能不能赚钱、强势币出现的概率、怎么提前发现，都还没过检验，所以这里不给参与评级，也不给名单。','Net-of-cost returns, how often strong tokens appear and how to spot them early are unverified, so there is no rating or shortlist here.')}</p></div></div></section>
-<details style="margin:20px 0"><summary>{T('这些数是怎么算的？','How is this calculated?')}</summary><p>{T('温度：把过去两年每天的活跃度（发射台手续费的 7 日平均）放在一起，去掉最低和最高各 5% 的极端日，剩下的范围拉成 0–100，看现在落在哪。0–20 低温、20–40 偏凉、40–60 温和、60–80 偏热、80–100 高热。','Temperature: take the past two years of daily activity (7-day average launchpad fees), drop the lowest and highest 5% of days, stretch the rest to 0–100 and see where today lands. 0–20 low, 20–40 cool, 40–60 moderate, 60–80 warm, 80–100 high.')}</p><p>{T('阶段：近一周跌超 10% 为退潮；否则温度 ≥70 为盛夏；否则近一周涨超 10% 为回暖；否则温度 ≤20 为寒冬；其余为盘整。每天只用当天以前的数据判定。','Stage: weekly change ≤ −10% is Cooling; else temperature ≥ 70 Summer; else change ≥ +10% Warming; else temperature ≤ 20 Winter; otherwise Steady. Each day uses only data up to that day.')}</p><p>{T('热潮：7 日平均连续 3 天超过前四周常态（中位数）的 1.5 倍，算一轮开始；之后连续 7 天回到常态 1.2 倍以内、或跌到这一轮最高点的 6 成以下，算结束。「最热那几天」= 最高点前后不低于最高点 8 成的日子。','Wave: the 7-day average stays above 1.5× the prior four-week norm (median) for 3 days to start; it ends after 7 straight days back within 1.2× the norm or below 60% of the wave’s peak. “Hottest stretch” = days around the peak within 80% of it.')}</p><a href="/data/cycle/stages.json" download>{T('下载每日阶段','Download daily stages')}</a></details>'''
+<details style="margin:20px 0"><summary>{T('这些数是怎么算的？','How is this calculated?')}</summary><p>{T('温度：把过去两年每天的活跃度（发射台手续费的 7 日平均）放在一起，去掉最低和最高各 5% 的极端日，剩下的范围拉成 0–100，看现在落在哪。0–20 低温、20–40 偏凉、40–60 温和、60–80 偏热、80–100 高热。','Temperature: take the past two years of daily activity (7-day average launchpad fees), drop the lowest and highest 5% of days, stretch the rest to 0–100 and see where today lands. 0–20 low, 20–40 cool, 40–60 moderate, 60–80 warm, 80–100 high.')}</p><p>{T('阶段：近一周跌超 10% 为退潮；否则温度 ≥70 为盛夏；否则近一周涨超 10% 为回暖；否则温度 ≤20 为寒冬；否则近两周累计跌超 10% 且近一周仍在跌为缓慢降温，累计涨超 10% 且近一周仍在涨为缓慢升温；其余为盘整。每天只用当天以前的数据判定。','Stage: weekly change ≤ −10% is Cooling; else temperature ≥ 70 Summer; else change ≥ +10% Warming; else temperature ≤ 20 Winter; else a two-week change ≤ −10% with the week still falling is Slow cooling, ≥ +10% with the week still rising is Slow warming; otherwise Steady. Each day uses only data up to that day.')}</p><p>{T('热潮：7 日平均连续 3 天超过前四周常态（中位数）的 1.5 倍，算一轮开始；之后连续 7 天回到常态 1.2 倍以内、或跌到这一轮最高点的 6 成以下，算结束。「最热那几天」= 最高点前后不低于最高点 8 成的日子。','Wave: the 7-day average stays above 1.5× the prior four-week norm (median) for 3 days to start; it ends after 7 straight days back within 1.2× the norm or below 60% of the wave’s peak. “Hottest stretch” = days around the peak within 80% of it.')}</p><a href="/data/cycle/stages.json" download>{T('下载每日阶段','Download daily stages')}</a></details>'''
     return body.replace('{MONEY}', money_html).replace('{HISTORY}', history_html)
