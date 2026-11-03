@@ -11,6 +11,7 @@ on:
       - "content/**"
       - "assets/**"
       - "config/**"
+      - "public/ai-agent/**"     # 大叔电脑上 Codex 的 monitor-agent-id 推新数据后立刻重建页面
       - ".github/workflows/**"
 
 permissions:
