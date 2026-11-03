@@ -1,13 +1,12 @@
 <!doctype html>
-<html lang="zh-CN"><head><script>(function(){document.documentElement.setAttribute('data-theme','light');document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href]');if(!a)return;var h=a.getAttribute('href');if(h&&h.charAt(0)!=='#'&&!a.target){a.target=/uncleonchain\.com|^\//.test(h)?'_top':'_blank'}});})();</script><meta charset="utf-8">
+<html lang="en"><head><script>(function(){document.documentElement.setAttribute('data-theme','light');document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href]');if(!a)return;var h=a.getAttribute('href');if(h&&h.charAt(0)!=='#'&&!a.target){a.target=/uncleonchain\.com|^\//.test(h)?'_top':'_blank'}});})();</script><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>发币回暖了，找币的没有：二级发现层为什么掉队</title>
+<title>Launches are back, discovery isn't: why the secondary discovery layer fell behind</title>
 <!--meta
-标题: 发币回暖了，找币的没有：二级发现层为什么掉队
+标题: Launches are back, discovery isn't: why the secondary discovery layer fell behind
 日期: 2026-09-08
-分类: MEME
-标签: 发射台, 交易终端, 发现层, Flap, pump.fun
-摘要: 一级市场爬回自身峰值的 56.5%，二级发现层只有 28.6%；2026 年 8 月二级第一次比一级矮。差的那段被五件事吃掉：发币吞吐、发行方自建前端、终端世代更替、增量跑到新链、税代币分账。
+标签: launchpads, trading terminals, discovery layer, Flap, pump.fun
+摘要: Primary markets are back to 56.5% of their own peak; the secondary discovery layer only to 28.6%. In August 2026 secondary fell below primary for the first time. Five things ate the gap: launch throughput, issuer-built front ends, a terminal generation turnover, growth moving to new chains, and tax-token splits.
 -->
 <style>
 :root{--paper:#111111;--ink:#dddad6;--body:#c9c3bb;--faint:#948c81;--line:#2b2722;--rule:#dad5ce;--blue:#67b9e9;--red:#e2575d;--gold:#dec06d;--beige:#3e3a34;--soft:#1b1813;color-scheme:light}
@@ -51,16 +50,29 @@ ul{padding-left:22px}li{margin:6px 0}
 @media(max-width:600px){.bars{grid-template-columns:96px 1fr 56px}.chain{grid-template-columns:92px 1fr 30px 56px 52px;font-size:11.5px}.fig{padding:14px 10px}table{font-size:13.5px}th,td{padding:8px}}
 @page{size:A4;margin:16mm 14mm 18mm}
 @media print{.fig,.call,table{break-inside:avoid}h2{break-after:avoid}}
+
+/* 报告头（与 2026-10 之后的报告统一） */
+.rh{position:relative;background:linear-gradient(135deg,#191e21 0%,#262116 100%);border:1px solid #252626;border-radius:14px;padding:30px 34px 28px 40px;overflow:hidden;margin:0 0 30px;break-inside:avoid}
+.rh::before,.rl::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:linear-gradient(180deg,#84baca,#dec06d 55%,#dd5c5b)}
+.rh .tag{display:inline-block;border-radius:0;font-size:12px;font-weight:700;letter-spacing:1.5px;color:#e2ca89;background:#1d1b12;border:1px solid #443d30;padding:6px 12px;line-height:1.4}
+.rh h1{font-family:Georgia,"Times New Roman","Songti SC","Noto Serif CJK SC","Noto Serif SC",serif;font-size:clamp(28px,5.6vw,42px);line-height:1.22;color:#dddad6;margin:22px 0 12px;font-weight:700;letter-spacing:-.3px;text-wrap:balance;border:0;padding:0}
+.rh .sub{font-family:Georgia,"Times New Roman","Songti SC","Noto Serif CJK SC","Noto Serif SC",serif;font-style:italic;font-size:18px;line-height:1.6;color:#c9c3bb;margin:0 0 20px}
+.rh .chips{display:flex;flex-wrap:wrap;gap:10px}
+.rh .chip{display:inline-block;font-size:13px;padding:7px 13px;border:1px solid #3e3a34;background:#111111;color:#c9c3bb;line-height:1.3;border-radius:0;font-weight:400}
+.rh .chip.gold{background:#2b2619;border-color:#433d2b;color:#e2ca89}
+.rh .chip.blue{background:#171f24;border-color:#313e46;color:#67b9e9}
+.rh .src{font-size:13px;line-height:1.7;color:#948c81;margin:18px 0 0;padding:0;border:0}
+.rl{position:relative;background:linear-gradient(135deg,#1a2023,#1f1e1b);border:1px solid #262b2e;border-radius:14px;padding:22px 28px 22px 36px;overflow:hidden;margin:0 0 26px;font-size:17px;line-height:1.75;color:#dddad6;break-inside:avoid}
+.rl::before{background:#67b9e9}
+@media(max-width:640px){.rh{padding:22px 18px 20px 24px}.rl{padding:18px 16px 18px 22px}}
 </style><style>html{color-scheme:dark}img{filter:brightness(.9)}</style></head><body><div class="wrap">
 
-<h1>发币回暖了，找币的没有</h1>
-<p class="lead">一级市场爬回历史峰值的 57%，二级发现层还趴在 29%。这份报告只回答一个问题：差的那 28 个百分点是被什么吃掉的。</p>
-<div class="meta">数据口径日 2026-08-29<span>｜</span>来源：DefiLlama Fees API（免密钥公开接口）、BSC 公共节点 RPC、BscScan 已验证源码、Flap 官方接口<span>｜</span>全文只给数字与机制，不含任何买卖建议</div>
+<header class="rh"><span class="tag">RESEARCH · DISCOVERY LAYER</span><h1>Launches are back, discovery isn't</h1><p class="sub">Primary markets have climbed back to 57% of their all-time peak; the secondary discovery layer is still stuck at 29%. This report answers one question only: what ate the 28-point gap?</p><div class="chips"><span class="chip">Uncle Onchain · Liquidity to Alpha</span><span class="chip gold">Research · MEME discovery layer</span><span class="chip blue">Data as of 2026-08-29</span></div><p class="src">Sources: DefiLlama Fees API (public, keyless), BSC public-node RPC, BscScan verified source, Flap official API<span> | </span>Numbers and mechanisms only; no buy or sell advice</p></header>
 
-<h2><span class="n">01</span>先把两条曲线画在同一把尺子上</h2>
-<p>过去几周我看到最多的错误比较，是把「一级距峰值还差 43%」和「一级比谷底涨了 192%」放在一段话里。这两个数一个从上面量、一个从下面量，读者没法比。这份报告全程只用一把尺子：<b>占自己历史峰值的百分之多少</b>。下面这张图另外叠了一层：柱子是每月的绝对手续费，曲线是两条轨道各占当月合计的比例。</p>
-<div class="fig"><h3>图 1　一张图看两件事：柱子是每月真金白银的手续费，曲线是两条轨道各占当月合计的多少</h3>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="47.5 321 499.5 200" role="img" aria-label="图 1：一级市场与二级发现层每月手续费与占比，2024-01 至 2026-08" style="width:100%;height:auto;display:block">
+<h2><span class="n">01</span>Put both curves on the same ruler first</h2>
+<p>The most common wrong comparison I've seen in recent weeks puts "primary is still 43% below its peak" and "primary is up 192% from the bottom" in the same paragraph. One is measured from the top, one from the bottom; readers can't compare them. This report uses a single ruler throughout: <b>what percentage of its own all-time peak</b>. The chart below adds one more layer: bars are monthly fees in dollars, lines are each track's share of that month's combined total.</p>
+<div class="fig"><h3>Figure 1　Two things in one chart: bars are real monthly fees; lines are each track's share of the monthly total</h3>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="47.5 321 499.5 200" role="img" aria-label="Figure 1: Monthly fees and share for the primary market and the secondary discovery layer, 2024-01 to 2026-08" style="width:100%;height:auto;display:block">
 <defs>
 <filter id="f1-filter-remove-color" x="0%" y="0%" width="100%" height="100%">
 <feColorMatrix color-interpolation-filters="sRGB" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0" />
@@ -1771,351 +1783,105 @@ ul{padding-left:22px}li{margin:6px 0}
 <g fill="#dbd5ce" fill-opacity="1">
 <use xlink:href="#f1-glyph-3-0" x="468.812815" y="430.733404"/>
 </g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-0-1" x="214.414113" y="389.588874"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-0-0" x="218.111905" y="389.588874"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-0-1" x="221.970464" y="389.588874"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-0-2" x="225.668256" y="389.588874"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-0-9" x="229.455369" y="389.588874"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-0-0" x="232.349293" y="389.588874"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-0-4" x="236.207852" y="389.588874"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-4-0" x="239.054135" y="389.588874"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-5-0" x="245.151627" y="389.588874"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-6-0" x="251.249118" y="389.588874"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-7-0" x="257.34661" y="389.588874"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-8-0" x="263.444103" y="389.588874"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-0-6" x="265.176876" y="389.588874"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-0-2" x="269.077125" y="389.588874"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-1-0" x="272.864238" y="389.588874"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-9-0" x="93.007865" y="337.569345"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-10-0" x="99.105357" y="337.569345"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-11-0" x="105.202849" y="337.569345"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-7-0" x="111.30034" y="337.569345"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-12-0" x="117.397832" y="337.569345"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-13-0" x="123.495324" y="337.569345"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-11-1" x="129.592816" y="337.569345"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-14-0" x="135.690308" y="337.569345"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-7-1" x="141.7878" y="337.569345"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-15-0" x="147.885292" y="337.569345"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-16-0" x="153.982784" y="337.569345"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-16-1" x="160.080276" y="337.569345"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-17-0" x="166.177768" y="337.569345"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-18-0" x="172.27526" y="337.569345"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-11-2" x="178.372752" y="337.569345"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-13-1" x="184.470244" y="337.569345"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-6-1" x="190.567736" y="337.569345"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-11-3" x="196.665228" y="337.569345"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-7-2" x="491.128942" y="337.569345"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-10-0" x="497.226434" y="337.569345"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-11-0" x="503.323926" y="337.569345"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-16-1" x="509.421418" y="337.569345"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-11-4" x="515.51891" y="337.569345"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-6-2" x="521.616402" y="337.569345"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-17-1" x="527.713893" y="337.569345"/>
-</g>
 <g mask="url(#f1-mask-64)">
 <use xlink:href="#f1-source-1985" transform="matrix(1, 0, 0, 1, 97, 509)"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-11-5" x="108.933645" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-6-0" x="115.031137" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-9-1" x="121.128629" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-19-0" x="127.226121" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-0-10" x="133.323613" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-7-3" x="135.151669" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-9-2" x="141.249161" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-7-4" x="147.346653" y="514.334963"/>
 </g>
 <g mask="url(#f1-mask-65)">
 <use xlink:href="#f1-source-2060" transform="matrix(1, 0, 0, 1, 193, 509)"/>
 </g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-5-0" x="205.543016" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-6-0" x="211.640508" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-7-3" x="217.738" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-20-0" x="223.835492" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-9-3" x="229.932984" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-0-10" x="236.030476" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-15-1" x="237.858533" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-21-0" x="243.956025" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-6-3" x="250.053517" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-22-0" x="256.151008" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-9-4" x="300.031297" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-6-1" x="306.128789" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-11-6" x="312.226281" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-7-5" x="318.323773" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-23-0" x="324.421265" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-7-0" x="330.518757" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-12-0" x="336.616249" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-13-0" x="342.713741" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-7-1" x="348.811233" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-15-0" x="354.908725" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-16-0" x="361.006217" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-18-0" x="367.103709" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-5-1" x="373.201201" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-11-2" x="379.298693" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-11-1" x="385.396185" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-13-2" x="391.493676" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-16-2" x="397.591168" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-17-2" x="403.68866" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-22-1" x="409.786152" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-5-2" x="415.883644" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-8-0" x="421.981136" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-0-4" x="423.713909" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-0-0" x="426.560192" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-0-0" x="430.41875" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-1-0" x="434.277309" y="514.334963"/>
-</g>
-<g fill="#887e76" fill-opacity="1">
-<use xlink:href="#f1-glyph-11-3" x="439.937131" y="514.334963"/>
-</g>
+<text x="214.41" y="389.59" fill="#887e76" font-size="5.4" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">2025-01 secondary 65%</text>
+<text x="93.01" y="337.57" fill="#887e76" font-size="5.4" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Left axis: share of the two tracks' monthly total (lines)</text>
+<text x="491.13" y="337.57" fill="#887e76" font-size="5.4" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Right axis: $M</text>
+<text x="108.93" y="514.33" fill="#887e76" font-size="5.4" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Primary · launchpads</text>
+<text x="205.54" y="514.33" fill="#887e76" font-size="5.4" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Secondary discovery · terminals</text>
+<text x="300.03" y="514.33" fill="#887e76" font-size="5.4" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Lines = each track's share of the monthly total (the two add up to 100%)</text>
 </svg>
 
-<p class="cap">看柱子知道盘子多大，看曲线知道钱分在哪一边。2025-01 二级拿走 65%；2026-08 一级 51.3%、二级 48.7% —— 两轨十九个月来第一次换位。二级已剔除 pump.fun 主站与 Jupiter。</p></div>
-<div class="call"><p><b>一级市场已经爬回自身峰值的 56.5%，二级发现层只有 28.6%。</b></p>
-<p>两条轨道在 2025 年 1 月同时见顶，之后一起塌。区别在 2026 年 6 月之后：<b>一级 19.3% → 56.5%；二级 14.2% → 28.6%</b>，而且二级这个位置还低于它自己 2026 年 1 月的 30.5%。换成「各占当月合计」看：2025 年 1 月二级拿走 65%，2026 年 8 月只剩 48.7%。</p></div>
-<p>绝对金额放在一起更直观。2025 年 1 月，二级发现层一个月收 3.026 亿美元手续费，是一级市场（1.614 亿）的 1.9 倍 —— 那时候钱主要在「找币」这一端。到 2026 年 8 月，一级是 9,125 万，二级是 8,668 万，<b>二级第一次比一级矮</b>。</p>
-<p class="note">口径说明：一级 = DefiLlama「Launchpad」分类 Top60 加总。二级发现层 = Axiom、GMGN、Photon、BullX、Trojan、Maestro、BONKbot、DEX Screener、Banana Gun、fomo Wallet、tradeXYZ、Terminal、pump.fun 手机端等行情终端与交易机器人队列，已剔除 pump.fun 主站与 Jupiter，避免和一级重复计算。</p>
+<p class="cap">Bars show how big the pie is; lines show which side the money went to. In 2025-01 the secondary layer took 65%; in 2026-08 primary 51.3%, secondary 48.7% — the first swap in nineteen months. Secondary excludes the pump.fun main site and Jupiter.</p></div>
+<div class="call"><p><b>Primary markets are back to 56.5% of their own peak; the secondary discovery layer only to 28.6%.</b></p>
+<p>Both tracks peaked in January 2025 and collapsed together. The difference comes after June 2026: <b>primary 19.3% → 56.5%; secondary 14.2% → 28.6%</b>, and the secondary layer is still below its own 30.5% of January 2026. Seen as shares of the monthly total: secondary took 65% in January 2025 and only 48.7% in August 2026.</p></div>
+<p>Absolute amounts make it clearer. In January 2025 the secondary discovery layer collected $302.6M in fees in a month, 1.9× the primary market ($161.4M) — back then the money sat mostly at the "finding coins" end. By August 2026, primary was $91.25M and secondary $86.68M: <b>for the first time, secondary is smaller than primary</b>.</p>
+<p class="note">Definitions: primary = sum of the top 60 in DefiLlama's "Launchpad" category. Secondary discovery layer = the line-up of trading terminals and bots — Axiom, GMGN, Photon, BullX, Trojan, Maestro, BONKbot, DEX Screener, Banana Gun, fomo Wallet, tradeXYZ, Terminal, pump.fun mobile and others — excluding the pump.fun main site and Jupiter to avoid double counting with primary.</p>
 
-<h2><span class="n">02</span>第一个原因：回暖的不是交易，是发币这个动作本身</h2>
-<p>这是最容易被跳过、但解释力最强的一条。<b>一级市场的钱和二级市场的钱，来源根本不是同一个东西。</b></p>
-<ul><li>发射台的收入 = 发币费 + 曲线上的交易费（或税），跟这枚币后来有没有人交易关系不大；</li>
-<li>行情终端的收入 = 用户成交额 × 抽成，必须有人真的在二级市场里换手才收得到钱。</li></ul>
-<p>2026 年 8 月一级的增量，绝大部分来自 BSC 上的 Flap，而 Flap 的增长是纯吞吐量增长：发币量从 7 月的 23.8 万场跳到 8 月的 131.8 万场（5.5 倍），而<b>每枚币贡献的手续费只从 7.55 美元变到 7.90 美元</b>。拉长看，每枚币的变现能力八个月跌了 57%（2026 年 1 月是 18.38 美元）。</p>
-<div class="call red"><p><b>这批币几乎不进入二级市场。</b>拿 2026-08-20 单日做切片：当天 Flap 发币 70,142 场，毕业 166 场（0.237%）；九天后流动性还有 1 万美元以上的 15 枚（0.021%），5 万美元以上的<b>只有 1 枚</b>（0.0014%）。当天全部发币九天后的总 FDV 只有 112 万美元，而用户那天付出去的手续费是 59.7 万美元。</p>
-<p>换句话说：一级收了 59.7 万，给二级留下的可交易资产总共值 112 万。终端能从这 112 万里抽到多少？几乎是零。</p></div>
-<p class="note">必须带上的语境：约 2% 的毕业率是这类平台的常态（pools.trade 2.43%、Pons 2.37%），Flap 的 0.24% 低一个数量级不是因为币更差，是因为<b>分母是机器造的</b> —— 发币成本只有 0.69 美元、无任何审核。Pons 一共发过 1,895 场，Flap 一天就发 7 万场。</p>
+<h2><span class="n">02</span>Reason one: what recovered is not trading, but the act of launching itself</h2>
+<p>This is the easiest one to skip and the one that explains the most. <b>Primary-market money and secondary-market money don't come from the same thing at all.</b></p>
+<ul><li>Launchpad revenue = launch fees + trading fees (or tax) on the curve, largely unrelated to whether anyone trades the coin later;</li>
+<li>Terminal revenue = user volume × take rate; someone has to actually trade in the secondary market for it to earn anything.</li></ul>
+<p>Most of primary's growth in August 2026 came from Flap on BSC, and Flap's growth is pure throughput: launches jumped from 238K in July to 1.318M in August (5.5×), while <b>fees per coin only moved from $7.55 to $7.90</b>. Over a longer window, monetization per coin fell 57% in eight months ($18.38 in January 2026).</p>
+<div class="call red"><p><b>These coins barely reach the secondary market.</b> Take a single day, 2026-08-20: Flap launched 70,142 coins that day and 166 graduated (0.237%); nine days later 15 still had over $10K in liquidity (0.021%), and over $50K <b>only one</b> (0.0014%). Nine days on, the total FDV of everything launched that day was just $1.12M, while users paid $597K in fees that day.</p>
+<p>In other words: primary collected $597K and left the secondary market tradeable assets worth $1.12M in total. How much can a terminal take out of that $1.12M? Almost nothing.</p></div>
+<p class="note">Context that must come with it: a graduation rate around 2% is normal for these platforms (pools.trade 2.43%, Pons 2.37%). Flap's 0.24% is an order of magnitude lower not because the coins are worse, but because <b>the denominator is machine-made</b> — a launch costs only $0.69 with no review at all. Pons launched 1,895 coins in total; Flap launches 70K in a day.</p>
 
-<h2><span class="n">03</span>第二个原因：发行方把发现这一环自己吃掉了</h2>
-<p>2024 年的分工是：pump.fun 发币 → Raydium 提供池子 → Photon / BullX / Trojan 这些终端负责找币和下单，各收各的钱。到 2026 年，这条链上的每一环都被发行方收回去了。</p>
-<table><thead><tr><th>平台</th><th>自建了什么</th><th>结果</th></tr></thead><tbody>
-<tr><td>pump.fun</td><td>PumpSwap 自有池 + 手机端 App</td><td>手机端 2026-08 收 356 万美元，是它自己的历史最高月</td></tr>
-<tr><td>Flap</td><td>自带行情页 + 税分红 + Vault</td><td>持币人拿分红，交易留在自家税池（30 天 Anti-Farmer 期禁止往部分 V3 池加流动性）</td></tr>
-<tr><td>o1</td><td>自有交易终端</td><td>终端 30 天只有 $46,710，发射台是终端的约 40 倍 —— 自建终端没做起来，但发射台本身就在收 swap 费</td></tr>
+<h2><span class="n">03</span>Reason two: issuers swallowed the discovery step themselves</h2>
+<p>In 2024 the division of labour was: pump.fun launches → Raydium provides the pool → terminals like Photon / BullX / Trojan handle discovery and orders, each collecting its own fee. By 2026 issuers had taken back every link in that chain.</p>
+<table><thead><tr><th>Platform</th><th>What it built in-house</th><th>Result</th></tr></thead><tbody>
+<tr><td>pump.fun</td><td>Own PumpSwap pools + mobile app</td><td>Mobile collected $3.56M in 2026-08, its own best month ever</td></tr>
+<tr><td>Flap</td><td>Built-in market pages + tax dividends + Vault</td><td>Holders get dividends; trading stays in its own tax pools (a 30-day Anti-Farmer period blocks adding liquidity to some V3 pools)</td></tr>
+<tr><td>o1</td><td>Own trading terminal</td><td>The terminal made only $46,710 in 30 days; the launchpad earns ~40× that — the terminal never took off, but the launchpad itself is collecting swap fees</td></tr>
 </tbody></table>
-<p>更狠的是 pump.fun 2026 年 9 月 1 日生效的新费率：毕业后 PumpSwap canonical pool 的总费率随市值从 1.25% 单调降到 0.30%，越大的币越便宜。这条定价的唯一目的就是<b>把大币留在自家池子里，不让它流到外面的池子和聚合器去</b>。发行方越会留客，发现层能收到的过路费就越少。</p>
+<p>Tougher still is pump.fun's new fee schedule effective 1 September 2026: after graduation, the total fee on the PumpSwap canonical pool falls monotonically with market cap from 1.25% to 0.30%, so bigger coins pay less. The only purpose of this pricing is to <b>keep big coins in its own pools and away from outside pools and aggregators</b>. The better issuers get at keeping users, the less toll the discovery layer collects.</p>
 
-<h2><span class="n">04</span>第三个原因：不是整体萎缩，是一代人被换掉了</h2>
-<p>把「二级发现层 −71%」当成一条平滑的下坡是错的。逐家看自己巅峰到现在的留存率，会看到一次彻底的世代更替。</p>
-<div class="fig"><h3>图 2　二级发现层不是整体萎缩，是一代人被换掉了：2024 年那批终端全部归零</h3>
-<div class="bars"><span></span><span class="h">现在还剩自己巅峰的百分之多少</span><span class="h pk">巅峰月</span><span class="lab">Axiom</span><span class="trk"><span class="bar b-gold" style="display:block;width:25.6%"></span><span class="v" style="left:25.6%">32.0%</span></span><span class="pk">2025-05</span><span class="lab">Photon</span><span class="trk"><span class="bar b-red" style="display:block;width:0.6%"></span><span class="v" style="left:0.6%">0.7%</span></span><span class="pk">2025-01</span><span class="lab">BullX</span><span class="trk"><span class="bar b-red" style="display:block;width:0.4%"></span><span class="v" style="left:0.4%">0.0%</span></span><span class="pk">2025-01</span><span class="lab">GMGN</span><span class="trk"><span class="bar b-blue" style="display:block;width:43.4%"></span><span class="v" style="left:43.4%">54.2%</span></span><span class="pk">2025-10</span><span class="lab">Trojan</span><span class="trk"><span class="bar b-red" style="display:block;width:2.3%"></span><span class="v" style="left:2.3%">2.9%</span></span><span class="pk">2025-01</span><span class="lab">moonshot.money</span><span class="trk"><span class="bar b-red" style="display:block;width:0.5%"></span><span class="v" style="left:0.5%">0.6%</span></span><span class="pk">2025-01</span><span class="lab">DEX Screener</span><span class="trk"><span class="bar b-gold" style="display:block;width:10.6%"></span><span class="v" style="left:10.6%">13.2%</span></span><span class="pk">2024-12</span><span class="lab">BONKbot</span><span class="trk"><span class="bar b-red" style="display:block;width:0.4%"></span><span class="v" style="left:0.4%">0.5%</span></span><span class="pk">2024-03</span><span class="lab">fomo Wallet</span><span class="trk"><span class="bar b-blue" style="display:block;width:80.0%"></span><span class="v" style="left:80.0%">100.0%</span></span><span class="pk">2026-08</span><span class="lab">SolTradingBot</span><span class="trk"><span class="bar b-red" style="display:block;width:0.4%"></span><span class="v" style="left:0.4%">0.4%</span></span><span class="pk">2024-03</span><span class="lab">Maestro</span><span class="trk"><span class="bar b-red" style="display:block;width:7.5%"></span><span class="v" style="left:7.5%">9.4%</span></span><span class="pk">2025-01</span><span class="lab">tradeXYZ</span><span class="trk"><span class="bar b-blue" style="display:block;width:61.5%"></span><span class="v" style="left:61.5%">76.9%</span></span><span class="pk">2026-07</span><span class="lab">Banana Gun</span><span class="trk"><span class="bar b-red" style="display:block;width:0.4%"></span><span class="v" style="left:0.4%">0.1%</span></span><span class="pk">2024-03</span><span class="lab">Terminal</span><span class="trk"><span class="bar b-blue" style="display:block;width:49.0%"></span><span class="v" style="left:49.0%">61.3%</span></span><span class="pk">2026-01</span></div>
-<p class="cap">蓝＝还剩 50% 以上，黄＝10–50%，红＝不到 10%。巅峰月在 2026 年的三家（fomo Wallet、tradeXYZ、pump.fun 手机端）是新一代，它们的巅峰就是现在。</p></div>
-<table><thead><tr><th>这一代</th><th>代表</th><th>现在还剩自己巅峰的</th></tr></thead><tbody>
-<tr><td>2024 年的 Telegram 机器人</td><td>BONKbot、Banana Gun、SolTradingBot、Maestro</td><td>0.1% – 9.4%</td></tr>
-<tr><td>2025 年初的高速终端</td><td>BullX、Photon、Trojan、moonshot.money</td><td>0.0% – 2.9%</td></tr>
-<tr><td>撑住的两家</td><td>Axiom、GMGN</td><td>32.0%、54.2%</td></tr>
-<tr><td>2026 年的新一代</td><td>fomo Wallet、tradeXYZ、pump.fun 手机端</td><td>巅峰就是现在，但盘子只有 1,109 万 / 733 万 / 356 万</td></tr>
+<h2><span class="n">04</span>Reason three: not a general shrink, but a generation replaced</h2>
+<p>Treating "secondary discovery layer −71%" as a smooth downhill is wrong. Look at each venue's retention from its own peak to now and you see a complete generational turnover.</p>
+<div class="fig"><h3>Figure 2　The secondary discovery layer didn't shrink evenly; a generation was replaced: the 2024 terminals all went to zero</h3>
+<div class="bars"><span></span><span class="h">Share of its own peak remaining today</span><span class="h pk">Peak month</span><span class="lab">Axiom</span><span class="trk"><span class="bar b-gold" style="display:block;width:25.6%"></span><span class="v" style="left:25.6%">32.0%</span></span><span class="pk">2025-05</span><span class="lab">Photon</span><span class="trk"><span class="bar b-red" style="display:block;width:0.6%"></span><span class="v" style="left:0.6%">0.7%</span></span><span class="pk">2025-01</span><span class="lab">BullX</span><span class="trk"><span class="bar b-red" style="display:block;width:0.4%"></span><span class="v" style="left:0.4%">0.0%</span></span><span class="pk">2025-01</span><span class="lab">GMGN</span><span class="trk"><span class="bar b-blue" style="display:block;width:43.4%"></span><span class="v" style="left:43.4%">54.2%</span></span><span class="pk">2025-10</span><span class="lab">Trojan</span><span class="trk"><span class="bar b-red" style="display:block;width:2.3%"></span><span class="v" style="left:2.3%">2.9%</span></span><span class="pk">2025-01</span><span class="lab">moonshot.money</span><span class="trk"><span class="bar b-red" style="display:block;width:0.5%"></span><span class="v" style="left:0.5%">0.6%</span></span><span class="pk">2025-01</span><span class="lab">DEX Screener</span><span class="trk"><span class="bar b-gold" style="display:block;width:10.6%"></span><span class="v" style="left:10.6%">13.2%</span></span><span class="pk">2024-12</span><span class="lab">BONKbot</span><span class="trk"><span class="bar b-red" style="display:block;width:0.4%"></span><span class="v" style="left:0.4%">0.5%</span></span><span class="pk">2024-03</span><span class="lab">fomo Wallet</span><span class="trk"><span class="bar b-blue" style="display:block;width:80.0%"></span><span class="v" style="left:80.0%">100.0%</span></span><span class="pk">2026-08</span><span class="lab">SolTradingBot</span><span class="trk"><span class="bar b-red" style="display:block;width:0.4%"></span><span class="v" style="left:0.4%">0.4%</span></span><span class="pk">2024-03</span><span class="lab">Maestro</span><span class="trk"><span class="bar b-red" style="display:block;width:7.5%"></span><span class="v" style="left:7.5%">9.4%</span></span><span class="pk">2025-01</span><span class="lab">tradeXYZ</span><span class="trk"><span class="bar b-blue" style="display:block;width:61.5%"></span><span class="v" style="left:61.5%">76.9%</span></span><span class="pk">2026-07</span><span class="lab">Banana Gun</span><span class="trk"><span class="bar b-red" style="display:block;width:0.4%"></span><span class="v" style="left:0.4%">0.1%</span></span><span class="pk">2024-03</span><span class="lab">Terminal</span><span class="trk"><span class="bar b-blue" style="display:block;width:49.0%"></span><span class="v" style="left:49.0%">61.3%</span></span><span class="pk">2026-01</span></div>
+<p class="cap">Blue = more than 50% left, yellow = 10–50%, red = under 10%. The three with peak months in 2026 (fomo Wallet, tradeXYZ, pump.fun mobile) are the new generation; their peak is now.</p></div>
+<table><thead><tr><th>Generation</th><th>Examples</th><th>Share of own peak remaining</th></tr></thead><tbody>
+<tr><td>2024 Telegram bots</td><td>BONKbot, Banana Gun, SolTradingBot, Maestro</td><td>0.1% – 9.4%</td></tr>
+<tr><td>Early-2025 speed terminals</td><td>BullX, Photon, Trojan, moonshot.money</td><td>0.0% – 2.9%</td></tr>
+<tr><td>The two that held up</td><td>Axiom, GMGN</td><td>32.0%, 54.2%</td></tr>
+<tr><td>The 2026 new generation</td><td>fomo Wallet, tradeXYZ, pump.fun mobile</td><td>Peaking now, but only $11.09M / $7.33M / $3.56M</td></tr>
 </tbody></table>
-<p>结果是集中度反向抬升：二级发现层的前两名合计份额从 2025 年 1 月的 46.0% 升到 2026 年 8 月的 62.2%。<b>这不是一个还有位置的市场，是一个刚刚洗完牌、赢家已经站定的市场。</b>Axiom 34.3% + GMGN 27.9%，两家合计 62%。</p>
-<div class="call"><p>对做发现类产品的人，这一条比「−71%」重要得多：<b>掉队的不是「终端」这个品类，是那一批只做「更快下单」的终端。</b>活下来的两家都做了别的事 —— GMGN 做的是跟单与地址标签，Axiom 做的是一体化交易前端与做市返佣。纯速度已经不值钱了，因为速度这件事所有人都做到了。</p></div>
+<p>The result is rising concentration: the top two's combined share of the secondary discovery layer went from 46.0% in January 2025 to 62.2% in August 2026. <b>This is not a market with room left; it has just been reshuffled and the winners are already in place.</b> Axiom 34.3% + GMGN 27.9%: 62% combined.</p>
+<div class="call"><p>For anyone building discovery products, this matters far more than "−71%": <b>what fell behind is not the "terminal" category but the batch of terminals that only offered "faster orders".</b> Both survivors did something else — GMGN does copy-trading and address labels; Axiom does an all-in-one trading front end and market-making rebates. Pure speed is worth nothing now, because everyone has it.</p></div>
 
-<h2><span class="n">05</span>第四个原因：增量跑到终端覆盖不到的链上去了</h2>
-<p>那批终端队列几乎全是 Solana 原生。而一级市场 2026 年的增量，主要不在 Solana。</p>
-<div class="fig"><h3>图 3　按 30 天手续费排全部公链：Solana 一家占一半，Robinhood Chain 用 46 家台子抢到第二</h3>
-<div class="chain"><span></span><span class="h">30 天手续费（百万美元）</span><span class="h r">台子数</span><span class="h r">单台平均</span><span class="h r">30 天占累计</span><span class="r" style="color:var(--ink);white-space:nowrap">Solana</span><span style="position:relative;height:13px"><span class="bar b-blue" style="display:block;height:13px;width:80.0%"></span><span style="position:absolute;left:80.0%;top:-2px;padding-left:6px;font-size:11.5px;color:var(--faint)">50.6</span></span><span class="r">43</span><span class="r">1,176 千</span><span class="r">3%</span><span class="r" style="color:var(--ink);white-space:nowrap">Robinhood Chain</span><span style="position:relative;height:13px"><span class="bar b-gold" style="display:block;height:13px;width:45.1%"></span><span style="position:absolute;left:45.1%;top:-2px;padding-left:6px;font-size:11.5px;color:var(--faint)">28.5</span></span><span class="r">46</span><span class="r">620 千</span><span class="r">35%</span><span class="r" style="color:var(--ink);white-space:nowrap">Monad</span><span style="position:relative;height:13px"><span class="bar b-gold" style="display:block;height:13px;width:5.7%"></span><span style="position:absolute;left:5.7%;top:-2px;padding-left:6px;font-size:11.5px;color:var(--faint)">3.6</span></span><span class="r">5</span><span class="r">726 千</span><span class="r">13%</span><span class="r" style="color:var(--ink);white-space:nowrap">BSC</span><span style="position:relative;height:13px"><span class="bar b-beige" style="display:block;height:13px;width:5.4%"></span><span style="position:absolute;left:5.4%;top:-2px;padding-left:6px;font-size:11.5px;color:var(--faint)">3.4</span></span><span class="r">17</span><span class="r">200 千</span><span class="r">3%</span><span class="r" style="color:var(--ink);white-space:nowrap">X Layer</span><span style="position:relative;height:13px"><span class="bar b-gold" style="display:block;height:13px;width:4.4%"></span><span style="position:absolute;left:4.4%;top:-2px;padding-left:6px;font-size:11.5px;color:var(--faint)">2.8</span></span><span class="r">4</span><span class="r">710 千</span><span class="r">49%</span><span class="r" style="color:var(--ink);white-space:nowrap">Base</span><span style="position:relative;height:13px"><span class="bar b-beige" style="display:block;height:13px;width:4.1%"></span><span style="position:absolute;left:4.1%;top:-2px;padding-left:6px;font-size:11.5px;color:var(--faint)">2.6</span></span><span class="r">27</span><span class="r">95 千</span><span class="r">6%</span><span class="r" style="color:var(--ink);white-space:nowrap">MegaETH</span><span style="position:relative;height:13px"><span class="bar b-gold" style="display:block;height:13px;width:1.1%"></span><span style="position:absolute;left:1.1%;top:-2px;padding-left:6px;font-size:11.5px;color:var(--faint)">0.7</span></span><span class="r">3</span><span class="r">222 千</span><span class="r">20%</span><span class="r" style="color:var(--ink);white-space:nowrap">Stable</span><span style="position:relative;height:13px"><span class="bar b-gold" style="display:block;height:13px;width:1.1%"></span><span style="position:absolute;left:1.1%;top:-2px;padding-left:6px;font-size:11.5px;color:var(--faint)">0.7</span></span><span class="r">5</span><span class="r">133 千</span><span class="r">18%</span><span class="r" style="color:var(--ink);white-space:nowrap">Merlin</span><span style="position:relative;height:13px"><span class="bar b-gold" style="display:block;height:13px;width:1.1%"></span><span style="position:absolute;left:1.1%;top:-2px;padding-left:6px;font-size:11.5px;color:var(--faint)">0.7</span></span><span class="r">1</span><span class="r">665 千</span><span class="r">20%</span><span class="r" style="color:var(--ink);white-space:nowrap">Intuition</span><span style="position:relative;height:13px"><span class="bar b-gold" style="display:block;height:13px;width:1.1%"></span><span style="position:absolute;left:1.1%;top:-2px;padding-left:6px;font-size:11.5px;color:var(--faint)">0.7</span></span><span class="r">1</span><span class="r">665 千</span><span class="r">20%</span><span class="r" style="color:var(--ink);white-space:nowrap">Ethereum</span><span style="position:relative;height:13px"><span class="bar b-beige" style="display:block;height:13px;width:0.6%"></span><span style="position:absolute;left:0.6%;top:-2px;padding-left:6px;font-size:11.5px;color:var(--faint)">0.2</span></span><span class="r">14</span><span class="r">16 千</span><span class="r">1%</span><span class="r" style="color:var(--ink);white-space:nowrap">Arbitrum</span><span style="position:relative;height:13px"><span class="bar b-beige" style="display:block;height:13px;width:0.6%"></span><span style="position:absolute;left:0.6%;top:-2px;padding-left:6px;font-size:11.5px;color:var(--faint)">0.2</span></span><span class="r">8</span><span class="r">24 千</span><span class="r">1%</span></div>
-<p class="cap">口径：多链协议按所在链数平均摊分，因此各链相加等于赛道 30 天总额 9,603 万美元，不会重复计算。「30 天占累计」越高＝这条链的生意越新。</p></div>
-<p>看最后一列「30 天占累计」，它等于「这条链的生意有多新」：</p>
-<ul><li><b>Solana 只有 3.2%</b> —— 累计 15.7 亿美元里，最近 30 天只占三十分之一。它是一条老链，钱是过去两年挣的。</li>
-<li><b>Robinhood Chain 35.3%、X Layer 49.2%、Monad 12.6%</b> —— 一半的生意是最近一个月发生的。</li>
-<li>BSC 3.1% 看起来也「老」，但那是被 four.meme 的历史累计摊薄的；BSC 的当期增量集中在 Flap 一家。</li></ul>
-<p>Robinhood Chain 值得单独说一句：它用 <b>46 家发射台</b>（比 Solana 的 43 家还多）拿到赛道第二的 30 天体量。台子多本身就是人气 —— 一条链上只有三五家台子，通常说明没人愿意来，而不是说明剩下的那几家很强。这也是为什么<b>不能用「单台平均手续费」给公链排名</b>：店少了平均自然高，它只反映集中度。</p>
-<p>对发现层的含义很直接：这些新增的成交额发生在 Robinhood Chain、X Layer、Monad、BSC 上，而 2024–2025 那批 Solana 终端<b>大多根本没接这些链</b>。它们不是被打败的，是站在了没有人流的路口。</p>
+<h2><span class="n">05</span>Reason four: growth moved to chains the terminals don't cover</h2>
+<p>That terminal line-up is almost entirely Solana-native. Primary-market growth in 2026 is mostly not on Solana.</p>
+<div class="fig"><h3>Figure 3　All chains ranked by 30-day fees: Solana alone takes half; Robinhood Chain grabs second with 46 launchpads</h3>
+<div class="chain"><span></span><span class="h">30-day fees ($M)</span><span class="h r">Pads</span><span class="h r">Avg / pad</span><span class="h r">30d / total</span><span class="r" style="color:var(--ink);white-space:nowrap">Solana</span><span style="position:relative;height:13px"><span class="bar b-blue" style="display:block;height:13px;width:80.0%"></span><span style="position:absolute;left:80.0%;top:-2px;padding-left:6px;font-size:11.5px;color:var(--faint)">50.6</span></span><span class="r">43</span><span class="r">$1,176K</span><span class="r">3%</span><span class="r" style="color:var(--ink);white-space:nowrap">Robinhood Chain</span><span style="position:relative;height:13px"><span class="bar b-gold" style="display:block;height:13px;width:45.1%"></span><span style="position:absolute;left:45.1%;top:-2px;padding-left:6px;font-size:11.5px;color:var(--faint)">28.5</span></span><span class="r">46</span><span class="r">$620K</span><span class="r">35%</span><span class="r" style="color:var(--ink);white-space:nowrap">Monad</span><span style="position:relative;height:13px"><span class="bar b-gold" style="display:block;height:13px;width:5.7%"></span><span style="position:absolute;left:5.7%;top:-2px;padding-left:6px;font-size:11.5px;color:var(--faint)">3.6</span></span><span class="r">5</span><span class="r">$726K</span><span class="r">13%</span><span class="r" style="color:var(--ink);white-space:nowrap">BSC</span><span style="position:relative;height:13px"><span class="bar b-beige" style="display:block;height:13px;width:5.4%"></span><span style="position:absolute;left:5.4%;top:-2px;padding-left:6px;font-size:11.5px;color:var(--faint)">3.4</span></span><span class="r">17</span><span class="r">$200K</span><span class="r">3%</span><span class="r" style="color:var(--ink);white-space:nowrap">X Layer</span><span style="position:relative;height:13px"><span class="bar b-gold" style="display:block;height:13px;width:4.4%"></span><span style="position:absolute;left:4.4%;top:-2px;padding-left:6px;font-size:11.5px;color:var(--faint)">2.8</span></span><span class="r">4</span><span class="r">$710K</span><span class="r">49%</span><span class="r" style="color:var(--ink);white-space:nowrap">Base</span><span style="position:relative;height:13px"><span class="bar b-beige" style="display:block;height:13px;width:4.1%"></span><span style="position:absolute;left:4.1%;top:-2px;padding-left:6px;font-size:11.5px;color:var(--faint)">2.6</span></span><span class="r">27</span><span class="r">$95K</span><span class="r">6%</span><span class="r" style="color:var(--ink);white-space:nowrap">MegaETH</span><span style="position:relative;height:13px"><span class="bar b-gold" style="display:block;height:13px;width:1.1%"></span><span style="position:absolute;left:1.1%;top:-2px;padding-left:6px;font-size:11.5px;color:var(--faint)">0.7</span></span><span class="r">3</span><span class="r">$222K</span><span class="r">20%</span><span class="r" style="color:var(--ink);white-space:nowrap">Stable</span><span style="position:relative;height:13px"><span class="bar b-gold" style="display:block;height:13px;width:1.1%"></span><span style="position:absolute;left:1.1%;top:-2px;padding-left:6px;font-size:11.5px;color:var(--faint)">0.7</span></span><span class="r">5</span><span class="r">$133K</span><span class="r">18%</span><span class="r" style="color:var(--ink);white-space:nowrap">Merlin</span><span style="position:relative;height:13px"><span class="bar b-gold" style="display:block;height:13px;width:1.1%"></span><span style="position:absolute;left:1.1%;top:-2px;padding-left:6px;font-size:11.5px;color:var(--faint)">0.7</span></span><span class="r">1</span><span class="r">$665K</span><span class="r">20%</span><span class="r" style="color:var(--ink);white-space:nowrap">Intuition</span><span style="position:relative;height:13px"><span class="bar b-gold" style="display:block;height:13px;width:1.1%"></span><span style="position:absolute;left:1.1%;top:-2px;padding-left:6px;font-size:11.5px;color:var(--faint)">0.7</span></span><span class="r">1</span><span class="r">$665K</span><span class="r">20%</span><span class="r" style="color:var(--ink);white-space:nowrap">Ethereum</span><span style="position:relative;height:13px"><span class="bar b-beige" style="display:block;height:13px;width:0.6%"></span><span style="position:absolute;left:0.6%;top:-2px;padding-left:6px;font-size:11.5px;color:var(--faint)">0.2</span></span><span class="r">14</span><span class="r">$16K</span><span class="r">1%</span><span class="r" style="color:var(--ink);white-space:nowrap">Arbitrum</span><span style="position:relative;height:13px"><span class="bar b-beige" style="display:block;height:13px;width:0.6%"></span><span style="position:absolute;left:0.6%;top:-2px;padding-left:6px;font-size:11.5px;color:var(--faint)">0.2</span></span><span class="r">8</span><span class="r">$24K</span><span class="r">1%</span></div>
+<p class="cap">Basis: multi-chain protocols are split evenly across their chains, so the chains add up to the sector's 30-day total of $96.03M with no double counting. A higher "30d / total" (last 30 days as a share of all-time fees) = newer business on that chain.</p></div>
+<p>The last column, "30d / total", tells you how new a chain's business is:</p>
+<ul><li><b>Solana is only 3.2%</b> — of $1.57B cumulative, the last 30 days are one-thirtieth. It's an old chain; its money was earned over the past two years.</li>
+<li><b>Robinhood Chain 35.3%, X Layer 49.2%, Monad 12.6%</b> — half their business happened in the last month.</li>
+<li>BSC at 3.1% also looks "old", but that's diluted by four.meme's historical total; BSC's current growth is concentrated in Flap alone.</li></ul>
+<p>Robinhood Chain deserves a separate note: it reached the sector's second-largest 30-day volume with <b>46 launchpads</b> (more than Solana's 43). Many launchpads is itself a sign of traction — a chain with only three to five launchpads usually means no one wants to come, not that the few left are strong. That's also why you <b>can't rank chains by "average fees per launchpad"</b>: fewer shops mechanically means a higher average; it only reflects concentration.</p>
+<p>The implication for the discovery layer is direct: this new volume happens on Robinhood Chain, X Layer, Monad and BSC, while the 2024–2025 Solana terminals <b>mostly don't support these chains at all</b>. They weren't beaten; they're standing at an intersection with no foot traffic.</p>
 
-<h2><span class="n">06</span>第五个原因：税代币模型把「手续费」这件事重新分配了</h2>
-<p>BSC 增量的主力 Flap 是税代币模型，它和抽成模型有一个本质区别，我把合约读完了：</p>
-<p>代币合约 <code>FlapTaxTokenV3</code> 自己不分钱，攒够税之后调用每个代币独立的 <code>TaxProcessor</code> 克隆。分账写死在 <code>TaxProcessorBase.sol</code> 里：先按 feeRate 抽平台那一份，再把剩下的按「项目方钱包 / 销毁 / 加池 / 持币分红」四个桶分掉，合约强制这四项之和等于 10000。</p>
-<table><thead><tr><th>代币</th><th class="r">平台抽成 feeRate</th><th class="r">持币分红</th><th class="r">销毁</th></tr></thead><tbody>
-<tr><td>牛来</td><td class="r">10%</td><td class="r">90%</td><td class="r">0</td></tr>
-<tr><td>我的女友景甜</td><td class="r">10%</td><td class="r">90%</td><td class="r">0</td></tr>
-<tr><td>孙小圣</td><td class="r">10%</td><td class="r">67.5%</td><td class="r">22.5%</td></tr>
+<h2><span class="n">06</span>Reason five: the tax-token model redistributed "fees"</h2>
+<p>Flap, the main driver of BSC growth, uses a tax-token model, which differs fundamentally from the take-rate model. I read the contracts end to end:</p>
+<p>The token contract <code>FlapTaxTokenV3</code> doesn't distribute money itself; once enough tax accumulates it calls each token's own <code>TaxProcessor</code> clone. The split is hard-coded in <code>TaxProcessorBase.sol</code>: first the platform's share is taken at feeRate, then the rest is split into four buckets — project wallet / burn / liquidity / holder dividends — and the contract enforces that the four sum to 10000.</p>
+<table><thead><tr><th>Token</th><th class="r">Platform take (feeRate)</th><th class="r">Holder dividends</th><th class="r">Burn</th></tr></thead><tbody>
+<tr><td>牛来 (Niulai)</td><td class="r">10%</td><td class="r">90%</td><td class="r">0</td></tr>
+<tr><td>我的女友景甜 ("My girlfriend Jing Tian")</td><td class="r">10%</td><td class="r">90%</td><td class="r">0</td></tr>
+<tr><td>孙小圣 (Sun Xiaosheng)</td><td class="r">10%</td><td class="r">67.5%</td><td class="r">22.5%</td></tr>
 <tr><td>MarsCoin</td><td class="r">10%</td><td class="r">90%</td><td class="r">0</td></tr>
 </tbody></table>
-<p>也就是说，用户交的税里 90% 回到持币人和销毁，只有 10% 归平台。<b>这套模型把「交易产生的钱」留在了代币内部，而不是交给外部的终端和聚合器。</b>一个只会转发订单的终端，在这条路径上没有任何位置可以站。</p>
-<p class="note">链上实测，逐币调用 <code>feeConfig()</code>：token 实现 <code>0x024f18294970B5c76c0691b87f138A0317156422</code>，TaxProcessor 实现 <code>0x9fe67a78f05c6569db77e3f4d957ed67bddc9569</code>，Dividend 实现 <code>0x666c0a0e0cccb2305bc2d9aa6445c3ff076bb031</code>。每个代币是各自的 EIP-1167 克隆，配置逐币不同。</p>
+<p>So 90% of the tax users pay goes back to holders and burns; only 10% goes to the platform. <b>This model keeps "the money trading generates" inside the token instead of handing it to outside terminals and aggregators.</b> A terminal that only forwards orders has nowhere to stand on this path.</p>
+<p class="note">Measured on-chain, calling each token's <code>feeConfig()</code>: token implementation <code>0x024f18294970B5c76c0691b87f138A0317156422</code>, TaxProcessor implementation <code>0x9fe67a78f05c6569db77e3f4d957ed67bddc9569</code>, Dividend implementation <code>0x666c0a0e0cccb2305bc2d9aa6445c3ff076bb031</code>. Each token is its own EIP-1167 clone with its own configuration.</p>
 
-<h2><span class="n">07</span>把五条原因排个序</h2>
-<table><thead><tr><th>原因</th><th>解释力</th><th>证据强度</th></tr></thead><tbody>
-<tr><td>一级的增量是发币吞吐，不产生可交易资产</td><td>最强</td><td>硬：单日 7 万场发币 / 0.021% 存活 / 九天后总 FDV 112 万</td></tr>
-<tr><td>发行方自建池子与前端，把发现环节内化</td><td>强</td><td>硬：PumpSwap、pump 手机端月度、9 月新费率表</td></tr>
-<tr><td>终端行业自身的世代更替 + 集中度抬升</td><td>强</td><td>硬：逐家留存率、前两名 46% → 62%</td></tr>
-<tr><td>增量在新链，老终端没覆盖</td><td>中</td><td>中：链维度数据硬，「哪家终端支持哪条链」未逐个核实</td></tr>
-<tr><td>税代币模型改变了钱的流向</td><td>中</td><td>硬（机制）／中（规模）：分账已读源码，但只覆盖 BSC 这一块增量</td></tr>
+<h2><span class="n">07</span>Ranking the five reasons</h2>
+<table><thead><tr><th>Reason</th><th>Explanatory power</th><th>Strength of evidence</th></tr></thead><tbody>
+<tr><td>Primary growth is launch throughput and creates no tradeable assets</td><td>Strongest</td><td>Hard: 70K launches in a day / 0.021% survive / total FDV $1.12M after nine days</td></tr>
+<tr><td>Issuers built their own pools and front ends, internalising discovery</td><td>Strong</td><td>Hard: PumpSwap, pump mobile monthly figures, September fee schedule</td></tr>
+<tr><td>Generational turnover among terminals + rising concentration</td><td>Strong</td><td>Hard: per-venue retention, top two 46% → 62%</td></tr>
+<tr><td>Growth is on new chains old terminals don't cover</td><td>Medium</td><td>Medium: chain-level data is hard; "which terminal supports which chain" not checked one by one</td></tr>
+<tr><td>The tax-token model changed where the money flows</td><td>Medium</td><td>Hard (mechanism) / medium (scale): split read from source, but it only covers the BSC part of the growth</td></tr>
 </tbody></table>
-<div class="call red"><p><b>没能核实的：</b>各家终端的实际抽成费率变化（是否存在明显的价格战），以及钱包内置交易（币安 Alpha、OKX Web3、TP）分走了多少订单流 —— DefiLlama 对这部分要么不计、要么记在钱包名下。如果这两条成立，二级发现层的真实收缩幅度会比 −71% 更小一些，但结构性结论不变。</p></div>
+<div class="call red"><p><b>What I couldn't verify: </b>changes in each terminal's actual take rate (whether there's a real price war), and how much order flow in-wallet trading (Binance Alpha, OKX Web3, TP) took — DefiLlama either doesn't count it or books it under the wallet. If both hold, the true shrink of the secondary discovery layer is somewhat smaller than −71%, but the structural conclusions don't change.</p></div>
 
-<h2><span class="n">08</span>如果要做发现类产品，这份数据指向哪</h2>
-<p>把上面五条倒过来读，就是这个市场现在缺的东西：</p>
-<ul><li><b>瓶颈已经从「看得到」变成「值得看」。</b>2024 年做终端是解决延迟问题，那个问题已经被解决完了 —— 也正因为解决完了，纯速度产品全线归零。现在的问题是一天七万枚新币里那 15 枚怎么找出来。</li>
-<li><b>筛选的对象不是币，是分母。</b>存活率 0.24% 和 2.4% 差一个数量级，差别不在币的质量，在发币成本（0.69 美元 vs 需要真金白银）。任何一个不先切分母的榜单，都会被机器造的噪音淹掉。</li>
-<li><b>跨链是硬要求，不是加分项。</b>增量在 Robinhood Chain（30 天占累计 35.3%）、X Layer（49.2%）、Monad（12.6%）。只做 Solana 等于只服务一条已经把钱挣完的链。</li>
-<li><b>不要指望靠订单抽成变现。</b>发行方正在系统性地把交易留在自己家里 —— pump.fun 用降费留大币，Flap 用税分红留在代币内部。抽成这条路的天花板在下降。</li>
-<li><b>活下来的两家给了答案的形状：</b>GMGN 卖的是地址标签与跟单（信息），Axiom 卖的是一体化前端与返佣（渠道）。都不是「更快的按钮」。</li></ul>
+<h2><span class="n">08</span>If you're building a discovery product, where does this data point</h2>
+<p>Read the five reasons backwards and you get what this market is missing now:</p>
+<ul><li><b>The bottleneck has moved from "can you see it" to "is it worth seeing".</b> Building a terminal in 2024 solved latency, and that problem is solved — which is exactly why pure-speed products all went to zero. Today's problem is how to find the 15 coins among 70K new ones a day.</li>
+<li><b>Filter the denominator, not the coins.</b> Survival of 0.24% vs 2.4% is an order of magnitude apart, and the gap isn't coin quality but launch cost ($0.69 vs real money). Any ranking that doesn't first cut the denominator drowns in machine-made noise.</li>
+<li><b>Cross-chain is a hard requirement, not a bonus.</b> Growth is on Robinhood Chain (30d / total 35.3%), X Layer (49.2%) and Monad (12.6%). Solana-only means serving a chain that has already earned its money.</li>
+<li><b>Don't count on monetizing via order take rates.</b> Issuers are systematically keeping trading at home — pump.fun with lower fees for big coins, Flap with tax dividends inside the token. The ceiling on take rates is falling.</li>
+<li><b>The two survivors show the shape of the answer: </b>GMGN sells address labels and copy-trading (information); Axiom sells an all-in-one front end and rebates (distribution). Neither is "a faster button".</li></ul>
 
-<h2><span class="n">09</span>方法与局限</h2>
-<ul><li>所有手续费数字来自 DefiLlama Fees API 的 <code>dailyFees</code>，按 UTC 月聚合，口径日 2026-08-29，当日不完整故不计入。</li>
-<li>一级 = Launchpad 分类 Top60 加总；尾部 81 家未计入，实际总量略高于本文数字。</li>
-<li>二级发现层 = 行情终端与交易机器人队列，已剔除 pump.fun 主站与 Jupiter。这份名单是人工圈的，换一份名单结论的量级会变、方向不会变。</li>
-<li>公链维度按「多链协议除以所在链数」摊分，因此各链相加等于赛道总额；如果改成「每条链都记全额」，Solana 与 Robinhood Chain 的绝对值都会更高，排序不变。</li>
-<li>存活率、发币量、分账比例来自 BSC 公共节点与已验证源码，可复现。</li></ul>
-<div class="foot">链上大叔 ｜ 流动性到 Alpha · @Uncle_Onchain · uncleonchain.com<br>本文只做机制与数据拆解，不构成任何投资建议。</div>
+<h2><span class="n">09</span>Method and limits</h2>
+<ul><li>All fee figures come from DefiLlama Fees API <code>dailyFees</code>, aggregated by UTC month, as of 2026-08-29; that day is incomplete and excluded.</li>
+<li>Primary = sum of the top 60 in the Launchpad category; 81 tail venues are excluded, so the true total is slightly above the figures here.</li>
+<li>Secondary discovery layer = trading terminals and bots, excluding the pump.fun main site and Jupiter. The list is hand-picked; a different list changes the magnitude, not the direction.</li>
+<li>By chain, multi-chain protocols are divided by their number of chains, so chains add up to the sector total; booking the full amount on every chain would raise Solana's and Robinhood Chain's absolute values without changing the order.</li>
+<li>Survival, launch counts and split ratios come from BSC public nodes and verified source code and are reproducible.</li></ul>
+<div class="foot">Uncle Onchain | Liquidity to Alpha · @Uncle_Onchain · uncleonchain.com<br>This report only breaks down mechanisms and data and is not investment advice.</div>
 </div></body></html>

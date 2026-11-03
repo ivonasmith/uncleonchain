@@ -51,11 +51,24 @@ ul{padding-left:22px}li{margin:6px 0}
 @media(max-width:600px){.bars{grid-template-columns:96px 1fr 56px}.chain{grid-template-columns:92px 1fr 30px 56px 52px;font-size:11.5px}.fig{padding:14px 10px}table{font-size:13.5px}th,td{padding:8px}}
 @page{size:A4;margin:16mm 14mm 18mm}
 @media print{.fig,.call,table{break-inside:avoid}h2{break-after:avoid}}
+
+/* 报告头（与 2026-10 之后的报告统一） */
+.rh{position:relative;background:linear-gradient(135deg,#edf2f5 0%,#f8f3e8 100%);border:1px solid #e6e8e8;border-radius:14px;padding:30px 34px 28px 40px;overflow:hidden;margin:0 0 30px;break-inside:avoid}
+.rh::before,.rl::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:linear-gradient(180deg,#326574,#8a6d1f 55%,#bb2827)}
+.rh .tag{display:inline-block;border-radius:0;font-size:12px;font-weight:700;letter-spacing:1.5px;color:#6b551a;background:#fbf9f3;border:1px solid #e0d6c0;padding:6px 12px;line-height:1.4}
+.rh h1{font-family:Georgia,"Times New Roman","Songti SC","Noto Serif CJK SC","Noto Serif SC",serif;font-size:clamp(28px,5.6vw,42px);line-height:1.22;color:#1c1a17;margin:22px 0 12px;font-weight:700;letter-spacing:-.3px;text-wrap:balance;border:0;padding:0}
+.rh .sub{font-family:Georgia,"Times New Roman","Songti SC","Noto Serif CJK SC","Noto Serif SC",serif;font-style:italic;font-size:18px;line-height:1.6;color:#3a352e;margin:0 0 20px}
+.rh .chips{display:flex;flex-wrap:wrap;gap:10px}
+.rh .chip{display:inline-block;font-size:13px;padding:7px 13px;border:1px solid #d9d2c8;background:#fff;color:#3a352e;line-height:1.3;border-radius:0;font-weight:400}
+.rh .chip.gold{background:#f6f0e0;border-color:#e6dcc0;color:#6b551a}
+.rh .chip.blue{background:#eaf2f7;border-color:#bcd3e0;color:#15628f}
+.rh .src{font-size:13px;line-height:1.7;color:#7d756a;margin:18px 0 0;padding:0;border:0}
+.rl{position:relative;background:linear-gradient(135deg,#ebf1f4,#f3f2ef);border:1px solid #dde4e8;border-radius:14px;padding:22px 28px 22px 36px;overflow:hidden;margin:0 0 26px;font-size:17px;line-height:1.75;color:#1c1a17;break-inside:avoid}
+.rl::before{background:#15628f}
+@media(max-width:640px){.rh{padding:22px 18px 20px 24px}.rl{padding:18px 16px 18px 22px}}
 </style></head><body><div class="wrap">
 
-<h1>发币回暖了，找币的没有</h1>
-<p class="lead">一级市场爬回历史峰值的 57%，二级发现层还趴在 29%。这份报告只回答一个问题：差的那 28 个百分点是被什么吃掉的。</p>
-<div class="meta">数据口径日 2026-08-29<span>｜</span>来源：DefiLlama Fees API（免密钥公开接口）、BSC 公共节点 RPC、BscScan 已验证源码、Flap 官方接口<span>｜</span>全文只给数字与机制，不含任何买卖建议</div>
+<header class="rh"><span class="tag">专题研报 · 发现层</span><h1>发币回暖了，找币的没有</h1><p class="sub">一级市场爬回历史峰值的 57%，二级发现层还趴在 29%。这份报告只回答一个问题：差的那 28 个百分点是被什么吃掉的。</p><div class="chips"><span class="chip">链上大叔 · 流动性到 Alpha</span><span class="chip gold">专题研报 · MEME 发现层</span><span class="chip blue">数据截至 2026-08-29</span></div><p class="src">来源：DefiLlama Fees API（免密钥公开接口）、BSC 公共节点 RPC、BscScan 已验证源码、Flap 官方接口<span> ｜ </span>全文只给数字与机制，不含任何买卖建议</p></header>
 
 <h2><span class="n">01</span>先把两条曲线画在同一把尺子上</h2>
 <p>过去几周我看到最多的错误比较，是把「一级距峰值还差 43%」和「一级比谷底涨了 192%」放在一段话里。这两个数一个从上面量、一个从下面量，读者没法比。这份报告全程只用一把尺子：<b>占自己历史峰值的百分之多少</b>。下面这张图另外叠了一层：柱子是每月的绝对手续费，曲线是两条轨道各占当月合计的比例。</p>
