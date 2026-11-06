@@ -202,7 +202,7 @@ def scan_day(n, ch, d):
     hs = sorted({new[t] for t in want})
     txs = dict(zip(hs, n.batch([("eth_getTransactionByHash", [h]) for h in hs])))
     fac = {}
-    direct = unknown = 0
+    direct = unknown = selfmint = 0
     for g, toks in order:
         seen = [txs.get(new[t]) for t in toks[:PER_GROUP] if new[t] in txs]
         seen = [s for s in seen if s]
@@ -213,6 +213,9 @@ def scan_day(n, ch, d):
         to = tos.most_common(1)[0][0]
         if not to:
             direct += len(toks)
+            continue
+        if to in toks:                   # 交易调用的就是这个币自己（公开铸币 / 刷量类代币），不是发币工厂
+            selfmint += len(toks)
             continue
         f = fac.setdefault(to, {"币": 0, "人": set(), "样本": []})
         f["币"] += len(toks)
@@ -226,10 +229,10 @@ def scan_day(n, ch, d):
         for v in keep.values():
             v["币"] *= k
         return {"块": [b0, b1], "抽样": k, "铸币事件": len(logs) * k, "新币": len(new) * k, "直接部署": direct * k, "未识别": unknown * k,
-                "查交易": len(hs), "单币合约": len(fac) - len(keep),
+                "查交易": len(hs), "单币合约": len(fac) - len(keep), "代币自铸": selfmint,
                 "工厂": {a: [v["币"], len(v["人"]), v["样本"]] for a, v in sorted(keep.items(), key=lambda kv: -kv[1]["币"])}}
     return {"块": [b0, b1], "铸币事件": len(logs), "新币": len(new), "直接部署": direct, "未识别": unknown,
-            "查交易": len(hs), "单币合约": len(fac) - len(keep),
+            "查交易": len(hs), "单币合约": len(fac) - len(keep), "代币自铸": selfmint,
             "工厂": {a: [v["币"], len(v["人"]), v["样本"]] for a, v in sorted(keep.items(), key=lambda kv: -kv[1]["币"])}}
 
 

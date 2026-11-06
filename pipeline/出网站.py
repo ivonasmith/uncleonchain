@@ -2645,7 +2645,8 @@ def oc_summary(key, lab):
         cov = len([d for d in p7 if d in days]) == 7
         ramp = x["7日"] >= 50 and cov and x["7日"] >= 2 * max(x["前7日"], 1)
         idt = ids.get(f"{key}:{a}") or {}
-        rows.append(dict(addr=a, name=tag.get("名称") or idt.get("合约名"), first=fs, new=new, ramp=ramp, cov=cov,
+        nm_ = tag.get("名称") or idt.get("合约名") or (f'{idt["交易所"]}（交易所标签）' if idt.get("交易所") else None)
+        rows.append(dict(addr=a, name=nm_, first=fs, new=new, ramp=ramp, cov=cov,
                          gh=idt.get("GitHub") or [], dom=idt.get("重复域名") or [], **x))
     rows.sort(key=lambda r: -r["7日"])
     return {"db": db, "rows": rows, "end": end, "days": len(ds)}

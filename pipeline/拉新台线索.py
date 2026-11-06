@@ -279,17 +279,93 @@ EXPLORER_API = {"robinhood": "https://explorer.chain.robinhood.com/api/v2", "arc
                 "polygon": "https://polygon.blockscout.com/api/v2", "ink": "https://explorer.inkonchain.com/api/v2"}
 
 
-def contract_name(chain, a):
-    """Blockscout：已验证合约名（代理合约取实现合约名）。BSC 没有免费的 Blockscout，留空。"""
-    api = EXPLORER_API.get(chain)
-    if not api:
+EIP1967 = "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc"
+PROXY_NAMES = {"TransparentUpgradeableProxy", "ERC1967Proxy", "BeaconProxy", "UUPSProxy", "Proxy", "AdminUpgradeabilityProxy", "OptimizedTransparentUpgradeableProxy"}
+CHAIN_ID = {"bsc": 56, "base": 8453, "ethereum": 1, "arbitrum": 42161, "optimism": 10, "polygon": 137, "robinhood": 4663, "arc": 5042,
+            "xlayer": 196, "monad": 143, "hyperevm": 999, "ink": 57073, "abstract": 2741, "berachain": 80094, "avalanche": 43114,
+            "sonic": 146, "mantle": 5000, "plasma": 9745, "zksync": 324, "unichain": 130, "stable": 988, "megaeth": 4326}
+GT_NET = {"bsc": "bsc", "base": "base", "ethereum": "eth", "arbitrum": "arbitrum", "optimism": "optimism", "polygon": "polygon_pos",
+          "robinhood": "robinhood", "arc": "arc", "avalanche": "avax", "xlayer": "x-layer", "mantle": "mantle", "zksync": "zksync"}
+
+
+def _rpc_url(chain):
+    try:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("oc", os.path.join(os.path.dirname(os.path.abspath(__file__)), "拉链上新台.py"))
+        m = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(m)
+        ch = m.CHAINS.get(chain) or {}
+        if ch.get("公共"):
+            return ch["公共"]
+        if ch.get("alchemy") and m.KEY:
+            return f"https://{ch['alchemy']}.g.alchemy.com/v2/{m.KEY}"
+    except Exception:
+        pass
+    return None
+
+
+def implementation(chain, a):
+    """EIP-1967 代理：读存储槽拿实现合约地址。"""
+    url = _rpc_url(chain)
+    if not url:
         return None
     try:
-        j = http(f"{api}/addresses/{a}", tries=2, pause=0.3)
+        j = http(url, {"jsonrpc": "2.0", "id": 1, "method": "eth_getStorageAt", "params": [a, EIP1967, "latest"]}, tries=2)
+        v = j.get("result") or "0x0"
+        return ("0x" + v[-40:]) if int(v, 16) else None
     except Exception:
         return None
-    impl = [i.get("name") for i in (j.get("implementations") or []) if i.get("name")]
-    return impl[0] if impl else (j.get("name") if j.get("is_verified") else None)
+
+
+def sourcify(chain, a):
+    cid = CHAIN_ID.get(chain)
+    if not cid:
+        return None
+    try:
+        j = http(f"https://sourcify.dev/server/v2/contract/{cid}/{a}?fields=compilation", tries=2, pause=0.2)
+        return (j.get("compilation") or {}).get("name")
+    except Exception:
+        return None
+
+
+def contract_name(chain, a):
+    """合约名，依次试：Blockscout 验证名（带实现合约）→ Sourcify → 是代理就读 EIP-1967 实现合约再查 Sourcify。查不到返回 None。"""
+    api = EXPLORER_API.get(chain)
+    if api:
+        try:
+            j = http(f"{api}/addresses/{a}", tries=2, pause=0.3)
+            impl = [i.get("name") for i in (j.get("implementations") or []) if i.get("name")]
+            nm = impl[0] if impl else (j.get("name") if j.get("is_verified") else None)
+            if nm and nm not in PROXY_NAMES:
+                return nm
+        except Exception:
+            pass
+    nm = sourcify(chain, a)
+    if nm and nm not in PROXY_NAMES:
+        return nm
+    imp = implementation(chain, a)
+    if imp:
+        nm2 = sourcify(chain, imp)
+        if nm2 and nm2 not in PROXY_NAMES:
+            return nm2
+    return None
+
+
+def gt_dex(chain, samples):
+    """样本币在 GeckoTerminal 上挂在哪个交易所（发射台曲线池常直接标平台名，如 four-meme）。"""
+    net = GT_NET.get(chain)
+    if not net:
+        return None
+    c = Counter()
+    for t in samples[:2]:
+        try:
+            j = gt(f"/networks/{net}/tokens/{t}/pools?page=1")
+        except Exception:
+            continue
+        for p in j.get("data") or []:
+            c[(((p.get("relationships") or {}).get("dex") or {}).get("data") or {}).get("id")] += 1
+    top = [d for d, _ in c.most_common() if d and not d.startswith(("uniswap", "pancakeswap", "aerodrome", "sushiswap"))]
+    return top[0] if top else None
 
 
 def github(q):
@@ -327,19 +403,24 @@ def enrich(clues, end, sol):
     for dex, blk in (sol or {}).items():
         for gid, g in list(blk["前端"].items())[:10]:
             todo.append(("solana", gid, g.get("样本") or []))
+    gt_left = 40                                     # GeckoTerminal 限流：每天最多给 40 个没名字的候选查交易所
     gh_left = 8                                      # GitHub 代码搜索限流严，每天最多查 8 个
     for chain, a, smp in todo:
         key = f"{chain}:{a}"
         old = ids.get(key)
-        if old and old.get("日期", "") >= shift(end, -13):
+        if old and old.get("日期", "") >= shift(end, -13) and old.get("查名v") == 2:
             continue
         r = identify(chain, smp[:30]) if smp else {"dexId": None, "重复域名": []}
         if chain != "solana":
             r["合约名"] = contract_name(chain, a)
+            if not r["合约名"] and gt_left > 0:
+                r["交易所"] = gt_dex(chain, [t for t in smp if t != a])
+                gt_left -= 1
         if gh_left > 0:
             r["GitHub"] = github(a)
             gh_left -= 1
         r["日期"] = end
+        r["查名v"] = 2                               # 2026-11-06 加 Sourcify + 代理实现合约 + GeckoTerminal 交易所；旧记录重查
         ids[key] = r
     print(f"  补身份：候选 {len(todo)}，已有记录 {len(ids)}")
 
