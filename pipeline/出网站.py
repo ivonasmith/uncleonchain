@@ -2623,6 +2623,7 @@ def oc_summary(key, lab):
                 x["昨日"] = v[0]
     first = db.get("首次出现") or {}
     known = dict(lab.get("*") or {}, **(lab.get(key) or {}))
+    ids = (load(os.path.join(DATA, "onchain", "线索.json")) or {}).get("身份") or {}
     rows = []
     for a, x in agg.items():
         tag = known.get(a) or {}
@@ -2632,7 +2633,9 @@ def oc_summary(key, lab):
         new = fs != "基线" and fs >= (e - dt.timedelta(days=OC_NEW_DAYS - 1)).isoformat()
         cov = len([d for d in p7 if d in days]) == 7
         ramp = x["7日"] >= 50 and cov and x["7日"] >= 2 * max(x["前7日"], 1)
-        rows.append(dict(addr=a, name=tag.get("名称"), first=fs, new=new, ramp=ramp, cov=cov, **x))
+        idt = ids.get(f"{key}:{a}") or {}
+        rows.append(dict(addr=a, name=tag.get("名称") or idt.get("合约名"), first=fs, new=new, ramp=ramp, cov=cov,
+                         gh=idt.get("GitHub") or [], dom=idt.get("重复域名") or [], **x))
     rows.sort(key=lambda r: -r["7日"])
     return {"db": db, "rows": rows, "end": end, "days": len(ds)}
 
@@ -2679,7 +2682,9 @@ def onchain_html():
         trs = ""
         for r in sm["rows"][:10]:
             prev = f'{r["前7日"]:,}' if r["cov"] else "—"
-            trs += (f'<tr><td class="l">{esc(r["name"]) if r["name"] else unnamed}{_oc_chips(r)}<br><small>{_oc_addr(exp, r["addr"])}</small></td>'
+            extra = "".join(f' <a href="{esc(g["链接"])}" target="_blank" rel="noopener">GitHub ↗</a>' for g in r["gh"][:1]) + \
+                    "".join(f' <span class="sub">{esc(d)}</span>' for d in r["dom"][:2])
+            trs += (f'<tr><td class="l">{esc(r["name"]) if r["name"] else unnamed}{_oc_chips(r)}<br><small>{_oc_addr(exp, r["addr"])}{extra}</small></td>'
                     f'<td>{r["昨日"]:,}</td><td>{r["7日"]:,}</td><td>{prev}</td><td>≥{r["人7日"]:,}</td><td>{_oc_first(r["first"])}</td></tr>')
         meta = T(f"{sm['end']} · 新币 {last.get('新币', 0):,} · 个人直接部署 {last.get('直接部署', 0):,} · 已积累 {sm['days']} 天 · 节点 {last.get('节点', '—')}",
                  f"{sm['end']} · new tokens {last.get('新币', 0):,} · direct deploys {last.get('直接部署', 0):,} · {sm['days']} days so far · node {last.get('节点', '—')}")
@@ -2709,7 +2714,76 @@ def onchain_html():
              "New token = minted in a round supply (a multiple of 1,000) in one transaction; factory = the contract the creating transaction called; tokens deployed directly by individuals are counted apart. "
              "Creators = distinct creating addresses among sampled transactions (a lower bound). New = first seen in the last 14 days; ramping = ≥ 50 new tokens in 7 days and at least 2× the prior 7 days. "
              "Generic contracts (account-abstraction entry points, multicall) are excluded; names come from verified contracts or manual labels, otherwise “unnamed contract”. Describes what is being launched; not a recommendation.")
-    return head + top + blocks + f'<p class="tnote">{note}</p>'
+    return head + top + blocks + f'<p class="tnote">{note}</p>' + solana_html() + clues_html()
+
+
+def solana_html():
+    """Solana：公共发币设施（Meteora DBC、Raydium LaunchLab）上的前端，按合作方 / 平台配置拆分；同名的合并。"""
+    db = load(os.path.join(DATA, "onchain", "solana.json"))
+    if not db or not db.get("逐日"):
+        return ""
+    end = max(db["逐日"])
+    first = db.get("首次出现") or {}
+    lab = (oc_labels().get("solana") or {})
+    cut = (dt.date.fromisoformat(end) - dt.timedelta(days=OC_NEW_DAYS - 1)).isoformat()
+    rows = {}
+    for dex, blk in db["逐日"][end].items():
+        for gid, g in blk["前端"].items():
+            nm = (lab.get(gid) or {}).get("名称") or g.get("名称")
+            k = (dex, nm) if nm else (dex, gid)
+            r = rows.setdefault(k, {"dex": dex, "名称": nm, "id": gid, "官网": g.get("官网"), "池": 0, "成交额": 0, "后缀": g.get("后缀"),
+                                    "首次": first.get(f"{dex}:{gid}", "基线"), "样本": []})
+            r["池"] += g["池"]
+            r["成交额"] += g["成交额"]
+            r["样本"] = (r["样本"] + g.get("样本", []))[:3]
+            f = first.get(f"{dex}:{gid}", "基线")
+            if "基线" in (f, r["首次"]):
+                r["首次"] = "基线"
+            else:
+                r["首次"] = min(f, r["首次"])
+    xs = sorted(rows.values(), key=lambda r: -r["成交额"])[:20]
+    dexn = {"meteora-dbc": "Meteora DBC", "raydium-launchlab": "Raydium LaunchLab"}
+    trs = ""
+    for r in xs:
+        new = r["首次"] != "基线" and r["首次"] >= cut
+        nm = esc(r["名称"]) if r["名称"] else T("未命名前端", "unnamed front end")
+        if r["官网"]:
+            nm = f'<a href="{esc(r["官网"])}" target="_blank" rel="noopener">{nm}</a>'
+        chips = f'<span class="chip t-cool carry">{T("新", "new")} {esc(r["首次"][5:])}</span>' if new else ""
+        hint = T(f"币地址后缀 {r['后缀']}", f"mint suffix {r['后缀']}") if r.get("后缀") else ""
+        samples = " ".join(f'<a href="https://dexscreener.com/solana/{esc(t)}" target="_blank" rel="noopener"><code>{esc(t[:5])}…</code></a>' for t in r["样本"])
+        trs += (f'<tr><td class="l">{nm}{chips}<br><small><a href="https://solscan.io/account/{esc(r["id"])}" target="_blank" rel="noopener"><code>{esc(r["id"][:6])}…</code></a> {esc(hint)}</small></td>'
+                f'<td class="l">{dexn.get(r["dex"], r["dex"])}</td><td>{r["池"]}</td><td>{f_usd(r["成交额"])}</td><td>{_oc_first(r["首次"])}</td><td class="l">{samples}</td></tr>')
+    n = sum(len(b["前端"]) for b in db["逐日"][end].values())
+    return (f'<details class="card fold ocb" open><summary><b>Solana</b> <span class="sub">{end} · '
+            + T(f"公共发币设施上的前端 {n} 个（样本：各设施近 24 小时最活跃的 200 个池子）", f"{n} front ends on shared launch infrastructure (sample: the 200 most active pools per venue in 24h)")
+            + f'</span></summary><div class="tw"><table><thead><tr><th class="l">{T("前端（合作方 / 平台配置）", "Front end (partner / platform config)")}</th><th class="l">{T("设施", "Venue")}</th>'
+            f'<th>{T("样本池", "Pools")}</th><th>{T("24h 成交额", "24h volume")}</th><th>{T("首次出现", "First seen")}</th><th class="l">{T("样本币", "Samples")}</th></tr></thead><tbody>{trs}</tbody></table></div>'
+            f'<p class="tnote" style="margin:8px 14px">{T("Solana 的新发射台多半是在 Meteora DBC、Raydium LaunchLab 这类公共设施上套前端，链上调用的是同一个程序，区别在各自的配置：DBC 按配置里的合作方（手续费接收地址）合并，LaunchLab 按平台配置（里面存着平台名字和官网）。GeckoTerminal 已单独列出的前端（Bags.fm、letsbonk.fun 等）不在这张表里，看下面的「新收录入口」。", "New Solana launchpads are mostly front ends on shared venues like Meteora DBC and Raydium LaunchLab: same program on-chain, different configs. DBC is grouped by the config partner (fee receiver), LaunchLab by platform config (which stores the platform name and site). Front ends GeckoTerminal already lists separately (Bags.fm, letsbonk.fun, …) are not here; see new entries below.")}</p></details>')
+
+
+def clues_html():
+    c = load(os.path.join(DATA, "onchain", "线索.json")) or {}
+    out = ""
+    dirs = c.get("目录") or {}
+    netn = {"solana": "Solana", "bsc": "BSC", "base": "Base", "robinhood": "Robinhood Chain", "arc": "Arc"}
+    new = [(net, k, v) for net, d in dirs.items() for k, v in d.items() if v.get("首次出现") not in (None, "基线")]
+    new.sort(key=lambda x: x[2]["首次出现"], reverse=True)
+    base_n = sum(len(d) for d in dirs.values())
+    if dirs:
+        li = "".join(f'<li><b>{esc(v["名称"])}</b> <span class="sub">{esc(netn.get(net, net))} · {esc(v["首次出现"])}</span> '
+                     f'<a href="https://www.geckoterminal.com/{esc(net)}/{esc(k)}/pools" target="_blank" rel="noopener">GeckoTerminal ↗</a></li>' for net, k, v in new[:20])
+        out += (f'<h3>{T("GeckoTerminal 新收录的发射台 / 交易入口", "New launchpad / DEX entries on GeckoTerminal")}</h3>'
+                + (f'<div class="card" style="padding:10px 16px"><ul class="plain">{li}</ul></div>' if li else
+                   f'<p class="tnote">{T(f"已建基线（五条链共 {base_n} 个条目），之后每天新冒出来的会列在这里。", f"Baseline recorded ({base_n} entries across five chains); new ones will be listed here.")}</p>'))
+    hits = sorted((c.get("自称发射台") or {}).values(), key=lambda x: x.get("日期", ""), reverse=True)[:12]
+    if hits:
+        li = "".join(f'<li><a href="{esc(h.get("页面") or "#")}" target="_blank" rel="noopener"><code>{esc((h.get("代币") or "")[:8])}…</code></a> '
+                     f'<span class="sub">{esc(h.get("链") or "")} · {esc(h.get("日期") or "")}</span><br><small>{esc(h.get("简介") or "")}</small></li>' for h in hits)
+        out += (f'<h3>{T("DEX Screener · 自称提供发币服务的项目", "DEX Screener · projects describing themselves as launchpads")}</h3>'
+                f'<div class="card" style="padding:10px 16px"><ul class="plain">{li}</ul></div>'
+                f'<p class="tnote">{T("从 DEX Screener 最新代币资料里按关键词（launchpad、token launcher、bonding curve、fair launch、发射台）筛出来的，只是自我介绍，没核实，大部分是噪音；有链上实际发币记录的才会出现在上面的工厂表里。", "Keyword matches (launchpad, token launcher, bonding curve, fair launch) in DEX Screener’s latest token profiles; self-descriptions, unverified and mostly noise. Only those with real on-chain launches show up in the factory tables above.")}</p>')
+    return out
 
 
 def carry_map(matrix, d=None):

@@ -57,6 +57,7 @@ jobs:
           LP_DATA: ${{ github.workspace }}/data
           LP_OUT: ${{ github.workspace }}/build
           COINGECKO_API_KEY: ${{ secrets.COINGECKO_API_KEY }}
+          GITHUB_TOKEN: ${{ github.token }}                   # 新台线索：GitHub 代码搜索（只读）
           ALCHEMY_KEY: ${{ secrets.ALCHEMY_KEY }}          # 链上新发射台：BSC / Base 只能走 Alchemy；Robinhood / Arc 公共节点失败时兜底
         run: |
           python3 pipeline/跑日更.py --site

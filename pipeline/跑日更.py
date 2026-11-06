@@ -47,6 +47,7 @@ def main():
     step("拉估值.py")
     step("拉Arc.py")
     step("拉链上新台.py")   # 链上自动发现新发射台（Robinhood / BSC / Base / Arc）；挂了只缺这一块
+    step("拉新台线索.py")   # Solana 前端拆分 + GeckoTerminal 目录 + DEX Screener 自称 + 候选补身份
     if not step("出看板.py"):
         sys.exit(4)
     if "--site" in sys.argv:
