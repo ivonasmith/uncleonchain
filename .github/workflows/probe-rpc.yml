@@ -1,0 +1,27 @@
+name: 探测链节点（手动）
+
+# 一次性诊断：各链免费公共节点 / Alchemy 能不能做全链铸币日志查询。只读，不提交任何东西。
+# 用自己的并发组，不占日更队列。
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: probe-rpc
+  cancel-in-progress: true
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: 探测
+        env:
+          ALCHEMY_KEY: ${{ secrets.ALCHEMY_KEY }}
+        run: python3 pipeline/探测节点.py
