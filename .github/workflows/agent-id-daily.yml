@@ -26,8 +26,10 @@ jobs:
       AGENT_ID_DEPLOY_WORKFLOW: ${{ vars.AGENT_ID_DEPLOY_WORKFLOW || 'daily.yml' }}   # 已核：daily.yml 有 workflow_dispatch，构建 main 最新提交
       AGENT_ID_NATIVE_GIT_DEPLOY: ${{ vars.AGENT_ID_NATIVE_GIT_DEPLOY }}
       GH_TOKEN: ${{ github.token }}
-      AGENT_ID_RUNTIME: ${{ runner.temp }}/agent-id-runtime
     steps:
+      # job 级 env 不能用 runner 上下文（GitHub 会拒绝整个 workflow），私有运行目录在这里设
+      - name: Private runtime directory outside the checkout
+        run: echo "AGENT_ID_RUNTIME=$RUNNER_TEMP/agent-id-runtime" >> "$GITHUB_ENV"
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.repository.default_branch }}
