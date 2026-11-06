@@ -25,3 +25,5 @@ jobs:
         env:
           ALCHEMY_KEY: ${{ secrets.ALCHEMY_KEY }}
         run: python3 pipeline/探测节点.py
+      - name: 探测合约名来源
+        run: python3 pipeline/探测合约名.py
