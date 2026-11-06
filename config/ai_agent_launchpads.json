@@ -1,0 +1,10 @@
+{
+ "_说明": "AI Agent 叙事发射台名单的人工修正。自动识别规则见 pipeline/拉新台线索.py 的 ai_agents()：DefiLlama「Launchpad」类目里介绍明确写 AI agent / agentic 的算强相关，只提到 AI 的算待确认；「AI Agents」类目里做「发 / 代币化 Agent」的也算。这里的「包含」会强制列入（档位按写的），「排除」会强制去掉。键是 DefiLlama slug。",
+ "包含": {
+  "virtuals-protocol": {"档": "强相关", "备注": "AI Agent 发射与代币化平台（DefiLlama 归在 AI Agents 类目）"},
+  "creator-bid": {"档": "强相关", "备注": "创建并代币化 AI Agent 的发射台（DefiLlama 归在 AI Agents 类目）"}
+ },
+ "排除": {
+  "hfun": "Telegram 交易机器人 + 发射台，「bot」不是 AI Agent 叙事"
+ }
+}

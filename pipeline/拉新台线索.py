@@ -308,7 +308,7 @@ def enrich(clues, end, sol):
     """给候选补身份：链上工厂近 7 天新币 ≥ 30 的、Solana 前端成交额前列的。每个候选只查一次（结果缓存 14 天）。"""
     ids = clues.setdefault("身份", {})
     todo = []
-    chains = sorted(f[:-5] for f in os.listdir(OUT) if f.endswith(".json") and f not in ("solana.json", "线索.json"))
+    chains = sorted(f[:-5] for f in os.listdir(OUT) if f.endswith(".json") and f not in ("solana.json", "线索.json", "ai_agent.json"))
     for chain in chains:
         p = os.path.join(OUT, f"{chain}.json")
         if not os.path.exists(p):
@@ -344,6 +344,54 @@ def enrich(clues, end, sol):
     print(f"  补身份：候选 {len(todo)}，已有记录 {len(ids)}")
 
 
+# ---------------------------------------------------------------- 5. AI Agent 叙事的发射台（重点关注）
+AI_STRONG = re.compile(r"ai[- ]?agents?|agentic|autonomous ai|launch(?:es|ing)? (?:and trade )?ai|tokeni[sz]e[sd]? ai|agent launchpad|ai idols?|virtuals", re.I)
+AI_WEAK = re.compile(r"\b(?:ai|a\.i\.|llm|gpt|aigc)\b|ai-(?:powered|audited|generated)", re.I)
+AI_LAUNCH = re.compile(r"launch|tokeni[sz]|bonding curve|fair launch|issuance", re.I)
+
+
+def ai_agents(end):
+    """DefiLlama 全部协议：Launchpad 类目按介绍分强相关 / 待确认；AI Agents 类目里做发币 / 代币化的也列入；人工名单修正。"""
+    try:
+        meta = http("https://api.llama.fi/protocols", tries=3)
+        ov = http("https://api.llama.fi/overview/fees?excludeTotalDataChart=true&excludeTotalDataChartBreakdown=true", tries=3)
+    except Exception as e:
+        print(f"  AI Agent 名单失败：{e}")
+        return
+    cp = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "config", "ai_agent_launchpads.json")
+    cfg = json.load(open(cp, encoding="utf-8")) if os.path.exists(cp) else {}
+    fees = {p.get("slug"): p for p in ov.get("protocols") or []}
+    inc, exc = cfg.get("包含") or {}, cfg.get("排除") or {}
+    rows = []
+    for m in meta:
+        slug, cat = m.get("slug"), m.get("category")
+        if not slug or slug in exc:
+            continue
+        txt = " ".join([m.get("name") or "", m.get("description") or ""])
+        tier = None
+        if slug in inc:
+            tier = inc[slug].get("档") or "强相关"
+        elif cat == "Launchpad":
+            tier = "强相关" if AI_STRONG.search(txt) else ("待确认" if AI_WEAK.search(txt) else None)
+        elif cat == "AI Agents" and AI_LAUNCH.search(txt) and AI_STRONG.search(txt):
+            tier = "强相关"
+        if not tier:
+            continue
+        f = fees.get(slug) or {}
+        rows.append({"slug": slug, "名称": m.get("name"), "类目": cat, "档": tier, "链": (m.get("chains") or f.get("chains") or [])[:4],
+                     "介绍": (m.get("description") or "")[:200], "官网": m.get("url"), "推特": m.get("twitter"),
+                     "当日": f.get("total24h"), "7日": f.get("total7d"), "30日": f.get("total30d"), "备注": (inc.get(slug) or {}).get("备注")})
+    rows.sort(key=lambda r: (r["档"] != "强相关", -(r["30日"] or 0)))
+    old = load("ai_agent.json", {})
+    first = old.get("首次出现") or {}
+    init = not first
+    for r in rows:
+        first.setdefault(r["slug"], "基线" if init else end)
+        r["首次出现"] = first[r["slug"]]
+    save("ai_agent.json", {"日期": end, "更新UTC": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M"), "平台": rows, "首次出现": first})
+    print(f"  AI Agent 发射台：强相关 {sum(r['档'] == '强相关' for r in rows)}，待确认 {sum(r['档'] == '待确认' for r in rows)}")
+
+
 def main():
     os.makedirs(OUT, exist_ok=True)
     end = shift(today_utc(), -1)
@@ -368,6 +416,7 @@ def main():
         sdb["首次出现"] = first
         sdb["更新UTC"] = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M")
         save("solana.json", sdb)
+    ai_agents(end)
     ds_self_described(clues, end)
     try:
         enrich(clues, end, sol)

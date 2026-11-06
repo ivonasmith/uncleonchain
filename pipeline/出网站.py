@@ -2592,7 +2592,7 @@ def oc_chain_list():
     out = []
     d = os.path.join(DATA, "onchain")
     for f in sorted(os.listdir(d)) if os.path.isdir(d) else []:
-        if not f.endswith(".json") or f in ("solana.json", "线索.json"):
+        if not f.endswith(".json") or f in ("solana.json", "线索.json", "ai_agent.json"):
             continue
         db = load(os.path.join(d, f)) or {}
         days = db.get("逐日") or {}
@@ -2858,12 +2858,104 @@ def discovery_card():
         pick_h = T("目前还没有候选 · 成交最高的前端", "No candidates yet · busiest front end")
     pk = "".join(f'<li><span class="badge b-other">{esc(c)}</span> <b>{esc(n)}</b> <small>{esc(d)}</small></li>' for c, n, d in picks)
     note = T("数据只积累了几天，开头几天出现的都算「已有」，之后新冒出来的才进候选。", "Only a few days of data so far: everything seen in the first days counts as existing; only later arrivals become candidates.") if not st["cand"] else ""
+    ai = ai_agent_html(compact=True)
+    ai_line = ""
+    if ai:
+        strong, f30 = ai
+        top3 = "、".join(r["名称"] for r in sorted(strong, key=lambda r: -(r.get("30日") or 0))[:3]) if LANG["v"] == "zh" else \
+            ", ".join(r["名称"] for r in sorted(strong, key=lambda r: -(r.get("30日") or 0))[:3])
+        ai_line = (f'<div class="dc-ai"><span class="chip t-up">AI Agent</span> '
+                   + T(f"AI Agent 叙事发射台 <b>{len(strong)}</b> 个，近 30 天手续费 <b>{f_usd(f30)}</b>（{esc(top3)}…）",
+                       f"<b>{len(strong)}</b> AI-agent launchpads, 30-day fees <b>{f_usd(f30)}</b> ({esc(top3)}…)") + '</div>')
     return (f'<a class="card dcard" href="{U("/launchpad/discovery/")}"><div class="dc-h"><div><div class="eyebrow">{T("新发射台监控 · 链上自动发现", "New launchpad monitor · on-chain discovery")}</div>'
             f'<h3>{T(f"不等 DefiLlama 收录：每天扫 {nch} 条 EVM 链的新币 + Solana 发射台前端", f"Before DefiLlama lists them: daily scans of new tokens on {nch} EVM chains, plus Solana launch front ends")}</h3></div>'
             f'<span class="btn dc-go">{T("进入监控 →", "Open monitor →")}</span></div>'
-            f'<div class="dc-g">{tiles}</div><div class="chainbar">{bar}</div><div class="chainleg">{leg}</div>'
+            f'<div class="dc-g">{tiles}</div>{ai_line}<div class="chainbar">{bar}</div><div class="chainleg">{leg}</div>'
             + (f'<div class="dc-p"><small>{pick_h}</small><ul>{pk}</ul></div>' if pk else "")
             + (f'<p class="tnote" style="margin:6px 0 0">{note}</p>' if note else "") + '</a>')
+
+
+AI_NAME = re.compile(r"agent|\bai\b|^ai|ai$", re.I)
+SCAN_KEY = {"hyperliquid": "hyperevm", "avax": "avalanche", "era": "zksync"}      # DefiLlama 分链键 → 本站扫描链名
+NON_EVM = {"ton", "tron", "aptos", "sui", "near", "hedera", "injective", "starknet", "cardano", "algorand", "stellar", "bitcoin", "ripple", "cosmos"}
+COVER_MIN, PAID_MIN = 0.0001, 0.005     # 0.01%：免费节点能扫就接；0.5%：只能付费扫的才报给大叔决定
+
+
+def ai_agent_html(compact=False):
+    """AI Agent 叙事的发射台：DefiLlama 规则识别 + 人工名单；再加链上扫出来、名字带 Agent / AI 的工厂和前端。"""
+    d = load(os.path.join(DATA, "onchain", "ai_agent.json")) or {}
+    rows = d.get("平台") or []
+    if not rows:
+        return ""
+    end = d.get("日期") or ""
+    cut = (dt.date.fromisoformat(end) - dt.timedelta(days=29)).isoformat() if end else ""
+    strong = [r for r in rows if r["档"] == "强相关"]
+    if compact:
+        f30 = sum(r.get("30日") or 0 for r in strong)
+        return strong, f30
+    trs = ""
+    for r in rows:
+        nm = esc(r["名称"] or r["slug"])
+        if r.get("官网"):
+            nm = f'<a href="{esc(r["官网"])}" target="_blank" rel="noopener">{nm}</a>'
+        tier = f'<span class="chip {"t-up" if r["档"] == "强相关" else "t-neutral"} carry">{T(r["档"], "strong" if r["档"] == "强相关" else "to confirm")}</span>'
+        new = (f'<span class="chip t-cool carry">{T("新", "new")} {esc(r["首次出现"][5:])}</span>'
+               if r.get("首次出现") not in (None, "基线") and r["首次出现"] >= cut else "")
+        chains = "".join(chain_badge(c) for c in (r.get("链") or [])[:3])
+        trs += (f'<tr><td class="l">{nm}{tier}{new}<br><small>{esc(r.get("介绍") or "")[:120]}</small></td><td class="l">{chains}</td>'
+                f'<td class="l"><small>{esc(r.get("类目") or "")}</small></td><td>{f_usd(r.get("当日"))}</td><td>{f_usd(r.get("7日"))}</td><td>{f_usd(r.get("30日"))}</td></tr>')
+    # 链上扫出来、名字带 Agent / AI 的工厂和前端（没有手续费数据，列新币数）
+    oc = []
+    lab = oc_labels()
+    for key, nm in oc_chain_list():
+        sm = oc_summary(key, lab)
+        for r in (sm or {}).get("rows", []):
+            if r.get("name") and AI_NAME.search(r["name"]):
+                oc.append((nm, r["name"], T(f"近 7 日新币 {r['7日']:,}", f"{r['7日']:,} new tokens in 7d")))
+    sdb = load(os.path.join(DATA, "onchain", "solana.json")) or {}
+    if sdb.get("逐日"):
+        for dex, b in sdb["逐日"][max(sdb["逐日"])].items():
+            for g in b["前端"].values():
+                if g.get("名称") and AI_NAME.search(g["名称"]):
+                    oc.append(("Solana", g["名称"], T(f"24h 成交 {f_usd(g['成交额'])}", f"24h volume {f_usd(g['成交额'])}")))
+    ocl = "".join(f'<li><span class="badge b-other">{esc(c)}</span> <b>{esc(n)}</b> <small>{esc(x)}</small></li>' for c, n, x in oc)
+    return (f'<h2 id="aiagent">{T("AI Agent 发射台 · 重点关注", "AI Agent launchpads · focus")} <span class="sub">'
+            + T(f"强相关 {len(strong)} 个 · 待确认 {len(rows) - len(strong)} 个 · 数据 DefiLlama {end}", f"{len(strong)} strong · {len(rows) - len(strong)} to confirm · DefiLlama {end}")
+            + '</span></h2>'
+            f'<div class="tw"><table><thead><tr><th class="l">{T("平台", "Platform")}</th><th class="l">{T("链", "Chain")}</th><th class="l">{T("DefiLlama 类目", "Category")}</th>'
+            f'<th>{T("当日手续费", "Fees (day)")}</th><th>{T("7 日手续费", "Fees (7d)")}</th><th>{T("30 日手续费", "Fees (30d)")}</th></tr></thead><tbody>{trs}</tbody></table></div>'
+            + (f'<div class="card" style="padding:10px 16px;margin-top:10px"><small class="sub">{T("链上扫描里名字带 Agent / AI 的工厂和前端", "On-chain factories and front ends named Agent / AI")}</small><ul class="plain">{ocl}</ul></div>' if ocl else "")
+            + f'<p class="tnote">{T("怎么认：DefiLlama「Launchpad」类目里项目介绍明确写 AI agent、agentic、launch AI 的算「强相关」，只提到 AI（如 AI 审计、AI 生成内容）的算「待确认」；「AI Agents」类目里做发币 / 代币化 Agent 的（如 Virtuals）也列入。人工修正在 config/ai_agent_launchpads.json，可以加也可以排除。只说明叙事归类，不是推荐。", "How: in DefiLlama’s Launchpad category, descriptions that clearly say AI agent / agentic / launch AI are “strong”; those only mentioning AI (AI audits, AI-generated content) are “to confirm”; AI Agents-category projects that launch or tokenize agents (e.g. Virtuals) are included. Manual overrides in config/ai_agent_launchpads.json. Narrative tagging only; not a recommendation.")}</p>')
+
+
+def coverage_html():
+    """链覆盖：各链近 30 天发射台手续费份额（DefiLlama）× 本站是否在扫，按门槛标状态。"""
+    m = load(os.path.join(DATA, "发射台矩阵.json")) or {}
+    c30 = {}
+    for p in m.get("协议") or []:
+        for k, v in (p.get("分链30日") or {}).items():
+            c30[k] = c30.get(k, 0) + (v or 0)
+    tot = sum(c30.values()) or 1
+    scanned = {k for k, _ in oc_chain_list()} | {"solana"}
+    trs = ""
+    for k, v in sorted(c30.items(), key=lambda kv: -kv[1]):
+        sh = v / tot
+        sk = SCAN_KEY.get(k, k)
+        if k == "hyperliquid" and sk in scanned:
+            stt, cls = T("部分 · 只扫 HyperEVM（HyperCore 上的发射台不在内）", "partial · HyperEVM only (HyperCore launchpads not covered)"), "t-cool"
+        elif sk in scanned:
+            stt, cls = T("已扫描", "scanned"), "t-up"
+        elif sh >= COVER_MIN:
+            if k in NON_EVM:
+                stt, cls = T("达门槛 · 非 EVM，需单独开发", "above bar · non-EVM, needs its own build"), "t-warn"
+            else:
+                stt, cls = T("达门槛 · 待接入", "above bar · to add"), "t-warn"
+        else:
+            continue
+        trs += f'<tr><td class="l">{esc(chain_name(k))}</td><td>{sh * 100:.2f}%</td><td>{f_usd(v)}</td><td class="l"><span class="chip {cls}">{stt}</span></td></tr>'
+    return (f'<h2 id="coverage">{T("链覆盖", "Chain coverage")} <span class="sub">{T("哪些链在扫、哪些该接（按近 30 天发射台手续费份额）", "Which chains we scan and which to add (by 30-day launchpad fee share)")}</span></h2>'
+            f'<div class="tw"><table><thead><tr><th class="l">{T("链", "Chain")}</th><th>{T("30 日手续费份额", "30d fee share")}</th><th>{T("30 日手续费", "30d fees")}</th><th class="l">{T("状态", "Status")}</th></tr></thead><tbody>{trs}</tbody></table></div>'
+            f'<p class="tnote">{T("门槛：近 30 天发射台手续费占全网 ≥ 0.01% 的链，免费节点能扫就接入；只能付费才能扫的，份额 ≥ 0.5% 才提出来由大叔决定。已接入、份额低于门槛的免费链保留（不花钱，链刚起量时能更早看到）。TON、Tron、Aptos 等非 EVM 链发币机制不同，要单独开发。份额来自 DefiLlama Launchpad 类目分链数据。", "Bar: chains with ≥ 0.01% of 30-day launchpad fees are added when a free node can scan them; chains that need a paid node are raised for a decision only at ≥ 0.5%. Free chains already added stay even below the bar. Non-EVM chains (TON, Tron, Aptos…) need their own build. Shares from DefiLlama’s per-chain Launchpad data.")}</p>')
 
 
 def build_launchpad_discovery():
@@ -2872,7 +2964,7 @@ def build_launchpad_discovery():
             + f'<div class="ph"><div><div class="eyebrow">Launchpad · {T("链上自动发现", "on-chain discovery")}</div><h1>{T("新发射台监控", "New launchpad monitor")}</h1>'
             + f'<p class="lede">{T("DefiLlama 收录有滞后。这里直接从链上看谁在批量发币：每天扫前一个 UTC 日的新币，按发币合约归到「工厂」；Solana 按公共发币设施上的配置拆出各个前端。只说明链上在发什么，不是推荐。", "DefiLlama lags. Here we read the chain directly: each day we scan the previous UTC day for new tokens and group them by the contract that created them; on Solana we split shared launch venues by config. Describes what is being launched; not a recommendation.")}</p></div>'
             + f'<div class="stamp">{T("数据截至", "Data as of")} <b>{esc(st["end"] or "—")}</b>{T("（UTC 完整日）", " (UTC)")}</div></div>'
-            + onchain_html())
+            + ai_agent_html() + onchain_html() + coverage_html())
     emit("launchpad/discovery/index.html", f'{T("新发射台监控", "New launchpad monitor")} · {T(BRAND, BRAND_EN)}', body, active="launchpad",
          desc=T("链上自动发现新发射台：Robinhood Chain、BSC、Base、Arc 每日新币按发币工厂统计，Solana 发射台前端拆分。", "On-chain discovery of new launchpads: daily new tokens by factory on Robinhood Chain, BSC, Base and Arc, plus Solana launch front ends."))
 
