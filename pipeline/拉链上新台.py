@@ -37,9 +37,9 @@ KEY = os.environ.get("ALCHEMY_KEY", "").strip()
 CHAINS = {
     "robinhood": {"名称": "Robinhood Chain", "公共": "https://rpc.mainnet.chain.robinhood.com", "alchemy": "robinhood-mainnet",
                   "浏览器": "https://explorer.chain.robinhood.com", "跨度": 30000},
-    # BSC / Base 一天铸币事件上百万条：每小时只扫前 10 分钟（全天 1/6），计数 ×6 估算并标「抽样」——发现新工厂够用，省额度省时间
-    "bsc": {"名称": "BSC", "公共": None, "alchemy": "bnb-mainnet", "浏览器": "https://bscscan.com", "跨度": 2000, "抽样": 6},
-    "base": {"名称": "Base", "公共": None, "alchemy": "base-mainnet", "浏览器": "https://basescan.org", "跨度": 2000, "抽样": 6},
+    # BSC / Base 一天铸币事件约 100 万条，Alchemy 全量扫 1～2 分钟（2026-11-06 实测），不抽样；要省额度可加 "抽样": 6（每小时只扫前 10 分钟）
+    "bsc": {"名称": "BSC", "公共": None, "alchemy": "bnb-mainnet", "浏览器": "https://bscscan.com", "跨度": 2000},
+    "base": {"名称": "Base", "公共": None, "alchemy": "base-mainnet", "浏览器": "https://basescan.org", "跨度": 2000},
     "arc": {"名称": "Arc", "公共": "https://rpc.mainnet.arc.io", "alchemy": "arc-mainnet", "浏览器": "https://explorer.arc.io", "跨度": 5000},
 }
 OUT_DIR = os.path.join(DATA, "onchain")
