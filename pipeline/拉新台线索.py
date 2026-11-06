@@ -328,8 +328,44 @@ def sourcify(chain, a):
         return None
 
 
+ETHERSCAN_KEY = os.environ.get("ETHERSCAN_KEY", "").strip()
+ES_STATE = {"失败": 0, "最后错误": None}
+
+
+def etherscan_name(chain, a):
+    """Etherscan V2（一个 key 查几十条链）：已验证合约名；代理合约顺着 Implementation 再查一次。
+    注意免费档有的链不开放（返回 NOTOK），这时退回 Sourcify 等，错误记在 ES_STATE 里写进日志。"""
+    cid = CHAIN_ID.get(chain)
+    if not (ETHERSCAN_KEY and cid) or ES_STATE["失败"] >= 5:      # 连续失败 5 次（多半是额度 / 不开放）就不再调
+        return None
+
+    def one(addr):
+        q = urllib.parse.urlencode({"chainid": cid, "module": "contract", "action": "getsourcecode", "address": addr, "apikey": ETHERSCAN_KEY})
+        j = http(f"https://api.etherscan.io/v2/api?{q}", tries=2, pause=0.25)       # 免费档每秒 5 次
+        if str(j.get("status")) != "1":
+            ES_STATE["失败"] += 1
+            ES_STATE["最后错误"] = f"{chain}: {str(j.get('result') or j.get('message'))[:120]}"
+            return None, None
+        ES_STATE["失败"] = 0
+        r = (j.get("result") or [{}])[0]
+        return (r.get("ContractName") or None), (r.get("Implementation") or None)
+    try:
+        nm, imp = one(a)
+        if imp and (not nm or nm in PROXY_NAMES):
+            nm2, _ = one(imp)
+            nm = nm2 or nm
+        return nm if nm and nm not in PROXY_NAMES else None
+    except Exception as e:
+        ES_STATE["失败"] += 1
+        ES_STATE["最后错误"] = str(e)[:120]
+        return None
+
+
 def contract_name(chain, a):
-    """合约名，依次试：Blockscout 验证名（带实现合约）→ Sourcify → 是代理就读 EIP-1967 实现合约再查 Sourcify。查不到返回 None。"""
+    """合约名，依次试：Etherscan（有 key 时）→ Blockscout 验证名（带实现合约）→ Sourcify → 是代理就读 EIP-1967 实现合约再查 Sourcify。"""
+    nm0 = etherscan_name(chain, a)
+    if nm0:
+        return nm0
     api = EXPLORER_API.get(chain)
     if api:
         try:
@@ -408,7 +444,7 @@ def enrich(clues, end, sol):
     for chain, a, smp in todo:
         key = f"{chain}:{a}"
         old = ids.get(key)
-        if old and old.get("日期", "") >= shift(end, -13) and old.get("查名v") == 2:
+        if old and old.get("日期", "") >= shift(end, -13) and old.get("查名v") == 3:
             continue
         r = identify(chain, smp[:30]) if smp else {"dexId": None, "重复域名": []}
         if chain != "solana":
@@ -420,9 +456,11 @@ def enrich(clues, end, sol):
             r["GitHub"] = github(a)
             gh_left -= 1
         r["日期"] = end
-        r["查名v"] = 2                               # 2026-11-06 加 Sourcify + 代理实现合约 + GeckoTerminal 交易所；旧记录重查
+        r["查名v"] = 3                               # v2：Sourcify + 代理实现合约 + GeckoTerminal；v3：加 Etherscan；旧记录重查
         ids[key] = r
-    print(f"  补身份：候选 {len(todo)}，已有记录 {len(ids)}")
+    named = sum(1 for v in ids.values() if v.get("合约名"))
+    print(f"  补身份：候选 {len(todo)}，已有记录 {len(ids)}，查到合约名 {named}"
+          + (f"；Etherscan {'未配置' if not ETHERSCAN_KEY else ('正常' if not ES_STATE['最后错误'] else '有报错：' + ES_STATE['最后错误'])}"))
 
 
 # ---------------------------------------------------------------- 5. AI Agent 叙事的发射台（重点关注）
