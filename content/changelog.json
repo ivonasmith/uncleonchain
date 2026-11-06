@@ -1,5 +1,29 @@
 [
   {
+    "version": "2026.11.06",
+    "date": "2026-11-06",
+    "notify": true,
+    "title_zh": "宝可梦报告英文版 · L3 恢复 · 日更提前",
+    "title_en": "Pokémon report in English · L3 restored · earlier daily run",
+    "items": [
+      {
+        "type": "new",
+        "zh": "《宝可梦线下卡价翻了一倍，链上抽卡却在降温：持有 CARDS，该看什么？》补英文版，PDF 中英文都可下载",
+        "en": "English edition of the Pokémon card RWA / CARDS report, with PDF"
+      },
+      {
+        "type": "fix",
+        "zh": "L3 筹码层恢复日更：数据源 bitview 10-31 起改了筹码分布接口的格式，L3 整层停在 10-29；现已兼容新格式，筹码分布读不到时只把集中度标缺失，其余照常更新",
+        "en": "L3 supply layer updates again: bitview changed its supply-distribution format on 10-31 and L3 had stopped at 10-29; the new format is handled, and if the distribution can't be read only concentration is marked missing"
+      },
+      {
+        "type": "fix",
+        "zh": "日更加一个早场（UTC 03:40）：GitHub 定时任务近来常晚 6–8 小时，前一天的数据会拖到北京时间次日凌晨才上线",
+        "en": "An earlier daily run (03:40 UTC): GitHub schedules have recently started 6–8 hours late, pushing the previous day's data to the small hours Beijing time"
+      }
+    ]
+  },
+  {
     "version": "2026.11.03",
     "date": "2026-11-03",
     "notify": true,
