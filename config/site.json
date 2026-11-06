@@ -41,5 +41,5 @@
  "推送重跑": "改了脚本、文章或配置推上来时，会立刻额外跑一次（所以个别日志的生成时间早于定时时间）。",
  "推送重跑EN": "Pushing code, posts or config triggers an extra run right away (so some logs are generated before the scheduled time).",
  "反馈账号": "Uncle_Onchain",
- "_时间": "全站统一 UTC+0：数据按 UTC 完整日（UTC 0 点收盘）对齐；页面上的时刻也一律写 UTC（中英文站相同），不换算北京时间 / 美东时间。定时任务在收盘后分批跑。"
+ "_时间": "后端统计一律 UTC+0（UTC 完整日，UTC 0 点收盘 = 新加坡时间 08:00）；前端显示按语言换算：中文站新加坡时间，英文站美东时间。定时任务在收盘后分批跑。"
 }

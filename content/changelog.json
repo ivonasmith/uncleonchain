@@ -3,13 +3,13 @@
     "version": "2026.11.06",
     "date": "2026-11-06",
     "notify": true,
-    "title_zh": "全站时间统一 UTC · 宝可梦报告英文版 · L3 恢复 · 日更提前",
-    "title_en": "All times in UTC · Pokémon report in English · L3 restored · earlier daily run",
+    "title_zh": "中文站改用新加坡时间 · 宝可梦报告英文版 · L3 恢复 · 日更提前",
+    "title_en": "Chinese site in Singapore time · Pokémon report in English · L3 restored · earlier daily run",
     "items": [
       {
         "type": "data",
-        "zh": "全站时间统一写 UTC+0：数据更新、日志生成、定时任务、收盘时刻、事件日历的时间都写 UTC，中英文站相同，不再换算北京时间 / 美东时间",
-        "en": "All times on the site are now UTC+0: data updates, log generation, job schedules, closes and event-calendar times, the same on both language sites",
+        "zh": "时间显示：后端统计统一 UTC+0 不变；前端中文站显示新加坡时间（UTC+8，原「北京时间」，钟点相同），英文站显示美东时间",
+        "en": "Time display: statistics stay in UTC+0; the Chinese site shows Singapore time (UTC+8), the English site US Eastern time",
         "corrections_anchor": "#rc-2026-11-06-utc"
       },
       {
@@ -24,8 +24,8 @@
       },
       {
         "type": "fix",
-        "zh": "日更加一个早场（UTC 03:40）：GitHub 定时任务近来常晚 6–8 小时，前一天的数据要拖到 UTC 18:00 之后才上线",
-        "en": "An earlier daily run (03:40 UTC): GitHub schedules have recently started 6–8 hours late, pushing the previous day's data past 18:00 UTC"
+        "zh": "日更加一个早场（UTC 03:40）：GitHub 定时任务近来常晚 6–8 小时，前一天的数据要拖到新加坡时间次日凌晨 2 点左右才上线",
+        "en": "An earlier daily run (03:40 UTC): GitHub schedules have recently started 6–8 hours late, pushing the previous day's data to around 1 PM ET"
       }
     ]
   },

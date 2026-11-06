@@ -13,7 +13,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.environ.get("CAL_OUT_DIR", os.path.join(HERE, "output"))
 TODAY = dt.date.fromisoformat(os.environ["CAL_TODAY"]) if os.environ.get("CAL_TODAY") else dt.datetime.now(dt.timezone.utc).date()
 OFFLINE = os.environ.get("CAL_OFFLINE") == "1"
-ET, BJ, UTC = ZoneInfo("America/New_York"), ZoneInfo("Asia/Shanghai"), dt.timezone.utc
+ET, BJ, UTC = ZoneInfo("America/New_York"), ZoneInfo("Asia/Singapore"), dt.timezone.utc   # BJ = 中文站显示用的 UTC+8（新加坡时间）
 BTC_DAYS, WEB3_DAYS, CARD_DAYS = 60, 60, 7
 STATS = json.load(open(os.path.join(HERE, "ev_stats.json"), encoding="utf-8"))
 status = {"stale": False, "detail": {}, "notes": []}
@@ -70,13 +70,13 @@ def btc_price():
     except Exception:
         return None
 
-USE_ZH = {"FOMC": "决议公布（UTC {utc}）前后 2 小时不挂贴近现价的单、不加杠杆追单；不提前押方向。",
-          "CPI": "数据公布（UTC {utc}）前后 2 小时不挂贴近现价的单、不加杠杆追单；不提前押方向。",
-          "NFP": "数据公布（UTC {utc}）前后 2 小时不挂贴近现价的单；当天整体波动不比平时大。",
+USE_ZH = {"FOMC": "决议公布（新加坡时间 {sg}）前后 2 小时不挂贴近现价的单、不加杠杆追单；不提前押方向。",
+          "CPI": "数据公布（新加坡时间 {sg}）前后 2 小时不挂贴近现价的单、不加杠杆追单；不提前押方向。",
+          "NFP": "数据公布（新加坡时间 {sg}）前后 2 小时不挂贴近现价的单；当天整体波动不比平时大。",
           "期权季度交割": "不需要为交割日调整动作。"}
-USE_EN = {"FOMC": "No resting orders near price and no leveraged chasing for 2 hours around the release ({utc} UTC). Don't bet on direction.",
-          "CPI": "No resting orders near price and no leveraged chasing for 2 hours around the release ({utc} UTC). Don't bet on direction.",
-          "NFP": "No resting orders near price for 2 hours around the release ({utc} UTC); the day as a whole is not more volatile.",
+USE_EN = {"FOMC": "No resting orders near price and no leveraged chasing for 2 hours around the release ({et} ET). Don't bet on direction.",
+          "CPI": "No resting orders near price and no leveraged chasing for 2 hours around the release ({et} ET). Don't bet on direction.",
+          "NFP": "No resting orders near price for 2 hours around the release ({et} ET); the day as a whole is not more volatile.",
           "期权季度交割": "No action needed for expiry day."}
 GRADE = {"FOMC": "已验证·波动", "CPI": "已验证·波动", "NFP": "已验证·波动", "期权季度交割": "已证伪"}
 UNTESTED = [  # 未检验、只提示的日子：手工维护
@@ -114,7 +114,7 @@ def btc_events():
                         time_et=(r["time_et"] + " ET") if r["time_et"] else "",
                         grade=GRADE[t], tested=True, emphasis=t != "期权季度交割",
                         what_zh=what_zh(t), what_en=what_en(t),
-                        use_zh=USE_ZH[t].format(utc=t_utc.strftime("%m-%d %H:%M")), use_en=USE_EN[t].format(utc=t_utc.strftime("%b %-d %H:%M")),
+                        use_zh=USE_ZH[t].format(sg=bj_s), use_en=USE_EN[t].format(et=t_utc.astimezone(ET).strftime("%b %-d ") + (f"{(t_utc.astimezone(ET).hour % 12) or 12}:{t_utc.astimezone(ET).minute:02d} " + ("AM" if t_utc.astimezone(ET).hour < 12 else "PM"))),
                         impact=impact(t, px), stats=STATS[t], source_url=r["source"]))
     for u in UNTESTED:
         d = dt.date.fromisoformat(u["date"])
@@ -376,7 +376,7 @@ def main():
             "stats_asof_zh": "检验数据截至 2026-10-12（Coinbase 小时线），每半年（1 月、7 月）用新数据重测一次，样本每半年约增加 25 次。",
             "intro_en": "Only events we have tested one by one on hourly BTC data since 2015. Fed decisions, CPI and payrolls widen the 2-hour range after release "
                         "(since 2022), but direction is unpredictable and the days before are not more volatile.",
-            "next_zh": (f"下一个：{nxt['title_zh']}，{nxt['days_until']} 天后（UTC {nxt['time_utc']}）" if nxt else ""),
+            "next_zh": (f"下一个：{nxt['title_zh']}，{nxt['days_until']} 天后（新加坡时间 {nxt['time_bj'][5:]}）" if nxt else ""),
             "events": btc,
             "method_zh": "对照组：同一星期几、前后 9 周内、没有其他事件的日子的同一时段。振幅 = 区间最高 ÷ 最低。年代分 2015-17、2018-21、2022-26 分别看。"
                          "期权交割：Deribit 每月最后一个周五 08:00 UTC。数据：Coinbase BTC-USD 小时线。",

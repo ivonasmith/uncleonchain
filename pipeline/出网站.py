@@ -85,10 +85,10 @@ def T(zh, en):
     return en if LANG["v"] == "en" else zh
 
 
-# 时间显示（2026-10-29 定数据口径，2026-11-06 定显示）：数据一律按 UTC 完整日（UTC 0 点收盘）；
-# 页面上的时刻也一律写 UTC（中英文站相同），不再换算北京时间 / 美东时间
+# 时间（2026-11-06 定）：后端统计一律 UTC+0（UTC 完整日，UTC 0 点收盘）；
+# 前端显示按语言区域换算：中文站新加坡时间（UTC+8），英文站美东时间（随夏令时）
 from zoneinfo import ZoneInfo                                             # noqa: E402
-BJ_TZ, ET_TZ = ZoneInfo("Asia/Shanghai"), ZoneInfo("America/New_York")
+SG_TZ, ET_TZ = ZoneInfo("Asia/Singapore"), ZoneInfo("America/New_York")
 MON_EN = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
 
@@ -108,31 +108,45 @@ def _en_clock(x):
 
 
 def TT(s, date=True):
-    """UTC 时刻 → 中文「UTC 10-29 10:20」/ 英文「Oct 29, 10:20 UTC」。date=False 只写钟点（定时任务）。"""
+    """UTC 时刻 → 中文「新加坡时间 10-29 18:20」/ 英文「Oct 29, 6:20 AM ET」。date=False 只写钟点（定时任务）。"""
     t = _utc(s)
     if t is None:
         return esc(s or "—")
-    zh = "UTC " + (t.strftime("%m-%d %H:%M") if date else t.strftime("%H:%M"))
-    en = (f"{MON_EN[t.month - 1]} {t.day}, " if date else "") + t.strftime("%H:%M") + " UTC"
+    b, e = t.astimezone(SG_TZ), t.astimezone(ET_TZ)
+    zh = "新加坡时间 " + (b.strftime("%m-%d %H:%M") if date else b.strftime("%H:%M"))
+    en = ((f"{MON_EN[e.month - 1]} {e.day}, " if date else "") + _en_clock(e) + " ET")
     return T(zh, en)
 
 
 def TCLOSE(d):
-    """数据日 D 的收盘 = D+1 日 UTC 00:00：中文「10-28 收盘（UTC 0 点）」/ 英文「Oct 28 close (00:00 UTC)」。"""
+    """数据日 D 的收盘 = D+1 日 UTC 0 点：中文「10-28 收盘（新加坡时间 10-29 08:00）」/ 英文「Oct 28 close (8:00 PM ET)」。"""
     try:
         day = dt.date.fromisoformat(str(d)[:10])
     except ValueError:
         return esc(d or "—")
-    return T(f"{day.strftime('%m-%d')} 收盘（UTC 0 点）", f"{MON_EN[day.month - 1]} {day.day} close (00:00 UTC)")
+    t = dt.datetime.combine(day + dt.timedelta(days=1), dt.time(0), dt.timezone.utc)
+    b, e = t.astimezone(SG_TZ), t.astimezone(ET_TZ)
+    return T(f"{day.strftime('%m-%d')} 收盘（新加坡时间 {b.strftime('%m-%d %H:%M')}）", f"{MON_EN[day.month - 1]} {day.day} close ({_en_clock(e)} ET)")
 
 
 def TDAY(d):
-    """数据日 D（UTC 完整日）的截止：中文「截至 UTC 10-28 收盘」/ 英文「through Oct 28 close (UTC)」。"""
+    """数据日 D（UTC 完整日）的截止：中文「截至新加坡时间 10-29 08:00」/ 英文「through Oct 28, 8:00 PM ET」。"""
     try:
         day = dt.date.fromisoformat(str(d)[:10])
     except ValueError:
         return esc(d or "—")
-    return T(f"截至 UTC {day.strftime('%m-%d')} 收盘", f"through {MON_EN[day.month - 1]} {day.day} close (UTC)")
+    t = dt.datetime.combine(day + dt.timedelta(days=1), dt.time(0), dt.timezone.utc)
+    b, e = t.astimezone(SG_TZ), t.astimezone(ET_TZ)
+    return T(f"截至新加坡时间 {b.strftime('%m-%d %H:%M')}", f"through {MON_EN[e.month - 1]} {e.day}, {_en_clock(e)} ET")
+
+
+def TLOC(s):
+    """事件时刻（UTC）→ 中文「11-06 21:30」（新加坡时间）/ 英文「Nov 6 8:30 AM」（美东），列表用的短写法。"""
+    t = _utc(s)
+    if t is None:
+        return "", ""
+    b, e = t.astimezone(SG_TZ), t.astimezone(ET_TZ)
+    return T(b.strftime("%m-%d"), f"{MON_EN[e.month - 1]} {e.day}"), T(b.strftime("%H:%M"), _en_clock(e))
 
 
 def U(path):
@@ -696,7 +710,7 @@ L2_TIME = next((x["时间"] for x in SCHED if x["文件"] == "l2-daily.yml"), "�
 
 
 def sched_text():
-    """「UTC 02:17（L2）、03:40（日更）」这类文案，全站共用（中英文都写 UTC）。"""
+    """「新加坡时间 10:17（L2）、11:40（日更）」这类文案（英文站写美东时间），全站共用。"""
     parts = [(f"{TT(x['时间'], False)}（{x['名称']}）", f"{TT(x['时间'], False)} ({x['EN']})") for x in SCHED]
     en = [p[1] for p in parts]
     return T("、".join(p[0] for p in parts), (", ".join(en[:-1]) + " and " + en[-1]) if len(en) > 1 else "".join(en))
@@ -2911,8 +2925,12 @@ def cal_home_card(cal):
     for x in xs[:6]:
         btc = x.get("tab") == "btc"
         badge = cal_grade(x.get("grade")) if btc else f'<span class="grade g-o">{T("行业动向", "Industry")}</span>'
-        when = (x.get("time_utc") or x.get("date") or "")[5:]
-        rows += (f'<li><a href="{U("/calendar/")}#{"btc" if btc else "web3"}"><span class="d">{esc(when)}{" UTC" if btc and x.get("time_utc") else ""}</span>'
+        if btc and x.get("time_utc"):
+            d_, h_ = TLOC(x["time_utc"])
+            when = f'{d_} {h_}{T(" 新加坡", " ET")}'
+        else:
+            when = esc((x.get("date") or "")[5:])
+        rows += (f'<li><a href="{U("/calendar/")}#{"btc" if btc else "web3"}"><span class="d">{when}</span>'
                  f'<b>{esc(T(x.get("title_zh") or x.get("title") or "", x.get("title_en") or x.get("title") or ""))}</b>{badge}</a></li>')
     return (f'<h2>{T("未来 7 天", "Next 7 days")} <a class="sub" href="{U("/calendar/")}">{T("事件日历 →", "Calendar →")}</a></h2>'
             f'<div class="card calhome"><ul>{rows}</ul></div>')
@@ -3005,7 +3023,7 @@ def build_calendar():
         big = (f'<div class="card calbig"><div class="eb">{T("下一个已检验事件", "Next tested event")}</div>'
                f'<div class="row1"><h3>{esc(T(nxt["title_zh"], nxt["title_en"]))}</h3>{cal_grade(nxt.get("grade"))}</div>'
                f'<div class="cd" data-utc="{esc(nxt.get("time_utc") or "")}">—</div>'
-               f'<div class="tz">UTC <b>{esc(nxt.get("time_utc") or "—")}</b></div>'
+               f'<div class="tz"><b>{TT(nxt.get("time_utc"))}</b></div>'
                f'<p class="imp"><b>{T("这次大概会晃多少：", "How much it may swing: ")}</b>{esc(T(im.get("text_zh") or "", im.get("text_en") or ""))} {esc(usd)}</p>'
                f'<p class="use"><b>{T("怎么用：", "How to use it: ")}</b>{esc(T(nxt.get("use_zh") or "", nxt.get("use_en") or ""))}</p></div>')
     # 会晃多大（幅度表）
@@ -3029,11 +3047,11 @@ def build_calendar():
     for e in evs:
         im = e.get("impact") or {}
         faint = e.get("grade") == "已证伪"
-        bj = (e.get("time_utc") or e.get("date") or "")   # 列表日期 / 钟点一律 UTC
+        loc_d, loc_t = TLOC(e.get("time_utc")) if e.get("time_utc") else (esc((e.get("date") or "")[:10]), "")   # 中文新加坡时间 / 英文美东
         note = T("（常见说法，数据不支持）", " (a common belief the data does not support)") if faint else ""
         usd = (T(f"，按现价约 ±${im['usd_typ']:,.0f}", f", about ±${im['usd_typ']:,.0f} at today's price") if im.get("usd_typ") else "")
         src = f' · <a href="{esc(e["source_url"])}" target="_blank" rel="noopener">{T("官方来源", "official source")} ↗</a>' if e.get("source_url") else ""
-        li += (f'<details class="calrow{" faint" if faint else ""}"><summary><span class="d">{esc(bj[:10])}</span><span class="t">{esc(bj[11:16])}</span>'
+        li += (f'<details class="calrow{" faint" if faint else ""}"><summary><span class="d">{loc_d}</span><span class="t">{loc_t}</span>'
                f'<b>{esc(T(e["title_zh"], e["title_en"]))}{note}</b>{cal_grade(e.get("grade"))}<span class="lv">{esc(T(im.get("level_zh") or "—", im.get("level_en") or "—"))}</span>'
                f'<em>{T(str(e.get("days_until")) + " 天后", "in " + str(e.get("days_until")) + "d")}</em></summary>'
                f'<div class="body"><p>{esc(T(im.get("text_zh") or "", im.get("text_en") or ""))}{esc(usd)}</p><p>{esc(T(e.get("what_zh") or "", e.get("what_en") or ""))}</p>'
@@ -3586,7 +3604,7 @@ def build_methodology():
     rrows = "".join(f"<tr><td>{esc(r['#'])}</td><td class='l wrap'><b>{esc(T(r['规则'], r['规则EN']))}</b></td><td class='l wrap'>{esc(T(r['怎么用'], r['怎么用EN']))}</td>"
                     f"<td class='l wrap'>{esc(T(r['可靠程度'], r['可靠程度EN']))}</td><td class='l'><b>{esc(T(r['能否改交易参数'], r['能否改交易参数EN']))}</b></td></tr>"
                     for r in L1_RULE_LIST.get("rules", []))
-    sched_rows = "".join(f"<tr><td class='l'>{esc(T(x['名称'], x['EN']))}</td><td>{TT(x['时间'], False)}</td><td class='l wrap'>{esc(T(x['覆盖'], x['覆盖EN']))}</td><td class='l'><code>.github/workflows/{esc(x['文件'])}</code></td></tr>" for x in SCHED)
+    sched_rows = "".join(f"<tr><td class='l'>{esc(T(x['名称'], x['EN']))}</td><td>{TT(x['时间'], False)}<br><small>UTC {esc(x['时间'])}</small></td><td class='l wrap'>{esc(T(x['覆盖'], x['覆盖EN']))}</td><td class='l'><code>.github/workflows/{esc(x['文件'])}</code></td></tr>" for x in SCHED)
     win_rows = ""
     for ind in R.INDICATORS:
         since, why, why_en = R.stats_window(S, ind)
@@ -3612,7 +3630,7 @@ def build_methodology():
 <div class="tw" style="margin-top:10px"><table><thead><tr><th>#</th><th class="l">{T("规则", "Rule")}</th><th class="l">{T("怎么用", "How to use")}</th><th class="l">{T("可靠程度", "Reliability")}</th><th class="l">{T("能否改交易参数", "Trading parameters")}</th></tr></thead><tbody>{rrows}</tbody></table></div>
 <h2 id="legend">{T("标签说明", "What the tags mean")}</h2><p class="tnote">{T("「级别」和「证据等级」是两个维度：级别说这个指标在本层判定里起什么作用，证据等级说它在研究里被检验到什么程度。", "Level and evidence grade are two separate dimensions: level is the gauge's role in the layer verdict, evidence grade is how well the research has tested it.")}</p>{tag_legend()}
 <h2 id="schedule">{T("更新时间", "Update schedule")}</h2>
-<div class="card mcard"><p>{T("时间口径：全站统一用 UTC+0。所有数据按 UTC 完整日对齐，一天在 UTC 0 点收盘；价格一律用收盘价，不用脚本运行那一刻的盘中价。页面上的钟点（数据更新、日志生成、定时任务、事件时间）也一律写 UTC，中英文站相同，不换算北京时间或美东时间。定时任务在收盘后分批跑（数据源出数有先后），运行时刻不同，但读的是同一个收盘日。", "Time basis: the whole site uses UTC+0. All data is aligned to full UTC days, each closing at 00:00 UTC; prices always use that close, never an intraday price at run time. Clock times on the site (data updates, log generation, scheduled jobs, event times) are also shown in UTC, the same on both language sites. Jobs run in batches after the close because sources publish at different times, but they all read the same closing day.")}</p></div>
+<div class="card mcard"><p>{T("时间口径：后端统计一律用 UTC+0，所有数据按 UTC 完整日对齐，一天在 UTC 0 点收盘（新加坡时间 08:00）；价格一律用收盘价，不用脚本运行那一刻的盘中价。页面上显示的钟点按语言换算：中文站写新加坡时间（UTC+8），英文站写美东时间。定时任务在收盘后分批跑（数据源出数有先后），运行时刻不同，但读的是同一个收盘日。", "Time basis: all statistics use UTC+0. Data is aligned to full UTC days, each closing at 00:00 UTC (8:00 PM ET the previous day in summer, 7:00 PM in winter); prices always use that close, never an intraday price at run time. Clock times are displayed in US Eastern time on the English site and Singapore time (UTC+8) on the Chinese site. Jobs run in batches after the close because sources publish at different times, but they all read the same closing day.")}</p></div>
 <div class="tw"><table><thead><tr><th class="l">{T("任务", "Job")}</th><th>{T("时间", "Time")}</th><th class="l">{T("覆盖哪些数据", "Covers")}</th><th class="l">{T("配置", "Config")}</th></tr></thead><tbody>{sched_rows}</tbody></table></div>
 <p class="tnote">{esc(T(SITE_CFG.get("推送重跑", ""), SITE_CFG.get("推送重跑EN", "")))}{T("页面上「解读生成」是当天日志冻结的时间，「数据更新」是页面读数最后一次刷新的时间。", " 'Log generated' is when the day's log was frozen; 'Data updated' is when the page's readings were last refreshed.")}</p>
 <h2 id="window">{T("统计窗口", "Statistics window")}</h2>

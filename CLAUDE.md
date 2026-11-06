@@ -42,8 +42,8 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
 - AI Agent 页 /ai-agent/（`出网站.build_ai_agent`）：读 `public/ai-agent/monitor/core_series.json`（交接包 `tools/agent-id` 导出，原样页面也发布在 /ai-agent/monitor/）。
   日更要 self-hosted runner（标签 agent-id）+ 私有运行目录（种子不进仓库）+ repo secret `AGENT_ID_PROXY` / variable `AGENT_ID_RUNTIME`，模板在 `tools/agent-id/handoff/agent-id-daily.yml.template`，**没装进 .github/workflows**；
   现在由大叔电脑上 Codex 的 monitor-agent-id 定时任务采集，切换前不要启用模板（单时钟）。U = 没取到完整数据，不当 0。
-- 时间口径（2026-10-29 数据，2026-11-06 显示）：全站统一 UTC+0。数据按 UTC 完整日（UTC 0 点收盘）对齐，价格用收盘价（L2 / L3 只取 < 今天的日子）；
-  页面上的所有时刻也写 UTC（中英文相同）：钟点用 `出网站.TT`，收盘 `TCLOSE`，UTC 日截止 `TDAY`，日历用 `time_utc`。别再换算北京时间 / 美东时间。
+- 时间口径（2026-11-06 定）：后端统计一律 UTC+0，数据按 UTC 完整日（UTC 0 点收盘）对齐，价格用收盘价（L2 / L3 只取 < 今天的日子）；
+  前端显示按语言区域换算：中文站新加坡时间（UTC+8，`SG_TZ`），英文站美东时间。钟点用 `出网站.TT`，收盘 `TCLOSE`，UTC 日截止 `TDAY`，日历列表 `TLOC`。别写裸「UTC hh:mm」或「北京时间」。
 - 交易所 + ETF 持币：`拉宏观.fetch_etf_hold`（TFTC data.json，`totalNetAssetsUsd / btcCloseUsd`）→ `etf_btc`；注册表 `etf_hold` / `exetf_sum` 在 L3「交易所与现货 ETF 持币」组，只作描述。
 - **所有 workflow 共用 concurrency 组 `daily-pipeline`**：排队中的会被新排进来的取消，手动触发一次只排一个。本地出网站会删掉 `site/data/launchpad/*`，提交前 `git checkout -- site/data/launchpad`。别用 git stash（出过丢改动的事）。
 - **指标注册表**（M12）= `宏观规则.REGISTRY`：每条带 层 / 组 / 序 / 状态（live · pending · retired；自录的满 90 天前自动「记录中」）/ cuts（tone 即 bias：up 顺风 · neutral · dn 逆风 · warn 留意）/

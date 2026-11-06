@@ -1923,10 +1923,10 @@ RULE_CHANGES.append(
 
 RULE_CHANGES.append(
     {"日期": "2026-11-06", "锚": "2026-11-06-utc", "范围": "全站时间显示", "EN范围": "Site-wide time display",
-     "原因": "2026-10-29 只把数据统一到了 UTC 完整日，页面上的钟点仍按语言换算（中文站北京时间、英文站美东时间），同一页上 UTC 日期和北京钟点混在一起，读者分不清数据属于哪一天。",
-     "原因EN": "On 2026-10-29 only the data was aligned to full UTC days; clock times on pages were still converted by language (Beijing time on the Chinese site, US Eastern on the English site), so UTC dates and local clock times appeared side by side.",
-     "内容": "页面上的所有时刻一律写 UTC+0，中英文站相同：数据更新、日志生成与冻结时间、定时任务时刻、收盘时刻（「11-05 收盘（UTC 0 点）」）、事件日历的公布时间。数据口径不变。已写入的历史日志正文保持原样。",
-     "EN": "Every clock time on the site is now shown in UTC+0, the same on both language sites: data updates, log generation and freeze times, job schedules, closes ('Nov 5 close (00:00 UTC)') and event-calendar release times. The data basis is unchanged; text in logs already written stays as it was."})
+     "原因": "后端统计已在 2026-10-29 统一到 UTC+0（UTC 完整日，UTC 0 点收盘）；前端显示按读者所在区域换算更好读。中文站读者以新加坡 / 东八区为主，所以中文站的「北京时间」改为「新加坡时间」（同为 UTC+8，钟点不变）。",
+     "原因EN": "Back-end statistics were aligned to UTC+0 on 2026-10-29 (full UTC days, closing at 00:00 UTC); display times are converted to the reader's region. The Chinese site now labels its UTC+8 times as Singapore time instead of Beijing time (same clock).",
+     "内容": "后端统计一律 UTC+0，口径不变；前端显示：中文站新加坡时间（UTC+8），英文站美东时间（随夏令时）。数据更新、日志生成、定时任务、收盘时刻、事件日历都按这个规则显示。已写入的历史日志正文保持原样。",
+     "EN": "Back-end statistics stay in UTC+0; display: Singapore time (UTC+8) on the Chinese site, US Eastern time (with daylight saving) on the English site — for data updates, log generation, job schedules, closes and the event calendar. Text in logs already written stays as it was."})
 
 RULE_CHANGES.append(
     {"日期": "2026-11-02", "锚": "2026-11-02-lpstage", "范围": "发射台活动温度 · 阶段", "EN范围": "Launchpad activity temperature · stages",
