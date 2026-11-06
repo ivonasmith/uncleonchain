@@ -2942,7 +2942,10 @@ def coverage_html():
     for k, v in sorted(c30.items(), key=lambda kv: -kv[1]):
         sh = v / tot
         sk = SCAN_KEY.get(k, k)
-        if k == "hyperliquid" and sk in scanned:
+        db = load(os.path.join(DATA, "onchain", f"{sk}.json")) or {}
+        if sk in scanned and not db.get("逐日") and str(db.get("状态", "")).startswith("失败"):
+            stt, cls = T("没扫通 · 免费节点太慢 / 限流；只能付费，份额没到 0.5% 不开", "not scanned · free nodes too slow / rate-limited; paid only, below the 0.5% bar"), "t-cool"
+        elif k == "hyperliquid" and sk in scanned:
             stt, cls = T("部分 · 只扫 HyperEVM（HyperCore 上的发射台不在内）", "partial · HyperEVM only (HyperCore launchpads not covered)"), "t-cool"
         elif sk in scanned:
             stt, cls = T("已扫描", "scanned"), "t-up"
