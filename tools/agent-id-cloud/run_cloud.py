@@ -17,25 +17,90 @@ def load(p):
     return json.loads(Path(p).read_text())
 
 
+POOL_IDENTITY = 'bsc-56-public-first-pool-v1'
+# 公共节点的探测窗口：2026-10-20 第一个 2000 块（当天注册 3 万多条，窗口里一定有注册日志）。
+# 节点要是对这段返回空，说明它没存这么老的历史却不报错，直接剔除，防止少算。
+PROBE_FROM = 128646423
+
+
+def pool_members(env):
+    public = [u.strip() for u in env.get('AGENT_ID_RPC_PUBLIC', '').split('|') if u.strip()]
+    fallback = env.get('AGENT_ID_RPC_FALLBACK', '').strip()
+    return public, fallback
+
+
 def configure(runtime, env):
     proxy, rpc = env.get('AGENT_ID_PROXY', ''), env.get('AGENT_ID_RPC_URL', '')
+    public, fallback = pool_members(env)
+    if not rpc and (public or fallback):
+        # 公共免费节点优先，带 key 的节点只兜底。所有成员都是同一条 BSC 链（chainId 56），来源身份按「池」算。
+        members = public + ([fallback] if fallback else [])
+        if any(urlsplit(u).scheme != 'https' or not urlsplit(u).hostname for u in members):
+            raise ValueError('RPC pool members must be HTTPS endpoints')
+        rpc = 'pool:' + '|'.join(members)
+        identity_source = POOL_IDENTITY
+    else:
+        identity_source = rpc
     p, r = urlsplit(proxy), urlsplit(rpc)
-    if p.scheme not in ('http', 'https') or not p.hostname:
-        raise ValueError('AGENT_ID_PROXY must be a runner-reachable HTTP proxy')
-    if p.hostname.lower() in ('localhost', '127.0.0.1', '::1'):
-        raise ValueError('GitHub-hosted runner cannot use your computer localhost proxy')
-    if r.scheme != 'https' or not r.hostname:
+    if proxy != 'direct':  # 'direct' = explicit user-approved direct connection, never an implicit fallback
+        if p.scheme not in ('http', 'https') or not p.hostname:
+            raise ValueError('AGENT_ID_PROXY must be a runner-reachable HTTP proxy or the explicit value direct')
+        if p.hostname.lower() in ('localhost', '127.0.0.1', '::1'):
+            raise ValueError('GitHub-hosted runner cannot use your computer localhost proxy')
+    if not rpc.startswith('pool:') and (r.scheme != 'https' or not r.hostname):
         raise ValueError('AGENT_ID_RPC_URL must be an archival BSC HTTPS endpoint')
-    identity = hashlib.sha256(rpc.encode()).hexdigest()
+    identity = hashlib.sha256(identity_source.encode()).hexdigest()
     old = runtime / 'source_identity.json'
     if old.exists() and load(old)['rpc_sha256'] != identity:
         raise ValueError('RPC source changed; refuse to splice histories. Start a separate full rebuild.')
     old.write_text(json.dumps({'rpc_sha256': identity}))
     config = load(runtime / 'config.json')
     config.update(proxy=proxy, rpc=rpc, mint_rpc=rpc, block_rpc=rpc,
-                  proxy_status='GitHub显式配置代理，无直连后备')
+                  proxy_status='GitHub云端直连（用户明确同意）' if proxy == 'direct' else 'GitHub显式配置代理，无直连后备')
+    if env.get('AGENT_ID_LOG_CHUNK'):  # provider getLogs block-range limit (Alchemy: 2000)
+        config['rpc_log_chunk'] = int(env['AGENT_ID_LOG_CHUNK'])
     (runtime / 'config.json').write_text(json.dumps(config, ensure_ascii=False, indent=2))
     return config
+
+
+def probe_pool(client, config, env):
+    """Keep public members that really serve old registry logs; the keyed fallback always stays last."""
+    from transport import Unavailable
+    public, fallback = pool_members(env)
+    scope = 'probe-' + dt.datetime.now(dt.timezone.utc).date().isoformat()
+    arg = dict(address=config['registry']['address'], fromBlock=hex(PROBE_FROM), toBlock=hex(PROBE_FROM + 1999))
+    live = []
+    for url in public:
+        try:
+            cid, _ = client.rpc(url, 'eth_chainId', [], scope)
+            logs, _ = client.rpc(url, 'eth_getLogs', [arg], scope)
+            ok = int(cid, 16) == 56 and isinstance(logs, list) and len(logs) > 0
+        except (Unavailable, ValueError):
+            ok = False
+        print('public RPC', urlsplit(url).hostname, 'OK' if ok else 'skipped')
+        if ok:
+            live.append(url)
+    members = live + ([fallback] if fallback else [])
+    if not members:
+        raise ValueError('no usable BSC RPC: public nodes failed the history probe and no fallback key is configured')
+    print('fallback key node', 'configured' if fallback else 'not configured')
+    return 'pool:' + '|'.join(members)
+
+
+def served_by(runtime, since):
+    """Count this run's successful RPC requests per host (hostnames only, never keys)."""
+    counts = {}
+    for f in (runtime / 'raw' / 'http').glob('*.json'):
+        if f.stat().st_mtime < since:
+            continue
+        try:
+            rec = load(f)
+        except Exception:
+            continue
+        if rec.get('ok') and isinstance(rec.get('json'), dict) and rec['json'].get('method'):
+            host = urlsplit(rec.get('url', '')).hostname or '?'
+            counts[host] = counts.get(host, 0) + 1
+    return counts
 
 
 def needs_backfill(state, start, through):
@@ -65,9 +130,24 @@ def publish_gate(runtime, output, yesterday):
     return row
 
 
+def private_values():
+    return [v for v in (os.environ.get(k, '') for k in ('AGENT_ID_RPC_URL', 'AGENT_ID_PROXY', 'AGENT_ID_RPC_FALLBACK', 'ALCHEMY_KEY', 'AGENT_ID_STATE_KEY')) if v and v != 'direct']
+
+
+def redact(text):
+    for v in private_values():
+        text = text.replace(v, '***')
+    return text
+
+
 def command(runtime, args, log):
     with (runtime / log).open('w') as f:
-        subprocess.run(args, cwd=runtime, stdout=f, stderr=subprocess.STDOUT, check=True)
+        done = subprocess.run(args, cwd=runtime, stdout=f, stderr=subprocess.STDOUT)
+    if done.returncode:
+        # 失败时把日志尾巴脱敏后打出来（密钥、节点 key 一律替换成 ***），不然 checkpoint 加密后没人能看原因
+        tail = (runtime / log).read_text(errors='replace').splitlines()[-40:]
+        print('---- ' + log + ' (last 40 lines, redacted) ----\n' + redact('\n'.join(tail)), file=sys.stderr)
+        raise subprocess.CalledProcessError(done.returncode, args[1:3])
 
 
 def run(runtime, output):
@@ -87,6 +167,11 @@ def run(runtime, output):
     sys.path.insert(0, str(runtime))
     from transport import Client
     client = Client(runtime, config['proxy'])
+    if config['rpc'].startswith('pool:'):
+        config['rpc'] = probe_pool(client, config, os.environ)
+        config.update(mint_rpc=config['rpc'], block_rpc=config['rpc'])
+        (runtime / 'config.json').write_text(json.dumps(config, ensure_ascii=False, indent=2))
+    started = dt.datetime.now(dt.timezone.utc).timestamp()
     chain_id, _ = client.rpc(config['rpc'], 'eth_chainId', [])
     if int(chain_id, 16) != 56:
         raise ValueError('configured RPC is not BSC chain 56')
@@ -111,14 +196,15 @@ def run(runtime, output):
     command(runtime, [sys.executable, '-m', 'unittest', 'discover', '-s', 'web_export', '-p', 'test_export.py', '-v'], 'customer_export_test_log.txt')
     command(runtime, ['node', 'web_export/verify_frontend.cjs', str(stage / 'index.html')], 'customer_frontend_check_log.txt')
     row = publish_gate(runtime, stage, yesterday)
-    secrets = [os.environ.get(k, '') for k in ('AGENT_ID_RPC_URL', 'AGENT_ID_PROXY')]
+    secrets = private_values()
     for path in stage.rglob('*'):
         if path.is_file() and any(s and s.encode() in path.read_bytes() for s in secrets):
             raise ValueError('private endpoint appeared in public files')
     if output.exists():
         shutil.rmtree(output)
     shutil.copytree(stage, output)
-    print(json.dumps({'date': yesterday, 'scope': row['scope'], 'gate': 'PASS', 'mode': 'backfill' if missing else 'daily'}))
+    print(json.dumps({'date': yesterday, 'scope': row['scope'], 'gate': 'PASS', 'mode': 'backfill' if missing else 'daily',
+                      'rpc_served': served_by(runtime, started)}))
 
 
 if __name__ == '__main__':
@@ -128,5 +214,5 @@ if __name__ == '__main__':
         run(a.runtime, a.output)
     except Exception as e:
         # Detailed logs stay only in the encrypted checkpoint, never in public build logs.
-        print('Agent ID update failed (' + type(e).__name__ + '); no new public data accepted.', file=sys.stderr)
+        print('Agent ID update failed (' + type(e).__name__ + ': ' + redact(str(e))[:500] + '); no new public data accepted.', file=sys.stderr)
         sys.exit(1)

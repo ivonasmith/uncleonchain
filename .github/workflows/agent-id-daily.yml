@@ -19,8 +19,14 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 330
     env:
-      AGENT_ID_PROXY: ${{ secrets.AGENT_ID_PROXY }}
+      # 2026-11-06 大叔同意：没有云端可用代理就直连（GitHub runner 连不上本机 localhost 代理）
+      AGENT_ID_PROXY: ${{ secrets.AGENT_ID_PROXY || 'direct' }}
+      # 节点：公共免费节点优先（按顺序，开跑前先探测能不能查 2026-10-20 的历史日志，不行的剔除），
+      # 网站日更已在用的 Alchemy key 只兜底。单独配了 AGENT_ID_RPC_URL secret 就只用那一个。
       AGENT_ID_RPC_URL: ${{ secrets.AGENT_ID_RPC_URL }}
+      AGENT_ID_RPC_PUBLIC: https://bsc-rpc.publicnode.com|https://bsc.drpc.org|https://1rpc.io/bnb|https://binance.llamarpc.com
+      AGENT_ID_RPC_FALLBACK: ${{ secrets.ALCHEMY_KEY && format('https://bnb-mainnet.g.alchemy.com/v2/{0}', secrets.ALCHEMY_KEY) || '' }}
+      AGENT_ID_LOG_CHUNK: '2000'   # 每次 getLogs 最多 2000 块（Alchemy 的上限，网站日更同样用 2000）
       AGENT_ID_STATE_KEY: ${{ secrets.AGENT_ID_STATE_KEY }}
       AGENT_ID_DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
       AGENT_ID_DEPLOY_WORKFLOW: ${{ vars.AGENT_ID_DEPLOY_WORKFLOW || 'daily.yml' }}   # 已核：daily.yml 有 workflow_dispatch，构建 main 最新提交
@@ -43,7 +49,6 @@ jobs:
         shell: bash
         run: |
           missing=''
-          [ -n "$AGENT_ID_RPC_URL" ] || missing="$missing AGENT_ID_RPC_URL"
           [ -n "$AGENT_ID_PROXY" ] || missing="$missing AGENT_ID_PROXY"
           [ -n "$AGENT_ID_STATE_KEY" ] || missing="$missing AGENT_ID_STATE_KEY"
           if [ -n "$missing" ]; then

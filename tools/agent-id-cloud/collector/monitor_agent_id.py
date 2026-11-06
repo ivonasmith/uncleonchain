@@ -32,7 +32,7 @@ def load(path,default):return json.loads(Path(path).read_text()) if Path(path).e
 def dates(a,b):
     a=dt.date.fromisoformat(a);b=dt.date.fromisoformat(b)
     while a<=b:yield a.isoformat();a+=dt.timedelta(days=1)
-def url_requested(client,url):return any(r.get('url')==url for r in client.records)
+def url_requested(client,url):return any(r.get('url')==url or r.get('pool')==url for r in client.records)
 
 class Monitor:
     def __init__(self,args):
@@ -179,7 +179,7 @@ class Monitor:
                 request=record.get('json') or {}
                 targets=request.get('params',[{}])[0].get('address',[]) if request.get('method')=='eth_getLogs' else []
                 targets=targets if isinstance(targets,list) else [targets]
-                if record['url']==self.chain.url and request.get('method')=='eth_getLogs' and p['address'].lower() in [a.lower() for a in targets]:
+                if self.chain.url in (record['url'],record.get('pool')) and request.get('method')=='eth_getLogs' and p['address'].lower() in [a.lower() for a in targets]:
                     arg=request['params'][0];log_sources.append((int(arg['fromBlock'],16),int(arg['toBlock'],16),record['raw_file']))
             for row in dedup_logs(rows):
                 e=bytopic[row['topics'][0].lower()];values=decode_event(row,e);rule=required[e['name']];kind=rule['role'];fields=rule['fields'];v={name:values[src] for name,src in fields.items()}
@@ -243,7 +243,7 @@ class Monitor:
                 request=record.get('json') or {}
                 targets=request.get('params',[{}])[0].get('address',[]) if request.get('method')=='eth_getLogs' else []
                 targets=targets if isinstance(targets,list) else [targets]
-                if record['url']==self.chain.url and request.get('method')=='eth_getLogs' and p['address'].lower() in [a.lower() for a in targets]:
+                if self.chain.url in (record['url'],record.get('pool')) and request.get('method')=='eth_getLogs' and p['address'].lower() in [a.lower() for a in targets]:
                     arg=request['params'][0];log_sources.append((int(arg['fromBlock'],16),int(arg['toBlock'],16),record['raw_file']))
             # HashDroids' exact-match source has an immutable registry and its
             # sole mine path checks msg.sender's ID before emitting Mined.

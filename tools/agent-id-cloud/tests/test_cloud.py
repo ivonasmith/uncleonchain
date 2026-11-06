@@ -29,6 +29,36 @@ class CloudTests(unittest.TestCase):
             root = Path(tmp); env = self.config_root(root); env.pop('AGENT_ID_PROXY')
             with self.assertRaises(ValueError): configure(root, env)
 
+    def test_explicit_direct_connection(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); env = self.config_root(root); env['AGENT_ID_PROXY'] = 'direct'; env['AGENT_ID_LOG_CHUNK'] = '2000'
+            config = configure(root, env)
+            self.assertEqual(config['proxy'], 'direct'); self.assertEqual(config['rpc_log_chunk'], 2000)
+            sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'collector'))
+            from transport import Client
+            self.assertIsNotNone(Client(root, 'direct').opener)
+
+    def test_public_first_pool_with_key_fallback(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); env = self.config_root(root); env.pop('AGENT_ID_RPC_URL'); env['AGENT_ID_PROXY'] = 'direct'
+            env['AGENT_ID_RPC_PUBLIC'] = 'https://public-a.example|https://public-b.example'
+            env['AGENT_ID_RPC_FALLBACK'] = 'https://keyed.example/v2/secret'
+            config = configure(root, env)
+            self.assertEqual(config['rpc'], 'pool:https://public-a.example|https://public-b.example|https://keyed.example/v2/secret')
+            env['AGENT_ID_RPC_PUBLIC'] = 'https://public-b.example'
+            configure(root, env)  # pool membership may change; same chain, same source identity
+            sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'collector'))
+            from transport import Client, Unavailable
+            client = Client(root, 'direct'); calls = []
+            def fake(url, body=None, scope='immutable'):
+                calls.append(url)
+                if 'public-a' in url: raise Unavailable('pruned')
+                return {'body': json.dumps({'jsonrpc': '2.0', 'id': 1, 'result': '0x38'}), 'url': url}
+            client.request = fake
+            result, rec = client.rpc(config['rpc'], 'eth_chainId', [])
+            self.assertEqual(result, '0x38'); self.assertEqual(calls, ['https://public-a.example', 'https://public-b.example'])
+            self.assertEqual(rec['pool'], config['rpc'])
+
     def test_rpc_change_cannot_splice_series(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp); env = self.config_root(root); configure(root, env)

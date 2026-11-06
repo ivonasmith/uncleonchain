@@ -20,7 +20,9 @@ class Client:
     def __init__(self, root, proxy=None, offline=False, timeout=15):
         self.root=Path(root);self.raw=self.root/'raw'/'http';self.raw.mkdir(parents=True,exist_ok=True)
         self.proxy=proxy;self.offline=offline;self.timeout=timeout;self.request_count=0;self.cache_hits=0;self.records=[]
-        self.opener=urllib.request.build_opener(urllib.request.ProxyHandler({'https':proxy,'http':proxy})) if proxy else None
+        # proxy='direct'：用户 2026-11-06 明确同意云端直连（GitHub runner 连不上本机代理），显式选择，不是失败后的后备
+        handler=urllib.request.ProxyHandler({}) if proxy=='direct' else urllib.request.ProxyHandler({'https':proxy,'http':proxy})
+        self.opener=urllib.request.build_opener(handler) if proxy else None
         self.provider_lock=threading.RLock();self.provider_last=0
 
     @staticmethod
@@ -107,6 +109,20 @@ class Client:
         except Exception as e:raise Unavailable('响应不是 JSON: '+str(e))
 
     def rpc(self,url,method,params,scope='immutable'):
+        # 'pool:u1|u2|…'：按顺序先试公共免费节点，失败（不通 / 报错 / 范围限制 / 空结果）才换下一个，最后才用带 key 的兜底节点。
+        # 每个节点的请求各自按真实地址存 raw；成功的那条记录挂上 pool 名，供按 chain.url 归集证据。
+        # 连续失败 20 次的节点本进程内跳过（限流 / 不支持），不再每次都先撞一遍。
+        if url.startswith('pool:'):
+            members=url[5:].split('|');last=None
+            if not hasattr(self,'pool_fails'):self.pool_fails={}
+            for i,member in enumerate(members):
+                if i<len(members)-1 and self.pool_fails.get(member,0)>=20:continue
+                try:
+                    result,rec=self.rpc(member,method,params,scope)
+                    self.pool_fails[member]=0;rec['pool']=url;return result,rec
+                except Unavailable as e:
+                    last=e;self.pool_fails[member]=self.pool_fails.get(member,0)+1
+            raise last or Unavailable('RPC pool empty')
         if method not in {'eth_chainId','eth_blockNumber','eth_getBlockByNumber','eth_getBlockByHash','eth_getLogs','eth_getCode','eth_call','eth_getTransactionReceipt','eth_getTransactionByHash'}:
             raise ValueError('read-only RPC allowlist rejected '+method)
         response,rec=self.json(url,{'jsonrpc':'2.0','id':1,'method':method,'params':params},scope)
