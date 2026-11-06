@@ -37,12 +37,19 @@ KEY = os.environ.get("ALCHEMY_KEY", "").strip()
 CHAINS = {
     "robinhood": {"名称": "Robinhood Chain", "公共": "https://rpc.mainnet.chain.robinhood.com", "alchemy": "robinhood-mainnet",
                   "浏览器": "https://explorer.chain.robinhood.com", "跨度": 30000},
-    "bsc": {"名称": "BSC", "公共": None, "alchemy": "bnb-mainnet", "浏览器": "https://bscscan.com", "跨度": 2000},
-    "base": {"名称": "Base", "公共": None, "alchemy": "base-mainnet", "浏览器": "https://basescan.org", "跨度": 2000},
+    # BSC / Base 一天铸币事件上百万条：每小时只扫前 10 分钟（全天 1/6），计数 ×6 估算并标「抽样」——发现新工厂够用，省额度省时间
+    "bsc": {"名称": "BSC", "公共": None, "alchemy": "bnb-mainnet", "浏览器": "https://bscscan.com", "跨度": 2000, "抽样": 6},
+    "base": {"名称": "Base", "公共": None, "alchemy": "base-mainnet", "浏览器": "https://basescan.org", "跨度": 2000, "抽样": 6},
     "arc": {"名称": "Arc", "公共": "https://rpc.mainnet.arc.io", "alchemy": "arc-mainnet", "浏览器": "https://explorer.arc.io", "跨度": 5000},
 }
 OUT_DIR = os.path.join(DATA, "onchain")
 CALLS = Counter()         # 每个节点今天调用了多少次（看 Alchemy 额度用）
+CHAIN_BUDGET = 20 * 60    # 每条链每次最多跑 20 分钟，超时就停，不拖垮日更
+DEADLINE = [0.0]
+
+
+class Timeout(RuntimeError):
+    pass
 
 
 class RpcError(RuntimeError):
@@ -71,6 +78,8 @@ class Node:
         self.url, self.label = url, label
 
     def call(self, method, params):
+        if DEADLINE[0] and time.time() > DEADLINE[0]:
+            raise Timeout("超过本链时间上限")
         CALLS[self.label] += 1
         j = _post(self.url, {"jsonrpc": "2.0", "id": 1, "method": method, "params": params})
         if "error" in j:
@@ -128,11 +137,19 @@ def scan_day(n, ch, d):
     head = int(n.call("eth_blockNumber", []), 16)
     b0 = first_block_at(n, t0, head)
     b1 = first_block_at(n, t0 + 86400, head) - 1
-    logs, x = [], b0
-    while x <= b1:
-        y = min(b1, x + ch["跨度"] - 1)
-        logs += _logs(n, x, y)
-        x = y + 1
+    k = ch.get("抽样") or 1
+    logs = []
+    if k > 1:                                    # 每小时只扫开头 1/k 的块
+        per_h = (b1 - b0 + 1) / 24
+        spans = [(int(b0 + h * per_h), int(b0 + h * per_h + per_h / k) - 1) for h in range(24)]
+    else:
+        spans = [(b0, b1)]
+    for a0, a1 in spans:
+        x = a0
+        while x <= a1:
+            y = min(a1, x + ch["跨度"] - 1)
+            logs += _logs(n, x, y)
+            x = y + 1
     # 每个币取它这一天的第一笔铸币交易；那笔交易里铸出的合计是整数供应量才算「新发的币」；记下铸得最多的接收方
     first_tx, amt, to_amt = {}, defaultdict(int), defaultdict(Counter)
     for l in logs:
@@ -183,6 +200,12 @@ def scan_day(n, ch, d):
                 f["样本"].append(t)
     # 只发了 1 个币的合约（多是个人用的路由 / 一次性合约）只记个数，不落明细，控制文件大小；候选门槛是 7 天 ≥ 30 个币，不影响发现
     keep = {a: v for a, v in fac.items() if v["币"] >= 2}
+    if k > 1:                                    # 抽样：数量按比例放大成全天估算；只发了 1 个币的不放大
+        for v in keep.values():
+            v["币"] *= k
+        return {"块": [b0, b1], "抽样": k, "铸币事件": len(logs) * k, "新币": len(new) * k, "直接部署": direct * k, "未识别": unknown * k,
+                "查交易": len(hs), "单币合约": len(fac) - len(keep),
+                "工厂": {a: [v["币"], len(v["人"]), v["样本"]] for a, v in sorted(keep.items(), key=lambda kv: -kv[1]["币"])}}
     return {"块": [b0, b1], "铸币事件": len(logs), "新币": len(new), "直接部署": direct, "未识别": unknown,
             "查交易": len(hs), "单币合约": len(fac) - len(keep),
             "工厂": {a: [v["币"], len(v["人"]), v["样本"]] for a, v in sorted(keep.items(), key=lambda kv: -kv[1]["币"])}}
@@ -250,6 +273,7 @@ def main():
         if only and key not in only:
             continue
         CALLS.clear()
+        DEADLINE[0] = time.time() + CHAIN_BUDGET
         try:
             run_chain(key, ch)
         except Exception as e:           # 一条链挂了不影响别的链，也不拦日更

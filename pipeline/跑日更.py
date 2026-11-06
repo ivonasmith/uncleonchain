@@ -19,14 +19,19 @@ from common import BASE, preflight
 PY = sys.executable
 
 
-def step(name, args=()):
+def step(name, args=(), timeout=None):
     if not os.path.exists(os.path.join(BASE, name)):
         print(f"── {name} 不在本目录，跳过\n")
         return True
     t = time.time()
-    r = subprocess.run([PY, os.path.join(BASE, name), *args], cwd=BASE)
-    print(f"── {name} {'完成' if r.returncode == 0 else '失败'}（{time.time() - t:.0f} 秒）\n")
-    return r.returncode == 0
+    try:
+        r = subprocess.run([PY, os.path.join(BASE, name), *args], cwd=BASE, timeout=timeout)
+        ok = r.returncode == 0
+    except subprocess.TimeoutExpired:
+        ok = False
+        print(f"── {name} 超过 {timeout // 60} 分钟，强制结束（只影响这一块）")
+    print(f"── {name} {'完成' if ok else '失败'}（{time.time() - t:.0f} 秒）\n")
+    return ok
 
 
 def main():
@@ -46,8 +51,8 @@ def main():
     step("读销毁.py", extra)
     step("拉估值.py")
     step("拉Arc.py")
-    step("拉链上新台.py")   # 链上自动发现新发射台（Robinhood / BSC / Base / Arc）；挂了只缺这一块
-    step("拉新台线索.py")   # Solana 前端拆分 + GeckoTerminal 目录 + DEX Screener 自称 + 候选补身份
+    step("拉链上新台.py", timeout=45 * 60)   # 链上自动发现新发射台（Robinhood / BSC / Base / Arc）；挂了只缺这一块
+    step("拉新台线索.py", timeout=30 * 60)   # Solana 前端拆分 + GeckoTerminal 目录 + DEX Screener 自称 + 候选补身份
     if not step("出看板.py"):
         sys.exit(4)
     if "--site" in sys.argv:
