@@ -172,7 +172,7 @@ def _logs(n, a, b):
         if isinstance(e, Timeout):
             raise
         m = str(e).lower()
-        if b > a and any(k in m for k in ("exceed", "limit", "too many", "spans", "range", "10000", "response size", "http 400", "http 413")):
+        if b > a and any(k in m for k in ("exceed", "limit", "too many", "spans", "range", "10000", "response size", "too big", "http 400", "http 413")):
             mid = (a + b) // 2
             return _logs(n, a, mid) + _logs(n, mid + 1, b)
         raise
