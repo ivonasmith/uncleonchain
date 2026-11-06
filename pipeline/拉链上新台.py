@@ -49,13 +49,13 @@ CHAINS = {
     "arbitrum": {"名称": "Arbitrum", "公共": "https://arb1.arbitrum.io/rpc", "alchemy": "arb-mainnet", "浏览器": "https://arbiscan.io", "跨度": 1000},
     "optimism": {"名称": "Optimism", "公共": "https://mainnet.optimism.io", "alchemy": None, "浏览器": "https://optimistic.etherscan.io", "跨度": 200},
     "polygon": {"名称": "Polygon", "公共": "https://polygon.drpc.org", "alchemy": "polygon-mainnet", "浏览器": "https://polygonscan.com", "跨度": 50},
-    "xlayer": {"名称": "X Layer", "公共": "https://rpc.xlayer.tech", "alchemy": None, "浏览器": "https://www.oklink.com/xlayer", "跨度": 50},
+    "xlayer": {"名称": "X Layer", "公共": "https://rpc.xlayer.tech", "alchemy": None, "浏览器": "https://www.oklink.com/xlayer", "跨度": 50, "抽样": 3},
     "monad": {"名称": "Monad", "公共": "https://rpc.monad.xyz", "alchemy": None, "浏览器": "https://monadscan.com", "跨度": 50, "抽样": 6},
-    "hyperevm": {"名称": "HyperEVM", "公共": "https://rpc.hyperliquid.xyz/evm", "alchemy": None, "浏览器": "https://hyperevmscan.io", "跨度": 200},
+    "hyperevm": {"名称": "HyperEVM", "公共": "https://rpc.hyperliquid.xyz/evm", "alchemy": None, "浏览器": "https://hyperevmscan.io", "跨度": 200, "间隔": 0.3},
     "ink": {"名称": "Ink", "公共": "https://rpc-gel.inkonchain.com", "alchemy": None, "浏览器": "https://explorer.inkonchain.com", "跨度": 1000},
     "abstract": {"名称": "Abstract", "公共": "https://api.mainnet.abs.xyz", "alchemy": None, "浏览器": "https://abscan.org", "跨度": 1000},
     "berachain": {"名称": "Berachain", "公共": "https://rpc.berachain.com", "alchemy": None, "浏览器": "https://berascan.com", "跨度": 1000},
-    "avalanche": {"名称": "Avalanche", "公共": "https://api.avax.network/ext/bc/C/rpc", "alchemy": None, "浏览器": "https://snowtrace.io", "跨度": 50},
+    "avalanche": {"名称": "Avalanche", "公共": "https://api.avax.network/ext/bc/C/rpc", "alchemy": None, "浏览器": "https://snowtrace.io", "跨度": 50, "间隔": 0.15, "抽样": 2},
     "sonic": {"名称": "Sonic", "公共": "https://rpc.soniclabs.com", "alchemy": None, "浏览器": "https://sonicscan.org", "跨度": 1000},
     "mantle": {"名称": "Mantle", "公共": "https://rpc.mantle.xyz", "alchemy": None, "浏览器": "https://mantlescan.xyz", "跨度": 1000},
     "plasma": {"名称": "Plasma", "公共": "https://rpc.plasma.to", "alchemy": None, "浏览器": "https://plasmascan.to", "跨度": 1000},
@@ -86,23 +86,36 @@ def _post(url, payload, timeout=120, tries=4):
                 return json.load(r)
         except urllib.error.HTTPError as e:
             last = f"HTTP {e.code}"
-            if e.code in (401, 403):
+            if e.code in (400, 401, 403, 413):       # 400 / 413 多半是范围太大，交给上层二分；401 / 403 是没权限
                 break
+            if e.code == 429:                        # 免费节点限流：多等一会儿
+                time.sleep(10 * (i + 1))
+                continue
         except Exception as e:
             last = str(e)[:120]
+            if "rate limit" in last.lower():
+                time.sleep(10 * (i + 1))
+                continue
         time.sleep(2 * (i + 1))
     raise RuntimeError(last)
 
 
 class Node:
-    def __init__(self, url, label, chain, deadline):
-        self.url, self.label, self.chain, self.deadline = url, label, chain, deadline
+    def __init__(self, url, label, chain, deadline, gap=0.0):
+        self.url, self.label, self.chain, self.deadline, self.gap = url, label, chain, deadline, gap
 
     def call(self, method, params):
         if time.time() > self.deadline:
             raise Timeout("超过本链时间上限")
+        if self.gap:
+            time.sleep(self.gap)
         CALLS[(self.chain, self.label)] += 1
-        j = _post(self.url, {"jsonrpc": "2.0", "id": 1, "method": method, "params": params})
+        for i in range(4):
+            j = _post(self.url, {"jsonrpc": "2.0", "id": 1, "method": method, "params": params})
+            if "error" in j and "rate limit" in str(j["error"]).lower():
+                time.sleep(10 * (i + 1))
+                continue
+            break
         if "error" in j:
             raise RpcError(str(j["error"].get("message") or j["error"]))
         return j["result"]
@@ -125,30 +138,41 @@ def nodes_for(key, ch):
     dl = time.time() + CHAIN_BUDGET
     ns = []
     if ch["公共"]:
-        ns.append(Node(ch["公共"], "公共", key, dl))
+        ns.append(Node(ch["公共"], "公共", key, dl, ch.get("间隔", 0.0)))
     if KEY and ch["alchemy"]:
         ns.append(Node(f"https://{ch['alchemy']}.g.alchemy.com/v2/{KEY}", "Alchemy", key, dl))
     return ns
 
 
+def _bts(n, b):
+    blk = n.call("eth_getBlockByNumber", [hex(b), False])
+    return int(blk["timestamp"], 16) if blk else None
+
+
 def first_block_at(n, ts, hi):
-    """时间戳 ≥ ts 的第一个块（二分）。"""
-    lo = 1
+    """时间戳 ≥ ts 的第一个块（二分）。下界按出块速度估到「目标时刻再往前 3 天」，避开节点已裁剪的远古块。"""
+    t_hi = _bts(n, hi)
+    t_ref = _bts(n, max(1, hi - 10000))
+    spb = max((t_hi - t_ref) / 10000, 0.01) if (t_hi and t_ref) else 1.0
+    lo = max(1, int(hi - (t_hi - ts + 3 * 86400) / spb)) if t_hi else 1
     while lo < hi:
         mid = (lo + hi) // 2
-        if int(n.call("eth_getBlockByNumber", [hex(mid), False])["timestamp"], 16) >= ts:
-            hi = mid
-        else:
+        t = _bts(n, mid)
+        if t is None or t < ts:                 # 拿不到（裁剪）当作太早
             lo = mid + 1
+        else:
+            hi = mid
     return lo
 
 
 def _logs(n, a, b):
     try:
         return n.call("eth_getLogs", [{"fromBlock": hex(a), "toBlock": hex(b), "topics": [TRANSFER, ZERO]}])
-    except RpcError as e:
+    except (RpcError, RuntimeError) as e:
+        if isinstance(e, Timeout):
+            raise
         m = str(e).lower()
-        if b > a and any(k in m for k in ("exceed", "limit", "too many", "spans", "range", "10000", "response size")):
+        if b > a and any(k in m for k in ("exceed", "limit", "too many", "spans", "range", "10000", "response size", "http 400", "http 413")):
             mid = (a + b) // 2
             return _logs(n, a, mid) + _logs(n, mid + 1, b)
         raise
@@ -169,7 +193,7 @@ def scan_day(n, ch, d):
     for a0, a1 in spans:
         x = a0
         while x <= a1:
-            y = min(a1, x + ch["跨度"] - 1)
+            y = min(a1, x + (ch["跨度"] if n.label == "公共" else min(ch["跨度"], 2000)) - 1)
             logs += _logs(n, x, y)
             x = y + 1
     # 每个币取它这一天的第一笔铸币交易；那笔交易里铸出的合计是整数供应量才算「新发的币」；记下铸得最多的接收方
