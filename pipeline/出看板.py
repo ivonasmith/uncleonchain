@@ -56,7 +56,8 @@ def fee(s, d):
     m = P[s]["fees"]
     if d in m:
         return m[d]
-    return None if d > LASTD[s] else 0.0
+    last = LASTD.get(s)              # 某家当天被 DefiLlama 漏掉（不在 ORDER 里）→ 当延迟，不崩
+    return None if last is None or d > last else 0.0
 
 
 def rv(s, d):
@@ -65,7 +66,8 @@ def rv(s, d):
     m = P[s]["revenue"]
     if d in m:
         return m[d]
-    return None if d > LASTR[s] else 0.0
+    last = LASTR.get(s)
+    return None if last is None or d > last else 0.0
 
 
 def pons(d):

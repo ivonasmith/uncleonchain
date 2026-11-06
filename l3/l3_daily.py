@@ -186,15 +186,73 @@ def load_or_fetch():
 
 
 # ---------------------------------------------------------------- URPD（筹码分布）
+URPD_ERR = []
+
+
 def urpd_url(date=None, agg="log500"):
     return f"{BV}/api/urpd/all{'/' + date if date else ''}?agg={agg}"
 
 
+PF_KEYS = ("price_floor", "price", "price_low", "floor", "lower", "low", "p")
+SU_KEYS = ("supply", "amount", "btc", "value", "size", "s")
+
+
+def _pick(d, keys):
+    for k in keys:
+        if k in d and d[k] is not None:
+            return d[k]
+    return None
+
+
+def urpd_shape(j, depth=0):
+    """把返回结构缩写成一行，接口改格式时写进日志，方便对着改。"""
+    if depth > 2:
+        return type(j).__name__
+    if isinstance(j, dict):
+        return "{" + ", ".join(f"{k}: {urpd_shape(v, depth + 1)}" for k, v in list(j.items())[:8]) + (", …" if len(j) > 8 else "") + "}"
+    if isinstance(j, list):
+        return f"[{len(j)} × {urpd_shape(j[0], depth + 1) if j else '—'}]"
+    return type(j).__name__ + (f"={j[:20]!r}" if isinstance(j, str) else "")
+
+
 def urpd_buckets(j):
-    """→ (日期, 收盘价, [(价格下限, 持币量)])；剔除价格为 0 的远古币。"""
-    bs = j.get("buckets") or []
-    rows = [(float(b["price_floor"]), float(b["supply"])) for b in bs if b.get("price_floor") and float(b["price_floor"]) > 0.01 and b.get("supply")]
-    return j.get("date"), float(j.get("close") or 0), rows
+    """→ (日期, 收盘价, [(价格下限, 持币量)])；剔除价格为 0 的远古币。
+    bitview 2026-10-31 起改过返回格式（旧代码按「字典列表」读，崩在 str.get）。这里兼容：
+    字典列表 / 列式 {price_floor: [...], supply: [...]} / {价格: 持币量} / [[价格, 持币量], …]，外面可再包一层 data。
+    一种都对不上就抛 ValueError（带结构摘要），由调用方降级处理，不再拖垮整层。"""
+    if isinstance(j, dict) and "buckets" not in j and isinstance(j.get("data"), (dict, list)):
+        j = j["data"] if isinstance(j["data"], dict) else {"buckets": j["data"], **{k: v for k, v in j.items() if k != "data"}}
+    if isinstance(j, list):
+        j = {"buckets": j}
+    bs = j.get("buckets")
+    if bs is None:
+        bs = _pick(j, ("urpd", "bins", "distribution", "rows"))
+    raw = []
+    if isinstance(bs, list):
+        for b in bs:
+            if isinstance(b, dict):
+                raw.append((_pick(b, PF_KEYS), _pick(b, SU_KEYS)))
+            elif isinstance(b, (list, tuple)) and len(b) >= 2:
+                raw.append((b[0], b[-1] if len(b) == 2 else b[1]))
+    elif isinstance(bs, dict):
+        pf, su = _pick(bs, PF_KEYS), _pick(bs, SU_KEYS)
+        if isinstance(pf, list) and isinstance(su, list):          # 列式
+            raw = list(zip(pf, su))
+        else:                                                       # {价格: 持币量}
+            raw = list(bs.items())
+    rows = []
+    for p_, s_ in raw:
+        try:
+            p_, s_ = float(p_), float(s_)
+        except (TypeError, ValueError):
+            continue
+        if p_ > 0.01 and s_ > 0:
+            rows.append((p_, s_))
+    if not rows:
+        raise ValueError(f"URPD 格式不认识：{urpd_shape(j)}")
+    d = j.get("date") or j.get("day")
+    close = j.get("close") or j.get("price") or j.get("close_usd") or 0
+    return (str(d)[:10] if d else None), float(close or 0), rows
 
 
 def concentration(close, rows):
@@ -222,10 +280,14 @@ def update_conc(latest_j):
     p = OUT / "l3_conc.json"
     conc = json.load(open(p, encoding="utf-8")) if p.exists() else {}
     if latest_j:
-        d, close, rows = urpd_buckets(latest_j)
-        c = concentration(close, rows)
-        if d and c is not None:
-            conc[d] = round(c, 3)
+        try:
+            d, close, rows = urpd_buckets(latest_j)
+            c = concentration(close, rows)
+            if d and c is not None:
+                conc[d] = round(c, 3)
+        except ValueError as e:
+            URPD_ERR.append(str(e))
+            print(e, flush=True)
     if not OFFLINE:
         try:
             dates = get(f"{BV}/api/urpd/all/dates", timeout=60).json()
@@ -257,8 +319,9 @@ def chip_map(latest_j, price):
     """B1：最新一张 URPD → 约 0.95% 一档；按 ±1% 平滑后在现价 ±50% 内排名：前 5% = 密集区，后 30% = 稀疏区；输出现价 ±30%。"""
     if not latest_j:
         return None
-    d, close, rows = urpd_buckets(latest_j)
-    if not rows:
+    try:
+        d, close, rows = urpd_buckets(latest_j)
+    except ValueError:
         return None
     acc = {}
     for p_, s in rows:
@@ -439,6 +502,8 @@ def main():
     uj, ust = fetch_urpd_latest()
     status["urpd"] = ust
     conc = update_conc(uj)
+    if URPD_ERR:
+        status["urpd"] = URPD_ERR[0][:300]
     F = build(cm, bv, conc)
     F = F[F.price.notna() & F.sth_rp.notna()]
     t = F.index[-1]
