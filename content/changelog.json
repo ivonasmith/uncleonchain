@@ -13,8 +13,8 @@
       },
       {
         "type": "fix",
-        "zh": "L3 筹码层恢复日更：数据源 bitview 10-31 起改了筹码分布接口的格式，L3 整层停在 10-29；现已兼容新格式，筹码分布读不到时只把集中度标缺失，其余照常更新",
-        "en": "L3 supply layer updates again: bitview changed its supply-distribution format on 10-31 and L3 had stopped at 10-29; the new format is handled, and if the distribution can't be read only concentration is marked missing"
+        "zh": "L2 周期层、L3 筹码层恢复日更：数据源 bitview 10-31 前后升级接口（查询参数改名、分龄与地址序列改名、筹码分布去掉日期列表），L3 停在 10-29、L2 一直在用缓存。已按新接口改好，历史数值逐日核对一致；筹码分布改取前一个已收盘日",
+        "en": "L2 cycle and L3 supply layers update again: bitview upgraded its API around 10-31 (renamed query parameter, renamed age-band and address series, no date list for the supply distribution); L3 had stopped at 10-29 and L2 was running on cache. Both now use the new API, with history checked day by day; the supply distribution now uses the last closed day"
       },
       {
         "type": "fix",

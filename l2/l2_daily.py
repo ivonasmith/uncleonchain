@@ -80,18 +80,24 @@ def cm_from_bitview():
 BV_SERIES = {
     "price_close": "bv_price",
     "sth_realized_price": "sth_rp", "lth_realized_price": "lth_rp", "true_market_mean": "tmmp",
-    "supply_in_profit_share": "psip", "lth_supply": "lth_supply", "supply": "bv_supply",
+    "supply_in_profit_share": "psip", "lth_supply": "lth_supply", "circulating_supply": "bv_supply",
     "sth_realized_profit_sum_1y": "p1y_sth", "lth_realized_profit_sum_1y": "p1y_lth",
     "sth_realized_loss_sum_1y": "l1y_sth", "lth_realized_loss_sum_1y": "l1y_lth",
     "sth_coindays_destroyed": "cdd_sth", "lth_coindays_destroyed": "cdd_lth",
 }
+# bitview v0.13：分龄序列改名 utxos_<段>_old_supply → age_<段>_supply（realized_cap 同理），
+# 合并段（10 年以下 / 7 年以上 / 10 年以上）不再单独提供，用细分段相加（细分段加总 = circulating_supply，已核对）
+_FINE = ["under_1h", "1h_to_1d", "1d_to_1w", "1w_to_1m", "1m_to_2m", "2m_to_3m", "3m_to_4m", "4m_to_5m", "5m_to_6m",
+         "6m_to_9m", "9m_to_1y", "1y_to_18m", "18m_to_2y", "2y_to_3y", "3y_to_4y", "4y_to_5y", "5y_to_6y", "6y_to_7y",
+         "7y_to_8y", "8y_to_10y", "10y_to_12y", "12y_to_15y", "over_15y"]
+_O10 = ["10y_to_12y", "12y_to_15y", "over_15y"]
 BANDS = {"1_3m": ["1m_to_2m", "2m_to_3m"], "3_6m": ["3m_to_4m", "4m_to_5m", "5m_to_6m"], "6_12m": ["6m_to_9m", "9m_to_1y"],
-         "12_18m": ["1y_to_18m"], "18_24m": ["18m_to_2y"], "under_10y": ["under_10y"], "over_6m": ["over_6m"],
-         "over_10y": ["over_10y"], "over_7y": ["over_7y"]}
+         "12_18m": ["1y_to_18m"], "18_24m": ["18m_to_2y"], "under_10y": _FINE[:_FINE.index("8y_to_10y") + 1], "over_6m": ["over_6m"],
+         "over_10y": _O10, "over_7y": ["7y_to_8y", "8y_to_10y"] + _O10}
 for bs in BANDS.values():
     for b in bs:
-        BV_SERIES[f"utxos_{b}_old_supply"] = f"S_{b}"
-        BV_SERIES[f"utxos_{b}_old_realized_cap"] = f"R_{b}"
+        BV_SERIES[f"age_{b}_supply"] = f"S_{b}"
+        BV_SERIES[f"age_{b}_realized_cap"] = f"R_{b}"
 
 
 # 币天销毁：不带后缀的序列没有日线，改用“24 小时合计”，再不行用累计值做差
@@ -100,7 +106,8 @@ ALT = {f"{c}_coindays_destroyed": [(f"{c}_coindays_destroyed_sum_24h", None), (f
 
 
 def fetch_bv_values(name):
-    for path in (f"/api/series/{name}/day1/data?from=0", f"/api/series/{name}/day1?from=0"):
+    # bitview v0.13（2026-10-31 前后）把查询参数 from 改名为 start；旧参数会 400
+    for path in (f"/api/series/{name}/day1/data?start=0", f"/api/series/{name}/day1?start=0"):
         try:
             j = get(BV + path, timeout=120, tries=2).json()
         except Exception:

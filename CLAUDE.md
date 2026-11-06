@@ -24,7 +24,8 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
   每天 UTC 02:17 跑 `l2/l2_daily.py`（Coin Metrics + bitview.space，需要 pandas）→ `data/l2/l2_latest.json` + `l2_history.json` → 出看板 → 出网站。
   缓存 `l2/cache/` 走 actions/cache，不进仓库。宏观页 L2 段、日志里的 L2 层结论 / 「L2」快照 / 状态切换预警都只读这两个 json；
   原 L2 单指标卡（MVRV / MVRV Z / Realized Price / NUPL / Mayer / Puell / Pi Cycle）2026-10-08 撤掉，旧链接 `_redirects` 301 到 /macro/#layer-2。
-  本地沙箱连不上 Coin Metrics / bitview（代理拒绝），L2 首跑只能在 Actions 里验。
+  云端会话用个人环境「uncleonchain」（放行 bitview.space、community-api.coinmetrics.io），本地能直接跑 L2 / L3 验证；Default 环境仍连不上。
+  bitview 2026-10-31 前后升到 v0.13：参数 from→start、分龄 utxos_X_old_* → age_X_*、地址 addrs_* → balance_*、URPD 无 /dates，接口说明 bitview.space/openapi.json。
 - `l3/`：L3 筹码层（依据《BTC筹码层L3研究》《L3网页数据维度规格》，2026-10-11）。`.github/workflows/l3-daily.yml` 每天 UTC 02:47 跑 `l3/l3_daily.py`
   （Coin Metrics + bitview，含 URPD `/api/urpd/all/{date}?agg=log500`）→ `data/l3/l3_latest.json`、`l3_history.json`（样本外，每天一行不回填）、`l3_series.json`（全历史）、
   `l3_conc.json`（筹码集中度：2012 年起每周日一张种子，每次最多补 14 分钟，之后每天追加）。只有三条通过检验：STH 成本 +1σ 压力区、STH 成本参考支撑、

@@ -95,16 +95,17 @@ BV_SERIES = {
     "sth_supply_in_profit": ("sth_sip", ["sth_supply_in_profit_btc"]),
     "sth_supply": ("sth_supply", ["sth_supply_btc"]),
     "sth_sopr_24h": ("sth_sopr", ["sth_sopr"]),
-    "sth_asopr_24h": ("sth_asopr", ["sth_asopr"]),
-    "addrs_1k_btc_to_10k_btc_supply": ("a_1k_10k", []),
-    "addrs_10k_btc_to_100k_btc_supply": ("a_10k_100k", []),
-    "addrs_over_100k_btc_supply": ("a_100k", []),
-    "addrs_under_1btc_supply": ("a_u1", []),
+    "sth_adjusted_sopr_24h": ("sth_asopr", ["sth_asopr_24h", "sth_asopr"]),
+    "balance_1k_to_10k_btc_supply": ("a_1k_10k", ["addrs_1k_btc_to_10k_btc_supply"]),
+    "balance_10k_to_100k_btc_supply": ("a_10k_100k", ["addrs_10k_btc_to_100k_btc_supply"]),
+    "balance_over_100k_btc_supply": ("a_100k", ["addrs_over_100k_btc_supply"]),
+    
 }
 
 
 def fetch_bv_values(name):
-    for path in (f"/api/series/{name}/day1/data?from=0", f"/api/series/{name}/day1?from=0"):
+    # bitview v0.13（2026-10-31 前后）把查询参数 from 改名为 start；旧参数会 400
+    for path in (f"/api/series/{name}/day1/data?start=0", f"/api/series/{name}/day1?start=0"):
         try:
             j = get(BV + path, timeout=120, tries=2).json()
         except Exception:
@@ -132,6 +133,19 @@ def fetch_bv(cm_price):
         else:
             vals[col] = got
         time.sleep(0.2)
+    # 散户（余额 < 1 BTC）：v0.13 不再有合并序列，用八个 sats 档相加（1 BTC = 1 亿 sats）
+    parts = []
+    for b in U1_BANDS:
+        try:
+            parts.append(fetch_bv_values(f"balance_{b}_sats_supply"))
+        except Exception:
+            parts = None
+            break
+    if parts:
+        n = min(len(x) for x in parts)
+        vals["a_u1"] = sum(x.iloc[-n:].reset_index(drop=True) for x in parts)
+    else:
+        missing.append("balance_<1btc_supply")
     if "bv_price" not in vals:
         raise RuntimeError("bitview 价格序列取不到，无法对齐日期")
     # 日期对齐（和 L2 同一套）：bitview 数组不带日期，末尾对齐后用价格和 Coin Metrics 比对，找误差最小的偏移
@@ -187,6 +201,7 @@ def load_or_fetch():
 
 # ---------------------------------------------------------------- URPD（筹码分布）
 URPD_ERR = []
+U1_BANDS = ["1_to_10", "10_to_100", "100_to_1k", "1k_to_10k", "10k_to_100k", "100k_to_1m", "1m_to_10m", "10m_to_100m"]
 
 
 def urpd_url(date=None, agg="log500"):
@@ -266,7 +281,11 @@ def concentration(close, rows):
 def fetch_urpd_latest():
     p = CACHE / "urpd_latest.json"
     try:
-        j = get(urpd_url(), timeout=120).json()
+        # 只用已收盘的 UTC 日：取昨天那一张；取不到再退回「最新」（当前区块，盘中）
+        try:
+            j = get(urpd_url(str((today_utc() - pd.Timedelta(days=1)).date())), timeout=120).json()
+        except Exception:
+            j = get(urpd_url(), timeout=120).json()
         json.dump(j, open(p, "w"))
         return j, "ok"
     except Exception as e:
@@ -290,7 +309,8 @@ def update_conc(latest_j):
             print(e, flush=True)
     if not OFFLINE:
         try:
-            dates = get(f"{BV}/api/urpd/all/dates", timeout=60).json()
+            # v0.13 去掉了日期列表接口：按周日自己生成，取不到的日子跳过
+            dates = [str(d.date()) for d in pd.date_range(SEED_FROM, today_utc() - pd.Timedelta(days=1), freq="W-SUN")]
             want = [d for d in dates if d >= SEED_FROM and pd.Timestamp(d).dayofweek == 6 and d not in conc]
             t0, n = time.time(), 0
             for d in want:
