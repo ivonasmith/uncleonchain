@@ -7,6 +7,11 @@
     "title_en": "Chinese site in Singapore time · Pokémon report in English · L3 restored · earlier daily run",
     "items": [
       {
+        "type": "fix",
+        "zh": "AI Agent 页恢复日更并补齐 10-29 至 11-05：采集从大叔电脑搬到 GitHub 云端，每天自动跑；从注册表部署起独立重算全部历史，和原有 10-19 至 10-28 逐项一致。范围仍是已核的 AgentPad 子集",
+        "en": "The AI Agent page updates daily again, with 10-29 to 11-05 filled in: collection moved to GitHub's cloud; full history independently recomputed from the registry deployment and matching the earlier 10-19 to 10-28 values exactly. Scope remains the verified AgentPad subset"
+      },
+      {
         "type": "data",
         "zh": "发射台矩阵标出「沿用前一日」的平台：DefiLlama 还没出当天数据的平台（如 StonkFun），排行、头部指标、当日变化拆解里标「沿用 MM-DD」，头部写明沿用几家、占比多少；补出后自动换成真实值",
         "en": "The launchpad matrix now tags platforms carried over from their last day (not yet published by DefiLlama, e.g. StonkFun) in the ranking, headline and day-over-day breakdown, with the count and share noted; real values replace them once published",
