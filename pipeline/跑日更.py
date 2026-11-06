@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """发射台日更 · 一键跑
-顺序：网络预检 → 拉日度 → 读销毁 → 拉估值 → 拉Arc → 出看板 → 打包（Claude 侧）
+顺序：网络预检 → 拉日度 → 读销毁 → 拉估值 → 拉Arc → 拉链上新台 → 出看板 → 打包（Claude 侧）
       仓库里加 --site：出看板 → 拉宏观 → 写日志 → 出网站
   拉日度失败 = 整期作废（没有手续费就没有看板）；其余步骤失败不拦截，看板上会标出缺哪块。
   ⚠️ 读销毁必须排在拉估值之前，否则 PONS 估值滞后一天（旧流程实测踩过）。
@@ -46,6 +46,7 @@ def main():
     step("读销毁.py", extra)
     step("拉估值.py")
     step("拉Arc.py")
+    step("拉链上新台.py")   # 链上自动发现新发射台（Robinhood / BSC / Base / Arc）；挂了只缺这一块
     if not step("出看板.py"):
         sys.exit(4)
     if "--site" in sys.argv:

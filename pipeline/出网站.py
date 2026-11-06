@@ -2586,6 +2586,132 @@ def new_listings_html(matrix):
             + f'<p class="tnote">{T("首次出现 = 第一次在 DefiLlama Launchpad 类目里看到它的日子（2026-11-06 起每天记录；之前已在名单里的按「第一天有手续费」回推近 60 天）。", "First seen = the first day we saw it in DefiLlama Launchpad (logged daily since 2026-11-06; for platforms already listed, back-dated from their first day with fees within 60 days).")}</p>')
 
 
+# ---------------------------------------------------------------- 发射台：链上自动发现的新发射台（拉链上新台.py → data/onchain/）
+OC_CHAINS = [("robinhood", "Robinhood Chain"), ("bsc", "BSC"), ("base", "Base"), ("arc", "Arc")]
+OC_NEW_DAYS = 14          # 首次出现在近 14 天内的工厂算「新出现」
+OC_MIN_7D = 30            # 进候选名单的门槛：近 7 天新币 ≥ 30 个
+
+
+def oc_labels():
+    lab = load(os.path.join(ROOT, "config", "launchpad_factories.json")) or {}
+    return lab
+
+
+def oc_summary(key, lab):
+    """一条链的工厂汇总：近 7 天 / 前 7 天新币数、发币人数（下限）、首次出现、标签、样本。"""
+    db = load(os.path.join(DATA, "onchain", f"{key}.json"))
+    if not db:
+        return None
+    days = db.get("逐日") or {}
+    ds = sorted(days)
+    if not ds:
+        return {"db": db, "rows": [], "end": None, "days": 0}
+    end = ds[-1]
+    e = dt.date.fromisoformat(end)
+    w7 = [(e - dt.timedelta(days=i)).isoformat() for i in range(7)]
+    p7 = [(e - dt.timedelta(days=i)).isoformat() for i in range(7, 14)]
+    agg = {}
+    for d in ds:
+        for a, v in days[d]["工厂"].items():
+            x = agg.setdefault(a, {"7日": 0, "前7日": 0, "人7日": 0, "昨日": 0, "样本": [], "活跃天": 0})
+            if d in w7:
+                x["7日"] += v[0]; x["人7日"] += v[1]; x["活跃天"] += 1
+                x["样本"] = (v[2] + x["样本"])[:3] if d == end else (x["样本"] or v[2])[:3]
+            elif d in p7:
+                x["前7日"] += v[0]
+            if d == end:
+                x["昨日"] = v[0]
+    first = db.get("首次出现") or {}
+    known = dict(lab.get("*") or {}, **(lab.get(key) or {}))
+    rows = []
+    for a, x in agg.items():
+        tag = known.get(a) or {}
+        if tag.get("类型") in ("基础设施", "忽略"):
+            continue
+        fs = first.get(a, "基线")
+        new = fs != "基线" and fs >= (e - dt.timedelta(days=OC_NEW_DAYS - 1)).isoformat()
+        cov = len([d for d in p7 if d in days]) == 7
+        ramp = x["7日"] >= 50 and cov and x["7日"] >= 2 * max(x["前7日"], 1)
+        rows.append(dict(addr=a, name=tag.get("名称"), first=fs, new=new, ramp=ramp, cov=cov, **x))
+    rows.sort(key=lambda r: -r["7日"])
+    return {"db": db, "rows": rows, "end": end, "days": len(ds)}
+
+
+def _oc_chips(r):
+    out = ""
+    if r["new"]:
+        out += f'<span class="chip t-cool carry">{T("新", "new")} {esc(r["first"][5:])}</span>'
+    if r["ramp"]:
+        out += f'<span class="chip t-up carry">{T("起量", "ramping")}</span>'
+    return out
+
+
+def _oc_addr(exp, a, kind="address"):
+    return f'<a href="{esc(exp)}/{kind}/{esc(a)}" target="_blank" rel="noopener"><code>{esc(a[:6])}…{esc(a[-4:])}</code></a>'
+
+
+def _oc_first(fs):
+    return T("基线", "baseline") if fs == "基线" else esc(fs)
+
+
+def onchain_html():
+    lab = oc_labels()
+    sums = {k: oc_summary(k, lab) for k, _ in OC_CHAINS}
+    if not any(sums.values()):
+        return ""
+    unnamed = T("未命名合约", "unnamed contract")
+    cand, blocks = [], ""
+    for key, nm in OC_CHAINS:
+        sm = sums[key]
+        if not sm:
+            continue
+        db = sm["db"]
+        exp = db.get("浏览器") or ""
+        st = db.get("状态") or ""
+        for r in sm["rows"]:
+            if (r["new"] or r["ramp"]) and r["7日"] >= OC_MIN_7D:
+                cand.append((nm, exp, r))
+        if not sm["rows"]:
+            note = st if LANG["v"] == "zh" else ("Pending: needs the Alchemy key (GitHub secret ALCHEMY_KEY)" if st.startswith("待接入") else st)
+            blocks += f'<div class="card ocb" style="padding:12px 16px"><b>{esc(nm)}</b> <span class="sub">{esc(note)}</span></div>'
+            continue
+        last = (db.get("逐日") or {}).get(sm["end"]) or {}
+        trs = ""
+        for r in sm["rows"][:10]:
+            prev = f'{r["前7日"]:,}' if r["cov"] else "—"
+            trs += (f'<tr><td class="l">{esc(r["name"]) if r["name"] else unnamed}{_oc_chips(r)}<br><small>{_oc_addr(exp, r["addr"])}</small></td>'
+                    f'<td>{r["昨日"]:,}</td><td>{r["7日"]:,}</td><td>{prev}</td><td>≥{r["人7日"]:,}</td><td>{_oc_first(r["first"])}</td></tr>')
+        meta = T(f"{sm['end']} · 新币 {last.get('新币', 0):,} · 个人直接部署 {last.get('直接部署', 0):,} · 已积累 {sm['days']} 天 · 节点 {last.get('节点', '—')}",
+                 f"{sm['end']} · new tokens {last.get('新币', 0):,} · direct deploys {last.get('直接部署', 0):,} · {sm['days']} days so far · node {last.get('节点', '—')}")
+        if st and st != "ok":
+            meta += " · " + esc(st[:80])
+        blocks += (f'<details class="card fold ocb"{" open" if key == "robinhood" else ""}><summary><b>{esc(nm)}</b> <span class="sub">{meta}</span></summary>'
+                   f'<div class="tw"><table><thead><tr><th class="l">{T("发币工厂（前 10）", "Token factory (top 10)")}</th><th>{T("昨日新币", "Yesterday")}</th>'
+                   f'<th>{T("近 7 日", "7d")}</th><th>{T("前 7 日", "Prior 7d")}</th><th>{T("发币人（近 7 日）", "Creators (7d)")}</th><th>{T("首次出现", "First seen")}</th></tr></thead>'
+                   f'<tbody>{trs}</tbody></table></div></details>')
+    if cand:
+        cand.sort(key=lambda c: -c[2]["7日"])
+        ctr = ""
+        for nm, exp, r in cand:
+            samples = " ".join(_oc_addr(exp, t, "token") for t in r["样本"])
+            ctr += (f'<tr><td class="l">{esc(r["name"]) if r["name"] else unnamed}{_oc_chips(r)}<br><small>{_oc_addr(exp, r["addr"])}</small></td>'
+                    f'<td class="l">{esc(nm)}</td><td>{r["7日"]:,}</td><td>≥{r["人7日"]:,}</td><td>{_oc_first(r["first"])}</td><td class="l">{samples}</td></tr>')
+        top = (f'<div class="tw"><table><thead><tr><th class="l">{T("候选工厂", "Candidate factory")}</th><th class="l">{T("链", "Chain")}</th><th>{T("近 7 日新币", "New tokens 7d")}</th>'
+               f'<th>{T("发币人", "Creators")}</th><th>{T("首次出现", "First seen")}</th><th class="l">{T("样本币", "Sample tokens")}</th></tr></thead><tbody>{ctr}</tbody></table></div>')
+    else:
+        top = (f'<div class="card" style="padding:12px 16px"><p class="tnote" style="margin:0">'
+               f'{T("目前没有符合条件的新工厂（近 14 天首次出现或正在起量，且近 7 天新币 ≥ 30 个）。数据还在积累中。", "No factory meets the bar yet (first seen in the last 14 days or ramping, with ≥ 30 new tokens in 7 days). Data is still accumulating.")}</p></div>')
+    head = (f'<h2 id="oclp">{T("链上新发射台 · 自动发现", "New launchpads on-chain · auto-detected")} '
+            f'<span class="sub">{T("不等 DefiLlama 收录：每天扫前一个 UTC 日的新币，按发币合约归到「工厂」", "Without waiting for DefiLlama: each day we scan the previous UTC day for new tokens and group them by the contract that created them")}</span></h2>')
+    note = T("新币 = 一笔交易里一次铸出整数供应量（1,000 枚的整数倍）的代币；工厂 = 发币交易调用的合约；个人直接部署合约发的币单独计数、不算工厂。"
+             "发币人是抽查交易里不同发币地址的个数，是下限。「新」= 近 14 天首次出现；「起量」= 近 7 天新币 ≥ 50 且是前 7 天的 2 倍以上。"
+             "账户抽象入口、多重调用等通用合约已排除；工厂名字来自已验证合约名或人工补录，没有的显示「未命名合约」。只说明链上在发什么，不是推荐。",
+             "New token = minted in a round supply (a multiple of 1,000) in one transaction; factory = the contract the creating transaction called; tokens deployed directly by individuals are counted apart. "
+             "Creators = distinct creating addresses among sampled transactions (a lower bound). New = first seen in the last 14 days; ramping = ≥ 50 new tokens in 7 days and at least 2× the prior 7 days. "
+             "Generic contracts (account-abstraction entry points, multicall) are excluded; names come from verified contracts or manual labels, otherwise “unnamed contract”. Describes what is being launched; not a recommendation.")
+    return head + top + blocks + f'<p class="tnote">{note}</p>'
+
+
 def carry_map(matrix, d=None):
     """{slug: 实际沿用的那天}：DefiLlama 在 d（默认矩阵日期）还没出数、矩阵用它最后一天的值顶上的平台。"""
     if not matrix:
@@ -2795,6 +2921,7 @@ def build_launchpad(sd, matrix):
 {cycle_hero()}
 <div class="grid g5" id="lpk">{kh}</div>
 {new_listings_html(matrix)}
+{onchain_html()}
 {total_html}
 <div class="card" style="padding:14px 16px;margin-top:22px"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:12.5px"><b>{T("生态份额 · 当日手续费按链拆分", "Chain share · today's fees by chain")}</b><span class="stamp">{T("多链协议按 DefiLlama 分链数据精确拆分", "Multi-chain protocols split by DefiLlama's per-chain data")}</span></div>
 <div class="chainbar">{bar}</div><div class="chainleg">{leg}</div></div>
