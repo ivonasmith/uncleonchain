@@ -1922,6 +1922,13 @@ RULE_CHANGES.append(
      "EN": "L2 and L3 now use only closed UTC days: the data date moves from the run day to the previous day, and price = that day's 00:00 UTC close; the ruler and price bar now read 'close + close time'. L3's out-of-sample log is never rewritten: rows up to 2026-10-29 used the run-time price, later rows use the close."})
 
 RULE_CHANGES.append(
+    {"日期": "2026-11-06", "锚": "2026-11-06-carry", "范围": "发射台矩阵 · 延迟平台", "EN范围": "Launchpad matrix · delayed platforms",
+     "原因": "DefiLlama 汇总接口对还没出前一天数据的平台，「当日」给的是它最后一天的值（2026-11-06 核实：StonkFun 11-05 未出数，接口给的 86,429 是 11-04 的值）。矩阵此前把这个值当成当天写进排行、合计、当日变化拆解与份额变化，没有任何标注；而且非 Top60 平台的这些格子之后也不会被更正。",
+     "原因EN": "DefiLlama's overview gives platforms that have not yet published the previous day their last day's value as 'today' (verified 2026-11-06: StonkFun had no Nov 5 data and the overview's 86,429 was its Nov 4 value). The matrix used it as the current day in the ranking, totals, day-over-day breakdown and share changes without any tag, and for non-top-60 platforms those cells were never corrected.",
+     "内容": "逐家拉逐日序列判断最后一天；还没出数的平台继续沿用最后一天的值（避免合计虚假下跌），但在排行、首页 Top6、头部指标、当日变化拆解里标「沿用 MM-DD」，头部写明沿用几家、占比多少；DefiLlama 补出后下一次日更自动换成真实值。规则写进口径页「延迟平台」。",
+     "EN": "Each platform's daily series now sets its last day; platforms not yet published keep their last value (so totals don't drop falsely) but are tagged 'carried MM-DD' in the ranking, home top 6, headline and day-over-day breakdown, with the number carried and their share noted; the next daily run swaps in the real value once DefiLlama publishes it. The rule is in Methodology › delayed platforms."})
+
+RULE_CHANGES.append(
     {"日期": "2026-11-06", "锚": "2026-11-06-utc", "范围": "全站时间显示", "EN范围": "Site-wide time display",
      "原因": "后端统计已在 2026-10-29 统一到 UTC+0（UTC 完整日，UTC 0 点收盘）；前端显示按读者所在区域换算更好读。中文站读者以新加坡 / 东八区为主，所以中文站的「北京时间」改为「新加坡时间」（同为 UTC+8，钟点不变）。",
      "原因EN": "Back-end statistics were aligned to UTC+0 on 2026-10-29 (full UTC days, closing at 00:00 UTC); display times are converted to the reader's region. The Chinese site now labels its UTC+8 times as Singapore time instead of Beijing time (same clock).",

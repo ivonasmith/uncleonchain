@@ -1064,7 +1064,7 @@ def build_home(sd, S, logs, weeks, months, rot, matrix):
         tot = sum(p.get("当日") or 0 for p in matrix["协议"]) or 1
         for i, p in enumerate(ps, 1):
             ch = "".join(chain_badge(c) for c in p["链"][:2])
-            lp_rows += (f'<tr><td class="rk">{i}</td><td class="l"><span class="pname">{esc(p["名称"])}</span></td>'
+            lp_rows += (f'<tr><td class="rk">{i}</td><td class="l"><span class="pname">{esc(p["名称"])}{carry_chip(p.get("数据日")) if p.get("沿用") else ""}</span></td>'
                         f'<td class="l">{ch}</td><td>{f_usd(p["当日"])}</td><td>{p["当日"]/tot*100:.1f}%</td><td>{fmt_delta(p.get("日环比"), pct_input=True)}</td></tr>')
     lp_tbl = (f'<div class="tw"><table><thead><tr><th class="l">#</th><th class="l">{T("平台", "Platform")}</th><th class="l">{T("链", "Chain")}</th>'
               f'<th>{T("当日手续费", "Fees (day)")}</th><th>{T("份额", "Share")}</th><th>{T("日环比", "DoD")}</th></tr></thead><tbody>{lp_rows}</tbody></table></div>'
@@ -2434,9 +2434,11 @@ def launchpad_history(matrix):
     rows = []
     for k, s in enumerate(top + ["_other"]):
         a, b = series[s][d1], series[s][d0]
-        rows.append({"名称": names.get(s, s) if s != "_other" else T("其他", "Other"), "c": f"s{k + 1}" if s != "_other" else "s9",
+        rows.append({"slug": s, "名称": names.get(s, s) if s != "_other" else T("其他", "Other"), "c": f"s{k + 1}" if s != "_other" else "s9",
                      "今": a, "昨": b, "变": a - b, "份额今": a / t1 * 100 if t1 else None, "份额昨": b / t0 * 100 if t0 else None})
-    return path, {"cfg": cfg_series, "d1": d1, "d0": d0, "t1": t1, "t0": t0, "rows": rows, "起": ds[0], "天数": len(ds)}
+    car = (matrix.get("沿用") or {})
+    return path, {"cfg": cfg_series, "d1": d1, "d0": d0, "t1": t1, "t0": t0, "rows": rows, "起": ds[0], "天数": len(ds),
+                  "沿用": {"d1": dict(car.get(d1, {})), "d0": dict(car.get(d0, {}))}, "名称": names}
 
 
 # ---------------------------------------------------------------- 发射台：钱在哪（按链 / 按平台的份额，读矩阵日更数据；周期页和矩阵页同一套配色）
@@ -2548,6 +2550,56 @@ def cycle_tag():
             f'{esc(T(*c["stage"]))}{T("（截至 ", " (as of ")}{c["date"][5:]}{T("）", ")")} →</a>')
 
 
+NEW_DAYS = 30        # 首次出现在近 30 天内的算「新上榜」
+
+
+def new_listings(matrix):
+    """DefiLlama Launchpad 类目新上榜：首次出现在近 NEW_DAYS 天的协议，按首次出现日期倒序。"""
+    if not matrix:
+        return []
+    cut = (dt.date.fromisoformat(matrix["日期"]) - dt.timedelta(days=NEW_DAYS)).isoformat()
+    xs = [p for p in matrix["协议"] if (p.get("首次出现") or "基线") != "基线" and p["首次出现"] >= cut]
+    return sorted(xs, key=lambda p: (p["首次出现"], p.get("7日") or 0), reverse=True)
+
+
+def new_chip(p):
+    return f'<span class="chip t-cool carry" title="{esc(T("DefiLlama Launchpad 类目首次出现：", "First seen in DefiLlama Launchpad: ") + str(p.get("首次出现")))}">{T("新", "new")} {esc(str(p.get("首次出现"))[5:])}</span>'
+
+
+def new_listings_html(matrix):
+    xs = new_listings(matrix)
+    head = (f'<h2 id="newlp">{T("新上榜", "New listings")} <span class="sub">{T(f"DefiLlama Launchpad 类目近 {NEW_DAYS} 天新出现的平台；「起量」= 近 7 日手续费 ≥ $1,000 且是前 7 日的 2 倍以上", f"Platforms new to DefiLlama Launchpad in the last {NEW_DAYS} days; ramping = 7-day fees ≥ $1,000 and at least 2× the prior 7 days")}</span></h2>')
+    if not xs:
+        return head + f'<div class="card" style="padding:12px 16px"><p class="tnote" style="margin:0">{T(f"近 {NEW_DAYS} 天没有新平台进入 DefiLlama Launchpad 类目。DefiLlama 收录有滞后，更早的新台子看「链上新发射台」。", f"No new platform entered DefiLlama Launchpad in the last {NEW_DAYS} days. DefiLlama lags; see on-chain discovery for earlier signals.")}</p></div>'
+    trs = ""
+    for p in xs:
+        d7, p7 = p.get("7日") or 0, p.get("上7日") or 0
+        ramp = d7 >= 1000 and (p7 == 0 or d7 >= 2 * p7)
+        g = (f"{(d7 / p7 - 1) * 100:+.0f}%" if p7 >= 100 else ("—" if not d7 else T("新起", "new")))   # 前 7 日 < $100 时百分比没意义
+        rchip = f'<span class="chip t-up carry">{T("起量", "ramping")}</span>' if ramp else ""
+        trs += (f'<tr><td class="l"><span class="pname"><a href="https://defillama.com/protocol/{esc(p["slug"])}" target="_blank" rel="noopener">{esc(p["名称"])}</a>'
+                f'{rchip}</span></td>'
+                f'<td class="l">{"".join(chain_badge(c) for c in (p.get("链") or [])[:3])}</td><td>{esc(p["首次出现"])}</td>'
+                f'<td>{f_usd(p.get("当日"))}</td><td>{f_usd(d7)}</td><td>{g}</td><td>{f_usd(p.get("30日"))}</td><td>{f_usd(p.get("累计"))}</td></tr>')
+    return (head + f'<div class="tw"><table><thead><tr><th class="l">{T("平台", "Platform")}</th><th class="l">{T("链", "Chain")}</th><th>{T("首次出现", "First seen")}</th>'
+            f'<th>{T("当日", "Day")}</th><th>{T("近 7 日", "7d")}</th><th>{T("较前 7 日", "vs prior 7d")}</th><th>{T("30 日", "30d")}</th><th>{T("累计", "All-time")}</th></tr></thead><tbody>{trs}</tbody></table></div>'
+            + f'<p class="tnote">{T("首次出现 = 第一次在 DefiLlama Launchpad 类目里看到它的日子（2026-11-06 起每天记录；之前已在名单里的按「第一天有手续费」回推近 60 天）。", "First seen = the first day we saw it in DefiLlama Launchpad (logged daily since 2026-11-06; for platforms already listed, back-dated from their first day with fees within 60 days).")}</p>')
+
+
+def carry_map(matrix, d=None):
+    """{slug: 实际沿用的那天}：DefiLlama 在 d（默认矩阵日期）还没出数、矩阵用它最后一天的值顶上的平台。"""
+    if not matrix:
+        return {}
+    return dict((matrix.get("沿用") or {}).get(d or matrix.get("日期"), {}))
+
+
+def carry_chip(last):
+    """「沿用 11-04」小标：数值是该平台最后一个有数的日子，不是当天。"""
+    tip = T(f"DefiLlama 还没出这家当天的数，这里是它 {last} 的值；补出后自动换成真实值。规则见口径页「延迟平台」。",
+            f"DefiLlama has not published this platform's day yet; this is its {last} value, replaced automatically once published. See Methodology › delayed platforms.")
+    return f'<span class="chip t-warn carry" title="{esc(tip)}">{T("沿用", "carried")} {esc(str(last)[5:])}</span>'
+
+
 def breakdown_html(bk):
     if not bk:
         return ""
@@ -2556,7 +2608,8 @@ def breakdown_html(bk):
     trs = ""
     for r in sorted(bk["rows"], key=lambda r: (r["c"] == "s9", -r["今"])):          # 「其他」固定放最后
         dsh = (r["份额今"] - r["份额昨"]) if r["份额今"] is not None and r["份额昨"] is not None else None
-        trs += (f'<tr><td class="l"><span class="pname"><i style="width:10px;height:10px;border-radius:2px;background:var(--{r["c"]});display:inline-block"></i>{esc(r["名称"])}</span></td>'
+        cy = (bk.get("沿用") or {}).get("d1", {}).get(r.get("slug")) or (bk.get("沿用") or {}).get("d0", {}).get(r.get("slug"))
+        trs += (f'<tr><td class="l"><span class="pname"><i style="width:10px;height:10px;border-radius:2px;background:var(--{r["c"]});display:inline-block"></i>{esc(r["名称"])}{carry_chip(cy) if cy else ""}</span></td>'
                 f'<td>{f_usd(r["今"])}</td><td>{f_usd(r["昨"])}</td><td class="{"t-up" if r["变"] > 0 else "t-dn" if r["变"] < 0 else ""}">{R.f_signed_usd(r["变"])}</td>'
                 f'<td>{R.f_pct(r["份额今"], 1)}</td><td class="{"t-up" if (dsh or 0) > 0 else "t-dn" if (dsh or 0) < 0 else ""}">{"—" if dsh is None else f"{dsh:+.1f}pp"}</td></tr>')
     up = sorted([r for r in bk["rows"] if r["变"] > 0], key=lambda r: -r["变"])[:2]
@@ -2578,6 +2631,12 @@ def breakdown_html(bk):
             s += "Declines led by " + ", ".join(f"{r['名称']} ({R.f_signed_usd(r['变'])})" for r in dn) + ". "
         if abs(chg) < 5 and up and dn:
             s += "The total barely moved while platforms swapped share — rotation between venues, not a hotter or colder sector."
+    cy1 = (bk.get("沿用") or {}).get("d1", {})
+    if cy1:
+        nm = dict(bk.get("名称") or {})
+        lst = "、".join(nm.get(k, k) for k in cy1) if LANG["v"] == "zh" else ", ".join(nm.get(k, k) for k in cy1)
+        s += T(f"（{lst} 当天 DefiLlama 还没出数，按它最后一天的值计入，份额变化可能失真。）",
+               f" ({lst}: not yet published by DefiLlama for this day; its last value is used, so share changes may be off.)")
     return (f'<p class="tnote" style="font-size:13px;color:var(--ink2)">{esc(s)}</p>'
             f'<div class="tw"><table><thead><tr><th class="l">{T("平台", "Platform")}</th><th>{bk["d1"]}</th><th>{bk["d0"]}</th><th>{T("变化", "Change")}</th>'
             f'<th>{T("份额", "Share")}</th><th>{T("份额变化", "Share Δ")}</th></tr></thead><tbody>{trs}'
@@ -2660,12 +2719,19 @@ def build_launchpad(sd, matrix):
     leg += f'<span><i style="background:var(--c-other)"></i>{T("其他", "Other")} <b>{f_usd(other)}</b> {other/tot_day*100:.1f}%</span>'
     active_n = sum(1 for p in matrix["协议"] if (p.get("当日") or 0) > 0)
     lead = max(matrix["协议"], key=lambda p: p.get("当日") or 0)
+    car = {p["slug"]: p.get("数据日") for p in matrix["协议"] if p.get("沿用")}
+    NEWS = new_listings(matrix)
+    car_amt = sum(p.get("当日") or 0 for p in matrix["协议"] if p["slug"] in car)
+    car_note = (T(f"含 {len(car)} 家沿用前一日 · 占 {car_amt / tot_day * 100:.1f}%", f"incl. {len(car)} carried over · {car_amt / tot_day * 100:.1f}%")
+                if car else "")
     lead_ch = main[0] if main else None
     kpis = [
-        (T("全类目当日手续费", "All launchpads · day"), f_usd(tot_day), fmt_delta((tot_day / tot_prev - 1) if tot_prev else None) + " " + T("日环比", "DoD")),
+        (T("全类目当日手续费", "All launchpads · day"), f_usd(tot_day), fmt_delta((tot_day / tot_prev - 1) if tot_prev else None) + " " + T("日环比", "DoD")
+         + (f'<br><span class="carrynote">{car_note}</span>' if car_note else "")),
         (T("7 日 / 30 日合计", "7d / 30d"), f_usd(tot_7), f"{T('30 日', '30d')} {f_usd(tot_30)}"),
         (T("当日活跃协议", "Active protocols"), f"{active_n}", T(f"DefiLlama Launchpad 类目共 {len(matrix['协议'])} 个", f"{len(matrix['协议'])} in DefiLlama's category")),
-        (T("当日第一", "#1 today"), esc(lead["名称"]), f'{f_usd(lead.get("当日"))} · {T("占", "")} {(lead.get("当日") or 0)/tot_day*100:.1f}%'),
+        (T("当日第一", "#1 today"), esc(lead["名称"]), f'{f_usd(lead.get("当日"))} · {T("占", "")} {(lead.get("当日") or 0)/tot_day*100:.1f}%'
+         + (" " + carry_chip(car[lead["slug"]]) if lead["slug"] in car else "")),
         (T("链份额第一", "Top chain"), esc(chain_name(lead_ch) if lead_ch else "—"), f'{ch_day.get(lead_ch, 0)/tot_day*100:.1f}% {T("当日手续费", "of fees")}' if lead_ch else ""),
     ]
     kh = "".join(f'<div class="glass hero"><div class="k">{k}</div><div class="v" style="font-size:21px">{v}</div><div class="s">{s}</div></div>' for k, v, s in kpis)
@@ -2681,6 +2747,10 @@ def build_launchpad(sd, matrix):
         nm = (f'<a href="{link}">{esc(p["名称"])}</a> <span class="deep">{T("深度", "deep")}</span>' if link else
               f'<a href="https://defillama.com/protocol/{esc(p["slug"])}" target="_blank" rel="noopener">{esc(p["名称"])}</a>')
         logo = f'<img src="{esc(p["logo"])}" alt="" loading="lazy" referrerpolicy="no-referrer">' if p.get("logo") else '<img alt="">'
+        if p.get("沿用"):
+            nm += carry_chip(p.get("数据日"))
+        if p in NEWS:
+            nm += new_chip(p)
         badges = "".join(chain_badge(c) for c in p["链"][:3]) + (f'<span class="badge b-other">+{len(p["链"])-3}</span>' if len(p["链"]) > 3 else "")
         attrs = {"name": p["名称"], "chains": ",".join(sorted(set(grp))), "chainnames": " / ".join(p["链"][:3]), "ck": ck,
                  "d1": p.get("当日") or 0, "d7": p.get("7日") or 0, "d30": p.get("30日") or 0, "chg": p.get("日环比"),
@@ -2724,6 +2794,7 @@ def build_launchpad(sd, matrix):
 <div class="stamp">{T("数据截至", "Data as of")} <b>{matrix["日期"]}</b>{T("（UTC 完整日）", " (UTC)")}<br>{T("生成", "Generated")} <b>{TT(matrix.get("生成时间UTC"))}</b></div></div>
 {cycle_hero()}
 <div class="grid g5" id="lpk">{kh}</div>
+{new_listings_html(matrix)}
 {total_html}
 <div class="card" style="padding:14px 16px;margin-top:22px"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:12.5px"><b>{T("生态份额 · 当日手续费按链拆分", "Chain share · today's fees by chain")}</b><span class="stamp">{T("多链协议按 DefiLlama 分链数据精确拆分", "Multi-chain protocols split by DefiLlama's per-chain data")}</span></div>
 <div class="chainbar">{bar}</div><div class="chainleg">{leg}</div></div>
@@ -3629,6 +3700,14 @@ def build_methodology():
 <div class="card mcard"><p>{T("「能否改交易参数」分四种：", "“May it change trading parameters” has four values:")}</p><ul>{pdef}</ul></div>
 <div class="tw" style="margin-top:10px"><table><thead><tr><th>#</th><th class="l">{T("规则", "Rule")}</th><th class="l">{T("怎么用", "How to use")}</th><th class="l">{T("可靠程度", "Reliability")}</th><th class="l">{T("能否改交易参数", "Trading parameters")}</th></tr></thead><tbody>{rrows}</tbody></table></div>
 <h2 id="legend">{T("标签说明", "What the tags mean")}</h2><p class="tnote">{T("「级别」和「证据等级」是两个维度：级别说这个指标在本层判定里起什么作用，证据等级说它在研究里被检验到什么程度。", "Level and evidence grade are two separate dimensions: level is the gauge's role in the layer verdict, evidence grade is how well the research has tested it.")}</p>{tag_legend()}
+<h2 id="delayed">{T("延迟平台（发射台矩阵）", "Delayed platforms (launchpad matrix)")}</h2>
+<div class="card mcard"><ul>
+<li>{T("发射台矩阵只报前一个 UTC 完整日。DefiLlama 各家出数有先后：到我们取数时，个别平台（常见的有 pump.fun、StonkFun、LaunchLab）还没出这一天的数。", "The launchpad matrix reports the previous full UTC day. DefiLlama publishes platforms at different times; when we fetch, a few (often pump.fun, StonkFun, LaunchLab) may not have that day yet.")}</li>
+<li>{T("判断办法：逐家拉 DefiLlama 逐日序列，最后一个有数的日子早于报告日，就是延迟平台。DefiLlama 汇总接口给这类平台的「当日」其实是它最后一天的值。", "How we detect it: we pull each platform's daily series; if its last day is earlier than the report day, it is delayed. DefiLlama's overview gives such platforms their last day's value as 'today'.")}</li>
+<li>{T("矩阵排行、全类目合计、当日变化拆解和份额变化：先沿用该平台最后一天的值，避免合计和份额因为「没出数」被算成 0 而虚假下跌；同时在名字旁标「沿用 MM-DD」，头部指标写明沿用了几家、占当日合计多少。", "Matrix ranking, category total, day-over-day breakdown and share changes: the platform's last value is carried over, so totals and shares don't drop falsely because a day is missing; the name is tagged 'carried MM-DD' and the headline notes how many were carried and their share of the day's total.")}</li>
+<li>{T("DefiLlama 补出真实值后，下一次日更自动换成真实值并去掉标记（保留 60 天内的沿用记录）。", "Once DefiLlama publishes the real value, the next daily run replaces it and drops the tag (carry records are kept for 60 days).")}</li>
+<li>{T("深度追踪平台（逐日序列、周期温度等）不沿用：没出数就标「延迟」、留空，不拿旧值冒充新值。", "Deep-tracked platforms (daily series, cycle temperature, etc.) are never carried: a missing day is marked 'delayed' and left blank.")}</li>
+</ul></div>
 <h2 id="schedule">{T("更新时间", "Update schedule")}</h2>
 <div class="card mcard"><p>{T("时间口径：后端统计一律用 UTC+0，所有数据按 UTC 完整日对齐，一天在 UTC 0 点收盘（新加坡时间 08:00）；价格一律用收盘价，不用脚本运行那一刻的盘中价。页面上显示的钟点按语言换算：中文站写新加坡时间（UTC+8），英文站写美东时间。定时任务在收盘后分批跑（数据源出数有先后），运行时刻不同，但读的是同一个收盘日。", "Time basis: all statistics use UTC+0. Data is aligned to full UTC days, each closing at 00:00 UTC (8:00 PM ET the previous day in summer, 7:00 PM in winter); prices always use that close, never an intraday price at run time. Clock times are displayed in US Eastern time on the English site and Singapore time (UTC+8) on the Chinese site. Jobs run in batches after the close because sources publish at different times, but they all read the same closing day.")}</p></div>
 <div class="tw"><table><thead><tr><th class="l">{T("任务", "Job")}</th><th>{T("时间", "Time")}</th><th class="l">{T("覆盖哪些数据", "Covers")}</th><th class="l">{T("配置", "Config")}</th></tr></thead><tbody>{sched_rows}</tbody></table></div>

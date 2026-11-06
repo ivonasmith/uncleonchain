@@ -51,7 +51,11 @@ def main():
     lp.sort(key=lambda p: p.get("total30d") or 0, reverse=True)
     top60 = [p["slug"] for p in lp[:60] if p.get("slug") and p["slug"] not in BAD]
 
-    jobs = [(s, "dailyFees") for s in set(top60) | set(FOCUS)]
+    # 矩阵上会显示的协议（30 日 ≥ $1,000 或当日 ≥ $100）也拉逐日序列，只用来判断「最后一天是哪天」：
+    # DefiLlama 汇总接口的 total24h 对还没出昨天数的协议给的是它最后一天的值（2026-11-06 核实 stonkfun），要标「沿用」
+    shown = [p["slug"] for p in lp if p.get("slug") and p["slug"] not in BAD
+             and ((p.get("total30d") or 0) >= 1000 or (p.get("total24h") or 0) >= 100)]
+    jobs = [(s, "dailyFees") for s in set(top60) | set(FOCUS) | set(shown)]
     jobs += [(s, "dailyRevenue") for s in FOCUS]
     with ThreadPoolExecutor(max_workers=8) as ex:      # 8 线程对 DefiLlama 没有限流问题
         res = dict(zip(jobs, ex.map(lambda j: series(*j), jobs)))
@@ -99,7 +103,11 @@ def main():
     for p in lp:
         if not p.get("slug"):
             continue
-        snap.append({"slug": p["slug"], "名称": p.get("displayName") or p.get("name"), "链": p.get("chains") or [],
+        m = res.get((p["slug"], "dailyFees"))
+        last = max((k for k, v in (m or {}).items() if v is not None), default=None) if m else None
+        snap.append({"数据日": last,
+                     # True = DefiLlama 还没出 expected 这天，「当日」是沿用它最后一天（last）的值；None = 没拉序列 / 拉失败，判断不了
+                     "沿用": (last < expected) if (m and last) else None,"slug": p["slug"], "名称": p.get("displayName") or p.get("name"), "链": p.get("chains") or [],
                      "当日": p.get("total24h"), "前日": p.get("total48hto24h"), "7日": p.get("total7d"),
                      "上7日": p.get("total14dto7d"), "30日": p.get("total30d"), "上30日": p.get("total60dto30d"),
                      "累计": p.get("totalAllTime"), "日环比": p.get("change_1d"),
@@ -113,11 +121,44 @@ def main():
             if k >= HIST_START and v:
                 hist.setdefault(k, {})[s] = v
     hist.setdefault(expected, {})
+    carried = M.get("沿用") or {}           # {日期: {slug: 实际沿用的那天}}：历史里哪些格子是拿最后一天的值顶上的
     for x in snap:
-        if x["当日"] is not None and (x["30日"] or 0) >= 1000 and x["slug"] not in hist[expected]:
+        if x["当日"] is None or (x["30日"] or 0) < 1000:
+            continue
+        if x["沿用"]:                       # 序列里没有 expected：这一格只能是沿用值（之前的运行可能已经写过），一律打标
             hist[expected][x["slug"]] = x["当日"]
+            carried.setdefault(expected, {})[x["slug"]] = x["数据日"]
+        elif x["slug"] not in hist[expected]:
+            hist[expected][x["slug"]] = x["当日"]
+    # 之前沿用过的格子：DefiLlama 补出真实值后换成真实值，并去掉标记
+    for d in list(carried):
+        for s_ in list(carried[d]):
+            m = res.get((s_, "dailyFees")) or {}
+            if d in m:
+                if m[d]:
+                    hist.setdefault(d, {})[s_] = m[d]
+                else:
+                    hist.get(d, {}).pop(s_, None)
+                del carried[d][s_]
+        if not carried[d] or d < shift(expected, -60):
+            del carried[d]
     hist = {k: hist[k] for k in sorted(hist) if k >= HIST_START}
-    save("发射台矩阵.json", {"日期": expected, "生成时间UTC": data["生成时间UTC"], "协议": snap, "历史": hist})
+    # 新上榜：DefiLlama Launchpad 类目里第一次出现的协议记下日期（2026-11-06 起）。
+    # 第一次跑时名单里已有的都记成「基线」，不算新上榜；之后每天新冒出来的才算。
+    first = M.get("首次出现")
+    if first is None:
+        # 基线：有逐日序列的，用「第一天有手续费」当出现日（近 60 天内的才当新上榜，否则记基线）
+        first = {}
+        for x in snap:
+            m = res.get((x["slug"], "dailyFees")) or {}
+            d0 = min((k for k, v in m.items() if v), default=None)
+            first[x["slug"]] = d0 if d0 and d0 >= shift(expected, -60) else "基线"
+    for x in snap:
+        first.setdefault(x["slug"], expected)
+    for x in snap:
+        x["首次出现"] = first.get(x["slug"])
+    save("发射台矩阵.json", {"日期": expected, "生成时间UTC": data["生成时间UTC"], "协议": snap, "历史": hist,
+                         "沿用": dict(sorted(carried.items())), "首次出现": dict(sorted(first.items()))})
 
     out = save("日度数据.json", data)
     print("写入", out, "期望最后一天", expected)
