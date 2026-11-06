@@ -75,9 +75,10 @@ def probe_pool(client, config, env):
             cid, _ = client.rpc(url, 'eth_chainId', [], scope)
             logs, _ = client.rpc(url, 'eth_getLogs', [arg], scope)
             ok = int(cid, 16) == 56 and isinstance(logs, list) and len(logs) > 0
-        except (Unavailable, ValueError):
-            ok = False
-        print('public RPC', urlsplit(url).hostname, 'OK' if ok else 'skipped')
+            why = '' if ok else 'chainId/empty logs (no history for 2026-10-20)'
+        except (Unavailable, ValueError) as e:
+            ok, why = False, redact(str(e))[:200]
+        print('public RPC', urlsplit(url).hostname, 'OK' if ok else 'skipped: ' + why)
         if ok:
             live.append(url)
     members = live + ([fallback] if fallback else [])
@@ -178,6 +179,7 @@ def run(runtime, output):
     client.rpc(config['rpc'], 'eth_getBlockByNumber', [hex(config['registry']['deployment_block']), False])
     client.rpc(config['rpc'], 'eth_getLogs', [dict(address=config['registry']['address'], fromBlock=hex(config['registry']['deployment_block']), toBlock=hex(config['registry']['deployment_block']))])
     (runtime / 'charts').mkdir(exist_ok=True)
+    (runtime / 'data').mkdir(exist_ok=True)  # 空目录首跑：discovery 直接往 data/ 写文件，不会自己建
     today = dt.datetime.now(dt.timezone.utc).date()
     yesterday = (today - dt.timedelta(days=1)).isoformat()
     state = load(runtime / 'state.json') if (runtime / 'state.json').exists() else {'days': {}}
