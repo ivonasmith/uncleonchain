@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI Agent · 生态趋势</title>
+<style>
+:root{color-scheme:light;--bg:#f5f7fa;--ink:#172b3a;--muted:#6b7b8b;--line:#e5ebf0;--teal:#09877c;--blue:#4175c8}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.65 system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif}main{max-width:1240px;padding:38px 28px 24px;margin:auto}header{display:flex;align-items:flex-start;justify-content:space-between;gap:20px}h1{margin:0;font-size:32px;letter-spacing:-1px}p{margin:6px 0}header p{color:var(--muted)}.stamp{font-size:12px;text-align:right;padding-top:7px}.stamp b{display:block;color:var(--teal);font-weight:600}.notice{background:#edf4fa;border:1px solid #dce6ee;padding:12px 16px;border-radius:10px;margin:22px 0;color:#486174;font-size:12px}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.card{background:white;border:1px solid var(--line);border-radius:12px;padding:19px 21px}.label{color:#647686;font-size:12px}.value{font-size:31px;letter-spacing:-.8px;font-weight:650;line-height:1.6}.unit{font-size:12px;color:var(--muted);letter-spacing:0;font-weight:400}.sub{color:var(--muted);font-size:11px;min-height:19px}.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:30px 0 14px}h2{font-size:17px;margin:0}.ranges{display:flex;gap:5px;background:#e9eef3;border-radius:8px;padding:4px}button{border:0;background:transparent;color:#5e7180;cursor:pointer;border-radius:5px;padding:6px 12px;font:inherit;font-size:12px}button[aria-pressed=true]{background:white;color:var(--ink);box-shadow:0 1px 3px #0001}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.panel{background:white;border:1px solid var(--line);border-radius:12px;padding:18px 18px 10px;min-width:0}.panel h3{font-size:13px;font-weight:600;margin:0}.panel p{font-size:11px;color:var(--muted);margin-bottom:6px}.chart{width:100%;display:block;overflow:visible}.empty{fill:#8999a6;font-size:13px}.detail{margin-top:23px;color:var(--muted);font-size:12px}.detail summary{cursor:pointer;color:#546b7b}.detail ul{padding-left:20px}.foot{display:flex;justify-content:space-between;gap:10px;color:#8a98a5;font-size:11px;margin-top:24px}.lag{color:#9b6d1a}@media(max-width:700px){main{padding:22px 16px}.cards{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}h1{font-size:28px}header{display:block}.stamp{text-align:left;padding-top:12px}.value{font-size:27px}.toolbar{flex-wrap:wrap}.foot{display:block}}@media(prefers-reduced-motion:no-preference){button{transition:background .15s}}
+</style></head><body><main>
+<header><div><h1>AI Agent</h1><p>币安 Agent ID 生态 · 核心数据与每日趋势</p></div><div class="stamp"><b>每日更新 · UTC</b><span id="through"></span><div id="lag"></div></div></header>
+<div class="notice" id="coverage"></div>
+<section class="cards" id="cards" aria-label="最近完整日核心数据"></section>
+<div class="toolbar"><h2>每日趋势</h2><div class="ranges" aria-label="趋势时间范围"><button data-range="7" aria-pressed="false">近 7 天</button><button data-range="30" aria-pressed="false">近 30 天</button><button data-range="all" aria-pressed="true">全部</button></div></div>
+<section class="grid" id="charts" aria-label="六项核心趋势图"></section>
+<details class="detail"><summary>数据范围说明</summary><ul><li>注册量来自完整 Agent ID 注册表；它不等于币安 Agentic Wallet 总量。</li><li>交易地址是当日实际买卖的独立参与地址，不含仅铸造或领取的地址。同一地址同日多笔交易只计一次。</li><li>成交额、新发币、毕业数只覆盖注明的已核平台；成交额为曲线成交 BNB，不含二级 DEX。不同范围不混为生态总量。</li><li>所有日期均为 UTC，只展示完整日。U 表示未取得完整数据；图中缺失位置断开。0 表示已完整读取且确为零。</li></ul></details>
+<div class="foot"><span>只记录数据，不提供买卖建议</span><span id="updated"></span></div>
+</main>
+<script>
+const DATA=/*__AGENT_DATA__*/null;
+const fmt=(v,d=0)=>v==null?'U':Number(v).toLocaleString('zh-CN',{maximumFractionDigits:d});
+const rows=DATA.rows,last=rows[rows.length-1];
+document.getElementById('through').textContent='数据截至 '+DATA.data_through_utc+' UTC';
+document.getElementById('updated').textContent='数据读取完成 '+(DATA.source_read_through_utc||'U').replace('T',' ').slice(0,19)+' UTC';
+const currentUTC=new Date().toISOString().slice(0,10), gap=(Date.parse(currentUTC)-Date.parse(DATA.data_through_utc))/86400000;
+if(gap>1){document.getElementById('lag').textContent='当前快照距今日 '+gap+' 个 UTC 日';document.getElementById('lag').className='lag';}
+const scope=(last.scope||[]).join('、')||'U';
+const totalVolume=rows.every(r=>r.volume_bnb!=null&&JSON.stringify(r.scope)===JSON.stringify(last.scope))?rows.reduce((a,r)=>a+Number(r.volume_bnb),0):null;
+document.getElementById('coverage').textContent='注册数据覆盖完整注册表；交易及发币数据目前覆盖 '+scope+'，不代表全生态总量。';
+const specs=[['cumulative_ids','累计 Agent ID','截至最近完整日',0,'个'],['new_ids','当日新增 Agent ID','完整 UTC 日新增',0,'个'],['trading_addresses','当日交易地址','已核平台 · '+scope,0,'个'],['volume_bnb','当日成交额','已核曲线 · '+scope,6,'BNB'],['new_launches','当日新发币','已核平台 · '+scope,0,'个'],['graduated','当日毕业币','已核平台 · '+scope,0,'个']];
+for(const [key,label,sub,dec,unit] of specs){const div=document.createElement('article');div.className='card';const l=document.createElement('div');l.className='label';l.textContent=label;const v=document.createElement('div');v.className='value';v.textContent=fmt(last[key],dec)+' ';const u=document.createElement('span');u.className='unit';u.textContent=unit;v.appendChild(u);const s=document.createElement('div');s.className='sub';s.textContent=sub+(key==='volume_bnb'?' · 观测期累计 '+fmt(totalVolume,6)+' BNB':'');div.append(l,v,s);document.getElementById('cards').appendChild(div);}
+function render(range){
+ const sample=range==='all'?rows:rows.slice(-Number(range));document.getElementById('charts').replaceChildren();
+ for(const [key,label,sub,dec,unit] of specs){
+  const scoped=!['cumulative_ids','new_ids'].includes(key), stable=JSON.stringify(last.scope);
+  const values=sample.map(r=>scoped&&JSON.stringify(r.scope)!==stable?null:r[key]);
+  const valid=values.filter(v=>v!=null).map(Number), W=520,H=220,L=59,R=16,T=20,B=40;
+  const plotW=W-L-R,plotH=H-T-B,max=valid.length?Math.max(...valid):0,top=max>0?max*1.15:1;
+  const x=i=>L+(i+.5)*plotW/sample.length,y=v=>H-B-Number(v)/top*plotH;
+  const axisLabel=v=>v>=1000000?(v/1000000).toFixed(1)+'m':v>=10000?(v/1000).toFixed(0)+'k':fmt(v,key==='volume_bnb'?3:0);
+  let svg='<svg class="chart" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+label+'趋势">';
+  for(let i=0;i<=3;i++){let n=top*i/3,yy=y(n);svg+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+yy+'" y2="'+yy+'" stroke="#edf1f5"/><text x="'+(L-9)+'" y="'+(yy+4)+'" text-anchor="end" fill="#8c9aa5" font-size="10">'+axisLabel(n)+'</text>';}
+  const bar=['new_ids','new_launches','graduated'].includes(key);
+  if(bar){values.forEach((v,i)=>{if(v==null)return;let xx=x(i),yy=y(v),bw=Math.max(1,Math.min(26,plotW/sample.length*.55));svg+='<rect x="'+(xx-bw/2)+'" y="'+yy+'" width="'+bw+'" height="'+(H-B-yy)+'" rx="2" fill="#14998b"><title>'+sample[i].date+' · '+fmt(v,dec)+' '+unit+'</title></rect>';if(Number(v)===0)svg+='<circle cx="'+xx+'" cy="'+yy+'" r="2" fill="#14998b"/>';});}
+  else{let path='',open=false;values.forEach((v,i)=>{if(v==null){open=false;return;}path+=(open?' L':' M')+x(i)+' '+y(v);open=true;});svg+='<path d="'+path+'" fill="none" stroke="#4175c8" stroke-width="2.3"/>';values.forEach((v,i)=>{if(v==null)return;svg+='<circle cx="'+x(i)+'" cy="'+y(v)+'" r="3" fill="#4175c8"><title>'+sample[i].date+' · '+fmt(v,dec)+' '+unit+'</title></circle>';});}
+  const step=Math.max(1,Math.ceil(sample.length/5));sample.forEach((r,i)=>{if(i%step===0||i===sample.length-1)svg+='<text x="'+x(i)+'" y="'+(H-13)+'" text-anchor="middle" font-size="10" fill="#8c9aa5">'+r.date.slice(5)+'</text>';});
+  if(!valid.length)svg+='<text x="'+(W/2)+'" y="'+(H/2)+'" text-anchor="middle" class="empty">U · 暂无完整数据</text>';
+  svg+='</svg>';const panel=document.createElement('article');panel.className='panel';const h=document.createElement('h3');h.textContent=label+' · '+unit;const p=document.createElement('p');p.textContent=(scoped?'已核范围：'+scope:'完整 Agent ID 注册表')+' · UTC';panel.append(h,p);panel.insertAdjacentHTML('beforeend',svg);document.getElementById('charts').appendChild(panel);
+ }
+}
+document.querySelectorAll('[data-range]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-range]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));render(b.dataset.range);}));render('all');
+</script></body></html>

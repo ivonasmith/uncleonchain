@@ -1,0 +1,48 @@
+{
+  "agent-sigils": {
+    "address": "0xf865018A1638A36130cCc1C99732b536c0B4D1A7",
+    "registry_getter": "agentRegistry()",
+    "cap_getter": "MAX_SUPPLY()",
+    "minted_getter": "totalSupply()",
+    "price_getter": "PRICE()",
+    "source_gate_reviewed": true,
+    "owner_can_change_price": false,
+    "owner_can_pause": false,
+    "requires_approval": false,
+    "requires_typedData": false
+  },
+  "tape-readers": {
+    "address": "0x0f05a8e1f6b04BB5d657e20305F86ff411B998C2",
+    "registry_getter": "agentIdRegistry()",
+    "cap_getter": "MAX_SUPPLY()",
+    "minted_getter": "totalMinted()",
+    "price_getter": "PRICE()",
+    "source_gate_reviewed": true,
+    "owner_can_change_price": false,
+    "owner_can_pause": true,
+    "requires_approval": false,
+    "requires_typedData": false
+  },
+  "hashdroids": {
+    "address": "0x49718F13F9318dFAC9638Cd0a79a25BBBe4649A9",
+    "registry_getter": "agentRegistry()",
+    "source_gate_reviewed": true,
+    "owner_can_change_price": false,
+    "owner_can_pause": false,
+    "requires_approval": false,
+    "requires_typedData": false,
+    "from_complete_E": true
+  },
+  "ptah-poa": {
+    "address": "0xD87ADb2E47979d6cb323896B1A9320E0dd132213",
+    "registry_getter": "handleRegistry()",
+    "source_policy": "sourcify_match",
+    "source_gate_reviewed": true,
+    "owner_can_change_price": true,
+    "owner_can_pause": true,
+    "requires_approval": false,
+    "requires_typedData": false,
+    "from_complete_E": true,
+    "from_complete_E_project": "Ptah-POA"
+  }
+}
