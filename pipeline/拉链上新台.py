@@ -19,6 +19,7 @@
 """
 import json, os, sys, time, datetime as dt, urllib.request, urllib.error
 from collections import defaultdict, Counter
+from concurrent.futures import ThreadPoolExecutor
 from common import DATA, today_utc, shift
 
 TRANSFER = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
@@ -34,18 +35,38 @@ TX_CAP = 4000             # 每条链每天最多查几笔交易
 UA = {"Content-Type": "application/json", "User-Agent": "Mozilla/5.0 (launchpad-daily)"}
 KEY = os.environ.get("ALCHEMY_KEY", "").strip()
 
+# 链配置：公共 = 免费节点（优先）；alchemy = 你的 key 开通了的网络名（公共失败时兜底，没开通就填 None）；
+# 跨度 = 单次日志查询的块数；抽样 = k 表示每小时只扫前 1/k（量太大的链），计数 ×k 估算。
+# 2026-11-06 用 .github/workflows/probe-rpc.yml 在 Actions 里实测：BSC 只有 Alchemy 能做无地址日志查询；
+# Base 免费节点只能一次查 50 块（一天 8,640 次）太慢，继续用 Alchemy；其余各链官方 / drpc 免费节点都行。
 CHAINS = {
     "robinhood": {"名称": "Robinhood Chain", "公共": "https://rpc.mainnet.chain.robinhood.com", "alchemy": "robinhood-mainnet",
                   "浏览器": "https://explorer.chain.robinhood.com", "跨度": 30000},
-    # BSC / Base 一天铸币事件约 100 万条，Alchemy 全量扫 1～2 分钟（2026-11-06 实测），不抽样；要省额度可加 "抽样": 6（每小时只扫前 10 分钟）
     "bsc": {"名称": "BSC", "公共": None, "alchemy": "bnb-mainnet", "浏览器": "https://bscscan.com", "跨度": 2000},
     "base": {"名称": "Base", "公共": None, "alchemy": "base-mainnet", "浏览器": "https://basescan.org", "跨度": 2000},
     "arc": {"名称": "Arc", "公共": "https://rpc.mainnet.arc.io", "alchemy": "arc-mainnet", "浏览器": "https://explorer.arc.io", "跨度": 5000},
+    "ethereum": {"名称": "Ethereum", "公共": "https://eth.drpc.org", "alchemy": "eth-mainnet", "浏览器": "https://etherscan.io", "跨度": 50},
+    "arbitrum": {"名称": "Arbitrum", "公共": "https://arb1.arbitrum.io/rpc", "alchemy": "arb-mainnet", "浏览器": "https://arbiscan.io", "跨度": 1000},
+    "optimism": {"名称": "Optimism", "公共": "https://mainnet.optimism.io", "alchemy": None, "浏览器": "https://optimistic.etherscan.io", "跨度": 200},
+    "polygon": {"名称": "Polygon", "公共": "https://polygon.drpc.org", "alchemy": "polygon-mainnet", "浏览器": "https://polygonscan.com", "跨度": 50},
+    "xlayer": {"名称": "X Layer", "公共": "https://rpc.xlayer.tech", "alchemy": None, "浏览器": "https://www.oklink.com/xlayer", "跨度": 50},
+    "monad": {"名称": "Monad", "公共": "https://rpc.monad.xyz", "alchemy": None, "浏览器": "https://monadscan.com", "跨度": 50, "抽样": 6},
+    "hyperevm": {"名称": "HyperEVM", "公共": "https://rpc.hyperliquid.xyz/evm", "alchemy": None, "浏览器": "https://hyperevmscan.io", "跨度": 200},
+    "ink": {"名称": "Ink", "公共": "https://rpc-gel.inkonchain.com", "alchemy": None, "浏览器": "https://explorer.inkonchain.com", "跨度": 1000},
+    "abstract": {"名称": "Abstract", "公共": "https://api.mainnet.abs.xyz", "alchemy": None, "浏览器": "https://abscan.org", "跨度": 1000},
+    "berachain": {"名称": "Berachain", "公共": "https://rpc.berachain.com", "alchemy": None, "浏览器": "https://berascan.com", "跨度": 1000},
+    "avalanche": {"名称": "Avalanche", "公共": "https://api.avax.network/ext/bc/C/rpc", "alchemy": None, "浏览器": "https://snowtrace.io", "跨度": 50},
+    "sonic": {"名称": "Sonic", "公共": "https://rpc.soniclabs.com", "alchemy": None, "浏览器": "https://sonicscan.org", "跨度": 1000},
+    "mantle": {"名称": "Mantle", "公共": "https://rpc.mantle.xyz", "alchemy": None, "浏览器": "https://mantlescan.xyz", "跨度": 1000},
+    "plasma": {"名称": "Plasma", "公共": "https://rpc.plasma.to", "alchemy": None, "浏览器": "https://plasmascan.to", "跨度": 1000},
+    "zksync": {"名称": "zkSync Era", "公共": "https://mainnet.era.zksync.io", "alchemy": None, "浏览器": "https://explorer.zksync.io", "跨度": 1000},
+    "unichain": {"名称": "Unichain", "公共": "https://mainnet.unichain.org", "alchemy": None, "浏览器": "https://uniscan.xyz", "跨度": 1000},
+    "stable": {"名称": "Stable", "公共": "https://rpc.stable.xyz", "alchemy": None, "浏览器": "https://stablescan.xyz", "跨度": 1000},
+    "megaeth": {"名称": "MegaETH", "公共": "https://mainnet.megaeth.com/rpc", "alchemy": None, "浏览器": "https://megaexplorer.xyz", "跨度": 1000},
 }
 OUT_DIR = os.path.join(DATA, "onchain")
-CALLS = Counter()         # 每个节点今天调用了多少次（看 Alchemy 额度用）
+CALLS = Counter()         # (链, 节点) → 今天调用了多少次（看 Alchemy 额度用）；多条链并行跑
 CHAIN_BUDGET = 20 * 60    # 每条链每次最多跑 20 分钟，超时就停，不拖垮日更
-DEADLINE = [0.0]
 
 
 class Timeout(RuntimeError):
@@ -74,13 +95,13 @@ def _post(url, payload, timeout=120, tries=4):
 
 
 class Node:
-    def __init__(self, url, label):
-        self.url, self.label = url, label
+    def __init__(self, url, label, chain, deadline):
+        self.url, self.label, self.chain, self.deadline = url, label, chain, deadline
 
     def call(self, method, params):
-        if DEADLINE[0] and time.time() > DEADLINE[0]:
+        if time.time() > self.deadline:
             raise Timeout("超过本链时间上限")
-        CALLS[self.label] += 1
+        CALLS[(self.chain, self.label)] += 1
         j = _post(self.url, {"jsonrpc": "2.0", "id": 1, "method": method, "params": params})
         if "error" in j:
             raise RpcError(str(j["error"].get("message") or j["error"]))
@@ -90,7 +111,7 @@ class Node:
         out = []
         for i in range(0, len(calls), size):
             part = calls[i:i + size]
-            CALLS[self.label] += len(part)
+            CALLS[(self.chain, self.label)] += len(part)
             try:
                 j = _post(self.url, [{"jsonrpc": "2.0", "id": k, "method": m, "params": p} for k, (m, p) in enumerate(part)])
                 res = {x.get("id"): x.get("result") for x in j} if isinstance(j, list) else {}
@@ -100,12 +121,13 @@ class Node:
         return out
 
 
-def nodes_for(ch):
+def nodes_for(key, ch):
+    dl = time.time() + CHAIN_BUDGET
     ns = []
     if ch["公共"]:
-        ns.append(Node(ch["公共"], "公共"))
+        ns.append(Node(ch["公共"], "公共", key, dl))
     if KEY and ch["alchemy"]:
-        ns.append(Node(f"https://{ch['alchemy']}.g.alchemy.com/v2/{KEY}", "Alchemy"))
+        ns.append(Node(f"https://{ch['alchemy']}.g.alchemy.com/v2/{KEY}", "Alchemy", key, dl))
     return ns
 
 
@@ -216,7 +238,7 @@ def run_chain(key, ch):
     db = json.load(open(path, encoding="utf-8")) if os.path.exists(path) else {}
     db.update({"链": ch["名称"], "浏览器": ch["浏览器"]})
     days = db.setdefault("逐日", {})
-    ns = nodes_for(ch)
+    ns = nodes_for(key, ch)
     if not ns:
         db["状态"] = "待接入：缺 Alchemy key（GitHub Secret ALCHEMY_KEY）"
         json.dump(db, open(path, "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
@@ -262,22 +284,28 @@ def run_chain(key, ch):
     db["首次出现"] = first
     db["状态"] = "ok" if not err else f"失败：{err}"
     db["更新UTC"] = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M")
-    db["调用"] = dict(CALLS)
+    db["调用"] = {lb: n for (c, lb), n in CALLS.items() if c == key}
     json.dump(db, open(path, "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
 
 
 def main():
     os.makedirs(OUT_DIR, exist_ok=True)
     only = [a for a in sys.argv[1:] if a in CHAINS]
-    for key, ch in CHAINS.items():
-        if only and key not in only:
-            continue
-        CALLS.clear()
-        DEADLINE[0] = time.time() + CHAIN_BUDGET
+    todo = [(k, ch) for k, ch in CHAINS.items() if not only or k in only]
+
+    def one(kc):
+        k, ch = kc
         try:
-            run_chain(key, ch)
+            run_chain(k, ch)
         except Exception as e:           # 一条链挂了不影响别的链，也不拦日更
-            print(f"  {ch['名称']} 失败：{e}")
+            print(f"  {ch['名称']} 失败：{e}", flush=True)
+    # 各链用的是不同节点，并行跑；每条链自带 20 分钟上限
+    with ThreadPoolExecutor(max_workers=8) as ex:
+        list(ex.map(one, todo))
+    tot = Counter()
+    for (c, lb), n in CALLS.items():
+        tot[lb] += n
+    print(f"  调用合计：{dict(tot)}", flush=True)
 
 
 if __name__ == "__main__":

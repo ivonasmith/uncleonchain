@@ -1067,7 +1067,7 @@ def build_home(sd, S, logs, weeks, months, rot, matrix):
             lp_rows += (f'<tr><td class="rk">{i}</td><td class="l"><span class="pname">{esc(p["名称"])}{carry_chip(p.get("数据日")) if p.get("沿用") else ""}</span></td>'
                         f'<td class="l">{ch}</td><td>{f_usd(p["当日"])}</td><td>{p["当日"]/tot*100:.1f}%</td><td>{fmt_delta(p.get("日环比"), pct_input=True)}</td></tr>')
     lp_tbl = (f'<div class="tw"><table><thead><tr><th class="l">#</th><th class="l">{T("平台", "Platform")}</th><th class="l">{T("链", "Chain")}</th>'
-              f'<th>{T("当日手续费", "Fees (day)")}</th><th>{T("份额", "Share")}</th><th>{T("日环比", "DoD")}</th></tr></thead><tbody>{lp_rows}</tbody></table></div>'
+              f'<th>{T("当日手续费", "Fees (day)")}</th><th>{T("手续费份额", "Fee share")}</th><th>{T("日环比", "DoD")}</th></tr></thead><tbody>{lp_rows}</tbody></table></div>'
               ) if lp_rows else empty_state("none", T("发射台数据待生成", "Launchpad data pending"), T("下一次每日运行后出现。", "Appears after the next daily run."), "")
     cats = ""
     if rot:
@@ -2407,7 +2407,7 @@ def build_indicator_pages(L, S, logs, files):
 
 # ---------------------------------------------------------------- 发射台矩阵
 def launchpad_history(matrix):
-    """全网手续费汇总：Top8（近 90 天合计排序，颜色按实体固定）+ 其他。返回 (数据路径, 拆解表数据)。"""
+    """全网手续费汇总：Top8（跨链排行的近 7 日手续费排序，颜色按实体固定）+ 其他。返回 (数据路径, 拆解表数据)。"""
     hist = matrix.get("历史") or {}
     ds = sorted(d for d in hist if hist[d])
     if len(ds) < 2:
@@ -2417,7 +2417,7 @@ def launchpad_history(matrix):
     for d in ds[-90:]:
         for s, v in hist[d].items():
             agg[s] = agg.get(s, 0) + (v or 0)
-    top = [s for s, _ in sorted(agg.items(), key=lambda x: -x[1])[:8]]
+    top = lp_top8(matrix, hist)
     series = {s: {} for s in top}
     series["_other"], tot = {}, {}
     for d in ds:
@@ -2462,7 +2462,7 @@ def money_where(matrix):
     for d in ds[-90:]:
         for s, v in hist[d].items():
             agg90[s] = agg90.get(s, 0) + (v or 0)
-    top = [s for s, _ in sorted(agg90.items(), key=lambda x: -x[1])[:8]]          # 和矩阵页汇总图同一个排序 → 同一套平台色
+    top = lp_top8(matrix, hist)          # 和矩阵页汇总图、跨链排行同一个排序 → 同一套平台色
     pcol = {s: f"s{k + 1}" for k, s in enumerate(top)}
 
     def window(end_i):
@@ -2513,8 +2513,8 @@ def money_where(matrix):
            "series": [{"k": k, "n": chain_name(k) if k != "other" else T("其他", "Other"), "c": "c-" + k} for k in ch_keys]}
     return (f'<section id="money"><h2>{T("钱在哪", "Where the money is")} <span class="sub">{T("近 7 日手续费份额 · 括号外是和 30 天前比变了几个百分点", "7-day fee share · change vs 30 days earlier in pp")}</span></h2>'
             f'<div class="card mwcard"><div class="stamp">{T("数据日", "Data date")} <b>{ds[-1]}</b> · {T("矩阵日更（DefiLlama Launchpad 逐日手续费）", "matrix daily data (DefiLlama Launchpad daily fees)")}</div>'
-            f'<h4>{T("按链", "By chain")}</h4>{chain_bar}<h4>{T("按平台（前 8 名 + 其他）", "By platform (top 8 + other)")}</h4>{plat_bar}'
-            f'<h4>{T("近 90 天按链份额", "Chain share, last 90 days")}</h4>{chart_div(cfg)}'
+            f'<h4>{T("按链（手续费份额）", "By chain (fee share)")}</h4>{chain_bar}<h4>{T("按平台（手续费份额 · 前 8 名 + 其他）", "By platform (fee share · top 8 + other)")}</h4>{plat_bar}'
+            f'<h4>{T("近 90 天按链手续费份额", "Chain fee share, last 90 days")}</h4>{chart_div(cfg)}'
             f'<p class="tnote">{T("份额只说明钱在各链、各平台之间怎么分；赛道整体冷暖看上面的仪表。多链协议按近 30 日手续费最多的那条链归类。", "Shares only show how money splits across chains and platforms; for the sector as a whole, read the dial above. Multi-chain protocols are assigned to their largest chain by 30-day fees.")}</p></div></section>')
 
 
@@ -2582,12 +2582,23 @@ def new_listings_html(matrix):
                 f'<td class="l">{"".join(chain_badge(c) for c in (p.get("链") or [])[:3])}</td><td>{esc(p["首次出现"])}</td>'
                 f'<td>{f_usd(p.get("当日"))}</td><td>{f_usd(d7)}</td><td>{g}</td><td>{f_usd(p.get("30日"))}</td><td>{f_usd(p.get("累计"))}</td></tr>')
     return (head + f'<div class="tw"><table><thead><tr><th class="l">{T("平台", "Platform")}</th><th class="l">{T("链", "Chain")}</th><th>{T("首次出现", "First seen")}</th>'
-            f'<th>{T("当日", "Day")}</th><th>{T("近 7 日", "7d")}</th><th>{T("较前 7 日", "vs prior 7d")}</th><th>{T("30 日", "30d")}</th><th>{T("累计", "All-time")}</th></tr></thead><tbody>{trs}</tbody></table></div>'
+            f'<th>{T("当日手续费", "Fees (day)")}</th><th>{T("近 7 日手续费", "Fees (7d)")}</th><th>{T("较前 7 日", "vs prior 7d")}</th><th>{T("30 日手续费", "Fees (30d)")}</th><th>{T("累计手续费", "Fees (all-time)")}</th></tr></thead><tbody>{trs}</tbody></table></div>'
             + f'<p class="tnote">{T("首次出现 = 第一次在 DefiLlama Launchpad 类目里看到它的日子（2026-11-06 起每天记录；之前已在名单里的按「第一天有手续费」回推近 60 天）。", "First seen = the first day we saw it in DefiLlama Launchpad (logged daily since 2026-11-06; for platforms already listed, back-dated from their first day with fees within 60 days).")}</p>')
 
 
 # ---------------------------------------------------------------- 发射台：链上自动发现的新发射台（拉链上新台.py → data/onchain/）
-OC_CHAINS = [("robinhood", "Robinhood Chain"), ("bsc", "BSC"), ("base", "Base"), ("arc", "Arc")]
+def oc_chain_list():
+    """链上扫描覆盖的 EVM 链：data/onchain/ 里有几条列几条，按最近一天新币数从多到少。"""
+    out = []
+    d = os.path.join(DATA, "onchain")
+    for f in sorted(os.listdir(d)) if os.path.isdir(d) else []:
+        if not f.endswith(".json") or f in ("solana.json", "线索.json"):
+            continue
+        db = load(os.path.join(d, f)) or {}
+        days = db.get("逐日") or {}
+        last = days[max(days)].get("新币", 0) if days else -1
+        out.append((f[:-5], db.get("链") or f[:-5], last))
+    return [(k, nm) for k, nm, _ in sorted(out, key=lambda x: -x[2])]
 OC_NEW_DAYS = 14          # 首次出现在近 14 天内的工厂算「新出现」
 OC_MIN_7D = 30            # 进候选名单的门槛：近 7 天新币 ≥ 30 个
 
@@ -2659,12 +2670,13 @@ def _oc_first(fs):
 
 def onchain_html():
     lab = oc_labels()
-    sums = {k: oc_summary(k, lab) for k, _ in OC_CHAINS}
+    chains = oc_chain_list()
+    sums = {k: oc_summary(k, lab) for k, _ in chains}
     if not any(sums.values()):
         return ""
     unnamed = T("未命名合约", "unnamed contract")
     cand, blocks = [], ""
-    for key, nm in OC_CHAINS:
+    for key, nm in chains:
         sm = sums[key]
         if not sm:
             continue
@@ -2786,6 +2798,93 @@ def clues_html():
     return out
 
 
+def discovery_stats():
+    """入口卡片和二级页面共用：四条 EVM 链 + Solana 的汇总数字。"""
+    lab = oc_labels()
+    out = {"chains": [], "factories": 0, "cand": [], "sol": 0, "sol_top": None, "end": None, "dirs_new": 0}
+    for key, nm in oc_chain_list():
+        sm = oc_summary(key, lab)
+        if not sm or not sm["end"]:
+            continue
+        last = (sm["db"].get("逐日") or {}).get(sm["end"]) or {}
+        out["chains"].append((key, nm, last.get("新币", 0)))
+        out["end"] = max(out["end"] or "", sm["end"])
+        act = [r for r in sm["rows"] if r["7日"] >= OC_MIN_7D]
+        out["factories"] += len(act)
+        out["cand"] += [(nm, r) for r in act if r["new"] or r["ramp"]]
+    sdb = load(os.path.join(DATA, "onchain", "solana.json")) or {}
+    if sdb.get("逐日"):
+        e = max(sdb["逐日"])
+        fr = [(g, dex) for dex, b in sdb["逐日"][e].items() for g in b["前端"].values()]
+        out["sol"] = len(fr)
+        byname = {}
+        for g, _ in fr:                                  # 同一个平台开多个配置：按名字合并后再比
+            if g.get("名称"):
+                x = byname.setdefault(g["名称"], {"名称": g["名称"], "成交额": 0})
+                x["成交额"] += g["成交额"]
+        out["sol_top"] = max(byname.values(), key=lambda g: g["成交额"]) if byname else None
+    c = load(os.path.join(DATA, "onchain", "线索.json")) or {}
+    out["dirs_new"] = sum(1 for d in (c.get("目录") or {}).values() for v in d.values() if v.get("首次出现") not in (None, "基线"))
+    out["cand"].sort(key=lambda x: -x[1]["7日"])
+    return out
+
+
+def discovery_card():
+    st = discovery_stats()
+    if not st["chains"]:
+        return ""
+    tot = sum(n for _, _, n in st["chains"]) or 1
+    tile = lambda k, v, sub, cls="": (f'<div class="dc-t{cls}"><small>{k}</small><b>{v}</b><span>{sub}</span></div>')
+    nch = len(st["chains"])
+    tiles = (tile(T("昨日链上新币", "New tokens yesterday"), f"{tot:,}", T(f"{nch} 条 EVM 链 · {st['end']}", f"{nch} EVM chains · {st['end']}"))
+             + tile(T("在发币的工厂", "Active factories"), f"{st['factories']:,}", T("近 7 天新币 ≥ 30 个", "≥ 30 new tokens in 7d"))
+             + tile(T("候选", "Candidates"), f"{len(st['cand']):,}", T("新出现或起量", "new or ramping"), " hot" if st["cand"] else "")
+             + tile(T("Solana 前端", "Solana front ends"), f"{st['sol']:,}", T("Meteora DBC · LaunchLab", "Meteora DBC · LaunchLab")))
+    cs = sorted(st["chains"], key=lambda x: -x[2])
+    head, rest = cs[:5], cs[5:]
+    if rest:
+        head = head + [("other", T(f"其他 {len(rest)} 条链", f"{len(rest)} other chains"), sum(n for _, _, n in rest))]
+    col = lambda k: k if k in MAIN_CHAINS else "other"
+    bar = "".join(f'<i style="width:{n / tot * 100:.2f}%;background:var(--c-{col(k)})" title="{esc(nm)} {n:,}"></i>' for k, nm, n in head)
+    leg = "".join(f'<span><i style="background:var(--c-{col(k)})"></i>{esc(nm)} <b>{n:,}</b></span>' for k, nm, n in head)
+    if st["cand"]:
+        picks = [(nm, r["name"] or T("未命名合约", "unnamed contract"), T(f"近 7 日 {r['7日']:,} 个新币", f"{r['7日']:,} new tokens in 7d")) for nm, r in st["cand"][:3]]
+        pick_h = T("最值得看", "Worth a look")
+    else:
+        picks = []
+        if st["sol_top"]:
+            g = st["sol_top"]
+            picks.append(("Solana", g["名称"], T(f"24h 成交 {f_usd(g['成交额'])}", f"24h volume {f_usd(g['成交额'])}")))
+        pick_h = T("目前还没有候选 · 成交最高的前端", "No candidates yet · busiest front end")
+    pk = "".join(f'<li><span class="badge b-other">{esc(c)}</span> <b>{esc(n)}</b> <small>{esc(d)}</small></li>' for c, n, d in picks)
+    note = T("数据只积累了几天，开头几天出现的都算「已有」，之后新冒出来的才进候选。", "Only a few days of data so far: everything seen in the first days counts as existing; only later arrivals become candidates.") if not st["cand"] else ""
+    return (f'<a class="card dcard" href="{U("/launchpad/discovery/")}"><div class="dc-h"><div><div class="eyebrow">{T("新发射台监控 · 链上自动发现", "New launchpad monitor · on-chain discovery")}</div>'
+            f'<h3>{T(f"不等 DefiLlama 收录：每天扫 {nch} 条 EVM 链的新币 + Solana 发射台前端", f"Before DefiLlama lists them: daily scans of new tokens on {nch} EVM chains, plus Solana launch front ends")}</h3></div>'
+            f'<span class="btn dc-go">{T("进入监控 →", "Open monitor →")}</span></div>'
+            f'<div class="dc-g">{tiles}</div><div class="chainbar">{bar}</div><div class="chainleg">{leg}</div>'
+            + (f'<div class="dc-p"><small>{pick_h}</small><ul>{pk}</ul></div>' if pk else "")
+            + (f'<p class="tnote" style="margin:6px 0 0">{note}</p>' if note else "") + '</a>')
+
+
+def build_launchpad_discovery():
+    st = discovery_stats()
+    body = (crumbs([(T("发射台矩阵", "Launchpads"), "/launchpad/"), (T("新发射台监控", "New launchpad monitor"), None)])
+            + f'<div class="ph"><div><div class="eyebrow">Launchpad · {T("链上自动发现", "on-chain discovery")}</div><h1>{T("新发射台监控", "New launchpad monitor")}</h1>'
+            + f'<p class="lede">{T("DefiLlama 收录有滞后。这里直接从链上看谁在批量发币：每天扫前一个 UTC 日的新币，按发币合约归到「工厂」；Solana 按公共发币设施上的配置拆出各个前端。只说明链上在发什么，不是推荐。", "DefiLlama lags. Here we read the chain directly: each day we scan the previous UTC day for new tokens and group them by the contract that created them; on Solana we split shared launch venues by config. Describes what is being launched; not a recommendation.")}</p></div>'
+            + f'<div class="stamp">{T("数据截至", "Data as of")} <b>{esc(st["end"] or "—")}</b>{T("（UTC 完整日）", " (UTC)")}</div></div>'
+            + onchain_html())
+    emit("launchpad/discovery/index.html", f'{T("新发射台监控", "New launchpad monitor")} · {T(BRAND, BRAND_EN)}', body, active="launchpad",
+         desc=T("链上自动发现新发射台：Robinhood Chain、BSC、Base、Arc 每日新币按发币工厂统计，Solana 发射台前端拆分。", "On-chain discovery of new launchpads: daily new tokens by factory on Robinhood Chain, BSC, Base and Arc, plus Solana launch front ends."))
+
+
+def lp_top8(matrix, hist):
+    """汇总趋势图、当日变化拆解、「钱在哪」共用的前 8 名：和下面「跨链排行」默认视图一致，按近 7 日手续费（DefiLlama total7d）排序；
+    只取逐日历史里有数的平台。颜色按这个排序给，三处同一套平台色。"""
+    have = set().union(*[set(v) for v in hist.values()]) if hist else set()
+    ps = sorted((p for p in matrix["协议"] if p["slug"] in have), key=lambda p: -(p.get("7日") or 0))
+    return [p["slug"] for p in ps[:8]]
+
+
 def carry_map(matrix, d=None):
     """{slug: 实际沿用的那天}：DefiLlama 在 d（默认矩阵日期）还没出数、矩阵用它最后一天的值顶上的平台。"""
     if not matrix:
@@ -2839,7 +2938,7 @@ def breakdown_html(bk):
                f" ({lst}: not yet published by DefiLlama for this day; its last value is used, so share changes may be off.)")
     return (f'<p class="tnote" style="font-size:13px;color:var(--ink2)">{esc(s)}</p>'
             f'<div class="tw"><table><thead><tr><th class="l">{T("平台", "Platform")}</th><th>{bk["d1"]}</th><th>{bk["d0"]}</th><th>{T("变化", "Change")}</th>'
-            f'<th>{T("份额", "Share")}</th><th>{T("份额变化", "Share Δ")}</th></tr></thead><tbody>{trs}'
+            f'<th>{T("手续费份额", "Fee share")}</th><th>{T("份额变化", "Share Δ")}</th></tr></thead><tbody>{trs}'
             f'<tr><td class="l"><b>{T("全网合计", "Total")}</b></td><td><b>{f_usd(t1)}</b></td><td>{f_usd(t0)}</td><td>{R.f_signed_usd(dt_)}</td><td>100%</td><td></td></tr></tbody></table></div>')
 
 
@@ -2984,9 +3083,9 @@ def build_launchpad(sd, matrix):
         total_html = (f'<h2>{T("全网手续费汇总趋势", "Sector-wide fee trend")} <span class="sub">{T("看赛道水多没多；切到「份额 %」看资金在平台之间怎么挪", "Is the sector heating up? Switch to Share % to see money moving between venues")}</span></h2>'
                       f'<div class="card" style="padding:14px 18px">'
                       + chart_div({"src": tpath, "fmt": "usd", "stack": True, "ranges": ["1M", "3M", "6M", "1Y", "ALL"], "range": "3M", "series": bk["cfg"],
-                                   "note": T(f"DefiLlama Launchpad 类目 Top60 逐日手续费（{bk['起']} 起，{bk['天数']} 天），前 8 名按近 90 天合计排序、颜色固定跟着平台走，其余并入「其他」。口径是手续费不是成交量：各平台费率不同，份额按手续费算。",
-                                             f"Daily fees of DefiLlama's top-60 launchpads since {bk['起']} ({bk['天数']} days). Top 8 by the last 90 days, colors fixed per platform, the rest folded into Other. Fees, not volume: fee rates differ by venue.")})
-                      + f'</div><h3>{T("当日变化拆解", "Day-over-day breakdown")} <span class="sub" style="font-weight:400;color:var(--muted)">{bk["d0"]} → {bk["d1"]}</span></h3>{breakdown_html(bk)}')
+                                   "note": T(f"DefiLlama Launchpad 类目 Top60 逐日手续费（{bk['起']} 起，{bk['天数']} 天），前 8 名和下面「跨链排行」一样按近 7 日手续费排序、颜色跟着平台走，其余并入「其他」。口径是手续费不是成交量：各平台费率不同，份额按手续费算。",
+                                             f"Daily fees of DefiLlama's top-60 launchpads since {bk['起']} ({bk['天数']} days). Top 8 by 7-day fees, same order as the cross-chain ranking below, colors per platform, the rest folded into Other. Fees, not volume: fee rates differ by venue.")})
+                      + f'</div><h3>{T("当日手续费变化拆解", "Day-over-day fee breakdown")} <span class="sub" style="font-weight:400;color:var(--muted)">{bk["d0"]} → {bk["d1"]}</span></h3>{breakdown_html(bk)}')
     first_arc = str(((arc.get("发射台") or [{}])[0]).get("slug", ""))
     body = f"""<div class="ph"><div><div class="eyebrow">Launchpad Matrix</div><h1>{T("发射台矩阵", "Launchpad matrix")}</h1>
 <p class="lede">{T(f"DefiLlama Launchpad 类目全部 {len(matrix['协议'])} 个协议：先看全网汇总趋势（赛道水多没多、资金在哪些平台之间挪），再看跨链排行和每个平台的市场份额。口径统一用手续费（fees），日期是 UTC 完整日。",
@@ -2994,20 +3093,20 @@ def build_launchpad(sd, matrix):
 <div class="stamp">{T("数据截至", "Data as of")} <b>{matrix["日期"]}</b>{T("（UTC 完整日）", " (UTC)")}<br>{T("生成", "Generated")} <b>{TT(matrix.get("生成时间UTC"))}</b></div></div>
 {cycle_hero()}
 <div class="grid g5" id="lpk">{kh}</div>
+{discovery_card()}
 {new_listings_html(matrix)}
-{onchain_html()}
 {total_html}
 <div class="card" style="padding:14px 16px;margin-top:22px"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:12.5px"><b>{T("生态份额 · 当日手续费按链拆分", "Chain share · today's fees by chain")}</b><span class="stamp">{T("多链协议按 DefiLlama 分链数据精确拆分", "Multi-chain protocols split by DefiLlama's per-chain data")}</span></div>
 <div class="chainbar">{bar}</div><div class="chainleg">{leg}</div></div>
-<h2>{T("跨链排行 · 市场份额", "Cross-chain ranking · market share")} <span class="sub">{T("份额条 = 占当前筛选范围合计的百分比，颜色 = 主力所在链；链接会记住当前筛选，可直接分享", "Share bar = % of the filtered total, color = main chain; the URL keeps your filters")}</span></h2>
+<h2>{T("跨链排行 · 手续费市场份额", "Cross-chain ranking · fee market share")} <span class="sub">{T("按手续费（fees）排，不是成交量；份额条 = 手续费占当前筛选范围合计的百分比，颜色 = 主力所在链；链接会记住当前筛选，可直接分享", "Ranked by fees, not volume; share bar = % of the filtered fee total, color = main chain; the URL keeps your filters")}</span></h2>
 <div class="glass fbar">
 <div class="fg"><span class="fl">{T("生态", "Chain")}</span>{chain_pills}</div>
 <div class="fg"><span class="fl">{T("周期", "Period")}</span><button class="pill" data-f="p" data-v="d1">{T("当日", "Day")}</button><button class="pill on" data-f="p" data-v="d7">{T("7 日", "7d")}</button><button class="pill" data-f="p" data-v="d30">{T("30 日", "30d")}</button></div>
 <div class="fg"><span class="fl">{T("金额档", "Tier")}</span><button class="pill on" data-f="tier" data-v="all">{T("全部", "All")}</button><button class="pill" data-f="tier" data-v="big">{T("主力", "Major")} ≥$100K</button><button class="pill" data-f="tier" data-v="mid">{T("腰部", "Mid")} $10K–100K</button><button class="pill" data-f="tier" data-v="small">{T("黑马", "Small")} &lt;$10K</button></div>
 <span class="fcount" id="fcount"></span><button class="btn" onclick="shareMatrix()">📸 {T("生成今日排行长图", "Share ranking image")}</button>
 </div>
-<div class="tw scroll"><table id="mx"><thead><tr><th class="l">#</th><th class="l">{T("协议", "Protocol")}</th><th class="l">{T("链", "Chain")}</th><th class="l">{T("份额", "Share")}</th><th data-col="d1">{T("当日", "Day")}</th><th>{T("日环比", "DoD")}</th>
-<th data-col="d7">{T("7 日", "7d")}</th><th data-col="d30">{T("30 日", "30d")}</th><th>{T("30 日走势", "30d trend")}</th></tr></thead><tbody>{rows}</tbody></table></div>
+<div class="tw scroll"><table id="mx"><thead><tr><th class="l">#</th><th class="l">{T("协议", "Protocol")}</th><th class="l">{T("链", "Chain")}</th><th class="l">{T("手续费份额", "Fee share")}</th><th data-col="d1">{T("当日手续费", "Fees (day)")}</th><th>{T("日环比", "DoD")}</th>
+<th data-col="d7">{T("7 日手续费", "Fees (7d)")}</th><th data-col="d30">{T("30 日手续费", "Fees (30d)")}</th><th>{T("30 日手续费走势", "30d fee trend")}</th></tr></thead><tbody>{rows}</tbody></table></div>
 <p class="tnote">{T("金额档按当前选中周期的金额判断（选 7 日 / 30 日时按日均换算）。选了某条链时，当日和 30 日用 DefiLlama 分链数据精确拆分，7 日按该协议 30 日分链占比折算（标 ≈）。「深度」= 本站逐日追踪的平台，点进去看协议收入、回购估值；其余链接到 DefiLlama。",
                   "Tiers use the selected period (daily average for 7d/30d). With a chain selected, day and 30d use DefiLlama's per-chain split and 7d is pro-rated (≈). 'deep' = tracked daily here; others link to DefiLlama.")}</p>
 <h2 id="deep">{T("深度追踪平台", "Deep-tracked platforms")} <span class="sub">{T("逐日序列 + 协议收入 + 回购市盈率", "daily series + revenue + buyback P/E")}</span> <a class="sub" href="{U("/launchpad/report/")}">{T("看今日文字解读 →", "Today's narrative →")}</a></h2>
@@ -3021,7 +3120,7 @@ def build_launchpad(sd, matrix):
            "tier": {"all": T("全部金额档", "All tiers"), "big": T("主力 ≥$100K", "Major ≥$100K"), "mid": T("腰部 $10K–100K", "Mid $10K–100K"), "small": T("黑马 <$10K", "Small <$10K")}}
     js = (MATRIX_JS.replace("%MAIN%", json.dumps(MAIN_CHAINS)).replace("%DATE%", matrix["日期"]).replace("%LAB%", json.dumps(lab, ensure_ascii=False))
           .replace("%SHOW%", T("显示", "Showing")).replace("%PROTO%", T("协议", "Protocol")).replace("%CHAIN%", T("链", "Chain"))
-          .replace("%SHARE%", T("份额", "Share")).replace("%DOD%", T("日环比", "DoD")).replace("%TITLE%", T("发射台矩阵", "Launchpad matrix"))
+          .replace("%SHARE%", T("手续费份额", "Fee share")).replace("%DOD%", T("日环比", "DoD")).replace("%TITLE%", T("发射台矩阵", "Launchpad matrix"))
           .replace("%SRC%", T("数据：DefiLlama · 口径：手续费", "Data: DefiLlama · fees")))
     emit("launchpad/index.html", T(f"发射台矩阵 · 跨链 Launchpad 手续费排行 · {BRAND}", f"Launchpad matrix · cross-chain fees · {BRAND_EN}"), body,
          active="launchpad", share=True, chart=True, scripts=js,
@@ -4170,6 +4269,7 @@ def main():
         if G.get("CYC_DATA"):
             build_cycle(globals())
         build_launchpad_platforms(sd)
+        build_launchpad_discovery()
         build_launchpad_report(sd)
         build_rotation(rot)
         build_narrative()

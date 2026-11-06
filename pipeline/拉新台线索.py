@@ -24,7 +24,9 @@ DS = "https://api.dexscreener.com"
 SOL_RPC = ["https://api.mainnet-beta.solana.com"]
 if os.environ.get("ALCHEMY_KEY"):
     SOL_RPC.append(f"https://solana-mainnet.g.alchemy.com/v2/{os.environ['ALCHEMY_KEY'].strip()}")
-GT_NETS = {"solana": "Solana", "bsc": "BSC", "base": "Base", "robinhood": "Robinhood Chain", "arc": "Arc"}
+GT_NETS = {"solana": "Solana", "bsc": "BSC", "base": "Base", "robinhood": "Robinhood Chain", "arc": "Arc", "eth": "Ethereum",
+           "arbitrum": "Arbitrum", "optimism": "Optimism", "polygon_pos": "Polygon", "avax": "Avalanche", "x-layer": "X Layer",
+           "mantle": "Mantle", "zksync": "zkSync Era"}
 DS_CHAIN = {"robinhood": "robinhood", "bsc": "bsc", "base": "base", "arc": "arc", "solana": "solana"}
 DBC, LAUNCHLAB = "dbcij3LWUppWqq96dh6gJWwBifmcGfLSB5D4DuSMaqN", "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
 POOL_PAGES = 10            # GeckoTerminal 每页 20 个池子
@@ -272,7 +274,9 @@ def identify(chain, samples):
 
 
 EXPLORER_API = {"robinhood": "https://explorer.chain.robinhood.com/api/v2", "arc": "https://explorer.arc.io/api/v2",
-                "base": "https://base.blockscout.com/api/v2"}
+                "base": "https://base.blockscout.com/api/v2", "ethereum": "https://eth.blockscout.com/api/v2",
+                "optimism": "https://optimism.blockscout.com/api/v2", "arbitrum": "https://arbitrum.blockscout.com/api/v2",
+                "polygon": "https://polygon.blockscout.com/api/v2", "ink": "https://explorer.inkonchain.com/api/v2"}
 
 
 def contract_name(chain, a):
@@ -304,7 +308,8 @@ def enrich(clues, end, sol):
     """给候选补身份：链上工厂近 7 天新币 ≥ 30 的、Solana 前端成交额前列的。每个候选只查一次（结果缓存 14 天）。"""
     ids = clues.setdefault("身份", {})
     todo = []
-    for chain in ("robinhood", "bsc", "base", "arc"):
+    chains = sorted(f[:-5] for f in os.listdir(OUT) if f.endswith(".json") and f not in ("solana.json", "线索.json"))
+    for chain in chains:
         p = os.path.join(OUT, f"{chain}.json")
         if not os.path.exists(p):
             continue
