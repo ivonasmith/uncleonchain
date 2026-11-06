@@ -8,6 +8,12 @@
   "items": [
    {
     "type": "data",
+    "zh": "发射台矩阵标出「沿用前一日」的平台：DefiLlama 还没出当天数据的平台（如 StonkFun），排行、头部指标、当日变化拆解里标「沿用 MM-DD」，头部写明沿用几家、占比多少；补出后自动换成真实值",
+    "en": "The launchpad matrix now tags platforms carried over from their last day (not yet published by DefiLlama, e.g. StonkFun) in the ranking, headline and day-over-day breakdown, with the count and share noted; real values replace them once published",
+    "corrections_anchor": "#rc-2026-11-06-carry"
+   },
+   {
+    "type": "data",
     "zh": "时间显示：后端统计统一 UTC+0 不变；前端中文站显示新加坡时间（UTC+8，原「北京时间」，钟点相同），英文站显示美东时间",
     "en": "Time display: statistics stay in UTC+0; the Chinese site shows Singapore time (UTC+8), the English site US Eastern time",
     "corrections_anchor": "#rc-2026-11-06-utc"
