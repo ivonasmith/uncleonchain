@@ -1922,6 +1922,13 @@ RULE_CHANGES.append(
      "EN": "L2 and L3 now use only closed UTC days: the data date moves from the run day to the previous day, and price = that day's 00:00 UTC close; the ruler and price bar now read 'close + close time'. L3's out-of-sample log is never rewritten: rows up to 2026-10-29 used the run-time price, later rows use the close."})
 
 RULE_CHANGES.append(
+    {"日期": "2026-11-06", "锚": "2026-11-06-utc", "范围": "全站时间显示", "EN范围": "Site-wide time display",
+     "原因": "2026-10-29 只把数据统一到了 UTC 完整日，页面上的钟点仍按语言换算（中文站北京时间、英文站美东时间），同一页上 UTC 日期和北京钟点混在一起，读者分不清数据属于哪一天。",
+     "原因EN": "On 2026-10-29 only the data was aligned to full UTC days; clock times on pages were still converted by language (Beijing time on the Chinese site, US Eastern on the English site), so UTC dates and local clock times appeared side by side.",
+     "内容": "页面上的所有时刻一律写 UTC+0，中英文站相同：数据更新、日志生成与冻结时间、定时任务时刻、收盘时刻（「11-05 收盘（UTC 0 点）」）、事件日历的公布时间。数据口径不变。已写入的历史日志正文保持原样。",
+     "EN": "Every clock time on the site is now shown in UTC+0, the same on both language sites: data updates, log generation and freeze times, job schedules, closes ('Nov 5 close (00:00 UTC)') and event-calendar release times. The data basis is unchanged; text in logs already written stays as it was."})
+
+RULE_CHANGES.append(
     {"日期": "2026-11-02", "锚": "2026-11-02-lpstage", "范围": "发射台活动温度 · 阶段", "EN范围": "Launchpad activity temperature · stages",
      "原因": "旧规则只看单周涨跌有没有过 ±10%，没过就一律叫「盘整（变化不大）」。2026-10-22 起活动连续两周慢慢往下走（7 日平均 $3.73M → $3.39M，温度 41.6 → 35.3），每周都没跌满 10%，页面却一直写「变化不大」，和实际不符。另外「一般持续几天」把门槛附近来回跳 1 天的段也算一次，范围被压短。",
      "原因EN": "The old rule only checked whether the weekly change crossed ±10%; anything else was 'Steady (flat)'. From 2026-10-22 activity slid for two weeks ($3.73M → $3.39M 7-day average, temperature 41.6 → 35.3) without any single week falling 10%, yet the page kept saying 'flat'. Also, one-day threshold flickers counted as stretches and pulled 'usually lasts' too short.",

@@ -70,9 +70,9 @@ def btc_price():
     except Exception:
         return None
 
-USE_ZH = {"FOMC": "决议公布（北京时间 {bj}）前后 2 小时不挂贴近现价的单、不加杠杆追单；不提前押方向。",
-          "CPI": "数据公布（北京时间 {bj}）前后 2 小时不挂贴近现价的单、不加杠杆追单；不提前押方向。",
-          "NFP": "数据公布（北京时间 {bj}）前后 2 小时不挂贴近现价的单；当天整体波动不比平时大。",
+USE_ZH = {"FOMC": "决议公布（UTC {utc}）前后 2 小时不挂贴近现价的单、不加杠杆追单；不提前押方向。",
+          "CPI": "数据公布（UTC {utc}）前后 2 小时不挂贴近现价的单、不加杠杆追单；不提前押方向。",
+          "NFP": "数据公布（UTC {utc}）前后 2 小时不挂贴近现价的单；当天整体波动不比平时大。",
           "期权季度交割": "不需要为交割日调整动作。"}
 USE_EN = {"FOMC": "No resting orders near price and no leveraged chasing for 2 hours around the release ({utc} UTC). Don't bet on direction.",
           "CPI": "No resting orders near price and no leveraged chasing for 2 hours around the release ({utc} UTC). Don't bet on direction.",
@@ -114,7 +114,7 @@ def btc_events():
                         time_et=(r["time_et"] + " ET") if r["time_et"] else "",
                         grade=GRADE[t], tested=True, emphasis=t != "期权季度交割",
                         what_zh=what_zh(t), what_en=what_en(t),
-                        use_zh=USE_ZH[t].format(bj=bj_s), use_en=USE_EN[t].format(utc=t_utc.strftime("%H:%M")),
+                        use_zh=USE_ZH[t].format(utc=t_utc.strftime("%m-%d %H:%M")), use_en=USE_EN[t].format(utc=t_utc.strftime("%b %-d %H:%M")),
                         impact=impact(t, px), stats=STATS[t], source_url=r["source"]))
     for u in UNTESTED:
         d = dt.date.fromisoformat(u["date"])
@@ -356,10 +356,10 @@ def web3_events():
 def main():
     btc = btc_events(); w3 = web3_events()
     card = [dict(date=e["date"], days_until=e["days_until"], tab="btc", title_zh=e["title_zh"], title_en=e["title_en"],
-                 time_bj=e.get("time_bj", ""), grade=e["grade"])
+                 time_utc=e.get("time_utc", ""), time_bj=e.get("time_bj", ""), grade=e["grade"])
             for e in btc if e["days_until"] <= CARD_DAYS and e["emphasis"]]
     card += [dict(date=e["date_start"], days_until=e["days_until"], tab="web3", title_zh=e["title"], title_en=e["title"],
-                  time_bj="", grade="行业动向", category=e["category"])
+                  time_utc="", time_bj="", grade="行业动向", category=e["category"])
              for e in w3 if e["days_until"] <= CARD_DAYS and e["importance"] >= 3]
     card.sort(key=lambda x: (x["date"], x["tab"]))
     nxt = next((e for e in btc if e["emphasis"]), None)
@@ -376,7 +376,7 @@ def main():
             "stats_asof_zh": "检验数据截至 2026-10-12（Coinbase 小时线），每半年（1 月、7 月）用新数据重测一次，样本每半年约增加 25 次。",
             "intro_en": "Only events we have tested one by one on hourly BTC data since 2015. Fed decisions, CPI and payrolls widen the 2-hour range after release "
                         "(since 2022), but direction is unpredictable and the days before are not more volatile.",
-            "next_zh": (f"下一个：{nxt['title_zh']}，{nxt['days_until']} 天后（北京时间 {nxt['time_bj']}）" if nxt else ""),
+            "next_zh": (f"下一个：{nxt['title_zh']}，{nxt['days_until']} 天后（UTC {nxt['time_utc']}）" if nxt else ""),
             "events": btc,
             "method_zh": "对照组：同一星期几、前后 9 周内、没有其他事件的日子的同一时段。振幅 = 区间最高 ÷ 最低。年代分 2015-17、2018-21、2022-26 分别看。"
                          "期权交割：Deribit 每月最后一个周五 08:00 UTC。数据：Coinbase BTC-USD 小时线。",
