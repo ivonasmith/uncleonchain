@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "data_through_utc": "2026-10-28",
-  "generated_utc": "2026-10-29T00:35:36.618120+00:00",
-  "source_read_through_utc": "2026-10-29T00:29:19.488608+00:00",
+  "data_through_utc": "2026-11-05",
+  "generated_utc": "2026-11-06T09:26:24.399747+00:00",
+  "source_read_through_utc": "2026-11-06T09:24:37.005969+00:00",
   "rows": [
     {
       "date": "2026-10-19",
@@ -17,7 +17,6 @@
       ],
       "start_block": 128454491,
       "end_block": 128646422,
-      "rpc": "https://rpc-bsc.blockmachine.io",
       "grade": "E1",
       "event_reconciliation": "PASS"
     },
@@ -34,7 +33,6 @@
       ],
       "start_block": 128646423,
       "end_block": 128838304,
-      "rpc": "https://rpc-bsc.blockmachine.io",
       "grade": "E1",
       "event_reconciliation": "PASS"
     },
@@ -51,7 +49,6 @@
       ],
       "start_block": 128838305,
       "end_block": 129030232,
-      "rpc": "https://rpc-bsc.blockmachine.io",
       "grade": "E1",
       "event_reconciliation": "PASS"
     },
@@ -68,7 +65,6 @@
       ],
       "start_block": 129030233,
       "end_block": 129222151,
-      "rpc": "https://rpc-bsc.blockmachine.io",
       "grade": "E1",
       "event_reconciliation": "PASS"
     },
@@ -85,7 +81,6 @@
       ],
       "start_block": 129222152,
       "end_block": 129414101,
-      "rpc": "https://rpc-bsc.blockmachine.io",
       "grade": "E1",
       "event_reconciliation": "PASS"
     },
@@ -102,7 +97,6 @@
       ],
       "start_block": 129414102,
       "end_block": 129606056,
-      "rpc": "https://rpc-bsc.blockmachine.io",
       "grade": "E1",
       "event_reconciliation": "PASS"
     },
@@ -119,7 +113,6 @@
       ],
       "start_block": 129606057,
       "end_block": 129797837,
-      "rpc": "https://rpc-bsc.blockmachine.io",
       "grade": "E1",
       "event_reconciliation": "PASS"
     },
@@ -136,7 +129,6 @@
       ],
       "start_block": 129797838,
       "end_block": 129989706,
-      "rpc": "https://rpc-bsc.blockmachine.io",
       "grade": "E1",
       "event_reconciliation": "PASS"
     },
@@ -153,7 +145,6 @@
       ],
       "start_block": 129989707,
       "end_block": 130181609,
-      "rpc": "https://rpc-bsc.blockmachine.io",
       "grade": "E1",
       "event_reconciliation": "PASS"
     },
@@ -170,7 +161,134 @@
       ],
       "start_block": 130181610,
       "end_block": 130373470,
-      "rpc": "https://rpc-bsc.blockmachine.io",
+      "grade": "E1",
+      "event_reconciliation": "PASS"
+    },
+    {
+      "date": "2026-10-29",
+      "cumulative_ids": 139857,
+      "new_ids": 7819,
+      "trading_addresses": 1,
+      "volume_bnb": "0.013265347542819877",
+      "new_launches": 0,
+      "graduated": 0,
+      "scope": [
+        "AgentPad"
+      ],
+      "start_block": 130373471,
+      "end_block": 130565342,
+      "grade": "E1",
+      "event_reconciliation": "PASS"
+    },
+    {
+      "date": "2026-10-30",
+      "cumulative_ids": 143640,
+      "new_ids": 3783,
+      "trading_addresses": 1,
+      "volume_bnb": "0.014894447007046682",
+      "new_launches": 0,
+      "graduated": 0,
+      "scope": [
+        "AgentPad"
+      ],
+      "start_block": 130565343,
+      "end_block": 130757300,
+      "grade": "E1",
+      "event_reconciliation": "PASS"
+    },
+    {
+      "date": "2026-10-31",
+      "cumulative_ids": 149408,
+      "new_ids": 5768,
+      "trading_addresses": 0,
+      "volume_bnb": "0",
+      "new_launches": 0,
+      "graduated": 0,
+      "scope": [
+        "AgentPad"
+      ],
+      "start_block": 130757301,
+      "end_block": 130949245,
+      "grade": "E1",
+      "event_reconciliation": "PASS"
+    },
+    {
+      "date": "2026-11-01",
+      "cumulative_ids": 157205,
+      "new_ids": 7797,
+      "trading_addresses": 1,
+      "volume_bnb": "0.065441398893459123",
+      "new_launches": 0,
+      "graduated": 0,
+      "scope": [
+        "AgentPad"
+      ],
+      "start_block": 130949246,
+      "end_block": 131141194,
+      "grade": "E1",
+      "event_reconciliation": "PASS"
+    },
+    {
+      "date": "2026-11-02",
+      "cumulative_ids": 160596,
+      "new_ids": 3391,
+      "trading_addresses": 0,
+      "volume_bnb": "0",
+      "new_launches": 0,
+      "graduated": 0,
+      "scope": [
+        "AgentPad"
+      ],
+      "start_block": 131141195,
+      "end_block": 131333147,
+      "grade": "E1",
+      "event_reconciliation": "PASS"
+    },
+    {
+      "date": "2026-11-03",
+      "cumulative_ids": 163236,
+      "new_ids": 2640,
+      "trading_addresses": 0,
+      "volume_bnb": "0",
+      "new_launches": 0,
+      "graduated": 0,
+      "scope": [
+        "AgentPad"
+      ],
+      "start_block": 131333148,
+      "end_block": 131525096,
+      "grade": "E1",
+      "event_reconciliation": "PASS"
+    },
+    {
+      "date": "2026-11-04",
+      "cumulative_ids": 167656,
+      "new_ids": 4420,
+      "trading_addresses": 0,
+      "volume_bnb": "0",
+      "new_launches": 0,
+      "graduated": 0,
+      "scope": [
+        "AgentPad"
+      ],
+      "start_block": 131525097,
+      "end_block": 131717050,
+      "grade": "E1",
+      "event_reconciliation": "PASS"
+    },
+    {
+      "date": "2026-11-05",
+      "cumulative_ids": 174042,
+      "new_ids": 6386,
+      "trading_addresses": 0,
+      "volume_bnb": "0",
+      "new_launches": 0,
+      "graduated": 0,
+      "scope": [
+        "AgentPad"
+      ],
+      "start_block": 131717051,
+      "end_block": 131908996,
       "grade": "E1",
       "event_reconciliation": "PASS"
     }
