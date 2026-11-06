@@ -51,11 +51,13 @@ CHAINS = {
     "polygon": {"名称": "Polygon", "公共": "https://polygon.drpc.org", "alchemy": "polygon-mainnet", "浏览器": "https://polygonscan.com", "跨度": 50},
     "xlayer": {"名称": "X Layer", "公共": "https://rpc.xlayer.tech", "alchemy": None, "浏览器": "https://www.oklink.com/xlayer", "跨度": 50, "抽样": 3},
     "monad": {"名称": "Monad", "公共": "https://rpc.monad.xyz", "alchemy": None, "浏览器": "https://monadscan.com", "跨度": 50, "抽样": 6},
-    "hyperevm": {"名称": "HyperEVM", "公共": "https://rpc.hyperliquid.xyz/evm", "alchemy": None, "浏览器": "https://hyperevmscan.io", "跨度": 200, "间隔": 0.3},
+    "hyperevm": {"名称": "HyperEVM", "公共": "https://rpc.hyperliquid.xyz/evm", "alchemy": None, "浏览器": "https://hyperevmscan.io", "跨度": 200, "间隔": 0.3, "抽样": 2,
+                 "备用": ["https://hyperliquid.drpc.org"]},
     "ink": {"名称": "Ink", "公共": "https://rpc-gel.inkonchain.com", "alchemy": None, "浏览器": "https://explorer.inkonchain.com", "跨度": 1000},
     "abstract": {"名称": "Abstract", "公共": "https://api.mainnet.abs.xyz", "alchemy": None, "浏览器": "https://abscan.org", "跨度": 1000},
     "berachain": {"名称": "Berachain", "公共": "https://rpc.berachain.com", "alchemy": None, "浏览器": "https://berascan.com", "跨度": 1000},
-    "avalanche": {"名称": "Avalanche", "公共": "https://api.avax.network/ext/bc/C/rpc", "alchemy": None, "浏览器": "https://snowtrace.io", "跨度": 50, "间隔": 0.15, "抽样": 2},
+    "avalanche": {"名称": "Avalanche", "公共": "https://api.avax.network/ext/bc/C/rpc", "alchemy": None, "浏览器": "https://snowtrace.io", "跨度": 50, "间隔": 0.4, "抽样": 2,
+                  "备用": ["https://avalanche.drpc.org"]},
     "sonic": {"名称": "Sonic", "公共": "https://rpc.soniclabs.com", "alchemy": None, "浏览器": "https://sonicscan.org", "跨度": 1000},
     "mantle": {"名称": "Mantle", "公共": "https://rpc.mantle.xyz", "alchemy": None, "浏览器": "https://mantlescan.xyz", "跨度": 1000},
     "plasma": {"名称": "Plasma", "公共": "https://rpc.plasma.to", "alchemy": None, "浏览器": "https://plasmascan.to", "跨度": 1000},
@@ -139,6 +141,8 @@ def nodes_for(key, ch):
     ns = []
     if ch["公共"]:
         ns.append(Node(ch["公共"], "公共", key, dl, ch.get("间隔", 0.0)))
+    for i, u in enumerate(ch.get("备用", []), 2):  # 第二个免费节点：官方节点限流 / 太慢时换它，仍不花钱
+        ns.append(Node(u, f"公共{i}", key, dl, ch.get("间隔", 0.0)))
     if KEY and ch["alchemy"]:
         ns.append(Node(f"https://{ch['alchemy']}.g.alchemy.com/v2/{KEY}", "Alchemy", key, dl))
     return ns
