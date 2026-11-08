@@ -49,6 +49,7 @@ jobs:
           CAL_CACHE_DIR: cal/cache
           COINMARKETCAL_KEY: ${{ secrets.COINMARKETCAL_KEY }}
           COINDAR_KEY: ${{ secrets.COINDAR_KEY }}
+          CONGRESS_API_KEY: ${{ secrets.CONGRESS_API_KEY }}
         run: python cal/cal_daily.py
 
       - name: 重出网站（看板素材 → 网站）

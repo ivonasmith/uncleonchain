@@ -117,6 +117,37 @@ def reg_sec_auto():
         status["notes"].append("SEC 最终期限自动扫描失败，REG 可能不全")
         return [e for e in js.get("events") or [] if e.get("date", "") >= TODAY.isoformat()], False
 
+CG_CACHE = lambda: os.path.join(os.environ.get("CAL_CACHE_DIR", os.path.join(HERE, "cache")), "reg_congress_last_ok.json")
+
+def _last_ok(path):
+    try: return json.load(open(path, encoding="utf-8")).get("ok_utc")
+    except Exception: return None
+
+def reg_congress_auto():
+    """国会委员会表决会 + 总统签署期限（reg_congress.py，api.congress.gov，要 CONGRESS_API_KEY）。失败用上次成功结果。"""
+    def cached():
+        try: js = json.load(open(CG_CACHE(), encoding="utf-8"))
+        except Exception: js = {}
+        return js, [e for e in js.get("events") or [] if e.get("date", "") >= TODAY.isoformat()]
+    key = os.environ.get("CONGRESS_API_KEY")
+    if OFFLINE or not key:
+        js, ev = cached()
+        status["detail"]["reg_congress"] = (f"离线：用缓存 {len(ev)} 条" if OFFLINE else "未接入（没有 CONGRESS_API_KEY），国会表决只靠每周人工核对")
+        return ev, False
+    try:
+        import reg_congress
+        ev, info = reg_congress.congress_votes(TODAY, BTC_DAYS, key)
+        os.makedirs(os.path.dirname(CG_CACHE()), exist_ok=True)
+        json.dump({"ok_utc": TODAY.isoformat(), "events": ev, "info": info}, open(CG_CACHE(), "w", encoding="utf-8"), ensure_ascii=False)
+        status["detail"]["reg_congress"] = f"ok（扫了 {info['meetings']} 场委员会会议，窗口内加密相关表决会 {info['events'] - info['sign_deadlines']} 场、签署期限 {info['sign_deadlines']} 条）"
+        return ev, True
+    except Exception as ex:
+        js, ev = cached()
+        status["stale"] = True
+        status["detail"]["reg_congress"] = f"失败：{type(ex).__name__} {str(ex)[:80]}；用 {js.get('ok_utc') or '—'} 的结果 {len(ev)} 条"
+        status["notes"].append("国会表决自动扫描失败，REG 可能不全")
+        return ev, False
+
 def reg_events():
     """监管 / 立法二元表决（type=REG）：读手工维护的 reg_events.json，只放今天起 BTC_DAYS 天内的；没有官方来源、日期格式不对的不出。"""
     try:
@@ -128,6 +159,7 @@ def reg_events():
     checked = js.get("checked_utc") or ""
     manual = js.get("events") or []
     auto, sec_ok = reg_sec_auto()
+    cg, cg_ok = reg_congress_auto(); auto = auto + cg
     seen = {(r.get("date"), r.get("source_url")) for r in manual}
     out = []
     for r in manual + [a for a in auto if (a["date"], a["source_url"]) not in seen]:
@@ -149,11 +181,12 @@ def reg_events():
                  use_zh=r.get("use_zh") or "按事件窗口处理：表决前 3 天不挂贴近现价的单，表决当天和次日不挂新单；不提前押方向。",
                  use_en=r.get("use_en") or "Treat as an event window: no resting orders near price in the 3 days before; no new orders on the day and the day after. Don't bet on direction.",
                  source_url=r["source_url"])
-        e["origin"] = "auto:sec" if r.get("auto") == "sec" else "manual"   # 自动扫描（SEC 最终期限）或手工维护
+        e["origin"] = f"auto:{r['auto']}" if r.get("auto") else "manual"   # auto:sec / auto:congress 自动扫描，manual 手工维护
         out.append(e)
     age = (TODAY - dt.date.fromisoformat(checked)).days if checked else None
     REG_STATUS["manual_checked_utc"] = checked or None
     REG_STATUS["sec_auto_ok_utc"] = TODAY.isoformat() if sec_ok else _last_sec_ok()
+    REG_STATUS["congress_auto_ok_utc"] = TODAY.isoformat() if cg_ok else _last_ok(CG_CACHE())
     status["detail"]["reg_votes"] = f"手工清单最后核对 {checked or '无'}；未来 {BTC_DAYS} 天共 {len(out)} 条（自动 {sum(e['origin'] != 'manual' for e in out)} 条）"
     if age is None or age > REG_STALE_DAYS:
         status["notes"].append(f"监管表决清单最后核对 {checked or '无'}，超过 {REG_STALE_DAYS} 天，请重新核对 cal/reg_events.json")
@@ -456,7 +489,7 @@ def main():
             "next_zh": (f"下一个：{nxt['title_zh']}，{nxt['days_until']} 天后（新加坡时间 {nxt['time_bj'][5:]}）" if nxt else ""),
             "events": btc,
             "reg_checked_utc": REG_CHECKED,   # 监管 / 立法表决（type=REG）手工清单最后一次核对的日期
-            "reg_status": REG_STATUS,          # {manual_checked_utc, sec_auto_ok_utc}：各来源最后一次成功核对；当天成功且 events 里没有 REG = 核对过、窗口内没有
+            "reg_status": REG_STATUS,          # {manual_checked_utc, sec_auto_ok_utc, congress_auto_ok_utc}：各来源最后一次成功核对；当天成功且 events 里没有 REG = 核对过、窗口内没有
             "method_zh": "对照组：同一星期几、前后 9 周内、没有其他事件的日子的同一时段。振幅 = 区间最高 ÷ 最低。年代分 2015-17、2018-21、2022-26 分别看。"
                          "期权交割：Deribit 每月最后一个周五 08:00 UTC。数据：Coinbase BTC-USD 小时线。",
         },
