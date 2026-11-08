@@ -1,0 +1,60 @@
+# 涨腿追踪 + 山寨轮动窗口：每天 UTC 00:53（UTC 日线收盘后）跑 leg/leg_data.py → data/leg/leg_latest.json，再重出一次网站。
+# 只用币安现货 BTCUSDT 已收盘的 UTC 日线（data-api.binance.vision 优先，Actions 美国机房 api.binance.com 会 451）。
+# 规则常量在 leg_data.py 顶部；改之前先跑 --selftest 和文末 ACCEPTANCE 回放。
+name: 涨腿追踪日更
+
+on:
+  schedule:
+    - cron: "53 0 * * *"
+  workflow_dispatch: {}
+  push:
+    branches: [main]
+    paths:
+      - "leg/**"
+      - ".github/workflows/leg-daily.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-pipeline
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 自测（离线合成数据）
+        run: python3 leg/leg_data.py --selftest
+
+      - name: 跑涨腿追踪
+        env:
+          LEG_OUT: data/leg/leg_latest.json
+        run: python3 leg/leg_data.py
+
+      - name: 重出网站（看板素材 → 网站）
+        env:
+          LP_DATA: ${{ github.workspace }}/data
+          LP_OUT: ${{ github.workspace }}/build
+        run: |
+          python3 pipeline/出看板.py
+          python3 pipeline/出网站.py
+
+      - name: 提交 data/leg 与 site/
+        run: |
+          git config user.name "uncleonchain-bot"
+          git config user.email "bot@uncleonchain.com"
+          git add data/leg site/
+          git diff --cached --quiet && echo "没有变化，跳过提交" && exit 0
+          git commit -m "涨腿追踪日更 $(date -u +%Y-%m-%d)"
+          git pull --rebase --autostash -X theirs origin main
+          git push

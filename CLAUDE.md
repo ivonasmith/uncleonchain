@@ -42,6 +42,11 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
   只收参院 Business Meeting / 众院 Markup、Meeting（不收听证），会议标题或关联法案标题含加密关键词；签署期限 = 呈送总统后 10 天（星期日除外）。
   ③ 院会表决 / 外国议会表决：手工维护 `cal/reg_events.json`（每周一个定时云端会话核对一次），核对后改 `checked_utc`，不收的写进 excluded。超过 14 天没核对 data_status 提示。
   `btc.reg_status` = 各来源最后成功核对日（manual / sec_auto / congress_auto）。大叔的交易系统读 btc.events 里的 REG（48 小时叠加、事件窗口），别改 type 值。
+- `leg/`：涨腿追踪 + 山寨轮动窗口（站长 2026-11-08 交付：`leg_data.py` 数据生成器 + 设计稿）。`leg-daily.yml` 每天 UTC 00:53 跑 `leg/leg_data.py`（币安现货 BTCUSDT 已收盘日线，
+  data-api.binance.vision 优先；云端环境 uncleonchain 已放行币安三个域名）→ `data/leg/leg_latest.json`（schema 2）→ 出网站复制到 `/data/leg_latest.json`。
+  页面 /leg-tracker/（`出网站.build_leg_tracker`）+ 首页卡片（`leg_home_card`）都由 `leg/web/leg.js` 取数渲染（样式 `leg/web/leg.css`，全收在 `.lg` 下，变量 `--g-*`）。
+  **数据字段、文案（T.zh / T.en）、STATS / ALT 统计数字、状态规则照设计稿，不许改**；统计只在研究文档升版时改并同步 `STATS_ASOF` + 更新日志。停更 = asof 比今天早 3 天以上（浏览器里判断）。
+  三个口径常量（THR_EQ / D0_INCLUDE_IGNITION / IGN_GAP）用脚本默认值，上线前 ACCEPTANCE 四个回放（--asof 2026-09-25～28）已全部对上；改规则先跑 `--selftest` 和回放。红线：不出现挂单 / 仓位 / 止损，不给个币名单。
 - 发射台活动温度（`pipeline/周期观察.py` 数据与热潮识别、`周期仪表盘.py` 展示）：每日更新。序列 = 研究快照 `content/cycle/snapshot.json`（截至 2026-10-17，sha256 在 manifest）+ 之后接 `发射台矩阵.json`「历史」的类目合计；热潮规则重算快照区间 27 轮逐字段对上（对不上会打 ⚠️）。
   仪表盘 `周期仪表盘.hero` 放在矩阵页最上面（先看温度再看细节），周期页 /launchpad/cycle/ 看这一轮、各阶段时长、历史；全站统一叫「发射台活动温度」，颜色用 `--cyc-*` 变量，文案要大白话。「钱在哪」= `出网站.money_where`。
 - 发射台长周期（2026-10-29）：`周期观察.long_view` / `coverage`。全部历史 2021-09-18 起只作背景，比高低只用可比段（`COMPARABLE_FROM` = 2024-03-01，pump.fun 开始报数；之前只有 1–6 家融资型平台报数）；

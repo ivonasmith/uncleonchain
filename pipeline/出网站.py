@@ -174,6 +174,7 @@ PILLARS = [
 
 ICON = {
     "home": '<path d="M2.5 2.5h4.5v4.5H2.5zM9 2.5h4.5v4.5H9zM2.5 9h4.5v4.5H2.5zM9 9h4.5v4.5H9z"/>',
+    "legs": '<path d="M1.5 13l3.5-4 2.5 2 6-7.5"/><path d="M10 3.5h3.5V7"/>',
     "calendar": '<path d="M2.5 3.5h11v10h-11z"/><path d="M2.5 6.5h11M5.5 2v3M10.5 2v3M5 9h1.5M7.75 9h1.5M10.5 9H12M5 11.5h1.5M7.75 11.5h1.5"/>',
     "macro": '<path d="M1.5 10.5c1.6-3.2 3.2-3.2 4.8 0s3.2 3.2 4.8 0c.9-1.8 1.9-2.6 2.9-2.2M1.5 5.5c1.6-3.2 3.2-3.2 4.8 0s3.2 3.2 4.8 0"/>',
     "launchpad": '<path d="M3 14V8.5M8 14V2.5M13 14V6"/><path d="M1.5 14h13"/>',
@@ -187,6 +188,7 @@ ICON = {
     "about": '<circle cx="8" cy="5.2" r="2.8"/><path d="M2.5 14c.9-2.9 2.9-4.2 5.5-4.2s4.6 1.3 5.5 4.2"/>',
 }
 NAV_MAIN = [("home", "/", "终端总览", "Overview"), ("macro", "/macro/", "宏观仪表盘", "Macro"),
+            ("legs", "/leg-tracker/", "涨腿追踪", "Leg Tracker"),
             ("calendar", "/calendar/", "事件日历", "Calendar"), ("launchpad", "/launchpad/", "发射台矩阵", "Launchpads"), ("aiagent", "/ai-agent/", "AI Agent", "AI Agent"), ("rotation", "/rotation/", "板块轮动", "Rotation"),
             ("narrative", "/narrative/", "叙事埋伏", "Narratives"), ("reports", "/reports/", "分析报告", "Reports"),
             ("journal", "/journal/", "解读日志", "Journal")]
@@ -446,7 +448,10 @@ def crumbs(items):
 # 全站共用的样式和脚本写成独立文件（浏览器缓存，翻页不用重复下载），文件名带内容哈希，改了自动换新
 import hashlib                                                           # noqa: E402
 
-ASSET_SRC = {"site.css": ST.SITE_CSS, "ui.js": ST.UI_JS, "share.js": ST.SHARE_JS, "chart.js": ST.CHART_JS}
+LEG_WEB = os.path.join(ROOT, "leg", "web")                              # 涨腿追踪：设计稿拆出来的脚本和样式（页面 + 首页卡片共用）
+ASSET_SRC = {"site.css": ST.SITE_CSS, "ui.js": ST.UI_JS, "share.js": ST.SHARE_JS, "chart.js": ST.CHART_JS,
+             "leg.js": open(os.path.join(LEG_WEB, "leg.js"), encoding="utf-8").read(),
+             "leg.css": open(os.path.join(LEG_WEB, "leg.css"), encoding="utf-8").read()}
 ASSET_URL = {k: f"/assets/{k}?v={hashlib.md5(v.encode('utf-8')).hexdigest()[:10]}" for k, v in ASSET_SRC.items()}
 
 # Cloudflare Pages 缓存规则：样式脚本带版本号可以长缓存；走势数据一小时；页面本身每次都向服务器确认
@@ -491,7 +496,7 @@ def page(title, body, active="", desc="", extra_head="", narrow=False, share=Fal
 {body}
 </div>
 <footer class="foot"><span>{esc(T(BRAND + "（" + BRAND_EN + "）", BRAND_EN))}</span><a href="{X_URL}">{esc(TWITTER)}</a>
-<span>{T('本站数据来源', 'Data sources')}{CN}DefiLlama · CoinMetrics · bitview.space · FRED · Farside · Yahoo · alternative.me · Hyperliquid · Deribit · CoinGecko{T('（', ' (')}<a href="{U('/methodology/')}">{T('口径与规则', 'methodology')}</a>{T('）', ')')}</span>
+<span>{T('本站数据来源', 'Data sources')}{CN}DefiLlama · CoinMetrics · bitview.space · Binance · FRED · Farside · Yahoo · alternative.me · Hyperliquid · Deribit · CoinGecko{T('（', ' (')}<a href="{U('/methodology/')}">{T('口径与规则', 'methodology')}</a>{T('）', ')')}</span>
 <span class="disc">{esc(T(DISCLAIMER, DISCLAIMER_EN))}</span></footer>
 {guide_templates()}
 </main>
@@ -1113,6 +1118,7 @@ def build_home(sd, S, logs, weeks, months, rot, matrix):
 <div class="grid g4" style="margin-top:14px">{heroes}</div>
 <h2>{T("四层信号灯", "Four-layer signals")} <span class="sub">{T("点进去看每层结论、依据和每个指标的全部历史", "Click through for each layer's verdict, evidence and every gauge's full history")}</span></h2>
 {signal_tiles(G["VS"], G["JBY"], G.get("L2"))}
+{leg_home_card()}
 {cal_home_card(G.get("CAL"))}
 <div class="grid g2" style="margin-top:22px;align-items:start">
 <div><h2 style="margin-top:12px">{T("发射台矩阵 · 当日 Top6", "Launchpads · top 6 today")} {cycle_tag()} <a class="sub" href="{U("/launchpad/")}">{T("全部", "All")} {len((matrix or {}).get("协议", []))} {T("个协议 →", "protocols →")}</a></h2>{lp_tbl}</div>
@@ -1122,7 +1128,8 @@ def build_home(sd, S, logs, weeks, months, rot, matrix):
 <h2>{T("解读日志", "Journal")} <a class="sub" href="{U("/journal/")}">{T("全部日志与复盘 →", "All logs and reviews →")}</a></h2>
 {jl}"""
     js = f"<script>function shareHome(){{ucShare({json.dumps(share_obj, ensure_ascii=False)})}}</script>"
-    emit("index.html", T(f"{BRAND} · 链上数据情报终端", f"{BRAND_EN} · Onchain research terminal"), body, active="home", share=True, scripts=js,
+    emit("index.html", T(f"{BRAND} · 链上数据情报终端", f"{BRAND_EN} · Onchain research terminal"), body, active="home", share=True,
+         scripts=js + leg_assets()[1], extra_head=leg_assets()[0],
          desc=LF(comp or {}, "一句话") or T(SLOGAN, SLOGAN_EN))
 
 
@@ -3403,6 +3410,61 @@ def cal_home_card(cal):
             f'<div class="card calhome"><ul>{rows}</ul></div>')
 
 
+# ---------------------------------------------------------------- 涨腿追踪（只读 data/leg/leg_latest.json；规则在 leg/leg_data.py，文案与统计在 leg/web/leg.js）
+def leg_src():
+    """数据文件链接带 ?v=<asof>（设计稿要求）；页面 / 卡片由 leg.js 取数渲染，停更判断在浏览器里按当天日期算。"""
+    return f'/data/leg_latest.json?v={esc((G.get("LEG") or {}).get("asof") or G["今天"])}'
+
+
+def leg_assets():
+    return (f'<link rel="stylesheet" href="{ASSET_URL["leg.css"]}">', f'<script src="{ASSET_URL["leg.js"]}" defer></script>')
+
+
+def leg_home_card():
+    return (f'<h2>{T("涨腿追踪 · 山寨轮动窗口", "Leg tracker · altcoin window")} <a class="sub" href="{U("/leg-tracker/")}">{T("看规律说明 →", "How it works →")}</a></h2>'
+            f'<div class="lg legh"><div id="leg-card" data-src="{leg_src()}" data-href="{U("/leg-tracker/")}">'
+            f'<div class="card"><div class="empty">{T("读取中…", "Loading…")}</div></div></div></div>')
+
+
+def build_leg_tracker():
+    """/leg-tracker/：设计稿 PAGE B。骨架在这里，文案 / 统计数字 / 当前读数由 leg.js 填。"""
+    cr = crumbs([(T("涨腿追踪", "Leg Tracker"), None)])
+    tags = {k: f'<span class="tag {c}" data-i18n="tag_{k}"></span>' for k, c in (("ver", "ver"), ("desc", "desc"), ("hyp", "hyp"), ("fals", "fals"))}
+    body = f"""{cr}
+<div class="lg" id="leg-page" data-src="{leg_src()}">
+<div class="ph"><div><div class="eyebrow">Leg Tracker</div><h1 data-i18n="h1">{T("涨腿追踪", "Leg Tracker")}</h1></div></div>
+<p class="lead" data-i18n="lead"></p>
+<div class="callout" data-i18n="callout"></div>
+<nav class="chips" id="legChips"></nav>
+<div id="liveMount"></div>
+<section class="blk" id="how"><h2 data-i18n="how_h"></h2><ul class="plain" data-i18n="how_ul"></ul></section>
+<section class="blk" id="def"><h2 data-i18n="def_h"></h2><div data-i18n="def_body"></div></section>
+<section class="blk" id="len"><h2><span data-i18n="len_h"></span>{tags["desc"]}</h2><p data-i18n="len_p1"></p>
+<div class="sw"><div id="lenPinMount"></div><div class="strip"><i style="width:25%"></i><i style="width:25%"></i><i style="width:25%"></i><i style="width:15%"></i><i style="width:10%"></i></div></div>
+<div class="chipgrid" id="lenChips"></div><div class="live" id="lenLive" style="display:none"></div><p class="muted small" data-i18n="len_p2"></p></section>
+<section class="blk" id="dd"><h2><span data-i18n="dd_h"></span>{tags["desc"]}</h2><p data-i18n="dd_p1"></p>
+<div id="ddMeter"></div><div class="legendline" id="ddLegend"></div><div class="live" id="ddLive" style="display:none"></div><p class="muted small" data-i18n="dd_p2"></p></section>
+<section class="blk" id="l89"><h2><span data-i18n="l89_h"></span>{tags["hyp"]}</h2><p data-i18n="l89_p1"></p><div class="bars" id="l89Bars"></div>
+<p class="muted small" data-i18n="l89_pre"></p><p data-i18n="l89_p2"></p><div class="callout" data-i18n="l89_falsify"></div></section>
+<section class="blk" id="alt"><h2><span data-i18n="alt_h"></span>{tags["ver"]}</h2><p data-i18n="alt_p1"></p><div class="bw" id="altStatic"></div>
+<ul class="plain" data-i18n="alt_ul"></ul><h3><span data-i18n="alt_t_h"></span>{tags["ver"]}</h3><table class="t" id="altTable"></table>
+<p class="muted small" data-i18n="alt_note"></p><h3><span data-i18n="alt_peak_h"></span>{tags["desc"]}</h3><p data-i18n="alt_peak_p"></p>
+<div class="callout" data-i18n="alt_notsel"></div><h3><span data-i18n="alt_f_h"></span>{tags["fals"]}</h3><p data-i18n="alt_f_p"></p></section>
+<section class="blk" id="false"><h2><span data-i18n="f_h"></span>{tags["fals"]}</h2><p data-i18n="f_intro"></p>
+<h3 data-i18n="f1_h"></h3><table class="t" id="f1Table"></table><p data-i18n="f1_p"></p><h3 data-i18n="f2_h"></h3><p data-i18n="f2_p"></p><p class="muted small" data-i18n="f3_p"></p></section>
+<section class="blk" id="method"><h2 data-i18n="m_h"></h2><ul class="plain" data-i18n="m_ul"></ul><p class="small muted" id="statsAsof"></p>
+<p class="small">{tags["ver"]} <span class="muted" data-i18n="lg_ver"></span><br>{tags["desc"]} <span class="muted" data-i18n="lg_desc"></span><br>
+{tags["hyp"]} <span class="muted" data-i18n="lg_hyp"></span><br>{tags["fals"]} <span class="muted" data-i18n="lg_fals"></span></p></section>
+<div class="foot" data-i18n="disclaimer"></div>
+</div>
+<noscript><p class="muted">{T("这一页需要开启 JavaScript。", "This page needs JavaScript.")}</p></noscript>"""
+    css, js = leg_assets()
+    emit("leg-tracker/index.html", T(f"涨腿追踪 · {BRAND}", f"Leg Tracker · {BRAND_EN}"), body, active="legs", narrow=True,
+         extra_head=css, scripts=js,
+         desc=T("比特币每一轮上涨走了多久、涨了多少、回撤多深，急拉之后山寨窗口什么时候开、什么时候关：历史规律和当前读数。",
+                "How long BTC rallies last, how far they go, how deep the dips are, and when the altcoin window opens and closes: historical patterns and current readings."))
+
+
 AGENT_DIR = os.path.join(ROOT, "public", "ai-agent", "monitor")      # tools/agent-id 的导出目录（交接包原样）
 AGENT_METRICS = [  # 键、中文、英文、格式、覆盖范围
     ("cumulative_ids", "累计 Agent ID", "Cumulative Agent IDs", "int", "reg"),
@@ -4222,7 +4284,7 @@ def build_misc(logs, weeks, months):
     if os.path.exists(rd):
         os.remove(rd)
     write("robots.txt", f"User-agent: *\nAllow: /\nSitemap: https://{DOMAIN}/sitemap.xml\n")
-    urls = ["/", "/macro/", "/calendar/", "/launchpad/", "/ai-agent/", "/rotation/", "/narrative/", "/reports/", "/journal/", "/methodology/", "/corrections/", "/about/",
+    urls = ["/", "/macro/", "/leg-tracker/", "/calendar/", "/launchpad/", "/ai-agent/", "/rotation/", "/narrative/", "/reports/", "/journal/", "/methodology/", "/corrections/", "/about/",
             "/launchpad/report/", "/launchpad/report/archive/"]
     urls += [f"/macro/{x['key']}/" for x in R.INDICATORS + R.RETIRED] + ["/changelog/"]
     for p in PILLARS:
@@ -4314,6 +4376,7 @@ def main():
     G["L4"] = load(os.path.join(DATA, "l4", "l4_latest.json"))
     G["L4H"] = load(os.path.join(DATA, "l4", "l4_history.json"), []) or []
     G["CAL"] = load(os.path.join(DATA, "cal", "cal_latest.json"))
+    G["LEG"] = load(os.path.join(DATA, "leg", "leg_latest.json"))
     upd = [(L.get("更新时间UTC") or sd.get("生成时间UTC") or "")[:16].replace("T", " "), (G["L2"] or {}).get("updated_utc") or ""]
     G["更新"] = max(upd)
     os.makedirs(SITE, exist_ok=True)
@@ -4353,6 +4416,8 @@ def main():
     for fn in ("l2_latest.json", "l2_history.json", "l2_live.json"):
         if os.path.exists(os.path.join(DATA, "l2", fn)):
             shutil.copyfile(os.path.join(DATA, "l2", fn), os.path.join(SITE, "data", "l2", fn))
+    if os.path.exists(os.path.join(DATA, "leg", "leg_latest.json")):
+        shutil.copyfile(os.path.join(DATA, "leg", "leg_latest.json"), os.path.join(SITE, "data", "leg_latest.json"))
     copy_report_files()
     for lang in ("zh", "en"):
         LANG["v"] = lang
@@ -4370,6 +4435,7 @@ def main():
         build_rotation(rot)
         build_narrative()
         build_calendar()
+        build_leg_tracker()
         build_ai_agent()
         build_posts()
         build_reports()

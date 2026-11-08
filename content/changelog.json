@@ -1,5 +1,29 @@
 [
   {
+    "version": "2026.11.08.2",
+    "date": "2026-11-08",
+    "notify": true,
+    "title_zh": "新增「涨腿追踪」与山寨轮动窗口",
+    "title_en": "New: Leg Tracker and the altcoin window",
+    "items": [
+      {
+        "type": "new",
+        "zh": "新页面 /leg-tracker/：BTC 这一轮上涨走了多少天、涨了多少、腿内最大回撤，对照历史 103 条牛市涨腿的长度和回撤分布；89 天提示线（假设级）；我们测过但不成立的说法单独列出。首页加卡片",
+        "en": "New page /leg-tracker/: days, gain and max in-leg drawdown of the current BTC rally, against the length and drawdown distribution of 103 historical bull-market rallies; the day-89 marker (hypothesis grade); claims we tested that failed are listed separately. Added a home-page card."
+      },
+      {
+        "type": "new",
+        "zh": "山寨轮动窗口：BTC 收盘 10 日涨幅 ≥15% 记点火，点火后 7 天内最高收盘日为 D0，D0+24 只减不加、D0+30 清零，BTC 收盘跌破 D0×0.90 提前关闭。只是纸面观察读数，不是开仓信号，不给个币名单",
+        "en": "Altcoin window: a 10-day BTC close gain ≥15% is an ignition; D0 is the highest close within 7 days; trim only from D0+24, cleared at D0+30, closed early if BTC closes below D0×0.90. A paper observation, not an entry signal; no coin list."
+      },
+      {
+        "type": "data",
+        "zh": "数据：币安现货 BTCUSDT 已收盘 UTC 日线，每天 UTC 00:53 更新；上线前回放 2026-09-25～09-28 四天与海报读数逐项一致（第 89 天 +47.8%、回撤 6.9%，第 90 天亮「多头只减不加」，D0=08-27）",
+        "en": "Data: closed Binance BTCUSDT UTC daily candles, updated daily; replays of 2026-09-25 to 09-28 matched the poster readings item by item."
+      }
+    ]
+  },
+  {
     "version": "2026.11.08",
     "date": "2026-11-08",
     "notify": false,
