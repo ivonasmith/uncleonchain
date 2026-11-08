@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-11-08 12:18",
+ "generated_utc": "2026-11-08 12:49",
  "today": "2026-11-08",
  "btc": {
   "title_zh": "比特币大事件（已单独检验）",
@@ -105,7 +105,7 @@
      "range_day_normal_pct": 3.5,
      "usd_typ": 1896,
      "usd_big": 3716,
-     "price_ref": 75842
+     "price_ref": 75840
     },
     "stats": {
      "n": 56,
@@ -160,7 +160,7 @@
      "range_day_normal_pct": 4.0,
      "usd_typ": 1517,
      "usd_big": 2275,
-     "price_ref": 75842
+     "price_ref": 75840
     },
     "stats": {
      "n": 57,
@@ -215,7 +215,7 @@
      "range_day_normal_pct": 3.4,
      "usd_typ": 2048,
      "usd_big": 4778,
-     "price_ref": 75842
+     "price_ref": 75840
     },
     "stats": {
      "n": 37,
@@ -270,7 +270,7 @@
      "range_day_normal_pct": 3.5,
      "usd_typ": 1896,
      "usd_big": 3716,
-     "price_ref": 75842
+     "price_ref": 75840
     },
     "stats": {
      "n": 56,
@@ -325,7 +325,7 @@
      "range_day_normal_pct": 4.0,
      "usd_typ": 531,
      "usd_big": 1289,
-     "price_ref": 75842
+     "price_ref": 75840
     },
     "stats": {
      "n": 19,
@@ -353,6 +353,10 @@
    }
   ],
   "reg_checked_utc": "2026-11-08",
+  "reg_status": {
+   "manual_checked_utc": "2026-11-08",
+   "sec_auto_ok_utc": "2026-11-08"
+  },
   "method_zh": "对照组：同一星期几、前后 9 周内、没有其他事件的日子的同一时段。振幅 = 区间最高 ÷ 最低。年代分 2015-17、2018-21、2022-26 分别看。期权交割：Deribit 每月最后一个周五 08:00 UTC。数据：Coinbase BTC-USD 小时线。"
  },
  "web3": {
@@ -2317,7 +2321,8 @@
  "data_status": {
   "stale": false,
   "detail": {
-   "reg_votes": "手工维护（最后核对 2026-11-08），未来 60 天 0 条",
+   "reg_sec": "ok（扫了 255 份 Federal Register 文件，窗口内最终期限 0 条）；不收：SR-ISE-2026-42 2026-11-11（可再启动审议程序，不是最终期限）；SR-NASDAQ-2026-016（SEC 页面标 WITHDRAWN）",
+   "reg_votes": "手工清单最后核对 2026-11-08；未来 60 天共 0 条（自动 0 条）",
    "btc_schedule": "ok（宏观日程录入到 2027-12-10）",
    "Luma": "ok（7 条）",
    "CryptoEvents": "ok（26 条）",
