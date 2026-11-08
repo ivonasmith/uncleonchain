@@ -188,7 +188,6 @@ ICON = {
     "about": '<circle cx="8" cy="5.2" r="2.8"/><path d="M2.5 14c.9-2.9 2.9-4.2 5.5-4.2s4.6 1.3 5.5 4.2"/>',
 }
 NAV_MAIN = [("home", "/", "终端总览", "Overview"), ("macro", "/macro/", "宏观仪表盘", "Macro"),
-            ("legs", "/leg-tracker/", "涨腿追踪", "Leg Tracker"),
             ("calendar", "/calendar/", "事件日历", "Calendar"), ("launchpad", "/launchpad/", "发射台矩阵", "Launchpads"), ("aiagent", "/ai-agent/", "AI Agent", "AI Agent"), ("rotation", "/rotation/", "板块轮动", "Rotation"),
             ("narrative", "/narrative/", "叙事埋伏", "Narratives"), ("reports", "/reports/", "分析报告", "Reports"),
             ("journal", "/journal/", "解读日志", "Journal")]
@@ -2107,6 +2106,7 @@ def build_macro(L, S, logs):
 <p class="lede">{T("综合研判把四层合成一句话：周期定方向，宏观管节奏，筹码和情绪用来确认和提醒。下面按层切换，每张指标卡都能点开看全部历史、区间规则和「正常波动范围」。拿不到真实数据的标「待接入」，不拿近似值冒充。",
                    "The overall read rolls four layers into one line: the cycle sets direction, macro sets pace, flows and sentiment confirm and caution. Switch layers below; every card opens its full history, zone rules and normal range. Anything without real data is marked pending.")}</p></div></div>
 {comp_block(comp, prev_comp, tlog, full=True)}
+{leg_macro_card()}
 {cal_next_line(G.get("CAL"))}
 {src_summary(st)}
 <div id="tabs-anchor"></div><div class="tabwrap"><nav class="tabs" role="tablist" aria-label="{T("四层", "Four layers")}" data-tabs>{tabs}</nav></div>
@@ -2114,6 +2114,7 @@ def build_macro(L, S, logs):
 {panels}
 {deep}"""
     emit("macro/index.html", T(f"宏观四层仪表盘 · {BRAND}", f"Macro dashboard · {BRAND_EN}"), body, active="macro", chart=True,
+         extra_head=leg_assets()[0], scripts=leg_assets()[1],
          desc=LF(comp or {}, "一句话") or T(PILLARS[0]["desc"], PILLARS[0]["descEN"]))
 
 
@@ -3426,9 +3427,17 @@ def leg_home_card():
             f'<div class="card"><div class="empty">{T("读取中…", "Loading…")}</div></div></div></div>')
 
 
+def leg_macro_card():
+    """宏观页顶部：跟四层综合研判放在一起的涨腿追踪 + 山寨窗口卡（同首页卡片，leg.js 渲染）。"""
+    return (f'<div class="lg legh legm"><div class="legm-h">{T("涨腿追踪 · 山寨轮动窗口", "Leg tracker · altcoin window")}'
+            f'<a class="sub" href="{U("/leg-tracker/")}">{T("看规律说明 →", "How it works →")}</a></div>'
+            f'<div id="leg-card" data-src="{leg_src()}" data-href="{U("/leg-tracker/")}">'
+            f'<div class="card"><div class="empty">{T("读取中…", "Loading…")}</div></div></div></div>')
+
+
 def build_leg_tracker():
     """/leg-tracker/：设计稿 PAGE B。骨架在这里，文案 / 统计数字 / 当前读数由 leg.js 填。"""
-    cr = crumbs([(T("涨腿追踪", "Leg Tracker"), None)])
+    cr = crumbs([(T("宏观仪表盘", "Macro"), "/macro/"), (T("涨腿追踪", "Leg Tracker"), None)])
     tags = {k: f'<span class="tag {c}" data-i18n="tag_{k}"></span>' for k, c in (("ver", "ver"), ("desc", "desc"), ("hyp", "hyp"), ("fals", "fals"))}
     body = f"""{cr}
 <div class="lg" id="leg-page" data-src="{leg_src()}">
@@ -3459,7 +3468,7 @@ def build_leg_tracker():
 </div>
 <noscript><p class="muted">{T("这一页需要开启 JavaScript。", "This page needs JavaScript.")}</p></noscript>"""
     css, js = leg_assets()
-    emit("leg-tracker/index.html", T(f"涨腿追踪 · {BRAND}", f"Leg Tracker · {BRAND_EN}"), body, active="legs", narrow=True,
+    emit("leg-tracker/index.html", T(f"涨腿追踪 · {BRAND}", f"Leg Tracker · {BRAND_EN}"), body, active="macro", narrow=True,
          extra_head=css, scripts=js,
          desc=T("比特币每一轮上涨走了多久、涨了多少、回撤多深，急拉之后山寨窗口什么时候开、什么时候关：历史规律和当前读数。",
                 "How long BTC rallies last, how far they go, how deep the dips are, and when the altcoin window opens and closes: historical patterns and current readings."))
