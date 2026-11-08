@@ -9,8 +9,9 @@
 import os, re, time, datetime as dt
 
 API = "https://api.congress.gov/v3"
-CRYPTO = re.compile(r"(?i)\b(crypto\w*|digital asset\w*|digital commodit\w*|stablecoin\w*|payment stablecoin|blockchain|bitcoin|virtual currenc\w*|"
-                    r"central bank digital currency|CBDC|distributed ledger|tokeni[sz]\w*|CLARITY Act|GENIUS Act|market structure)\b")
+# 只认核心词：「blockchain」「Clarity Act」之类会误中执法工具、部落管辖、助学金等无关法案（2026 年回测实测）
+CRYPTO = re.compile(r"(?i)\b(crypto\w*|digital asset\w*|digital commodit\w*|stablecoin\w*|bitcoin|virtual currenc\w*|"
+                    r"central bank digital currency|CBDC|tokeni[sz]\w*)\b")
 VOTE_TYPES = re.compile(r"(?i)markup|business meeting|^meeting$")
 CH_ZH = {"House": "众院", "Senate": "参院"}
 
