@@ -2105,8 +2105,8 @@ def build_macro(L, S, logs):
     body = f"""<div class="ph"><div><div class="eyebrow">Macro · 4-Layer Framework</div><h1>{T("宏观四层仪表盘", "Four-layer macro dashboard")}</h1>
 <p class="lede">{T("综合研判把四层合成一句话：周期定方向，宏观管节奏，筹码和情绪用来确认和提醒。下面按层切换，每张指标卡都能点开看全部历史、区间规则和「正常波动范围」。拿不到真实数据的标「待接入」，不拿近似值冒充。",
                    "The overall read rolls four layers into one line: the cycle sets direction, macro sets pace, flows and sentiment confirm and caution. Switch layers below; every card opens its full history, zone rules and normal range. Anything without real data is marked pending.")}</p></div></div>
-{comp_block(comp, prev_comp, tlog, full=True)}
 {leg_macro_card()}
+{comp_block(comp, prev_comp, tlog, full=True)}
 {cal_next_line(G.get("CAL"))}
 {src_summary(st)}
 <div id="tabs-anchor"></div><div class="tabwrap"><nav class="tabs" role="tablist" aria-label="{T("四层", "Four layers")}" data-tabs>{tabs}</nav></div>
@@ -3428,7 +3428,7 @@ def leg_home_card():
 
 
 def leg_macro_card():
-    """宏观页顶部：跟四层综合研判放在一起的涨腿追踪 + 山寨窗口卡（同首页卡片，leg.js 渲染）。"""
+    """宏观页最上面（四层综合研判之上）：涨腿追踪 + 山寨窗口卡（同首页卡片，leg.js 渲染）。"""
     return (f'<div class="lg legh legm"><div class="legm-h">{T("涨腿追踪 · 山寨轮动窗口", "Leg tracker · altcoin window")}'
             f'<a class="sub" href="{U("/leg-tracker/")}">{T("看规律说明 →", "How it works →")}</a></div>'
             f'<div id="leg-card" data-src="{leg_src()}" data-href="{U("/leg-tracker/")}">'

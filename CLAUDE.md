@@ -44,7 +44,7 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
   `btc.reg_status` = 各来源最后成功核对日（manual / sec_auto / congress_auto）。大叔的交易系统读 btc.events 里的 REG（48 小时叠加、事件窗口），别改 type 值。
 - `leg/`：涨腿追踪 + 山寨轮动窗口（站长 2026-11-08 交付：`leg_data.py` 数据生成器 + 设计稿）。`leg-daily.yml` 每天 UTC 00:53 跑 `leg/leg_data.py`（币安现货 BTCUSDT 已收盘日线，
   data-api.binance.vision 优先；云端环境 uncleonchain 已放行币安三个域名）→ `data/leg/leg_latest.json`（schema 2）→ 出网站复制到 `/data/leg_latest.json`。
-  读数卡放宏观页顶部、紧跟四层综合研判（`leg_macro_card`，大叔 11-08 定：这是用户最直观的结论）+ 首页卡片（`leg_home_card`）；详情页 /leg-tracker/（`出网站.build_leg_tracker`，挂在宏观下，不单独占导航），都由 `leg/web/leg.js` 取数渲染（样式 `leg/web/leg.css`，全收在 `.lg` 下，变量 `--g-*`）。
+  读数卡放宏观页最上面、四层综合研判之上（`leg_macro_card`，大叔 11-08 定：这是用户最直观的结论）+ 首页卡片（`leg_home_card`）；详情页 /leg-tracker/（`出网站.build_leg_tracker`，挂在宏观下，不单独占导航），都由 `leg/web/leg.js` 取数渲染（样式 `leg/web/leg.css`，全收在 `.lg` 下，变量 `--g-*`）。
   **数据字段、文案（T.zh / T.en）、STATS / ALT 统计数字、状态规则照设计稿，不许改**；统计只在研究文档升版时改并同步 `STATS_ASOF` + 更新日志。停更 = asof 比今天早 3 天以上（浏览器里判断）。
   三个口径常量（THR_EQ / D0_INCLUDE_IGNITION / IGN_GAP）用脚本默认值，上线前 ACCEPTANCE 四个回放（--asof 2026-09-25～28）已全部对上；改规则先跑 `--selftest` 和回放。红线：不出现挂单 / 仓位 / 止损，不给个币名单。
 - 发射台活动温度（`pipeline/周期观察.py` 数据与热潮识别、`周期仪表盘.py` 展示）：每日更新。序列 = 研究快照 `content/cycle/snapshot.json`（截至 2026-10-17，sha256 在 manifest）+ 之后接 `发射台矩阵.json`「历史」的类目合计；热潮规则重算快照区间 27 轮逐字段对上（对不上会打 ⚠️）。
