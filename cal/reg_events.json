@@ -1,0 +1,23 @@
+{
+ "_说明": "监管 / 立法二元表决（type=REG），手工维护，cal_daily.py 每天读、只放今天起 60 天内的、过期自动不出。只收有明确日期、结果二元的表决 / 最终决定日，每条必须有官方来源（国会 / 委员会官网、SEC 文件、各国议会官方日程）；听证会、评论期、传闻、没有官方日期的都不收。time_utc 只在官方给出钟点时写（YYYY-MM-DD HH:MM，UTC），否则省略 = 整天算窗口。每次核对后改 checked_utc，核对过但不收的写进 excluded 并说明原因。",
+ "checked_utc": "2026-11-08",
+ "checked_scope_zh": "美国国会（众院金融服务委员会日程、参院院会与委员会公开信息）、SEC 交易所规则提案列表（2026-07-15 至 11-06 的全部发布，按加密关键词筛）、欧盟 / 英国 / 香港 / 韩国公开报道",
+ "events": [],
+ "excluded": [
+  {"item": "SR-NASDAQ-2026-016 VanEck JitoSOL ETF（原定 2026-11-15 最终批准 / 否决日）",
+   "reason_zh": "SEC 页面标注该文件 2026-10-14 已撤回，截止日不再存在",
+   "source_url": "https://www.sec.gov/rules-regulations/self-regulatory-organization-rulemaking/sr-nasdaq-2026-016"},
+  {"item": "SR-ISE-2026-42 Nasdaq ISE 数字商品信托期权上市标准（2026-11-11 截止）",
+   "reason_zh": "不是最终决定日：SEC 到期可以批准、否决，也可以启动审议程序（再拖最长到 240 天），结果不是二元；且 Cboe / IEX 同类规则已即时生效，影响小",
+   "source_url": "https://www.sec.gov/files/rules/sro/ise/2026/34-106448.pdf"},
+  {"item": "美国参院 CLARITY 市场结构法案",
+   "reason_zh": "2026-09-15 程序性投票 49-50 未过；之后没有官方排期的表决",
+   "source_url": ""},
+  {"item": "韩国《数字资产基本法》",
+   "reason_zh": "只有政府 / 议员表态的『11 月提交、争取年内通过』，没有国会官方表决日期",
+   "source_url": ""},
+  {"item": "法国 2027 预算案加密换稳定币征税修正案",
+   "reason_zh": "是税收预算案的一条修正案，后续审议日期未定，不收",
+   "source_url": ""}
+ ]
+}

@@ -1,7 +1,8 @@
 """日历模块 · 每日生成（零配置，自动保存）
 两个分区：
   btc   —— 比特币大事件：只放单独检验过的宏观事件（FOMC / CPI / 非农），附检验结论和用法；
-           季度期权交割作为“常见说法但数据不支持”的反例显示；中期选举等“未检验”单列。
+           季度期权交割作为“常见说法但数据不支持”的反例显示；中期选举等“未检验”单列；
+           监管 / 立法二元表决（type=REG，未检验，手工维护 reg_events.json，必须有官方来源）。
   web3  —— 行业动向：会议、黑客松、主网升级、代币解锁、上所、TGE、监管、ETF。不做价格检验，只告诉读者行业在发生什么。
 输出：cal_latest.json（今天往后的两个分区 + 首页“未来 7 天”卡片）
 环境变量：CAL_OUT_DIR（默认 ./output）、COINMARKETCAL_KEY（可选）、CAL_TODAY（测试用 YYYY-MM-DD）、CAL_OFFLINE=1（不联网）
@@ -85,6 +86,44 @@ UNTESTED = [  # 未检验、只提示的日子：手工维护
      "note_en": "Only 3 presidential elections in the sample; midterms untested. Shown for awareness only."},
 ]
 
+REG_STALE_DAYS = 14   # 监管表决清单超过这么多天没人工核对，就在 data_status 里提示
+
+def reg_events():
+    """监管 / 立法二元表决（type=REG）：读手工维护的 reg_events.json，只放今天起 BTC_DAYS 天内的；没有官方来源、日期格式不对的不出。"""
+    try:
+        js = json.load(open(os.path.join(HERE, "reg_events.json"), encoding="utf-8"))
+    except Exception as ex:
+        status["detail"]["reg_votes"] = f"读不到 reg_events.json：{type(ex).__name__}"
+        status["notes"].append("监管表决清单 reg_events.json 读不到，REG 事件缺失")
+        return [], None
+    checked = js.get("checked_utc") or ""
+    out = []
+    for r in js.get("events") or []:
+        try:
+            d = dt.date.fromisoformat(r["date"])
+            t_utc = dt.datetime.strptime(r["time_utc"], "%Y-%m-%d %H:%M").replace(tzinfo=UTC) if r.get("time_utc") else None
+        except Exception:
+            status["notes"].append(f"REG 条目日期 / 时间格式不对，已跳过：{r.get('title_zh', '')}"); continue
+        if not (r.get("source_url") or "").startswith("http"):
+            status["notes"].append(f"REG 条目没有官方来源，已跳过：{r.get('title_zh', '')}"); continue
+        if not (TODAY <= d <= TODAY + dt.timedelta(days=BTC_DAYS)): continue
+        e = dict(type="REG", date=d.isoformat(), days_until=(d - TODAY).days, title_zh=r["title_zh"], title_en=r["title_en"])
+        if t_utc:
+            et = t_utc.astimezone(ET)
+            e.update(time_utc=t_utc.strftime("%Y-%m-%d %H:%M"), time_bj=t_utc.astimezone(BJ).strftime("%Y-%m-%d %H:%M"), time_et=et.strftime("%H:%M") + " ET")
+        e.update(grade="未检验", tested=False, emphasis=False,
+                 what_zh=r.get("what_zh") or "监管 / 立法表决，结果是二元的（过或不过、批或不批）。没做过历史波动检验，没有统计数字。",
+                 what_en=r.get("what_en") or "Regulatory / legislative vote with a binary outcome. Not tested against BTC prices; no statistics.",
+                 use_zh=r.get("use_zh") or "按事件窗口处理：表决前 3 天不挂贴近现价的单，表决当天和次日不挂新单；不提前押方向。",
+                 use_en=r.get("use_en") or "Treat as an event window: no resting orders near price in the 3 days before; no new orders on the day and the day after. Don't bet on direction.",
+                 source_url=r["source_url"])
+        out.append(e)
+    age = (TODAY - dt.date.fromisoformat(checked)).days if checked else None
+    status["detail"]["reg_votes"] = f"手工维护（最后核对 {checked or '无'}），未来 {BTC_DAYS} 天 {len(out)} 条"
+    if age is None or age > REG_STALE_DAYS:
+        status["notes"].append(f"监管表决清单最后核对 {checked or '无'}，超过 {REG_STALE_DAYS} 天，请重新核对 cal/reg_events.json")
+    return out, checked or None
+
 def last_friday(y, m):
     d = dt.date(y, m, 28)
     while (d + dt.timedelta(days=1)).month == m: d += dt.timedelta(days=1)
@@ -121,6 +160,7 @@ def btc_events():
         if TODAY <= d <= TODAY + dt.timedelta(days=BTC_DAYS):
             out.append(dict(type="未检验", date=u["date"], days_until=(d - TODAY).days, title_zh=u["title_zh"], title_en=u["title_en"],
                             grade="未检验", tested=False, emphasis=False, what_zh=u["note_zh"], what_en=u["note_en"], use_zh="不改动作。", use_en="No action."))
+    reg, _ = reg_events(); out += reg
     out.sort(key=lambda x: (x["date"], x.get("time_utc", "")))
     left = (dt.date.fromisoformat(last_known) - TODAY).days
     status["detail"]["btc_schedule"] = f"ok（宏观日程录入到 {last_known}）"
@@ -128,6 +168,8 @@ def btc_events():
         status["stale"] = True
         status["notes"].append(f"宏观日程只录入到 {last_known}，请按 FOMC/BLS 官网补下一年的日期到 btc_events.csv")
     return out
+
+REG_CHECKED = (lambda: (json.load(open(os.path.join(HERE, "reg_events.json"), encoding="utf-8")).get("checked_utc") if os.path.exists(os.path.join(HERE, "reg_events.json")) else None))()
 
 # ---------------- Web3 分区：直接聚合 6 个站 ----------------
 # Luma（加密分类的大会时间线）、CryptoEvents、IndustryEvents、Web3Voyager —— 会议 / 黑客松
@@ -357,7 +399,7 @@ def main():
     btc = btc_events(); w3 = web3_events()
     card = [dict(date=e["date"], days_until=e["days_until"], tab="btc", title_zh=e["title_zh"], title_en=e["title_en"],
                  time_utc=e.get("time_utc", ""), time_bj=e.get("time_bj", ""), grade=e["grade"])
-            for e in btc if e["days_until"] <= CARD_DAYS and e["emphasis"]]
+            for e in btc if e["days_until"] <= CARD_DAYS and (e["emphasis"] or e["type"] == "REG")]
     card += [dict(date=e["date_start"], days_until=e["days_until"], tab="web3", title_zh=e["title"], title_en=e["title"],
                   time_utc="", time_bj="", grade="行业动向", category=e["category"])
              for e in w3 if e["days_until"] <= CARD_DAYS and e["importance"] >= 3]
@@ -378,6 +420,7 @@ def main():
                         "(since 2022), but direction is unpredictable and the days before are not more volatile.",
             "next_zh": (f"下一个：{nxt['title_zh']}，{nxt['days_until']} 天后（新加坡时间 {nxt['time_bj'][5:]}）" if nxt else ""),
             "events": btc,
+            "reg_checked_utc": REG_CHECKED,   # 监管 / 立法表决（type=REG）清单最后一次人工核对的日期；events 里没有 REG = 核对过、窗口内没有
             "method_zh": "对照组：同一星期几、前后 9 周内、没有其他事件的日子的同一时段。振幅 = 区间最高 ÷ 最低。年代分 2015-17、2018-21、2022-26 分别看。"
                          "期权交割：Deribit 每月最后一个周五 08:00 UTC。数据：Coinbase BTC-USD 小时线。",
         },
