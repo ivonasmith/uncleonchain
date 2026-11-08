@@ -10,6 +10,11 @@
         "type": "new",
         "zh": "事件日历的比特币大事件里加「监管 / 立法表决」（REG）：国会 / 委员会对加密法案的表决、SEC 对加密产品的最终决定日、其他地区的监管表决。只收有官方日期和官方来源的，标「未检验」，不给统计数字。2026-11-08 核对：未来 60 天没有符合条件的（JitoSOL ETF 申请已撤回；ISE 加密信托期权 11-11 截止日不是最终决定）",
         "en": "BTC events now include regulatory / legislative votes (REG): congressional and committee votes on crypto bills, SEC final decision dates on crypto products, and votes elsewhere. Only items with an official date and source; marked untested, no statistics. Checked 2026-11-08: none qualify in the next 60 days."
+      },
+      {
+        "type": "new",
+        "zh": "SEC 对加密产品的最终批准 / 否决期限改为每天自动从 Federal Register 官方接口扫描：只收不能再延期的最终期限，出了批准 / 否决令或撤回就自动拿掉。回测今年能抓到 iShares 比特币备兑收益 ETF（5-30）、Nasdaq 比特币指数期权（5-27）、JitoSOL ETF（11-15，后撤回）",
+        "en": "SEC final approve/disapprove deadlines for crypto products are now scanned daily from the Federal Register API: only final deadlines, dropped automatically once an order or withdrawal appears."
       }
     ]
   },

@@ -35,8 +35,11 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
   层结论读 `conclusion.level`（过热 / 偏热 / 中性 / 偏冷）+ 信号；`data_status` 非 ok 或 funding stale 时「今天不判断」。资金费率要 repo secret `COINALYZE_KEY`（BitMEX 在 Actions 里 403）。
   fng / hl_funding / hl_oi 已 retired；altseason、btc_dom 降为 L4 观察。宏观页 `l4_tab`。
 - `cal/`：事件日历。`cal-daily.yml` 每天 UTC 00:37 跑 `cal/cal_daily.py` → `data/cal/cal_latest.json`；页面 /calendar/、首页卡片、宏观页综合研判下「下一个：…」。CoinMarketCal / Coindar 没 key 就「未接入」。
-  监管 / 立法二元表决（type=REG）手工维护在 `cal/reg_events.json`：只收有官方日期、结果二元的表决 / SEC 最终决定日，每条必须有官方来源，没钟点就不写 time_utc；
-  核对后改 `checked_utc`，不收的写进 excluded 说明原因。超过 14 天没核对 data_status 会提示。大叔的交易系统读 btc.events 里的 REG（48 小时叠加、事件窗口），别改 type 值。
+  监管 / 立法二元表决（type=REG，`origin` = auto:sec / manual）。只收有官方日期、结果二元的表决 / 最终决定日，每条必须有官方来源，没钟点就不写 time_utc。
+  ① SEC 对加密产品的最终批准 / 否决期限：`cal/reg_sec.py` 每天自动扫 Federal Register 官方接口（全文走 govinfo，federalregister.gov 全文链接会转人机验证），
+  只认「designates … approve or disapprove」且没有「or institute proceedings」的；之后出了批准 / 否决令或撤回（FR 文件头 File No. 对上，或 SEC 页 WITHDRAWN）就不出。失败用上次结果并标 stale。
+  ② 国会 / 外国议会表决：手工维护 `cal/reg_events.json`（每周一个定时云端会话核对一次），核对后改 `checked_utc`，不收的写进 excluded。超过 14 天没核对 data_status 提示。
+  `btc.reg_status` = 各来源最后成功核对日。大叔的交易系统读 btc.events 里的 REG（48 小时叠加、事件窗口），别改 type 值。
 - 发射台活动温度（`pipeline/周期观察.py` 数据与热潮识别、`周期仪表盘.py` 展示）：每日更新。序列 = 研究快照 `content/cycle/snapshot.json`（截至 2026-10-17，sha256 在 manifest）+ 之后接 `发射台矩阵.json`「历史」的类目合计；热潮规则重算快照区间 27 轮逐字段对上（对不上会打 ⚠️）。
   仪表盘 `周期仪表盘.hero` 放在矩阵页最上面（先看温度再看细节），周期页 /launchpad/cycle/ 看这一轮、各阶段时长、历史；全站统一叫「发射台活动温度」，颜色用 `--cyc-*` 变量，文案要大白话。「钱在哪」= `出网站.money_where`。
 - 发射台长周期（2026-10-29）：`周期观察.long_view` / `coverage`。全部历史 2021-09-18 起只作背景，比高低只用可比段（`COMPARABLE_FROM` = 2024-03-01，pump.fun 开始报数；之前只有 1–6 家融资型平台报数）；

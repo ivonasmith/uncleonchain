@@ -88,6 +88,35 @@ UNTESTED = [  # 未检验、只提示的日子：手工维护
 
 REG_STALE_DAYS = 14   # 监管表决清单超过这么多天没人工核对，就在 data_status 里提示
 
+REG_STATUS = {}   # 输出到 btc.reg_status：每个来源最后一次成功核对的日期
+SEC_CACHE = lambda: os.path.join(os.environ.get("CAL_CACHE_DIR", os.path.join(HERE, "cache")), "reg_sec_last_ok.json")
+
+def _last_sec_ok():
+    try: return json.load(open(SEC_CACHE(), encoding="utf-8")).get("ok_utc")
+    except Exception: return None
+
+def reg_sec_auto():
+    """SEC 对加密产品的最终批准 / 否决期限（reg_sec.py，Federal Register 官方接口自动扫）。失败用上次成功结果。"""
+    if OFFLINE:
+        try: js = json.load(open(SEC_CACHE(), encoding="utf-8"))
+        except Exception: js = {}
+        status["detail"]["reg_sec"] = f"离线：用缓存 {len(js.get('events') or [])} 条"
+        return js.get("events") or [], False
+    try:
+        import reg_sec
+        ev, info = reg_sec.sec_deadlines(TODAY, BTC_DAYS, os.environ.get("CAL_CACHE_DIR", os.path.join(HERE, "cache")))
+        os.makedirs(os.path.dirname(SEC_CACHE()), exist_ok=True)
+        json.dump({"ok_utc": TODAY.isoformat(), "events": ev, "info": info}, open(SEC_CACHE(), "w", encoding="utf-8"), ensure_ascii=False)
+        status["detail"]["reg_sec"] = f"ok（扫了 {info['scanned']} 份 Federal Register 文件，窗口内最终期限 {len(ev)} 条）" + (f"；不收：{'；'.join(info['skipped'][:5])}" if info["skipped"] else "")
+        return ev, True
+    except Exception as ex:
+        try: js = json.load(open(SEC_CACHE(), encoding="utf-8"))
+        except Exception: js = {}
+        status["stale"] = True
+        status["detail"]["reg_sec"] = f"失败：{type(ex).__name__} {str(ex)[:80]}；用 {js.get('ok_utc') or '—'} 的结果 {len(js.get('events') or [])} 条"
+        status["notes"].append("SEC 最终期限自动扫描失败，REG 可能不全")
+        return [e for e in js.get("events") or [] if e.get("date", "") >= TODAY.isoformat()], False
+
 def reg_events():
     """监管 / 立法二元表决（type=REG）：读手工维护的 reg_events.json，只放今天起 BTC_DAYS 天内的；没有官方来源、日期格式不对的不出。"""
     try:
@@ -97,8 +126,11 @@ def reg_events():
         status["notes"].append("监管表决清单 reg_events.json 读不到，REG 事件缺失")
         return [], None
     checked = js.get("checked_utc") or ""
+    manual = js.get("events") or []
+    auto, sec_ok = reg_sec_auto()
+    seen = {(r.get("date"), r.get("source_url")) for r in manual}
     out = []
-    for r in js.get("events") or []:
+    for r in manual + [a for a in auto if (a["date"], a["source_url"]) not in seen]:
         try:
             d = dt.date.fromisoformat(r["date"])
             t_utc = dt.datetime.strptime(r["time_utc"], "%Y-%m-%d %H:%M").replace(tzinfo=UTC) if r.get("time_utc") else None
@@ -117,9 +149,12 @@ def reg_events():
                  use_zh=r.get("use_zh") or "按事件窗口处理：表决前 3 天不挂贴近现价的单，表决当天和次日不挂新单；不提前押方向。",
                  use_en=r.get("use_en") or "Treat as an event window: no resting orders near price in the 3 days before; no new orders on the day and the day after. Don't bet on direction.",
                  source_url=r["source_url"])
+        e["origin"] = "auto:sec" if r.get("auto") == "sec" else "manual"   # 自动扫描（SEC 最终期限）或手工维护
         out.append(e)
     age = (TODAY - dt.date.fromisoformat(checked)).days if checked else None
-    status["detail"]["reg_votes"] = f"手工维护（最后核对 {checked or '无'}），未来 {BTC_DAYS} 天 {len(out)} 条"
+    REG_STATUS["manual_checked_utc"] = checked or None
+    REG_STATUS["sec_auto_ok_utc"] = TODAY.isoformat() if sec_ok else _last_sec_ok()
+    status["detail"]["reg_votes"] = f"手工清单最后核对 {checked or '无'}；未来 {BTC_DAYS} 天共 {len(out)} 条（自动 {sum(e['origin'] != 'manual' for e in out)} 条）"
     if age is None or age > REG_STALE_DAYS:
         status["notes"].append(f"监管表决清单最后核对 {checked or '无'}，超过 {REG_STALE_DAYS} 天，请重新核对 cal/reg_events.json")
     return out, checked or None
@@ -420,7 +455,8 @@ def main():
                         "(since 2022), but direction is unpredictable and the days before are not more volatile.",
             "next_zh": (f"下一个：{nxt['title_zh']}，{nxt['days_until']} 天后（新加坡时间 {nxt['time_bj'][5:]}）" if nxt else ""),
             "events": btc,
-            "reg_checked_utc": REG_CHECKED,   # 监管 / 立法表决（type=REG）清单最后一次人工核对的日期；events 里没有 REG = 核对过、窗口内没有
+            "reg_checked_utc": REG_CHECKED,   # 监管 / 立法表决（type=REG）手工清单最后一次核对的日期
+            "reg_status": REG_STATUS,          # {manual_checked_utc, sec_auto_ok_utc}：各来源最后一次成功核对；当天成功且 events 里没有 REG = 核对过、窗口内没有
             "method_zh": "对照组：同一星期几、前后 9 周内、没有其他事件的日子的同一时段。振幅 = 区间最高 ÷ 最低。年代分 2015-17、2018-21、2022-26 分别看。"
                          "期权交割：Deribit 每月最后一个周五 08:00 UTC。数据：Coinbase BTC-USD 小时线。",
         },
