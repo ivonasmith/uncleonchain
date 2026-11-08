@@ -2693,7 +2693,7 @@ def onchain_html():
         exp = db.get("浏览器") or ""
         st = db.get("状态") or ""
         for r in sm["rows"]:
-            if (r["new"] or r["ramp"]) and r["7日"] >= OC_MIN_7D:
+            if (r["new"] or r["ramp"]) and r["7日"] >= OC_MIN_7D and r["addr"] not in r["样本"]:   # 工厂地址本身出现在样本币里 = 代币自己在铸，不算发射台
                 cand.append((nm, exp, r))
         if not sm["rows"]:
             note = st if LANG["v"] == "zh" else ("Pending: needs the Alchemy key (GitHub secret ALCHEMY_KEY)" if st.startswith("待接入") else st)
@@ -2970,13 +2970,137 @@ def coverage_html():
             f'<p class="tnote">{T("门槛：近 30 天发射台手续费占全网 ≥ 0.01% 的链，免费节点能扫就接入；只能付费才能扫的，份额 ≥ 0.5% 才提出来由大叔决定。已接入、份额低于门槛的免费链保留（不花钱，链刚起量时能更早看到）。TON、Tron、Aptos 等非 EVM 链发币机制不同，要单独开发。份额来自 DefiLlama Launchpad 类目分链数据。", "Bar: chains with ≥ 0.01% of 30-day launchpad fees are added when a free node can scan them; chains that need a paid node are raised for a decision only at ≥ 0.5%. Free chains already added stay even below the bar. Non-EVM chains (TON, Tron, Aptos…) need their own build. Shares from DefiLlama’s per-chain Launchpad data.")}</p>')
 
 
+# ---------------------------------------------------------------- 发射台名录（logo + 名字 + 叙事；发射台名录.py 合并链上工厂与 Solana 前端）
+CHAIN_LABEL = {"solana": "Solana", "bsc": "BSC", "base": "Base", "robinhood": "Robinhood", "arc": "Arc", "ethereum": "Ethereum", "ink": "Ink",
+               "optimism": "Optimism", "xlayer": "X Layer", "monad": "Monad", "arbitrum": "Arbitrum", "stable": "Stable", "plasma": "Plasma"}
+
+
+def _lp_avatar(e, src):
+    nm = e.get("名称") or "?"
+    if src:
+        return f'<img class="lpc-logo" src="{esc(src)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.replaceWith(Object.assign(document.createElement(\'span\'),{{className:\'lpc-logo lpc-av\',textContent:\'{esc(nm[:1].upper())}\'}}))">'
+    hue = int(hashlib_md5(nm)[:2], 16) * 360 // 256
+    return f'<span class="lpc-logo lpc-av" style="--h:{hue}">{esc(nm[:1].upper())}</span>'
+
+
+def hashlib_md5(s):
+    import hashlib
+    return hashlib.md5((s or "").encode()).hexdigest()
+
+
+def directory_html():
+    try:
+        import 发射台名录 as DIR
+    except Exception as ex:
+        print(f"  名录模块加载失败：{ex}")
+        return ""
+    ents = DIR.collect()
+    if not ents:
+        return ""
+    lang = LANG["v"]
+    sol_end = None
+    sdb = load(os.path.join(DATA, "onchain", "solana.json")) or {}
+    if sdb.get("逐日"):
+        sol_end = max(sdb["逐日"])
+    ref = dt.date.fromisoformat(sol_end) if sol_end else dt.date.today()
+    cut = (ref - dt.timedelta(days=OC_NEW_DAYS - 1)).isoformat()
+    cards = {"sol": [], "evm": []}
+    chains_seen = []
+    for e in ents:
+        txt, src, tags, x = DIR.narrative(e, lang)
+        logo = DIR.logo_src(e)
+        nm = e["名称"] or "—"
+        chs = [CHAIN_LABEL.get(c, c) for c in e["链"]]
+        for c in e["链"]:
+            if c not in chains_seen:
+                chains_seen.append(c)
+        fac = [T(f, "own contract") if f == DIR.OWN else f for f in e["设施"]]
+        chips = ""
+        if e["首次出现"] != "基线" and e["首次出现"] >= cut:
+            chips += f'<span class="chip t-cool carry">{T("新", "new")} {esc(e["首次出现"][5:])}</span>'
+        if e["近7日新币"] >= 50 and e["近7日新币"] >= 2 * max(e["前7日新币"], 1) and e["前7日新币"] > 0:
+            chips += f'<span class="chip t-up carry">{T("起量", "ramping")}</span>'
+        tg = "".join(f'<span class="lpc-tag{" ai" if t == "AI Agent" else ""}">{esc(t)}</span>' for t in tags)
+        if txt:
+            body = f'<p class="lpc-n">{esc(txt)}</p><p class="lpc-src">{T("出处：", "Source: ")}{esc(src)}</p>'
+        else:
+            body = f'<p class="lpc-n lpc-none">{T("还没查到介绍：官网资料每天自动抓，抓到后显示在这里。", "No description yet: the site is fetched daily and its blurb will show here.")}</p>'
+        mets = []
+        if e["24h成交额"]:
+            mets.append(f'{T("24h 成交额", "24h volume")} <b>{f_usd(e["24h成交额"])}</b>')
+            mets.append(f'{T("样本池", "pools")} <b>{e["样本池"]:,}</b>')
+        if e["近7日新币"]:
+            mets.append(f'{T("近 7 日新币", "new tokens 7d")} <b>{e["近7日新币"]:,}</b>')
+            if e["发币人"]:
+                mets.append(f'{T("发币人", "creators")} <b>≥{e["发币人"]:,}</b>')
+        mets.append(f'{T("首次出现", "first seen")} <b>{_oc_first(e["首次出现"])}</b>')
+        links = []
+        if e.get("官网"):
+            links.append(f'<a href="{esc(e["官网"])}" target="_blank" rel="noopener">{T("官网", "Site")} ↗</a>')
+        if x:
+            links.append(f'<a href="https://x.com/{esc(x)}" target="_blank" rel="noopener">X ↗</a>')
+        if e.get("defillama"):
+            links.append(f'<a href="https://defillama.com/protocol/{esc(e["defillama"])}" target="_blank" rel="noopener">DefiLlama ↗</a>')
+        for c, a, exp in e["地址"][:3]:
+            u = f"https://solscan.io/account/{a}" if c == "solana" else f"{exp}/address/{a}"
+            links.append(f'<a href="{esc(u)}" target="_blank" rel="noopener"><code>{esc(a[:6])}…</code></a>')
+        q = " ".join([nm, e.get("官网") or "", " ".join(chs), " ".join(tags), " ".join(f for f in e["设施"]), e["key"]]).lower()
+        card = (f'<div class="lpc card" data-ch="{esc(" ".join(e["链"]))}" data-q="{esc(q)}">'
+                f'<div class="lpc-h">{_lp_avatar(e, logo)}<div class="lpc-t"><div class="lpc-name">{esc(nm)}{chips}</div>'
+                f'<div class="lpc-sub">{esc(" · ".join(chs))} · {esc(" / ".join(fac))}</div></div></div>'
+                f'{f"<div class=lpc-tags>{tg}</div>" if tg else ""}{body}'
+                f'<div class="lpc-m">{" · ".join(mets)}</div><div class="lpc-l">{" ".join(links)}</div></div>')
+        score = e["24h成交额"] if e["链"] == ["solana"] else e["近7日新币"]
+        cards["sol" if e["链"] == ["solana"] else "evm"].append((-score, card))
+    order = ["solana", "bsc", "robinhood", "base", "arc"] + [c for c in chains_seen if c not in ("solana", "bsc", "robinhood", "base", "arc")]
+    fbtn = f'<button type="button" class="lpf on" data-f="">{T("全部", "All")}</button>' + "".join(
+        f'<button type="button" class="lpf" data-f="{esc(c)}">{esc(CHAIN_LABEL.get(c, c))}</button>' for c in order if c in chains_seen)
+    grid = lambda xs: '<div class="lpg">' + "".join(c for _, c in sorted(xs, key=lambda t: t[0])) + "</div>"
+    js = ("<script>(function(){var r=document.getElementById('lpdir');if(!r)return;var q=r.querySelector('.lps'),f='';"
+          "function go(){var s=(q.value||'').trim().toLowerCase(),n=0;r.querySelectorAll('.lpc').forEach(function(c){"
+          "var ok=(!s||c.dataset.q.indexOf(s)>=0)&&(!f||(' '+c.dataset.ch+' ').indexOf(' '+f+' ')>=0);c.style.display=ok?'':'none';if(ok)n++;});"
+          "r.querySelectorAll('.lpsec').forEach(function(x){x.style.display=x.querySelector('.lpc:not([style*=\"none\"])')?'':'none';});"
+          "r.querySelector('.lpn').textContent=n;}"
+          "q.addEventListener('input',go);r.querySelectorAll('.lpf').forEach(function(b){b.addEventListener('click',function(){"
+          "r.querySelectorAll('.lpf').forEach(function(x){x.classList.remove('on')});b.classList.add('on');f=b.dataset.f;go();});});})();</script>")
+    n = len(ents)
+    head = (f'<h2 id="directory">{T("发射台名录", "Launchpad directory")} <span class="sub">'
+            + T(f"链上扫到、认得出名字的发射台 {n} 个：是什么、什么叙事、多活跃", f"{n} launchpads seen on-chain that we can name: what they are, their angle, how active")
+            + '</span></h2>')
+    tools = (f'<div class="lpbar"><input class="lps" type="search" placeholder="{T("搜名字、官网、叙事（如 float、股票、AI）", "Search name, site or angle (e.g. float, stocks, AI)")}">'
+             f'<div class="lpfs">{fbtn}</div><span class="sub">{T("显示", "showing")} <b class="lpn">{n}</b></span></div>')
+    secs = ""
+    if cards["sol"]:
+        secs += (f'<div class="lpsec"><h3>{T("Solana 发射台前端", "Solana launch front ends")} <span class="sub">{T("按样本池 24h 成交额排", "by 24h volume in sampled pools")}</span></h3>'
+                 + grid(cards["sol"]) + "</div>")
+    if cards["evm"]:
+        secs += (f'<div class="lpsec"><h3>{T("EVM 链发射台", "EVM launchpads")} <span class="sub">{T("按近 7 日新币数排", "by new tokens in 7 days")}</span></h3>'
+                 + grid(cards["evm"]) + "</div>")
+    note = T("名录 = 链上扫到的发币工厂（EVM 近 7 日新币 ≥ 30）和 Solana 公共设施上的前端（样本池 24h 成交额 ≥ $1 万）里，认得出名字的那些；同一个平台的多个合约 / 配置合并成一张卡。"
+             "叙事优先用人工整理的一句话（写明出处），没有的用 DefiLlama 介绍或官网自述（英文原文，未核实）；标签按介绍里的关键词自动打。"
+             "logo 每天从官网 / DefiLlama 自动抓。Solana 的指标是样本池的成交额，EVM 的是新币数，两边不能直接比。认不出名字的合约在下面「未识别的发币合约」里。只说明是什么，不是推荐。",
+             "Directory = the token factories we scan on EVM chains (≥ 30 new tokens in 7 days) and Solana front ends on shared venues (≥ $10K 24h volume in sampled pools) that we can name; multiple contracts/configs of one platform are merged into one card. "
+             "The angle uses a curated one-liner with its source where we have one, otherwise the DefiLlama description or the site’s own blurb (unverified); tags come from keywords. "
+             "Logos are fetched daily from sites / DefiLlama. Solana is measured by sampled-pool volume and EVM by new tokens; the two aren’t comparable. Unnamed contracts are listed further down. Describes what they are; not a recommendation.")
+    return f'<section id="lpdir">{head}{tools}{secs}<p class="tnote">{note}</p></section>{js}'
+
+
 def build_launchpad_discovery():
     st = discovery_stats()
+    ld, dst = os.path.join(DATA, "onchain", "logo"), os.path.join(SITE, "img", "lp")     # 发射台 logo（发射台名录.py 抓的）
+    if os.path.isdir(ld) and LANG["v"] == "zh":
+        shutil.rmtree(dst, ignore_errors=True)
+        os.makedirs(dst, exist_ok=True)
+        for f in os.listdir(ld):
+            shutil.copyfile(os.path.join(ld, f), os.path.join(dst, f))
     body = (crumbs([(T("发射台矩阵", "Launchpads"), "/launchpad/"), (T("新发射台监控", "New launchpad monitor"), None)])
             + f'<div class="ph"><div><div class="eyebrow">Launchpad · {T("链上自动发现", "on-chain discovery")}</div><h1>{T("新发射台监控", "New launchpad monitor")}</h1>'
             + f'<p class="lede">{T("DefiLlama 收录有滞后。这里直接从链上看谁在批量发币：每天扫前一个 UTC 日的新币，按发币合约归到「工厂」；Solana 按公共发币设施上的配置拆出各个前端。只说明链上在发什么，不是推荐。", "DefiLlama lags. Here we read the chain directly: each day we scan the previous UTC day for new tokens and group them by the contract that created them; on Solana we split shared launch venues by config. Describes what is being launched; not a recommendation.")}</p></div>'
             + f'<div class="stamp">{T("数据截至", "Data as of")} <b>{esc(st["end"] or "—")}</b>{T("（UTC 完整日）", " (UTC)")}</div></div>'
-            + ai_agent_html() + onchain_html() + coverage_html())
+            + directory_html() + ai_agent_html()
+            + f'<h2 id="raw">{T("未识别的发币合约 · 扫描明细", "Unidentified factories · scan details")} <span class="sub">{T("认不出名字的工厂、各链前 10、Solana 全部前端、其他线索；点开看", "factories we can’t name yet, top 10 per chain, all Solana front ends, other leads — expand to view")}</span></h2>'
+            + f'<details class="card fold"><summary><b>{T("展开扫描明细", "Show scan details")}</b></summary><div style="padding:0 14px 14px">' + onchain_html() + '</div></details>'
+            + coverage_html())
     emit("launchpad/discovery/index.html", f'{T("新发射台监控", "New launchpad monitor")} · {T(BRAND, BRAND_EN)}', body, active="launchpad",
          desc=T("链上自动发现新发射台：Robinhood Chain、BSC、Base、Arc 每日新币按发币工厂统计，Solana 发射台前端拆分。", "On-chain discovery of new launchpads: daily new tokens by factory on Robinhood Chain, BSC, Base and Arc, plus Solana launch front ends."))
 

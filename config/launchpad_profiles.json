@@ -1,0 +1,188 @@
+{
+ "_说明": "发射台名录的人工档案（新发射台监控页 /launchpad/discovery/ 顶部名录用）。键 = 名录 id；匹配 = 链上能对上它的东西（工厂标签名、已验证合约名、官网域名、'链:地址'），命中任何一个就并到这一条。叙事 = 一句话中文（只写有出处的事实，出处写进「来源」）；标签从 发射台名录.TAGS 的中文名里挑，自动标签会再补。没写叙事的条目，页面用 DefiLlama 介绍或官网自述（英文原文）。logo 留空就自动抓官网图标。",
+ "float": {
+  "名称": "Float",
+  "官网": "https://www.floatlaunch.xyz",
+  "匹配": [
+   "floatlaunch.xyz",
+   "float"
+  ],
+  "叙事": "币对代币化股票：发的 meme 币可以挂 NVDA、TSLA 这类代币化股票、预 IPO、隐私币或其他主流币，用 SOL 交易、持币奖励按挂的资产发；交易费 35% 按成交量空投 USDC 给头部交易者、35% 回购销毁平台币 $FLOAT。起始市值约 $2 万，约 $15 万毕业到 Raydium 并锁死流动性。",
+  "叙事EN": "Coins paired with tokenized stocks: memecoins can be paired with tokenized equities (NVDA, TSLA…), pre-IPO names, privacy coins or majors; traded in SOL, holder rewards paid in the paired asset. 35% of trading fees go to top traders as USDC airdrops and 35% to buying back and burning $FLOAT. Starts near $20K market cap and graduates to Raydium around $150K with liquidity locked.",
+  "标签": [
+   "代币化股票 / RWA",
+   "持币分红",
+   "回购销毁",
+   "交易返现 / 空投"
+  ],
+  "来源": "官网文档 floatlaunch.xyz/docs（大叔 2026-11-08 转来的摘要）",
+  "来源EN": "floatlaunch.xyz/docs (summary shared 2026-11-08)",
+  "logo": "https://www.floatlaunch.xyz/icon.png",
+  "_logo来源": "链上 LaunchLab 平台配置 img 字段"
+ },
+ "four-meme": {
+  "名称": "Four.meme",
+  "官网": "https://four.meme",
+  "匹配": [
+   "Four.meme",
+   "bsc:0x5c952063c7fc8610ffdb798152d69f0b9550762b"
+  ],
+  "defillama": "four.meme",
+  "叙事": "BSC 上的 meme 币公平发射平台，BSC 发币量最大的几家之一。",
+  "叙事EN": "Fair-launch memecoin platform on BSC; one of the largest by token count there.",
+  "标签": [
+   "公平发射 / 反狙击",
+   "Meme 通用"
+  ],
+  "来源": "DefiLlama 介绍 + 本站链上数据",
+  "来源EN": "DefiLlama description + our on-chain data"
+ },
+ "flap": {
+  "名称": "Flap",
+  "官网": "https://flap.sh",
+  "匹配": [
+   "Flap（Portal）",
+   "VaultPortal",
+   "bsc:0xe2ce6ab80874fa9fa2aae65d277dd6b8e65c9de0",
+   "bsc:0x90497450f2a706f1951b5bdda52b4e5d16f34c06"
+  ],
+  "defillama": "flap-sh",
+  "叙事": "BSC 一键发币平台，发的多是税币（币地址以 7777 结尾），带 Meme Battle 玩法；Portal 和 VaultPortal 两个合约都是它。",
+  "叙事EN": "One-click token launches on BSC, mostly tax tokens (addresses end in 7777), with a Meme Battle mode; both the Portal and VaultPortal contracts are Flap.",
+  "标签": [
+   "税币",
+   "游戏 / 对战"
+  ],
+  "来源": "Flap 官方文档合约地址 + DefiLlama 介绍；VaultPortal 按样本币同样以 7777 结尾归入",
+  "来源EN": "Flap docs (contract addresses) + DefiLlama; VaultPortal grouped in because its tokens also end in 7777"
+ },
+ "gang-fun": {
+  "名称": "gang.fun",
+  "官网": "https://gang.fun",
+  "匹配": [
+   "gang.fun（AI Agent 专属发射台）",
+   "GangLaunchpad",
+   "bsc:0x2bebed4be8c8f46c17776c71d7a6a45dbc5cab29",
+   "bsc:0x770331a9accdb53acb4a45b6c5b7d151fadce557"
+  ],
+  "叙事": "BSC 上 AI Agent 专属发射台：买入要 Binance Agentic Wallet 的 Agent ID，等于只让 AI Agent 发币和交易。",
+  "叙事EN": "AI-agent-only launchpad on BSC: buying requires an Agent ID from Binance Agentic Wallet, so only AI agents launch and trade.",
+  "标签": [
+   "AI Agent"
+  ],
+  "来源": "官方开源仓库 gangfun/gang-launchpad；GangLaunchpad 合约按已验证合约名归入",
+  "来源EN": "Official repo gangfun/gang-launchpad; the GangLaunchpad contract grouped in by its verified name"
+ },
+ "pons": {
+  "名称": "Pons",
+  "官网": "https://www.ponsfamily.com/launchpad",
+  "匹配": [
+   "Pons V2",
+   "PonsV2LaunchFactory",
+   "PonsV2LaunchAndBuy",
+   "ponsfamily.com"
+  ],
+  "defillama": "pons-v2",
+  "叙事": "Robinhood Chain 上最大的发射台：发固定总量的币，交易推进到「毕业」后进流动性池。",
+  "叙事EN": "The largest launchpad on Robinhood Chain: fixed-supply tokens that trade toward a liquidity graduation.",
+  "标签": [
+   "Meme 通用"
+  ],
+  "来源": "DefiLlama 介绍 + 本站链上数据",
+  "来源EN": "DefiLlama description + our on-chain data"
+ },
+ "clanker": {
+  "名称": "Clanker",
+  "官网": "https://www.clanker.world",
+  "匹配": [
+   "Clanker",
+   "clanker.world"
+  ],
+  "defillama": "clanker",
+  "叙事": "AI 机器人自动帮人部署 meme 币，Base 起家，现在 Robinhood Chain 上也有工厂。",
+  "叙事EN": "An AI agent that deploys memecoins on request; started on Base, now also has a factory on Robinhood Chain.",
+  "标签": [
+   "AI Agent"
+  ],
+  "来源": "DefiLlama 介绍 + 本站链上数据",
+  "来源EN": "DefiLlama description + our on-chain data"
+ },
+ "zora": {
+  "名称": "Zora Coins",
+  "官网": "https://zora.co",
+  "匹配": [
+   "ZoraFactoryImpl",
+   "zora.co"
+  ],
+  "defillama": "zora-coins",
+  "叙事": "社交网络里每条帖子都是一个币（Base）。",
+  "叙事EN": "A social network where every post is a coin (Base).",
+  "标签": [
+   "社交 / 内容币"
+  ],
+  "来源": "DefiLlama 介绍",
+  "来源EN": "DefiLlama description"
+ },
+ "argus": {
+  "名称": "Argus World",
+  "官网": "https://arguspad.io",
+  "匹配": [
+   "ArgusV5Portal",
+   "arguspad.io"
+  ],
+  "defillama": "argus-world",
+  "叙事": "Arc 上的税币发射台：整盘供应一次放进锁死的 Uniswap v4 单边仓位，没有联合曲线也不迁移，每笔买卖收税。",
+  "叙事EN": "Tax-token launchpad on Arc: the full supply goes into a locked single-sided Uniswap v4 position — no bonding curve, no migration — with a buy/sell tax on every swap.",
+  "标签": [
+   "税币"
+  ],
+  "来源": "DefiLlama 介绍；ArgusV5Portal 按已验证合约名归入",
+  "来源EN": "DefiLlama description; ArgusV5Portal grouped in by its verified name"
+ },
+ "sentry": {
+  "名称": "Sentry",
+  "官网": "https://sentry.trading",
+  "匹配": [
+   "SentryLaunchFactoryV4Ink",
+   "sentry.trading"
+  ],
+  "defillama": "sentry",
+  "叙事": "一键发 ERC-20，开盘即在 Uniswap V3 建池、LP 永久锁在工厂里，LP 手续费 65/35 分给创建者和协议金库。我们在 Ink 上扫到它的工厂（DefiLlama 记在 Robinhood Chain）。",
+  "叙事EN": "One-click ERC-20 launches with a Uniswap V3 pool seeded at launch and LP permanently locked; LP fees split 65/35 between creator and treasury. We see its factory on Ink (DefiLlama lists it on Robinhood Chain).",
+  "标签": [
+   "创作者分成"
+  ],
+  "来源": "DefiLlama 介绍；Ink 上的工厂按合约名 SentryLaunchFactoryV4Ink 推断，待确认",
+  "来源EN": "DefiLlama description; the Ink factory matched by its contract name, unconfirmed"
+ },
+ "pair": {
+  "名称": "PAIR",
+  "官网": "https://pair.fund",
+  "匹配": [
+   "PairPairLauncher",
+   "pair.fund"
+  ],
+  "defillama": "pair",
+  "叙事": "Robinhood Chain 上无需许可的代币化股权发射台。",
+  "叙事EN": "A permissionless tokenized-equity launchpad on Robinhood Chain.",
+  "标签": [
+   "代币化股票 / RWA"
+  ],
+  "来源": "DefiLlama 介绍；合约 PairPairLauncher 按名字推断，待确认",
+  "来源EN": "DefiLlama description; the PairPairLauncher contract matched by name, unconfirmed"
+ },
+ "doppler-airlock": {
+  "名称": "Doppler（Airlock）",
+  "匹配": [
+   "Airlock"
+  ],
+  "叙事": "Doppler 协议的发币入口合约，多个前端共用一套合约，不是单一品牌；Base、Robinhood Chain、Arc 都有部署。",
+  "叙事EN": "The token-launch entry contract of the Doppler protocol, shared by multiple front ends rather than one brand; deployed on Base, Robinhood Chain and Arc.",
+  "标签": [
+   "基础设施 / 协议"
+  ],
+  "只用人工标签": true,
+  "来源": "已验证合约名 Airlock",
+  "来源EN": "Verified contract name Airlock"
+ }
+}

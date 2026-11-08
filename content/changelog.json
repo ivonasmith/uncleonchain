@@ -26,10 +26,15 @@
   {
     "version": "2026.11.08",
     "date": "2026-11-08",
-    "notify": false,
-    "title_zh": "事件日历加监管 / 立法二元表决",
-    "title_en": "Calendar adds regulatory / legislative votes",
+    "notify": true,
+    "title_zh": "发射台名录（logo + 叙事） · 事件日历加监管 / 立法二元表决",
+    "title_en": "Launchpad directory (logos + angles) · Calendar adds regulatory / legislative votes",
     "items": [
+      {
+        "type": "new",
+        "zh": "新发射台监控页加「发射台名录」：链上扫到、认得出名字的发射台做成卡片，带 logo、所在链与设施、叙事标签（如 代币化股票 / RWA、AI Agent、税币、持币分红）、一句话介绍（标明出处）、活跃度和官网 / X / DefiLlama 链接，可按名字、叙事搜索和按链筛选；同一平台的多个合约 / 配置合并成一张（如 Float 的几套 LaunchLab 配置、Flap 的 Portal 与 VaultPortal）。logo 和官网简介每天自动抓，认不出名字的合约折进「扫描明细」。",
+        "en": "New launchpad monitor adds a launchpad directory: cards for every launchpad we see on-chain and can name, with logo, chain and venue, angle tags (tokenized stocks / RWA, AI Agent, tax tokens, holder rewards…), a sourced one-liner, activity and site / X / DefiLlama links; searchable by name or angle and filterable by chain. Multiple contracts/configs of one platform are merged (e.g. Float’s LaunchLab configs; Flap’s Portal and VaultPortal). Logos and site blurbs are fetched daily; unnamed contracts move into the scan details."
+      },
       {
         "type": "new",
         "zh": "事件日历的比特币大事件里加「监管 / 立法表决」（REG）：国会 / 委员会对加密法案的表决、SEC 对加密产品的最终决定日、其他地区的监管表决。只收有官方日期和官方来源的，标「未检验」，不给统计数字。2026-11-08 核对：未来 60 天没有符合条件的（JitoSOL ETF 申请已撤回；ISE 加密信托期权 11-11 截止日不是最终决定）",

@@ -151,15 +151,34 @@ def _num(v):
         return 0.0
 
 
+def _cstr(b):
+    return b.split(b"\0")[0].decode("utf-8", errors="ignore").strip()
+
+
+def _url(u):
+    u = (u or "").strip()
+    if not u or " " in u or "." not in u:
+        return None
+    return u if u.startswith("http") else "https://" + u
+
+
 def platform_name(data):
-    """LaunchLab 平台配置里的名字和官网（在官网链接前面那段可读文字）。"""
-    m = re.search(rb"https?://[\x21-\x7e]{4,}", data or b"")
+    """LaunchLab 平台配置（PlatformConfig）里的名字、官网、图标：固定字段 name [112:176]、web [176:432]、img [432:688]
+    （2026-11-08 对 Float 配置实测）。老版本 / 长度不够时退回「官网链接前那段可读文字」的猜法。"""
+    data = data or b""
+    if len(data) >= 688:
+        name, web, img = _cstr(data[112:176]), _url(_cstr(data[176:432])), _url(_cstr(data[432:688]))
+        if web and re.search(r"\.(png|jpe?g|gif|webp|svg)(\?|$)|img|image|attachments|catbox", web, re.I):
+            web, img = None, img or web                # 有人把图标填进了官网栏
+        if name or web:
+            return (name[:40] or None), web, img
+    m = re.search(rb"https?://[\x21-\x7e]{4,}", data)
     if not m:
-        return None, None
+        return None, None, None
     web = m.group(0).decode(errors="ignore")
     runs = [r.decode(errors="ignore").strip() for r in re.findall(rb"[\x20-\x7e]{2,}", data[:m.start()])]
     runs = [r for r in runs if re.search(r"[A-Za-z]{2}", r)]
-    return (runs[-1][:40] if runs else None), web
+    return (runs[-1][:40] if runs else None), web, None
 
 
 def solana_frontends():
@@ -184,11 +203,11 @@ def solana_frontends():
             c = cfg.get(k) or b""
             if dex == "meteora-dbc":
                 gid = b58(c[40:72]) if len(c) >= 72 else k          # 合作方（手续费接收地址）
-                name, web = None, None
+                name, web, img = None, None, None
             else:
                 gid = k
-                name, web = platform_name(c)
-            g = groups.setdefault(gid, {"名称": name, "官网": web, "池": 0, "成交额": 0.0, "笔数": 0, "配置": set(), "样本": [], "_币": []})
+                name, web, img = platform_name(c)
+            g = groups.setdefault(gid, {"名称": name, "官网": web, "图标": img, "池": 0, "成交额": 0.0, "笔数": 0, "配置": set(), "样本": [], "_币": []})
             at = x["attributes"]
             g["池"] += 1
             g["成交额"] += _num((at.get("volume_usd") or {}).get("h24"))
