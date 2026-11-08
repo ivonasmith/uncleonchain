@@ -44,7 +44,8 @@ TAGS = {
     "游戏 / 对战": ("Games / battles", r"\bgam(?:e|es|ing)\b|\bbattles?\b"),
     "预测市场": ("Prediction markets", r"prediction market"),
     "Apple Pay / 法币入金": ("Apple Pay / fiat", r"apple pay|credit card"),
-    "Meme 通用": ("General memecoins", r"(?!x)x"),              # 只人工打
+    "Meme 通用": ("General memecoins", r"(?!x)x"),
+    "玩法创新": ("Novel mechanics", r"(?!x)x"),              # 只人工打
     "基础设施 / 协议": ("Infrastructure / protocol", r"(?!x)x"),
 }
 _TAG_RE = {k: re.compile(v[1], re.I) for k, v in TAGS.items()}
@@ -132,6 +133,9 @@ def collect():
     ents = {}
 
     def put(idents, name, chain, **kw):
+        if name:
+            name = re.sub(r"\s+\d+(?:\.\d+)?%$", "", name.strip()) or name    # 「Tracer 1%」「Tracer 2.5%」= 同一平台不同费率
+            idents = set(idents) | {name}
         pid = _match_profile(prof, idents)
         dom = domain(kw.get("官网") or "")
         n = (name or "").lower()
@@ -239,16 +243,43 @@ def auto_tags(*texts):
     return [k for k, r in _TAG_RE.items() if r.search(t)]
 
 
+def _dos(e):
+    """档案按名录 key 存；key 变了（比如后来加了人工档案）就按官网域名找回原来那条。"""
+    d = dossier()
+    if e["key"] in d:
+        return d[e["key"]]
+    dom = domain(e.get("官网") or "")
+    if dom:
+        for v in d.values():
+            if domain(v.get("官网") or "") == dom:
+                return v
+    return {}
+
+
+def _ds_blurb(e):
+    """没官网资料时：DEX Screener「自称发射台」里以这个名字开头的自述（如 UPPIN）。"""
+    nm = (e.get("名称") or "").strip()
+    if len(nm) < 3:
+        return None
+    hits = _cached("clues", os.path.join(OC, "线索.json")).get("自称发射台") or {}
+    r = re.compile(r"^\W*" + re.escape(nm) + r"\b", re.I)
+    for h in sorted(hits.values(), key=lambda h: h.get("日期", ""), reverse=True):
+        if r.search(h.get("简介") or ""):
+            return h["简介"][:400]
+    return None
+
+
 def narrative(e, lang="zh"):
     """→ (一句话, 来源说明, 标签列表, X 账号)。"""
     prof = profiles().get(e.get("profile") or "", {})
     meta = llama_meta().get(e.get("defillama") or "", {})
-    dos = dossier().get(e["key"], {})
+    dos = _dos(e)
     site, llama = dos.get("简介") or "", meta.get("介绍") or ""
     tags = list(prof.get("标签") or [])
     if not prof.get("只用人工标签"):
+        extra = "" if site else (_ds_blurb(e) or "")
         cname = re.sub(r"(?<=[a-z0-9])(?=[A-Z])", " ", e.get("名称") or "")     # TaxRWAERC20LaunchpadFactory → Tax RWAERC20 …
-        for t in auto_tags(prof.get("叙事EN"), llama, site, cname):
+        for t in auto_tags(prof.get("叙事EN"), llama, site, extra, cname):
             if t not in tags:
                 tags.append(t)
     if lang == "en":
@@ -260,6 +291,8 @@ def narrative(e, lang="zh"):
         txt, src = llama, ("DefiLlama 介绍（英文原文）" if lang == "zh" else "DefiLlama description")
     elif site:
         txt, src = site, ("官网自述（英文原文，未核实）" if lang == "zh" else "From its website (unverified)")
+    elif _ds_blurb(e):
+        txt, src = _ds_blurb(e), ("DEX Screener 上的项目自述（英文原文，未核实）" if lang == "zh" else "Self-description on DEX Screener (unverified)")
     else:
         txt, src = "", ""
     x = prof.get("X") or meta.get("X") or dos.get("X")
@@ -268,7 +301,7 @@ def narrative(e, lang="zh"):
 
 def logo_src(e):
     """页面用的图标：本地缓存（/img/lp/…）> 远程（人工 / DefiLlama 图标 / LaunchLab 配置里的图）> None（页面画首字母）。"""
-    dos = dossier().get(e["key"], {})
+    dos = _dos(e)
     if dos.get("图标文件") and os.path.exists(os.path.join(LOGO_DIR, dos["图标文件"])):
         return "/img/lp/" + dos["图标文件"]
     meta = llama_meta().get(e.get("defillama") or "", {})
@@ -379,7 +412,7 @@ def fetch_dossiers():
     ents.sort(key=lambda e: -(e["近7日新币"] * 50 + e["24h成交额"]))     # 先抓活跃的
     n = ok = 0
     for e in ents:
-        old = dos.get(e["key"]) or {}
+        old = dos.get(e["key"]) or _dos(e)
         if old.get("日期", "") >= stale and old.get("官网") == e.get("官网"):
             continue
         if n >= FETCH_CAP:
@@ -406,6 +439,8 @@ def fetch_dossiers():
         fn, src = _save_logo(e["key"], cands)
         if fn:
             rec.update({"图标文件": fn, "图标来源": src})
+            if old.get("图标文件") and old["图标文件"] != fn and os.path.exists(os.path.join(LOGO_DIR, old["图标文件"])):
+                os.remove(os.path.join(LOGO_DIR, old["图标文件"]))      # 名录 key 改了以后旧文件名的图标
         elif old.get("图标文件"):
             rec.update({"图标文件": old["图标文件"], "图标来源": old.get("图标来源")})
         dos[e["key"]] = rec
