@@ -75,7 +75,7 @@ def export(runtime, output):
                    source_read_through_utc=run.get('finished_utc'), rows=rows,
                    coverage='注册为完整注册表；交易/发币为scope列出的完整已核平台子集，不代表全生态',
                    definitions=dict(trading_addresses='当日买卖事件独立参与地址；不是只买入地址，不含单纯铸造/领取，不是Agentic Wallet总数',
-                                    volume_bnb='已核曲线买卖成交额，扣除平台费；不含二级DEX及其他未核平台',
+                                    volume_bnb='已核平台曲线买卖成交额（BNB计价；Gang按含费毛额）；不含二级DEX、稳定币计价曲线及其他未核平台',
                                     new_launches='已核工厂当日创建数；不表示每个创建者均受ID门禁',
                                     missing='null显示U，图上断点；完整读取的零显示0'))
     # Keep each customer metric's detailed proof in the private runtime, not the homepage.

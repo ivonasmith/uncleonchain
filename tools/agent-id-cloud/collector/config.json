@@ -344,5 +344,150 @@
       "enabled": false,
       "reason": "通过公开仓库文件读取发现；不是GitHub代码搜索结果。未核验实现/门禁/历史事件全集前不启用"
     }
-  ]
+  ],
+  "gang_adapter": {
+    "schema": 1,
+    "source_repo": "https://github.com/gangfun/gang-launchpad",
+    "source_commit": "8b12b306aa9fe37668a5cd211b4200aa9d552d61",
+    "grade": "E3",
+    "registry": "0x4fF77D4d9ac080939a24E1B805206bA094C44e5C",
+    "registry_pads_selector": "580c3777",
+    "pads": [
+      "0x0508232833aE6849c03b28F7aA248BBd5cFCceE2",
+      "0x0B51F398491F534933d5223590f50D86e361c241",
+      "0x0d11EF6938F3d572eb5f01c4e4df13fD86269F56",
+      "0x11E857d3D744CBF83acDe64aF4AcF15D3438a05d",
+      "0x15CFD2dc8278Fb87a1783ef42111618E20874365",
+      "0x1B8F3f69DFa0a7F63d308C7EB0Fd38D8b099966E",
+      "0x1BDBDD73f51079c64BCA3917629c84c257921aCc",
+      "0x2202F7898e7e0b77d2Bb46d661d88d1Ffa7D8330",
+      "0x281889ad915c1A95ffc4922235c6314b3Cbd8a5a",
+      "0x2866369F7acEFC9760bdE7779362fae5cD68B41E",
+      "0x298288D76A1BA71999eb71D128526Ff656f689f7",
+      "0x2bEbED4be8c8F46C17776C71D7a6A45dbC5CAB29",
+      "0x4E6f13c8A453c1b8b4E20b590082bb233a5b80d7",
+      "0x4E7E327621F2FD9A8fea832D9160d7A88344bd6c",
+      "0x4d353264317ecc9f9FAf72220bBe702F4C869908",
+      "0x4f7391D69cbf62891Ba8db929c323cd2609b94e7",
+      "0x4fF77D4d9ac080939a24E1B805206bA094C44e5C",
+      "0x5a4FA2D91638a305EdF027894753c943f095dDAA",
+      "0x60aee38576035E757deD30fF8db8A8DA476430C1",
+      "0x631e66560F4FAE4e486B65349edE48189E48B029",
+      "0x6381707406eb7E8EF8EdaF2DedBfFcEFFC0b39be",
+      "0x69bfa8459b01e3705Aa8C0397557E537F2024F53",
+      "0x6B0ECAAe1Cf9A733ab98F2ad90A4d48c9a7790A3",
+      "0x706973e4F08dBf1604Cf540d0168428521e0E3d6",
+      "0x770331a9accdb53ACb4a45B6c5B7D151fADCe557",
+      "0x771b6dAA5240e3Cc0F0819535E8200774AFedEED",
+      "0x7E3000c87950Ac3C9e05622d3A58E001F96D937e",
+      "0x88A4C3e0AE30Ae47Cd4DE6d79da6Fe0dB95B028D",
+      "0x9108e7b85e69060A5E626A04Ce6DEf323071C8a9",
+      "0x9d90F5412EE7E5Af2868F2D887d836ac7a46767E",
+      "0x9dD16b73f624bdd8a210CBB2602FdF70f1B450B8",
+      "0xB06DB29008E8569f813e09991B7f76702856F7a4",
+      "0xB11B83C83DEd269B040faecC1D61B4885BA8e56e",
+      "0xC18eA63d3D44E3Abb78Be7AF984C9825308F0Ab4",
+      "0xCa8e63434072B40d3dFE6f5e7Fd885F93A3200b6",
+      "0xD6482850aCAC74BA889804931Fc797294777951c",
+      "0xE90851A90C6278E3d6e4C24320101f8B13D90A11",
+      "0xF45C221cF453d3943b00F905f66d66e34380956A",
+      "0xF81C4E51c48466c6025B0165b1Ea0F6978c712cb",
+      "0xFFE9a823FbA62d0a77d4f8bB83965299b5664395",
+      "0xa712E8194aEE0291638bF1b6Cb440A07c40c409A",
+      "0xb14d415f70D7F99f0D93Bd3BF76e0D6b38b53B3E",
+      "0xb21828C49A526FA293C48990070a518e9ab9FC08",
+      "0xcbB924E3ab1fA564627506C56c98721222df6636",
+      "0xf7447D9ee5041eB3Ec3e8eF01ad652a48B956086"
+    ],
+    "events": {
+      "0x6e59ac1e0b7a4b5c385ffff3601e05644c2ed9d875089895ed1b88e9cf8c632a": {
+        "sig": "Buy(address,address,uint256,uint256,uint256,uint256,uint256)",
+        "kind": "buy",
+        "amount_word": 0,
+        "fee_words": [
+          1,
+          2
+        ]
+      },
+      "0x00055e00ae56ca9d108326c7fd1ab1e6380614100b19bf3e4d1411240a726d86": {
+        "sig": "Sell(address,address,uint256,uint256,uint256,uint256,uint256)",
+        "kind": "sell",
+        "amount_word": 3,
+        "fee_words": [
+          1,
+          2
+        ]
+      },
+      "0x75a85e7be0265abefef113ee168a0d751385a985c3a37920ae97ae192d2eadb4": {
+        "sig": "Buy(address,address,uint256,uint256,uint256,uint256)",
+        "kind": "buy",
+        "amount_word": 0,
+        "fee_words": [
+          1
+        ]
+      },
+      "0x4f4be38a8508fd47fad5f6d8d4dc1753a805beb3ce3f769802abc4d2165a6d8a": {
+        "sig": "Sell(address,address,uint256,uint256,uint256,uint256)",
+        "kind": "sell",
+        "amount_word": 2,
+        "fee_words": [
+          1
+        ]
+      },
+      "0xe57a519fe6a031fac5d360f4b8ce246c86dd280b40dc37b68c0a7cc7394ef9c0": {
+        "sig": "Created(address,address,string,string)",
+        "kind": "create",
+        "mode": "curve-v1",
+        "quote": "native"
+      },
+      "0xd23a447045c377a966a79f59983bae21db7b92fead61df8ace4aea5628043791": {
+        "sig": "Created(address,address,string,string,string,bool,address,address,uint256)",
+        "kind": "create",
+        "mode": "curve-v2",
+        "quote": "topic3"
+      },
+      "0x416fe98c8f1ea2977674a1a4ee6252eb72597a8392fc2d7d0599a2bf5d8fdb63": {
+        "sig": "Created(address,address,string,string,string,address,address,uint256)",
+        "kind": "create",
+        "mode": "curve-v3",
+        "quote": "topic3"
+      },
+      "0xd46f0c9c36ad8c7839cf830c7cb08aa3a24392965d09cf84e5c8d3bf098d6a4f": {
+        "sig": "Created(address,address,string,string,string,address,address,uint256,uint256,uint256,uint256,uint256,uint256)",
+        "kind": "create",
+        "mode": "fair",
+        "quote": "topic3"
+      },
+      "0x3794109b2940f03560225200c3d62de2cb3933623779e29e612558c9876c68dc": {
+        "sig": "Created(address,address,string,string,address,uint256)",
+        "kind": "create",
+        "mode": "curve-s",
+        "quote": "topic3"
+      },
+      "0xd14ba4fc88e04545311d8e6c7aa996d2f50a41375f5f3c783797558b48da74c3": {
+        "sig": "Created(address,address,string,string,string,address,uint256,(uint256,uint16,uint8,uint8,uint16,uint16,uint16,uint16,uint16,uint16,uint32,uint32,uint8,bool))",
+        "kind": "create",
+        "mode": "flywheel",
+        "quote": "word",
+        "quote_word": 3
+      },
+      "0x6da2ac486174425e3bbc9aab3a6fd9ee8fb4d1c1e769a02af4a159b37c52eea9": {
+        "sig": "Graduated(address,address,address,uint256,uint256)",
+        "kind": "graduate"
+      },
+      "0x18a56450d3c666e2bae9e0829fcada82a9ab0deef6e33c2496752c88d4155c9d": {
+        "sig": "Graduated(address,address,uint256,uint256)",
+        "kind": "graduate"
+      },
+      "0xec774f0683e9ac48e8d835f412f9f877a8a5dee9af3170d78cf3ef33149d15e7": {
+        "sig": "Launched(address,address,address,uint256,uint256)",
+        "kind": "graduate"
+      },
+      "0xd113672859919fb75607f9e7df716114585bc03e2c4cb89ca2b2a7e8220c90bc": {
+        "sig": "Launched(address,address,uint256,uint256,uint256)",
+        "kind": "graduate"
+      }
+    },
+    "note": "Gang 全部内盘链上强制 SPACE ID Agent ID 门禁；事件定义取自官方公开仓库，按 topic0 解码；pad 名单 = 仓库文档地址 + GangPadRegistry.pads()，只保留主网有代码的"
+  }
 }

@@ -437,6 +437,17 @@ class Monitor:
                 for date in span:self.state['days'][date]['C']=self.participation(date,self.state['days'][date]['B'],self.state['days'][date]['E'],(self.state['days'][date]['A'].get('start_block'),self.state['days'][date]['A'].get('end_block')) if self.state['days'][date]['A'].get('start_block') is not None else None)
             except Exception as e:
                 for date in span:self.gap('B/AgentPad-children',date,str(e),self.chain.url)
+        if self.config.get('gang_adapter'):
+            # Gang：Agent ID 门禁发射台（E3：官方公开源码事件 + 链上日志）。自带补历史：没做完的日子每次都会补。
+            try:
+                from gang import collect as collect_gang
+                g=collect_gang(ROOT,self.config,self.client,self.run_date,span,self.state)
+                for row in g['rows']:
+                    if row['date'] in self.state['days']:
+                        rows=[r for r in self.state['days'][row['date']].get('B',[]) if r['platform']!='Gang'];self.state['days'][row['date']]['B']=rows+[row]
+                self.trades=[t for t in self.trades if t['platform']!='Gang']+[t for t in g['trades'] if t['date'] in self.state['days']];self.errors.extend(g['errors'])
+            except Exception as e:
+                for date in span:self.gap('B/Gang',date,str(e),self.chain.url)
         self.errors.extend(fill_calendar(self.state,self.config,self.yesterday))
         self.snapshots();self.outcomes();self.rules();self.audit()
         from free_mints import collect as collect_mints
