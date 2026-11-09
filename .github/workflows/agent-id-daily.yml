@@ -1,11 +1,12 @@
 # AI Agent / Agent ID 云端日更（交接包 2026-11-06，代码在 tools/agent-id-cloud）。
-# 验收期只开 workflow_dispatch：旧任务（大叔电脑上 Codex 的 monitor-agent-id）停掉之前不加 cron（单时钟）。
-# 切换时只加一条 `schedule: - cron: '20 0 * * *'`，别的不动。
+# 2026-11-09 切换为唯一定时：首轮 11-06 验收通过；旧 Codex monitor-agent-id 自 10-30 起已不再推数据。
 # 发布：只提交 public/ai-agent/monitor，然后显式 dispatch daily.yml 重建 site/（GITHUB_TOKEN 的 push 不会触发别的 workflow），
 # Cloudflare Pages 原生 Git 部署再从 daily.yml 的提交上线 site/。
 # concurrency 单独一组：首轮回填可能跑几个小时，放进 daily-pipeline 会把排队的 L2/L3/L4/日历挤掉。
 name: Agent ID daily data
 on:
+  schedule:
+    - cron: '20 0 * * *'     # UTC 00:20 = 新加坡 08:20，处理前一个完整 UTC 日
   workflow_dispatch:
 permissions:
   contents: write

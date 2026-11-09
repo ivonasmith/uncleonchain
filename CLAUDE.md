@@ -53,14 +53,13 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
 - 发射台长周期（2026-10-29）：`周期观察.long_view` / `coverage`。全部历史 2021-09-18 起只作背景，比高低只用可比段（`COMPARABLE_FROM` = 2024-03-01，pump.fun 开始报数；之前只有 1–6 家融资型平台报数）；
   长周期读数只作描述（距最高、常态下沿 Q05 的倍数、可比段最低），不合成分数、不贴季节。近期温度仍是 730 天 Q05–Q95（≥365 天）。覆盖 < 95% 时第一屏提示。
 - AI Agent 页 /ai-agent/（`出网站.build_ai_agent`）：读 `public/ai-agent/monitor/core_series.json`（交接包 `tools/agent-id` 导出，原样页面也发布在 /ai-agent/monitor/）。
-  日更要 self-hosted runner（标签 agent-id）+ 私有运行目录（种子不进仓库）+ repo secret `AGENT_ID_PROXY` / variable `AGENT_ID_RUNTIME`，模板在 `tools/agent-id/handoff/agent-id-daily.yml.template`，**没装进 .github/workflows**；
-  现在由大叔电脑上 Codex 的 monitor-agent-id 定时任务采集，切换前不要启用模板（单时钟）。U = 没取到完整数据，不当 0。
-  云端版（2026-11-06 交接包）：`tools/agent-id-cloud` + `.github/workflows/agent-id-daily.yml`（GitHub-hosted，验收期**只有 workflow_dispatch**，单独 concurrency 组 `agent-id-daily`）。
+  旧的 self-hosted 模板 `tools/agent-id/handoff/` 作废不用；U = 没取到完整数据，不当 0。
+  云端版（2026-11-06 交接包）：`tools/agent-id-cloud` + `.github/workflows/agent-id-daily.yml`（GitHub-hosted，2026-11-09 起每天 UTC 00:20 唯一定时 + 手动，单独 concurrency 组 `agent-id-daily`）。
   节点 = 公共免费池优先（workflow 里 `AGENT_ID_RPC_PUBLIC`，开跑先探测 2026-10-20 的注册日志，查不到的剔除），`ALCHEMY_KEY` 只兜底；逐请求失败才换下一个，跑完日志里 `rpc_served` 报各节点承担了多少。
   大叔 2026-11-06 定：先用公共免费的，key 兜底；云端直连不走代理（`AGENT_ID_PROXY` 不配 = direct）。`AGENT_ID_STATE_KEY`（Fernet，Codex 已生成存好，加密 checkpoint artifact，丢了旧状态解不开）；
   2026-11-06 首轮实测：4 个公共节点都过不了历史探测（publicnode 对 10-20 返回空、drpc 400、1rpc 只给 50 块、llamarpc 域名失效），全部 4283 次请求走 Alchemy 兜底；回填 10-19～11-05 约 10 分钟，独立重算与旧数据 10 天逐项一致。
   加密 checkpoint 约 440MB / 份，保留两份（仓库公开，artifact 不占付费额度）。dispatch 的 daily.yml 若被 daily-pipeline 里后排进来的任务挤掉没关系：组里每条都从最新 main 重出网站。
-  发布 = 只提交 public/ai-agent/monitor → dispatch `daily.yml`（变量 `AGENT_ID_DEPLOY_WORKFLOW` 不设就默认它）。真实首轮通过、线上文件哈希对上、旧 Codex 任务停掉之后，才加唯一 cron `20 0 * * *`。
+  发布 = 只提交 public/ai-agent/monitor → dispatch `daily.yml`（变量 `AGENT_ID_DEPLOY_WORKFLOW` 不设就默认它）。旧 Codex 任务（大叔电脑）已不推数据，但仍应停掉，避免旧数据盖回来。
 - 时间口径（2026-11-06 定）：后端统计一律 UTC+0，数据按 UTC 完整日（UTC 0 点收盘）对齐，价格用收盘价（L2 / L3 只取 < 今天的日子）；
   前端显示按语言区域换算：中文站新加坡时间（UTC+8，`SG_TZ`），英文站美东时间。钟点用 `出网站.TT`，收盘 `TCLOSE`，UTC 日截止 `TDAY`，日历列表 `TLOC`。别写裸「UTC hh:mm」或「北京时间」。
 - 交易所 + ETF 持币：`拉宏观.fetch_etf_hold`（TFTC data.json，`totalNetAssetsUsd / btcCloseUsd`）→ `etf_btc`；注册表 `etf_hold` / `exetf_sum` 在 L3「交易所与现货 ETF 持币」组，只作描述。
