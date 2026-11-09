@@ -1,5 +1,29 @@
 [
   {
+    "version": "2026.11.09",
+    "date": "2026-11-09",
+    "notify": true,
+    "title_zh": "涨腿追踪升级为「涨跌腿追踪」",
+    "title_en": "Leg Tracker now covers down-legs too",
+    "items": [
+      {
+        "type": "improve",
+        "zh": "BTC 每天必在一条涨腿或一条跌腿之中，不再有「没有进行中的涨腿」的空状态。跌腿显示：已走天数、高点到最低收盘的跌幅（对照历史牛市回撤分位）、现价距高点、反弹确认线（最低收盘 ×1.10，收盘站上 = 涨腿重新开始）。现在是跌腿第 48 天，−13.6%（截至 11-08）",
+        "en": "BTC is always in either an up-leg or a down-leg, so there is no more empty \"no rally\" state. Down-legs show days so far, drop from the peak to the lowest close (against historical bull drawdown percentiles), distance from the peak, and the reversal line (lowest close ×1.10). Currently day 48 of a down-leg, −13.6% (as of 11-08)."
+      },
+      {
+        "type": "new",
+        "zh": "详情页加「全部行情的涨腿与跌腿」：2010-07-18 起全部日线用同一套 10% 折线逐条切开，不分牛熊的持续天数与幅度分位、当前这一腿在历史里的位置、最近几条腿、牛熊拆开四组。上线前回放核对：截至 2026-09-27 共 5,916 天、305 条腿，牛市涨 103 / 跌 99、熊市涨 49 / 跌 54，与研究原件逐条一致",
+        "en": "The detail page adds \"Every up-leg and down-leg\": all daily closes since 2010-07-18 cut with the same 10% zigzag; duration and size percentiles, where the current leg sits, recent legs, and a bull/bear split. Replay check: 5,916 days and 305 legs as of 2026-09-27, matching the research original leg by leg."
+      },
+      {
+        "type": "data",
+        "zh": "数据：2017-08-17 起币安现货 BTCUSDT 已收盘日线，之前用 Coin Metrics PriceUSD（缓存在仓库，历史不变）。新增 /data/leg_history.json",
+        "en": "Data: closed Binance BTCUSDT daily candles from 2017-08-17, Coin Metrics PriceUSD before that (cached in the repo). New file /data/leg_history.json."
+      }
+    ]
+  },
+  {
     "version": "2026.11.08.2",
     "date": "2026-11-08",
     "notify": true,

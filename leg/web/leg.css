@@ -20,6 +20,11 @@
 .lg .mod-sub{font-size:12px;color:var(--g-muted);margin-top:1px}
 .lg .badge{font-size:11px;padding:1px 8px;border-radius:5px;border:1px solid var(--g-muted);color:var(--g-muted);white-space:nowrap}
 .lg .badge.stale{border-color:var(--g-red);color:var(--g-red)}
+.lg .bgs{display:flex;gap:6px;flex-wrap:wrap}
+.lg .badge.dir-up{color:var(--g-blue);border-color:var(--g-blue)}
+.lg .badge.dir-down{color:var(--g-red);border-color:var(--g-red)}
+.lg .gain.loss{color:var(--g-red)}
+.lg .prev{font-size:11.5px;color:var(--g-muted);margin-top:8px}
 .lg .badge.b-build{color:var(--g-blue);border-color:var(--g-blue)}
 .lg .badge.b-trim{color:var(--g-gold);border-color:var(--g-gold)}
 .lg .badge.b-closing{color:var(--g-red);border-color:var(--g-red)}
@@ -115,9 +120,12 @@
 .lg table.t{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
 .lg table.t th,.lg table.t td{padding:8px 6px;border-bottom:1px solid var(--g-line);text-align:right}
 .lg table.t th:first-child,.lg table.t td:first-child{text-align:left}
+.lg table.t td:first-child{white-space:nowrap}
+.lg section.blk h3.sub{font-size:13.5px;color:var(--g-muted);font-weight:500;margin:12px 0 2px}
 .lg table.t th{color:var(--g-muted);font-weight:500;font-size:12px}
 
 .lg .foot{padding:26px 0 60px;color:var(--g-muted);font-size:12.5px;border-top:1px solid var(--g-line);margin-top:28px}
+@media (max-width:420px){.lg table.t{font-size:12px}.lg table.t th,.lg table.t td{padding:8px 2px}.lg table.t td:first-child{white-space:normal}.lg table.t td:first-child .muted{display:block;font-size:11px}}
 @media (min-width:600px){.lg .big{font-size:32px}.lg .brow{grid-template-columns:90px 1fr 90px}}
 /* 站点接入：首页卡片宽屏两栏（BTC 涨腿 | 山寨窗口）；详情页标题用站点 .ph */
 .lg .ph{margin-bottom:6px}
@@ -129,3 +137,6 @@
 .lg.legm{margin:0 0 16px}
 .lg .legm-h{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;font-weight:650;font-size:14.5px;margin:0 0 8px}
 .lg .legm-h .sub{font-weight:400;font-size:12.5px;color:var(--g-muted);text-decoration:underline;text-underline-offset:3px}
+/* 站点 .live（侧栏「数据更新」）是 flex + 等宽小字，这里还原设计稿的段落样式 */
+.lg .live{display:block;font-family:inherit;font-size:14px;color:var(--g-text)}
+.lg .live i{width:auto;height:auto;border-radius:0;background:none;box-shadow:none;animation:none}

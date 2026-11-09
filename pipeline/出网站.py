@@ -3536,9 +3536,9 @@ def cal_home_card(cal):
 
 
 # ---------------------------------------------------------------- 涨腿追踪（只读 data/leg/leg_latest.json；规则在 leg/leg_data.py，文案与统计在 leg/web/leg.js）
-def leg_src():
+def leg_src(fn="leg_latest.json"):
     """数据文件链接带 ?v=<asof>（设计稿要求）；页面 / 卡片由 leg.js 取数渲染，停更判断在浏览器里按当天日期算。"""
-    return f'/data/leg_latest.json?v={esc((G.get("LEG") or {}).get("asof") or G["今天"])}'
+    return f'/data/{fn}?v={esc((G.get("LEG") or {}).get("asof") or G["今天"])}'
 
 
 def leg_assets():
@@ -3546,14 +3546,14 @@ def leg_assets():
 
 
 def leg_home_card():
-    return (f'<h2>{T("涨腿追踪 · 山寨轮动窗口", "Leg tracker · altcoin window")} <a class="sub" href="{U("/leg-tracker/")}">{T("看规律说明 →", "How it works →")}</a></h2>'
+    return (f'<h2>{T("涨跌腿追踪 · 山寨轮动窗口", "Leg tracker · altcoin window")} <a class="sub" href="{U("/leg-tracker/")}">{T("看规律说明 →", "How it works →")}</a></h2>'
             f'<div class="lg legh"><div id="leg-card" data-src="{leg_src()}" data-href="{U("/leg-tracker/")}">'
             f'<div class="card"><div class="empty">{T("读取中…", "Loading…")}</div></div></div></div>')
 
 
 def leg_macro_card():
     """宏观页最上面（四层综合研判之上）：涨腿追踪 + 山寨窗口卡（同首页卡片，leg.js 渲染）。"""
-    return (f'<div class="lg legh legm"><div class="legm-h">{T("涨腿追踪 · 山寨轮动窗口", "Leg tracker · altcoin window")}'
+    return (f'<div class="lg legh legm"><div class="legm-h">{T("涨跌腿追踪 · 山寨轮动窗口", "Leg tracker · altcoin window")}'
             f'<a class="sub" href="{U("/leg-tracker/")}">{T("看规律说明 →", "How it works →")}</a></div>'
             f'<div id="leg-card" data-src="{leg_src()}" data-href="{U("/leg-tracker/")}">'
             f'<div class="card"><div class="empty">{T("读取中…", "Loading…")}</div></div></div></div>')
@@ -3561,11 +3561,11 @@ def leg_macro_card():
 
 def build_leg_tracker():
     """/leg-tracker/：设计稿 PAGE B。骨架在这里，文案 / 统计数字 / 当前读数由 leg.js 填。"""
-    cr = crumbs([(T("宏观仪表盘", "Macro"), "/macro/"), (T("涨腿追踪", "Leg Tracker"), None)])
+    cr = crumbs([(T("宏观仪表盘", "Macro"), "/macro/"), (T("涨跌腿追踪", "Leg Tracker"), None)])
     tags = {k: f'<span class="tag {c}" data-i18n="tag_{k}"></span>' for k, c in (("ver", "ver"), ("desc", "desc"), ("hyp", "hyp"), ("fals", "fals"))}
     body = f"""{cr}
-<div class="lg" id="leg-page" data-src="{leg_src()}">
-<div class="ph"><div><div class="eyebrow">Leg Tracker</div><h1 data-i18n="h1">{T("涨腿追踪", "Leg Tracker")}</h1></div></div>
+<div class="lg" id="leg-page" data-src="{leg_src()}" data-hist="{leg_src("leg_history.json")}">
+<div class="ph"><div><div class="eyebrow">Leg Tracker</div><h1 data-i18n="h1">{T("涨跌腿追踪", "Leg Tracker")}</h1></div></div>
 <p class="lead" data-i18n="lead"></p>
 <div class="callout" data-i18n="callout"></div>
 <nav class="chips" id="legChips"></nav>
@@ -3577,6 +3577,7 @@ def build_leg_tracker():
 <div class="chipgrid" id="lenChips"></div><div class="live" id="lenLive" style="display:none"></div><p class="muted small" data-i18n="len_p2"></p></section>
 <section class="blk" id="dd"><h2><span data-i18n="dd_h"></span>{tags["desc"]}</h2><p data-i18n="dd_p1"></p>
 <div id="ddMeter"></div><div class="legendline" id="ddLegend"></div><div class="live" id="ddLive" style="display:none"></div><p class="muted small" data-i18n="dd_p2"></p></section>
+<section class="blk" id="hist"><h2><span data-i18n="hist_h"></span>{tags["desc"]}</h2><div id="histMount"></div></section>
 <section class="blk" id="l89"><h2><span data-i18n="l89_h"></span>{tags["hyp"]}</h2><p data-i18n="l89_p1"></p><div class="bars" id="l89Bars"></div>
 <p class="muted small" data-i18n="l89_pre"></p><p data-i18n="l89_p2"></p><div class="callout" data-i18n="l89_falsify"></div></section>
 <section class="blk" id="alt"><h2><span data-i18n="alt_h"></span>{tags["ver"]}</h2><p data-i18n="alt_p1"></p><div class="bw" id="altStatic"></div>
@@ -3592,7 +3593,7 @@ def build_leg_tracker():
 </div>
 <noscript><p class="muted">{T("这一页需要开启 JavaScript。", "This page needs JavaScript.")}</p></noscript>"""
     css, js = leg_assets()
-    emit("leg-tracker/index.html", T(f"涨腿追踪 · {BRAND}", f"Leg Tracker · {BRAND_EN}"), body, active="macro", narrow=True,
+    emit("leg-tracker/index.html", T(f"涨跌腿追踪 · {BRAND}", f"Leg Tracker · {BRAND_EN}"), body, active="macro", narrow=True,
          extra_head=css, scripts=js,
          desc=T("比特币每一轮上涨走了多久、涨了多少、回撤多深，急拉之后山寨窗口什么时候开、什么时候关：历史规律和当前读数。",
                 "How long BTC rallies last, how far they go, how deep the dips are, and when the altcoin window opens and closes: historical patterns and current readings."))
@@ -4549,8 +4550,9 @@ def main():
     for fn in ("l2_latest.json", "l2_history.json", "l2_live.json"):
         if os.path.exists(os.path.join(DATA, "l2", fn)):
             shutil.copyfile(os.path.join(DATA, "l2", fn), os.path.join(SITE, "data", "l2", fn))
-    if os.path.exists(os.path.join(DATA, "leg", "leg_latest.json")):
-        shutil.copyfile(os.path.join(DATA, "leg", "leg_latest.json"), os.path.join(SITE, "data", "leg_latest.json"))
+    for fn in ("leg_latest.json", "leg_history.json"):
+        if os.path.exists(os.path.join(DATA, "leg", fn)):
+            shutil.copyfile(os.path.join(DATA, "leg", fn), os.path.join(SITE, "data", fn))
     copy_report_files()
     for lang in ("zh", "en"):
         LANG["v"] = lang

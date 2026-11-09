@@ -1,17 +1,30 @@
 {
-  "schema": 2,
-  "generated_at": "2026-11-08T18:15:32Z",
-  "asof": "2026-11-07",
-  "source": "Binance spot BTCUSDT 1d (closed candles, UTC)",
+  "schema": 3,
+  "generated_at": "2026-11-09T03:36:11Z",
+  "asof": "2026-11-08",
+  "source": "Coin Metrics PriceUSD (2010-07-18~2017-08-16) + Binance spot BTCUSDT 1d (2017-08-17~, closed candles, UTC)",
   "btc_leg": {
-    "status": "none",
-    "leg": null,
+    "direction": "down",
+    "leg": {
+      "start_date": "2026-09-21",
+      "start_close": 86620.0,
+      "confirm_date": "2026-10-30",
+      "day": 48,
+      "drop_pct": 13.6,
+      "low_close": 74851.44,
+      "low_date": "2026-11-08",
+      "btc_close": 74851.44,
+      "from_peak_pct": -13.6,
+      "reversal_line": 82336.58,
+      "to_reversal_pct": 10.0
+    },
     "badge": null,
-    "last_leg": {
+    "prev_leg": {
+      "dir": "up",
       "start_date": "2026-06-30",
       "end_date": "2026-09-21",
       "days": 83,
-      "gain_pct": 47.8
+      "pct": 47.8
     }
   },
   "alt_window": {
@@ -19,12 +32,12 @@
     "ignition_date": "2026-08-21",
     "d0_date": "2026-08-27",
     "d0_close": 80249.58,
-    "n": 72,
+    "n": 73,
     "days_to_clear": 0,
     "clear_date": "2026-09-26",
     "stop_line": 72224.62,
     "stopped_date": null,
-    "btc_close": 75867.59,
-    "btc_vs_stop_pct": 5.0
+    "btc_close": 74851.44,
+    "btc_vs_stop_pct": 3.6
   }
 }
