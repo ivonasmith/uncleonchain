@@ -79,7 +79,32 @@ def main():
     p.add_argument('--to-block', type=int, required=True)
     p.add_argument('--extra', default='', help='comma-separated extra addresses')
     p.add_argument('--http', default='', help='comma-separated public URLs to print (cross-check sources)')
+    p.add_argument('--dump', default='', help='addr:n[,addr:n] print first n raw logs of addr in the block range (plus tx to/from)')
+    p.add_argument('--calls', default='', help='to:calldata[,…] eth_call at latest, print raw result')
+    p.add_argument('--count', default='', help='comma-separated addresses: only count logs per topic0 in range (no dump)')
     a = p.parse_args()
+    for item in [c for c in a.calls.split(',') if c.strip()]:
+        to, data = item.strip().split(':')
+        try:
+            print('CALL', to, data[:10], rpc('eth_call', [{'to': to, 'data': data}, 'latest']))
+        except Exception as e:  # noqa: BLE001
+            print('CALL', to, data[:10], 'ERROR', str(e)[:200])
+    for item in [c for c in a.dump.split(',') if c.strip()]:
+        addr, n = item.strip().split(':')
+        rows, errs = logs(addr, a.from_block, a.to_block)
+        print(f'DUMP {addr} logs={len(rows)} errs={errs}')
+        for r in rows[:int(n)]:
+            tx = rpc('eth_getTransactionByHash', [r['transactionHash']])
+            print('  ', json.dumps({'block': int(r['blockNumber'], 16), 'tx': r['transactionHash'], 'from': tx.get('from'), 'to': tx.get('to'),
+                                    'input4': (tx.get('input') or '')[:10], 'value': int(tx.get('value', '0x0'), 16), 'topics': r['topics'], 'data': r['data'][:1200]}))
+    for addr in [c.strip() for c in a.count.split(',') if c.strip()]:
+        rows, errs = logs(addr, a.from_block, a.to_block)
+        by = collections.Counter(r['topics'][0] for r in rows if r['topics'])
+        print(f'COUNT {addr} logs={len(rows)} errs={errs} bytes~{sum(len(r["data"]) for r in rows)//2}')
+        for t, n in by.most_common(15):
+            print(f'   {n:7d} {t} {event_name(t)}')
+    if a.dump or a.count or a.calls:
+        return
     for url in [u for u in a.http.split(',') if u.strip()]:
         try:
             req = urllib.request.Request(url.strip(), headers={'User-Agent': 'Mozilla/5.0 uncleonchain-probe', 'Accept': 'application/json'})

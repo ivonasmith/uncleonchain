@@ -17,6 +17,18 @@ on:
         description: 交叉核对用的公开网址（逗号分隔，可空）
         required: false
         default: ''
+      dump:
+        description: 打印原始日志 addr:n（逗号分隔，可空）
+        required: false
+        default: ''
+      calls:
+        description: eth_call to:calldata（逗号分隔，可空）
+        required: false
+        default: ''
+      count:
+        description: 只统计事件数的地址（逗号分隔，可空）
+        required: false
+        default: ''
 permissions:
   contents: read
 jobs:
@@ -30,4 +42,4 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: python tools/agent-id-cloud/probe_platforms.py --from-block "${{ inputs.from_block }}" --to-block "${{ inputs.to_block }}" --extra "${{ inputs.extra }}" --http "${{ inputs.http }}"
+      - run: python tools/agent-id-cloud/probe_platforms.py --from-block "${{ inputs.from_block }}" --to-block "${{ inputs.to_block }}" --extra "${{ inputs.extra }}" --http "${{ inputs.http }}" --dump "${{ inputs.dump }}" --calls "${{ inputs.calls }}" --count "${{ inputs.count }}"
