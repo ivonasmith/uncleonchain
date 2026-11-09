@@ -57,6 +57,10 @@ def daily_core(state, trades, run_date):
             new_launches=sum(p['new_launches'] for p in platforms) if launches_known else None,
             graduated=sum(p['graduated_today'] for p in platforms) if graduates_known else None,
             scope=scope,
+            by_platform={p['platform']: dict(
+                trading_addresses=len({t['actor'].lower() for t in events if t['platform'] == p['platform']}) if complete else None,
+                volume_bnb=str(p['curve_volume_bnb']), new_launches=p.get('new_launches'), graduated=p.get('graduated_today'),
+                note=p.get('scope_note')) for p in platforms},
             start_block=a.get('start_block'), end_block=a.get('end_block'), rpc=a.get('rpc'),
             grade='E1', event_reconciliation='PASS' if complete else 'U',
         ))

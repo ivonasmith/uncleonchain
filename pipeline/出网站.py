@@ -3651,17 +3651,38 @@ def build_ai_agent():
                    + chart_div({"src": path, "fmt": "bnb" if f == "bnb" else "int", "ranges": ["7D", "1M", "ALL"], "range": "ALL", "group": "aiagent", "gaps": True, "h": 200,
                                 "zero": True, "series": [{"k": "v", "n": T(zh, en), "c": "s1", "area": True}]}) + '</div>')
     stale = (f' <span class="chip t-warn">{T(f"已 {lag} 天未更新", f"{lag} days behind")}</span>' if lag > 1 else "")
+    # 分平台：最近 7 个完整日，每家交易地址 / 成交 BNB / 新发币 / 毕业（合计里同一地址跨平台只算一次）
+    PLAT = {"Gang": T("Gang（Agent ID 门禁）", "Gang (Agent ID gated)"), "Flap-AgentID": T("Flap（Agent ID 门禁币）", "Flap (Agent ID-gated tokens)"),
+            "Four.meme-Agent": T("Four.meme（Agent 创建的币，买卖不限 ID）", "Four.meme (Agent-created tokens; trading not ID-gated)"), "AgentPad": "AgentPad"}
+    recent = [r for r in rows if r.get("by_platform")][-7:]
+    names = sorted({k for r in recent for k in r["by_platform"]}, key=lambda k: ["Gang", "Flap-AgentID", "Four.meme-Agent", "AgentPad"].index(k) if k in PLAT else 9)
+    bnbf = lambda v: "U" if v is None else (lambda x: f"{x:,.2f}" if x >= 1 else (f"{x:.4f}".rstrip("0").rstrip(".") or "0"))(float(v))
+    intf = lambda v: "U" if v is None else f"{v:,.0f}"
+    plat_tbl = ""
+    if recent:
+        head = "".join(f"<th>{esc(r['date'][5:])}</th>" for r in recent)
+        trs = ""
+        for nm in names:
+            for key, lab, fm in (("trading_addresses", T("交易地址", "Traders"), intf), ("volume_bnb", T("成交 BNB", "BNB volume"), bnbf),
+                                 ("new_launches", T("新发币", "Launches"), intf), ("graduated", T("毕业", "Graduated"), intf)):
+                cells = "".join(f"<td style=\"text-align:right;font-family:var(--mono)\">{fm((r['by_platform'].get(nm) or {}).get(key)) if nm in r['by_platform'] else '—'}</td>" for r in recent)
+                trs += f"<tr><td>{esc(PLAT.get(nm, nm)) if key == 'trading_addresses' else ''}</td><td>{lab}</td>{cells}</tr>"
+        plat_tbl = (f'<h2>{T("分平台（最近 7 天）", "By platform (last 7 days)")}</h2><div class="card" style="overflow-x:auto"><table class="l3t">'
+                    f'<thead><tr><th>{T("平台", "Platform")}</th><th></th>{head}</tr></thead><tbody>{trs}</tbody></table>'
+                    f'<p class="tnote">{T("合计里的交易地址按地址去重，同一地址在几家都交易只算一次，所以分平台相加会大于合计。Four.meme 一行是 Agent 钱包创建的币，买卖的人不一定持有 Agent ID。", "Total traders are de-duplicated across platforms, so per-platform figures can add up to more than the total. The Four.meme row covers tokens created by Agent wallets; their traders need not hold an Agent ID.")}</p></div>')
     defs = d.get("definitions") or {}
     body = f"""{cr}<div class="ph"><div><div class="eyebrow">AI Agent</div><h1>{T("AI Agent · 币安 Agent ID 生态", "AI Agent · Binance Agent ID ecosystem")}</h1>
 <p class="lede">{T("注册、交易地址、成交额与发币的每日趋势；只发布已经结束的 UTC 完整日，拿不到完整数据的日子标 U，不当 0。", "Daily registrations, trading addresses, volume and launches. Only finished UTC days are published; days without complete data show U, never 0.")}</p></div>
 <div class="stamp">{T("数据截至", "Data through")} <b>{esc(thru)}</b>{stale}<br>{TDAY(thru)}</div></div>
 <div class="note">{T(f"注册量来自完整的 Agent ID 注册表；交易地址、成交额、新发币和毕业目前只覆盖已核实的 {plats}，不代表全生态。", f"Registrations come from the full Agent ID registry; trading, volume, launches and graduations cover only the verified {plats} so far, not the whole ecosystem.")}</div>
 <div class="grid g3" style="margin:14px 0 22px">{cards}</div>
+{plat_tbl}
 <h2>{T("每日趋势", "Daily trends")}</h2><div class="grid g2">{charts}</div>
 <details class="card fold" style="margin-top:18px"><summary>{T("数据范围说明", "Scope and definitions")}</summary><ul class="tnote">
 <li>{T("注册量来自完整 Agent ID 注册表；它不等于币安 Agentic Wallet 总量。", "Registrations come from the full Agent ID registry; this is not the number of Binance Agentic Wallets.")}</li>
 <li>{T("交易地址 = 当日实际买卖的独立地址，不含仅铸造或领取的地址；同一地址同日多笔只算一次。", "Trading addresses = unique addresses that actually bought or sold that day; mint/claim-only addresses excluded; counted once per day.")}</li>
-<li>{T("成交额是已核平台曲线上的买卖金额（BNB，扣除平台费），不含二级 DEX；新发币 = 已核工厂当日创建数。", "Volume is buy/sell on the verified bonding curves (BNB, net of platform fees), excluding secondary DEX trading; launches = tokens created by verified factories that day.")}</li>
+<li>{T("成交额 = 已核平台内盘（曲线）买卖金额，按含手续费的毛额、只算 BNB 计价的币，不含二级 DEX；新发币 = 已核平台当日创建的 Agent 币；毕业 = 当日从内盘迁到 DEX。", "Volume = buys and sells on the verified platforms' bonding curves, gross of fees, BNB-quoted tokens only, excluding secondary DEX trading; launches = Agent tokens created on verified platforms that day; graduations = tokens that moved from the curve to a DEX that day.")}</li>
+<li>{T("各平台怎么认 Agent 币：Gang 全平台合约强制 Agent ID 门禁；Flap 只算发币时设了 Binance Agent ID 门禁的币；Four.meme 只算合约标记为 Agent 钱包创建的币（买卖不限 ID）；AgentPad 为已核工厂。", "How each platform's Agent tokens are identified: Gang enforces the Agent ID gate on every curve; Flap counts only tokens launched with the Binance Agent ID gate; Four.meme counts tokens its contract marks as created by an Agent wallet (trading not ID-gated); AgentPad is the verified factory.")}</li>
 <li>{T("所有日期为 UTC 日；U 表示没取得完整数据，图上断开；0 表示完整读取后确实为 0。", "All dates are UTC days; U = incomplete data (gap in the chart); 0 = fully read and truly zero.")}</li>
 <li>{T("采集状态", "Collection status")}: {esc(health.get("collection_status") or "—")} · {T("身份对账", "Identity reconciliation")}: {esc(health.get("identity_reconciliation") or "—")} · <a href="/ai-agent/monitor/core_series.json" download>{T("下载数据", "Download data")}</a></li>
 </ul></details>"""
