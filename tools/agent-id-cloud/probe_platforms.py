@@ -81,6 +81,7 @@ def main():
     p.add_argument('--http', default='', help='comma-separated public URLs to print (cross-check sources)')
     p.add_argument('--dump', default='', help='addr:n[,addr:n] print first n raw logs of addr in the block range (plus tx to/from)')
     p.add_argument('--calls', default='', help='to:calldata[,…] eth_call at latest, print raw result')
+    p.add_argument('--four', action='store_true', help='Four.meme agent-bit census over the block range')
     p.add_argument('--count', default='', help='comma-separated addresses: only count logs per topic0 in range (no dump)')
     a = p.parse_args()
     for url in [u for u in a.http.split(',') if u.strip()]:
@@ -129,6 +130,28 @@ def main():
         print(f'COUNT {addr} logs={len(rows)} errs={errs} bytes~{sum(len(r["data"]) for r in rows)//2}')
         for t, n in by.most_common(15):
             print(f'   {n:7d} {t} {event_name(t)}')
+    if a.four:
+        # Four.meme：区间内 TokenCreate 的币逐个读 _tokenInfos，数 template 第 85 位；再看这些 Agent 币的创建交易发给了谁
+        tm, create = '0x5c952063c7fc8610FFDB798152D69F0B9550762b', '0x396d5e902b675b032348d3d2e9517ee8f0c4a926603fbc075d3d282ff00cad20'
+        rows, errs = logs(tm, a.from_block, a.to_block)
+        made = [r for r in rows if r['topics'][0] == create]
+        agents, tos = [], collections.Counter()
+        for r in made:
+            tok = '0x' + r['data'][2 + 64 + 24:2 + 128]
+            raw = rpc('eth_call', [{'to': tm, 'data': '0xe684626b' + tok[2:].zfill(64)}, 'latest'])
+            tpl = int(raw[2 + 128:2 + 192], 16)
+            if (tpl >> 85) & 1:
+                agents.append(tok)
+                tx = rpc('eth_getTransactionByHash', [r['transactionHash']])
+                tos[(tx.get('to') or '').lower()] += 1
+        print(f'FOUR creates={len(made)} agent_bit85={len(agents)} errs={errs} create_tx_to={tos.most_common(5)} sample={agents[:3]}')
+        tpl_hist = collections.Counter()
+        for r in made[:60]:
+            tok = '0x' + r['data'][2 + 64 + 24:2 + 128]
+            raw = rpc('eth_call', [{'to': tm, 'data': '0xe684626b' + tok[2:].zfill(64)}, 'latest'])
+            tpl_hist[hex(int(raw[2 + 128:2 + 192], 16))] += 1
+        print('FOUR template values (first 60 creates):', tpl_hist.most_common(12))
+        return
     if a.dump or a.count or a.calls:
         return
     if a.from_block <= 0:
