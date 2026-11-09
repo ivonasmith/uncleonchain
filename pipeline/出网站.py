@@ -3632,7 +3632,7 @@ def build_ai_agent():
     yday = (dt.datetime.now(dt.timezone.utc).date() - dt.timedelta(days=1)).isoformat()
     lag = (dt.date.fromisoformat(yday) - dt.date.fromisoformat(thru)).days
     plats = " / ".join(health.get("complete_platforms") or ["AgentPad"])
-    scope = {"reg": T("完整注册表", "Full registry"), "pad": T(f"仅 {plats}", f"{plats} only")}
+    scope = {"reg": T("完整注册表", "Full registry"), "pad": T("已核平台", "Verified platforms")}  # 平台全名在页头说明里，卡片上只放短标签
     cards, charts = "", ""
     for k, zh, en, f, sc in AGENT_METRICS:
         vals = [num(r.get(k)) for r in rows]
@@ -3663,12 +3663,13 @@ def build_ai_agent():
         head = "".join(f"<th>{esc(r['date'][5:])}</th>" for r in recent)
         trs = ""
         for nm in names:
+            trs += f'<tr><td colspan="{len(recent) + 1}" style="text-align:left;padding-top:10px"><b>{esc(PLAT.get(nm, nm))}</b></td></tr>'
             for key, lab, fm in (("trading_addresses", T("交易地址", "Traders"), intf), ("volume_bnb", T("成交 BNB", "BNB volume"), bnbf),
                                  ("new_launches", T("新发币", "Launches"), intf), ("graduated", T("毕业", "Graduated"), intf)):
                 cells = "".join(f"<td style=\"text-align:right;font-family:var(--mono)\">{fm((r['by_platform'].get(nm) or {}).get(key)) if nm in r['by_platform'] else '—'}</td>" for r in recent)
-                trs += f"<tr><td>{esc(PLAT.get(nm, nm)) if key == 'trading_addresses' else ''}</td><td>{lab}</td>{cells}</tr>"
-        plat_tbl = (f'<h2>{T("分平台（最近 7 天）", "By platform (last 7 days)")}</h2><div class="card" style="overflow-x:auto"><table class="l3t">'
-                    f'<thead><tr><th>{T("平台", "Platform")}</th><th></th>{head}</tr></thead><tbody>{trs}</tbody></table>'
+                trs += f'<tr><td style="text-align:left;white-space:nowrap;color:var(--muted)">{lab}</td>{cells}</tr>'
+        plat_tbl = (f'<h2>{T("分平台（最近 7 天）", "By platform (last 7 days)")}</h2><div class="card" style="overflow-x:auto"><table class="l3t" style="min-width:560px">'
+                    f'<thead><tr><th></th>{head}</tr></thead><tbody>{trs}</tbody></table>'
                     f'<p class="tnote">{T("合计里的交易地址按地址去重，同一地址在几家都交易只算一次，所以分平台相加会大于合计。Four.meme 一行是 Agent 钱包创建的币，买卖的人不一定持有 Agent ID。", "Total traders are de-duplicated across platforms, so per-platform figures can add up to more than the total. The Four.meme row covers tokens created by Agent wallets; their traders need not hold an Agent ID.")}</p></div>')
     defs = d.get("definitions") or {}
     body = f"""{cr}<div class="ph"><div><div class="eyebrow">AI Agent</div><h1>{T("AI Agent · 币安 Agent ID 生态", "AI Agent · Binance Agent ID ecosystem")}</h1>
