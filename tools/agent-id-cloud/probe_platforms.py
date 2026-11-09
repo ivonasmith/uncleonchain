@@ -97,8 +97,13 @@ def main():
                 links = sorted(set(_re.findall(r'href="(/[a-z]{2}/flap[^"#]*)"', text)))
                 text = _re.sub(r'<[^>]+>', ' ', text); text = _re.sub(r'\s+', ' ', text)
                 print('HTTP', base, r.status, 'chars', len(text), 'links', ' '.join(links)[:4000])
+                seen_pos = -10**9
+                shown = 0
                 for m in _re.finditer(grep, text, _re.I):
-                    print('   …', text[max(0, m.start() - 300):m.end() + 300])
+                    if m.start() - seen_pos < 400 or shown >= 25:
+                        continue
+                    seen_pos = m.start(); shown += 1
+                    print('   …', text[max(0, m.start() - 200):m.end() + 200])
         except Exception as e:  # noqa: BLE001
             print('HTTP', url, 'ERROR', str(e)[:300])
     for item in [c for c in a.calls.split(',') if c.strip()]:
