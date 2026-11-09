@@ -83,6 +83,13 @@ def main():
     p.add_argument('--calls', default='', help='to:calldata[,…] eth_call at latest, print raw result')
     p.add_argument('--count', default='', help='comma-separated addresses: only count logs per topic0 in range (no dump)')
     a = p.parse_args()
+    for url in [u for u in a.http.split(',') if u.strip()]:
+        try:
+            req = urllib.request.Request(url.strip(), headers={'User-Agent': 'Mozilla/5.0 uncleonchain-probe', 'Accept': 'application/json'})
+            with urllib.request.urlopen(req, timeout=30) as r:
+                print('HTTP', url, r.status, r.read(3000).decode('utf-8', 'replace'))
+        except Exception as e:  # noqa: BLE001
+            print('HTTP', url, 'ERROR', str(e)[:300])
     for item in [c for c in a.calls.split(',') if c.strip()]:
         to, data = item.strip().split(':')
         try:
@@ -105,13 +112,6 @@ def main():
             print(f'   {n:7d} {t} {event_name(t)}')
     if a.dump or a.count or a.calls:
         return
-    for url in [u for u in a.http.split(',') if u.strip()]:
-        try:
-            req = urllib.request.Request(url.strip(), headers={'User-Agent': 'Mozilla/5.0 uncleonchain-probe', 'Accept': 'application/json'})
-            with urllib.request.urlopen(req, timeout=30) as r:
-                print('HTTP', url, r.status, r.read(3000).decode('utf-8', 'replace'))
-        except Exception as e:  # noqa: BLE001
-            print('HTTP', url, 'ERROR', str(e)[:300])
     if a.from_block <= 0:
         return
     cfg = json.loads((HERE / 'collector/config.json').read_text())
