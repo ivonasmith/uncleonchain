@@ -1,0 +1,29 @@
+# AI Agent 平台摸底（只读）：未启用平台一天里发了哪些链上事件。只手动触发，不提交、不发布。
+name: Agent ID platform probe
+on:
+  workflow_dispatch:
+    inputs:
+      from_block:
+        description: 起始区块（含）
+        required: true
+      to_block:
+        description: 结束区块（含）
+        required: true
+      extra:
+        description: 额外地址（逗号分隔，可空）
+        required: false
+        default: ''
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      AGENT_ID_RPC_FALLBACK: ${{ secrets.ALCHEMY_KEY && format('https://bnb-mainnet.g.alchemy.com/v2/{0}', secrets.ALCHEMY_KEY) || '' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python tools/agent-id-cloud/probe_platforms.py --from-block "${{ inputs.from_block }}" --to-block "${{ inputs.to_block }}" --extra "${{ inputs.extra }}"
