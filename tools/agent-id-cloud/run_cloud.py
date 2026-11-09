@@ -17,6 +17,7 @@ def load(p):
     return json.loads(Path(p).read_text())
 
 
+REFRESH_KEYS = ('gang_adapter',)  # 由代码维护的配置段：每次以仓库为准
 POOL_IDENTITY = 'bsc-56-public-first-pool-v1'
 # 公共节点的探测窗口：2026-10-20 第一个 2000 块（当天注册 3 万多条，窗口里一定有注册日志）。
 # 节点要是对这段返回空，说明它没存这么老的历史却不报错，直接剔除，防止少算。
@@ -165,6 +166,18 @@ def run(runtime, output):
                     ignore=shutil.ignore_patterns('__pycache__', 'config.json'))
     if not (runtime / 'config.json').exists():
         shutil.copy2(src / 'config.json', runtime / 'config.json')
+    else:
+        # 运行时 config 来自加密 checkpoint（含采集过程写回的状态），不整体覆盖；
+        # 但仓库新加的配置段（如 gang_adapter）和适配器定义要带进来，否则新代码读不到。
+        repo_cfg, run_cfg = load(src / 'config.json'), load(runtime / 'config.json')
+        changed = False
+        for key, value in repo_cfg.items():
+            if key not in run_cfg or key in REFRESH_KEYS:
+                if run_cfg.get(key) != value:
+                    run_cfg[key] = value
+                    changed = True
+        if changed:
+            (runtime / 'config.json').write_text(json.dumps(run_cfg, ensure_ascii=False, indent=2))
     config = configure(runtime, os.environ)
     if (runtime / 'state.json').exists():
         os.environ['AGENT_ID_RETRY_FAILED_SCOPE'] = os.environ.get('GITHUB_RUN_ID', 'manual') + '-' + os.environ.get('GITHUB_RUN_ATTEMPT', '1')

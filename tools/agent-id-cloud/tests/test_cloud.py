@@ -65,6 +65,19 @@ class CloudTests(unittest.TestCase):
             root = Path(tmp)
             run_cloud.command(root, [sys.executable, '-c', 'import os,sys; sys.exit(1 if "AGENT_ID_RETRY_FAILED_SCOPE" in os.environ else 0)'], 'log.txt', clean_env=True)
 
+    def test_runtime_config_gets_new_repo_sections(self):
+        import run_cloud
+        with tempfile.TemporaryDirectory() as tmp:
+            rt = Path(tmp) / 'rt'; rt.mkdir()
+            (rt / 'config.json').write_text(json.dumps({'registry': {'address': 'kept'}, 'gang_adapter': {'schema': 0}}))
+            with patch.object(run_cloud, 'configure', side_effect=RuntimeError('stop')):
+                with self.assertRaises(RuntimeError):
+                    run_cloud.run(rt, Path(tmp) / 'out')
+            cfg = json.loads((rt / 'config.json').read_text())
+            self.assertEqual(cfg['registry'], {'address': 'kept'})
+            self.assertEqual(cfg['gang_adapter']['schema'], 1)
+            self.assertIn('platforms', cfg)
+
     def test_rpc_change_cannot_splice_series(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp); env = self.config_root(root); configure(root, env)
