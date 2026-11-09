@@ -13,6 +13,10 @@ on:
         description: 额外地址（逗号分隔，可空）
         required: false
         default: ''
+      http:
+        description: 交叉核对用的公开网址（逗号分隔，可空）
+        required: false
+        default: ''
 permissions:
   contents: read
 jobs:
@@ -26,4 +30,4 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: python tools/agent-id-cloud/probe_platforms.py --from-block "${{ inputs.from_block }}" --to-block "${{ inputs.to_block }}" --extra "${{ inputs.extra }}"
+      - run: python tools/agent-id-cloud/probe_platforms.py --from-block "${{ inputs.from_block }}" --to-block "${{ inputs.to_block }}" --extra "${{ inputs.extra }}" --http "${{ inputs.http }}"

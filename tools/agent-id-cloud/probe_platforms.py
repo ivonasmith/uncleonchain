@@ -78,7 +78,17 @@ def main():
     p.add_argument('--from-block', type=int, required=True)
     p.add_argument('--to-block', type=int, required=True)
     p.add_argument('--extra', default='', help='comma-separated extra addresses')
+    p.add_argument('--http', default='', help='comma-separated public URLs to print (cross-check sources)')
     a = p.parse_args()
+    for url in [u for u in a.http.split(',') if u.strip()]:
+        try:
+            req = urllib.request.Request(url.strip(), headers={'User-Agent': 'Mozilla/5.0 uncleonchain-probe', 'Accept': 'application/json'})
+            with urllib.request.urlopen(req, timeout=30) as r:
+                print('HTTP', url, r.status, r.read(3000).decode('utf-8', 'replace'))
+        except Exception as e:  # noqa: BLE001
+            print('HTTP', url, 'ERROR', str(e)[:300])
+    if a.from_block <= 0:
+        return
     cfg = json.loads((HERE / 'collector/config.json').read_text())
     targets = [(x['id'], x['address']) for x in cfg['platforms'] + cfg['noncurve'] if x.get('address')]
     targets += [('pending', x['address']) for x in cfg.get('pending_discoveries', []) if x.get('address')
