@@ -85,9 +85,20 @@ def main():
     a = p.parse_args()
     for url in [u for u in a.http.split(',') if u.strip()]:
         try:
-            req = urllib.request.Request(url.strip(), headers={'User-Agent': 'Mozilla/5.0 uncleonchain-probe', 'Accept': 'application/json'})
+            base, _, grep = url.strip().partition('#grep=')
+            req = urllib.request.Request(base, headers={'User-Agent': 'Mozilla/5.0 uncleonchain-probe', 'Accept': '*/*'})
             with urllib.request.urlopen(req, timeout=30) as r:
-                print('HTTP', url, r.status, r.read(3000).decode('utf-8', 'replace'))
+                body = r.read().decode('utf-8', 'replace')
+            if not grep:
+                print('HTTP', base, r.status, body[:3000])
+            else:
+                import re as _re
+                text = _re.sub(r'<script.*?</script>|<style.*?</style>', ' ', body, flags=_re.S)
+                links = sorted(set(_re.findall(r'href="(/[a-z]{2}/flap[^"#]*)"', text)))
+                text = _re.sub(r'<[^>]+>', ' ', text); text = _re.sub(r'\s+', ' ', text)
+                print('HTTP', base, r.status, 'chars', len(text), 'links', ' '.join(links)[:4000])
+                for m in _re.finditer(grep, text, _re.I):
+                    print('   …', text[max(0, m.start() - 300):m.end() + 300])
         except Exception as e:  # noqa: BLE001
             print('HTTP', url, 'ERROR', str(e)[:300])
     for item in [c for c in a.calls.split(',') if c.strip()]:
