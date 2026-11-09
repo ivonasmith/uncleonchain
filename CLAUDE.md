@@ -61,7 +61,10 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
   加密 checkpoint 约 440MB / 份，保留两份（仓库公开，artifact 不占付费额度）。dispatch 的 daily.yml 若被 daily-pipeline 里后排进来的任务挤掉没关系：组里每条都从最新 main 重出网站。
   2026-11-09 接入 Gang（`collector/gang.py`，配置 `gang_adapter`：官方公开仓库 gangfun/gang-launchpad@8b12b30 的事件 topic 表 + pad 名单 + GangPadRegistry.pads()，E3）：成交额 = 含费毛额、只算 BNB 计价；
   未见创建记录的币当日 U；未完成的日子每次自动补。运行时 config 来自 checkpoint，`run_cloud.REFRESH_KEYS` 里的段每次以仓库为准、仓库新增段自动并入。
-  Four.meme Agent（TokenManager2 template 第 85 位 = Agent 创建）、Flap Agent 还没接；`agent-id-probe.yml` 手动摸底任意区块段事件 / 公开网址。
+  2026-11-09 同日接入 `collector/agentpads.py`（配置 `agentpads`）：Flap = Portal 0xe2cE…9De0 上 FlapNFTGated(token, Binance Agent ID) 的门禁币（docs.flap.sh/en/flap/drafts/nft-gated，E2；
+  买入 eth 已含费，链上实测），门禁移除后不算；Four.meme = TokenManager2 `_tokenInfos(token)` 第 3 个字的第 85 位 = Agent 钱包创建（官方仓库 four-meme-ai，买卖不限 ID，单列标注；
+  买 = cost+fee，卖 = cost）。两家全量日志大，不缓存原始响应，只存命中事件。Four.meme 另有未公开合约 0xebe7…27f3（实现 0x02d7…，交易事件 topic 0x8728ba77：w0 1=买 0=卖、买毛额 w6、卖毛额 w5），
+  抽查 6 个交易者 3 个没有 Agent ID、无文档说明属 Agent 生态，未计入。导出每行带 `by_platform`，页面「分平台（最近 7 天）」表。`agent-id-probe.yml` 手动摸底任意区块段事件 / eth_call / 公开网址（#grep= 关键词摘录）/ Four.meme 普查。
   发布 = 只提交 public/ai-agent/monitor → dispatch `daily.yml`（变量 `AGENT_ID_DEPLOY_WORKFLOW` 不设就默认它）。旧 Codex 任务（大叔电脑）已不推数据，但仍应停掉，避免旧数据盖回来。
 - 时间口径（2026-11-06 定）：后端统计一律 UTC+0，数据按 UTC 完整日（UTC 0 点收盘）对齐，价格用收盘价（L2 / L3 只取 < 今天的日子）；
   前端显示按语言区域换算：中文站新加坡时间（UTC+8，`SG_TZ`），英文站美东时间。钟点用 `出网站.TT`，收盘 `TCLOSE`，UTC 日截止 `TDAY`，日历列表 `TLOC`。别写裸「UTC hh:mm」或「北京时间」。

@@ -3,9 +3,14 @@
     "version": "2026.11.09",
     "date": "2026-11-09",
     "notify": true,
-    "title_zh": "AI Agent 页补上 Gang：交易地址、成交 BNB、新发币、毕业不再只算 AgentPad",
-    "title_en": "AI Agent page now includes Gang: traders, BNB volume, launches and graduations beyond AgentPad",
+    "title_zh": "AI Agent 页补上 Gang、Flap、Four.meme：交易地址、成交 BNB、新发币、毕业不再只算 AgentPad",
+    "title_en": "AI Agent page now includes Gang, Flap and Four.meme: traders, BNB volume, launches and graduations beyond AgentPad",
     "items": [
+      {
+        "type": "new",
+        "zh": "再加入 Flap（只算发币时设了 Binance Agent ID 门禁的币，内盘每笔买卖链上要求持有 Agent ID）和 Four.meme（合约标记为 Agent 钱包创建的币，买卖不限 ID，单独标注）；页面新增「分平台（最近 7 天）」表。Four.meme 另有一个未公开文档的发币合约（交易者不全持有 Agent ID），未证实属于 Agent 生态，暂不计入",
+        "en": "Also added Flap (only tokens launched with the Binance Agent ID gate, where every curve trade requires an Agent ID on-chain) and Four.meme (tokens its contract marks as created by an Agent wallet; trading not ID-gated, labelled separately), plus a by-platform table for the last 7 days. A separate undocumented Four.meme launch contract (whose traders don't all hold an Agent ID) is not counted until it can be shown to be part of the Agent ecosystem"
+      },
       {
         "type": "data",
         "zh": "每日买卖交易地址、成交 BNB、新发币、毕业币加入 Gang（gang.fun，合约强制只有持 Agent ID 的钱包能发币和买卖）。从 10-19 起全部重算；之前只算 AgentPad，而 AgentPad 10-24 后基本没人用，所以这几项长期接近 0。成交额只算 BNB 计价的币；Four.meme Agent、Flap Agent 还在接入中，范围见页面「范围」",
