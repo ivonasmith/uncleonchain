@@ -448,6 +448,19 @@ class Monitor:
                 self.trades=[t for t in self.trades if t['platform']!='Gang']+[t for t in g['trades'] if t['date'] in self.state['days']];self.errors.extend(g['errors'])
             except Exception as e:
                 for date in span:self.gap('B/Gang',date,str(e),self.chain.url)
+        for key in (self.config.get('agentpads') or {}):
+            # Four.meme（Agent 创建币）/ Flap（Agent ID 门禁币）：不缓存全量原始日志，只存命中的 Agent 币事件；没做完的日子自动补。
+            name=self.config['agentpads'][key]['platform']
+            try:
+                from agentpads import collect as collect_pads
+                g=collect_pads(ROOT,self.config,self.client,self.run_date,span,self.state,key)
+                for row in g['rows']:
+                    if row['date'] in self.state['days']:
+                        rows=[r for r in self.state['days'][row['date']].get('B',[]) if r['platform']!=name];self.state['days'][row['date']]['B']=rows+[row]
+                self.trades=[t for t in self.trades if t['platform']!=name]+[t for t in g['trades'] if t['date'] in self.state['days']];self.errors.extend(g['errors'])
+                print('agentpads',key,'rpc calls',g['rpc_calls'],'errors',len(g['errors']),flush=True)
+            except Exception as e:
+                for date in span:self.gap('B/'+name,date,str(e),self.chain.url)
         self.errors.extend(fill_calendar(self.state,self.config,self.yesterday))
         self.snapshots();self.outcomes();self.rules();self.audit()
         from free_mints import collect as collect_mints

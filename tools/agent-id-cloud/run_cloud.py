@@ -17,7 +17,7 @@ def load(p):
     return json.loads(Path(p).read_text())
 
 
-REFRESH_KEYS = ('gang_adapter',)  # 由代码维护的配置段：每次以仓库为准
+REFRESH_KEYS = ('gang_adapter', 'agentpads')  # 由代码维护的配置段：每次以仓库为准
 POOL_IDENTITY = 'bsc-56-public-first-pool-v1'
 # 公共节点的探测窗口：2026-10-20 第一个 2000 块（当天注册 3 万多条，窗口里一定有注册日志）。
 # 节点要是对这段返回空，说明它没存这么老的历史却不报错，直接剔除，防止少算。

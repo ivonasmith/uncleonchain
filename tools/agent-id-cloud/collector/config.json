@@ -489,5 +489,43 @@
       }
     },
     "note": "Gang 全部内盘链上强制 SPACE ID Agent ID 门禁；事件定义取自官方公开仓库，按 topic0 解码；pad 名单 = 仓库文档地址 + GangPadRegistry.pads()，只保留主网有代码的"
+  },
+  "agentpads": {
+    "four": {
+      "schema": 1,
+      "platform": "Four.meme-Agent",
+      "grade": "E3",
+      "address": "0x5c952063c7fc8610FFDB798152D69F0B9550762b",
+      "tokeninfo_selector": "0xe684626b",
+      "agent_bit": 85,
+      "first_date": "2026-10-19",
+      "topics": {
+        "create": "0x396d5e902b675b032348d3d2e9517ee8f0c4a926603fbc075d3d282ff00cad20",
+        "buy": "0x7db52723a3b2cdd6164364b3b766e65e540d7be48ffa89582956d8eaebe62942",
+        "sell": "0x0a5575b3648bae2210cee56bf33254cc1ddfbc7bf637c0af2ac18b14fb1bae19",
+        "graduate": "0xc18aa71171b358b706fe3dd345299685ba21a5316c66ffa9e319268b033c44b0"
+      },
+      "source": "github.com/four-meme-community/four-meme-ai references/agent-creator-and-wallets.md（template 第85位）+ event-listening.md",
+      "scope_note": "Agent 钱包创建的币（template 第85位），买卖不限 Agent ID"
+    },
+    "flap": {
+      "schema": 1,
+      "platform": "Flap-AgentID",
+      "grade": "E2",
+      "address": "0xe2cE6ab80874Fa9Fa2aAE65D277Dd6B8e65C9De0",
+      "buy_includes_fee": true,
+      "first_date": "2026-10-19",
+      "topics": {
+        "create": "0x504e7f360b2e5fe33cbaaae4c593bc55305328341bf79009e43e0e3b7f699603",
+        "buy": "0xa800a2038683844fac66747f771bfdfae862eb28b16bcfa387afa9fbacce8ff7",
+        "sell": "0x03a4693e592f5e75dc7c136acb39b146d2b4966c0e509c34f362dee02b3b861a",
+        "graduate": "0x6e4f47630b8745b8cacbd44f42a8a33e7eea7cc08ef22fc7630f4f385784ff7d",
+        "gated": "0x2179156b3d2ade0f0de96eff28a7c29d924002784e113e69108d91a02cbf9098",
+        "gate_updated": "0xef4dac2f9b1190c744c50eaead877aa2f222bafb1ef8bb2c60baed13f4b63cd8",
+        "quote": "0x3ceb902d3c555c21c3415b6aa839104b18e4825b2f8324011ff979089a507a8c"
+      },
+      "source": "docs.flap.sh/en/flap/drafts/nft-gated（Agent ID-Gated Internal Market）+ trade-tokens；买入 eth 含手续费（2026-11-09 实测：tx 付 0.05 BNB = eth 0.05，fee 0.0005）",
+      "scope_note": "Binance Agent ID 门禁币：内盘每笔买卖链上要求持有 Agent ID"
+    }
   }
 }
