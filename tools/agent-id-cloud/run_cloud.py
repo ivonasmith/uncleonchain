@@ -141,9 +141,12 @@ def redact(text):
     return text
 
 
-def command(runtime, args, log):
+def command(runtime, args, log, clean_env=False):
+    env = None
+    if clean_env:  # self-tests must not inherit this run's repair switch (it changes cache-retry behaviour)
+        env = {k: v for k, v in os.environ.items() if k != 'AGENT_ID_RETRY_FAILED_SCOPE'}
     with (runtime / log).open('w') as f:
-        done = subprocess.run(args, cwd=runtime, stdout=f, stderr=subprocess.STDOUT)
+        done = subprocess.run(args, cwd=runtime, stdout=f, stderr=subprocess.STDOUT, env=env)
     if done.returncode:
         # 失败时把日志尾巴脱敏后打出来（密钥、节点 key 一律替换成 ***），不然 checkpoint 加密后没人能看原因
         tail = (runtime / log).read_text(errors='replace').splitlines()[-40:]
@@ -183,7 +186,7 @@ def run(runtime, output):
     today = dt.datetime.now(dt.timezone.utc).date()
     yesterday = (today - dt.timedelta(days=1)).isoformat()
     state = load(runtime / 'state.json') if (runtime / 'state.json').exists() else {'days': {}}
-    command(runtime, [sys.executable, '-m', 'unittest', 'discover', '-s', 'tests', '-v'], 'test_log.txt')
+    command(runtime, [sys.executable, '-m', 'unittest', 'discover', '-s', 'tests', '-v'], 'test_log.txt', clean_env=True)
     # One-time bootstrap / explicit catch-up; normal daily collection remains yesterday only.
     missing = needs_backfill(state, config['backfill_observed_start'], yesterday)
     args = [sys.executable, 'monitor_agent_id.py', '--backfill' if missing else '--daily']
@@ -195,7 +198,7 @@ def run(runtime, output):
     # Stage export outside repository; failed validation cannot overwrite the live website snapshot.
     stage = runtime.parent / 'agent-id-customer-stage'
     command(runtime, [sys.executable, 'web_export/export_site.py', '--runtime', '.', '--output', str(stage)], 'export_log.txt')
-    command(runtime, [sys.executable, '-m', 'unittest', 'discover', '-s', 'web_export', '-p', 'test_export.py', '-v'], 'customer_export_test_log.txt')
+    command(runtime, [sys.executable, '-m', 'unittest', 'discover', '-s', 'web_export', '-p', 'test_export.py', '-v'], 'customer_export_test_log.txt', clean_env=True)
     command(runtime, ['node', 'web_export/verify_frontend.cjs', str(stage / 'index.html')], 'customer_frontend_check_log.txt')
     row = publish_gate(runtime, stage, yesterday)
     secrets = private_values()

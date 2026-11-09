@@ -59,6 +59,12 @@ class CloudTests(unittest.TestCase):
             self.assertEqual(result, '0x38'); self.assertEqual(calls, ['https://public-a.example', 'https://public-b.example'])
             self.assertEqual(rec['pool'], config['rpc'])
 
+    def test_self_tests_do_not_inherit_repair_switch(self):
+        import run_cloud
+        with tempfile.TemporaryDirectory() as tmp, patch.dict(os.environ, {'AGENT_ID_RETRY_FAILED_SCOPE': 'run-1'}):
+            root = Path(tmp)
+            run_cloud.command(root, [sys.executable, '-c', 'import os,sys; sys.exit(1 if "AGENT_ID_RETRY_FAILED_SCOPE" in os.environ else 0)'], 'log.txt', clean_env=True)
+
     def test_rpc_change_cannot_splice_series(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp); env = self.config_root(root); configure(root, env)
