@@ -1,5 +1,6 @@
 # 涨跌腿追踪 + 山寨轮动窗口：每天 UTC 00:53（UTC 日线收盘后）跑 leg/leg_data.py → data/leg/leg_latest.json + leg_history.json，再重出一次网站。
 # 2017-08-17 起币安现货 BTCUSDT 已收盘 UTC 日线（data-api.binance.vision 优先，Actions 美国机房 api.binance.com 会 451）；
+# 山寨整体涨跌腿 = 币安成交额前 50 左右山寨币的等权指数（15% 折线，不含 BTC / ETH / 稳定币 / 代币化股票）。
 # 之前（2010-07-18～2017-08-16）读仓库里的 leg/leg_early_cache.csv（Coin Metrics PriceUSD，历史不变，缓存缺了才联网取）。
 # 规则常量在 leg_data.py 顶部；改之前先跑 --selftest 和文末 ACCEPTANCE 回放。
 name: 涨跌腿追踪日更
@@ -24,7 +25,7 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
         with:
@@ -33,6 +34,14 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+
+      # 山寨整体（动态篮子指数）要 700 来个币的日线：缓存 leg/leg_alt_cache.csv（约 30MB，不进仓库），首次约 5～10 分钟，之后只补新日期
+      - name: 恢复山寨日线缓存
+        uses: actions/cache@v4
+        with:
+          path: leg/leg_alt_cache.csv
+          key: leg-alt-${{ github.run_id }}
+          restore-keys: leg-alt-
 
       - name: 自测（离线合成数据）
         run: python3 leg/leg_data.py --selftest

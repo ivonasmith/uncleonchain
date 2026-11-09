@@ -45,6 +45,9 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
 - `leg/`：涨跌腿追踪 + 山寨轮动窗口（站长交付 `leg_data.py` + 设计稿；11-09 升 v3 / schema 3：BTC 永远在涨腿或跌腿之一，`direction` = up / down）。`leg-daily.yml` 每天 UTC 00:53 跑 `leg/leg_data.py`
   （2017-08-17 起币安现货 BTCUSDT 已收盘日线，data-api.binance.vision 优先，云端环境 uncleonchain 已放行币安三个域名；之前读仓库里的 `leg/leg_early_cache.csv` = Coin Metrics PriceUSD）
   → `data/leg/leg_latest.json`（schema 3）+ `leg_history.json`（全部腿逐条 + 分布 + 牛熊周期口径，详情页「全部行情」）→ 出网站复制到 `/data/`。历史核对：截至 09-27 共 5,916 天、305 条腿、牛涨 103 / 牛跌 99 / 熊涨 49 / 熊跌 54。
+  11-09 升 schema 4：`alt_leg` = 山寨整体涨跌腿（币安成交额前 50～75 山寨币等权指数，每月 1 日重排，ALT_THR=15%；大叔定「简单逻辑」，按校准结果只加一条：
+  B 结尾且 2026-06-11 起上市的代币化股票不入篮 `ALT_STOCK_FROM`，其余参数用脚本默认）。700 来个币的日线缓存 `leg/leg_alt_cache.csv`（~30MB，gitignore，走 actions/cache）。
+  卡片里的「山寨整体」模块是站点自写（`leg.js` 的 `altLegModuleHTML` / 文案 `LT`），只用百分比，不展示指数点位。校准用 `--alt-calib --alt-scan`（结果 `leg/leg_alt_report.txt`，不进仓库）。
   读数卡放宏观页最上面、四层综合研判之上（`leg_macro_card`，大叔 11-08 定：这是用户最直观的结论）+ 首页卡片（`leg_home_card`）；详情页 /leg-tracker/（`出网站.build_leg_tracker`，挂在宏观下，不单独占导航），都由 `leg/web/leg.js` 取数渲染（样式 `leg/web/leg.css`，全收在 `.lg` 下，变量 `--g-*`）。
   **数据字段、文案（T.zh / T.en）、STATS / ALT 统计数字、状态规则照设计稿，不许改**；统计只在研究文档升版时改并同步 `STATS_ASOF` + 更新日志。停更 = asof 比今天早 3 天以上（浏览器里判断）。
   设计稿换版时照原样拆：pure 函数 + STATS/T + 渲染片段原样搬进 leg.js，只改取数 / 预览删除 / 颜色变量。三个口径常量（THR_EQ / D0_INCLUDE_IGNITION / IGN_GAP）用脚本默认值，上线前 ACCEPTANCE 四个回放（--asof 2026-09-25～28）已全部对上；改规则先跑 `--selftest` 和回放。红线：不出现挂单 / 仓位 / 止损，不给个币名单。

@@ -3546,14 +3546,14 @@ def leg_assets():
 
 
 def leg_home_card():
-    return (f'<h2>{T("涨跌腿追踪 · 山寨轮动窗口", "Leg tracker · altcoin window")} <a class="sub" href="{U("/leg-tracker/")}">{T("看规律说明 →", "How it works →")}</a></h2>'
+    return (f'<h2>{T("涨跌腿追踪 · BTC 与山寨整体 · 山寨轮动窗口", "Leg tracker · BTC & altcoins · altcoin window")} <a class="sub" href="{U("/leg-tracker/")}">{T("看规律说明 →", "How it works →")}</a></h2>'
             f'<div class="lg legh"><div id="leg-card" data-src="{leg_src()}" data-href="{U("/leg-tracker/")}">'
             f'<div class="card"><div class="empty">{T("读取中…", "Loading…")}</div></div></div></div>')
 
 
 def leg_macro_card():
     """宏观页最上面（四层综合研判之上）：涨腿追踪 + 山寨窗口卡（同首页卡片，leg.js 渲染）。"""
-    return (f'<div class="lg legh legm"><div class="legm-h">{T("涨跌腿追踪 · 山寨轮动窗口", "Leg tracker · altcoin window")}'
+    return (f'<div class="lg legh legm"><div class="legm-h">{T("涨跌腿追踪 · BTC 与山寨整体 · 山寨轮动窗口", "Leg tracker · BTC & altcoins · altcoin window")}'
             f'<a class="sub" href="{U("/leg-tracker/")}">{T("看规律说明 →", "How it works →")}</a></div>'
             f'<div id="leg-card" data-src="{leg_src()}" data-href="{U("/leg-tracker/")}">'
             f'<div class="card"><div class="empty">{T("读取中…", "Loading…")}</div></div></div></div>')

@@ -305,7 +305,7 @@ function cardHTML(d){
   if(!d||!d.btc_leg||!d.alt_window){return '<div class="card"><div class="errbox">'+t('err')+' · <button type="button" data-leg-retry>'+t('retry')+'</button></div></div>';}
   var stale=isStale(d.asof,TODAY);
   var top=(stale?'<div style="margin-bottom:8px"><span class="badge stale">'+t('staleB')+'</span></div>':'');
-  return '<a class="card'+(stale?' is-stale':'')+'" href="'+HREF+'">'+top+btcModuleHTML(d.btc_leg)+altModuleHTML(d.alt_window,stale)
+  return '<a class="card'+(stale?' is-stale':'')+'" href="'+HREF+'">'+top+btcModuleHTML(d.btc_leg)+altLegModuleHTML(d)+altModuleHTML(d.alt_window,stale)
    +'<div class="card-foot"><span>'+t('asof')+' '+d.asof+'</span><span class="cta">'+t('cta')+'</span></div></a>';
 }
 
@@ -425,6 +425,52 @@ function histHTML(){
 }
 
 
+
+/* ===== 山寨整体涨跌腿（站点自写，2026-11-09；设计稿 v3 没有这块，样式照 BTC 涨跌腿模块）=====
+   数据 = leg_latest.json 的 alt_leg（schema 4）：成交额前 50 左右的山寨币等权指数，15% 折线。指数点位不展示，只用百分比。 */
+var LT={
+zh:{t:'山寨整体',sub:function(a){return '成交额前 50 左右的山寨币等权指数 · 15% 折线 · 今日 '+a.basket.coins_today+' 个币';},
+ missing:'山寨整体数据未生成', missingP:'今天没取到足够的山寨币日线，明天自动重试。',
+ dnK:'现在距高点', dnC:function(l){return '高点 '+l.start_date+' · '+l.confirm_date.slice(5)+' 确认';},
+ revK:'反弹确认线', revC:'指数收盘从最低点反弹 15% ＝ 涨腿重新开始',
+ upK:'腿内最大回撤', upC:'回撤到 15% 这一腿结束',
+ stK:'起点', stC:function(l){return l.confirm_date.slice(5)+' 确认';},
+ gainLbl:'距起点涨幅', dropLbl:'高点至最低收盘', excl:'不含 BTC、ETH、稳定币和代币化股票'},
+en:{t:'Altcoins overall',sub:function(a){return 'Equal-weight index of ~50 top-volume altcoins · 15% zigzag · '+a.basket.coins_today+' coins today';},
+ missing:'Altcoin index not generated', missingP:'Not enough altcoin candles today; it retries tomorrow.',
+ dnK:'From the peak', dnC:function(l){return 'Peak '+l.start_date+' · confirmed '+l.confirm_date.slice(5);},
+ revK:'Reversal line', revC:'A 15% bounce off the low restarts an up-leg',
+ upK:'Max in-leg drawdown', upC:'A 15% pullback ends the leg',
+ stK:'Start', stC:function(l){return 'confirmed '+l.confirm_date.slice(5);},
+ gainLbl:'gain from start', dropLbl:'peak to lowest close', excl:'Excludes BTC, ETH, stablecoins and tokenized stocks'}};
+function lt(k){var v=LT[lang][k];if(typeof v==='function'){return v.apply(null,[].slice.call(arguments,1));}return v;}
+function altLegModuleHTML(d){
+  var a=d.alt_leg;
+  if(!a||!a.leg||!a.basket){return '<div class="mod m3"><div class="mod-head"><div class="mod-title">'+lt('t')+'</div></div><div class="empty"><b>'+lt('missing')+'</b>'+lt('missingP')+'</div></div>';}
+  var dir=dirOf(a), L=a.leg, pv=prevOf(a);
+  function tile(k,v,c){return '<div class="tile"><div class="k">'+k+'</div><div class="v">'+v+'</div><div class="c">'+c+'</div></div>';}
+  var head='<div class="mod-head"><div class="mod-title">'+lt('t')+'</div>'+bgsHTML({badge:null},dir)+'</div><div class="mod-sub">'+lt('sub',a)+'</div>';
+  var prev=pv?'<div class="prev">'+t('prevLeg',pv)+'</div>':'';
+  var big='<div class="reading"><div class="big"><small>'+t('dayPre')+'</small>'+L.day+'<small>'+t('dayPost')+'</small></div>';
+  var body;
+  if(dir==='down'){
+    body=big+'<div class="gain loss">−'+f1(L.drop_pct)+'%<small>'+lt('dropLbl')+'</small></div></div>'
+      +'<div class="tiles">'+tile(lt('dnK'),sg(L.from_peak_pct),lt('dnC',L))+tile(lt('revK'),'+'+f1(L.to_reversal_pct)+'%',lt('revC'))+'</div>';
+  }else{
+    body=big+'<div class="gain">+'+f1(L.gain_pct)+'%<small>'+lt('gainLbl')+'</small></div></div>'
+      +'<div class="tiles">'+tile(lt('upK'),f1(L.max_dd_pct)+'%',lt('upC'))+tile(lt('stK'),L.start_date,lt('stC',L))+'</div>';
+  }
+  return '<div class="mod m3">'+head+body+prev+'<div class="prev muted">'+lt('excl')+'</div></div>';
+}
+function altLegOk(a){
+  if(a==null){return true;}
+  if(!a.leg||!a.basket){return false;}
+  var dir=dirOf(a), ks=dir==='down'?['start_date','confirm_date','day','drop_pct','from_peak_pct','to_reversal_pct']:dir==='up'?['start_date','confirm_date','day','gain_pct','max_dd_pct']:null;
+  if(!ks){return false;}
+  for(var i=0;i<ks.length;i++){if(a.leg[ks[i]]==null){return false;}}
+  return true;
+}
+
 /* ===== 总渲染（站点版：设计稿 renderAll / load 改写，去掉预览与示例数据） ===== */
 var UPK=['start_date','start_close','confirm_date','day','gain_pct','high_close','high_date','max_dd_pct','max_dd_date'];
 var DNK=['start_date','start_close','confirm_date','day','drop_pct','low_close','low_date','btc_close','from_peak_pct','reversal_line','to_reversal_pct'];
@@ -438,14 +484,14 @@ function okData(d){
   var need={pending:['ignition_date','d0_date'],idle:[]}[a.stage]||['d0_date','d0_close','n','days_to_clear','clear_date','stop_line','btc_close'];
   for(var j=0;j<need.length;j++){if(a[need[j]]==null){return false;}}
   if(a.stage==='stopped'&&a.stopped_date==null){return false;}
-  return true;
+  return altLegOk(d.alt_leg);
 }
 var DATA=null, HIST=null, TRIED=false;
 function $(id){return document.getElementById(id);}
 function renderPage(){
   document.querySelectorAll('#leg-page [data-i18n]').forEach(function(el){var v=t(el.getAttribute('data-i18n'));if(v!=null)el.innerHTML=v;});
   var navs=t('navs');$('legChips').innerHTML=Object.keys(navs).map(function(k){return '<a href="#'+k+'">'+navs[k]+'</a>';}).join('');
-  $('liveMount').innerHTML=!TRIED?'':DATA?liveHTML(DATA):'<div class="card"><div class="errbox">'+t('err')+' · <button type="button" data-leg-retry>'+t('retry')+'</button></div></div>';
+  $('liveMount').innerHTML=!TRIED?'':DATA?liveHTML(DATA)+'<div class="card panel lgalt">'+altLegModuleHTML(DATA)+'</div>':'<div class="card"><div class="errbox">'+t('err')+' · <button type="button" data-leg-retry>'+t('retry')+'</button></div></div>';
   var curDir=(DATA&&DATA.btc_leg&&DATA.btc_leg.leg)?dirOf(DATA.btc_leg):'none';
   var active=curDir==='up'?DATA.btc_leg.leg:null, down=curDir==='down'?DATA.btc_leg.leg:null;
   $('lenChips').innerHTML=['p25','p50','p75','p90'].map(function(k,i){return '<div class="tile"><div class="k">'+t('lenChipK')[i]+'</div><div class="v">'+STATS.len[k]+t('lenUnit')+'</div></div>';}).join('');

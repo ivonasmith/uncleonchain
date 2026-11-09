@@ -1,6 +1,25 @@
 [
   {
-    "version": "2026.11.09",
+    "version": "2026.11.09.2",
+    "date": "2026-11-09",
+    "notify": true,
+    "title_zh": "加「山寨整体」涨跌腿",
+    "title_en": "New: altcoin-wide up/down leg",
+    "items": [
+      {
+        "type": "new",
+        "zh": "涨跌腿追踪卡片加一块「山寨整体」：把币安成交额前 50 左右的山寨币做成等权指数（每月 1 日按 30 日成交额重排，停牌 / 崩盘立刻剔除），用和 BTC 一样的折线规则切涨腿和跌腿，阈值 15%（山寨波动约是 BTC 的 1.5 倍）。截至 11-08：山寨整体跌腿第 42 天，−28.2%，反弹 15% 才算涨腿重新开始",
+        "en": "The leg tracker adds \"Altcoins overall\": an equal-weight index of ~50 top-volume Binance altcoins (re-ranked monthly by 30-day volume; halted or collapsed coins dropped at once), cut into up- and down-legs with the BTC rules at a 15% threshold. As of 11-08: day 42 of a down-leg, −28.2%."
+      },
+      {
+        "type": "data",
+        "zh": "篮子不含 BTC、ETH、稳定币、包装币，也不含代币化股票（币安 2026-06 起上线的 NVDAB、TSLAB 这类，10～11 月有 8 个按成交额挤进了前 50）。已下架币的历史照算，没有幸存者偏差。阈值对比：10%～25% 四档给出的当前方向一致",
+        "en": "The basket excludes BTC, ETH, stablecoins, wrapped coins and tokenized stocks (NVDAB, TSLAB etc.). Delisted coins keep their history, so no survivorship bias. Thresholds of 10–25% all give the same current direction."
+      }
+    ]
+  },
+  {
+    "version": "2026.11.09.1",
     "date": "2026-11-09",
     "notify": true,
     "title_zh": "AI Agent 页补上 Gang、Flap、Four.meme：交易地址、成交 BNB、新发币、毕业不再只算 AgentPad",

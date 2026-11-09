@@ -1,7 +1,7 @@
 /* 涨腿追踪（设计稿 leg-tracker-design.html 的样式，全部收在 .lg 下；颜色走站点变量，进度条三色两种主题通用） */
 :root,:root[data-theme="dark"]{--g-surface:var(--card);--g-surface2:var(--card2);--g-line:var(--line2);--g-text:var(--ink);--g-muted:var(--muted);--g-soft-text:var(--ink2);
---g-blue:#7fb8dc;--g-gold:#e3cd84;--g-red:#e8a3a7;--g-bar-blue:#9cc6de;--g-bar-gold:#e3cd84;--g-bar-red:#e8a3a7;--g-m1:rgba(227,205,132,.055);--g-m2:rgba(170,150,230,.065);--g-radius:12px}
-:root[data-theme="light"]{--g-blue:#2b78a8;--g-gold:#8c6c1f;--g-red:#be2b2b;--g-m1:#faf4e8;--g-m2:#f0ecf7}
+--g-blue:#7fb8dc;--g-gold:#e3cd84;--g-red:#e8a3a7;--g-bar-blue:#9cc6de;--g-bar-gold:#e3cd84;--g-bar-red:#e8a3a7;--g-m1:rgba(227,205,132,.055);--g-m2:rgba(170,150,230,.065);--g-m3:rgba(110,200,190,.06);--g-radius:12px}
+:root[data-theme="light"]{--g-m3:#eaf4f2;--g-blue:#2b78a8;--g-gold:#8c6c1f;--g-red:#be2b2b;--g-m1:#faf4e8;--g-m2:#f0ecf7}
 .lg{font-size:15px;line-height:1.65;color:var(--g-text)}
 .lg a{color:inherit;text-decoration:none}
 .lg b{font-weight:650}
@@ -129,7 +129,7 @@
 @media (min-width:600px){.lg .big{font-size:32px}.lg .brow{grid-template-columns:90px 1fr 90px}}
 /* 站点接入：首页卡片宽屏两栏（BTC 涨腿 | 山寨窗口）；详情页标题用站点 .ph */
 .lg .ph{margin-bottom:6px}
-@media (min-width:900px){.lg.legh .card{display:grid;grid-template-columns:1fr 1fr;column-gap:10px;align-items:stretch}.lg.legh .card>:not(.mod){grid-column:1/-1}}
+@media (min-width:900px){.lg.legh .card{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));column-gap:10px;align-items:stretch}.lg.legh .card>:not(.mod){grid-column:1/-1}}
 .lg table.t{table-layout:fixed;min-width:0}
 .lg table.t th,.lg table.t td{white-space:normal;overflow-wrap:anywhere;background:none}
 .lg .empty{border:0;border-radius:0}
@@ -140,3 +140,7 @@
 /* 站点 .live（侧栏「数据更新」）是 flex + 等宽小字，这里还原设计稿的段落样式 */
 .lg .live{display:block;font-family:inherit;font-size:14px;color:var(--g-text)}
 .lg .live i{width:auto;height:auto;border-radius:0;background:none;box-shadow:none;animation:none}
+/* 山寨整体涨跌腿模块（站点自写） */
+.lg .mod.m3{background:var(--g-m3)}
+.lg .mod .prev.muted{font-size:11.5px;margin-top:2px}
+.lg .card.panel.lgalt{padding:4px}.lg .card.panel.lgalt .mod{margin:0}
