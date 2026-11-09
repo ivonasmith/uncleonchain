@@ -96,7 +96,7 @@ def main():
                 text = _re.sub(r'<script.*?</script>|<style.*?</style>', ' ', body, flags=_re.S)
                 links = sorted(set(_re.findall(r'href="(/[a-z]{2}/flap[^"#]*)"', text)))
                 text = _re.sub(r'<[^>]+>', ' ', text); text = _re.sub(r'\s+', ' ', text)
-                print('HTTP', base, r.status, 'chars', len(text), 'links', ' '.join(links)[:4000])
+                print('HTTP', base, r.status, 'chars', len(text))
                 seen_pos = -10**9
                 shown = 0
                 for m in _re.finditer(grep, text, _re.I):
@@ -113,8 +113,11 @@ def main():
         except Exception as e:  # noqa: BLE001
             print('CALL', to, data[:10], 'ERROR', str(e)[:200])
     for item in [c for c in a.dump.split(',') if c.strip()]:
-        addr, n = item.strip().split(':')
+        parts = item.strip().split(':')
+        addr, n = parts[0], parts[1]
         rows, errs = logs(addr, a.from_block, a.to_block)
+        if len(parts) > 2:  # addr:n:topicPrefix — only logs whose topic0 starts with it
+            rows = [r for r in rows if r['topics'] and r['topics'][0].startswith(parts[2].lower())]
         print(f'DUMP {addr} logs={len(rows)} errs={errs}')
         for r in rows[:int(n)]:
             tx = rpc('eth_getTransactionByHash', [r['transactionHash']])
