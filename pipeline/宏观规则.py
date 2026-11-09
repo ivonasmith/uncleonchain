@@ -1922,6 +1922,13 @@ RULE_CHANGES.append(
      "EN": "L2 and L3 now use only closed UTC days: the data date moves from the run day to the previous day, and price = that day's 00:00 UTC close; the ruler and price bar now read 'close + close time'. L3's out-of-sample log is never rewritten: rows up to 2026-10-29 used the run-time price, later rows use the close."})
 
 RULE_CHANGES.append(
+    {"日期": "2026-11-09", "锚": "2026-11-09-gang", "范围": "AI Agent · 交易与发币", "EN范围": "AI Agent · trading and launches",
+     "原因": "AI Agent 页的「买卖交易地址 / 成交 BNB / 新发币 / 毕业币」此前只统计 AgentPad 一家；AgentPad 10-24 后基本停摆，这四项长期接近 0，但 Agent ID 持有者实际在 Gang（gang.fun）上交易，Gang 合约强制只有持 Agent ID 的钱包能发币、买卖和打新，却因为源码不在 Sourcify / BscScan 上一直没算进去。",
+     "原因EN": "The AI Agent page's traders / BNB volume / launches / graduations only counted AgentPad, which went almost idle after 10-24, so the four stayed near zero. Agent ID holders actually trade on Gang (gang.fun), whose contracts only let Agent ID holders launch, trade and mint, but it had been left out because its source isn't on Sourcify / BscScan.",
+     "内容": "加入 Gang 全部内盘（按官方公开仓库 gangfun/gang-launchpad 的事件定义解码，证据 E3）：交易 = 曲线买卖；成交额 = 含费毛额，只算 BNB 计价的币；新发币 = 曲线 + 打新 + Flywheel 创建；毕业 = 曲线进池 + 打新满额开池。10-19 起全部重算；交叉核对 gang.fun 官网统计（2,160 币 / 24 毕业，截至 11-09）与本站 10-23～11-08 累计（2,082 / 23）基本一致。Four.meme Agent、Flap Agent 仍未接入。",
+     "EN": "Added all Gang curve pads (decoded from the event definitions in the official public repo gangfun/gang-launchpad, grade E3): trades = curve buys/sells; volume = gross incl. fees, BNB-quoted tokens only; launches = curve + fair-mint + Flywheel creations; graduations = curve migrations + fair-mint launches. Recomputed from 10-19; cross-checked against gang.fun's own stats (2,160 tokens / 24 graduated as of 11-09) vs our 10-23..11-08 totals (2,082 / 23). Four.meme Agent and Flap Agent are not yet included."})
+
+RULE_CHANGES.append(
     {"日期": "2026-11-06", "锚": "2026-11-06-carry", "范围": "发射台矩阵 · 延迟平台", "EN范围": "Launchpad matrix · delayed platforms",
      "原因": "DefiLlama 汇总接口对还没出前一天数据的平台，「当日」给的是它最后一天的值（2026-11-06 核实：StonkFun 11-05 未出数，接口给的 86,429 是 11-04 的值）。矩阵此前把这个值当成当天写进排行、合计、当日变化拆解与份额变化，没有任何标注；而且非 Top60 平台的这些格子之后也不会被更正。",
      "原因EN": "DefiLlama's overview gives platforms that have not yet published the previous day their last day's value as 'today' (verified 2026-11-06: StonkFun had no Nov 5 data and the overview's 86,429 was its Nov 4 value). The matrix used it as the current day in the ranking, totals, day-over-day breakdown and share changes without any tag, and for non-top-60 platforms those cells were never corrected.",

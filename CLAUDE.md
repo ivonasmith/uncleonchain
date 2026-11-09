@@ -59,6 +59,9 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
   大叔 2026-11-06 定：先用公共免费的，key 兜底；云端直连不走代理（`AGENT_ID_PROXY` 不配 = direct）。`AGENT_ID_STATE_KEY`（Fernet，Codex 已生成存好，加密 checkpoint artifact，丢了旧状态解不开）；
   2026-11-06 首轮实测：4 个公共节点都过不了历史探测（publicnode 对 10-20 返回空、drpc 400、1rpc 只给 50 块、llamarpc 域名失效），全部 4283 次请求走 Alchemy 兜底；回填 10-19～11-05 约 10 分钟，独立重算与旧数据 10 天逐项一致。
   加密 checkpoint 约 440MB / 份，保留两份（仓库公开，artifact 不占付费额度）。dispatch 的 daily.yml 若被 daily-pipeline 里后排进来的任务挤掉没关系：组里每条都从最新 main 重出网站。
+  2026-11-09 接入 Gang（`collector/gang.py`，配置 `gang_adapter`：官方公开仓库 gangfun/gang-launchpad@8b12b30 的事件 topic 表 + pad 名单 + GangPadRegistry.pads()，E3）：成交额 = 含费毛额、只算 BNB 计价；
+  未见创建记录的币当日 U；未完成的日子每次自动补。运行时 config 来自 checkpoint，`run_cloud.REFRESH_KEYS` 里的段每次以仓库为准、仓库新增段自动并入。
+  Four.meme Agent（TokenManager2 template 第 85 位 = Agent 创建）、Flap Agent 还没接；`agent-id-probe.yml` 手动摸底任意区块段事件 / 公开网址。
   发布 = 只提交 public/ai-agent/monitor → dispatch `daily.yml`（变量 `AGENT_ID_DEPLOY_WORKFLOW` 不设就默认它）。旧 Codex 任务（大叔电脑）已不推数据，但仍应停掉，避免旧数据盖回来。
 - 时间口径（2026-11-06 定）：后端统计一律 UTC+0，数据按 UTC 完整日（UTC 0 点收盘）对齐，价格用收盘价（L2 / L3 只取 < 今天的日子）；
   前端显示按语言区域换算：中文站新加坡时间（UTC+8，`SG_TZ`），英文站美东时间。钟点用 `出网站.TT`，收盘 `TCLOSE`，UTC 日截止 `TDAY`，日历列表 `TLOC`。别写裸「UTC hh:mm」或「北京时间」。
