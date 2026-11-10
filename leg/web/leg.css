@@ -129,7 +129,7 @@
 @media (min-width:600px){.lg .big{font-size:32px}.lg .brow{grid-template-columns:90px 1fr 90px}}
 /* 站点接入：首页卡片宽屏两栏（BTC 涨腿 | 山寨窗口）；详情页标题用站点 .ph */
 .lg .ph{margin-bottom:6px}
-@media (min-width:900px){.lg.legh .card{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));column-gap:10px;align-items:stretch}.lg.legh .card>:not(.mod){grid-column:1/-1}}
+@media (min-width:900px){.lg.legh .card{display:grid;grid-template-columns:1fr 1fr;column-gap:10px;align-items:stretch}.lg.legh .card>:not(.mod){grid-column:1/-1}}
 .lg table.t{table-layout:fixed;min-width:0}
 .lg table.t th,.lg table.t td{white-space:normal;overflow-wrap:anywhere;background:none}
 .lg .empty{border:0;border-radius:0}
@@ -159,3 +159,5 @@
 .lg .badge.stale{color:var(--dn);border-color:var(--dn-bd);background:var(--dn-bg)}
 .lg .card-foot .cta,.lg .legm-h .sub{color:var(--lime-ink)}
 .lg .track .m89{border-left-color:var(--warn)}.lg .track .m89 span{color:var(--warn)}
+.lg .legcyc{padding:14px 16px 10px;margin-bottom:12px}
+.lg .legcyc .l2leg{font-size:12px;color:var(--g-muted)}

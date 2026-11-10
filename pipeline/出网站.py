@@ -3551,10 +3551,46 @@ def leg_home_card():
             f'<div class="card"><div class="empty">{T("读取中…", "Loading…")}</div></div></div></div>')
 
 
+def leg_cycle_chart():
+    """原型（11-10，未上线）：BTC 价格按涨腿 / 跌腿分色，背景 = L2 周期状态。涨跌腿读 data/leg/leg_history.json，价格与状态读 l2_series（Coin Metrics 收盘）。"""
+    ser, hist = G.get("L2S"), load(os.path.join(DATA, "leg", "leg_history.json"))
+    if not ser or not hist or not hist.get("legs"):
+        return ""
+    if "LEGCHART" not in G:
+        d0 = dt.date.fromisoformat(ser["start"])
+        px = {(d0 + dt.timedelta(days=i)).isoformat(): v for i, v in enumerate(ser["series"].get("price") or []) if v}
+        st = {(d0 + dt.timedelta(days=i)).isoformat(): v for i, v in enumerate(ser["series"].get("state") or []) if v is not None}
+        legs = list(hist["legs"]) + ([hist["current"]] if hist.get("current") else [])
+        up, dn = {}, {}
+        for n, lg in enumerate(legs):
+            a = lg["start_date"]
+            b = legs[n + 1]["start_date"] if n + 1 < len(legs) else max(px)
+            tgt = up if lg["dir"] == "up" else dn
+            for d, v in px.items():
+                if a <= d <= b:
+                    tgt[d] = v
+        start = "2012-01-01"
+        cols = {"up": {d: v for d, v in up.items() if d >= start}, "dn": {d: v for d, v in dn.items() if d >= start},
+                "st": {d: v for d, v in st.items() if d >= start}}
+        G["LEGCHART"] = put_multi("leg_chart", cols)
+    codes = ser.get("state_codes") or R.L2_ORDER
+    states = [{"n": T(R.L2_STATES[c][0], R.L2_STATES[c][1]), "c": R.L2_STATES[c][4]} for c in codes]
+    leg = "".join(f'<span><i style="background:var(--{R.L2_STATES[c][4]})"></i>{esc(T(R.L2_STATES[c][0], R.L2_STATES[c][1]))}</span>' for c in codes)
+    cur = hist.get("current") or {}
+    mk = [{"date": cur["start_date"], "label": T("这一腿起点", "current leg start")}] if cur.get("start_date") else []
+    cfg = {"v2": True, "src": G["LEGCHART"], "fmt": "price", "log": True, "ranges": ["1Y", "3Y", "CYC", "ALL"], "range": "1Y", "cyc": G.get("CYC"),
+           "stk": "st", "states": states, "markers": mk, "gaps": True, "last": False,
+           "note": T("对数坐标。线的颜色 = 当时在涨腿还是跌腿（收盘反向走出 10% 换腿）；背景色 = 当天的 L2 周期状态。",
+                     "Log scale. Line colour = up-leg or down-leg at the time (a 10% reversal switches legs); background = the L2 cycle state of the day."),
+           "series": [{"k": "up", "n": T("涨腿", "Up-leg"), "c": "up", "w": 1.8}, {"k": "dn", "n": T("跌腿", "Down-leg"), "c": "dn", "w": 1.8}]}
+    return (f'<div class="card chartcard legcyc"><div class="l2leg">{T("背景色 = 周期状态（L2）：", "Background = cycle state (L2): ")}{leg}</div>' + chart_div(cfg) + '</div>')
+
+
 def leg_macro_card():
     """宏观页最上面（四层综合研判之上）：涨腿追踪 + 山寨窗口卡（同首页卡片，leg.js 渲染）。"""
     return (f'<div class="lg legh legm"><div class="legm-h">{T("涨跌腿追踪 · BTC 与山寨整体", "Leg tracker · BTC & altcoins")}'
             f'<a class="sub" href="{U("/leg-tracker/")}">{T("看规律说明 →", "How it works →")}</a></div>'
+            + leg_cycle_chart() +
             f'<div id="leg-card" data-src="{leg_src()}" data-href="{U("/leg-tracker/")}">'
             f'<div class="card"><div class="empty">{T("读取中…", "Loading…")}</div></div></div></div>')
 
