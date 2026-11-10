@@ -2106,6 +2106,7 @@ def build_macro(L, S, logs):
 <p class="lede">{T("综合研判把四层合成一句话：周期定方向，宏观管节奏，筹码和情绪用来确认和提醒。下面按层切换，每张指标卡都能点开看全部历史、区间规则和「正常波动范围」。拿不到真实数据的标「待接入」，不拿近似值冒充。",
                    "The overall read rolls four layers into one line: the cycle sets direction, macro sets pace, flows and sentiment confirm and caution. Switch layers below; every card opens its full history, zone rules and normal range. Anything without real data is marked pending.")}</p></div></div>
 {leg_macro_card()}
+<div class="hzrow"><span class="hz">{T("长期 · 周期", "Long term · cycle")}</span>{T("按月看：处在四年周期的哪一段、风险预算该松还是紧", "In months: where we are in the four-year cycle, and how loose or tight the risk budget should be")}</div>
 {comp_block(comp, prev_comp, tlog, full=True)}
 {cal_next_line(G.get("CAL"))}
 {src_summary(st)}
@@ -3552,7 +3553,7 @@ def leg_home_card():
 
 
 def leg_cycle_chart():
-    """原型（11-10，未上线）：BTC 价格按涨腿 / 跌腿分色，背景 = L2 周期状态。涨跌腿读 data/leg/leg_history.json，价格与状态读 l2_series（Coin Metrics 收盘）。"""
+    """宏观页顶部「周期里的涨跌腿」（大叔 11-10 定）：BTC 价格按涨腿 / 跌腿分色，背景 = L2 周期状态。涨跌腿读 data/leg/leg_history.json，价格与状态读 l2_series（Coin Metrics 收盘）。"""
     ser, hist = G.get("L2S"), load(os.path.join(DATA, "leg", "leg_history.json"))
     if not ser or not hist or not hist.get("legs"):
         return ""
@@ -3579,20 +3580,60 @@ def leg_cycle_chart():
     cur = hist.get("current") or {}
     mk = [{"date": cur["start_date"], "label": T("这一腿起点", "current leg start")}] if cur.get("start_date") else []
     cfg = {"v2": True, "src": G["LEGCHART"], "fmt": "price", "log": True, "ranges": ["1Y", "3Y", "CYC", "ALL"], "range": "1Y", "cyc": G.get("CYC"),
-           "stk": "st", "states": states, "markers": mk, "gaps": True, "last": False,
-           "note": T("对数坐标。线的颜色 = 当时在涨腿还是跌腿（收盘反向走出 10% 换腿）；背景色 = 当天的 L2 周期状态。",
-                     "Log scale. Line colour = up-leg or down-leg at the time (a 10% reversal switches legs); background = the L2 cycle state of the day."),
+           "stk": "st", "states": states, "markers": mk, "gaps": True, "last": False, "novals": True,
+           "note": T("对数坐标。线的颜色 = 当时在涨腿还是跌腿（收盘从高 / 低点反向走出 10% 换腿，按币安收盘价切）；背景色 = 当天的 L2 周期状态。价格线画的是 Coin Metrics 收盘价（和 L2 图同源），与币安收盘每天相差零点几个百分点。",
+                     "Log scale. Line colour = up-leg or down-leg at the time (a 10% reversal off a high/low switches legs, cut on Binance closes); background = the L2 cycle state of the day. The line is the Coin Metrics close (same as the L2 chart), within a few tenths of a percent of Binance."),
            "series": [{"k": "up", "n": T("涨腿", "Up-leg"), "c": "up", "w": 1.8}, {"k": "dn", "n": T("跌腿", "Down-leg"), "c": "dn", "w": 1.8}]}
     return (f'<div class="card chartcard legcyc"><div class="l2leg">{T("背景色 = 周期状态（L2）：", "Background = cycle state (L2): ")}{leg}</div>' + chart_div(cfg) + '</div>')
 
 
+L2_BULLISH = {"BULL", "BULL_RISK", "BULL_PULLBACK", "RECOVERY", "BEAR_ZONE"}   # 说明句用：L2 状态偏多 / 偏空（只决定拿哪一组历史腿来比）
+
+
+def leg_bridge():
+    """长期周期（L2）和短期这一腿方向相反时，自动加一行说明，只摆历史数字：同类腿多少条、中位天数 / 幅度，这一条的天数和幅度各排在哪。"""
+    l2, hist, cur = G.get("L2"), load(os.path.join(DATA, "leg", "leg_history.json")), (G.get("LEG") or {}).get("btc_leg") or {}
+    code = ((l2 or {}).get("state") or {}).get("code")
+    if not code or not hist or not cur.get("leg") or cur.get("direction") not in ("up", "down"):
+        return ""
+    bull, d = code in L2_BULLISH, cur["direction"]
+    if bull == (d == "up"):
+        return ""
+    reg = "bull" if bull else "bear"
+    same = [x for x in hist.get("legs") or [] if x["dir"] == d and x.get("regime") == reg]
+    if len(same) < 10:
+        return ""
+    L = cur["leg"]
+    mag = L["drop_pct"] if d == "down" else L["gain_pct"]
+    days_med = sorted(x["days"] for x in same)[len(same) // 2]
+    mags = sorted(abs(x["pct"]) for x in same)
+    mag_med = (mags[len(mags) // 2] + mags[(len(mags) - 1) // 2]) / 2
+    longer = sum(1 for x in same if x["days"] < L["day"])
+    deeper = sum(1 for x in same if abs(x["pct"]) < mag)
+    sname = T(R.L2_STATES[code][0], R.L2_STATES[code][1])
+    if d == "down":
+        zh = (f"周期在「{sname}」，短期在跌腿：牛市阶段里跌腿很常见（历史 {len(same)} 条，中位 {days_med} 天、−{mag_med:.1f}%）。"
+              f"这一条已走 {L['day']} 天、最深跌了 {mag:.1f}%：时长比其中 {longer} 条都长，跌幅只比其中 {deeper} 条深。")
+        en = (f"The cycle is \"{sname}\" but the short-term leg is down: down-legs are common in bull phases ({len(same)} in history, median {days_med} days, −{mag_med:.1f}%). "
+              f"This one is {L['day']} days old and at most {mag:.1f}% down: longer than {longer} of them, but deeper than only {deeper}.")
+    else:
+        zh = (f"周期在「{sname}」，短期在涨腿：熊市阶段里也常有反弹（历史 {len(same)} 条，中位 {days_med} 天、+{mag_med:.1f}%）。"
+              f"这一条已走 {L['day']} 天、涨了 {mag:.1f}%：时长比其中 {longer} 条都长，涨幅比其中 {deeper} 条大。")
+        en = (f"The cycle is \"{sname}\" but the short-term leg is up: rallies are common in bear phases ({len(same)} in history, median {days_med} days, +{mag_med:.1f}%). "
+              f"This one is {L['day']} days old and up {mag:.1f}%: longer than {longer} of them, bigger than {deeper}.")
+    note = T("长期、短期方向不一样，不矛盾。牛 / 熊阶段按价格周期事后划分，只用来归类历史腿。",
+             "Long and short term pointing different ways is not a contradiction. Bull/bear phases are assigned after the fact and only used to group past legs.")
+    return f'<div class="legbridge"><b>{esc(T(zh, en))}</b> <span>{esc(note)}</span></div>'
+
+
 def leg_macro_card():
     """宏观页最上面（四层综合研判之上）：涨腿追踪 + 山寨窗口卡（同首页卡片，leg.js 渲染）。"""
-    return (f'<div class="lg legh legm"><div class="legm-h">{T("涨跌腿追踪 · BTC 与山寨整体", "Leg tracker · BTC & altcoins")}'
+    return (f'<div class="lg legh legm"><div class="legm-h"><span class="hz">{T("长期周期 × 短期波段", "Long-term cycle × short-term swings")}</span>{T("周期里的涨跌腿", "Legs inside the cycle")}'
             f'<a class="sub" href="{U("/leg-tracker/")}">{T("看规律说明 →", "How it works →")}</a></div>'
-            + leg_cycle_chart() +
+            + leg_cycle_chart()
+            + f'<div class="hzrow"><span class="hz">{T("短期 · 波段", "Short term · swings")}</span>{T("按天看：BTC 和山寨整体这一波在涨还是在跌、走了多久，一条腿通常一到两周", "In days: whether BTC and altcoins are in an up- or down-leg and for how long; a leg usually lasts one to two weeks")}</div>'
             f'<div id="leg-card" data-src="{leg_src()}" data-href="{U("/leg-tracker/")}">'
-            f'<div class="card"><div class="empty">{T("读取中…", "Loading…")}</div></div></div></div>')
+            f'<div class="card"><div class="empty">{T("读取中…", "Loading…")}</div></div></div>' + leg_bridge() + '</div>')
 
 
 def build_leg_tracker():
