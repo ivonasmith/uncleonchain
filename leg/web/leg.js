@@ -305,7 +305,7 @@ function cardHTML(d){
   if(!d||!d.btc_leg||!d.alt_window){return '<div class="card"><div class="errbox">'+t('err')+' · <button type="button" data-leg-retry>'+t('retry')+'</button></div></div>';}
   var stale=isStale(d.asof,TODAY);
   var top=(stale?'<div style="margin-bottom:8px"><span class="badge stale">'+t('staleB')+'</span></div>':'');
-  return '<a class="card'+(stale?' is-stale':'')+'" href="'+HREF+'">'+top+btcModuleHTML(d.btc_leg)+altLegModuleHTML(d)+altModuleHTML(d.alt_window,stale)
+  return '<a class="card'+(stale?' is-stale':'')+'" href="'+HREF+'">'+top+btcModuleHTML(d.btc_leg)+altLegModuleHTML(d)
    +'<div class="card-foot"><span>'+t('asof')+' '+d.asof+'</span><span class="cta">'+t('cta')+'</span></div></a>';
 }
 
@@ -348,7 +348,7 @@ function liveHTML(d){
 }
 
 function meterHTML(v){
-  var segs=[[0,10,'rgba(127,127,127,.28)'],[10,STATS.dd.p25,'rgba(127,184,220,.25)'],[STATS.dd.p25,STATS.dd.p50,'rgba(127,184,220,.42)'],[STATS.dd.p50,STATS.dd.p75,'rgba(127,184,220,.62)'],[STATS.dd.p75,STATS.dd.p90,'rgba(127,184,220,.85)'],[STATS.dd.p90,40,'rgba(232,163,167,.7)']];
+  var segs=[[0,10,'var(--line2)'],[10,STATS.dd.p25,'color-mix(in srgb,var(--cool) 22%,transparent)'],[STATS.dd.p25,STATS.dd.p50,'color-mix(in srgb,var(--cool) 40%,transparent)'],[STATS.dd.p50,STATS.dd.p75,'color-mix(in srgb,var(--cool) 60%,transparent)'],[STATS.dd.p75,STATS.dd.p90,'color-mix(in srgb,var(--cool) 82%,transparent)'],[STATS.dd.p90,40,'color-mix(in srgb,var(--dn) 60%,transparent)']];
   var h='<div class="meter">';
   segs.forEach(function(s,i){h+='<div class="z" style="left:'+ddPos(s[0])+'%;width:'+(ddPos(s[1])-ddPos(s[0]))+'%;background:'+s[2]+';'+(i===0?'border-radius:7px 0 0 7px;':'')+(i===segs.length-1?'border-radius:0 7px 7px 0;':'')+'"></div>';});
   [[10,'10','up'],[STATS.dd.p25,String(STATS.dd.p25),'dn'],[STATS.dd.p50,String(STATS.dd.p50),'up'],[STATS.dd.p75,String(STATS.dd.p75),'dn'],[STATS.dd.p90,f1(STATS.dd.p90),'up']].forEach(function(k){

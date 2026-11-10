@@ -1,7 +1,7 @@
 /* 涨腿追踪（设计稿 leg-tracker-design.html 的样式，全部收在 .lg 下；颜色走站点变量，进度条三色两种主题通用） */
-:root,:root[data-theme="dark"]{--g-surface:var(--card);--g-surface2:var(--card2);--g-line:var(--line2);--g-text:var(--ink);--g-muted:var(--muted);--g-soft-text:var(--ink2);
---g-blue:#7fb8dc;--g-gold:#e3cd84;--g-red:#e8a3a7;--g-bar-blue:#9cc6de;--g-bar-gold:#e3cd84;--g-bar-red:#e8a3a7;--g-m1:rgba(227,205,132,.055);--g-m2:rgba(170,150,230,.065);--g-m3:rgba(110,200,190,.06);--g-radius:12px}
-:root[data-theme="light"]{--g-m3:#eaf4f2;--g-blue:#2b78a8;--g-gold:#8c6c1f;--g-red:#be2b2b;--g-m1:#faf4e8;--g-m2:#f0ecf7}
+:root,:root[data-theme="dark"],:root[data-theme="light"]{--g-surface:var(--card);--g-surface2:var(--card2);--g-line:var(--line);--g-text:var(--ink);--g-muted:var(--muted);--g-soft-text:var(--ink2);
+--g-blue:var(--cool);--g-gold:var(--warn);--g-red:var(--dn);--g-bar-blue:var(--cool);--g-bar-gold:var(--warn);--g-bar-red:var(--dn);--g-m1:var(--wash);--g-m2:var(--wash);--g-m3:var(--wash);--g-radius:12px}
+/* 颜色全部取站点变量（网站样式.py），深 / 浅主题自动跟随；大叔 11-10 定：不再用设计稿的海报色 */
 .lg{font-size:15px;line-height:1.65;color:var(--g-text)}
 .lg a{color:inherit;text-decoration:none}
 .lg b{font-weight:650}
@@ -144,3 +144,18 @@
 .lg .mod.m3{background:var(--g-m3)}
 .lg .mod .prev.muted{font-size:11.5px;margin-top:2px}
 .lg .card.panel.lgalt{padding:4px}.lg .card.panel.lgalt .mod{margin:0}
+/* 站点终端风（11-10）：模块像宏观页信号灯卡——细线框 + 顶边按方向着色（涨 --up / 跌 --dn），数字用等宽字体 */
+.lg .mod{border:1px solid var(--line);border-top:2px solid var(--line2);border-radius:10px}
+.lg .mod:has(.badge.dir-up){border-top-color:var(--up)}
+.lg .mod:has(.badge.dir-down){border-top-color:var(--dn)}
+.lg .big,.lg .gain,.lg .tile .v{font-family:var(--mono)}
+.lg .big{font-weight:600}
+.lg .gain{color:var(--up)}
+.lg .gain.loss{color:var(--dn)}
+.lg .tile{background:var(--card);border-color:var(--line)}
+.lg .badge{font-family:var(--mono);font-size:10px;border-radius:4px;padding:1px 6px;border-color:var(--line2)}
+.lg .badge.dir-up{color:var(--up);border-color:var(--up-bd);background:var(--up-bg)}
+.lg .badge.dir-down{color:var(--dn);border-color:var(--dn-bd);background:var(--dn-bg)}
+.lg .badge.stale{color:var(--dn);border-color:var(--dn-bd);background:var(--dn-bg)}
+.lg .card-foot .cta,.lg .legm-h .sub{color:var(--lime-ink)}
+.lg .track .m89{border-left-color:var(--warn)}.lg .track .m89 span{color:var(--warn)}
