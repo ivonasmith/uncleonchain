@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "data_through_utc": "2026-11-08",
-  "generated_utc": "2026-11-09T13:23:54.365755+00:00",
-  "source_read_through_utc": "2026-11-09T13:21:45.085849+00:00",
+  "data_through_utc": "2026-11-09",
+  "generated_utc": "2026-11-10T07:45:09.911296+00:00",
+  "source_read_through_utc": "2026-11-10T07:43:19.941980+00:00",
   "rows": [
     {
       "date": "2026-10-19",
@@ -1030,6 +1030,55 @@
       },
       "start_block": 132292867,
       "end_block": 132484799,
+      "grade": "E1",
+      "event_reconciliation": "PASS"
+    },
+    {
+      "date": "2026-11-09",
+      "cumulative_ids": 180036,
+      "new_ids": 1591,
+      "trading_addresses": 86,
+      "volume_bnb": "2.907807127010679553",
+      "new_launches": 19,
+      "graduated": 0,
+      "scope": [
+        "AgentPad",
+        "Flap-AgentID",
+        "Four.meme-Agent",
+        "Gang"
+      ],
+      "by_platform": {
+        "AgentPad": {
+          "trading_addresses": 0,
+          "volume_bnb": "0",
+          "new_launches": 0,
+          "graduated": 0,
+          "note": null
+        },
+        "Gang": {
+          "trading_addresses": 78,
+          "volume_bnb": "2.714674212547087404",
+          "new_launches": 14,
+          "graduated": 0,
+          "note": null
+        },
+        "Four.meme-Agent": {
+          "trading_addresses": 5,
+          "volume_bnb": "0.143280033535120684",
+          "new_launches": 0,
+          "graduated": 0,
+          "note": "Agent 钱包创建的币（template 第85位），买卖不限 Agent ID"
+        },
+        "Flap-AgentID": {
+          "trading_addresses": 5,
+          "volume_bnb": "0.049852880928471465",
+          "new_launches": 5,
+          "graduated": 0,
+          "note": "Binance Agent ID 门禁币：内盘每笔买卖链上要求持有 Agent ID"
+        }
+      },
+      "start_block": 132484800,
+      "end_block": 132676597,
       "grade": "E1",
       "event_reconciliation": "PASS"
     }
