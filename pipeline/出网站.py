@@ -3575,15 +3575,19 @@ def leg_cycle_chart():
                 "st": {d: v for d, v in st.items() if d >= start}}
         G["LEGCHART"] = put_multi("leg_chart", cols)
     codes = ser.get("state_codes") or R.L2_ORDER
-    states = [{"n": T(R.L2_STATES[c][0], R.L2_STATES[c][1]), "c": R.L2_STATES[c][4]} for c in codes]
+    short = {"BULL": ("牛市", "Bull"), "BULL_RISK": ("顶部风险", "Top risk"), "BULL_PULLBACK": ("牛市回撤", "Pullback"), "BEAR": ("熊市", "Bear"),
+             "BEAR_ZONE": ("熊底区", "Bottom zone"), "RECOVERY": ("熊末→牛初", "Late bear→bull")}
+    states = [{"n": T(R.L2_STATES[c][0], R.L2_STATES[c][1]), "s": T(*short.get(c, (R.L2_STATES[c][0], R.L2_STATES[c][1]))), "c": R.L2_STATES[c][4]} for c in codes]
     leg = "".join(f'<span><i style="background:var(--{R.L2_STATES[c][4]})"></i>{esc(T(R.L2_STATES[c][0], R.L2_STATES[c][1]))}</span>' for c in codes)
     cur = hist.get("current") or {}
     mk = [{"date": cur["start_date"], "label": T("这一腿起点", "current leg start")}] if cur.get("start_date") else []
     cfg = {"v2": True, "src": G["LEGCHART"], "fmt": "price", "log": True, "ranges": ["1Y", "3Y", "CYC", "ALL"], "range": "1Y", "cyc": G.get("CYC"),
-           "stk": "st", "states": states, "markers": mk, "gaps": True, "last": False, "novals": True,
-           "note": T("对数坐标。线的颜色 = 当时在涨腿还是跌腿（收盘从高 / 低点反向走出 10% 换腿，按币安收盘价切）；背景色 = 当天的 L2 周期状态。价格线画的是 Coin Metrics 收盘价（和 L2 图同源），与币安收盘每天相差零点几个百分点。",
-                     "Log scale. Line colour = up-leg or down-leg at the time (a 10% reversal off a high/low switches legs, cut on Binance closes); background = the L2 cycle state of the day. The line is the Coin Metrics close (same as the L2 chart), within a few tenths of a percent of Binance."),
-           "series": [{"k": "up", "n": T("涨腿", "Up-leg"), "c": "up", "w": 1.8}, {"k": "dn", "n": T("跌腿", "Down-leg"), "c": "dn", "w": 1.8}]}
+           "stk": "st", "states": states, "markers": mk, "gaps": True, "last": False, "novals": True, "h": 360,
+           "zoom": True, "stateLabels": True, "segLabels": True,
+           "note": T("可以放大缩小：用图上方的 ＋ / － / ← / → 按钮，电脑上也可以直接在图上拖选一段放大，双击复位。对数坐标。线的颜色 = 当时在涨腿还是跌腿（收盘从高 / 低点反向走出 10% 换腿，按币安收盘价切）；背景色 = 当天的 L2 周期状态。价格线画的是 Coin Metrics 收盘价（和 L2 图同源），与币安收盘每天相差零点几个百分点。",
+                     "Zoom with the + / − / ← / → buttons above the chart; on desktop you can also drag across the chart to zoom in, double-click to reset. Log scale. Line colour = up-leg or down-leg at the time (a 10% reversal off a high/low switches legs, cut on Binance closes); background = the L2 cycle state of the day. The line is the Coin Metrics close (same as the L2 chart), within a few tenths of a percent of Binance."),
+           "series": [{"k": "up", "n": T("涨腿", "Up-leg"), "lab": T("涨腿", "Up"), "up": True, "c": "up", "w": 1.8},
+                      {"k": "dn", "n": T("跌腿", "Down-leg"), "lab": T("跌腿", "Down"), "c": "dn", "w": 1.8}]}
     return (f'<div class="card chartcard legcyc"><div class="l2leg">{T("背景色 = 周期状态（L2）：", "Background = cycle state (L2): ")}{leg}</div>' + chart_div(cfg) + '</div>')
 
 

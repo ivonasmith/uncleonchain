@@ -702,6 +702,10 @@ padding:8px 10px;font-size:12px;min-width:150px;box-shadow:0 6px 24px rgba(0,0,0
 .uc-plot .mk.live{stroke:var(--lime-ink);stroke-dasharray:none;opacity:.9;stroke-width:1.5}
 .uc-plot .mkl{fill:var(--muted);font-size:10px;font-family:var(--sans)}
 .uc-plot .shl{fill:var(--muted);font-size:10px;font-family:var(--sans)}
+.uc-plot .stl{font-size:10.5px;font-family:var(--sans);font-weight:600;opacity:.95}
+.uc-plot .sgl{font-size:10.5px;font-family:var(--sans);font-weight:600;paint-order:stroke;stroke:var(--card);stroke-width:3px;stroke-linejoin:round}
+.uc-plot .zsel{fill:var(--lime);opacity:.12}
+.uc-zoom .pill{min-width:30px}
 .uc-plot .lastv{font-size:10.5px;font-family:var(--mono);font-weight:600}
 .uc-plot .clipm{fill:var(--warn);opacity:.8}
 .uc-hint{font-size:11px;color:var(--muted);margin-left:auto}

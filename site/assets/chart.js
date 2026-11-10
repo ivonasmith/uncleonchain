@@ -55,6 +55,9 @@ Chart.prototype.init=function(){
  window.addEventListener('uc-theme',()=>self.data&&self.draw());
 };
 Chart.prototype.H=function(){const w=this.plot?this.plot.clientWidth:this.el.clientWidth;return this.cfg.h||((w||800)<560?240:320)};
+Chart.prototype.zoomBy=function(f){const sp=this._span;if(!sp)return;const [d0,d1,a,b]=sp,m=(a+b)/2;let h=Math.max(7*864e5,(b-a)/2*f);
+ let na=m-h,nb=m+h;if(na<d0){nb+=d0-na;na=d0}if(nb>d1){na-=nb-d1;nb=d1}na=Math.max(d0,na);this.win=(na<=d0&&nb>=d1)?null:[na,nb];this.draw()};
+Chart.prototype.panBy=function(f){const sp=this._span;if(!sp)return;const [d0,d1,a,b]=sp,w=b-a;let na=a+w*f,nb=b+w*f;if(na<d0){na=d0;nb=d0+w}if(nb>d1){nb=d1;na=d1-w}this.win=[na,nb];this.draw()};
 Chart.prototype.msg=function(text,retry){this.plot.querySelectorAll('svg,.uc-empty').forEach(x=>x.remove());const d=document.createElement('div');
  d.className='uc-empty';d.style.minHeight=this.H()+'px';d.textContent=text;if(retry){d.style.cursor='pointer';d.onclick=()=>this.fetch()}this.plot.insertBefore(d,this.tip)};
 Chart.prototype.fetch=function(){const self=this,c=this.cfg;this.msg(ZH?'加载中…':'Loading…');
@@ -63,9 +66,13 @@ Chart.prototype.fetch=function(){const self=this,c=this.cfg;this.msg(ZH?'加载�
 Chart.prototype.buttons=function(){const c=this.cfg,self=this,j=this.data;if(!c.ranges||!c.ranges.length||!j.d.length)return;
  const span=(T0(j.d[j.d.length-1])-T0(j.d[0]))/864e5;const g=document.createElement('div');g.className='fg';
  c.ranges.filter(r=>!c.v2||r==='ALL'||(r==='CYC'?!!c.cyc:span>RANGES[r]*1.02)).forEach(r=>{const b=document.createElement('button');b.className='pill';b.textContent=RL[LANG][r]||r;b.dataset.r=r;
-  b.onclick=()=>{(c.group?groups[c.group]:[self]).forEach(x=>{if(x.data&&(r==='ALL'||x.bar.querySelector('[data-r="'+r+'"]'))){x.range=r;x.draw()}})};g.appendChild(b)});
+  b.onclick=()=>{(c.group?groups[c.group]:[self]).forEach(x=>{if(x.data&&(r==='ALL'||x.bar.querySelector('[data-r="'+r+'"]'))){x.range=r;x.win=null;x.draw()}})};g.appendChild(b)});
  if(!g.querySelector('[data-r="'+this.range+'"]'))this.range='ALL';
  this.bar.insertBefore(g,this.bar.firstChild);
+ if(c.zoom){const z=document.createElement('div');z.className='fg uc-zoom';
+  [['+',ZH?'放大':'Zoom in',()=>self.zoomBy(.5)],['−',ZH?'缩小':'Zoom out',()=>self.zoomBy(2)],['←',ZH?'往前':'Earlier',()=>self.panBy(-.4)],['→',ZH?'往后':'Later',()=>self.panBy(.4)],[ZH?'复位':'Reset',ZH?'复位':'Reset',()=>{self.win=null;self.draw()}]]
+   .forEach(([t,l,f])=>{const b=document.createElement('button');b.type='button';b.className='pill';b.textContent=t;b.title=l;b.setAttribute('aria-label',l);b.onclick=f;z.appendChild(b)});
+  g.after(z)}
  if(c.hint){const h=document.createElement('span');h.className='uc-hint';h.textContent=c.hint;this.bar.appendChild(h)}};
 Chart.prototype.draw=function(){
  const c=this.cfg,j=this.data,self=this;
@@ -79,6 +86,8 @@ Chart.prototype.draw=function(){
  if(c.from&&T0(c.from)>lo0)lo0=T0(c.from);
  let i0=0;while(i0<N-1&&T0(D[i0])<lo0)i0++;
  const idx=[];for(let i=i0;i<N;i++)idx.push(i);
+ if(this.win){idx.length=0;for(let i=0;i<N;i++){const t=T0(D[i]);if(t>=this.win[0]&&t<=this.win[1])idx.push(i)}if(idx.length<2){this.win=null;return this.draw()}}
+ this._span=[T0(D[0]),last,T0(D[idx[0]]),T0(D[idx[idx.length-1]])];
  const ser=(c.series||[]).filter(s=>j.s[s.k]);const vis=ser.filter(s=>!self.off[s.k]);
  const pct=c.stack&&this.mode==='pct';
  let stk=null,tot=null;
@@ -118,7 +127,9 @@ Chart.prototype.draw=function(){
  // 状态背景色
  if(c.states&&c.stk&&j.s[c.stk]){const a=j.s[c.stk];let s0=0;
   for(let n=1;n<=idx.length;n++){if(n===idx.length||a[idx[n]]!==a[idx[s0]]){const st=c.states[a[idx[s0]]];
-   if(st){const xa=X(T0(D[idx[s0]])),xb=n<idx.length?X(T0(D[idx[n]])):L+pw;svg.appendChild(mk('rect',{x:xa,y:TP,width:Math.max(0,xb-xa),height:ph,style:`fill:var(--${st.c});opacity:.14`}))}s0=n}}}
+   if(st){const xa=X(T0(D[idx[s0]])),xb=n<idx.length?X(T0(D[idx[n]])):L+pw;svg.appendChild(mk('rect',{x:xa,y:TP,width:Math.max(0,xb-xa),height:ph,style:`fill:var(--${st.c});opacity:.14`}));
+    if(c.stateLabels){const tw=s=>[...s].reduce((a,ch)=>a+(ch.charCodeAt(0)>255?10.5:6),0)+8;const lab=(xb-xa)>=tw(st.n)?st.n:(st.s&&(xb-xa)>=tw(st.s)?st.s:null);
+     if(lab){const tx=mk('text',{x:xa+4,y:TP+13,class:'stl',style:`fill:var(--${st.c})`});tx.textContent=lab;svg.appendChild(tx)}}}s0=n}}}
  yt.forEach(v=>{svg.appendChild(mk('line',{x1:L,x2:L+pw,y1:Y(v),y2:Y(v),class:'gl'}));
   const tx=mk('text',{x:L-8,y:Y(v)+3.5,'text-anchor':'end',class:'ax'});tx.textContent=pct?v+'%':axfmt(c.fmt,v);svg.appendChild(tx)});
  // x 轴：3 年以上只标年；1~3 年标年-月；1 年以内标月-日
@@ -141,7 +152,7 @@ Chart.prototype.draw=function(){
  // 竖线标记：减半、实时记录起点等
  (c.markers||[]).forEach(mm=>{const t=T0(mm.date);if(t<t0||t>t1)return;const x=X(t);
   svg.appendChild(mk('line',{x1:x,x2:x,y1:TP,y2:TP+ph,class:mm.type==='live'?'mk live':'mk'}));
-  const tx=mk('text',{x:x+4,y:TP+ph-6,class:'mkl'});tx.textContent=mm.label||'';svg.appendChild(tx)});
+  const rt=x>L+pw-90,tx=mk('text',{x:rt?x-4:x+4,y:TP+ph-6,class:'mkl','text-anchor':rt?'end':'start'});tx.textContent=mm.label||'';svg.appendChild(tx)});
  const col=s=>`var(--${s.c||'s1'})`;
  // 折线：点数远多于像素时按像素列取最小 / 最大值，形状不变
  function path(arr,clip){let p='',pen=false,n=0;const step=idx.length>pw*2?Math.ceil(idx.length/(pw*2)):1;
@@ -157,6 +168,14 @@ Chart.prototype.draw=function(){
  else vis.forEach(s=>{const arr=j.s[s.k];const p=path(arr,clipped);if(!p)return;
    if(s.area&&!c.log){const base=Y(Math.max(Math.min(0,yhi),ylo));svg.appendChild(mk('path',{d:p+`L${(L+pw).toFixed(1)},${base}L${L},${base}Z`,style:`fill:${col(s)};opacity:.10`}))}
    svg.appendChild(mk('path',{d:p,style:`fill:none;stroke:${col(s)};stroke-width:${s.w||1.8};stroke-linejoin:round;stroke-linecap:round`}))});
+ // 分段标注：同一条线里每段连续的数据写名字 + 段内涨跌幅（涨腿 / 跌腿）
+ if(c.segLabels&&!c.stack)vis.forEach(s=>{if(!s.lab)return;const arr=j.s[s.k];let a=-1;
+  const flush=(a,b)=>{if(a<0||b<=a)return;const xa=X(T0(D[idx[a]])),xb=X(T0(D[idx[b]]));if(xb-xa<26)return;
+   const v0=arr[idx[a]];let ex=v0,ek=a;for(let k=a;k<=b;k++){const v=arr[idx[k]];if(v==null)continue;if(s.up?v>ex:v<ex){ex=v;ek=k}}
+   const pc=v0>0?(ex/v0-1)*100:null;let t=s.lab;if(pc!=null&&xb-xa>=62)t+=' '+(pc>=0?'+':'−')+Math.abs(pc).toFixed(0)+'%';
+   const x=Math.min(Math.max((xa+xb)/2,L+18),L+pw-18),y=s.up?Math.max(TP+26,YC(ex)-7):Math.min(TP+ph-4,YC(ex)+15);
+   const tx=mk('text',{x:x,y:y,'text-anchor':'middle',class:'sgl',style:`fill:${col(s)}`});tx.textContent=t;svg.appendChild(tx)};
+  for(let k=0;k<idx.length;k++){const v=arr[idx[k]];if(v!=null&&a<0)a=k;if((v==null||k===idx.length-1)&&a>=0){flush(a,v==null?k-1:k);a=-1}}});
  // 被截掉的异常值：边缘画小三角，悬停看真实值
  if(clipped){const arr=j.s[vis[0].k];let lastx=-9;idx.forEach(i=>{const v=arr[i];if(v==null)return;const x=X(T0(D[i]));if(x-lastx<4)return;
    if(v>hi){svg.appendChild(mk('path',{d:`M${x-3},${TP+5}L${x+3},${TP+5}L${x},${TP}Z`,class:'clipm'}));lastx=x}
@@ -199,6 +218,13 @@ Chart.prototype.draw=function(){
   (c.group?groups[c.group]:[self]).forEach(g=>g.showDate?g.showDate(day):0)};
  const leave=e=>{if(e.pointerType==='touch')return;(c.group?groups[c.group]:[self]).forEach(g=>g.show&&g.show(null))};
  hit.addEventListener('pointermove',e=>{if(e.pointerType!=='touch')move(e)});hit.addEventListener('pointerdown',move);hit.addEventListener('pointerleave',leave);
+ if(c.zoom){const sel=mk('rect',{y:TP,height:ph,class:'zsel',visibility:'hidden'});svg.insertBefore(sel,hit);let x0=null;
+  const pxOf=e=>{const r=svg.getBoundingClientRect();return Math.min(L+pw,Math.max(L,(e.clientX-r.left)*W/r.width))};
+  hit.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse')return;x0=pxOf(e);hit.setPointerCapture(e.pointerId)});
+  hit.addEventListener('pointermove',e=>{if(x0==null)return;const x=pxOf(e);sel.setAttribute('x',Math.min(x0,x));sel.setAttribute('width',Math.abs(x-x0));sel.setAttribute('visibility','visible')});
+  hit.addEventListener('pointerup',e=>{if(x0==null)return;const x=pxOf(e),a=Math.min(x0,x),b=Math.max(x0,x);x0=null;sel.setAttribute('visibility','hidden');
+   if(b-a>10){const ta=t0+(a-L)/pw*(t1-t0),tb=t0+(b-L)/pw*(t1-t0);if(tb-ta>=10*864e5){self.win=[ta,tb];self.draw()}}});
+  hit.addEventListener('dblclick',()=>{self.win=null;self.draw()})}
  this.showDate=day=>{if(!self.show)return;const tt=T0(day);let best=-1,bd=Infinity;for(let n=0;n<tsv.length;n++){const d=Math.abs(tsv[n]-tt);if(d<bd){bd=d;best=n}}
   self.show(bd<=8*864e5?best:null)};
 };
