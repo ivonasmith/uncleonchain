@@ -1,5 +1,29 @@
 [
  {
+  "version": "2026.11.10",
+  "date": "2026-11-10",
+  "notify": true,
+  "title_zh": "宏观页顶部：周期里的涨跌腿",
+  "title_en": "Macro page: legs inside the cycle",
+  "items": [
+   {
+    "type": "new",
+    "zh": "宏观页最上面加一张图：BTC 价格按涨腿 / 跌腿分色（青绿 = 涨腿，红 = 跌腿），背景色是当天的 L2 周期状态。一眼看出大周期在哪一段、短期在走哪一腿。默认看近 1 年，可切 3 年 / 本轮 / 全部（2012 年起）",
+    "en": "A new chart tops the macro page: BTC price coloured by up-leg / down-leg over the daily L2 cycle-state background, so the cycle stage and the current short-term leg read at a glance. Default 1Y; 3Y / this cycle / all (since 2012)."
+   },
+   {
+    "type": "improve",
+    "zh": "标清时间尺度：涨跌腿卡片标「短期 · 波段」（按天看，一条腿通常一到两周），四层综合研判标「长期 · 周期」（按月看）。长短期方向相反时，中间自动加一行历史对比，天数和幅度都写：例如现在「这一条已走 49 天、最深跌了 13.6%：时长比 99 条牛市跌腿里的 96 条都长，跌幅只比其中 21 条深」",
+    "en": "Time horizons are labelled: the leg cards are \"short term · swings\" (days; a leg usually lasts one to two weeks), the four-layer read is \"long term · cycle\" (months). When the two point different ways, a line compares the current leg with history on both duration and size."
+   },
+   {
+    "type": "improve",
+    "zh": "涨跌腿卡片只留 BTC 涨跌腿和山寨整体，山寨轮动窗口移到详情页；卡片配色改成全站终端风",
+    "en": "The leg card keeps only BTC and altcoins overall; the altcoin window moves to the detail page. Card colours now match the site."
+   }
+  ]
+ },
+ {
   "version": "2026.11.09.2",
   "date": "2026-11-09",
   "notify": true,

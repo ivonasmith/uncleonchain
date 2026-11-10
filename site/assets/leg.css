@@ -1,7 +1,7 @@
 /* 涨腿追踪（设计稿 leg-tracker-design.html 的样式，全部收在 .lg 下；颜色走站点变量，进度条三色两种主题通用） */
-:root,:root[data-theme="dark"]{--g-surface:var(--card);--g-surface2:var(--card2);--g-line:var(--line2);--g-text:var(--ink);--g-muted:var(--muted);--g-soft-text:var(--ink2);
---g-blue:#7fb8dc;--g-gold:#e3cd84;--g-red:#e8a3a7;--g-bar-blue:#9cc6de;--g-bar-gold:#e3cd84;--g-bar-red:#e8a3a7;--g-m1:rgba(227,205,132,.055);--g-m2:rgba(170,150,230,.065);--g-m3:rgba(110,200,190,.06);--g-radius:12px}
-:root[data-theme="light"]{--g-m3:#eaf4f2;--g-blue:#2b78a8;--g-gold:#8c6c1f;--g-red:#be2b2b;--g-m1:#faf4e8;--g-m2:#f0ecf7}
+:root,:root[data-theme="dark"],:root[data-theme="light"]{--g-surface:var(--card);--g-surface2:var(--card2);--g-line:var(--line);--g-text:var(--ink);--g-muted:var(--muted);--g-soft-text:var(--ink2);
+--g-blue:var(--cool);--g-gold:var(--warn);--g-red:var(--dn);--g-bar-blue:var(--cool);--g-bar-gold:var(--warn);--g-bar-red:var(--dn);--g-m1:var(--wash);--g-m2:var(--wash);--g-m3:var(--wash);--g-radius:12px}
+/* 颜色全部取站点变量（网站样式.py），深 / 浅主题自动跟随；大叔 11-10 定：不再用设计稿的海报色 */
 .lg{font-size:15px;line-height:1.65;color:var(--g-text)}
 .lg a{color:inherit;text-decoration:none}
 .lg b{font-weight:650}
@@ -129,7 +129,7 @@
 @media (min-width:600px){.lg .big{font-size:32px}.lg .brow{grid-template-columns:90px 1fr 90px}}
 /* 站点接入：首页卡片宽屏两栏（BTC 涨腿 | 山寨窗口）；详情页标题用站点 .ph */
 .lg .ph{margin-bottom:6px}
-@media (min-width:900px){.lg.legh .card{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));column-gap:10px;align-items:stretch}.lg.legh .card>:not(.mod){grid-column:1/-1}}
+@media (min-width:900px){.lg.legh .card{display:grid;grid-template-columns:1fr 1fr;column-gap:10px;align-items:stretch}.lg.legh .card>:not(.mod){grid-column:1/-1}}
 .lg table.t{table-layout:fixed;min-width:0}
 .lg table.t th,.lg table.t td{white-space:normal;overflow-wrap:anywhere;background:none}
 .lg .empty{border:0;border-radius:0}
@@ -144,3 +144,26 @@
 .lg .mod.m3{background:var(--g-m3)}
 .lg .mod .prev.muted{font-size:11.5px;margin-top:2px}
 .lg .card.panel.lgalt{padding:4px}.lg .card.panel.lgalt .mod{margin:0}
+/* 站点终端风（11-10）：模块像宏观页信号灯卡——细线框 + 顶边按方向着色（涨 --up / 跌 --dn），数字用等宽字体 */
+.lg .mod{border:1px solid var(--line);border-top:2px solid var(--line2);border-radius:10px}
+.lg .mod:has(.badge.dir-up){border-top-color:var(--up)}
+.lg .mod:has(.badge.dir-down){border-top-color:var(--dn)}
+.lg .big,.lg .gain,.lg .tile .v{font-family:var(--mono)}
+.lg .big{font-weight:600}
+.lg .gain{color:var(--up)}
+.lg .gain.loss{color:var(--dn)}
+.lg .tile{background:var(--card);border-color:var(--line)}
+.lg .badge{font-family:var(--mono);font-size:10px;border-radius:4px;padding:1px 6px;border-color:var(--line2)}
+.lg .badge.dir-up{color:var(--up);border-color:var(--up-bd);background:var(--up-bg)}
+.lg .badge.dir-down{color:var(--dn);border-color:var(--dn-bd);background:var(--dn-bg)}
+.lg .badge.stale{color:var(--dn);border-color:var(--dn-bd);background:var(--dn-bg)}
+.lg .card-foot .cta,.lg .legm-h .sub{color:var(--lime-ink)}
+.lg .track .m89{border-left-color:var(--warn)}.lg .track .m89 span{color:var(--warn)}
+.lg .legcyc{padding:14px 16px 10px;margin-bottom:12px}
+.lg .legcyc .l2leg{font-size:12px;color:var(--g-muted)}
+/* 时间尺度标签（11-10）：长期周期 / 短期波段，宏观页顶部和综合研判上方共用 */
+.hz{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.6px;color:var(--lime-ink);border:1px solid var(--lime-bd);background:var(--lime-bg);border-radius:4px;padding:1px 7px;margin-right:8px;vertical-align:1px;font-weight:500}
+.hzrow{font-size:12.5px;color:var(--ink2);margin:16px 0 8px}
+.lg .legbridge{margin:10px 0 4px;padding:10px 14px;border-left:2px solid var(--warn);background:var(--warn-bg);border-radius:0 8px 8px 0;font-size:13.5px;line-height:1.6}
+.lg .legbridge b{font-weight:600;color:var(--ink)}.lg .legbridge span{display:block;font-size:12px;color:var(--muted);margin-top:2px}
+.lg .gain small,.lg .big small{font-family:var(--sans)}

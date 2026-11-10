@@ -173,7 +173,7 @@ Chart.prototype.draw=function(){
  this.leg.innerHTML='';const li=idx[idx.length-1];
  if(ser.length>1||c.stack)ser.forEach(s=>{const sp=document.createElement(c.toggle?'button':'span'),i=document.createElement('i');i.className=c.stack?'box':'';i.style.background=col(s);
   if(c.toggle){sp.type='button';sp.className='lg'+(self.off[s.k]?' off':'');sp.setAttribute('aria-pressed',self.off[s.k]?'false':'true');sp.onclick=()=>{self.off[s.k]=self.off[s.k]?0:1;self.draw()}}
-  sp.appendChild(i);sp.appendChild(document.createTextNode(s.n+' '));const b=document.createElement('b');let v=null;for(let k=idx.length-1;k>=0&&v==null;k--)v=j.s[s.k][idx[k]];
+  sp.appendChild(i);sp.appendChild(document.createTextNode(s.n+' '));if(c.novals){this.leg.appendChild(sp);return}const b=document.createElement('b');let v=null;for(let k=idx.length-1;k>=0&&v==null;k--)v=j.s[s.k][idx[k]];
   b.textContent=v==null?'—':(c.stack&&pct?((tot[tot.length-1]?v/tot[tot.length-1]*100:0).toFixed(1)+'%'):F[c.fmt](v));sp.appendChild(b);this.leg.appendChild(sp)});
  const tsv=idx.map(i=>T0(D[i]));
  const bd=this.btc;let bts=null;if(bd&&bd.s.v)bts=bd.d.map(T0);
