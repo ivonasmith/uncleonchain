@@ -2108,6 +2108,7 @@ def build_macro(L, S, logs):
 {leg_macro_card()}
 <div class="hzrow"><span class="hz">{T("长期 · 周期", "Long term · cycle")}</span>{T("按月看：处在四年周期的哪一段、风险预算该松还是紧", "In months: where we are in the four-year cycle, and how loose or tight the risk budget should be")}</div>
 {comp_block(comp, prev_comp, tlog, full=True)}
+{leg_short_context()}
 {cal_next_line(G.get("CAL"))}
 {src_summary(st)}
 <div id="tabs-anchor"></div><div class="tabwrap"><nav class="tabs" role="tablist" aria-label="{T("四层", "Four layers")}" data-tabs>{tabs}</nav></div>
@@ -3594,40 +3595,65 @@ def leg_cycle_chart():
 L2_BULLISH = {"BULL", "BULL_RISK", "BULL_PULLBACK", "RECOVERY", "BEAR_ZONE"}   # 说明句用：L2 状态偏多 / 偏空（只决定拿哪一组历史腿来比）
 
 
-def leg_bridge():
-    """长期周期（L2）和短期这一腿方向相反时，自动加一行说明，只摆历史数字：同类腿多少条、中位天数 / 幅度，这一条的天数和幅度各排在哪。"""
+def _qs(xs, p):
+    xs = sorted(xs)
+    k = (len(xs) - 1) * p
+    lo, hi = int(k), min(int(k) + 1, len(xs) - 1)
+    return xs[lo] + (xs[hi] - xs[lo]) * (k - lo)
+
+
+def leg_short_context():
+    """综合研判下面「结合短期」（大叔 11-11 定 A 方案）：只用历史数据描述 BTC 这一腿的位置和历史上可能还剩多少空间，不写买卖动作。
+    同类腿 = 和当前同方向、同一类周期阶段（L2 偏多 → 历史牛市阶段的腿，偏空 → 熊市阶段；阶段按价格周期事后划分）。每天按最新数据重算。"""
     l2, hist, cur = G.get("L2"), load(os.path.join(DATA, "leg", "leg_history.json")), (G.get("LEG") or {}).get("btc_leg") or {}
     code = ((l2 or {}).get("state") or {}).get("code")
-    if not code or not hist or not cur.get("leg") or cur.get("direction") not in ("up", "down"):
+    if not code or code not in R.L2_STATES or not hist or not cur.get("leg") or cur.get("direction") not in ("up", "down"):
         return ""
-    bull, d = code in L2_BULLISH, cur["direction"]
-    if bull == (d == "up"):
-        return ""
+    bull, d, L = code in L2_BULLISH, cur["direction"], cur["leg"]
     reg = "bull" if bull else "bear"
     same = [x for x in hist.get("legs") or [] if x["dir"] == d and x.get("regime") == reg]
     if len(same) < 10:
         return ""
-    L = cur["leg"]
-    mag = L["drop_pct"] if d == "down" else L["gain_pct"]
-    days_med = sorted(x["days"] for x in same)[len(same) // 2]
-    mags = sorted(abs(x["pct"]) for x in same)
-    mag_med = (mags[len(mags) // 2] + mags[(len(mags) - 1) // 2]) / 2
-    longer = sum(1 for x in same if x["days"] < L["day"])
-    deeper = sum(1 for x in same if abs(x["pct"]) < mag)
+    day, mag = L["day"], (L["drop_pct"] if d == "down" else L["gain_pct"])
+    mags, days = [abs(x["pct"]) for x in same], [x["days"] for x in same]
+    m_med, d_med = _qs(mags, .5), _qs(days, .5)
+    longer = sum(1 for x in days if x < day)
+    # 「还剩多少空间」只拿 2017-08 起（币安时代，和实时读数同一数据源）的同类腿比：2010～2013 年的腿幅度大得多，会把空间算大
+    recent = [abs(x["pct"]) for x in same if x["start_date"] >= "2017-08-17"]
+    reached = [m for m in recent if m >= mag]
+    phase = T("牛市阶段", "bull-phase") if bull else T("熊市阶段", "bear-phase")
     sname = T(R.L2_STATES[code][0], R.L2_STATES[code][1])
+    lines = []
+    if bull != (d == "up"):
+        lines.append(T(f"长期周期在「{sname}」，短期在{'跌腿' if d == 'down' else '涨腿'}：两者不矛盾，{phase}里{'跌腿' if d == 'down' else '涨腿'}很常见（历史 {len(same)} 条）。",
+                       f"The cycle is \"{sname}\" while the short-term leg is {'down' if d == 'down' else 'up'}: no contradiction; such legs are common in {phase} markets ({len(same)} in history)."))
     if d == "down":
-        zh = (f"周期在「{sname}」，短期在跌腿：牛市阶段里跌腿很常见（历史 {len(same)} 条，中位 {days_med} 天、−{mag_med:.1f}%）。"
-              f"这一条已走 {L['day']} 天、最深跌了 {mag:.1f}%：时长比其中 {longer} 条都长，跌幅只比其中 {deeper} 条深。")
-        en = (f"The cycle is \"{sname}\" but the short-term leg is down: down-legs are common in bull phases ({len(same)} in history, median {days_med} days, −{mag_med:.1f}%). "
-              f"This one is {L['day']} days old and at most {mag:.1f}% down: longer than {longer} of them, but deeper than only {deeper}.")
+        lines.append(T(f"现在是跌腿第 {day} 天，最深 −{mag:.1f}%。{phase}跌腿的中位是 {d_med:.0f} 天、−{m_med:.1f}%：这一条的时长比 {len(same)} 条里的 {longer} 条都长，跌幅只比其中 {sum(1 for m in mags if m < mag)} 条深。",
+                       f"Day {day} of a down-leg, at most −{mag:.1f}%. The {phase} median is {d_med:.0f} days and −{m_med:.1f}%: this one is longer than {longer} of {len(same)}, but deeper than only {sum(1 for m in mags if m < mag)}."))
+        if len(reached) >= 10:
+            f50, f25, f75 = _qs(reached, .5), _qs(reached, .25), _qs(reached, .75)
+            lines.append(T(f"2017 年以来{phase}里跌到这个深度的 {len(reached)} 条，最终跌幅中位 −{f50:.1f}%（一半在 −{f25:.1f}% 到 −{f75:.1f}% 之间）。"
+                           f"按这个中位，这一腿还有约 {max(0, f50 - mag):.0f} 个百分点的下跌空间（一半情况在 {max(0, f25 - mag):.0f}～{max(0, f75 - mag):.0f} 个百分点）。",
+                           f"Since 2017, the {len(reached)} {phase} down-legs that fell this far ended at a median of −{f50:.1f}% (half between −{f25:.1f}% and −{f75:.1f}%). "
+                           f"At that median, about {max(0, f50 - mag):.0f} more points of downside (half the time {max(0, f25 - mag):.0f}–{max(0, f75 - mag):.0f})."))
     else:
-        zh = (f"周期在「{sname}」，短期在涨腿：熊市阶段里也常有反弹（历史 {len(same)} 条，中位 {days_med} 天、+{mag_med:.1f}%）。"
-              f"这一条已走 {L['day']} 天、涨了 {mag:.1f}%：时长比其中 {longer} 条都长，涨幅比其中 {deeper} 条大。")
-        en = (f"The cycle is \"{sname}\" but the short-term leg is up: rallies are common in bear phases ({len(same)} in history, median {days_med} days, +{mag_med:.1f}%). "
-              f"This one is {L['day']} days old and up {mag:.1f}%: longer than {longer} of them, bigger than {deeper}.")
-    note = T("长期、短期方向不一样，不矛盾。牛 / 熊阶段按价格周期事后划分，只用来归类历史腿。",
-             "Long and short term pointing different ways is not a contradiction. Bull/bear phases are assigned after the fact and only used to group past legs.")
-    return f'<div class="legbridge"><b>{esc(T(zh, en))}</b> <span>{esc(note)}</span></div>'
+        p75m, p75d = _qs(mags, .75), _qs(days, .75)
+        tier = (T("属于涨得多、走得久的那一档", "in the big-and-long bracket") if mag > p75m and day > p75d else
+                T("涨幅属于偏大的那一档", "a large move") if mag > p75m else T("时长属于偏久的那一档", "a long-running leg") if day > p75d else
+                T("还在常见范围内", "still within the usual range"))
+        lines.append(T(f"现在是涨腿第 {day} 天，+{mag:.1f}%。{phase}涨腿的中位是 {d_med:.0f} 天、+{m_med:.1f}%，前四分之一是 {p75d:.0f} 天以上、+{p75m:.1f}% 以上：这一条{tier}，时长比 {len(same)} 条里的 {longer} 条都长。",
+                       f"Day {day} of an up-leg, +{mag:.1f}%. The {phase} median is {d_med:.0f} days and +{m_med:.1f}%; the top quarter is beyond {p75d:.0f} days and +{p75m:.1f}%: this one is {tier}, longer than {longer} of {len(same)}."))
+        if len(reached) >= 10:
+            f50, f25, f75 = _qs(reached, .5), _qs(reached, .25), _qs(reached, .75)
+            lines.append(T(f"2017 年以来{phase}里涨到这个幅度的 {len(reached)} 条，最终涨幅中位 +{f50:.1f}%（一半在 +{f25:.1f}% 到 +{f75:.1f}% 之间）；"
+                           f"按这个中位，从起点算还有约 {max(0, f50 - mag):.0f} 个百分点的上涨空间。收盘从高点回落 10%，这一腿就结束。",
+                           f"Since 2017, the {len(reached)} {phase} up-legs that rose this far ended at a median of +{f50:.1f}% (half between +{f25:.1f}% and +{f75:.1f}%); "
+                           f"at that median, about {max(0, f50 - mag):.0f} more points from the start. A 10% close-to-close pullback ends the leg."))
+    note = T("只摆历史数字和位置，不是买卖建议。位置对比用 2010 年起全部同类腿；剩余空间只用 2017 年起的（早年腿的幅度大得多）。牛 / 熊阶段按价格周期事后划分，只用来归类历史腿；同类腿不到 10 条时不写。",
+             "Historical numbers and position only, not trading advice. Position uses all comparable legs since 2010; remaining room uses legs since 2017 only (early legs were far larger). Bull/bear phases are assigned after the fact; skipped below 10 comparable legs.")
+    body = "".join(f"<p>{esc(x)}</p>" for x in lines)
+    return (f'<div class="lg"><div class="legbridge"><div class="lbt"><span class="hz">{T("结合短期", "Short-term context")}</span>'
+            f'{T("BTC 这一腿在历史里的位置", "Where the current BTC leg sits in history")}</div>{body}<span>{esc(note)}</span></div></div>')
 
 
 def leg_macro_card():
@@ -3637,7 +3663,7 @@ def leg_macro_card():
             + leg_cycle_chart()
             + f'<div class="hzrow"><span class="hz">{T("短期 · 波段", "Short term · swings")}</span>{T("按天看：BTC 和山寨整体这一波在涨还是在跌、走了多久，一条腿通常一到两周", "In days: whether BTC and altcoins are in an up- or down-leg and for how long; a leg usually lasts one to two weeks")}</div>'
             f'<div id="leg-card" data-src="{leg_src()}" data-href="{U("/leg-tracker/")}">'
-            f'<div class="card"><div class="empty">{T("读取中…", "Loading…")}</div></div></div>' + leg_bridge() + '</div>')
+            f'<div class="card"><div class="empty">{T("读取中…", "Loading…")}</div></div></div></div>')
 
 
 def build_leg_tracker():
