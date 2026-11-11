@@ -68,11 +68,35 @@ def probe(url):
     return {"ok": False, "秒/块": round(spb, 3), "错误": f"无地址日志查询失败：{err}"[:110]}
 
 
+def chainlist(words):
+    """按名字从 chainid.network 的公开链表里找 RPC（新链没人告诉我们节点地址时用）。"""
+    try:
+        req = urllib.request.Request("https://chainid.network/chains.json", headers=UA)
+        cl = json.load(urllib.request.urlopen(req, timeout=60))
+    except Exception as e:
+        print(f"chainid.network 读不到：{e}")
+        return {}
+    out = {}
+    for c in cl:
+        txt = (c.get("name", "") + " " + c.get("shortName", "") + " " + c.get("chain", "")).lower()
+        if any(w in txt for w in words):
+            rpcs = [r for r in c.get("rpc", []) if r.startswith("https://") and "${" not in r]
+            print(f"chainlist 命中：{c.get('name')} chainId={c.get('chainId')} rpc={rpcs} explorers={[x.get('url') for x in c.get('explorers') or []]}")
+            out[f"{c.get('name')}#{c.get('chainId')}"] = (rpcs, None)
+    return out
+
+
 def main():
     rows = []
-    for chain, (pubs, alc) in CAND.items():
+    only = os.environ.get("PROBE_ONLY", "").strip()
+    cand = dict(CAND)
+    if only:
+        words = [w.strip().lower() for w in only.split(",") if w.strip()]
+        cand = {k: v for k, v in CAND.items() if k in words}
+        cand.update(chainlist(words))
+    for chain, (pubs, alc) in cand.items():
         res = []
-        for u in pubs:
+        for u in pubs[:6]:
             r = probe(u)
             res.append(("公共", u, r))
             if r["ok"]:

@@ -3,7 +3,12 @@ name: 探测链节点（手动）
 # 一次性诊断：各链免费公共节点 / Alchemy 能不能做全链铸币日志查询。只读，不提交任何东西。
 # 用自己的并发组，不占日更队列。
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      only:
+        description: "只探测这些链（逗号分隔，名字关键词也行，如 elysium,kinetiq）；留空 = 全部"
+        required: false
+        default: ""
 
 permissions:
   contents: read
@@ -24,6 +29,7 @@ jobs:
       - name: 探测
         env:
           ALCHEMY_KEY: ${{ secrets.ALCHEMY_KEY }}
+          PROBE_ONLY: ${{ inputs.only }}
         run: python3 pipeline/探测节点.py
       - name: 探测合约名来源
         run: python3 pipeline/探测合约名.py
