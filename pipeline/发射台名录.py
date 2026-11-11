@@ -26,7 +26,7 @@ INFRA_NAMES = {"entrypoint", "uniswapv2router02", "multicall3", "hyperproxy", "t
 GENERIC_NAMES = {"tokenfactory", "factory", "launchpad", "launchpadfactory", "portal", "standardlaunchfactory", "erc20factory"}
 FACILITY = {"meteora-dbc": "Meteora DBC", "raydium-launchlab": "Raydium LaunchLab"}
 OWN = "自有合约"
-SKIP_FILES = ("solana.json", "线索.json", "ai_agent.json", "档案.json", "llama_meta.json")
+SKIP_FILES = ("solana.json", "线索.json", "ai_agent.json", "档案.json", "llama_meta.json", "平台资料.json")
 
 # 叙事标签：中文名 → (英文名, 正则)。英文自述 / 介绍里命中就打上
 TAGS = {
@@ -450,6 +450,108 @@ def fetch_dossiers():
     print(f"  发射台档案：名录 {len(ents)} 个，本次抓 {n} 个官网（成功 {ok}），有图标 {sum(1 for v in dos.values() if v.get('图标文件'))} 个")
 
 
+# ---------------------------------------------------------------- 平台二级页面的资料（DefiLlama 协议详情 + 官网）
+PLATFORM_MIN_SHARE = 0.001     # 近 30 日或近 7 日手续费份额 ≥ 0.1% 的平台做二级页面
+PLATFORM_REFRESH = 7
+
+
+def platform_slugs(matrix):
+    P = matrix.get("协议") or []
+    t30 = sum(p.get("30日") or 0 for p in P) or 1
+    t7 = sum(p.get("7日") or 0 for p in P) or 1
+    return [p["slug"] for p in P if (p.get("30日") or 0) / t30 >= PLATFORM_MIN_SHARE or (p.get("7日") or 0) / t7 >= PLATFORM_MIN_SHARE]
+
+
+def platform_info():
+    return _cached("pinfo", os.path.join(OC, "平台资料.json"))
+
+
+def _ts(v):
+    try:
+        return dt.datetime.fromtimestamp(int(v), dt.timezone.utc).date().isoformat()
+    except Exception:
+        return None
+
+
+def fetch_platform_details(cap=45):
+    matrix = load(os.path.join(DATA, "发射台矩阵.json"), {}) or {}
+    slugs = platform_slugs(matrix)
+    info = dict(platform_info())
+    stale = (dt.date.today() - dt.timedelta(days=PLATFORM_REFRESH)).isoformat()
+    today = dt.date.today().isoformat()
+    n = 0
+    for slug in slugs:
+        if (info.get(slug) or {}).get("日期", "") >= stale or n >= cap:
+            continue
+        n += 1
+        rec = {"日期": today}
+        try:
+            raw, _, _ = _get(f"https://api.llama.fi/protocol/{urllib.parse.quote(slug)}", limit=50_000_000, timeout=60, accept="application/json")
+            d = json.loads(raw)
+            rec.update({
+                "名称": d.get("name"), "官网": d.get("url") or None, "X": d.get("twitter") or None, "GitHub": d.get("github") or [],
+                "介绍": (d.get("description") or "").strip() or None, "代币": d.get("symbol") if d.get("symbol") not in (None, "-", "None") else None,
+                "gecko_id": d.get("gecko_id") or None, "市值": d.get("mcap") or None, "审计数": d.get("audits"), "审计链接": d.get("audit_links") or [],
+                "上线DefiLlama": _ts(d.get("listedAt")), "母协议": d.get("parentProtocolSlug") or None, "分叉自": d.get("forkedFrom") or [],
+                "链": d.get("chains") or [], "合约": d.get("address") or None,
+                "融资": [{"日期": _ts(r.get("date")), "轮次": r.get("round"), "金额百万": r.get("amount"), "领投": r.get("leadInvestors") or [],
+                          "其他": r.get("otherInvestors") or [], "来源": r.get("source")} for r in d.get("raises") or []],
+                "安全事件": [{"日期": _ts(h.get("date")), "类型": h.get("classification"), "手法": h.get("technique"), "金额": h.get("amount"),
+                            "来源": h.get("source")} for h in d.get("hacks") or []],
+                "大事记": [[_ts(h[0]), h[1]] for h in d.get("hallmarks") or [] if isinstance(h, list) and len(h) == 2],
+            })
+        except Exception as ex:
+            rec["错误"] = f"DefiLlama 协议详情：{str(ex)[:100]}"
+        try:
+            raw, _, _ = _get(f"https://api.llama.fi/summary/fees/{urllib.parse.quote(slug)}?excludeTotalDataChart=true&excludeTotalDataChartBreakdown=true",
+                             limit=20_000_000, timeout=60, accept="application/json")
+            f = json.loads(raw)
+            meth = f.get("methodology") or {}
+            rec["口径"] = {k: meth[k] for k in ("Fees", "Revenue", "HoldersRevenue", "ProtocolRevenue", "SupplySideRevenue") if meth.get(k)}
+            rec["口径代码"] = f.get("methodologyURL") or None
+        except Exception as ex:
+            rec.setdefault("错误", f"DefiLlama 手续费口径：{str(ex)[:100]}")
+        if rec.get("官网"):
+            try:
+                raw, ct, final = _get(rec["官网"])
+                if "html" in ct.lower() or raw[:300].lstrip().lower().startswith((b"<!doctype", b"<html")):
+                    m = PageMeta(raw.decode("utf-8", errors="ignore"), final)
+                    rec.update({"官网标题": m.title[:160] or None, "官网简介": m.desc(), "官网X": m.x})
+            except Exception as ex:
+                rec["官网错误"] = str(ex)[:120]
+        info[slug] = rec
+        time.sleep(0.4)
+    with open(os.path.join(OC, "平台资料.json"), "w", encoding="utf-8") as fh:
+        json.dump(info, fh, ensure_ascii=False, indent=0, sort_keys=True)
+    _CACHE.pop("pinfo", None)
+    print(f"  平台资料：够门槛 {len(slugs)} 个，本次更新 {n} 个")
+
+
+def platform_narrative(slug, name, url, lang="zh"):
+    """二级页面的一句话：人工档案（defillama 字段或名字 / 域名对上）> DefiLlama 介绍 > 官网自述。→ (文字, 来源, 标签, 档案 id)"""
+    prof = profiles()
+    pid = next((k for k, v in prof.items() if not k.startswith("_") and v.get("defillama") == slug), None) \
+        or _match_profile(prof, {name, domain(url or "") or None})
+    info = platform_info().get(slug) or {}
+    e = {"key": slug, "profile": pid, "defillama": slug, "名称": name, "官网": url}
+    txt, src, tags, _ = narrative(e, lang)
+    if not prof.get(pid or "", {}).get("叙事"):
+        site = info.get("官网简介")
+        llama = info.get("介绍")
+        if llama:
+            txt, src = llama, ("DefiLlama 介绍（英文原文）" if lang == "zh" else "DefiLlama description")
+        elif site:
+            txt, src = site, ("官网自述（英文原文，未核实）" if lang == "zh" else "From its website (unverified)")
+        extra = auto_tags(llama, site, " ".join((info.get("口径") or {}).values()))
+        en = {k: v[0] for k, v in TAGS.items()}
+        for t in extra:
+            t2 = en.get(t, t) if lang == "en" else t
+            if t2 not in tags:
+                tags.append(t2)
+    return txt, src, tags, pid
+
+
 if __name__ == "__main__":
     fetch_llama_meta()
     fetch_dossiers()
+    fetch_platform_details()

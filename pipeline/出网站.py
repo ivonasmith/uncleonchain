@@ -633,7 +633,8 @@ CHAIN_KEY = {"Solana": "solana", "BSC": "bsc", "Base": "base", "Robinhood Chain"
              "Ethereum": "ethereum", "X Layer": "xlayer", "Arbitrum": "arbitrum", "Avalanche": "avax", "Polygon": "polygon",
              "Hyperliquid L1": "hyperliquid", "TON": "ton", "Sonic": "sonic", "MegaETH": "megaeth", "Stable": "stable",
              "Unichain": "unichain", "Blast": "blast", "Linea": "linea", "Plasma": "plasma", "Ink": "ink", "Tron": "tron",
-             "Near": "near", "Aptos": "aptos", "Hedera": "hedera", "OP Mainnet": "optimism", "ZKsync Era": "era"}
+             "Near": "near", "Aptos": "aptos", "Hedera": "hedera", "OP Mainnet": "optimism", "ZKsync Era": "era",
+             "Elysium Kinetiq": "elysium"}
 KEY_CHAIN = {v: k for k, v in CHAIN_KEY.items()}
 MAIN_CHAINS = ["solana", "bsc", "robinhood", "base", "arc", "monad"]
 
@@ -2602,7 +2603,7 @@ def oc_chain_list():
     out = []
     d = os.path.join(DATA, "onchain")
     for f in sorted(os.listdir(d)) if os.path.isdir(d) else []:
-        if not f.endswith(".json") or f in ("solana.json", "线索.json", "ai_agent.json"):
+        if not f.endswith(".json") or f in ("solana.json", "线索.json", "ai_agent.json", "档案.json", "llama_meta.json", "平台资料.json"):
             continue
         db = load(os.path.join(d, f)) or {}
         days = db.get("逐日") or {}
@@ -2973,7 +2974,7 @@ def coverage_html():
 
 
 # ---------------------------------------------------------------- 发射台名录（logo + 名字 + 叙事；发射台名录.py 合并链上工厂与 Solana 前端）
-CHAIN_LABEL = {"solana": "Solana", "bsc": "BSC", "base": "Base", "robinhood": "Robinhood", "arc": "Arc", "ethereum": "Ethereum", "ink": "Ink",
+CHAIN_LABEL = {"solana": "Solana", "bsc": "BSC", "base": "Base", "robinhood": "Robinhood", "arc": "Arc", "ethereum": "Ethereum", "ink": "Ink", "elysium": "Elysium",
                "optimism": "Optimism", "xlayer": "X Layer", "monad": "Monad", "arbitrum": "Arbitrum", "stable": "Stable", "plasma": "Plasma"}
 
 
@@ -3230,6 +3231,7 @@ def build_launchpad(sd, matrix):
     hist = matrix.get("历史") or {}
     hds = sorted(hist)[-30:]
     deep = {x["slug"]: U(f'/launchpad/platforms/{x["slug"]}/') for x in (sd or {}).get("平台", [])}
+    PSLUGS = platform_page_slugs(matrix)
     ch_day, ch_30 = {}, {}
     for p in matrix["协议"]:
         for k, v in (p.get("分链当日") or {}).items():
@@ -3273,8 +3275,12 @@ def build_launchpad(sd, matrix):
         ck = ck if ck in MAIN_CHAINS else "other"
         sp = [hist[d].get(p["slug"]) for d in hds]
         link = deep.get(p["slug"])
-        nm = (f'<a href="{link}">{esc(p["名称"])}</a> <span class="deep">{T("深度", "deep")}</span>' if link else
-              f'<a href="https://defillama.com/protocol/{esc(p["slug"])}" target="_blank" rel="noopener">{esc(p["名称"])}</a>')
+        if link:
+            nm = f'<a href="{link}">{esc(p["名称"])}</a> <span class="deep">{T("深度", "deep")}</span>'
+        elif p["slug"] in PSLUGS:
+            nm = f'<a href="{U("/launchpad/platforms/" + p["slug"] + "/")}">{esc(p["名称"])}</a>'
+        else:
+            nm = f'<a href="https://defillama.com/protocol/{esc(p["slug"])}" target="_blank" rel="noopener" title="{esc(T("份额不到 0.1%，直接看 DefiLlama", "Under 0.1% share: opens DefiLlama"))}">{esc(p["名称"])} ↗</a>'
         logo = f'<img src="{esc(p["logo"])}" alt="" loading="lazy" referrerpolicy="no-referrer">' if p.get("logo") else '<img alt="">'
         if p.get("沿用"):
             nm += carry_chip(p.get("数据日"))
@@ -3328,7 +3334,7 @@ def build_launchpad(sd, matrix):
 {total_html}
 <div class="card" style="padding:14px 16px;margin-top:22px"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:12.5px"><b>{T("生态份额 · 当日手续费按链拆分", "Chain share · today's fees by chain")}</b><span class="stamp">{T("多链协议按 DefiLlama 分链数据精确拆分", "Multi-chain protocols split by DefiLlama's per-chain data")}</span></div>
 <div class="chainbar">{bar}</div><div class="chainleg">{leg}</div></div>
-<h2>{T("跨链排行 · 手续费市场份额", "Cross-chain ranking · fee market share")} <span class="sub">{T("按手续费（fees）排，不是成交量；份额条 = 手续费占当前筛选范围合计的百分比，颜色 = 主力所在链；链接会记住当前筛选，可直接分享", "Ranked by fees, not volume; share bar = % of the filtered fee total, color = main chain; the URL keeps your filters")}</span></h2>
+<h2 id="rank">{T("跨链排行 · 手续费市场份额", "Cross-chain ranking · fee market share")} <span class="sub">{T("按手续费（fees）排，不是成交量；份额条 = 手续费占当前筛选范围合计的百分比，颜色 = 主力所在链；链接会记住当前筛选，可直接分享", "Ranked by fees, not volume; share bar = % of the filtered fee total, color = main chain; the URL keeps your filters")}</span></h2>
 <div class="glass fbar">
 <div class="fg"><span class="fl">{T("生态", "Chain")}</span>{chain_pills}</div>
 <div class="fg"><span class="fl">{T("周期", "Period")}</span><button class="pill" data-f="p" data-v="d1">{T("当日", "Day")}</button><button class="pill on" data-f="p" data-v="d7">{T("7 日", "7d")}</button><button class="pill" data-f="p" data-v="d30">{T("30 日", "30d")}</button></div>
@@ -3357,7 +3363,186 @@ def build_launchpad(sd, matrix):
          desc=T(f'{matrix["日期"]} 发射台全类目当日手续费 {f_usd(tot_day)}，第一 {lead["名称"]}。', f'{matrix["日期"]}: launchpad fees {f_usd(tot_day)}, #1 {lead["名称"]}.'))
 
 
-def build_launchpad_platforms(sd):
+# ---------------------------------------------------------------- 平台二级页面（份额 ≥ 0.1%）：数据 + 产品与基本面 + 官网入口 + 数据来源
+METH_LABEL = {"Fees": ("手续费", "Fees"), "Revenue": ("协议收入", "Revenue"), "HoldersRevenue": ("给持币人（回购 / 分红）", "To holders (buyback / dividends)"),
+              "ProtocolRevenue": ("留给协议 / 团队", "Kept by protocol / team"), "SupplySideRevenue": ("给创作者等供给方", "To creators / supply side")}
+
+
+def _pdir():
+    import 发射台名录 as DIR
+    return DIR
+
+
+def platform_page_slugs(matrix):
+    try:
+        return set(_pdir().platform_slugs(matrix or {}))
+    except Exception as ex:
+        print(f"  平台二级页面名单失败：{ex}")
+        return set()
+
+
+def platform_links_html(p, info):
+    url = info.get("官网") or None
+    x = info.get("X") or info.get("官网X")
+    btn = []
+    if url:
+        btn.append(f'<a class="btn pri" href="{esc(url)}" target="_blank" rel="noopener">{T("访问官网 · 体验产品", "Visit the site · try the product")} ↗</a>')
+    if x:
+        btn.append(f'<a class="btn" href="https://x.com/{esc(x)}" target="_blank" rel="noopener">X @{esc(x)} ↗</a>')
+    btn.append(f'<a class="btn" href="https://defillama.com/protocol/{esc(p["slug"])}" target="_blank" rel="noopener">{T("DefiLlama 数据源", "DefiLlama source")} ↗</a>')
+    for g in (info.get("GitHub") or [])[:2]:
+        btn.append(f'<a class="btn" href="https://github.com/{esc(g)}" target="_blank" rel="noopener">GitHub {esc(g)} ↗</a>')
+    if info.get("gecko_id"):
+        btn.append(f'<a class="btn" href="https://www.coingecko.com/coins/{esc(info["gecko_id"])}" target="_blank" rel="noopener">CoinGecko ↗</a>')
+    return f'<div class="pbtns">{"".join(btn)}</div>'
+
+
+def platform_profile_html(p):
+    """产品与基本面：一句话 + 叙事标签 + 基本信息 + 收费分账口径 + 融资 / 安全事件 / 大事记 + 数据来源。"""
+    slug = p["slug"]
+    try:
+        DIR = _pdir()
+        info = DIR.platform_info().get(slug) or {}
+        txt, src, tags, pid = DIR.platform_narrative(slug, p["名称"], info.get("官网"), LANG["v"])
+        prof = DIR.profiles().get(pid or "", {}) if pid else {}
+    except Exception as ex:
+        print(f"  平台资料读取失败 {slug}：{ex}")
+        info, txt, src, tags, prof = {}, "", "", [], {}
+    tg = "".join(f'<span class="lpc-tag{" ai" if t == "AI Agent" else ""}">{esc(t)}</span>' for t in tags)
+    one = (f'<p class="pp-one">{esc(txt)}</p><p class="lpc-src">{T("出处：", "Source: ")}{esc(src)}</p>' if txt else
+           f'<p class="pp-one lpc-none">{T("DefiLlama 和官网都没给介绍。", "Neither DefiLlama nor the site gives a description.")}</p>')
+    na = T("—", "—")
+    team = prof.get("团队") if LANG["v"] == "zh" else (prof.get("团队EN") or prof.get("团队"))
+    rows = [
+        (T("链", "Chains"), " ".join(chain_badge(c) for c in p.get("链") or []) or na),
+        (T("代币", "Token"), esc(info["代币"]) + (f' · {T("市值", "mcap")} {f_usd(float(info["市值"]))}' if info.get("市值") else "") if info.get("代币") else T("DefiLlama 没记代币", "no token listed")),
+        (T("上 DefiLlama", "Listed on DefiLlama"), esc(info.get("上线DefiLlama") or (p.get("首次出现") if p.get("首次出现") not in (None, "基线") else na))),
+        (T("母协议", "Parent"), esc(info.get("母协议") or na)),
+        (T("审计", "Audits"), (" ".join(f'<a href="{esc(a)}" target="_blank" rel="noopener">{T("报告", "report")} {i + 1} ↗</a>' for i, a in enumerate(info.get("审计链接") or []))
+                              or (T("DefiLlama 记 0 份", "0 on DefiLlama") if str(info.get("审计数")) in ("0", "None", "") else esc(str(info.get("审计数")))))),
+        (T("团队", "Team"), esc(team) if team else T("DefiLlama 不收录团队信息；看官网和 X 的自我介绍，本站还没核实", "DefiLlama has no team data; see the site and X — not verified by us")),
+    ]
+    fund = info.get("融资") or []
+    if fund:
+        fr = "".join(f'<li>{esc(r.get("日期") or "")} · {esc(r.get("轮次") or "")}'
+                     + (f' · ${r["金额百万"]:,.0f}M' if r.get("金额百万") else "")
+                     + (f' · {T("领投", "lead")} {esc(", ".join(r["领投"]))}' if r.get("领投") else "")
+                     + (f' · {T("参投", "with")} {esc(", ".join(r["其他"][:6]))}' if r.get("其他") else "") + "</li>" for r in fund)
+        rows.append((T("融资", "Raises"), f'<ul class="plain">{fr}</ul>'))
+    else:
+        rows.append((T("融资", "Raises"), T("DefiLlama 没有融资记录", "none recorded on DefiLlama")))
+    hk = info.get("安全事件") or []
+    rows.append((T("安全事件", "Security incidents"), "".join(
+        f'<div>{esc(h.get("日期") or "")} · {esc(h.get("类型") or "")}{" · " + esc(h["手法"]) if h.get("手法") else ""}{" · " + f_usd(h["金额"]) if h.get("金额") else ""}</div>' for h in hk)
+        if hk else T("DefiLlama 没有记录", "none recorded on DefiLlama")))
+    dl = "".join(f'<div class="pp-k">{k}</div><div class="pp-v">{v}</div>' for k, v in rows)
+    meth = info.get("口径") or {}
+    mt = "".join(f'<div class="pm-k">{T(*METH_LABEL[k])}</div><div class="pm-v">{esc(meth[k])}</div>' for k in METH_LABEL if meth.get(k))
+    mblock = (f'<h3>{T("钱怎么收、怎么分", "How fees are charged and split")} <span class="sub">{T("DefiLlama 口径原文（英文）：最能看出产品机制", "DefiLlama methodology (original): the clearest view of the mechanics")}</span></h3>'
+              f'<div class="card pm">{mt}</div>') if mt else ""
+    hm = info.get("大事记") or []
+    hblock = (f'<h3>{T("大事记", "Milestones")} <span class="sub">DefiLlama</span></h3><ul class="plain">'
+              + "".join(f'<li>{esc(a or "")} · {esc(b)}</li>' for a, b in hm) + "</ul>") if hm else ""
+    srcs = [f'<a href="https://defillama.com/protocol/{esc(slug)}" target="_blank" rel="noopener">DefiLlama · {esc(p["名称"])}</a>']
+    if info.get("口径代码"):
+        srcs.append(f'<a href="{esc(info["口径代码"])}" target="_blank" rel="noopener">{T("DefiLlama 统计代码", "DefiLlama adapter code")}</a>')
+    if info.get("官网"):
+        srcs.append(f'<a href="{esc(info["官网"])}" target="_blank" rel="noopener">{T("官网", "official site")}</a>')
+    note = T(f"数据来源：{' · '.join(srcs)}。手续费、协议收入、分账口径、融资、安全事件都是 DefiLlama 的数据，本站每天同步；产品介绍的出处见上方。资料更新于 {esc(info.get('日期') or '—')}。只说明是什么，不是推荐。",
+             f"Sources: {' · '.join(srcs)}. Fees, revenue, methodology, raises and incidents are DefiLlama data synced daily; the description’s source is noted above. Profile updated {esc(info.get('日期') or '—')}. Describes what it is; not a recommendation.")
+    return (f'<h2 id="profile">{T("产品与基本面", "Product & fundamentals")}</h2>'
+            f'<div class="card pp">{f"<div class=lpc-tags>{tg}</div>" if tg else ""}{one}<div class="pp-grid">{dl}</div></div>'
+            f'{mblock}{hblock}<p class="tnote">{note}</p>')
+
+
+def build_platform_pages(matrix, deep_slugs):
+    if not matrix:
+        return
+    slugs = platform_page_slugs(matrix) - set(deep_slugs)
+    if not slugs:
+        return
+    P = matrix["协议"]
+    hist = matrix.get("历史") or {}
+    t30 = sum(p.get("30日") or 0 for p in P) or 1
+    t7 = sum(p.get("7日") or 0 for p in P) or 1
+    rank30 = {p["slug"]: i + 1 for i, p in enumerate(sorted(P, key=lambda p: -(p.get("30日") or 0)))}
+    rank7 = {p["slug"]: i + 1 for i, p in enumerate(sorted(P, key=lambda p: -(p.get("7日") or 0)))}
+    car = {p["slug"]: p.get("数据日") for p in P if p.get("沿用")}
+    tpl = lambda k, v, s="": f'<div class="glass hero"><div class="k">{k}</div><div class="v" style="font-size:21px">{v}</div><div class="s">{s}</div></div>'  # noqa: E731
+    for p in P:
+        if p["slug"] not in slugs:
+            continue
+        slug = p["slug"]
+        try:
+            info = _pdir().platform_info().get(slug) or {}
+        except Exception:
+            info = {}
+        vs = lambda a, b: fmt_delta((a / b - 1) if a and b else None)  # noqa: E731
+        k = (tpl(T("当日手续费", "Fees (day)"), f_usd(p.get("当日")), fmt_delta(p.get("日环比"), pct_input=True) + " " + T("日环比", "DoD")
+                 + (" " + carry_chip(car[slug]) if slug in car else ""))
+             + tpl(T("近 7 日手续费", "Fees (7d)"), f_usd(p.get("7日")), vs(p.get("7日"), p.get("上7日")) + " " + T("较前 7 日", "vs prior 7d"))
+             + tpl(T("近 30 日手续费", "Fees (30d)"), f_usd(p.get("30日")), vs(p.get("30日"), p.get("上30日")) + " " + T("较前 30 日", "vs prior 30d"))
+             + tpl(T("手续费份额", "Fee share"), f'{(p.get("7日") or 0) / t7 * 100:.2f}%', T(f"近 7 日 · 第 {rank7[slug]} 名；30 日 {(p.get('30日') or 0) / t30 * 100:.2f}% · 第 {rank30[slug]} 名",
+                                                                                            f"7d · #{rank7[slug]}; 30d {(p.get('30日') or 0) / t30 * 100:.2f}% · #{rank30[slug]}"))
+             + tpl(T("累计手续费", "Cumulative fees"), f_usd(p.get("累计")), T("首次出现 ", "first seen ") + esc(T("基线", "baseline") if p.get("首次出现") in (None, "基线") else p["首次出现"])))
+        ser = {d: hist[d][slug] for d in sorted(hist) if hist[d].get(slug) is not None}
+        chart = ""
+        if ser:
+            dates = sorted(ser)
+            src_ = write_data(f'launchpad/m-{slug}.json', dates, {"f": ser})
+            chart = (f'<div class="card" style="padding:14px 18px;margin-top:14px"><h3 style="margin-top:0">{T("每日手续费", "Daily fees")}</h3>'
+                     + chart_div({"src": src_, "fmt": "usd", "ranges": ["1M", "3M", "6M", "ALL"], "range": "3M" if len(dates) > 90 else "ALL",
+                                  "series": [{"k": "f", "n": T("手续费", "Fees"), "c": "s1", "area": True}]}) + "</div>")
+        hv = (hist.get(p.get("数据日") or "") or {}).get(slug)
+        if hv and p.get("当日") and abs(hv / p["当日"] - 1) > 0.05 and slug not in car:
+            gap = T(f"注意：DefiLlama 两个接口对 {p['数据日']} 给的数不一样——汇总接口（上面「当日」）{f_usd(p['当日'])}，逐日序列（下图）{f_usd(hv)}；近 7 日合计和逐日序列一致。等 DefiLlama 自己对齐，本站不替它选。",
+                    f"Note: DefiLlama’s two endpoints disagree for {p['数据日']}: the summary (“day” above) says {f_usd(p['当日'])}, the daily series (chart) {f_usd(hv)}; the 7-day total matches the series. We show both rather than pick one.")
+            chart += f'<p class="tnote">{gap}</p>'
+        c30 = p.get("分链30日") or {}
+        cb = ""
+        if len(c30) > 1:
+            tt = sum(c30.values()) or 1
+            cb = (f'<h3>{T("分链（近 30 日手续费）", "By chain (30d fees)")}</h3><div class="tw"><table><tbody>'
+                  + "".join(f'<tr><td class="l">{esc(chain_name(c))}</td><td>{f_usd(v)}</td><td>{v / tt * 100:.1f}%</td></tr>' for c, v in sorted(c30.items(), key=lambda kv: -kv[1]))
+                  + "</tbody></table></div>")
+        logo = f'<img class="ph-logo" src="{esc(p["logo"])}" alt="" referrerpolicy="no-referrer">' if p.get("logo") else ""
+        body = f"""{crumbs([(T("发射台矩阵", "Launchpads"), "/launchpad/"), (T("跨链排行", "Ranking"), "/launchpad/#rank"), (p["名称"], None)])}
+<div class="ph"><div><div class="eyebrow">Launchpad · {T("平台", "platform")}</div><h1>{logo}{esc(p["名称"])} {"".join(chain_badge(c) for c in (p.get("链") or [])[:4])}</h1></div>
+<div class="stamp">{T("数据截至", "Data as of")} <b>{esc(p.get("数据日") or matrix.get("日期") or "")}</b>{T("（UTC 完整日）", " (UTC)")}</div></div>
+{platform_links_html(p, info)}
+<div class="grid g5">{k}</div>
+{chart}{cb}
+{platform_profile_html(p)}"""
+        emit(f'launchpad/platforms/{slug}/index.html', f'{p["名称"]} · {T("发射台", "Launchpad")} · {T(BRAND, BRAND_EN)}', body,
+             active="launchpad", chart=True, desc=T(f'{p["名称"]}：近 7 日手续费 {f_usd(p.get("7日"))}，产品介绍、收费分账、融资与官网入口。',
+                                                   f'{p["名称"]}: 7-day fees {f_usd(p.get("7日"))}; product, fee split, raises and official links.'))
+
+
+def _deep_profile(x, matrix):
+    """深度追踪页也挂上官网入口 + 产品与基本面（和普通平台页同一套）。"""
+    p = next((q for q in (matrix or {}).get("协议") or [] if q["slug"] == x["slug"]), None)
+    if not p:
+        return ""
+    try:
+        info = _pdir().platform_info().get(p["slug"]) or {}
+    except Exception:
+        info = {}
+    return platform_profile_html(p)
+
+
+def _deep_links(x, matrix):
+    p = next((q for q in (matrix or {}).get("协议") or [] if q["slug"] == x["slug"]), None)
+    if not p:
+        return ""
+    try:
+        info = _pdir().platform_info().get(p["slug"]) or {}
+    except Exception:
+        info = {}
+    return platform_links_html(p, info)
+
+
+def build_launchpad_platforms(sd, matrix=None):
+    build_platform_pages(matrix, [x["slug"] for x in (sd or {}).get("平台", [])])
     if not sd:
         return
     tpl = lambda k, v, s="": f'<div class="glass hero"><div class="k">{k}</div><div class="v" style="font-size:21px">{v}</div><div class="s">{s}</div></div>'  # noqa: E731
@@ -3383,9 +3568,10 @@ def build_launchpad_platforms(sd):
         body = f"""{crumbs([(T("发射台矩阵", "Launchpads"), "/launchpad/"), (T("深度追踪", "Deep-tracked"), "/launchpad/#deep"), (x["名称"], None)])}
 <div class="ph"><div><div class="eyebrow">Launchpad · {T("深度追踪", "deep-tracked")}</div><h1>{esc(x["名称"])} {chain_badge(x["链"])}</h1></div>
 <div class="stamp">{T("数据截至", "Data as of")} <b>{sd["日期"]}</b></div></div>
+{_deep_links(x, matrix)}
 <div class="grid g5">{k}</div>
 <div class="card" style="padding:14px 18px;margin-top:14px"><h3 style="margin-top:0">{T("手续费 / 协议收入", "Fees / revenue")}</h3>{chart}</div>
-{vb}"""
+{vb}{_deep_profile(x, matrix)}"""
         emit(f'launchpad/platforms/{x["slug"]}/index.html', f'{x["名称"]} · {T("发射台", "Launchpad")} · {T(BRAND, BRAND_EN)}', body,
              active="launchpad", chart=True)
     for z in (sd.get("Arc") or {}).get("发射台", []):
@@ -4699,7 +4885,7 @@ def main():
         globals()["CYCLE_MONEY"] = money_where(matrix)
         if G.get("CYC_DATA"):
             build_cycle(globals())
-        build_launchpad_platforms(sd)
+        build_launchpad_platforms(sd, matrix)
         build_launchpad_discovery()
         build_launchpad_report(sd)
         build_rotation(rot)

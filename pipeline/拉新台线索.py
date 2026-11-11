@@ -26,8 +26,8 @@ if os.environ.get("ALCHEMY_KEY"):
     SOL_RPC.append(f"https://solana-mainnet.g.alchemy.com/v2/{os.environ['ALCHEMY_KEY'].strip()}")
 GT_NETS = {"solana": "Solana", "bsc": "BSC", "base": "Base", "robinhood": "Robinhood Chain", "arc": "Arc", "eth": "Ethereum",
            "arbitrum": "Arbitrum", "optimism": "Optimism", "polygon_pos": "Polygon", "avax": "Avalanche", "x-layer": "X Layer",
-           "mantle": "Mantle", "zksync": "zkSync Era"}
-DS_CHAIN = {"robinhood": "robinhood", "bsc": "bsc", "base": "base", "arc": "arc", "solana": "solana"}
+           "mantle": "Mantle", "zksync": "zkSync Era", "elysium": "Elysium"}
+DS_CHAIN = {"robinhood": "robinhood", "bsc": "bsc", "base": "base", "arc": "arc", "solana": "solana", "elysium": "elysium"}
 DBC, LAUNCHLAB = "dbcij3LWUppWqq96dh6gJWwBifmcGfLSB5D4DuSMaqN", "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
 POOL_PAGES = 10            # GeckoTerminal 每页 20 个池子
 KEYWORDS = ("launchpad", "token launcher", "launch platform", "bonding curve", "fair launch", "发射台", "发币平台", "memecoin launcher")
@@ -295,16 +295,17 @@ def identify(chain, samples):
 EXPLORER_API = {"robinhood": "https://explorer.chain.robinhood.com/api/v2", "arc": "https://explorer.arc.io/api/v2",
                 "base": "https://base.blockscout.com/api/v2", "ethereum": "https://eth.blockscout.com/api/v2",
                 "optimism": "https://optimism.blockscout.com/api/v2", "arbitrum": "https://arbitrum.blockscout.com/api/v2",
-                "polygon": "https://polygon.blockscout.com/api/v2", "ink": "https://explorer.inkonchain.com/api/v2"}
+                "polygon": "https://polygon.blockscout.com/api/v2", "ink": "https://explorer.inkonchain.com/api/v2",
+                "elysium": "https://elysium.kinetiq.xyz/api/v2"}
 
 
 EIP1967 = "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc"
 PROXY_NAMES = {"TransparentUpgradeableProxy", "ERC1967Proxy", "BeaconProxy", "UUPSProxy", "Proxy", "AdminUpgradeabilityProxy", "OptimizedTransparentUpgradeableProxy"}
 CHAIN_ID = {"bsc": 56, "base": 8453, "ethereum": 1, "arbitrum": 42161, "optimism": 10, "polygon": 137, "robinhood": 4663, "arc": 5042,
             "xlayer": 196, "monad": 143, "hyperevm": 999, "ink": 57073, "abstract": 2741, "berachain": 80094, "avalanche": 43114,
-            "sonic": 146, "mantle": 5000, "plasma": 9745, "zksync": 324, "unichain": 130, "stable": 988, "megaeth": 4326}
+            "sonic": 146, "mantle": 5000, "plasma": 9745, "zksync": 324, "unichain": 130, "stable": 988, "megaeth": 4326, "elysium": 99901}
 GT_NET = {"bsc": "bsc", "base": "base", "ethereum": "eth", "arbitrum": "arbitrum", "optimism": "optimism", "polygon": "polygon_pos",
-          "robinhood": "robinhood", "arc": "arc", "avalanche": "avax", "xlayer": "x-layer", "mantle": "mantle", "zksync": "zksync"}
+          "robinhood": "robinhood", "arc": "arc", "avalanche": "avax", "xlayer": "x-layer", "mantle": "mantle", "zksync": "zksync", "elysium": "elysium"}
 
 
 def _rpc_url(chain):
@@ -439,7 +440,7 @@ def enrich(clues, end, sol):
     """给候选补身份：链上工厂近 7 天新币 ≥ 30 的、Solana 前端成交额前列的。每个候选只查一次（结果缓存 14 天）。"""
     ids = clues.setdefault("身份", {})
     todo = []
-    chains = sorted(f[:-5] for f in os.listdir(OUT) if f.endswith(".json") and f not in ("solana.json", "线索.json", "ai_agent.json"))
+    chains = sorted(f[:-5] for f in os.listdir(OUT) if f.endswith(".json") and f not in ("solana.json", "线索.json", "ai_agent.json", "档案.json", "llama_meta.json", "平台资料.json"))
     for chain in chains:
         p = os.path.join(OUT, f"{chain}.json")
         if not os.path.exists(p):

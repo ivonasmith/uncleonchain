@@ -65,6 +65,9 @@ CHAINS = {
     "unichain": {"名称": "Unichain", "公共": "https://mainnet.unichain.org", "alchemy": None, "浏览器": "https://uniscan.xyz", "跨度": 1000},
     "stable": {"名称": "Stable", "公共": "https://rpc.stable.xyz", "alchemy": None, "浏览器": "https://stablescan.xyz", "跨度": 1000},
     "megaeth": {"名称": "MegaETH", "公共": "https://mainnet.megaeth.com/rpc", "alchemy": None, "浏览器": "https://megaexplorer.xyz", "跨度": 1000},
+    # Hyperliquid 系新链 Elysium（Kinetiq，chainId 99901）：2026-11-11 用 probe-rpc 从 chainid.network 找到官方免费节点，
+    # 无地址日志查询可用，约 0.14 秒一块（一天约 60 万块）、一天约 13 万条铸币事件
+    "elysium": {"名称": "Elysium（Hyperliquid 系）", "公共": "https://rpc.elysium.kinetiq.xyz", "alchemy": None, "浏览器": "https://elysium.kinetiq.xyz", "跨度": 1000},
 }
 OUT_DIR = os.path.join(DATA, "onchain")
 CALLS = Counter()         # (链, 节点) → 今天调用了多少次（看 Alchemy 额度用）；多条链并行跑

@@ -1,0 +1,1000 @@
+{
+"argus-world": {
+"GitHub": [],
+"X": "arguspad",
+"gecko_id": null,
+"上线DefiLlama": "2026-09-20",
+"介绍": "Tax-token launchpad on Arc. Each launch mints its whole supply into a single-sided Uniswap v4 position held by a locker with no withdrawal path, so there is no bonding curve and no migration — the token trades in a real v4 pool from block one, and a per-launch hook charges a buy/sell tax on every swap.",
+"代币": "ARGUS",
+"分叉自": [],
+"口径": {
+"Fees": "The tax ArgusPad's per-launch hook charges on every buy and sell, the trading fee each launch's pool charges (on Portals 3-7 the 1% pool fee earned by the permanently locked launch position; on Portal 8 a 1% base fee the hook charges in the quote asset in its place), and the extra tax charged on buys in a launch's first seconds. Counted in the asset the fee is charged in, at the moment it is charged, so the protocol's later sale of the launched tokens it was paid is not counted a second time. Fees charged in the launched token itself (Portals 3-7 only; Portal 8 takes every fee in the quote asset) are reported in that token's own units and are priced only if DefiLlama has a price for it; it has none for these tokens today, because a launched token's only market is the pool ArgusPad seeded, and pricing it there overstates by about 40% against what ArgusPad's own sales of them actually realise.",
+"ProtocolRevenue": "The share of fees reaching the ArgusPad treasury at the rate each launch fixes at creation - 10% of every fee on Portals 3-7 and 30% on Portal 8 - plus the whole of the early-buy snipe tax, which is paid straight to the treasury.",
+"Revenue": "The share of fees reaching the ArgusPad treasury at the rate each launch fixes at creation - 10% of every fee on Portals 3-7 and 30% on Portal 8 - plus the whole of the early-buy snipe tax, which is paid straight to the treasury.",
+"SupplySideRevenue": "The rest of the fees, which leave the protocol divided at the weights each launch fixed at creation: the token creator's share, the dividends paid to holders of that launched token, the share added back into the launch's permanently locked liquidity, the share used to buy and burn the launched token, and on Portal 8 the share used to buy the launched token and lock it permanently."
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/arguspad",
+"合约": "arc:0xeCe5cA8bf9220718E5727754026757512212cb3c",
+"名称": "Argus World",
+"大事记": [],
+"安全事件": [],
+"官网": "https://arguspad.io",
+"官网错误": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+"审计数": "0",
+"审计链接": [],
+"市值": null,
+"日期": "2026-11-11",
+"母协议": null,
+"融资": [],
+"链": [
+"Arc"
+]
+},
+"ascend-launchpad": {
+"GitHub": [],
+"X": "AscendLaunch",
+"gecko_id": null,
+"上线DefiLlama": "2026-11-10",
+"介绍": "Ascend brings token creation, trading, HYPE staking, and continued project support together on Elysium.",
+"代币": null,
+"分叉自": [],
+"口径": {
+"Fees": "Trading fees charged by the Ascend launchpad on every launch-pool trade, counted when they are settled to each coin's creator escrow (normally within an hour of the trade).",
+"HoldersRevenue": "The 28.8% of the protocol splitter's share set aside to burn KNTQ.",
+"ProtocolRevenue": "The protocol splitter's team, strategic KNTQ, stakers and strategic HYPE legs, plus standing-bid buys of launched coins into protocol treasuries. The stakers leg is held in a protocol treasury while staking is not live.",
+"Revenue": "The part of trading fees sent to the Ascend protocol splitter, plus the part used by the launchpad's standing bids to buy launched coins into protocol treasuries.",
+"SupplySideRevenue": "The part of trading fees paid to coin creators (including the share held in escrow until a coin graduates), to builders who brought the launch, and to buybacks of the launched coin."
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/dexs/ascend",
+"合约": null,
+"名称": "Ascend Launchpad",
+"大事记": [],
+"安全事件": [],
+"官网": null,
+"审计数": "0",
+"审计链接": [],
+"市值": null,
+"日期": "2026-11-11",
+"母协议": null,
+"融资": [],
+"链": [
+"Elysium Kinetiq"
+]
+},
+"bags": {
+"GitHub": [],
+"X": "BagsApp",
+"gecko_id": null,
+"上线DefiLlama": null,
+"介绍": "Launch a coin on BagsApp and earn royalties.",
+"代币": null,
+"分叉自": [],
+"口径": {
+"Fees": "On Solana: total trading fees paid by users when swapping against Bags DBC pools (pre-migration) and DAMMv2 pools (post-migration), excluding the underlying Meteora protocol fee, DAMMv2 LP fees and any referral fees. On Robinhood Chain: token creation fees plus gross trading fees charged on Bags bonding-curve swaps (pre-migration) and Uniswap v4 hook swaps (post-migration) across the V1, V2 and V3 deployments. V1/V2 pools are quoted in WETH; each V3 launch sets its own 1-10% buy and sell fees, and its fees are counted in its quote asset: WETH or an allowlisted ERC-20 (e.g. tokenized stocks).",
+"ProtocolRevenue": "Net revenue earned by the Bags protocol from trading and token-creation activity.",
+"Revenue": "Bags' net share: on Solana, trading-fee revenue from DBC (pre-migration) and DAMMv2 (post-migration); on Robinhood Chain, token creation fees plus the protocol share of trading fees net of the partner cut: 50% of gross on V1/V2 (partner cut on V2 pools with a partner), and on V3 max(20% of the fee, 0.5% of volume) per side, minus a partner cut of the launch's snapshotted partnerFeeBps (25% by default) of that share on pools with a partner.",
+"SupplySideRevenue": "Creator fees paid to token creators, plus (on Robinhood Chain V2 and V3) the partner/referrer share carved out of the protocol share of trading fees."
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/launch-on-bags",
+"合约": null,
+"名称": "Bags",
+"大事记": [],
+"安全事件": [],
+"官网": "https://bags.fm/",
+"官网错误": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+"审计数": "0",
+"审计链接": [],
+"市值": null,
+"日期": "2026-11-11",
+"母协议": null,
+"融资": [],
+"链": [
+"Solana"
+]
+},
+"binance-alpha": {
+"GitHub": [],
+"X": "binance",
+"gecko_id": null,
+"上线DefiLlama": null,
+"介绍": "Binance Alpha is a curated early-token discovery platform offering quick access, reward mechanics, and potential listings",
+"代币": "BNB",
+"分叉自": [],
+"口径": {
+"Fees": "Fees paid by users while trading via Binance Alpha app.",
+"Revenue": "All fees are collected by Binance."
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/binance-alpha.ts",
+"合约": "0xb8c77482e45f1f44de1745f52c74426c631bdd52",
+"名称": "Binance Alpha",
+"大事记": [],
+"安全事件": [],
+"官网": "https://www.binance.com/en/alpha/",
+"官网错误": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+"审计数": "0",
+"审计链接": [],
+"市值": null,
+"日期": "2026-11-11",
+"母协议": null,
+"融资": [],
+"链": [
+"BSC"
+]
+},
+"bonk.fun-launchpad": {
+"GitHub": [],
+"X": "bonkfun",
+"gecko_id": null,
+"上线DefiLlama": null,
+"介绍": "Meme token launchpad",
+"代币": "BONK",
+"分叉自": [],
+"口径": {
+"Fees": "Fees are collected from users and distributed to holders and protocol.",
+"HoldersRevenue": "Before 10th jun 2025: 43% of total fees (Buy/burn 35% + SBR 4% + BonkRewards 4%). After 10th jun 2025: 58% of total fees (Buy/burn 50% + SBR 4% + BonkRewards 4%).",
+"ProtocolRevenue": "2% of total fees for marketing.",
+"Revenue": "Total Letsbonk Protocol Revenue and Holders Revenue",
+"SupplySideRevenue": "Fees for coin creators."
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/letsbonk",
+"合约": "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263",
+"名称": "BONK.fun Launchpad",
+"大事记": [
+[
+"2025-06-10",
+"BuyBack and burn increased from 35% to 50% of total revenue, Letsbonk share increased from 45% to 60%"
+]
+],
+"安全事件": [],
+"官网": null,
+"审计数": "0",
+"审计链接": [],
+"市值": null,
+"日期": "2026-11-11",
+"母协议": "bonk.fun",
+"融资": [],
+"链": [
+"Solana"
+]
+},
+"bordrless-launchpad": {
+"GitHub": [],
+"X": "bordrlessdex",
+"gecko_id": null,
+"上线DefiLlama": "2026-10-15",
+"介绍": "Bordrless is a Solana token standard with trade hooks, plus its own DEX, token launchpad and bridge. Coins launch on a bonding curve and graduate to the Bordrless DEX; SOL and SPL tokens are bridged onto the standard to trade.",
+"代币": "BORDR",
+"分叉自": [],
+"口径": {
+"Fees": "Every fee traders pay on trades on the Bordrless launchpad bonding curve, before a coin graduates: the protocol fee, LP fee, coin creator fee and holder reward fee.",
+"HoldersRevenue": "Half of the protocol fee, spent buying back $BORDR.",
+"ProtocolRevenue": "Half of the protocol fee, kept by the treasury.",
+"Revenue": "The protocol fee, paid to the Bordrless treasury: half is kept, half buys back $BORDR.",
+"SupplySideRevenue": "Fees paid to liquidity providers, coin creators and coin holders."
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/dexs/bordrless-launchpad",
+"合约": "solana:6Mix12LiHrQFojaQEnfPUC65Qkwd6X4Y5Qg93oFbordr",
+"名称": "Bordrless Launchpad",
+"大事记": [],
+"安全事件": [],
+"官网": null,
+"审计数": "0",
+"审计链接": [],
+"市值": null,
+"日期": "2026-11-11",
+"母协议": "bordrless",
+"融资": [],
+"链": [
+"Solana"
+]
+},
+"clanker": {
+"GitHub": [],
+"X": "_proxystudio",
+"gecko_id": null,
+"上线DefiLlama": null,
+"介绍": "AI agent designed to automatically deploy tokens, specifically focusing on creating meme tokens on the Base",
+"代币": null,
+"分叉自": [],
+"口径": {
+"Fees": "Total swap fees paid by traders in Clanker-deployed Uniswap v4 pools (creator fee + Clanker's 20% of creator fee).",
+"HoldersRevenue": "CLANKER tokens bought back and distributed to holders.",
+"ProtocolRevenue": "Clanker protocol's cut of swap fees, minus the amount spent buying back CLANKER (negative when a buyback exceeds the period's revenue).",
+"Revenue": "Clanker protocol's cut: 20% of the creator LP fee charged on top of each swap.",
+"SupplySideRevenue": "Token creator's LP rewards, claimable from the initial single-sided Uniswap v4 position."
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/clanker.ts",
+"合约": null,
+"名称": "clanker",
+"大事记": [],
+"安全事件": [],
+"官网": "https://www.clanker.world/",
+"官网错误": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+"审计数": "0",
+"审计链接": [],
+"市值": null,
+"日期": "2026-11-11",
+"母协议": "farcaster",
+"融资": [],
+"链": [
+"Base"
+]
+},
+"flap-sh": {
+"GitHub": [],
+"X": "flapdotsh",
+"gecko_id": null,
+"上线DefiLlama": "2024-08-13",
+"介绍": "Launch your crypto token with Flap.sh in one click, join the Meme Battle, and create your coin today on the ultimate trading platform.",
+"代币": null,
+"分叉自": [],
+"口径": {
+"Fees": "Protocol revenue (quote tokens received by the Flap fee Safe, including wrapped-native transfers such as WBNB) plus token-tax amounts routed to marketing/vault recipients and token-holder dividends.",
+"ProtocolRevenue": "Same as Revenue — all quote inflows to the Flap fee Safe.",
+"Revenue": "All quote tokens received by the Flap fee Safe, from any sender. Includes native SafeReceived and configured ERC20 quote transfers, plus wrapped-native (e.g. WBNB) transfers from TaxProcessor fee settlement.",
+"SupplySideRevenue": "Token tax routed outside the protocol Safe: V1 TaxSplitter beneficiary payouts, plus V2/V3 TaxProcessor market and dividend buckets."
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/dexs/flap.ts",
+"合约": null,
+"名称": "Flap sh",
+"大事记": [],
+"安全事件": [],
+"官网": null,
+"审计数": "0",
+"审计链接": [],
+"市值": null,
+"日期": "2026-11-11",
+"母协议": null,
+"融资": [],
+"链": [
+"Monad",
+"Robinhood Chain",
+"X Layer",
+"Base",
+"Binance"
+]
+},
+"four.meme": {
+"GitHub": [],
+"X": "four_meme_",
+"gecko_id": null,
+"上线DefiLlama": "2024-09-23",
+"介绍": "Four.meme is a premier fair launch platform for meme coins on the BSC chain. Our platform is dedicated to empowering creators and communities to launch successful meme coin projects with ease.",
+"代币": null,
+"分叉自": [],
+"口径": {
+"Fees": "Trade, launch and migration fees paid by users on four.meme's bonding curves, classic and OpenFour. Token taxes are excluded.",
+"ProtocolRevenue": "The share of those fees four.meme keeps: its treasury cut plus developer fees on the OpenFour presets it wrote itself.",
+"Revenue": "The share of those fees four.meme keeps: its treasury cut plus developer fees on the OpenFour presets it wrote itself.",
+"SupplySideRevenue": "The share paid to others: the 5% rev-share rebate, third-party preset developers, partners, token creators and the anti-sniper buyback."
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/four-meme.ts",
+"合约": null,
+"名称": "four.meme",
+"大事记": [],
+"安全事件": [
+{
+"手法": "Improper Access Control",
+"日期": "2025-03-18",
+"来源": "",
+"类型": "Access Control",
+"金额": 80000
+},
+{
+"手法": "Swap Logic Flaw",
+"日期": "2025-02-11",
+"来源": "",
+"类型": "Protocol Logic",
+"金额": 183000
+}
+],
+"官网": "https://four.meme",
+"官网错误": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+"审计数": "2",
+"审计链接": [
+"https://easy-fight-6a5.notion.site/Salus-Audit-Report-294ce2c0b4e442cb81e090b0232ae243"
+],
+"市值": null,
+"日期": "2026-11-11",
+"母协议": null,
+"融资": [],
+"链": [
+"Binance"
+]
+},
+"frontier": {
+"GitHub": [],
+"X": "frontierhood",
+"gecko_id": null,
+"上线DefiLlama": "2026-08-07",
+"介绍": "Bonding-curve token launchpad on Robinhood Chain. Tokens trade on a shared bonding curve until it fills, then graduate to a Uniswap V4 pool",
+"代币": null,
+"分叉自": [],
+"口径": {
+"Fees": "The bonding-curve trade fee charged on every buy and sell (1.5% of the trade's cost at the time of writing), the fees a token pays out of the ETH it raised when its curve fills and seeds its Uniswap V4 pool, the FactoryHook fee taken on every swap of a Frontier V4 pool (a hook delta on top of the pool's LP fee, so not part of uniswap-v4's fees), and the LP fees of the protocol's permanently locked seed positions, counted on a realized basis when they are collected (Harvester.collect is permissionless, so a collection carries the fees accrued since the previous one and lands on the collection day, not the days they were earned). v1 reconstructs the trade fee from the on-chain txFee timeline and graduation payouts from WETH transfers; v1.2 reads everything exactly from CurveFeeDistributed, GraduationFeesPaid, SwapFeeDistributed and the PolDistributor's FeesDistributed.",
+"ProtocolRevenue": "v1: 25% of the curve trade fee net of referrer rewards, plus WETH sent to the factory owner at graduation. v1.2: residual share of the curve trade fee (50% at the time of writing, net of referrer rewards), its share of graduation payouts (0% at the time of writing), the protocol owner's share of the V4 hook fee (protocolFeeRatio, owner-tunable) and the protocol's share of collected seed-position LP fees.",
+"Revenue": "Protocol revenue across both deployments: on v1, the protocol's 25% of the bonding-curve trade fee net of referrer rewards plus the factory owner's graduation share; on v1.2, the residual share of the trade fee after referrer and creator cuts (creator share owner-tunable via creatorShareBps), the protocol's graduation share, the protocol owner's share of the hook fee on every V4 swap, and the protocol's share of collected seed-position LP fees. Frontier has no protocol token, so there is no holders revenue and Revenue equals ProtocolRevenue.",
+"SupplySideRevenue": "v1: the creator's 75% of every curve trade fee, referrer rewards, and the 5% graduation fee to the token creator. v1.2: the creator's share of every curve trade fee (50% at the time of writing), referrer rewards, the 5% graduation fee to the creator, the graduation refund to the caller (0% at the time of writing), and the after-protocol remainder of the V4 hook fee and of collected seed-position LP fees, split between the coin's staking vault and its fee recipient (the creator)."
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/dexs/frontier-fun",
+"合约": null,
+"名称": "Frontier",
+"大事记": [],
+"安全事件": [],
+"官网": "https://frontier.fun",
+"官网错误": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+"审计数": "0",
+"审计链接": [],
+"市值": null,
+"日期": "2026-11-11",
+"母协议": null,
+"融资": [],
+"链": [
+"Robinhood Chain"
+]
+},
+"genius.fun": {
+"GitHub": [],
+"X": "GeniusTerminal",
+"gecko_id": null,
+"上线DefiLlama": "2026-09-22",
+"介绍": "A permissionless token launchpad on BNB Smart Chain with bonding-curve trading, multiple quote assets, creator fee distributions, and graduation into permanently locked PancakeSwap Infinity liquidity",
+"代币": "GENIUS",
+"分叉自": [],
+"口径": {
+"Fees": "Token creation, bonding-curve trading (including any launch-window surcharge), Genius hook trading and paid Alpha promotion fees. Fees accrue at launch/trade/promotion; settlements are excluded. Meme-denominated hook fees use the same swap’s quote/meme execution-price ratio, rounded down to quote base units.",
+"ProtocolRevenue": "The same protocol-retained portion as Revenue. Genius.fun has no protocol token receiving these fees.",
+"Revenue": "The Genius platform share of trading fees under each launch’s immutable policy, plus separately labeled creation and Alpha promotion fees. The creator-selected destination allocation (Foundation or creator), creator share and launched-meme buyback allocations are excluded.",
+"SupplySideRevenue": "Creator-selected destination allocations (Foundation or creator), creator shares and accrued funding for buybacks of individual launched meme tokens, calculated from immutable per-launch policies with contract integer rounding."
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/genius-fun.ts",
+"合约": "bsc:0x1F12B85aAC097E43Aa1555b2881E98a51090e9A6",
+"名称": "Genius.fun",
+"大事记": [],
+"安全事件": [],
+"官网": "https://genius.fun",
+"官网错误": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+"审计数": "0",
+"审计链接": [],
+"市值": null,
+"日期": "2026-11-11",
+"母协议": "genius-terminal",
+"融资": [],
+"链": [
+"Binance"
+]
+},
+"glazecorp-launchpad": {
+"GitHub": [],
+"X": "glaze_corp",
+"gecko_id": null,
+"上线DefiLlama": "2026-11-05",
+"介绍": "GlazeCorp is a fund launchpad. Each fund token is backed by a fund that uses mining revenue to buy assets through auctions, and holders can redeem their tokens for a share of those assets.",
+"代币": null,
+"分叉自": [],
+"口径": {
+"Fees": "Mining payments kept by the protocol, fund creators and funds (everything except the 80% paid to the outgoing miner), plus swap fees charged on Uniswap v4 pools created by the GlazeCorp Launchpad, counted when each swap happens.",
+"ProtocolRevenue": "The protocol fee on each mining payment (currently 0.5%) and 30% of swap fees on Launchpad pools, sent to the GlazeCorp treasury.",
+"Revenue": "The protocol fee on each mining payment (currently 0.5%) and 30% of swap fees on Launchpad pools.",
+"SupplySideRevenue": "The creator fee on each mining payment, the rest of each mining payment sent to the fund to buy assets for fund coin holders, and 70% of swap fees on Launchpad pools paid to the fund or its creator."
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/glazecorp",
+"合约": null,
+"名称": "GlazeCorp Launchpad",
+"大事记": [],
+"安全事件": [],
+"官网": "https://www.glazecorp.io",
+"官网错误": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+"审计数": "0",
+"审计链接": [],
+"市值": null,
+"日期": "2026-11-11",
+"母协议": "glazecorp",
+"融资": [],
+"链": [
+"Robinhood Chain"
+]
+},
+"graphite-protocol": {
+"GitHub": [],
+"X": "GraphiteProto",
+"gecko_id": "graphite-protocol",
+"上线DefiLlama": null,
+"介绍": "Graphite Protocol - We build smart contracts  and tech currently powering LiveBONK & bonk_fun.",
+"代币": "GP",
+"分叉自": [],
+"口径": {
+"Fees": "Graphite Protocol's portion of joint venture fees with Letsbonk. Before 10th jun 2025: 57.68% of total fees. After 10th jun 2025: 40% of total fees.",
+"HoldersRevenue": "GP that Graphite bought back on Jupiter and burned, valued at the GP price when burned. Buybacks are counted on the day of the burn, which can be weeks after the purchase.",
+"ProtocolRevenue": "Graphite Protocol's portion of the joint venture fees with Letsbonk.fun minus the GP bought back and burned. Negative on burn days, as one burn covers weeks of buybacks.",
+"Revenue": "All of Graphite Protocol's portion of the joint venture fees with Letsbonk.fun."
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/graphite-protocol",
+"合约": "solana:31k88G5Mq7ptbRDf3AM13HAq6wRQHXHikR8hik7wPygk",
+"名称": "Graphite Protocol",
+"大事记": [
+[
+"2025-06-10",
+"Graphite Protocol share reduced from 57.68% to 40% of total fees, BONKsol staking reduced from 30% to 15%"
+]
+],
+"安全事件": [],
+"官网": "https://taiyorobotics.com/#/",
+"官网错误": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+"审计数": "0",
+"审计链接": [],
+"市值": 11700935.973517913,
+"日期": "2026-11-11",
+"母协议": null,
+"融资": [],
+"链": [
+"Solana"
+]
+},
+"launchlab": {
+"GitHub": [],
+"X": "RaydiumProtocol",
+"gecko_id": null,
+"上线DefiLlama": null,
+"介绍": "Raydium's all-in-one token launchpad",
+"代币": "RAY",
+"分叉自": [],
+"口径": {
+"Fees": "All fees deducted from trades on the bonding curves: Raydium's protocol fee, the launch platform's fee and the token creator's fee, denominated in each pool's quote token.",
+"HoldersRevenue": "25% of the protocol fee is used to buy back and burn RAY.",
+"ProtocolRevenue": "75% of the protocol fee.",
+"Revenue": "Raydium's protocol fee only. Platform and creator fees are passed on to the third parties that launched the token.",
+"SupplySideRevenue": "Fees paid out to the launch platform (e.g. StonkFun, LetsBonk) and to the token creator."
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/launchlab",
+"合约": "solana:4k3Dyjzvzp8eMZWUXbBCjEvwSkkk59S5iCNLY3QrkX6R",
+"名称": "LaunchLab",
+"大事记": [],
+"安全事件": [],
+"官网": "https://raydium.io/launchpad/",
+"官网错误": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+"审计数": "0",
+"审计链接": [],
+"市值": null,
+"日期": "2026-11-11",
+"母协议": "raydium",
+"融资": [],
+"链": [
+"Solana"
+]
+},
+"metaplex": {
+"GitHub": [],
+"X": "metaplex",
+"gecko_id": "metaplex",
+"上线DefiLlama": null,
+"介绍": "Metaplex is a decentralized platform on Solana for creating, selling, and managing digital assets, including NFTs, fungible tokens, RWAs, gaming assets, DePIN assets, and more, offering tools for developers, creators, and businesses",
+"代币": "MPLX",
+"分叉自": [],
+"口径": {
+"Fees": "All fees paid by users for launching, trading assets.",
+"HoldersRevenue": "50% of revenue goes to buyback MPLX after june 2023",
+"ProtocolRevenue": "50% of revenue goes to protocol after june 2023",
+"Revenue": "Fees collected by Metaplex protocol."
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/metaplex.ts",
+"合约": "solana:METAewgxyPbgwsseH8T16a39CQ5VyVxZi9zXiDPY18m",
+"名称": "Metaplex",
+"大事记": [],
+"安全事件": [],
+"官网": "https://www.metaplex.com/",
+"官网错误": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+"审计数": "0",
+"审计链接": [],
+"市值": 34996062.431431316,
+"日期": "2026-11-11",
+"母协议": null,
+"融资": [],
+"链": [
+"Solana"
+]
+},
+"meteora-dynamic-bonding-curve": {
+"GitHub": [],
+"X": "MeteoraAG",
+"gecko_id": null,
+"上线DefiLlama": null,
+"介绍": "Meteora's Dynamic Bonding Curve is a permissionless token launch protocol that allows platforms to create customizable bonding curve pools for new tokens, enabling immediate trading, flexible fee structures, and automated migration to AMMs",
+"代币": "MET",
+"分叉自": [],
+"口径": {
+"Fees": "Trading fees paid by users.",
+"HoldersRevenue": "MET token buybacks funded from Meteora protocol revenue across all Meteora products.",
+"ProtocolRevenue": "Protocol fees collected by Meteora DBC protocol, minus the MET buybacks funded from Meteora protocol revenue.",
+"Revenue": "Protocol fees collected by Meteora DBC protocol.",
+"SupplySideRevenue": "The portion of the trading fees paid to LPs and referrals."
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/dexs/meteora-dbc",
+"合约": "solana:METvsvVRapdj9cFLzq4Tr43xK4tAjQfwX76z3n6mWQL",
+"名称": "Meteora Dynamic Bonding Curve",
+"大事记": [],
+"安全事件": [],
+"官网": "https://www.meteora.ag/",
+"官网错误": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+"审计数": "0",
+"审计链接": [],
+"市值": null,
+"日期": "2026-11-11",
+"母协议": "meteora",
+"融资": [],
+"链": [
+"Solana"
+]
+},
+"montra": {
+"GitHub": [],
+"X": "MontraXYZ",
+"gecko_id": null,
+"上线DefiLlama": "2026-11-10",
+"介绍": "Montra is a launchpad in Elysium.",
+"代币": "MONTRA",
+"分叉自": [],
+"口径": {
+"Fees": "Trading fees charged by the Montra launch hook on every launch-pool trade (including the higher anti-snipe fee right after launch), LP fees earned by graduated pools' seed liquidity, and launch fees (none charged so far).",
+"HoldersRevenue": "The share of the protocol fee vault used to buy back and burn MONTRA: 70% since 2026-11-10, none before.",
+"ProtocolRevenue": "The share of the protocol fee vault paid to the Montra treasury: all of it until 2026-11-10, 30% since.",
+"Revenue": "The protocol's part of every trading fee, plus any launch fees, sent to the Montra protocol fee vault, which pays them to the treasury and to MONTRA buybacks.",
+"SupplySideRevenue": "The part of every trading fee kept for each coin's creator side, plus the seed LP fees paid to creators."
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/dexs/montra",
+"合约": "elysium:0x063F7Cc5339f92a5FD7BaF3D22233044FdA1F327",
+"名称": "Montra",
+"大事记": [],
+"安全事件": [],
+"官网": "https://montramarkets.xyz/",
+"官网错误": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+"审计数": "0",
+"审计链接": [],
+"市值": null,
+"日期": "2026-11-11",
+"母协议": null,
+"融资": [],
+"链": [
+"Elysium Kinetiq"
+]
+},
+"noxa-fun": {
+"GitHub": [],
+"X": "Noxa_Fi",
+"gecko_id": null,
+"上线DefiLlama": "2026-07-09",
+"介绍": "Hybrid launchpad with V3 single-sided LP and graduation mechanics. Instant DEX trading, no LP migration, no token taxes. Creators earn fees",
+"代币": null,
+"分叉自": [],
+"口径": {
+"Fees": "Includes uniswap swap fees for tokens graduated from noxa fun (filtered by pools with >$1000 TVL)",
+"Revenue": "Revenue is disabled for now",
+"SupplySideRevenue": "All fees collected from swaps are distributed to the creator of the token"
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/dexs/noxa-fun",
+"合约": null,
+"名称": "NOXA Fun",
+"大事记": [],
+"安全事件": [],
+"官网": "https://fun.noxa.eth.limo/",
+"官网错误": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+"审计数": "0",
+"审计链接": [],
+"市值": null,
+"日期": "2026-11-11",
+"母协议": "noxa",
+"融资": [],
+"链": [
+"MegaETH",
+"Monad",
+"Stable",
+"Arc",
+"Intuition",
+"Merlin",
+"Robinhood Chain"
+]
+},
+"o1-launchpad": {
+"GitHub": [],
+"X": "o1_exchange",
+"gecko_id": null,
+"上线DefiLlama": null,
+"介绍": "o1 Launchpad enables creators to launch and trade tokens on Base and Robinhood Chain through permanently locked Uniswap v4 liquidity.",
+"代币": "O",
+"分叉自": [],
+"口径": {
+"Fees": "Quote-denominated swap fees from Hook Trade events plus token-launch payment events across configured suites. Legacy launch-token-denominated swap fees are excluded because reliable historical USD valuation is unavailable. Crypto uses token balances; Stocks use the event-time factory tick reference price under the documented $4,000 opening-cap convention, with historical DefiLlama prices only when that reference is unavailable.",
+"ProtocolRevenue": "Swap and launch fees retained by the protocol treasury.",
+"Revenue": "Actual platform and protocol-owned fixed-component swap credits, plus token-launch fees. Includes anti-snipe surcharges, referral fallback and rounding retained by the protocol. Claims do not count again.",
+"SupplySideRevenue": "Actual swap credits allocated to creators and referrers, including amounts still unclaimed."
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/o1-launchpad",
+"合约": "base:0x182fa643e5f29d5eca75e7b9cf9336a3fe4620b2",
+"名称": "o1 Launchpad",
+"大事记": [],
+"安全事件": [],
+"官网": "https://launch.o1.exchange",
+"官网错误": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+"审计数": "0",
+"审计链接": [],
+"市值": null,
+"日期": "2026-11-11",
+"母协议": "o1.exchange",
+"融资": [],
+"链": [
+"Base",
+"Robinhood Chain"
+]
+},
+"otc": {
+"GitHub": [],
+"X": "otc_labs",
+"gecko_id": "otc",
+"上线DefiLlama": "2026-10-29",
+"介绍": "OTC is a multi-product Solana protocol that turns the fees its products earn into rewards for holders. Its launcher uses creator fees to buy tokenized stocks or other reward tokens for each coin's holders, and its Desk NFTs hold vaults credited with tokenized stocks from a shared revenue pot. A share of fees buys back and burns $OTC",
+"代币": "OTC",
+"分叉自": [],
+"口径": {
+"Fees": "Creator fees from coins launched on OTC (Pump.fun bonding curve and PumpSwap), paid out by Pump.fun to OTC's fee wallet, plus the creator fees of the $OTC token itself, plus the 0.5 SOL surcharge paid on every Desk NFT mint (refundable account rent excluded). Meteora launches, whose fees are claimed in the quote token, are not tracked yet.",
+"HoldersRevenue": "Share of launcher fees used to buy back and burn $OTC (10% since Sep 12 2026, about 5% before) and SOL dividends paid to $OTC holders (5% of launcher fees from Sep 12 to Oct 2 2026).",
+"ProtocolRevenue": "Share of launcher fees sent to the OTC protocol wallet (12.5% since Oct 3 2026, 5% from Sep 13 to Oct 2, 15% from early September to Sep 12 and less in the first days after launch), plus the part of $OTC's own creator fees the Desk pot forwards to it (50% per the docs, less in earlier months), plus 0.05 SOL of each Desk mint surcharge.",
+"Revenue": "Share of launcher fees, $OTC creator fees and Desk mint surcharges sent to the OTC protocol wallet, plus the launcher fees used to buy back and burn $OTC or paid as SOL dividends to $OTC holders.",
+"SupplySideRevenue": "Launcher fees spent on the reward tokens airdropped to each launcher coin's holders and the account rent those payouts need (67.5% of launcher fees since Oct 3 2026, 70% before), plus the Desk pot paid out to Desk NFT owners (10% of launcher fees, the $OTC creator fees left after the protocol's part, and 0.45 SOL of each Desk mint surcharge)."
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/otc",
+"合约": "solana:MukLDtJ8Cx9DxLbeyLRSWPSposTMWuwHANbuaudpump",
+"名称": "OTC",
+"大事记": [],
+"安全事件": [],
+"官网": "https://otcdesks.cash",
+"官网错误": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+"审计数": "0",
+"审计链接": [],
+"市值": 2426462.2221214096,
+"日期": "2026-11-11",
+"母协议": null,
+"融资": [],
+"链": [
+"Solana"
+]
+},
+"pons-v1": {
+"GitHub": [],
+"X": "ponsdotfamily",
+"gecko_id": null,
+"上线DefiLlama": "2026-07-31",
+"介绍": "Pons is a token launchpad for creating and trading fixed-supply tokens that progress toward liquidity graduation on Robinhood Chain",
+"代币": "PONS",
+"分叉自": [],
+"口径": {
+"Fees": "1% swap fees paid on all token swaps of tokens launched on the platform (only pools with at least $200 in TVL are included) and 0.0005 $ETH per token launched.",
+"HoldersRevenue": "Around 80% of revenue is used to buyback and burn $PONS tokens.",
+"ProtocolRevenue": "Revenue minus the $PONS bought back and burnt.",
+"Revenue": "Part of swap fees retained by the protocol (exact fee share extracted from the protocolFeeShare function, only pools with at least $200 in TVL are included) and all the launch fees (0.0005 $ETH per token launched).",
+"SupplySideRevenue": "Includes one-sixth of swap fees (routed to Uniswap after July 27, 2026, and zero before that), as well as the portion of swap fees paid to token creators after protocol revenue is deducted."
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/ponsdotfamily",
+"合约": "robinhood:0x39dbed3a2bd333467115de45665cc57f813c4571",
+"名称": "Pons V1",
+"大事记": [],
+"安全事件": [],
+"官网": "https://www.ponsfamily.com/launchpad",
+"官网错误": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+"审计数": "0",
+"审计链接": [],
+"市值": null,
+"日期": "2026-11-11",
+"母协议": "pons",
+"融资": [],
+"链": [
+"Robinhood Chain"
+]
+},
+"pons-v2": {
+"GitHub": [],
+"X": "ponsdotfamily",
+"gecko_id": null,
+"上线DefiLlama": "2026-07-31",
+"介绍": "Pons is a token launchpad for creating and trading fixed-supply tokens that progress toward liquidity graduation on Robinhood Chain",
+"代币": "PONS",
+"分叉自": [],
+"口径": {
+"Fees": "Includes launch fees, curve swap fees and swap fees post graduation (uniswap v4 : realised through fee swept events)",
+"Revenue": "Includes all the launch fees and part of swap fees",
+"SupplySideRevenue": "Includes swap fees to creators, taxes (optional) to creators and buybacks (if enabled by creators) of meme tokens"
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/ponsdotfamily-v2",
+"合约": "robinhood:0x39dbed3a2bd333467115de45665cc57f813c4571",
+"名称": "Pons V2",
+"大事记": [],
+"安全事件": [],
+"官网": "https://www.ponsfamily.com/launchpad",
+"官网错误": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+"审计数": "0",
+"审计链接": [],
+"市值": null,
+"日期": "2026-11-11",
+"母协议": "pons",
+"融资": [],
+"链": [
+"Robinhood Chain"
+]
+},
+"pools": {
+"GitHub": [],
+"X": "TradePools",
+"gecko_id": null,
+"上线DefiLlama": null,
+"介绍": "Uniswap Labs' token launchpad on Robinhood Chain",
+"代币": null,
+"分叉自": [],
+"口径": {
+"Fees": "The 0.25% fee charged on every trade, taken in whichever token the trader pays with. pools.trade charges nothing to launch a token and takes no cut of the raise. Traders also pay Uniswap's own 0.04% protocol fee on pools where it is switched on; that is Uniswap's charge, not pools.trade's, and is left out here.",
+"HoldersRevenue": "Zero. There is no pools.trade token.",
+"ProtocolRevenue": "Zero. pools.trade has no treasury cut, no launch fee and no graduation fee.",
+"Revenue": "Zero. pools.trade keeps none of the trading fee — it all goes to the token's creator and back into the pool's own permanently locked liquidity.",
+"SupplySideRevenue": "The whole 0.25% trading fee: the creator's share plus the part that is compounded back into the locked liquidity."
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/pools-trade.ts",
+"合约": null,
+"名称": "Pools",
+"大事记": [],
+"安全事件": [],
+"官网": "https://pools.trade/",
+"官网错误": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+"审计数": "0",
+"审计链接": [],
+"市值": null,
+"日期": "2026-11-11",
+"母协议": null,
+"融资": [],
+"链": [
+"Robinhood Chain"
+]
+},
+"pump.fun": {
+"GitHub": [],
+"X": "Pumpfun",
+"gecko_id": null,
+"上线DefiLlama": "2024-04-06",
+"介绍": "Launch a coin that is instantly tradeable in one click for free",
+"代币": "PUMP",
+"分叉自": [],
+"口径": {
+"Fees": "Bonding-curve trade fees paid by users (pump's slice + creator/cashback slice), graduation fees, Mayhem-mode fees, and the app fee on pump.fun website trades.",
+"HoldersRevenue": "PUMP bought back on the market by pump.fun buyback wallets (funded by all pump products, so it won't sum exactly with ProtocolRevenue here).",
+"ProtocolRevenue": "Pump's slice kept by the protocol after the buyback share, plus 100% of graduation fees, Mayhem fees and the website app fee. Era-based split: 100% pre-2025-07-14, 0% from 2025-07-14, 50% from 2026-04-28.",
+"Revenue": "Pump's slice of the bonding-curve trade fee plus graduation fees, Mayhem-mode fees and the website app fee.",
+"SupplySideRevenue": "Creator fees paid out to coin creators and cashback returned to traders/holders of the coin."
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/pumpdotfun.ts",
+"合约": "solana:pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn",
+"名称": "pump.fun",
+"大事记": [],
+"安全事件": [
+{
+"手法": "Private Key Compromised",
+"日期": "2024-05-16",
+"来源": "",
+"类型": "Key Compromise",
+"金额": 1900000
+}
+],
+"官网": "https://www.pump.fun/",
+"官网错误": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+"审计数": "0",
+"审计链接": [],
+"市值": null,
+"日期": "2026-11-11",
+"母协议": "pump",
+"融资": [
+{
+"其他": [],
+"日期": "2025-07-12",
+"来源": "",
+"轮次": "Private token sale",
+"金额百万": 400,
+"领投": []
+},
+{
+"其他": [],
+"日期": "2025-07-12",
+"来源": "",
+"轮次": "ICO",
+"金额百万": 600,
+"领投": []
+}
+],
+"链": [
+"Solana"
+]
+},
+"rapid-launch": {
+"GitHub": [],
+"X": null,
+"gecko_id": null,
+"上线DefiLlama": "2026-09-02",
+"介绍": "Rapid Launch is a token-deployment and trading toolkit that lets users deploy tokens across major launchpads and manage bundled buys, wallets, and automated trading workflows.",
+"代币": null,
+"分叉自": [],
+"口径": {
+"Fees": "SOL fees paid by users for Rapid Launch token deployment and trading tools.",
+"ProtocolRevenue": "86% of collector fees, kept by Rapid Launch after the 14% referral split.",
+"Revenue": "86% of collector fees, kept by Rapid Launch after the 14% referral split.",
+"SupplySideRevenue": "14% of collector fees, distributed to referral recipients."
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/rapid-launch.ts",
+"合约": null,
+"名称": "Rapid Launch",
+"大事记": [],
+"安全事件": [],
+"官网": "https://rapidlaunch.io/",
+"官网错误": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+"审计数": "0",
+"审计链接": [],
+"市值": null,
+"日期": "2026-11-11",
+"母协议": null,
+"融资": [],
+"链": [
+"Solana"
+]
+},
+"rise.rich": {
+"GitHub": [
+"riserich"
+],
+"X": "risedotrich",
+"gecko_id": null,
+"上线DefiLlama": "2026-05-08",
+"介绍": "RISE is the first floor-backed, permissionless token launchpad on Solana, enabling creators to launch tokens instantly while embedding capped downside risk mechanics and in-house lending from day one",
+"代币": null,
+"分叉自": [],
+"口径": {
+"Fees": "1.25% on every buy/sell trade and 3% on every borrow (gross principal), on Rise v1 and v2 markets. Includes both bonding-curve trading fees and lending fees.",
+"ProtocolRevenue": "Fees collected by the rise team wallet: 75% of v1 fees and, on v2, the team leg set per market on-chain (fees_team, currently 50% on every market) (on-chain protocol share, before any internal split).",
+"Revenue": "Fees collected by the rise team wallet: 75% of v1 fees and, on v2, the team leg set per market on-chain (fees_team, currently 50% on every market) (on-chain protocol share, before any internal split).",
+"SupplySideRevenue": "Fees paid to creators: 25% of v1 fees (split per-market between the creator and the floor reserve) and, on v2, the creator and floor legs set per market on-chain (fees_creator + fees_floor, currently 50% / 0%)."
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/rise-launchpad.ts",
+"合约": null,
+"名称": "Rise.rich",
+"大事记": [],
+"安全事件": [],
+"官网": " ",
+"官网错误": "unknown url type: ''",
+"审计数": "0",
+"审计链接": [],
+"市值": null,
+"日期": "2026-11-11",
+"母协议": null,
+"融资": [],
+"链": [
+"Solana"
+]
+},
+"sapling": {
+"GitHub": [],
+"X": "saplingdotcash",
+"gecko_id": "sapling",
+"上线DefiLlama": "2026-10-20",
+"介绍": "Sapling is the first zcash-native launchpad & terminal. Launch, trade and cash out coins straight from a Zcash wallet, shielded. Coins launch on Raydium LaunchLab, paired with ZEC, hSOL or tokenized stocks. Sapling's 2% of every trade is split on chain: 0.5% buys and burns $SAPLING, 0.5% deepens $SAPLING/ZEC liquidity, 0.5% buys back and burns the top Sapling coins, and 0.5% goes to the treasury. Deployers can add up to 3% more for their holders, paid in ZEC",
+"代币": "SAPLING",
+"分叉自": [],
+"口径": {
+"Fees": "The 2% fee on every buy and sell of a coin launched on Sapling, the flat fee paid to plant a coin, and Sapling's fee on buys, plantings and sales made from a Zcash account. On Robinhood Chain: the 2% creator tax plus the creator's 70% of Pons's 1% fee on every buy and sell of a coin planted through Sapling, both paid to Sapling's splitter, plus the planting fee and the Zcash account fee, paid in USDG to the treasury. On Raydium LaunchLab (from 2026-10-28): any platform fee claimed from the curve and Sapling's fees from the coin's graduated pool; excludes the coin's transfer tax (Sapling's 2.00% plus the deployer's tax of none to 3%), which is taken on every transfer of the coin, wallet to wallet included.",
+"HoldersRevenue": "50% of the 2% coin trading fee: 25% buys and burns $SAPLING, and 25% goes to the $SAPLING/ZEC pool on PumpSwap, where about half of it buys $SAPLING, both sides are deposited and the LP tokens are burned, so no one, Sapling included, can withdraw it. On Robinhood Chain the shares apply to what reaches Sapling's splitter: the 2% creator tax plus the creator's 70% of Pons's 1% fee. For LaunchLab coins, half of the curve platform fee and the graduated pool's fees: $SAPLING buyback and burn, and the protocol-owned $SAPLING/ZEC pool, whose position is locked for good.",
+"ProtocolRevenue": "The treasury's share: 10% of the 2% coin trading fee, plus the planting fee and the Zcash account fee. For LaunchLab coins, the treasury's and the flywheel's quarters of the curve platform fee and the graduated pool's fees. On Robinhood Chain the shares apply to what reaches Sapling's splitter: the 2% creator tax plus the creator's 70% of Pons's 1% fee.",
+"Revenue": "The part of the 2% coin trading fee Sapling keeps (10% treasury, 25% $SAPLING buyback and burn, 25% $SAPLING/ZEC liquidity), plus the planting fee and the Zcash account fee. For LaunchLab coins, all of the curve platform fee and the graduated pool's fees (a quarter each to the treasury, the flywheel, $SAPLING buyback and burn, and the protocol-owned $SAPLING/ZEC pool). On Robinhood Chain the shares apply to what reaches Sapling's splitter: the 2% creator tax plus the creator's 70% of Pons's 1% fee.",
+"SupplySideRevenue": "40% of the 2% coin trading fee, paid to each coin's deployer, a wallet they choose, or the holders of that coin as holder rewards (on Robinhood Chain, 40% of what reaches Sapling's splitter). LaunchLab coins pay their deployers from the coin's transfer tax, which is not counted."
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/sapling",
+"合约": "solana:BZFYNPeQAEW3HWQ4DNsTVahC1n4ZjTgn6jB2nnBbB96W",
+"名称": "Sapling",
+"大事记": [],
+"安全事件": [],
+"官网": "https://sapling.cash",
+"官网错误": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+"审计数": "0",
+"审计链接": [],
+"市值": 1355861.38171818,
+"日期": "2026-11-11",
+"母协议": null,
+"融资": [],
+"链": [
+"Solana"
+]
+},
+"stockereum": {
+"GitHub": [],
+"X": "Stockereum",
+"gecko_id": "stockereum-fun",
+"上线DefiLlama": "2026-10-21",
+"介绍": "Token launchpad on Ethereum where every token launches into a locked Uniswap v4 pool paired with tokenized stocks, memecoins, stablecoins or ETH",
+"代币": "STOCKER",
+"分叉自": [],
+"口径": {
+"Fees": "The fee the Stockereum hook charges on every swap, in the quote currency, from the hook's Trade event: 1% on v2 launches, 1%, 2% or 3% (chosen by the creator) on v3 launches, plus the anti-snipe rate in the first moments after a launch.",
+"ProtocolRevenue": "The platform's share of the swap fee.",
+"Revenue": "The platform's share of the swap fee: half of the normal 1% on v2, 0.5% of the trade on 1% v3 launches and 1% of the trade on 2% and 3% v3 launches, plus any anti-snipe excess.",
+"SupplySideRevenue": "The rest of the swap fee, paid to the launch's creator or, on launches with holder rewards enabled, to the launched token's holders."
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/stockereum.ts",
+"合约": "0x75e2fc69ff2ac12af65ba7d321bbf4f878c535d2",
+"名称": "Stockereum",
+"大事记": [],
+"安全事件": [],
+"官网": null,
+"审计数": "0",
+"审计链接": [],
+"市值": 586267.1871555487,
+"日期": "2026-11-11",
+"母协议": null,
+"融资": [],
+"链": [
+"Ethereum"
+]
+},
+"stonkbrokers-safe-launch": {
+"GitHub": [],
+"X": "ClutchMarkets",
+"gecko_id": null,
+"上线DefiLlama": "2026-09-22",
+"介绍": "Token launch platform using bonding curves and anti-snipe launch windows, with launch proceeds graduating into permanently locked DEX liquidity",
+"代币": "STONKBROKER",
+"分叉自": [],
+"口径": {
+"Fees": "Safe Launch / Stonklauncher snipe tax on window buys and sells across all pad generations (16.5% creator / 16.5% protocol / 50% locked-LP or ICO Bonus / 17% StockBooster + Clock In Card referrers); the anti-snipe fair-launch snipe tax (time-decay tax on launch-curve buys, 90% StockBooster / 10% launch dev); and StonkCurvePool 1% trade fees (33/33/33 waterfall).",
+"ProtocolRevenue": "16.5% of the Safe Launch / Stonklauncher snipe tax → protocol accrual; 33.34% of bonding-curve trade fees → protocol.",
+"Revenue": "The 16.5% protocol leg of the Safe Launch / Stonklauncher snipe tax and 33.34% of bonding-curve trade fees.",
+"SupplySideRevenue": "Safe Launch tax legs to the launch creator (16.5%), StockBooster + Clock In Card referrers (17%), and the permanently locked LP reserve / ICO Bonus (50%); 90% of the anti-snipe launch tax → StockBooster dividends and 10% → launch dev; bonding-curve creator (33.33%) + StonkBrokers Directed Clock In / pot (33.33%)."
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/stonkbrokers-safe-launch",
+"合约": "robinhood:0xe934e36a439c94017b64a3fece66af12099abf50",
+"名称": "StonkBrokers Safe Launch",
+"大事记": [],
+"安全事件": [],
+"官网": "https://stonkbrokers.io/home",
+"官网错误": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+"审计数": "0",
+"审计链接": [],
+"市值": null,
+"日期": "2026-11-11",
+"母协议": "stonkbrokers",
+"融资": [],
+"链": [
+"Robinhood Chain"
+]
+},
+"stonkfun": {
+"GitHub": [],
+"X": "LaunchOnSF",
+"gecko_id": "stonk-3",
+"上线DefiLlama": null,
+"介绍": "A Solana launchpad to launch coins paired with anything.",
+"代币": "STONK",
+"分叉自": [],
+"口径": {
+"Fees": "Trading fees StonkFun collects, measured when it claims them: the 1% platform fee on its Raydium LaunchLab bonding curves (every platform config whose fees it claims), the creator fee on the Raydium CPMM pools those launches graduate into, and the quote side of fees harvested from the permanently locked liquidity behind pre-LaunchLab launches. Raydium's own fee shares are excluded. Each token is valued with Dune trade prices at the hour it was received, ignoring trades priced more than 10x away from that day's median.",
+"HoldersRevenue": "Quote assets spent buying STONK on Jupiter, identified on-chain as swaps that returned STONK to the operator wallet, at the net amount each swap spent.",
+"ProtocolRevenue": "Fees StonkFun keeps after paying the creator share of standard launches and the flywheel share of reward launches, minus the quote assets spent buying STONK on Jupiter. From 2026-08-28, fees paid in STONK and fees from STONK's own pool are excluded. Buybacks spend income claimed on earlier days, so this is negative when a buyback is larger than the day's retained fees.",
+"Revenue": "Fees less the creator share of standard launches and the flywheel share of reward launches, as paid out on-chain. From 2026-08-28, fees paid in STONK and fees from STONK's own pool are excluded: they cannot fund a STONK buyback.",
+"SupplySideRevenue": "Creator and flywheel shares of fees, measured when they are paid out."
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/stonkfun.ts",
+"合约": "6GmAFSYs4gk3FDao5FzzySQpPZaWsa4rUJHacpMpUNgx",
+"名称": "StonkFun",
+"大事记": [],
+"安全事件": [],
+"官网": null,
+"审计数": "0",
+"审计链接": [],
+"市值": 38838671.85575492,
+"日期": "2026-11-11",
+"母协议": null,
+"融资": [],
+"链": [
+"Solana"
+]
+}
+}
