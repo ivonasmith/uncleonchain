@@ -719,6 +719,7 @@ padding:8px 10px;font-size:12px;min-width:150px;box-shadow:0 6px 24px rgba(0,0,0
 .uc-plot .shl{fill:var(--muted);font-size:10px;font-family:var(--sans)}
 .uc-plot .stl{font-size:10.5px;font-family:var(--sans);font-weight:600;opacity:.95}
 .uc-plot .sgl{font-size:10.5px;font-family:var(--sans);font-weight:600;paint-order:stroke;stroke:var(--card);stroke-width:3px;stroke-linejoin:round}
+.uc-plot .sgl .sgp{font-family:var(--mono);font-size:10px;font-weight:500}
 .uc-plot .zsel{fill:var(--lime);opacity:.12}
 .uc-zoom .pill{min-width:30px}
 .uc-plot .lastv{font-size:10.5px;font-family:var(--mono);font-weight:600}
@@ -1117,13 +1118,19 @@ Chart.prototype.draw=function(){
  else vis.forEach(s=>{const arr=j.s[s.k];const p=path(arr,clipped);if(!p)return;
    if(s.area&&!c.log){const base=Y(Math.max(Math.min(0,yhi),ylo));svg.appendChild(mk('path',{d:p+`L${(L+pw).toFixed(1)},${base}L${L},${base}Z`,style:`fill:${col(s)};opacity:.10`}))}
    svg.appendChild(mk('path',{d:p,style:`fill:none;stroke:${col(s)};stroke-width:${s.w||1.8};stroke-linejoin:round;stroke-linecap:round`}))});
- // 分段标注：同一条线里每段连续的数据写名字 + 段内涨跌幅（涨腿 / 跌腿）
+ // 分段标注：每段连续的数据写两行——名字 + 整段涨跌幅（按整条腿算：起点从数据里往前找到这一段真正的开头，不受当前显示范围影响）
  if(c.segLabels&&!c.stack)vis.forEach(s=>{if(!s.lab)return;const arr=j.s[s.k];let a=-1;
-  const flush=(a,b)=>{if(a<0||b<=a)return;const xa=X(T0(D[idx[a]])),xb=X(T0(D[idx[b]]));if(xb-xa<26)return;
-   const v0=arr[idx[a]];let ex=v0,ek=a;for(let k=a;k<=b;k++){const v=arr[idx[k]];if(v==null)continue;if(s.up?v>ex:v<ex){ex=v;ek=k}}
-   const pc=v0>0?(ex/v0-1)*100:null;let t=s.lab;if(pc!=null&&xb-xa>=62)t+=' '+(pc>=0?'+':'−')+Math.abs(pc).toFixed(0)+'%';
-   const x=Math.min(Math.max((xa+xb)/2,L+18),L+pw-18),y=s.up?Math.max(TP+26,YC(ex)-7):Math.min(TP+ph-4,YC(ex)+15);
-   const tx=mk('text',{x:x,y:y,'text-anchor':'middle',class:'sgl',style:`fill:${col(s)}`});tx.textContent=t;svg.appendChild(tx)};
+  const flush=(a,b)=>{if(a<0||b<a)return;const xa=X(T0(D[idx[a]])),xb=X(T0(D[idx[b]]));if(xb-xa<22)return;
+   let i0=idx[a];while(i0>0&&arr[i0-1]!=null)i0--;let i1=idx[b];while(i1<N-1&&arr[i1+1]!=null)i1++;
+   const v0=arr[i0];let ex=v0,ei=i0;for(let i=i0;i<=i1;i++){const v=arr[i];if(v==null)continue;if(s.up?v>ex:v<ex){ex=v;ei=i}}
+   const pc=(i1===N-1&&s.lastPct!=null)?s.lastPct:(s.segPct&&s.segPct[D[i0]]!=null)?s.segPct[D[i0]]:(v0>0?(ex/v0-1)*100:null);   // segPct = 数据里每条腿自己的涨跌幅（按起点日期）   // 最后一段 = 当前这一腿：用涨跌腿数据（币安收盘），和读数卡同一个数
+   let vk=-1,vv=null;for(let k=a;k<=b;k++){const v=arr[idx[k]];if(v==null)continue;if(vv==null||(s.up?v>vv:v<vv)){vv=v;vk=k}}
+   const x=Math.min(Math.max((xa+xb)/2,L+20),L+pw-20),yv=YC(vv);
+   const y1=s.up?Math.max(TP+30,yv-20):Math.min(TP+ph-18,yv+15);
+   const tx=mk('text',{x:x,y:y1,'text-anchor':'middle',class:'sgl',style:`fill:${col(s)}`});
+   const t1=mk('tspan',{x:x});t1.textContent=s.lab;tx.appendChild(t1);
+   if(pc!=null&&Math.abs(pc)>=0.5){const t2=mk('tspan',{x:x,dy:12,class:'sgp'});t2.textContent=(pc>=0?'+':'−')+Math.abs(pc).toFixed(0)+'%';tx.appendChild(t2)}
+   svg.appendChild(tx)};
   for(let k=0;k<idx.length;k++){const v=arr[idx[k]];if(v!=null&&a<0)a=k;if((v==null||k===idx.length-1)&&a>=0){flush(a,v==null?k-1:k);a=-1}}});
  // 被截掉的异常值：边缘画小三角，悬停看真实值
  if(clipped){const arr=j.s[vis[0].k];let lastx=-9;idx.forEach(i=>{const v=arr[i];if(v==null)return;const x=X(T0(D[i]));if(x-lastx<4)return;

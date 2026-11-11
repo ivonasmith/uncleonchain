@@ -3581,14 +3581,20 @@ def leg_cycle_chart():
     states = [{"n": T(R.L2_STATES[c][0], R.L2_STATES[c][1]), "s": T(*short.get(c, (R.L2_STATES[c][0], R.L2_STATES[c][1]))), "c": R.L2_STATES[c][4]} for c in codes]
     leg = "".join(f'<span><i style="background:var(--{R.L2_STATES[c][4]})"></i>{esc(T(R.L2_STATES[c][0], R.L2_STATES[c][1]))}</span>' for c in codes)
     cur = hist.get("current") or {}
+    bl = ((G.get("LEG") or {}).get("btc_leg") or {})
+    segpct = {"up": {x["start_date"]: x["pct"] for x in hist["legs"] if x["dir"] == "up"},
+              "down": {x["start_date"]: x["pct"] for x in hist["legs"] if x["dir"] == "down"}}
+    lastpct = (bl["leg"].get("gain_pct") if bl.get("direction") == "up" else -bl["leg"]["drop_pct"]) if bl.get("leg") and bl.get("direction") in ("up", "down") else None
     mk = [{"date": cur["start_date"], "label": T("这一腿起点", "current leg start")}] if cur.get("start_date") else []
     cfg = {"v2": True, "src": G["LEGCHART"], "fmt": "price", "log": True, "ranges": ["1Y", "3Y", "CYC", "ALL"], "range": "1Y", "cyc": G.get("CYC"),
            "stk": "st", "states": states, "markers": mk, "gaps": True, "last": False, "novals": True, "h": 360,
            "zoom": True, "stateLabels": True, "segLabels": True,
            "note": T("可以放大缩小：用图上方的 ＋ / － / ← / → 按钮，电脑上也可以直接在图上拖选一段放大，双击复位。对数坐标。线的颜色 = 当时在涨腿还是跌腿（收盘从高 / 低点反向走出 10% 换腿，按币安收盘价切）；背景色 = 当天的 L2 周期状态。价格线画的是 Coin Metrics 收盘价（和 L2 图同源），与币安收盘每天相差零点几个百分点。",
                      "Zoom with the + / − / ← / → buttons above the chart; on desktop you can also drag across the chart to zoom in, double-click to reset. Log scale. Line colour = up-leg or down-leg at the time (a 10% reversal off a high/low switches legs, cut on Binance closes); background = the L2 cycle state of the day. The line is the Coin Metrics close (same as the L2 chart), within a few tenths of a percent of Binance."),
-           "series": [{"k": "up", "n": T("涨腿", "Up-leg"), "lab": T("涨腿", "Up"), "up": True, "c": "up", "w": 1.8},
-                      {"k": "dn", "n": T("跌腿", "Down-leg"), "lab": T("跌腿", "Down"), "c": "dn", "w": 1.8}]}
+           "series": [{"k": "up", "n": T("涨腿", "Up-leg"), "lab": T("涨腿", "Up"), "up": True, "c": "up", "w": 1.8,
+                       "lastPct": lastpct if bl.get("direction") == "up" else None, "segPct": segpct["up"]},
+                      {"k": "dn", "n": T("跌腿", "Down-leg"), "lab": T("跌腿", "Down"), "c": "dn", "w": 1.8,
+                       "lastPct": lastpct if bl.get("direction") == "down" else None, "segPct": segpct["down"]}]}
     return (f'<div class="card chartcard legcyc"><div class="l2leg">{T("背景色 = 周期状态（L2）：", "Background = cycle state (L2): ")}{leg}</div>' + chart_div(cfg) + '</div>')
 
 
