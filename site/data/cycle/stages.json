@@ -7527,6 +7527,10 @@
     {
       "date": "2026-11-09",
       "state": "autumn"
+    },
+    {
+      "date": "2026-11-10",
+      "state": "drift_down"
     }
   ],
   "runs": [
@@ -9089,6 +9093,12 @@
       "start": "2026-11-04",
       "end": "2026-11-09",
       "days": 6
+    },
+    {
+      "state": "drift_down",
+      "start": "2026-11-10",
+      "end": "2026-11-10",
+      "days": 1
     }
   ],
   "duration_inclusion": "all non-unknown runs excluding first and last and runs of <= 2 days; not independent market cycles"
