@@ -7,6 +7,16 @@
   "title_en": "Cycle chart: every leg shows its move",
   "items": [
    {
+    "type": "new",
+    "zh": "发射台矩阵：近 30 日或近 7 日手续费份额 ≥ 0.1% 的平台都有二级页面（现在 30 个，如 Montra、Graphite、Bags、Clanker），排行里点名字直接进：手续费走势、份额与排名、分链，「产品与基本面」（一句话介绍并注明出处、叙事标签、代币、上 DefiLlama 时间、审计、融资、安全事件、团队信息待补），「钱怎么收、怎么分」（DefiLlama 口径原文），以及官网 / X / DefiLlama 数据源 / GitHub 入口。份额不到 0.1% 的仍直接跳 DefiLlama。pump.fun、Flap 等深度追踪页也加上了这两块。",
+    "en": "Launchpads: every platform with ≥ 0.1% of 30-day or 7-day fees now has its own page (30 today, e.g. Montra, Graphite, Bags, Clanker), linked from the ranking: fee history, share and rank, chain split, product & fundamentals (sourced one-liner, angle tags, token, DefiLlama listing date, audits, raises, incidents; team info pending), how fees are charged and split (DefiLlama methodology), and links to the site, X, the DefiLlama source and GitHub. Below 0.1% still opens DefiLlama. Deep-tracked pages (pump.fun, Flap…) get the same sections."
+   },
+   {
+    "type": "new",
+    "zh": "链上新币扫描加 Hyperliquid 系新链 Elysium（Kinetiq，chainId 99901，官方免费节点）：它上面的 Montra、Ascend 两个发射台 11-10 刚上 DefiLlama，近 30 天已占全网发射台手续费约 1%。",
+    "en": "On-chain scan adds Elysium (Kinetiq’s Hyperliquid-linked chain, chainId 99901, free official node): its launchpads Montra and Ascend joined DefiLlama on 11-10 and already take about 1% of launchpad fees over 30 days."
+   },
+   {
     "type": "fix",
     "zh": "周期图上的涨腿 / 跌腿标注改成两行（名字在上、百分比在下），窄的腿也写得下百分比；百分比直接取涨跌腿数据里每条腿的涨跌幅（和读数卡、详情页同一个数），放大缩小或只看一段时也不会少算",
     "en": "Leg labels on the cycle chart now use two lines (name over percentage) so narrow legs also show their move; percentages come straight from the leg data, so they match the cards and stay correct when zoomed."
