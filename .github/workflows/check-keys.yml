@@ -1,0 +1,49 @@
+name: 检查密钥（手动）
+
+# 只报告几个候选 Secret 名字有没有配、能不能用，不打印任何值。用自己的并发组，不占日更队列。
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: check-keys
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: 检查
+        env:
+          XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
+          GROK_API_KEY: ${{ secrets.GROK_API_KEY }}
+          XAI_KEY: ${{ secrets.XAI_KEY }}
+          GROK_KEY: ${{ secrets.GROK_KEY }}
+          GROK_API: ${{ secrets.GROK_API }}
+          GROK: ${{ secrets.GROK }}
+          XAI: ${{ secrets.XAI }}
+          CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          python3 - <<'EOF'
+          import os, json, urllib.request
+          names = ["XAI_API_KEY", "GROK_API_KEY", "XAI_KEY", "GROK_KEY", "GROK_API", "GROK", "XAI", "CLAUDE_API_KEY", "ANTHROPIC_API_KEY"]
+          for n in names:
+              v = os.environ.get(n, "").strip()
+              if not v:
+                  print(f"{n}: 没配")
+                  continue
+              msg = f"{n}: 已配（长度 {len(v)}）"
+              if n not in ("CLAUDE_API_KEY", "ANTHROPIC_API_KEY"):
+                  try:
+                      req = urllib.request.Request("https://api.x.ai/v1/models", headers={"Authorization": f"Bearer {v}", "User-Agent": "uncleonchain-key-check"})
+                      with urllib.request.urlopen(req, timeout=30) as r:
+                          ids = [m.get("id") for m in json.load(r).get("data", [])]
+                      msg += f" · xAI 可用，模型：{', '.join(ids[:12])}"
+                  except Exception as e:
+                      msg += f" · xAI 调用失败：{str(e)[:80]}"
+              print(msg)
+          EOF
