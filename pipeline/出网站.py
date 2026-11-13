@@ -3468,9 +3468,12 @@ def platform_profile_html(p):
         def _host(u):
             return re.sub(r"^https?://(www\.)?", "", u).split("/")[0]
         read = "".join(f' <a href="{esc(u)}" target="_blank" rel="noopener">{esc(_host(u))}</a>' for u in (ai.get("官网已读") or [])[:3])
+        manual = ai.get("方式") == "手动"
         aiblock = (f'<h3 id="ai">{T("AI 研究摘要", "AI research summary")}</h3><p class="tnote" style="margin-top:-4px">'
-                   + T(f"Grok 以本站收集的资料为底（DefiLlama 协议详情与口径、本站手续费数据、官网和文档正文{('，读了' + read) if read else ''}），团队和近况另用 X / 网页搜索补，搜来的都附链接；查不到写「资料未提及」。生成于 {esc(ai.get('日期') or '')}，未人工核实，不是推荐。",
-                       f"Grok worked from the material we collected (DefiLlama details and methodology, our fee data, the site and docs{('; read' + read) if read else ''}), adding team and recent news from X / web search with links; anything not found is marked. Generated {esc(ai.get('日期') or '')}; not verified by us, not a recommendation.")
+                   + (T(f"Grok（网页版）用官网、DefiLlama、X 和网页搜索整理，搜来的说法都附链接；查不到写「资料未提及」。整理于 {esc(ai.get('日期') or '')}，未人工核实，不是推荐。",
+                        f"Compiled by Grok (web) from the site, DefiLlama, X and web search, with links for every claim; anything not found is marked. {esc(ai.get('日期') or '')}; not verified by us, not a recommendation.") if manual else '')
+                   + ("" if manual else T(f"Grok 以本站收集的资料为底（DefiLlama 协议详情与口径、本站手续费数据、官网和文档正文{('，读了' + read) if read else ''}），团队和近况另用 X / 网页搜索补，搜来的都附链接；查不到写「资料未提及」。生成于 {esc(ai.get('日期') or '')}，未人工核实，不是推荐。",
+                       f"Grok worked from the material we collected (DefiLlama details and methodology, our fee data, the site and docs{('; read' + read) if read else ''}), adding team and recent news from X / web search with links; anything not found is marked. Generated {esc(ai.get('日期') or '')}; not verified by us, not a recommendation."))
                    + '</p><div class="card pm">' + "".join(f'<div class="pm-k">{k}</div><div class="pm-v">{v}</div>' for k, v in arows if v) + "</div>")
     hm = info.get("大事记") or []
     hblock = (f'<h3>{T("大事记", "Milestones")} <span class="sub">DefiLlama</span></h3><ul class="plain">'
