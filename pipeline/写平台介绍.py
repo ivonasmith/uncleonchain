@@ -16,7 +16,7 @@ import 发射台名录 as DIR
 
 MODEL = os.environ.get("XAI_MODEL", "grok-4.7")
 MAX_TURNS = 3
-CALL_LIMIT = 300          # 每个平台调用 Grok 最多等 5 分钟（联网搜索慢）
+CALL_LIMIT = 660          # 每个平台调用 Grok 最多等 11 分钟（联网搜索 + 中英双语输出慢；11-13 试写 4 分钟都没回）
 
 
 def _with_limit(fn, seconds, default):
@@ -223,7 +223,7 @@ def grok_call(key, system, prompt):
                                  headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json",
                                           "User-Agent": "uncleonchain-platform-notes"})
     try:
-        with urllib.request.urlopen(req, timeout=240) as r:
+        with urllib.request.urlopen(req, timeout=600) as r:
             data = json.load(r)
     except urllib.error.HTTPError as e:
         raise RuntimeError(f"HTTP {e.code} {e.read().decode('utf-8', 'ignore')[:200]}")
