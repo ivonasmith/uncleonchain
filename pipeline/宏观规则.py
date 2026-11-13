@@ -1948,3 +1948,10 @@ RULE_CHANGES.append(
      "原因EN": "The old rule only checked whether the weekly change crossed ±10%; anything else was 'Steady (flat)'. From 2026-10-22 activity slid for two weeks ($3.73M → $3.39M 7-day average, temperature 41.6 → 35.3) without any single week falling 10%, yet the page kept saying 'flat'. Also, one-day threshold flickers counted as stretches and pulled 'usually lasts' too short.",
      "内容": "阶段新增「缓慢降温 / 缓慢升温」：前四条（退潮 / 盛夏 / 回暖 / 寒冬）都不满足时，近 14 天累计跌超 10% 且近一周仍在跌 = 缓慢降温，累计涨超 10% 且近一周仍在涨 = 缓慢升温，其余才是盘整。「一般持续几天」不计 ≤2 天的段，不足 5 次不给范围。历史每日阶段按新规则重算（1,871 天里 65 天的标签变了），stages.json 版本升为 v2。",
      "EN": "Added Slow cooling / Slow warming: when none of Cooling / Summer / Warming / Winter applies, a 14-day change ≤ −10% with the week still falling is Slow cooling, ≥ +10% with the week still rising is Slow warming; only the rest is Steady. 'Usually lasts' now skips stretches of ≤ 2 days and gives no range below 5 stretches. Daily stages were recomputed under the new rule (65 of 1,871 days changed label); stages.json is now v2."})
+
+RULE_CHANGES.append(
+    {"日期": "2026-11-13", "锚": "2026-11-13-lpresync", "范围": "发射台矩阵 · 逐日历史", "EN范围": "Launchpad matrix · daily history",
+     "原因": "DefiLlama 对新上榜的平台会事后补历史，也会改前几天的数。2026-11-11 Montra、Ascend 上榜当天接口只给 11-09、11-10 两天，第二天补到了 11-05；矩阵只对前 60 名整段重拉，其余平台补不上。",
+     "原因EN": "DefiLlama backfills new listings and revises recent days. On 2026-11-11 Montra and Ascend had only Nov 9–10 at listing and were backfilled to Nov 5 the next day; the matrix only re-pulled the top 60, so others never caught up.",
+     "内容": "每天对矩阵上显示的所有平台，按 DefiLlama 逐日序列重新同步近 60 天；补出来的天数、改过的数直接替换。汇总趋势、温度和平台页的近期数字可能随之小幅变动。",
+     "EN": "Every day, the last 60 days of every platform shown are re-synced from DefiLlama's daily series, replacing backfilled or revised days. Recent totals, the temperature gauge and platform pages may shift slightly."})

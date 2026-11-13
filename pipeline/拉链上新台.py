@@ -56,8 +56,7 @@ CHAINS = {
     "ink": {"名称": "Ink", "公共": "https://rpc-gel.inkonchain.com", "alchemy": None, "浏览器": "https://explorer.inkonchain.com", "跨度": 1000},
     "abstract": {"名称": "Abstract", "公共": "https://api.mainnet.abs.xyz", "alchemy": None, "浏览器": "https://abscan.org", "跨度": 1000},
     "berachain": {"名称": "Berachain", "公共": "https://rpc.berachain.com", "alchemy": None, "浏览器": "https://berascan.com", "跨度": 1000},
-    "avalanche": {"名称": "Avalanche", "公共": "https://avalanche.drpc.org", "alchemy": None, "浏览器": "https://snowtrace.io", "跨度": 50, "间隔": 0.4, "抽样": 2,
-                  "备用": ["https://api.avax.network/ext/bc/C/rpc"]},
+    # avalanche 2026-11-13 撤掉：近 30 天发射台手续费份额不到 0.01%，两个免费节点 20 分钟都扫不完一天
     "sonic": {"名称": "Sonic", "公共": "https://rpc.soniclabs.com", "alchemy": None, "浏览器": "https://sonicscan.org", "跨度": 1000},
     "mantle": {"名称": "Mantle", "公共": "https://rpc.mantle.xyz", "alchemy": None, "浏览器": "https://mantlescan.xyz", "跨度": 1000},
     "plasma": {"名称": "Plasma", "公共": "https://rpc.plasma.to", "alchemy": None, "浏览器": "https://plasmascan.to", "跨度": 1000},

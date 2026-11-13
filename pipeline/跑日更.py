@@ -54,6 +54,7 @@ def main():
     step("拉链上新台.py", timeout=45 * 60)   # 链上自动发现新发射台（Robinhood / BSC / Base / Arc）；挂了只缺这一块
     step("拉新台线索.py", timeout=30 * 60)   # Solana 前端拆分 + GeckoTerminal 目录 + DEX Screener 自称 + 候选补身份
     step("发射台名录.py", timeout=15 * 60)   # 名录：DefiLlama 介绍 + 抓官网简介 / X / logo（data/onchain/档案.json、logo/）
+    step("写平台介绍.py", timeout=20 * 60)   # 平台二级页面的 AI 研究摘要（没配 ANTHROPIC_API_KEY 就跳过）
     if not step("出看板.py"):
         sys.exit(4)
     if "--site" in sys.argv:

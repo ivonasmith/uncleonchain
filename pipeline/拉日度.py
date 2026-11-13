@@ -120,6 +120,15 @@ def main():
         for k, v in (res.get((s, "dailyFees")) or {}).items():
             if k >= HIST_START and v:
                 hist.setdefault(k, {})[s] = v
+    # 矩阵上显示的平台：近 60 天按逐日序列重新同步。DefiLlama 对新上榜平台会事后补历史（2026-11-11 Montra / Ascend 上榜当天只给 2 天，
+    # 第二天补到 11-05），也会改前几天的数；不在 Top60 的平台以前补不上
+    resync = 0
+    for s in shown:
+        for k, v in (res.get((s, "dailyFees")) or {}).items():
+            if k >= shift(expected, -60) and k >= HIST_START and v and hist.get(k, {}).get(s) != v:
+                hist.setdefault(k, {})[s] = v
+                resync += 1
+    print(f"  矩阵历史：近 60 天按逐日序列同步 {resync} 格")
     hist.setdefault(expected, {})
     carried = M.get("沿用") or {}           # {日期: {slug: 实际沿用的那天}}：历史里哪些格子是拿最后一天的值顶上的
     for x in snap:

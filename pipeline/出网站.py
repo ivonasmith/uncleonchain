@@ -3375,7 +3375,8 @@ def _pdir():
 
 def platform_page_slugs(matrix):
     try:
-        return set(_pdir().platform_slugs(matrix or {}))
+        DIR = _pdir()
+        return set(DIR.platform_slugs(matrix or {})) | set(DIR.platform_info())      # 只要进过 0.1% 就一直有二级页面
     except Exception as ex:
         print(f"  平台二级页面名单失败：{ex}")
         return set()
@@ -3408,6 +3409,13 @@ def platform_profile_html(p):
     except Exception as ex:
         print(f"  平台资料读取失败 {slug}：{ex}")
         info, txt, src, tags, prof = {}, "", "", [], {}
+        DIR = None
+    ai = ((load(os.path.join(DATA, "onchain", "平台AI介绍.json")) or {}).get(slug) or {})
+    aic = ai.get("内容") or {}
+    sfx = "zh" if LANG["v"] == "zh" else "en"
+    if aic.get(f"one_liner_{sfx}") and not prof.get("叙事"):         # 没有人工一句话时，用 AI 的（中文站不再挂英文原文）
+        txt = aic[f"one_liner_{sfx}"]
+        src = T(f"AI 根据 DefiLlama、官网与文档整理（{ai.get('日期')}），未人工核实", f"AI summary of DefiLlama, the site and docs ({ai.get('日期')}), not verified by us")
     tg = "".join(f'<span class="lpc-tag{" ai" if t == "AI Agent" else ""}">{esc(t)}</span>' for t in tags)
     one = (f'<p class="pp-one">{esc(txt)}</p><p class="lpc-src">{T("出处：", "Source: ")}{esc(src)}</p>' if txt else
            f'<p class="pp-one lpc-none">{T("DefiLlama 和官网都没给介绍。", "Neither DefiLlama nor the site gives a description.")}</p>')
@@ -3440,6 +3448,24 @@ def platform_profile_html(p):
     mt = "".join(f'<div class="pm-k">{T(*METH_LABEL[k])}</div><div class="pm-v">{esc(meth[k])}</div>' for k in METH_LABEL if meth.get(k))
     mblock = (f'<h3>{T("钱怎么收、怎么分", "How fees are charged and split")} <span class="sub">{T("DefiLlama 口径原文（英文）：最能看出产品机制", "DefiLlama methodology (original): the clearest view of the mechanics")}</span></h3>'
               f'<div class="card pm">{mt}</div>') if mt else ""
+    aiblock = ""
+    if aic:
+        def _ul(xs):
+            return "<ul class=\"plain\">" + "".join(f"<li>{esc(x)}</li>" for x in xs) + "</ul>" if xs else T("无", "none")
+        arows = [(T("核心卖点", "Selling points"), _ul(aic.get(f"selling_points_{sfx}") or [])),
+                 (T("和其他发射台的区别", "How it differs"), esc(aic.get(f"differentiation_{sfx}") or "")),
+                 (T("手续费怎么分", "Fee split"), esc(aic.get(f"fee_split_{sfx}") or "")),
+                 (T("平台币", "Token"), esc(aic.get(f"token_{sfx}") or "")),
+                 (T("团队与背景", "Team & backing"), esc(aic.get(f"team_{sfx}") or "")),
+                 (T("风险与疑点", "Risks & open questions"), _ul(aic.get(f"risks_{sfx}") or [])),
+                 (T("资料里没有的", "Not in the sources"), _ul(aic.get(f"unknowns_{sfx}") or []))]
+        def _host(u):
+            return re.sub(r"^https?://(www\.)?", "", u).split("/")[0]
+        read = "".join(f' <a href="{esc(u)}" target="_blank" rel="noopener">{esc(_host(u))}</a>' for u in (ai.get("官网已读") or [])[:3])
+        aiblock = (f'<h3 id="ai">{T("AI 研究摘要", "AI research summary")}</h3><p class="tnote" style="margin-top:-4px">'
+                   + T(f"Claude 只根据本站收集的资料整理：DefiLlama 协议详情与口径、本站手续费数据、官网和文档正文{('（读了' + read + '）') if read else ''}；资料里没有的写「资料未提及」。生成于 {esc(ai.get('日期') or '')}，未人工核实，不是推荐。",
+                       f"Claude summarised only the material we collected: DefiLlama details and methodology, our fee data, the site and docs{(' (read' + read + ')') if read else ''}; anything missing is marked as such. Generated {esc(ai.get('日期') or '')}; not verified by us, not a recommendation.")
+                   + '</p><div class="card pm">' + "".join(f'<div class="pm-k">{k}</div><div class="pm-v">{v}</div>' for k, v in arows if v) + "</div>")
     hm = info.get("大事记") or []
     hblock = (f'<h3>{T("大事记", "Milestones")} <span class="sub">DefiLlama</span></h3><ul class="plain">'
               + "".join(f'<li>{esc(a or "")} · {esc(b)}</li>' for a, b in hm) + "</ul>") if hm else ""
@@ -3452,7 +3478,7 @@ def platform_profile_html(p):
              f"Sources: {' · '.join(srcs)}. Fees, revenue, methodology, raises and incidents are DefiLlama data synced daily; the description’s source is noted above. Profile updated {esc(info.get('日期') or '—')}. Describes what it is; not a recommendation.")
     return (f'<h2 id="profile">{T("产品与基本面", "Product & fundamentals")}</h2>'
             f'<div class="card pp">{f"<div class=lpc-tags>{tg}</div>" if tg else ""}{one}<div class="pp-grid">{dl}</div></div>'
-            f'{mblock}{hblock}<p class="tnote">{note}</p>')
+            f'{aiblock}{mblock}{hblock}<p class="tnote">{note}</p>')
 
 
 def build_platform_pages(matrix, deep_slugs):

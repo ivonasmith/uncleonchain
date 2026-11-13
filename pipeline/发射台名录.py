@@ -475,16 +475,19 @@ def _ts(v):
 
 def fetch_platform_details(cap=45):
     matrix = load(os.path.join(DATA, "发射台矩阵.json"), {}) or {}
-    slugs = platform_slugs(matrix)
     info = dict(platform_info())
+    slugs = list(dict.fromkeys(platform_slugs(matrix) + list(info)))     # 进过门槛的一直保留、继续更新
     stale = (dt.date.today() - dt.timedelta(days=PLATFORM_REFRESH)).isoformat()
     today = dt.date.today().isoformat()
     n = 0
     for slug in slugs:
-        if (info.get(slug) or {}).get("日期", "") >= stale or n >= cap:
+        old = info.get(slug) or {}
+        # 有官网却没抓到官网资料、也没记错误的（比如在连不上官网的环境里生成的）不算新鲜，下次重抓
+        fresh = old.get("日期", "") >= stale and not (old.get("官网") and not old.get("官网简介") and not old.get("官网错误"))
+        if fresh or n >= cap:
             continue
         n += 1
-        rec = {"日期": today}
+        rec = {"日期": today, "进门槛": old.get("进门槛") or today}
         try:
             raw, _, _ = _get(f"https://api.llama.fi/protocol/{urllib.parse.quote(slug)}", limit=50_000_000, timeout=60, accept="application/json")
             d = json.loads(raw)
@@ -524,7 +527,7 @@ def fetch_platform_details(cap=45):
     with open(os.path.join(OC, "平台资料.json"), "w", encoding="utf-8") as fh:
         json.dump(info, fh, ensure_ascii=False, indent=0, sort_keys=True)
     _CACHE.pop("pinfo", None)
-    print(f"  平台资料：够门槛 {len(slugs)} 个，本次更新 {n} 个")
+    print(f"  平台资料：现在够门槛 {len(platform_slugs(matrix))} 个，进过门槛的共 {len(slugs)} 个，本次更新 {n} 个，抓到官网简介 {sum(1 for v in info.values() if v.get('官网简介'))} 个")
 
 
 def platform_narrative(slug, name, url, lang="zh"):
