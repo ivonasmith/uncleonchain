@@ -29,7 +29,7 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
           python3 - <<'EOF'
-          import os, json, urllib.request
+          import os, json, urllib.request, urllib.error
           names = ["XAI_API_KEY", "GROK_API_KEY", "XAI_KEY", "GROK_KEY", "GROK_API", "GROK", "XAI", "CLAUDE_API_KEY", "ANTHROPIC_API_KEY"]
           for n in names:
               v = os.environ.get(n, "").strip()
@@ -43,7 +43,11 @@ jobs:
                       with urllib.request.urlopen(req, timeout=30) as r:
                           ids = [m.get("id") for m in json.load(r).get("data", [])]
                       msg += f" · xAI 可用，模型：{', '.join(ids[:12])}"
+                  except urllib.error.HTTPError as e:
+                      body = e.read().decode("utf-8", "ignore")[:300].replace(v, "***")
+                      msg += f" · xAI 调用失败：HTTP {e.code} {body}"
                   except Exception as e:
                       msg += f" · xAI 调用失败：{str(e)[:80]}"
+                  msg += f" · 以 xai- 开头：{v.startswith('xai-')} · 含空白：{any(c.isspace() for c in v)}"
               print(msg)
           EOF
