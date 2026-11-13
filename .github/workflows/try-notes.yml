@@ -19,7 +19,7 @@ concurrency:
 jobs:
   try:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -30,4 +30,4 @@ jobs:
           XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
           PLATFORM_ONLY: ${{ inputs.only }}
           PLATFORM_DRY: "1"
-        run: cd pipeline && python3 写平台介绍.py
+        run: cd pipeline && python3 -u 写平台介绍.py

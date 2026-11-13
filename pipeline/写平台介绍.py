@@ -10,12 +10,25 @@
 · 资料没变就不重写（输入哈希），最长 30 天重写一次；每次最多写 MAX_PER_RUN 个。
 · 结果 data/onchain/平台AI介绍.json，中英各一份，页面标明「AI 根据资料整理，未人工核实」。
 """
-import os, re, json, html, hashlib, datetime as dt, urllib.parse
+import os, re, json, html, time, hashlib, datetime as dt, urllib.parse, concurrent.futures as cf
 
 import 发射台名录 as DIR
 
 MODEL = os.environ.get("XAI_MODEL", "grok-4.7")
 MAX_TURNS = 3
+CALL_LIMIT = 300          # 每个平台调用 Grok 最多等 5 分钟（联网搜索慢）
+
+
+def _with_limit(fn, seconds, default):
+    """给可能卡住的网络调用加总时限（urllib 的 timeout 只管单次读写，慢速滴流会一直拖）。"""
+    ex = cf.ThreadPoolExecutor(max_workers=1)
+    fut = ex.submit(fn)
+    try:
+        return fut.result(timeout=seconds)
+    except cf.TimeoutError:
+        return default
+    finally:
+        ex.shutdown(wait=False, cancel_futures=True)
 MAX_PER_RUN = 12
 REWRITE_DAYS = 30
 SITE_TEXT_MAX = 12000
@@ -145,12 +158,19 @@ def main():
         old = out.get(slug) or {}
         if not only and old.get("日期", "") >= stale and old.get("资料哈希") == hashlib.sha256(base.encode()).hexdigest()[:16]:
             continue
-        stext, used = site_text(info.get("官网"))
+        t0 = time.time()
+        print(f"  [{slug}] 读官网与文档…", flush=True)
+        stext, used = _with_limit(lambda: site_text(info.get("官网")), 60, ("", []))
+        print(f"  [{slug}] 官网 {len(stext)} 字（{time.time() - t0:.0f} 秒），调 Grok…", flush=True)
         mat = materials(p, info, prof, (p.get("7日") or 0) / t7, (p.get("30日") or 0) / t30)
         prompt = f"资料：\n{mat}\n\n官网与文档正文（平台自己的说法）：\n{stext or '（没抓到）'}"
         n += 1
         try:
-            data, meta = grok_call(key, SYSTEM, prompt)
+            t1 = time.time()
+            data, meta = _with_limit(lambda: grok_call(key, SYSTEM, prompt), CALL_LIMIT, None) or (None, None)
+            if data is None:
+                raise RuntimeError(f"超过 {CALL_LIMIT} 秒没返回")
+            print(f"  [{slug}] Grok 返回（{time.time() - t1:.0f} 秒，X 帖 {meta.get('X帖')}，${meta.get('美元')}）", flush=True)
         except RuntimeError as ex:
             print(f"  AI 平台介绍 {slug} 失败：{str(ex)[:160]}")
             fail += 1
