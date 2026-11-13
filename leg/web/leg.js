@@ -332,18 +332,6 @@ function liveHTML(d){
      +'<div class="tile"><div class="k">'+t('liveRev')+'</div><div class="v">'+px(D.reversal_line)+'</div><div class="c">'+t('revC',D.to_reversal_pct)+'</div></div></div>'
      +'<div class="small muted" style="margin-top:8px">'+t('confirmK')+' '+D.confirm_date+'</div></div>';
   }
-  var a=d.alt_window;
-  h+='<div class="card panel"><div class="mod-head"><div class="mod-title">'+t('altLiveH')+'</div><span class="badge b-'+a.stage+'">'+t('stg')[a.stage]+'</span></div>';
-  if(a.stage==='idle'){h+='<div class="empty"><b>'+t('idleT')+'</b>'+t('idleP')+'</div></div>';}
-  else if(a.stage==='pending'){h+='<div class="empty"><b>'+t('pendT')+'</b>'+t('pendP')+'</div>'+altChips(a)+'</div>';}
-  else{
-    var vs=a.btc_vs_stop_pct, vsTxt=vs==null?'':(vs>=0?'+'+f1(vs)+'% '+t('vsLine'):f1(vs)+'% '+t('vsLineNeg'));
-    h+='<div class="reading"><div class="big"><small>D0+</small>'+a.n+'<small>'+t('altDaySuf')+'</small></div></div>'+altBarHTML(a,true)
-     +'<div class="tiles tiles3">'
-     +'<div class="tile"><div class="k">D0</div><div class="v" style="font-size:15px">'+a.d0_date+'</div><div class="c">'+px(a.d0_close)+'</div></div>'
-     +'<div class="tile"><div class="k">'+t('stopLineK')+'</div><div class="v" style="font-size:15px">'+px(a.stop_line)+'</div><div class="c">'+t('btcNowK')+' '+px(a.btc_close)+'<br>'+vsTxt+'</div></div>'
-     +'<div class="tile"><div class="k">'+(a.stage==='cleared'?t('c_doneK'):t('c_clrK'))+'</div><div class="v" style="font-size:15px">'+(a.stage==='cleared'?t('c_doneV'):a.stage==='stopped'?t('c_stopV'):t('c_clrV',a.days_to_clear))+'</div><div class="c">'+(a.stage==='cleared'?t('c_doneN',a.clear_date):a.stage==='stopped'?t('c_stopN',a.stopped_date):t('c_clrN'))+'</div></div></div></div>';
-  }
   return h;
 }
 
