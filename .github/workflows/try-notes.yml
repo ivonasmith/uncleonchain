@@ -1,0 +1,33 @@
+name: 试写平台介绍（手动）
+
+# 用 Grok 给指定平台试写 AI 研究摘要，只打印到日志、不提交。独立并发组，不占日更队列。
+on:
+  workflow_dispatch:
+    inputs:
+      only:
+        description: "平台 slug，逗号分隔（如 montra,graphite-protocol,pump.fun）"
+        required: true
+        default: "montra,graphite-protocol,ascend-launchpad"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: try-notes
+  cancel-in-progress: true
+
+jobs:
+  try:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: 试写
+        env:
+          XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
+          PLATFORM_ONLY: ${{ inputs.only }}
+          PLATFORM_DRY: "1"
+        run: cd pipeline && python3 写平台介绍.py

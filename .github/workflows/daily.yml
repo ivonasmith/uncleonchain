@@ -52,10 +52,6 @@ jobs:
               || echo "html2canvas 下载失败，页面会退回 CDN 加载"
           fi
 
-      # 平台 AI 介绍用 Anthropic 官方 SDK（没配 key 时脚本自己跳过，装上也不影响）
-      - name: 安装 anthropic SDK
-        run: python3 -m pip install -q anthropic
-
       - name: 跑日更（拉数 → 看板 → 宏观 → 解读日志 → 网站）
         env:
           LP_DATA: ${{ github.workspace }}/data
@@ -64,7 +60,7 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}                   # 新台线索：GitHub 代码搜索（只读）
           ETHERSCAN_KEY: ${{ secrets.ETHERSCAN_KEY }}       # 新台线索：查工厂合约名（Etherscan V2，一个 key 多链）
           ALCHEMY_KEY: ${{ secrets.ALCHEMY_KEY }}          # 链上新发射台：BSC / Base 只能走 Alchemy；Robinhood / Arc 公共节点失败时兜底
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}   # 平台二级页面 AI 研究摘要；不配就不写
+          # XAI_API_KEY: ${{ secrets.XAI_API_KEY }}         # 平台二级页面 AI 研究摘要（Grok）：大叔看过试写（try-notes.yml）再打开
         run: |
           python3 pipeline/跑日更.py --site
 

@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""平台二级页面的 AI 研究摘要（大叔 2026-11-12 定：只给进过 0.1% 份额的平台写）。
+"""平台二级页面的 AI 研究摘要（大叔 2026-11-12 定：只给进过 0.1% 份额的平台写；11-13 定用 Grok，key = GitHub Secret XAI_API_KEY）。
 
-· 没配 ANTHROPIC_API_KEY（GitHub Secret）就跳过，页面照旧用 DefiLlama 介绍 / 官网自述。
-· 资料只用我们自己收集的：DefiLlama 协议详情与手续费口径原文、融资 / 安全事件 / 大事记、本站手续费数据、
-  人工档案（config/launchpad_profiles.json）、官网首页和文档页的正文。AI 不上网，资料里没有的写「资料未提及」。
+· 没配 XAI_API_KEY 就跳过，页面照旧用 DefiLlama 介绍 / 官网自述。
+· 底稿是我们自己收集的：DefiLlama 协议详情与手续费口径原文、融资 / 安全事件 / 大事记、本站手续费数据、
+  人工档案（config/launchpad_profiles.json）、官网首页和文档页的正文。Grok 另外可以用 X 搜索 / 网页搜索补团队和近况，
+  搜来的每条都要给链接，和官方资料分开写（sources 里标 official / x / web）。查不到写「资料未提及」。
+· 调用照交易机器人 cloud/grok.mjs：xAI Responses 接口 + x_search / web_search，max_turns 封顶控费。
 · 资料没变就不重写（输入哈希），最长 30 天重写一次；每次最多写 MAX_PER_RUN 个。
 · 结果 data/onchain/平台AI介绍.json，中英各一份，页面标明「AI 根据资料整理，未人工核实」。
 """
@@ -12,7 +14,8 @@ import os, re, json, html, hashlib, datetime as dt, urllib.parse
 
 import 发射台名录 as DIR
 
-MODEL = "claude-opus-5-5"
+MODEL = os.environ.get("XAI_MODEL", "grok-4.7")
+MAX_TURNS = 3
 MAX_PER_RUN = 12
 REWRITE_DAYS = 30
 SITE_TEXT_MAX = 12000
@@ -23,15 +26,19 @@ LIST_FIELDS = ["selling_points", "risks", "unknowns"]
 SCHEMA = {
     "type": "object",
     "properties": {**{f"{k}_{l}": {"type": "string"} for k in TEXT_FIELDS for l in ("zh", "en")},
-                   **{f"{k}_{l}": {"type": "array", "items": {"type": "string"}} for k in LIST_FIELDS for l in ("zh", "en")}},
-    "required": [f"{k}_{l}" for k in TEXT_FIELDS + LIST_FIELDS for l in ("zh", "en")],
+                   **{f"{k}_{l}": {"type": "array", "items": {"type": "string"}} for k in LIST_FIELDS for l in ("zh", "en")},
+                   "sources": {"type": "array", "items": {"type": "object", "properties": {
+                       "url": {"type": "string"}, "kind": {"type": "string"}, "note": {"type": "string"}}}}},
+    "required": [f"{k}_{l}" for k in TEXT_FIELDS + LIST_FIELDS for l in ("zh", "en")] + ["sources"],
     "additionalProperties": False,
 }
 
 SYSTEM = """你是「链上大叔研究台」的研究员，给一个代币发射台（launchpad）写平台介绍，读者是想快速看懂这个平台的普通加密用户。
 
 规则：
-1. 只用下面「资料」里写到的事实。资料里没有的，写「资料未提及」/ "Not stated in the sources"，不要猜，不要用你自己的记忆补。
+1. 先用下面「资料」（DefiLlama 与官网 / 文档，算官方资料）。团队、背后公司、融资方、近期出过的事故，资料里没有的可以用 X 搜索和网页搜索补，
+   但每条搜来的说法都要在 sources 里给出链接（kind = x 或 web），并在正文里写明「据 X 帖子 / 据网页报道」；官方资料的链接 kind = official。
+   搜不到或说法互相矛盾的，写「资料未提及」/「说法不一」，不要猜，不要用你自己的记忆补，不要引用没有链接的说法。KOL 的吹捧不算事实。
 2. 不写任何买卖建议、价格预测或「值得关注 / 有潜力」之类的评价。只说它是什么、怎么运作、钱怎么分。
 3. 中文用大白话，短句；英文简洁。数字照资料写，标明是哪一天 / 哪个口径。
 4. 各字段：
@@ -43,7 +50,10 @@ SYSTEM = """你是「链上大叔研究台」的研究员，给一个代币发�
    - team：团队、背后公司、融资方；资料里只有 X 账号或什么都没有，就如实写。
    - risks：资料里能看出来的风险或疑点（如安全事件、数据口径变化、刚上线、费用比例改过、只有一条链），没有就给空数组。
    - unknowns：想了解但资料里没有的关键信息（如审计、团队身份），最多 4 条。
-5. _zh 字段写中文，_en 字段写对应英文，内容一致。"""
+5. _zh 字段写中文，_en 字段写对应英文，内容一致。
+6. 只输出一个 JSON 对象，不要任何别的文字，不要 Markdown 代码块。字段：
+   one_liner_zh/en、differentiation_zh/en、fee_split_zh/en、token_zh/en、team_zh/en（字符串）；
+   selling_points_zh/en、risks_zh/en、unknowns_zh/en（字符串数组）；sources（数组，每项 {"url","kind","note"}）。"""
 
 
 def _visible_text(raw):
@@ -106,11 +116,12 @@ def materials(p, info, prof, share7, share30):
 
 
 def main():
-    if not os.environ.get("ANTHROPIC_API_KEY", "").strip():
-        print("  AI 平台介绍：没配 ANTHROPIC_API_KEY，跳过（页面用 DefiLlama 介绍 / 官网自述）")
+    key = os.environ.get("XAI_API_KEY", "").strip()
+    if not key:
+        print("  AI 平台介绍：没配 XAI_API_KEY，跳过（页面用 DefiLlama 介绍 / 官网自述）")
         return
-    import anthropic
-    client = anthropic.Anthropic()
+    only = [x for x in os.environ.get("PLATFORM_ONLY", "").split(",") if x.strip()]
+    dry = os.environ.get("PLATFORM_DRY") == "1"          # 试写：只打印，不写文件
     matrix = DIR.load(os.path.join(DIR.DATA, "发射台矩阵.json"), {}) or {}
     P = {p["slug"]: p for p in matrix.get("协议") or []}
     t7 = sum(p.get("7日") or 0 for p in P.values()) or 1
@@ -124,7 +135,7 @@ def main():
     n = fail = 0
     for slug in slugs:
         p = P.get(slug)
-        if not p or n >= MAX_PER_RUN:
+        if not p or n >= MAX_PER_RUN or (only and slug not in only):
             continue
         info = infos.get(slug) or {}
         pid = next((k for k, v in prof_all.items() if not k.startswith("_") and v.get("defillama") == slug), None)
@@ -132,50 +143,88 @@ def main():
         # 哈希只算「平台是什么」的资料，不算每天变的手续费数字
         base = materials({**p, "7日": 0, "30日": 0, "累计": 0, "数据日": ""}, info, prof, 0, 0)
         old = out.get(slug) or {}
-        if old.get("日期", "") >= stale and old.get("资料哈希") == hashlib.sha256(base.encode()).hexdigest()[:16]:
+        if not only and old.get("日期", "") >= stale and old.get("资料哈希") == hashlib.sha256(base.encode()).hexdigest()[:16]:
             continue
         stext, used = site_text(info.get("官网"))
         mat = materials(p, info, prof, (p.get("7日") or 0) / t7, (p.get("30日") or 0) / t30)
         prompt = f"资料：\n{mat}\n\n官网与文档正文（平台自己的说法）：\n{stext or '（没抓到）'}"
         n += 1
         try:
-            resp = client.beta.messages.create(
-                model=MODEL, max_tokens=8000,
-                betas=["server-side-fallback-2026-07-01"], fallbacks="default",
-                system=SYSTEM,
-                output_config={"effort": "medium", "format": {"type": "json_schema", "schema": SCHEMA}},
-                messages=[{"role": "user", "content": prompt}],
-            )
-        except anthropic.RateLimitError:
-            print("  AI 平台介绍：限流，本次到此为止")
-            break
-        except anthropic.AuthenticationError:
-            print("  AI 平台介绍：API key 无效，跳过")
-            return
-        except (anthropic.APIStatusError, anthropic.APIConnectionError) as ex:
-            print(f"  AI 平台介绍 {slug} 失败：{str(ex)[:120]}")
+            data, meta = grok_call(key, SYSTEM, prompt)
+        except RuntimeError as ex:
+            print(f"  AI 平台介绍 {slug} 失败：{str(ex)[:160]}")
             fail += 1
+            if "401" in str(ex) or "Incorrect API key" in str(ex):
+                print("  AI 平台介绍：key 无效，停止")
+                return
             continue
-        if resp.stop_reason != "end_turn":
-            print(f"  AI 平台介绍 {slug}：没写完（{resp.stop_reason}），跳过")
-            fail += 1
+        if dry:
+            print(f"\n===== {slug} =====\n" + json.dumps({"内容": data, "用量": meta}, ensure_ascii=False, indent=1))
             continue
-        text = next((b.text for b in resp.content if b.type == "text"), "")
-        try:
-            data = json.loads(text)
-        except json.JSONDecodeError:
-            print(f"  AI 平台介绍 {slug}：返回不是 JSON，跳过")
-            fail += 1
-            continue
-        out[slug] = {"日期": today, "模型": resp.model, "资料哈希": hashlib.sha256(base.encode()).hexdigest()[:16],
-                     "官网已读": used, "资料截至": p.get("数据日"), "内容": data,
-                     "用量": {"输入": resp.usage.input_tokens, "输出": resp.usage.output_tokens}}
+        out[slug] = {"日期": today, "模型": meta["模型"], "资料哈希": hashlib.sha256(base.encode()).hexdigest()[:16],
+                     "官网已读": used, "资料截至": p.get("数据日"), "内容": data, "用量": meta}
+    if dry:
+        print(f"  试写结束：{n} 个，失败 {fail} 个")
+        return
     with open(OUT, "w", encoding="utf-8") as fh:
         json.dump(out, fh, ensure_ascii=False, indent=1, sort_keys=True)
-    tok_in = sum((v.get("用量") or {}).get("输入", 0) for v in out.values() if v.get("日期") == today)
-    tok_out = sum((v.get("用量") or {}).get("输出", 0) for v in out.values() if v.get("日期") == today)
-    print(f"  AI 平台介绍：本次写 {n - fail} 个、失败 {fail} 个，已有 {len(out)} 个；今天用量 输入 {tok_in:,} / 输出 {tok_out:,} tokens"
-          f"（约 ${tok_in / 1e6 * 4 + tok_out / 1e6 * 20:.2f}）")
+    cost = sum((v.get("用量") or {}).get("美元", 0) or 0 for v in out.values() if v.get("日期") == today)
+    print(f"  AI 平台介绍（Grok）：本次写 {n - fail} 个、失败 {fail} 个，已有 {len(out)} 个；今天花费约 ${cost:.3f}")
+
+
+def _text(data):
+    if isinstance(data.get("output_text"), str) and data["output_text"].strip():
+        return data["output_text"].strip()
+    parts = []
+    for item in data.get("output") or []:
+        if item.get("type") == "message":
+            parts += [b.get("text") for b in item.get("content") or [] if b.get("type") == "output_text" and b.get("text")]
+    return "\n".join(parts).strip()
+
+
+def _json(text):
+    t = text.strip()
+    t = re.sub(r"^```(?:json)?\s*|\s*```$", "", t)
+    try:
+        return json.loads(t)
+    except json.JSONDecodeError:
+        i, j = t.find("{"), t.rfind("}")
+        if i >= 0 and j > i:
+            return json.loads(t[i:j + 1])
+        raise
+
+
+def grok_call(key, system, prompt):
+    """xAI Responses 接口（同交易机器人 cloud/grok.mjs）：x_search + web_search，max_turns 封顶。→ (内容 dict, 用量 dict)"""
+    import urllib.request, urllib.error
+    body = {"model": MODEL, "input": [{"role": "system", "content": system}, {"role": "user", "content": prompt}],
+            "tools": [{"type": "x_search"}, {"type": "web_search"}], "max_turns": MAX_TURNS}
+    req = urllib.request.Request("https://api.x.ai/v1/responses", data=json.dumps(body).encode(),
+                                 headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json",
+                                          "User-Agent": "uncleonchain-platform-notes"})
+    try:
+        with urllib.request.urlopen(req, timeout=240) as r:
+            data = json.load(r)
+    except urllib.error.HTTPError as e:
+        raise RuntimeError(f"HTTP {e.code} {e.read().decode('utf-8', 'ignore')[:200]}")
+    except Exception as e:
+        raise RuntimeError(str(e)[:160])
+    text = _text(data)
+    if not text:
+        raise RuntimeError("没有返回正文")
+    try:
+        content = _json(text)
+    except json.JSONDecodeError:
+        raise RuntimeError("返回不是 JSON：" + text[:120])
+    miss = [k for k in SCHEMA["required"] if k not in content]
+    if miss:
+        raise RuntimeError("缺字段：" + ", ".join(miss[:6]))
+    u = data.get("usage") or {}
+    tools = u.get("server_side_tool_usage_details") or {}
+    ticks = u.get("cost_in_usd_ticks")
+    usd = round(ticks / 1e10, 4) if isinstance(ticks, (int, float)) and ticks > 0 else None
+    return content, {"模型": data.get("model") or MODEL, "输入": u.get("input_tokens"), "输出": u.get("output_tokens"),
+                     "X帖": tools.get("x_posts_fetched"), "搜索": tools.get("x_search_calls"), "美元": usd}
 
 
 if __name__ == "__main__":

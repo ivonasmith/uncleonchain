@@ -3459,12 +3459,18 @@ def platform_profile_html(p):
                  (T("团队与背景", "Team & backing"), esc(aic.get(f"team_{sfx}") or "")),
                  (T("风险与疑点", "Risks & open questions"), _ul(aic.get(f"risks_{sfx}") or [])),
                  (T("资料里没有的", "Not in the sources"), _ul(aic.get(f"unknowns_{sfx}") or []))]
+        KIND = {"official": T("官方", "official"), "x": "X", "web": T("网页", "web")}
+        srcs_ = [x for x in (aic.get("sources") or []) if isinstance(x, dict) and str(x.get("url", "")).startswith("http")]
+        if srcs_:
+            arows.append((T("来源", "Sources"), "<ul class=\"plain\">" + "".join(
+                f'<li><span class="lpc-tag">{esc(KIND.get(x.get("kind"), x.get("kind") or ""))}</span> <a href="{esc(x["url"])}" target="_blank" rel="noopener nofollow">{esc((x.get("note") or x["url"])[:80])}</a></li>'
+                for x in srcs_[:12]) + "</ul>"))
         def _host(u):
             return re.sub(r"^https?://(www\.)?", "", u).split("/")[0]
         read = "".join(f' <a href="{esc(u)}" target="_blank" rel="noopener">{esc(_host(u))}</a>' for u in (ai.get("官网已读") or [])[:3])
         aiblock = (f'<h3 id="ai">{T("AI 研究摘要", "AI research summary")}</h3><p class="tnote" style="margin-top:-4px">'
-                   + T(f"Claude 只根据本站收集的资料整理：DefiLlama 协议详情与口径、本站手续费数据、官网和文档正文{('（读了' + read + '）') if read else ''}；资料里没有的写「资料未提及」。生成于 {esc(ai.get('日期') or '')}，未人工核实，不是推荐。",
-                       f"Claude summarised only the material we collected: DefiLlama details and methodology, our fee data, the site and docs{(' (read' + read + ')') if read else ''}; anything missing is marked as such. Generated {esc(ai.get('日期') or '')}; not verified by us, not a recommendation.")
+                   + T(f"Grok 以本站收集的资料为底（DefiLlama 协议详情与口径、本站手续费数据、官网和文档正文{('，读了' + read) if read else ''}），团队和近况另用 X / 网页搜索补，搜来的都附链接；查不到写「资料未提及」。生成于 {esc(ai.get('日期') or '')}，未人工核实，不是推荐。",
+                       f"Grok worked from the material we collected (DefiLlama details and methodology, our fee data, the site and docs{('; read' + read) if read else ''}), adding team and recent news from X / web search with links; anything not found is marked. Generated {esc(ai.get('日期') or '')}; not verified by us, not a recommendation.")
                    + '</p><div class="card pm">' + "".join(f'<div class="pm-k">{k}</div><div class="pm-v">{v}</div>' for k, v in arows if v) + "</div>")
     hm = info.get("大事记") or []
     hblock = (f'<h3>{T("大事记", "Milestones")} <span class="sub">DefiLlama</span></h3><ul class="plain">'
