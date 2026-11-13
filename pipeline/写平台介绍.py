@@ -63,8 +63,11 @@ SYSTEM = """你是「链上大叔研究台」的研究员，给一个代币发�
    - team：团队、背后公司、融资方；资料里只有 X 账号或什么都没有，就如实写。
    - risks：资料里能看出来的风险或疑点（如安全事件、数据口径变化、刚上线、费用比例改过、只有一条链），没有就给空数组。
    - unknowns：想了解但资料里没有的关键信息（如审计、团队身份），最多 4 条。
-5. _zh 字段写中文，_en 字段写对应英文，内容一致。
-6. 只输出一个 JSON 对象，不要任何别的文字，不要 Markdown 代码块。字段：
+5. 篇幅（页面上要一眼看完）：one_liner 40 字以内；selling_points / risks 各最多 5 条、每条 40 字以内；
+   differentiation、token、team 各 120 字以内；fee_split 200 字以内，只写主要比例和生效日期，细枝末节不写；unknowns 最多 4 条。
+   英文对应控制在同等长度。sources 最多 10 条。
+6. _zh 字段写中文，_en 字段写对应英文，内容一致。
+7. 只输出一个 JSON 对象，不要任何别的文字，不要 Markdown 代码块。字段：
    one_liner_zh/en、differentiation_zh/en、fee_split_zh/en、token_zh/en、team_zh/en（字符串）；
    selling_points_zh/en、risks_zh/en、unknowns_zh/en（字符串数组）；sources（数组，每项 {"url","kind","note"}）。"""
 
