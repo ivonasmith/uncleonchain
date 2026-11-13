@@ -19,12 +19,16 @@
 "大事记": [],
 "安全事件": [],
 "官网": "https://arguspad.io",
+"官网X": "arguspad",
+"官网标题": "Token launchpad on Arc | Argus",
+"官网简介": "Argus is a permissionless token launchpad on Arc. Tax splits to the creator, buyback, liquidity and holders from the first trade. Every parameter is fixed at launch.",
 "审计数": "0",
 "审计链接": [],
 "市值": null,
-"日期": "2026-01-01",
+"日期": "2026-11-13",
 "母协议": null,
 "融资": [],
+"进门槛": "2026-11-13",
 "链": [
 "Arc"
 ]
@@ -80,12 +84,16 @@
 "大事记": [],
 "安全事件": [],
 "官网": "https://bags.fm/",
+"官网X": null,
+"官网标题": "Bags: launch a coin, get paid on every trade",
+"官网简介": "The Bags launchpad. Launch a coin free for yourself, an X account or a website. Its creator earns 1% of every trade.",
 "审计数": "0",
 "审计链接": [],
 "市值": null,
-"日期": "2026-01-01",
+"日期": "2026-11-13",
 "母协议": null,
 "融资": [],
+"进门槛": "2026-11-13",
 "链": [
 "Solana"
 ]
@@ -108,12 +116,16 @@
 "大事记": [],
 "安全事件": [],
 "官网": "https://www.binance.com/en/alpha/",
+"官网X": null,
+"官网标题": null,
+"官网简介": null,
 "审计数": "0",
 "审计链接": [],
 "市值": null,
-"日期": "2026-01-01",
+"日期": "2026-11-13",
 "母协议": null,
 "融资": [],
+"进门槛": "2026-11-13",
 "链": [
 "BSC"
 ]
@@ -194,11 +206,11 @@
 "代币": null,
 "分叉自": [],
 "口径": {
-"Fees": "Total swap fees paid by traders in Clanker-deployed Uniswap v4 pools (creator fee + Clanker's 20% of creator fee).",
+"Fees": "Total swap fees paid by traders in Clanker-deployed Uniswap v4 pools (creator fee + Clanker's 20% of creator fee). On Elysium (Clanker v5), the buy and sell tax paid on every swap in a launch's pool, including the anti-snipe surcharge of its first seconds of trading; the part of the tax that is burned in the launched token is excluded.",
 "HoldersRevenue": "CLANKER tokens bought back and distributed to holders.",
-"ProtocolRevenue": "Clanker protocol's cut of swap fees, minus the amount spent buying back CLANKER (negative when a buyback exceeds the period's revenue).",
-"Revenue": "Clanker protocol's cut: 20% of the creator LP fee charged on top of each swap.",
-"SupplySideRevenue": "Token creator's LP rewards, claimable from the initial single-sided Uniswap v4 position."
+"ProtocolRevenue": "Clanker protocol's cut of swap fees (on Elysium also the anti-snipe surcharge and redirected dividend shares), minus the amount spent buying back CLANKER (negative when a buyback exceeds the period's revenue).",
+"Revenue": "Clanker protocol's cut: 20% of the creator LP fee charged on top of each swap. On Elysium (Clanker v5), the protocol's share of each swap's tax (10% of the tax, at least 0.5% and at most 1% of the trade), the anti-snipe surcharge, and dividend shares redirected to Clanker while no holder qualifies.",
+"SupplySideRevenue": "Token creator's LP rewards, claimable from the initial single-sided Uniswap v4 position. On Elysium (Clanker v5), the creators' share of each swap's tax and the dividend share paid to holders of the launched token."
 },
 "口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/clanker.ts",
 "合约": null,
@@ -206,12 +218,16 @@
 "大事记": [],
 "安全事件": [],
 "官网": "https://www.clanker.world/",
+"官网X": "clanker_world",
+"官网标题": "Clanker — Launch Your Token in Minutes | Multi-Chain Token Platform",
+"官网简介": "Create and launch ERC-20 tokens on Base, BNB Chain, Monad, and more — no code required. Instant liquidity and built-in fee rewards. Over 1.5M tokens launched. Start deploying today.",
 "审计数": "0",
 "审计链接": [],
 "市值": null,
-"日期": "2026-01-01",
+"日期": "2026-11-13",
 "母协议": "farcaster",
 "融资": [],
+"进门槛": "2026-11-13",
 "链": [
 "Base"
 ]
@@ -315,14 +331,16 @@
 }
 ],
 "官网": "https://four.meme",
+"官网错误": "HTTP Error 403: Forbidden",
 "审计数": "2",
 "审计链接": [
 "https://easy-fight-6a5.notion.site/Salus-Audit-Report-294ce2c0b4e442cb81e090b0232ae243"
 ],
 "市值": null,
-"日期": "2026-01-01",
+"日期": "2026-11-13",
 "母协议": null,
 "融资": [],
+"进门槛": "2026-11-13",
 "链": [
 "Binance"
 ]
@@ -347,12 +365,16 @@
 "大事记": [],
 "安全事件": [],
 "官网": "https://frontier.fun",
+"官网X": null,
+"官网标题": "Frontier — Shape, launch and trade on Robinhood",
+"官网简介": "Shape, launch and trade new coins natively on Robinhood Chain.",
 "审计数": "0",
 "审计链接": [],
 "市值": null,
-"日期": "2026-01-01",
+"日期": "2026-11-13",
 "母协议": null,
 "融资": [],
+"进门槛": "2026-11-13",
 "链": [
 "Robinhood Chain"
 ]
@@ -377,12 +399,16 @@
 "大事记": [],
 "安全事件": [],
 "官网": "https://genius.fun",
+"官网X": null,
+"官网标题": "Genius.fun - Launch and trade tokens on BNB Chain",
+"官网简介": "genius.fun allows creators to send bStocks to an ownerless foundation to unwrap their equities and exercise their governance power on wall st. There is no precedent for global, open capital formation vehicles at scale that can be spun up with 2 clicks. Welcome to that future.",
 "审计数": "0",
 "审计链接": [],
 "市值": null,
-"日期": "2026-01-01",
+"日期": "2026-11-13",
 "母协议": "genius-terminal",
 "融资": [],
+"进门槛": "2026-11-13",
 "链": [
 "Binance"
 ]
@@ -407,12 +433,14 @@
 "大事记": [],
 "安全事件": [],
 "官网": "https://www.glazecorp.io",
+"官网错误": "HTTP Error 429: Too Many Requests",
 "审计数": "0",
 "审计链接": [],
 "市值": null,
-"日期": "2026-01-01",
+"日期": "2026-11-13",
 "母协议": "glazecorp",
 "融资": [],
+"进门槛": "2026-11-13",
 "链": [
 "Robinhood Chain"
 ]
@@ -442,12 +470,16 @@
 ],
 "安全事件": [],
 "官网": "https://taiyorobotics.com/#/",
+"官网X": null,
+"官网标题": "Taiyo",
+"官网简介": null,
 "审计数": "0",
 "审计链接": [],
-"市值": 11700935.973517913,
-"日期": "2026-01-01",
+"市值": 10380197.28376333,
+"日期": "2026-11-13",
 "母协议": null,
 "融资": [],
+"进门槛": "2026-11-13",
 "链": [
 "Solana"
 ]
@@ -473,12 +505,16 @@
 "大事记": [],
 "安全事件": [],
 "官网": "https://raydium.io/launchpad/",
+"官网X": null,
+"官网标题": "LaunchLab Raydium",
+"官网简介": "An on-chain order book AMM powering the evolution of DeFi",
 "审计数": "0",
 "审计链接": [],
 "市值": null,
-"日期": "2026-01-01",
+"日期": "2026-11-13",
 "母协议": "raydium",
 "融资": [],
+"进门槛": "2026-11-13",
 "链": [
 "Solana"
 ]
@@ -503,12 +539,16 @@
 "大事记": [],
 "安全事件": [],
 "官网": "https://www.metaplex.com/",
+"官网X": "metaplex",
+"官网标题": "The leading tokenization platform on Solana. | Metaplex",
+"官网简介": "Launch and trade onchain assets. Access the largest network in the ecosystem, with provenance and settlement the ecosystem already trusts.",
 "审计数": "0",
 "审计链接": [],
-"市值": 34996062.431431316,
-"日期": "2026-01-01",
+"市值": 32724774.313857812,
+"日期": "2026-11-13",
 "母协议": null,
 "融资": [],
+"进门槛": "2026-11-13",
 "链": [
 "Solana"
 ]
@@ -534,12 +574,16 @@
 "大事记": [],
 "安全事件": [],
 "官网": "https://www.meteora.ag/",
+"官网X": null,
+"官网标题": "Home | Meteora",
+"官网简介": "Building the most secure, optimized & composable yield layer on Solana",
 "审计数": "0",
 "审计链接": [],
 "市值": null,
-"日期": "2026-01-01",
+"日期": "2026-11-13",
 "母协议": "meteora",
 "融资": [],
+"进门槛": "2026-11-13",
 "链": [
 "Solana"
 ]
@@ -565,14 +609,18 @@
 "大事记": [],
 "安全事件": [],
 "官网": "https://montramarkets.xyz/",
+"官网X": "MontraXYZ",
+"官网标题": "Montra · The house of all launches on Elysium",
+"官网简介": "Montra is the house of all launches on Elysium: a project, an attention market, an idea, each a live onchain market from its first block, found and traded in one place.",
 "审计数": "0",
 "审计链接": [],
 "市值": null,
-"日期": "2026-01-01",
+"日期": "2026-11-13",
 "母协议": null,
 "融资": [],
+"进门槛": "2026-11-13",
 "链": [
-"Elysium Kinetiq"
+"Elysium"
 ]
 },
 "noxa-fun": {
@@ -594,20 +642,24 @@
 "大事记": [],
 "安全事件": [],
 "官网": "https://fun.noxa.eth.limo/",
+"官网X": null,
+"官网标题": "NOXA Fun",
+"官网简介": "Discover launched tokens and claim creator fees directly from smart contracts.",
 "审计数": "0",
 "审计链接": [],
 "市值": null,
-"日期": "2026-01-01",
+"日期": "2026-11-13",
 "母协议": "noxa",
 "融资": [],
+"进门槛": "2026-11-13",
 "链": [
 "MegaETH",
 "Monad",
-"Stable",
 "Arc",
+"Robinhood Chain",
+"Stable",
 "Intuition",
-"Merlin",
-"Robinhood Chain"
+"Merlin"
 ]
 },
 "o1-launchpad": {
@@ -630,12 +682,14 @@
 "大事记": [],
 "安全事件": [],
 "官网": "https://launch.o1.exchange",
+"官网错误": "HTTP Error 429: Too Many Requests",
 "审计数": "0",
 "审计链接": [],
 "市值": null,
-"日期": "2026-01-01",
+"日期": "2026-11-13",
 "母协议": "o1.exchange",
 "融资": [],
+"进门槛": "2026-11-13",
 "链": [
 "Base",
 "Robinhood Chain"
@@ -662,12 +716,16 @@
 "大事记": [],
 "安全事件": [],
 "官网": "https://otcdesks.cash",
+"官网X": "otc_labs",
+"官网标题": "OTC",
+"官网简介": "Over-The-Counter Protocol, earn stocks, pre-ipo, and yield.",
 "审计数": "0",
 "审计链接": [],
-"市值": 2426462.2221214096,
-"日期": "2026-01-01",
+"市值": 1697638.1885256974,
+"日期": "2026-11-13",
 "母协议": null,
 "融资": [],
+"进门槛": "2026-11-13",
 "链": [
 "Solana"
 ]
@@ -693,12 +751,16 @@
 "大事记": [],
 "安全事件": [],
 "官网": "https://www.ponsfamily.com/launchpad",
+"官网X": "ponsdotfamily",
+"官网标题": "Pons | Token launchpad on Robinhood Chain",
+"官网简介": "Every token launched on Robinhood Chain, live. New, graduating, graduated, and the largest by market cap.",
 "审计数": "0",
 "审计链接": [],
 "市值": null,
-"日期": "2026-01-01",
+"日期": "2026-11-13",
 "母协议": "pons",
 "融资": [],
+"进门槛": "2026-11-13",
 "链": [
 "Robinhood Chain"
 ]
@@ -722,12 +784,16 @@
 "大事记": [],
 "安全事件": [],
 "官网": "https://www.ponsfamily.com/launchpad",
+"官网X": "ponsdotfamily",
+"官网标题": "Pons | Token launchpad on Robinhood Chain",
+"官网简介": "Every token launched on Robinhood Chain, live. New, graduating, graduated, and the largest by market cap.",
 "审计数": "0",
 "审计链接": [],
 "市值": null,
-"日期": "2026-01-01",
+"日期": "2026-11-13",
 "母协议": "pons",
 "融资": [],
+"进门槛": "2026-11-13",
 "链": [
 "Robinhood Chain"
 ]
@@ -753,12 +819,16 @@
 "大事记": [],
 "安全事件": [],
 "官网": "https://pools.trade/",
+"官网X": null,
+"官网标题": "Pools — launch and trade the newest tokens",
+"官网简介": "Launch and trade the newest tokens. Start with a crowd-priced window or an instant pool, follow live prices, and claim your position.",
 "审计数": "0",
 "审计链接": [],
 "市值": null,
-"日期": "2026-01-01",
+"日期": "2026-11-13",
 "母协议": null,
 "融资": [],
+"进门槛": "2026-11-13",
 "链": [
 "Robinhood Chain"
 ]
@@ -792,10 +862,11 @@
 }
 ],
 "官网": "https://www.pump.fun/",
+"官网错误": "HTTP Error 403: Forbidden",
 "审计数": "0",
 "审计链接": [],
 "市值": null,
-"日期": "2026-01-01",
+"日期": "2026-11-13",
 "母协议": "pump",
 "融资": [
 {
@@ -815,6 +886,7 @@
 "领投": []
 }
 ],
+"进门槛": "2026-11-13",
 "链": [
 "Solana"
 ]
@@ -839,12 +911,16 @@
 "大事记": [],
 "安全事件": [],
 "官网": "https://rapidlaunch.io/",
+"官网X": null,
+"官网标题": "Rapid Launch",
+"官网简介": "Deploy Tweets Instantly",
 "审计数": "0",
 "审计链接": [],
 "市值": null,
-"日期": "2026-01-01",
+"日期": "2026-11-13",
 "母协议": null,
 "融资": [],
+"进门槛": "2026-11-13",
 "链": [
 "Solana"
 ]
@@ -871,12 +947,14 @@
 "大事记": [],
 "安全事件": [],
 "官网": " ",
+"官网错误": "unknown url type: ''",
 "审计数": "0",
 "审计链接": [],
 "市值": null,
-"日期": "2026-01-01",
+"日期": "2026-11-13",
 "母协议": null,
 "融资": [],
+"进门槛": "2026-11-13",
 "链": [
 "Solana"
 ]
@@ -902,12 +980,16 @@
 "大事记": [],
 "安全事件": [],
 "官网": "https://sapling.cash",
+"官网X": "saplingdotcash",
+"官网标题": "Sapling · the first zcash-native launchpad & terminal",
+"官网简介": "Every market. One Zcash wallet. Launch, trade and earn across Solana, Robinhood Chain and stocks, straight from your Zcash wallet. The first zcash-native launchpad & terminal.",
 "审计数": "0",
 "审计链接": [],
-"市值": 1355861.38171818,
-"日期": "2026-01-01",
+"市值": 1154605.9988134108,
+"日期": "2026-11-13",
 "母协议": null,
 "融资": [],
+"进门槛": "2026-11-13",
 "链": [
 "Solana"
 ]
@@ -962,12 +1044,16 @@
 "大事记": [],
 "安全事件": [],
 "官网": "https://stonkbrokers.io/home",
+"官网X": "ClutchMarkets",
+"官网标题": "StonkBrokers",
+"官网简介": "StonkBrokers is the $STONKBROKER powered DeFi suite and on chain incubator for stock tokens on Robinhood Chain. Trade Robinhood tokenized stocks on the Stonk Exchange, farm volatility with Smart LP, launch tokens on Stonklauncher, lock LP in the Safety Deposit Box, and back the Special Projects teams building StockFi on chain ID 4663.",
 "审计数": "0",
 "审计链接": [],
 "市值": null,
-"日期": "2026-01-01",
+"日期": "2026-11-13",
 "母协议": "stonkbrokers",
 "融资": [],
+"进门槛": "2026-11-13",
 "链": [
 "Robinhood Chain"
 ]

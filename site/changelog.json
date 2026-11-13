@@ -3,6 +3,31 @@
   "version": "2026.11.13",
   "date": "2026-11-13",
   "notify": false,
+  "title_zh": "平台页 AI 研究摘要 · 发射台历史自动补齐",
+  "title_en": "Platform AI summaries · launchpad history backfill",
+  "items": [
+   {
+    "type": "data",
+    "zh": "发射台矩阵：每天按 DefiLlama 逐日序列重新同步近 60 天历史。DefiLlama 对新上榜平台会事后补历史（Montra、Ascend 上榜当天只给 2 天，第二天补到 11-05），以前只有前 60 名会补上，现在所有显示的平台都补。",
+    "en": "Launchpads: the last 60 days of history are re-synced daily from DefiLlama’s daily series. DefiLlama backfills new listings (Montra and Ascend had 2 days on listing, backfilled to 11-05 the next day); previously only the top 60 were refreshed, now every platform shown is.",
+    "corrections_anchor": "2026-11-13-lpresync"
+   },
+   {
+    "type": "new",
+    "zh": "平台二级页面：只要进过 0.1% 份额就一直保留；加「AI 研究摘要」（核心卖点、和其他发射台的区别、手续费怎么分、平台币、团队与背景、风险与疑点），只根据本站收集的 DefiLlama 资料与官网 / 文档正文整理，标明未人工核实（配好 API key 后自动生成）。",
+    "en": "Platform pages stay once a platform has crossed 0.1% share, and gain an AI research summary (selling points, how it differs, fee split, token, team, risks) written only from the DefiLlama data and site/docs text we collect, marked as unverified (generated once the API key is set)."
+   },
+   {
+    "type": "fix",
+    "zh": "链上扫描撤掉 Avalanche（发射台手续费份额不到 0.01%，免费节点一天都扫不完）；Elysium 上一个每天铸几千个币但都没有交易池的合约标为批量铸币，不算发射台。",
+    "en": "On-chain scan drops Avalanche (under 0.01% of launchpad fees; free nodes can’t finish a day). An Elysium contract minting thousands of tokens a day with no trading pools is marked as batch minting, not a launchpad."
+   }
+  ]
+ },
+ {
+  "version": "2026.11.13",
+  "date": "2026-11-13",
+  "notify": false,
   "title_zh": "涨跌腿详情页：去掉山寨轮动窗口读数卡",
   "title_en": "Leg tracker page: altcoin-window card removed",
   "items": [
