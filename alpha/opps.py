@@ -86,6 +86,9 @@ def build():
             entry.append("use"); entry_why = (entry_why + "；" if entry_why else "") + "官方有积分 / 空投计划（研究补证）"
         if stance == "官方确认不发币":
             entry_why = entry_why or "官方确认不发币"
+        ENTRY_KEYS = {o["k"] for o in FW["entry"]["opts"]}
+        if c and isinstance(c.get("entry"), list) and c["entry"] and all(e in ENTRY_KEYS for e in c["entry"]):
+            entry, entry_why = list(c["entry"]), (c.get("entry_why") or "研究补证给出的资金参与方式")   # 研究结论优先
         if not entry:
             entry = ["none"]
             entry_why = entry_why or {"官方表态会发": "官方表态会发币，但还没开放资金参与 → 预警观察，等发币 / 积分开放",
@@ -107,6 +110,14 @@ def build():
                 sc["V"] = S(1, "research", "有积分 / 空投计划 → 1（仅排放或升值预期）")
             if "刷量" in ws and ("为主" in ws or "主要" in ws):
                 sc["D"] = S(1, "research", "研究查到刷量 / 补贴为主 → 1")
+            mx = {"TM": 3, "TE": 3}
+            for k2, v2 in (c.get("scores") or {}).items():   # 研究直接给的分（每条要有依据），优先于上面的自动 / 推导分
+                if k2 not in sc or not isinstance(v2, dict):
+                    continue
+                val = v2.get("v")
+                if val in ("U", "NA") or (isinstance(val, int) and 0 <= val <= mx.get(k2, 4)):
+                    why = (v2.get("why") or "")[:200] + (f"（来源 {v2['src']}）" if v2.get("src") else "")
+                    sc[k2] = S(val, "research", why)
         # ---- 门槛
         gates = {"safety": S("待核验", "auto", "没有完成控制权审计一律待核验"),
                  "data": S("通过" if (c or {}).get("verdict") == "研究观察" else "待核验", "research" if c else "auto",
@@ -117,7 +128,10 @@ def build():
             status = "原始线索"
         # 历史 rev30（台账每天记的）
         rev_hist = [[h["date"], (h.get("rev30") or {}).get(k)] for h in hist if (h.get("rev30") or {}).get(k) is not None]
+        disc = L.get("first_seen")
+        fresh = bool(disc and not L.get("baseline") and (dt.date.today() - dt.date.fromisoformat(disc)).days <= 3)
         cards.append({
+            "fresh": fresh, "reviewer": (c or {}).get("reviewer") or ("codex" if c else None),
             "id": k.split(":", 1)[1].replace("parent#", ""), "key": k, "name": name,
             "kind": "tokenless" if k.startswith("g:") else "listing",
             "discovered": L.get("first_seen"), "baseline": bool(L.get("baseline")),
@@ -158,9 +172,39 @@ def series(cards):
     return out
 
 
+QUEUE_PROMPT = """你在给「链上大叔研究台」Alpha 雷达补证（只研究正规项目，不写买卖建议）。对清单里每个协议，查官方网站 / 文档 / 公告、DefiLlama 方法论和可核对的链上信息，
+按下面格式交一个 JSON 数组（文件名 <日期>_checks.json）。每条事实带来源链接和核对日期；查不到写 "U"，不要估，不要编。
+结论 verdict 只能是：研究观察（对象明确、有可证伪假设、没查到否决项）/ 待核验（关键事实缺失或冲突，写清缺什么）/ 拒绝（身份错误、已确认风险、其实已有代币、不是对普通人开放的正规项目，写证据）。
+分数按 framework.json 附录一锚点给（M A F E G T 是 0–4，TM TE 是 0–3，不知道写 U，没有代币时 TE 写 NA），每个分数写 why 和 src。
+资金参与方式 entry 从 buy / stake / points / use / presale / mine / none 里选（none = 暂时没有资金入口），写 entry_why。"""
+
+QUEUE_SCHEMA = {"key": "清单里的 key（原样）", "name": "名称", "reviewer": "claude-auto 或 codex", "checked_utc": "核对时间 ISO",
+                "token_stance": "官方确认不发币|有积分/空投计划|官方表态会发|没有表态|U", "token_stance_src": "链接", "token_stance_date": "日期或 U",
+                "revenue_who": "收入归谁", "revenue_method": "收入口径要点", "wash_or_subsidy": "刷量 / 补贴迹象或 U", "user_role": "普通人能以什么角色参与",
+                "entry": ["points"], "entry_why": "为什么是这种资金参与方式（带来源）",
+                "scores": {"M": {"v": "0-4|U", "why": "依据", "src": "链接"}, "TM": {"v": "0-3|U", "why": "", "src": ""}},
+                "counter": "最强反方一句话", "verdict": "研究观察|待核验|拒绝", "verdict_reason": "为什么", "missing": ["还没查清的事项"],
+                "evidence": [{"url": "链接", "fields": ["支持了哪些字段"]}]}
+
+
+def queue(cards):
+    """补证队列：没补完的卡，按 新发现 → 可投资 → 收入 / TVL 排序。给每日自动补证会话和 Codex 用。"""
+    q = [c for c in cards if c["status"] in ("原始线索", "待核验")]
+    q.sort(key=lambda c: (not c["fresh"], c["bucket"] != "invest", c["status"] != "原始线索", -(c["data"]["rev30"] or c["data"]["tvl"] or 0)))
+    items = [{"key": c["key"], "name": c["name"], "status": c["status"], "kind": c["kind"], "fresh": c["fresh"], "bucket": c["bucket"],
+              "discovered": c["discovered"], "category": c["data"]["category"], "chains": c["data"]["chains"], "rev30": c["data"]["rev30"], "tvl": c["data"]["tvl"],
+              "defillama": f"https://defillama.com/protocol/{c['data']['slug']}" if c["data"].get("slug") else None,
+              "pending": [k for k, v in c["scores"].items() if v["v"] == "U" and k not in ("P", "L")],
+              "missing_before": (c.get("research") or {}).get("missing") or []} for c in q]
+    return {"generated": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"), "n": len(items), "prompt": QUEUE_PROMPT, "schema": QUEUE_SCHEMA, "items": items}
+
+
 def main():
     res = build()
+    q = queue(res["opps"])
+    res["queue_n"] = q["n"]
     json.dump(res, open(os.path.join(OUT, "opps.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    json.dump(q, open(os.path.join(OUT, "research_queue.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     if "--no-series" not in sys.argv:
         json.dump(series(res["opps"]), open(os.path.join(OUT, "opp_series.json"), "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
     print("机会卡", len(res["opps"]), res["counts"])

@@ -89,7 +89,10 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
   Notion 同步走服务器（11-14）：`alpha/notion_sync.py`（Notion REST API，repo secret `NOTION_TOKEN`，入口页要连接该集成）在 alpha-daily 里每天同步机会卡 + 线索，每周一出 weekly 并同步周复盘；没 token 跳过，失败不影响日更。
   周复盘的「结论」由复盘会话写进 `data/alpha/weekly/<周>.md` 末节，同步时只在 Notion 为空才带入（不覆盖人写的）。hotcoin 仓库的 NOTION_TOKEN 跨仓库读不到，要大叔在本仓库再存一份。
   每周复盘定时任务 trig_01Us4KZPynk7ohXsPbGAoFLN（每周一新加坡 09:47，新会话）：跑 weekly.py → 写结论 → 推 main（Notion 交给 Actions；会话有 Notion 工具也可以直接写）。
-  看板默认只展开补证完的卡（研究观察 / 优先研究），待核验 + 原始线索收进「补证队列」，显示进度。
+  看板（大叔 11-14 定：没补证的也要马上能看到，不能藏）：最上面「新发现」（3 天内新进、不分状态）→ 已补证 → 待补证，全部展开；卡上标补证来源（Claude 自动 / Codex）。
+  每日自动补证 trig_01T8oc3EhUfm7KVqLxWzcdhM（每天新加坡 13:47，Sonnet，新会话）：按 `data/alpha/research_queue.json`（opps.py 每天生成，排序 新发现 → 可投资 → 收入高，含给 Codex 的提示词和交付格式）取前 8 个，
+  交 `alpha/review/auto_<日期>_checks.json`（reviewer = claude-auto），推 main 触发 alpha-daily 重算。研究文件可直接带 `scores`（M A F E G T TM TE，每个带 why / src）和 `entry`，opps.py 优先采用。
+  想加快就把 research_queue.json 交给 Codex，交回 `<日期>_checks.json` 放 alpha/review/ 即可（同一格式）。
   给 Fable 的检查清单 `alpha/review/fable_checklist.md`。
   数据管理：原始层（data/alpha 接口原样）→ 清洗层（线索台账、案例指标）→ 应用层（机会卡、周复盘）。每周复盘 `alpha/weekly.py` → `data/alpha/weekly/<周>.json/.md`；Notion 单独的「Alpha 雷达」入口页（大叔：每个板块各自一个入口，不和别的板块混放）。
   云端环境 uncleonchain 11-14 已放行 ethresear.ch、hub.snapshot.org、www.binance.com、api.bybit.com、api-manager.upbit.com；Bybit（CloudFront 按国家拦）、Upbit（Cloudflare 人机验证）实测不通，没接。Binance pageSize 超过 20 会 400。

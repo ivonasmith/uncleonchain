@@ -3950,7 +3950,7 @@ def write_alpha_data():
     G["OPPS"] = load(os.path.join(src, "opps.json"))
     out = os.path.join(SITE, "data", "alpha")
     os.makedirs(out, exist_ok=True)
-    for fn in ("alpha_latest.json", "alpha_history.json", "alpha_leads.json", "opps.json", "opp_series.json", "case_metrics.json", "case_series.json"):
+    for fn in ("alpha_latest.json", "alpha_history.json", "alpha_leads.json", "opps.json", "opp_series.json", "research_queue.json", "case_metrics.json", "case_series.json"):
         if os.path.exists(os.path.join(src, fn)):
             shutil.copyfile(os.path.join(src, fn), os.path.join(out, fn))
     for fn in ("framework.json", "cases.json"):   # 框架与案例定义在 alpha/（单一来源），网页按同一份读
