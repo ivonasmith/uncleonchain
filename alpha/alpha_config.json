@@ -1,0 +1,26 @@
+{
+  "_说明": "Alpha 雷达参数。改了在 content/changelog.json 记一条；已写入的线索台账（data/alpha/alpha_leads.json）不回改。",
+  "tokenless": {
+    "min_rev30_usd": 100000,
+    "_min_rev30_usd": "无币协议榜门槛：近 30 天协议收入（DefiLlama dailyRevenue，按母协议合并）≥ 10 万美元",
+    "exclude_categories": [
+      "Stablecoin Issuer",
+      "CEX",
+      "CeDeFi",
+      "Block Builders"
+    ],
+    "_exclude_categories": "稳定币发行方、交易所、CeDeFi、区块构建者：公司业务，不是普通人能参与的链上新协议",
+    "exclude_names": [
+      "Grayscale",
+      "Fidelity Crypto Fund",
+      "Binance staked ETH",
+      "Hyper Foundation HYPE Staking"
+    ],
+    "_exclude_names": "传统金融 / 交易所产品（DefiLlama 归在 RWA / 质押里），以及有币资产的官方质押（HYPE 质押）"
+  },
+  "listings": {
+    "days": 14,
+    "_days": "新上架协议：DefiLlama listedAt 在最近 14 天内"
+  },
+  "_范围": "大叔 2026-11-14 定：只研究正规项目的新协议 / 新产品 / 新机制；部署后 0–6 小时、纯 MEME 打狗不在本板块（要做另起一套，不上网站）"
+}

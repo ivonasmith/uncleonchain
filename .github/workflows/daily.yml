@@ -74,7 +74,7 @@ jobs:
           BASE=$(git rev-parse HEAD~1)   # 本次出网站用的代码版本
           git pull --rebase --autostash -X theirs origin main   # 万一中途有人推送：site/ 是生成物，以本次生成的为准
           # 运行期间别人推了代码：用最新代码重出一次网站再推，别拿旧代码出的页面盖掉新的（2026-11-10 出过）
-          if ! git diff --quiet "$BASE" HEAD -- pipeline leg core config content assets; then
+          if ! git diff --quiet "$BASE" HEAD -- pipeline leg core alpha config content assets; then
             LP_DATA="$GITHUB_WORKSPACE/data" LP_OUT="$GITHUB_WORKSPACE/build" python3 pipeline/出看板.py
             LP_DATA="$GITHUB_WORKSPACE/data" LP_OUT="$GITHUB_WORKSPACE/build" python3 pipeline/出网站.py
             git add site/ && (git diff --cached --quiet || git commit -m "重出网站（运行期间有代码更新）")

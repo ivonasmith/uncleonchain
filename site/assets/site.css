@@ -772,6 +772,9 @@ a.rcard:hover{border-color:var(--lime-bd);color:inherit}
 .article blockquote{margin:0 0 14px;padding:8px 18px;border-left:3px solid var(--lime);color:var(--ink2);background:var(--wash);border-radius:0 8px 8px 0}
 .article code{background:var(--hover);padding:1px 5px;border-radius:4px;font-family:var(--mono);font-size:.88em}
 .article ul{padding-left:22px}.article li{margin:0 0 7px}
+.alpha-doc{max-width:960px}.alpha-doc .scroll{overflow-x:auto;margin:0 0 16px}
+.alpha-doc table.rt{font-size:13px;min-width:560px}.alpha-doc table.rt th,.alpha-doc table.rt td{text-align:left;white-space:normal;vertical-align:top;font-family:var(--sans);line-height:1.6}
+.alpha-doc h2{margin-top:30px}.alpha-doc h3{margin-top:22px}.alpha-doc h4,.alpha-doc h5{margin:18px 0 8px;font-size:15px}
 .callout{border-left:3px solid var(--lime);background:var(--lime-bg);padding:14px 18px;margin:20px 0;border-radius:0 10px 10px 0}
 .callout h4{margin:0 0 6px;font-size:13px;color:var(--lime-ink)}
 .callout.blue{border-color:var(--cool);background:var(--cool-bg)}.callout.blue h4{color:var(--cool)}
