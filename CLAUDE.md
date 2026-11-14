@@ -85,7 +85,15 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
   仪表盘 `周期仪表盘.hero` 放在矩阵页最上面（先看温度再看细节），周期页 /launchpad/cycle/ 看这一轮、各阶段时长、历史；全站统一叫「发射台活动温度」，颜色用 `--cyc-*` 变量，文案要大白话。「钱在哪」= `出网站.money_where`。
 - 发射台长周期（2026-10-29）：`周期观察.long_view` / `coverage`。全部历史 2021-09-18 起只作背景，比高低只用可比段（`COMPARABLE_FROM` = 2024-03-01，pump.fun 开始报数；之前只有 1–6 家融资型平台报数）；
   长周期读数只作描述（距最高、常态下沿 Q05 的倍数、可比段最低），不合成分数、不贴季节。近期温度仍是 730 天 Q05–Q95（≥365 天）。覆盖 < 95% 时第一屏提示。
-- AI Agent 页 /ai-agent/（`出网站.build_ai_agent`）：读 `public/ai-agent/monitor/core_series.json`（交接包 `tools/agent-id` 导出，原样页面也发布在 /ai-agent/monitor/）。
+- `aiagent/`：AI Agent 赛道监控（2026-11-14 大叔定为重点赛道：全面监控发展情况和机会，现有东西保留）。/ai-agent/ 四个页签（`出网站.build_ai_agent`，`aia_head`）：
+  赛道总览 `aia_overview`（读 `data/aiagent/`）/ 币安 Agent ID /ai-agent/agent-id/（`agent_id_body`，就是原来的 /ai-agent/ 内容）/ 发射台功能卡 /ai-agent/launchpads/（Codex v2 的 18 张卡 + 功能矩阵，
+  `aiagent/research/launchpad_cards_v2.json` 写入即冻结；BNB 门禁平台卡片附本站链上读数 `aia_card_live`）/ 研究进度 /ai-agent/research/（`aiagent/research/研究进度.md`，缺口 G1–G10）。首页卡片 `aia_home_card`。
+  `aiagent-daily.yml` 每天 UTC 05:13 跑 `aiagent/aiagent_daily.py` → `aiagent_latest.json`、`fees_series.json`（四层逐日手续费全历史）、`aiagent_history.json`（CoinGecko 分类市值等每天一行，11-14 起自录不回填）。
+  四层 = 发行（发射台）/ 服务（Agent 雇 Agent、x402、推理额度）/ 资管（DeFAI）/ 框架，口径和协议归层在 `aiagent_config.json`，DefiLlama「AI Agents」类目新收录的自动并入 commerce 层；
+  Flap / Four.meme / Pump.fun 全平台数只作参照不进合计（Codex 同口径）。环比看去峰（各 30 天窗口去掉最高一天），前 30 天 < $1,000 不显示环比。监控地图 + 生命周期事件 `aiagent_registry.json`（只收有日期和出处的，待核日期在 open_items）。
+  分工同 Alpha：查证和找数据源交 Codex，任务包 `aiagent/review/README.md`（A1 服务层真实性 · A2 x402 / ERC-8004 数据源 · A3 ACP 逐日服务收入 · A4 非 BNB 发射台使用量 · A5 时间线与 C 级证据升级 · A6 框架清单），结果回 `aiagent/review/*.json`。
+  Codex v2 报告在 /reports/2026-11-12-ai-agent-launchpad-v2/。红线：手续费 ≠ 服务收入，不打分排名，不写买卖。
+- 币安 Agent ID 页 /ai-agent/agent-id/（`出网站.agent_id_body`）：读 `public/ai-agent/monitor/core_series.json`（交接包 `tools/agent-id` 导出，原样页面也发布在 /ai-agent/monitor/）。
   旧的 self-hosted 模板 `tools/agent-id/handoff/` 作废不用；U = 没取到完整数据，不当 0。
   云端版（2026-11-06 交接包）：`tools/agent-id-cloud` + `.github/workflows/agent-id-daily.yml`（GitHub-hosted，2026-11-09 起每天 UTC 00:20 唯一定时 + 手动，单独 concurrency 组 `agent-id-daily`）。
   节点 = 公共免费池优先（workflow 里 `AGENT_ID_RPC_PUBLIC`，开跑先探测 2026-10-20 的注册日志，查不到的剔除），`ALCHEMY_KEY` 只兜底；逐请求失败才换下一个，跑完日志里 `rpc_served` 报各节点承担了多少。

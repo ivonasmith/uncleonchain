@@ -1132,6 +1132,7 @@ def build_home(sd, S, logs, weeks, months, rot, matrix):
 {leg_home_card()}
 {core_home_card()}
 {alpha_home_card()}
+{aia_home_card()}
 {rwa_home_card()}
 {cal_home_card(G.get("CAL"))}
 <div class="grid g2" style="margin-top:22px;align-items:start">
@@ -4630,15 +4631,12 @@ AGENT_METRICS = [  # 键、中文、英文、格式、覆盖范围
 ]
 
 
-def build_ai_agent():
-    """AI Agent：币安 Agent ID 生态六项核心数据（交接包 tools/agent-id 导出的 core_series.json）。"""
-    cr = crumbs([("AI Agent", None)])
+def agent_id_body(cr):
+    """AI Agent · 币安 Agent ID 子页：六项核心数据（交接包 tools/agent-id 导出的 core_series.json）。cr = 页头（面包屑 + 标签页）。"""
     src = os.path.join(AGENT_DIR, "core_series.json")
     d = load(src)
     if not d or not d.get("rows"):
-        body = cr + empty_state("pending", T("AI Agent · 等待数据", "AI Agent · awaiting data"), T("tools/agent-id 导出后显示。", "Shown after tools/agent-id exports data."), "")
-        emit("ai-agent/index.html", f"AI Agent · {T(BRAND, BRAND_EN)}", body, active="aiagent")
-        return
+        return cr + empty_state("pending", T("币安 Agent ID · 等待数据", "Binance Agent ID · awaiting data"), T("tools/agent-id 导出后显示。", "Shown after tools/agent-id exports data."), "")
     # 原始客户页与数据一并发布，方便核查下载
     dst = os.path.join(SITE, "ai-agent", "monitor")
     if LANG["v"] == "zh" and os.path.isdir(AGENT_DIR):
@@ -4692,7 +4690,7 @@ def build_ai_agent():
                     f'<thead><tr><th></th>{head}</tr></thead><tbody>{trs}</tbody></table>'
                     f'<p class="tnote">{T("合计里的交易地址按地址去重，同一地址在几家都交易只算一次，所以分平台相加会大于合计。Four.meme 一行是 Agent 钱包创建的币，买卖的人不一定持有 Agent ID。", "Total traders are de-duplicated across platforms, so per-platform figures can add up to more than the total. The Four.meme row covers tokens created by Agent wallets; their traders need not hold an Agent ID.")}</p></div>')
     defs = d.get("definitions") or {}
-    body = f"""{cr}<div class="ph"><div><div class="eyebrow">AI Agent</div><h1>{T("AI Agent · 币安 Agent ID 生态", "AI Agent · Binance Agent ID ecosystem")}</h1>
+    body = f"""{cr}<div class="ph"><div><h2 style="margin:0">{T("币安 Agent ID 生态", "Binance Agent ID ecosystem")}</h2>
 <p class="lede">{T("注册、交易地址、成交额与发币的每日趋势；只发布已经结束的 UTC 完整日，拿不到完整数据的日子标 U，不当 0。", "Daily registrations, trading addresses, volume and launches. Only finished UTC days are published; days without complete data show U, never 0.")}</p></div>
 <div class="stamp">{T("数据截至", "Data through")} <b>{esc(thru)}</b>{stale}<br>{TDAY(thru)}</div></div>
 <div class="note">{T(f"注册量来自完整的 Agent ID 注册表；交易地址、成交额、新发币和毕业目前只覆盖已核实的 {plats}，不代表全生态。", f"Registrations come from the full Agent ID registry; trading, volume, launches and graduations cover only the verified {plats} so far, not the whole ecosystem.")}</div>
@@ -4707,8 +4705,301 @@ def build_ai_agent():
 <li>{T("所有日期为 UTC 日；U 表示没取得完整数据，图上断开；0 表示完整读取后确实为 0。", "All dates are UTC days; U = incomplete data (gap in the chart); 0 = fully read and truly zero.")}</li>
 <li>{T("采集状态", "Collection status")}: {esc(health.get("collection_status") or "—")} · {T("身份对账", "Identity reconciliation")}: {esc(health.get("identity_reconciliation") or "—")} · <a href="/ai-agent/monitor/core_series.json" download>{T("下载数据", "Download data")}</a></li>
 </ul></details>"""
-    emit("ai-agent/index.html", f"AI Agent · {T(BRAND, BRAND_EN)}", body, active="aiagent", chart=True,
+    return body
+
+
+# ---------------------------------------------------------------- AI Agent 赛道（aiagent/：总览读 data/aiagent/*；币安 Agent ID 读 public/ai-agent/monitor；功能卡 / 进度读 aiagent/research/）
+AIA_TABS = [("", "赛道总览", "Overview", "冷热 · 四层 · 市值 · 时间线", "Heat · layers · market · timeline"),
+            ("agent-id/", "币安 Agent ID", "Binance Agent ID", "注册 · 发行 · 交易（链上）", "Registry · launches · trading"),
+            ("launchpads/", "发射台功能卡", "Launchpad cards", "18 个版本 · 功能矩阵", "18 versions · feature matrix"),
+            ("research/", "研究进度", "Progress", "缺口 · 口径 · 分工", "Gaps · rules · tasks")]
+AIA_LAYER_TONE = {"launch": "t-warn", "commerce": "t-up", "defai": "t-cool", "infra": "t-neutral", "identity": "t-cool", "market": "t-neutral"}
+AIA_LAYER_EXTRA = {"identity": ("身份 · 注册", "Identity"), "market": ("市场 · 代币", "Market · tokens")}
+
+
+def aia_head(cur):
+    tabs = "".join(f'<a role="tab" href="{U("/ai-agent/" + p)}" class="tab{" on" if p == cur else ""}"><span class="tn">{T(zh, en)}</span><span class="ts">{T(dz, de)}</span></a>'
+                   for p, zh, en, dz, de in AIA_TABS)
+    name = next(T(zh, en) for p, zh, en, _, _ in AIA_TABS if p == cur)
+    cr = crumbs([("AI Agent", "/ai-agent/" if cur else None)] + ([(name, None)] if cur else []))
+    return (f'{cr}<div class="ph"><div><div class="eyebrow">AI Agent</div><h1>{T("AI Agent 赛道监控", "AI Agent sector monitor")}</h1>'
+            f'<p class="lede">{T("Web3 × AI Agent 的发展和机会：赛道在变热还是变冷、钱是投机还是真在买 Agent 的服务、哪里冒出了新机制。分四层看（发行 / 服务 / 资管 / 框架），加链上身份和代币市场。只摆读数、证据和未知项，不打分排名，不是买卖建议。", "Development and opportunities in Web3 × AI agents: is the sector heating or cooling, is money speculating or actually buying agent services, where are new mechanisms appearing. Four layers (launch / commerce / DeFAI / infra) plus on-chain identity and the token market. Readings, evidence and unknowns only — no scores, no rankings, not trade advice.")}</p></div></div>'
+            f'<div class="tabwrap"><nav class="tabs" role="tablist">{tabs}</nav></div>')
+
+
+def aia_int(v):
+    return "U" if v is None else f"{v:,.0f}"
+
+
+def aia_layer_name(k):
+    lay = (G.get("AIA") or {}).get("_layers") or {}
+    if k in lay:
+        return T(lay[k]["zh"], lay[k]["en"])
+    zh, en = AIA_LAYER_EXTRA.get(k, (k, k))
+    return T(zh, en)
+
+
+def write_aiagent_data():
+    src = os.path.join(DATA, "aiagent")
+    G["AIA"] = load(os.path.join(src, "aiagent_latest.json"))
+    if G["AIA"]:
+        G["AIA"]["_layers"] = (load(os.path.join(ROOT, "aiagent", "aiagent_config.json")) or {}).get("layers") or {}
+    G["AIA_REG"] = load(os.path.join(ROOT, "aiagent", "aiagent_registry.json")) or {}
+    out = os.path.join(SITE, "data", "aiagent")
+    if G["AIA"]:
+        os.makedirs(out, exist_ok=True)
+        for fn in ("aiagent_latest.json", "aiagent_history.json", "fees_series.json"):
+            if os.path.exists(os.path.join(src, fn)):
+                shutil.copyfile(os.path.join(src, fn), os.path.join(out, fn))
+
+
+def aia_pct(v, base=None, minbase=1000):
+    """环比：基数（前 30 天）太小不显示；None = 新。"""
+    if base is not None and base < minbase:
+        return '<span class="muted">—</span>'
+    if v is None:
+        return f'<span class="muted">{T("新", "new")}</span>'
+    return f'<span style="color:var(--{"up" if v >= 0 else "dn"})">{v:+.0f}%</span>'
+
+
+def aia_fees_chart(d):
+    """四层逐日手续费 → 7 日滚动合计（堆叠）。"""
+    fs = load(os.path.join(DATA, "aiagent", "fees_series.json")) or {}
+    D, L = fs.get("d") or [], fs.get("layers") or {}
+    if not D:
+        return ""
+    ser = {}
+    for k, vals in L.items():
+        roll = {}
+        for i in range(6, len(D)):
+            w = vals[i - 6:i + 1]
+            roll[D[i]] = sum(x or 0 for x in w) if all(x is not None for x in w) else None
+        ser[k] = roll
+    path = write_data("aiagent/fees_layers_7d.json", D[6:], ser)
+    cols = {"launch": "s3", "commerce": "s1", "defai": "s2", "infra": "s4"}
+    return chart_div({"src": path, "fmt": "usd", "stack": True, "ranges": ["3M", "6M", "1Y", "ALL"], "range": "1Y", "group": "aia", "h": 280,
+                      "series": [{"k": k, "n": aia_layer_name(k), "c": cols.get(k, "s5"), "area": True} for k in L]})
+
+
+def aia_overview():
+    d, reg = G.get("AIA") or {}, G.get("AIA_REG") or {}
+    if not d:
+        return '<div class="note">' + T("赛道数据还没生成（aiagent/aiagent_daily.py）。", "Sector data not generated yet.") + '</div>'
+    tot, lay, mk, aid = d.get("total") or {}, d.get("layers") or {}, d.get("market") or {}, d.get("agent_id") or {}
+    cats = mk.get("categories") or {}
+    ag = cats.get("ai-agents") or {}
+    # 读数卡
+    pos = tot.get("pctile_1y")
+    c1 = (f'<div class="glass hero"><div class="k">{T("赛道手续费 · 近 30 天", "Sector fees · 30d")}</div><div class="v" style="font-size:22px">{a_usd(tot.get("f30"))}</div>'
+          f'<div class="s">{T("比前 30 天", "vs prior 30d")} {aia_pct(tot.get("chg30"))} · {T("去掉最高一天", "ex-peak")} {aia_pct(tot.get("chg30_ex_peak"))}'
+          + (f'<br>{T(f"在过去一年的 30 天合计里高于 {pos:.0f}% 的时候", f"Above {pos:.0f}% of rolling 30d totals in the past year")}' if pos is not None else "") + '</div></div>')
+    c2 = (f'<div class="glass hero"><div class="k">{T("AI Agent 代币市值", "AI Agent token market cap")} <span class="chip">CoinGecko</span></div><div class="v" style="font-size:22px">{a_usd(ag.get("mcap"))}</div>'
+          f'<div class="s">{T("24 小时", "24h")} {aia_pct(ag.get("chg24h"))} · {T("发射台代币", "Launchpad tokens")} {a_usd((cats.get("ai-agent-launchpad") or {}).get("mcap"))} · {T("框架代币", "Frameworks")} {a_usd((cats.get("ai-framework") or {}).get("mcap"))}</div></div>')
+    nid, pid = aid.get("new_ids_7d"), aid.get("new_ids_prev7d")
+    c3 = (f'<div class="glass hero"><div class="k">{T("币安 Agent ID 累计", "Binance Agent IDs")} <span class="chip">{T("链上", "on-chain")}</span></div>'
+          f'<div class="v" style="font-size:22px">{aia_int(aid.get("cumulative_ids"))}</div>'
+          f'<div class="s">{T("近 7 天新增", "New in 7d")} {aia_int(nid)}'
+          + (f'（{T("前 7 天", "prior 7d")} {pid:,.0f}）' if pid is not None else "")
+          + f' · {T("门禁发射台近 7 天发币", "Gated-pad launches 7d")} {aia_int(aid.get("launches_7d"))} · <a href="{U("/ai-agent/agent-id/")}">{T("详情", "details")}</a></div></div>')
+    # 一句话：哪层在涨、哪层在跌（只说事实）
+    parts = []
+    for k in ("launch", "commerce", "defai", "infra"):
+        x = lay.get(k) or {}
+        if x.get("f30") is None:
+            continue
+        ch = x.get("chg30_ex_peak") if x.get("chg30_ex_peak") is not None else x.get("chg30")
+        top = (f'{T("，最大一家", ", top: ")}{esc(x.get("top") or "")} {T("占", "")}{x["top_share"]:.0f}%' if (x.get("top_share") or 0) >= 50 else "")
+        parts.append(f'{aia_layer_name(k)} {a_usd(x["f30"])}（{T("去峰环比", "ex-peak")} {aia_pct(ch)}{top}）')
+    line = f'<div class="card" style="padding:12px 16px;margin:0 0 14px;font-size:13.5px">{T("近 30 天手续费按层：", "30d fees by layer: ")}' + "；".join(parts) + '</div>'
+    # 事件
+    ev = d.get("events") or []
+    EVN = {"new_protocol": T("新进名单", "Newly tracked"), "dormant": T("手续费归零", "Fees went to zero"), "spike": T("单日事件", "Single-day spike")}
+    evh = ""
+    if ev:
+        items = "".join(f'<li><span class="chip {"t-warn" if e["type"] != "new_protocol" else "t-up"}">{EVN.get(e["type"], e["type"])}</span> <b>{esc(e["name"])}</b> <small>{aia_layer_name(e["layer"])}'
+                        + (T(f" · 最高一天占近 30 天的 {e['share']:.0f}%，看去峰环比", f" · top day = {e['share']:.0f}% of 30d; use ex-peak change") if e["type"] == "spike" else "")
+                        + (T(" · 前 30 天有手续费，近 30 天为 0", " · fees in prior 30d, none in last 30d") if e["type"] == "dormant" else "") + '</small></li>' for e in ev)
+        evh = f'<h2>{T("今天的变化", "Today’s changes")}</h2><div class="card" style="padding:10px 16px"><ul class="plain">{items}</ul></div>'
+    elif d.get("baseline_day") == (d.get("generated") or "")[:10]:
+        bd = d.get("baseline_day")
+        evh = f'<div class="note">{T(f"今天（{bd}）是名单第一天，全部记为基线；从明天起新收录的协议会在这里提示。", "Today is the baseline; newly tracked protocols will be flagged from tomorrow.")}</div>'
+    # 四层表
+    lrows = ""
+    for k in ("launch", "commerce", "defai", "infra"):
+        x, m = lay.get(k) or {}, (d.get("_layers") or {}).get(k) or {}
+        lrows += (f'<tr><td class="l"><span class="chip {AIA_LAYER_TONE.get(k, "")}">{aia_layer_name(k)}</span><br><small>{esc(T(m.get("desc_zh", ""), m.get("desc_en", "")))}</small></td>'
+                  f'<td>{a_usd(x.get("f30"))}</td><td>{aia_pct(x.get("chg30"))}</td><td>{aia_pct(x.get("chg30_ex_peak"))}</td><td>{a_usd(x.get("med30"))}</td>'
+                  f'<td>{x.get("n_active", 0)} / {x.get("n", 0)}</td><td class="l">{esc(x.get("top") or "—")}' + (f' <small>{x["top_share"]:.0f}%</small>' if x.get("top_share") is not None else "") + '</td></tr>')
+    ltbl = (f'<div class="tw scroll"><table><thead><tr><th class="l">{T("层", "Layer")}</th><th>{T("30 天手续费", "30d fees")}</th><th>{T("环比", "Change")}</th><th>{T("去峰环比", "Ex-peak")}</th>'
+            f'<th>{T("中位日", "Median day")}</th><th>{T("活跃 / 在册", "Active / tracked")}</th><th class="l">{T("最大一家", "Largest")}</th></tr></thead><tbody>{lrows}</tbody></table></div>')
+    # 协议表
+    prow = ""
+    for r in d.get("protocols") or []:
+        if r.get("status") != "ok" or not r.get("f30"):
+            continue
+        small = (r.get("f30") or 0) < 1000
+        nm = f'<a href="https://defillama.com/protocol/{esc(r["slug"])}" target="_blank" rel="noopener">{esc(r["name"])}</a>'
+        note = T(r.get("note_zh") or "", r.get("note_en") or "")
+        prow += (f'<tr><td class="l wrap" style="min-width:170px">{nm}' + (f'<div class="tnote" style="margin:2px 0 0;white-space:normal">{esc(note)}</div>' if note else "")
+                 + f'</td><td class="l"><span class="chip {AIA_LAYER_TONE.get(r["layer"], "")} carry">{aia_layer_name(r["layer"])}</span></td>'
+                 f'<td class="l">{"".join(chain_badge(c) for c in (r.get("chains") or [])[:3])}</td><td>{a_usd(r.get("f30"))}</td>'
+                 f'<td>{aia_pct(None if small else r.get("chg30"), r.get("p30") if r.get("chg30") is not None else None)}</td>'
+                 f'<td>{aia_pct(None if small else r.get("chg30_ex_peak"), r.get("p30") if r.get("chg30_ex_peak") is not None else None)}</td>'
+                 f'<td>{a_usd(r.get("med30"))}</td><td>{"—" if r.get("peak_share") is None else str(round(r["peak_share"])) + "%"}</td>'
+                 f'<td>{esc(r.get("first_day") or "")}</td></tr>')
+    quiet = [r for r in d.get("protocols") or [] if r.get("status") != "ok" or not r.get("f30")]
+    qline = "、".join(esc(r["name"]) + ("" if r.get("status") == "ok" else T("（无适配器）", " (no adapter)")) for r in quiet)
+    ref = d.get("reference") or {}
+    rline = " · ".join(f'{esc(T(v["name"], k))} {a_usd(v.get("f30"))}' for k, v in ref.items())
+    ptbl = (f'<div class="tw scroll"><table><thead><tr><th class="l">{T("协议", "Protocol")}</th><th class="l">{T("层", "Layer")}</th><th class="l">{T("链", "Chains")}</th>'
+            f'<th>{T("30 天手续费", "30d fees")}</th><th>{T("环比", "Change")}</th><th>{T("去峰环比", "Ex-peak")}</th><th>{T("中位日", "Median day")}</th><th>{T("最高一天占比", "Top-day share")}</th><th>{T("有数起", "Since")}</th></tr></thead><tbody>{prow}</tbody></table></div>'
+            + (f'<p class="tnote">{T("近 30 天手续费为 0 或没有适配器：", "Zero fees in 30d or no adapter: ")}{qline}</p>' if qline else "")
+            + f'<p class="tnote">{T("量级参照（全平台，不进赛道合计，也不能归给 Agent 模式）：", "Scale reference (whole platforms; not in sector totals, not attributable to agent modes): ")}{rline}</p>')
+    # 市场
+    crow = "".join(f'<tr><td class="l">{esc(T(v["zh"], v["en"]))}</td><td>{a_usd(v.get("mcap"))}</td><td>{a_usd(v.get("vol24h"))}</td><td>{aia_pct(v.get("chg24h"))}</td></tr>' for v in cats.values())
+    topn = mk.get("top") or []
+    ts = mk.get("top_share") or {}
+    trow = "".join(f'<tr><td class="rk">{i}</td><td class="l"><b>{esc(x["symbol"])}</b> <small>{esc(x["name"])}</small></td><td>{a_usd(x.get("mcap"))}</td><td>{aia_pct(x.get("chg7d"))}</td><td>{aia_pct(x.get("chg30d"))}</td>'
+                   f'<td>{aia_pct(x.get("ath_chg"))}</td></tr>' for i, x in enumerate(topn[:10], 1))
+    market = (f'<h2 id="market">{T("代币市场", "Token market")} <span class="sub">CoinGecko · {T("快照", "snapshot")} {TT(mk.get("snapshot_utc"))}</span></h2>'
+              f'<div class="grid g2"><div class="tw scroll"><table><thead><tr><th class="l">{T("分类", "Category")}</th><th>{T("市值", "Market cap")}</th><th>{T("24h 成交", "24h volume")}</th><th>24h</th></tr></thead><tbody>{crow}</tbody></table></div>'
+              f'<div class="tw scroll"><table><thead><tr><th>#</th><th class="l">{T("AI Agent 分类市值前十", "Top 10 in AI Agents")}</th><th>{T("市值", "Mcap")}</th><th>7d</th><th>30d</th><th>{T("距最高", "From ATH")}</th></tr></thead><tbody>{trow}</tbody></table></div></div>'
+              + f'<p class="tnote">{T("CoinGecko 分类是第三方归类，同一个币可以在几个分类里，成分会变。免费接口没有分类历史，所以从 2026-11-14 起每天自录一次，满 90 天前只描述、不比高低。", "CoinGecko categories are third-party groupings and overlap; constituents change. No free category history, so we self-record daily from 2026-11-14 and only describe until 90 days accrue.")}'
+              + (T(f" 前 30 名里第一名占 {ts['top1']:.0f}%、前五名占 {ts['top5']:.0f}%。", f" Within the top 30, #1 holds {ts['top1']:.0f}% and the top five {ts['top5']:.0f}%.") if ts.get("top1") is not None else "")
+              + f' {T("列名单只为说明分类构成，不是推荐。", "Listed only to show what the category contains; not a recommendation.")}</p>')
+    # 监控地图
+    ST = {"live": ("t-up", T("已接", "Live")), "pending": ("t-warn", T("待接入", "Pending"))}
+    mrows = ""
+    for it in reg.get("monitor_map") or []:
+        tone, lab = ST.get(it["status"], ("", it["status"]))
+        nm = esc(T(it["zh"], it["en"]))
+        if it.get("href"):
+            nm = f'<a href="{U("/ai-agent/" + it["href"]) if it["href"].startswith("#") else U(it["href"])}">{nm}</a>' if not it["href"].startswith("#agent") else f'<a href="{U("/ai-agent/agent-id/")}">{nm}</a>'
+        mrows += f'<tr><td class="l"><span class="chip {AIA_LAYER_TONE.get(it["layer"], "")} carry">{aia_layer_name(it["layer"])}</span></td><td class="l wrap">{nm}</td><td class="l"><span class="chip {tone}">{lab}</span></td><td class="l wrap"><small>{esc(T(it["src"], it.get("src_en") or it["src"]))}</small></td></tr>'
+    mmap = (f'<h2 id="map">{T("监控地图", "Coverage map")} <span class="sub">{T("每一层看什么、接没接", "What each layer tracks and whether it is wired")}</span></h2>'
+            f'<div class="tw scroll"><table><thead><tr><th class="l">{T("层", "Layer")}</th><th class="l">{T("监控项", "Item")}</th><th class="l">{T("状态", "Status")}</th><th class="l">{T("来源 / 卡在哪", "Source / blocker")}</th></tr></thead><tbody>{mrows}</tbody></table></div>'
+            f'<p class="tnote">{T("待接入的项由 Codex 核数据源、Claude 接进日更，进度见", "Pending items: Codex verifies sources, Claude wires them in; see")} <a href="{U("/ai-agent/research/")}">{T("研究进度", "Progress")}</a>。</p>')
+    # 时间线
+    KIND = {"launch": ("t-up", T("上线", "Launch")), "stop": ("t-dn", T("停新 / 下线", "Stopped")), "pivot": ("t-warn", T("转型", "Pivot")), "peak": ("t-cool", T("峰值", "Peak"))}
+    evs = sorted(reg.get("events") or [], key=lambda e: e["date"], reverse=True)
+    tl = "".join(f'<li><span class="mono" style="display:inline-block;min-width:84px">{esc(e["date"])}</span> <span class="chip {KIND.get(e["kind"], ("", ""))[0]}">{KIND.get(e["kind"], ("", e["kind"]))[1]}</span> '
+                 f'<b>{esc(e["who"])}</b> {esc(T(e["zh"], e["en"]))} <small class="muted">· {esc(e["grade"])} · {esc(e["src"])}</small></li>' for e in evs)
+    timeline = (f'<h2 id="timeline">{T("生命周期时间线", "Lifecycle timeline")} <span class="sub">{T("上线 / 停新 / 转型 / 峰值，只收有日期和出处的", "Launches, stops, pivots, peaks — dated and sourced only")}</span></h2>'
+                f'<div class="card" style="padding:10px 16px"><ul class="plain">{tl}</ul>'
+                f'<p class="tnote">{T("证据：A 官方原文或可复算链上；B 第三方数据平台；C 媒体 / 社区 / 项目自述。还有", "Evidence: A official / reproducible on-chain; B third-party data; C media / community / self-reported. ")}{len(reg.get("open_items") or [])}{T(" 条日期待核，见研究进度。", " items await date checks; see Progress.")}'
+                f' {T("人工核对于", "Checked")} {esc(reg.get("checked_utc") or "—")}</p></div>')
+    src_ok = all(v.get("ok") for v in (d.get("sources") or {}).values())
+    foot = (f'<p class="tnote">{T("手续费数据日", "Fee data day")} {esc(d.get("asof") or "")}（{TDAY(d.get("asof"))}）· {T("生成于", "Generated")} {TT(d.get("generated"))} · '
+            f'{T("来源 DefiLlama 逐日手续费、CoinGecko 分类、本站 Agent ID 链上采集", "Sources: DefiLlama daily fees, CoinGecko categories, own Agent ID collector")}{"" if src_ok else " · " + T("有数据源失败，沿用上次结果", "a source failed; last result carried")}'
+            f' · <a href="/data/aiagent/aiagent_latest.json">JSON</a> · <a href="/data/aiagent/fees_series.json">{T("逐日手续费", "Daily fees")}</a></p>')
+    return (f'<div class="grid g3" style="margin:14px 0 14px">{c1}{c2}{c3}</div>{line}{evh}'
+            f'<h2 id="fees">{T("四层手续费", "Fees by layer")} <span class="sub">{T("7 日滚动合计，堆叠", "7-day rolling sum, stacked")}</span></h2><div class="card" style="padding:14px 16px">{aia_fees_chart(d)}</div>'
+            f'<p class="tnote">{T("手续费 ≠ 收入 ≠ 服务收入：发行层的手续费反映投机热度，服务层（Agent 雇 Agent、x402 按次付费、推理额度）才接近 Agent 在卖服务，而且还没剔除自付。去峰环比 = 两个 30 天窗口各去掉最高一天再比，防止单日事件带偏；前 30 天不到 1,000 美元的不显示环比。", "Fees ≠ revenue ≠ service revenue: launch-layer fees track speculation; the commerce layer (agent hiring, x402 pay-per-call, inference credits) is closer to agents selling services, and self-payment is not yet excluded. Ex-peak change drops the highest day from each 30d window; no change shown when the prior 30d is under $1,000.")}</p>'
+            + ltbl + f'<h2>{T("协议明细", "Protocols")} <span class="sub">{T("按近 30 天手续费排序", "Sorted by 30d fees")}</span></h2>' + ptbl
+            + market + timeline + mmap + foot)
+
+
+AIA_CARD_LIVE = {"K02": ("bnb", "Gang"), "K03": ("bnb", "Gang"), "K04": ("bnb", "Gang"), "K05": ("bnb", "AgentPad"), "K06": ("bnb", "Flap-AgentID"),
+                 "K07": ("bnb", "Four.meme-Agent"), "K09": ("fee", "virtuals-protocol"), "K10": ("fee", "clanker"), "K11": ("fee", "clanker"), "K12": ("fee", "bankr")}
+
+
+def aia_card_live(kid):
+    """功能卡上的「本站持续读数」：BNB 门禁平台读 Agent ID 采集（近 7 天），其他读 DefiLlama 手续费（近 30 天）。"""
+    m = AIA_CARD_LIVE.get(kid)
+    if not m:
+        return ""
+    if m[0] == "bnb":
+        rows = [r for r in ((load(os.path.join(AGENT_DIR, "core_series.json")) or {}).get("rows") or []) if r.get("by_platform")][-7:]
+        if not rows:
+            return ""
+        g = lambda k: [(r["by_platform"].get(m[1]) or {}).get(k) for r in rows]
+        ok = lambda xs: all(x is not None for x in xs)
+        tr, vo, la, gr = g("trading_addresses"), g("volume_bnb"), g("new_launches"), g("graduated")
+        s = lambda xs, f=float: "U" if not ok(xs) else f"{sum(f(x) for x in xs):,.{2 if f is float else 0}f}"
+        txt = T(f"近 7 天（{rows[0]['date'][5:]}～{rows[-1]['date'][5:]}）：交易地址合计 {s(tr, int)}、成交 {s(vo)} BNB、新发币 {s(la, int)}、毕业 {s(gr, int)}",
+                f"Last 7 days ({rows[0]['date'][5:]}–{rows[-1]['date'][5:]}): traders {s(tr, int)}, volume {s(vo)} BNB, launches {s(la, int)}, graduations {s(gr, int)}")
+        if kid in ("K02", "K03", "K04"):
+            txt += T("（Gang 全平台，未按版本拆）", " (all of Gang; not split by version)")
+        return f'<div class="note" style="margin:8px 0">{T("本站链上读数", "Our on-chain reading")} · {txt}</div>'
+    r = next((x for x in (G.get("AIA") or {}).get("protocols") or [] if x["slug"] == m[1]), None)
+    if not r or r.get("f30") is None:
+        return ""
+    return (f'<div class="note" style="margin:8px 0">{T("本站持续读数", "Our daily reading")} · {T("DefiLlama 近 30 天手续费", "DefiLlama 30d fees")} {a_usd(r["f30"])}，'
+            f'{T("去峰环比", "ex-peak change")} {aia_pct(r.get("chg30_ex_peak"))}（{T("全平台 / 跨版本，不归给本卡的版本", "whole platform / all versions; not attributable to this card")}）</div>')
+
+
+def aia_launchpads():
+    cj = load(os.path.join(ROOT, "aiagent", "research", "launchpad_cards_v2.json")) or {}
+    cards, srcs = cj.get("cards") or [], cj.get("sources") or {}
+    if not cards:
+        return ""
+    GR = {"A": "t-up", "B": "t-cool", "C": "t-warn", "U": "t-neutral"}
+    feats = list(cards[0]["flags"].keys())
+    CELL = {"✓": ("var(--up)", "✓"), "✗": ("var(--dn)", "✗"), "U": ("var(--muted)", "·")}
+    head = "".join(f'<th title="{esc(c["name"])} · {esc(c["version"])}"><a href="#{c["id"]}">{c["id"][1:]}</a></th>' for c in cards)
+    mrows = ""
+    for f in feats:
+        cells = ""
+        for c in cards:
+            v = c["flags"].get(f, "U")
+            col, ch = CELL.get(v, ("var(--muted)", v))
+            cells += f'<td style="text-align:center;color:{col};font-weight:600">{ch}</td>'
+        nyes = sum(1 for c in cards if c["flags"].get(f) == "✓")
+        mrows += f'<tr><td class="l" style="white-space:nowrap">{esc(f)} <small class="muted">{nyes}</small></td>{cells}</tr>'
+    legend = " · ".join(f'<b>{c["id"]}</b> {esc(c["name"])}' for c in cards)
+    matrix = (f'<h2 id="matrix">{T("功能矩阵", "Feature matrix")} <span class="sub">{T("✓ 有支持证据 · ✗ 有明确相反证据 · · 未知；数字 = 有证据支持的版本数", "✓ supported · ✗ explicitly not · · unknown; number = versions with support")}</span></h2>'
+              f'<div class="tw scroll"><table class="l3t" style="min-width:880px;font-size:12.5px"><thead><tr><th class="l">{T("功能", "Feature")}</th>{head}</tr></thead><tbody>{mrows}</tbody></table></div>'
+              f'<p class="tnote">{legend}</p>'
+              f'<p class="tnote">{T("「强制运行验证」「创建者审核」「持币使用权」「服务退款」「改费 / 暂停权限」18 个版本全是未知——也就是说，目前没有一家能证明发出来的 Agent 真在运行、持币人有什么权利、平台能不能单方面改规则。这是整个品类最大的空白。", "Mandatory run verification, creator review, holder usage rights, service refunds and fee / pause powers are unknown for all 18 versions: no platform can yet prove its agents actually run, what holders are entitled to, or whether the platform can change rules unilaterally. The biggest blank in the category.")}</p>')
+    body = ""
+    for c in cards:
+        params = "".join(f'<tr><td class="l" style="white-space:nowrap">{esc(k)}</td><td class="l wrap">{esc(v)}</td></tr>' for k, v in (c.get("params") or {}).items())
+        fields = "".join(f'<tr><td class="l" style="white-space:nowrap">{esc(k)}</td><td class="l wrap">{esc(v)}</td></tr>' for k, v in (c.get("fields") or {}).items() if k != "基本")
+        ev = "".join(f'<li><b>{esc(k)}</b> {esc(v)}</li>' for k, v in (c.get("evidence") or {}).items())
+        flow = " → ".join(esc(x) for x in c.get("flow") or [])
+        sl = " ".join(f'<a href="{esc(srcs[s]["url"])}" target="_blank" rel="noopener">{esc(s)}</a><small class="muted">（{esc(srcs[s]["grade"])}）</small>' for s in c.get("source_ids") or [] if s in srcs)
+        body += (f'<details class="card fold" id="{c["id"]}" style="margin:0 0 10px"><summary><b>{c["id"]}</b> {esc(c["name"])} <span class="chip {GR.get(c.get("grade"), "")}">{esc(c.get("grade") or "U")}</span> '
+                 f'<small class="muted">{esc(c.get("chain") or "")} · {esc(c.get("version") or "")} · {esc(c.get("category") or "")}</small><br><small>{esc(c.get("status") or "")}</small></summary>'
+                 + aia_card_live(c["id"])
+                 + (f'<p class="tnote" style="margin:6px 0">{T("流程", "Flow")}：{flow}</p>' if flow else "")
+                 + f'<div class="grid g2"><div><h4 style="margin:8px 0 4px">{T("参数", "Parameters")}</h4><div class="tw"><table><tbody>{params}</tbody></table></div>'
+                 f'<h4 style="margin:12px 0 4px">{T("三层核验", "Three-layer check")}</h4><ul class="plain" style="font-size:13px">{ev}</ul></div>'
+                 f'<div><h4 style="margin:8px 0 4px">{T("功能与边界", "Functions & limits")}</h4><div class="tw"><table><tbody>{fields}</tbody></table></div></div></div>'
+                 f'<p class="tnote">{T("来源", "Sources")}：{sl} · {T("读取", "Read")} {esc((c.get("utc") or "")[:10])} · {esc(c.get("read") or "")}</p></details>')
+    intro = (f'<div class="note">{T("Codex《AI Agent 发射台的功能与形态》v2（研究截止 2026-11-12），18 个版本 / 模式逐个拆：创建、定价、毕业、费用分账、服务履约和权限。卡片写入即冻结，新研究另起版本；卡片上「本站读数」是网站每天的持续读数，用来补卡片里「数据 U」的部分。证据：A 官方原文或可复算链上 · B 第三方数据平台 · C 媒体 / 社区 / 摘要 · U 未知。", "Codex research “AI Agent launchpads: functions and forms” v2 (cutoff 2026-11-12): 18 versions / modes broken down by creation, pricing, graduation, fee split, service delivery and permissions. Cards are frozen; the “our reading” lines are the site’s daily readings, filling the cards’ “data U”. Evidence: A official / reproducible on-chain · B third-party data · C media / community / summary · U unknown.")}'
+             f' <a href="{U("/reports/2026-11-12-ai-agent-launchpad-v2/")}">{T("报告全文（含附件下载）→", "Full report (with attachments) →")}</a></div>')
+    zh_only = ZH_ONLY if LANG["v"] == "en" else ""
+    return zh_only + intro + matrix + f'<h2 id="cards">{T("版本卡", "Version cards")} <span class="sub">{T("点开看参数、功能与边界、三层核验", "Expand for parameters, functions and checks")}</span></h2>' + body
+
+
+def build_ai_agent():
+    desc = T("AI Agent 赛道监控：发行 / 服务 / 资管 / 框架四层手续费、AI Agent 代币市值、币安 Agent ID 链上数据、18 个发射台功能卡和生命周期时间线。只摆读数和证据，不是买卖建议。",
+             "AI Agent sector monitor: fees across launch / commerce / DeFAI / infra, AI Agent token market cap, Binance Agent ID on-chain data, 18 launchpad feature cards and a lifecycle timeline. Readings and evidence only; not trade advice.")
+    title = lambda zh, en: T(f"{zh} · AI Agent · {BRAND}", f"{en} · AI Agent · {BRAND_EN}")
+    emit("ai-agent/index.html", T(f"AI Agent 赛道监控 · {BRAND}", f"AI Agent Monitor · {BRAND_EN}"), aia_head("") + aia_overview(), active="aiagent", chart=True, desc=desc)
+    emit("ai-agent/agent-id/index.html", title("币安 Agent ID", "Binance Agent ID"), agent_id_body(aia_head("agent-id/")), active="aiagent", chart=True,
          desc=T("币安 Agent ID 生态：累计与新增 Agent ID、交易地址、曲线成交额、新发币与毕业的每日趋势。", "Binance Agent ID ecosystem: IDs, trading addresses, curve volume, launches and graduations, daily."))
+    emit("ai-agent/launchpads/index.html", title("发射台功能卡", "Launchpad cards"), aia_head("launchpads/") + aia_launchpads(), active="aiagent", desc=desc)
+    src = open(os.path.join(ROOT, "aiagent", "research", "研究进度.md"), encoding="utf-8").read()
+    zh_only = ZH_ONLY if LANG["v"] == "en" else ""
+    emit("ai-agent/research/index.html", title("研究进度", "Progress"), aia_head("research/") + zh_only + f'<div class="article alpha-doc">{core_md(src)}</div>',
+         active="aiagent", desc=desc)
+
+
+def aia_home_card():
+    d = G.get("AIA")
+    if not d:
+        return ""
+    tot, lay, aid = d.get("total") or {}, d.get("layers") or {}, d.get("agent_id") or {}
+    ag = ((d.get("market") or {}).get("categories") or {}).get("ai-agents") or {}
+    ls = " ".join(f'<span>{aia_layer_name(k)} <b>{a_usd((lay.get(k) or {}).get("f30"))}</b> {aia_pct((lay.get(k) or {}).get("chg30_ex_peak"))}</span>' for k in ("launch", "commerce", "defai", "infra"))
+    return (f'<h2>{T("AI Agent 赛道", "AI Agent sector")} <span class="sub">{T("四层手续费 · 代币市值 · 币安 Agent ID", "Fees by layer · market cap · Binance Agent ID")}</span>'
+            f' <a class="sub" href="{U("/ai-agent/")}">{T("进监控 →", "Open →")}</a></h2>'
+            f'<div class="card core-home"><div class="row"><span>{T("赛道手续费（30 天）", "Sector fees (30d)")} <b>{a_usd(tot.get("f30"))}</b> {aia_pct(tot.get("chg30_ex_peak"))}</span>'
+            f'<span>{T("AI Agent 代币市值", "AI Agent token mcap")} <b>{a_usd(ag.get("mcap"))}</b></span>'
+            f'<span>{T("币安 Agent ID", "Binance Agent IDs")} <b>{aia_int(aid.get("cumulative_ids"))}</b></span></div>'
+            f'<div class="row" style="margin-top:6px">{ls}</div>'
+            f'<div class="row" style="margin-top:6px;font-size:12px;color:var(--muted)">{T("环比为去掉最高一天后的 30 天环比", "Changes are 30d ex-peak")} · {T("数据日", "Data day")} {esc(d.get("asof") or "")}</div></div>')
 
 
 def build_calendar():
@@ -5461,7 +5752,7 @@ def build_misc(logs, weeks, months):
     if os.path.exists(rd):
         os.remove(rd)
     write("robots.txt", f"User-agent: *\nAllow: /\nSitemap: https://{DOMAIN}/sitemap.xml\n")
-    urls = ["/", "/macro/", "/leg-tracker/", "/calendar/", "/launchpad/", "/ai-agent/", "/rotation/", "/alpha/", "/alpha/pool/", "/alpha/cases/", "/alpha/method/", "/alpha/progress/", "/reports/", "/journal/", "/methodology/", "/corrections/", "/about/",
+    urls = ["/", "/macro/", "/leg-tracker/", "/calendar/", "/launchpad/", "/ai-agent/", "/ai-agent/agent-id/", "/ai-agent/launchpads/", "/ai-agent/research/", "/rotation/", "/alpha/", "/alpha/pool/", "/alpha/cases/", "/alpha/method/", "/alpha/progress/", "/reports/", "/journal/", "/methodology/", "/corrections/", "/about/",
             "/launchpad/report/", "/launchpad/report/archive/"]
     urls += [f"/macro/{x['key']}/" for x in R.INDICATORS + R.RETIRED] + ["/changelog/"]
     for p in PILLARS:
@@ -5601,6 +5892,7 @@ def main():
             json.dump(dict(G["LEG"], site_scale=leg_scale()), f, ensure_ascii=False, indent=1)
     write_core_data()
     write_alpha_data()
+    write_aiagent_data()
     write_rwa_data()
     copy_report_files()
     for lang in ("zh", "en"):
