@@ -1,5 +1,29 @@
 [
  {
+  "version": "2026.11.14.9",
+  "date": "2026-11-14",
+  "notify": true,
+  "title_zh": "Alpha 雷达改版：机会看板 + 统一框架卡 + 案例库",
+  "title_en": "Alpha Radar rebuilt: opportunity board, one framework card, case library",
+  "items": [
+   {
+    "type": "new",
+    "zh": "首页改成机会看板：每个新东西（无币但有收入的协议、新上架协议）按同一套框架拆解打分——系统规则能判断的自动打（每条写明规则和证据），要判断的记 U 等研究补证，所以给区间和覆盖率，不按分数排名。资金能参与的（买币、质押、存入或交易赚积分、发售、挖矿）进「可投资机会」，暂时没有入口的进「预警观察」。",
+    "en": "The landing page is now an opportunity board: every new thing is scored on one framework — system rules where data can decide (each rule and its evidence shown), U where research is needed — so scores are ranges with coverage, never a ranking. Capital-accessible items go to Investable, the rest to Watchlist."
+   },
+   {
+    "type": "new",
+    "zh": "每张机会卡：分类、两组评分（逐项锚点 + 来源）、门槛、研究补证、四个问题、历史量级对照（最相近的历史案例后来走到什么估值、涨幅、到峰天数）、估值该用什么、持续监控（近 180 天协议收入）。",
+    "en": "Each card: classes, two score groups (anchor by anchor, with source), gates, research, the four questions, historical analogs (what the closest past cases reached), valuation guide, and monitoring (180-day revenue)."
+   },
+   {
+    "type": "new",
+    "zh": "案例库：25 个历史案例（含 3 个对照组）用同一张框架卡显示，加上接口算出的结果——估值峰值、首日 / 首周后倍数、相对 BTC、到峰天数、热度天数、TVL 峰值，以及创新级别 × 结果量级的对照表。框架页把整套方法论的维度、流程、打分规则结构化展示；评估器可以手动给任何项目打分。",
+    "en": "Case library: 25 historical cases (3 controls) on the same card with computed outcomes, plus innovation-level × outcome tables. The framework page lays out every dimension, step and scoring rule; the evaluator scores any project by hand."
+   }
+  ]
+ },
+ {
   "version": "2026.11.14.8",
   "date": "2026-11-14",
   "notify": false,

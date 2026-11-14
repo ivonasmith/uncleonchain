@@ -284,7 +284,8 @@ def main():
     if rev is None and prev:       # 收入源失败：榜单沿用上次
         out["tokenless"] = prev.get("tokenless", [])
     row = {"date": today, "asof": asof, "baseline": baseline, "n_tokenless": len(rows), "rev30_sum": round(sum(r["rev30"] for r in rows)),
-           "n_listings": len(lst), "n_leads": len(L), "feed_new": feed_new, "events": {t: sum(1 for e in events if e["type"] == t) for t in ("new_rank", "new_listing", "token", "status")},
+           "n_listings": len(lst), "n_leads": len(L), "feed_new": feed_new,
+           "src_ok": {k: bool(v.get("ok")) for k, v in src.items()}, "events": {t: sum(1 for e in events if e["type"] == t) for t in ("new_rank", "new_listing", "token", "status")},
            # A4 结果追踪：台账里每个协议组今天的 30 天收入（含已发币、跌出门槛的；取不到 = 不记，不当 0）
            "rev30": {k: round(allrev[k[2:]]) for k in L if k.startswith("g:") and k[2:] in allrev} if rev is not None else None}
     hist = [h for h in hist if h["date"] != today] + [row]
@@ -297,3 +298,8 @@ def main():
 
 if __name__ == "__main__":
     main()
+    try:   # 机会卡（应用层）：雷达 + 自动打分 + 研究补证 → data/alpha/opps.json
+        import opps
+        opps.main()
+    except Exception as e:
+        print("机会卡生成失败：", e)

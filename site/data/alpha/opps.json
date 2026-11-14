@@ -1,0 +1,6178 @@
+{
+ "generated": "2026-11-14T17:05:24+00:00",
+ "asof": "2026-11-13",
+ "framework": "v1",
+ "rules": "v1（2026-11-14）",
+ "counts": {
+  "invest": 10,
+  "watch": 24,
+  "reject": 0
+ },
+ "opps": [
+  {
+   "id": "polymarket",
+   "key": "g:parent#polymarket",
+   "name": "Polymarket",
+   "kind": "tokenless",
+   "discovered": "2026-11-14",
+   "baseline": true,
+   "status": "研究观察",
+   "status_src": "alpha/review/tokenless_checks.json",
+   "bucket": "watch",
+   "entry": [
+    "none"
+   ],
+   "entry_why": "官方没有表态发币，也没查到积分计划",
+   "classes": {
+    "business": {
+     "v": "trading",
+     "src": "auto",
+     "why": "DefiLlama 类目「Prediction Market」→ 映射表"
+    },
+    "right": {
+     "v": "none",
+     "src": "auto",
+     "why": "本协议和母协议都没登记代币"
+    },
+    "opportunity": {
+     "v": "genesis",
+     "src": "auto",
+     "why": "无币 → 初始参与（早期使用 / 积分）"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": 2,
+     "src": "research",
+     "why": "普通人可以「预测市场用户或提供报价流动性的交易者；抵押品 pUSD 不是治理代币。」参与，全成本未验 → 2"
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": 2,
+     "src": "auto",
+     "why": "近 30 天协议收入 18,692,959 美元 ≥ 100,000 → 2（可识别外部客户但账单未核）"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "通过",
+     "src": "research",
+     "why": "身份经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "research": {
+    "token_stance": "没有表态",
+    "token_stance_src": "https://help.polymarket.com/en/articles/13364250-does-polymarket-have-a-token",
+    "token_stance_date": "2026-06-24",
+    "revenue_who": "Polymarket 协议地址/运营方；不是全体交易者共同分红。",
+    "revenue_method": "International：交易费用扣 maker/taker 返还、邀请、流动性及持有奖励后才计协议收入；Combos：组合合约 taker 费用计协议收入。",
+    "wash_or_subsidy": "官方有流动性奖励；适配器扣除了多种返还/奖励。是否关联自成交、净外部付款占比 U。",
+    "user_role": "预测市场用户或提供报价流动性的交易者；抵押品 pUSD 不是治理代币。",
+    "counter": "交易费增长可能来自激励和事件周期，真实产品收入也不自动给予用户未来代币权利。",
+    "verdict_reason": "公开费用方法、使用场景及当前未公告空投/TGE 的官方 FAQ 可核；只作产品研究，保留需求独立性缺口。",
+    "missing": [
+     "独立关联地址/自成交及去补贴留存审计未完成。",
+     "未独立重放全部费用与支付，适配器方法可能更新。",
+     "官方计划不等于代币已发行或用户已获得权益；当前链上代币状态/分配需另核。"
+    ],
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00"
+   },
+   "evidence": [
+    {
+     "url": "https://api.llama.fi/summary/fees/polymarket-international?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/protocol/polymarket-international",
+     "fields": [
+      "name",
+      "defillama_reference",
+      "metadata_symbol"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/summary/fees/polymarket-combos?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://polymarket.com",
+     "fields": [
+      "user_role",
+      "official_identity"
+     ]
+    },
+    {
+     "url": "https://help.polymarket.com/en/articles/13364466-liquidity-rewards",
+     "fields": [
+      "token_stance",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://help.polymarket.com/en/articles/13364250-does-polymarket-have-a-token",
+     "fields": [
+      "token_stance",
+      "token_stance_date"
+     ]
+    }
+   ],
+   "data": {
+    "category": "Prediction Market",
+    "chains": [
+     "Polygon"
+    ],
+    "rev30": 18692959,
+    "chg30": 27.9,
+    "tvl": null,
+    "listed": null,
+    "slug": "polymarket-international",
+    "children": [
+     "Polymarket International",
+     "Polymarket Combos"
+    ],
+    "token": false,
+    "token_seen": null,
+    "rev_hist": [
+     [
+      "2026-11-14",
+      18692959
+     ]
+    ]
+   }
+  },
+  {
+   "id": "axiom",
+   "key": "g:parent#axiom",
+   "name": "Axiom",
+   "kind": "tokenless",
+   "discovered": "2026-11-14",
+   "baseline": true,
+   "status": "研究观察",
+   "status_src": "alpha/review/tokenless_checks.json",
+   "bucket": "invest",
+   "entry": [
+    "use"
+   ],
+   "entry_why": "官方有积分 / 空投计划（研究补证）",
+   "classes": {
+    "business": {
+     "v": "trading",
+     "src": "auto",
+     "why": "DefiLlama 类目「Trading App」→ 映射表"
+    },
+    "right": {
+     "v": "none",
+     "src": "auto",
+     "why": "本协议和母协议都没登记代币"
+    },
+    "opportunity": {
+     "v": "genesis",
+     "src": "auto",
+     "why": "无币 → 初始参与（早期使用 / 积分）"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": 2,
+     "src": "research",
+     "why": "普通人可以「交易终端用户、推荐者；积分用户，但积分不等于代币分配保证。」参与，全成本未验 → 2"
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": 1,
+     "src": "research",
+     "why": "有积分 / 空投计划 → 1（仅排放或升值预期）"
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": 2,
+     "src": "auto",
+     "why": "近 30 天协议收入 8,993,288 美元 ≥ 100,000 → 2（可识别外部客户但账单未核）"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "通过",
+     "src": "research",
+     "why": "身份经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "research": {
+    "token_stance": "有积分/空投计划",
+    "token_stance_src": "https://docs.axiom.trade/getting-started/point-system",
+    "token_stance_date": "U",
+    "revenue_who": "Axiom 运营方；扣已分配的 cashback/referral 后留存。",
+    "revenue_method": "主交易终端从手续费钱包收款，净收入扣返现和推荐支付；Perps 单独统计 Hyperliquid builder-code 费用。",
+    "wash_or_subsidy": "返现与推荐支付有适配器证据，官方积分按交易/推荐积累；未证明刷量，排除激励后的持续需求 U。",
+    "user_role": "交易终端用户、推荐者；积分用户，但积分不等于代币分配保证。",
+    "counter": "交易积分和返现可能放大成交及费用，必须证明取消奖励后仍有留存。",
+    "verdict_reason": "收入扣减口径与官方积分机制可核，未来奖励内容及用户价值捕获仍未确定。",
+    "missing": [
+     "独立关联地址/自成交及去补贴留存审计未完成。",
+     "未独立重放全部费用与支付，适配器方法可能更新。",
+     "官方计划不等于代币已发行或用户已获得权益；当前链上代币状态/分配需另核。",
+     "官方原始表态日期 U，不用页面读取日期代替。"
+    ],
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00"
+   },
+   "evidence": [
+    {
+     "url": "https://api.llama.fi/summary/fees/axiom?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/protocol/axiom",
+     "fields": [
+      "name",
+      "defillama_reference",
+      "metadata_symbol"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/summary/fees/axiom-perps?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://axiom.trade/",
+     "fields": [
+      "user_role",
+      "official_identity"
+     ]
+    },
+    {
+     "url": "https://docs.axiom.trade/getting-started/point-system",
+     "fields": [
+      "token_stance",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    }
+   ],
+   "data": {
+    "category": "Trading App",
+    "chains": [
+     "Hyperliquid L1",
+     "Solana",
+     "BSC"
+    ],
+    "rev30": 8993288,
+    "chg30": -47.4,
+    "tvl": null,
+    "listed": null,
+    "slug": "axiom",
+    "children": [
+     "Axiom",
+     "Axiom Perps"
+    ],
+    "token": false,
+    "token_seen": null,
+    "rev_hist": [
+     [
+      "2026-11-14",
+      8993288
+     ]
+    ]
+   }
+  },
+  {
+   "id": "phantom",
+   "key": "g:parent#phantom",
+   "name": "Phantom",
+   "kind": "tokenless",
+   "discovered": "2026-11-14",
+   "baseline": true,
+   "status": "研究观察",
+   "status_src": "alpha/review/tokenless_checks.json",
+   "bucket": "watch",
+   "entry": [
+    "none"
+   ],
+   "entry_why": "还没查到资金参与方式",
+   "classes": {
+    "business": {
+     "v": "trading",
+     "src": "auto",
+     "why": "DefiLlama 类目「Wallets」→ 映射表"
+    },
+    "right": {
+     "v": "none",
+     "src": "auto",
+     "why": "本协议和母协议都没登记代币"
+    },
+    "opportunity": {
+     "v": "genesis",
+     "src": "auto",
+     "why": "无币 → 初始参与（早期使用 / 积分）"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": 2,
+     "src": "research",
+     "why": "普通人可以「钱包兑换/桥接用户及前端产品用户。」参与，全成本未验 → 2"
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": 2,
+     "src": "auto",
+     "why": "近 30 天协议收入 5,813,094 美元 ≥ 100,000 → 2（可识别外部客户但账单未核）"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "通过",
+     "src": "research",
+     "why": "身份经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "research": {
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "Phantom 钱包/前端运营方；不是 SOL 或任意钱包所展示代币的持有人。",
+    "revenue_method": "Wallet 收兑换/桥接费用；Perps 的收入为 Hyperliquid 前端 builder 费用；Spot/Outcome 各自 builder 费用均归前端。",
+    "wash_or_subsidy": "返佣/积分及净补贴规模 U，不能从钱包展示代币或第三方空投推断自身发行。",
+    "user_role": "钱包兑换/桥接用户及前端产品用户。",
+    "counter": "产品费用归公司而代币承诺不明，钱包使用规模并不产生可归属普通用户的资产权益。",
+    "verdict_reason": "四个子项的收费归属可核；仅保留正规钱包产品观察，不推导空投资格。",
+    "missing": [
+     "独立关联地址/自成交及去补贴留存审计未完成。",
+     "未独立重放全部费用与支付，适配器方法可能更新。",
+     "当前官方自身 token/积分/空投立场及适用日期 U。",
+     "官方原始表态日期 U，不用页面读取日期代替。"
+    ],
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00"
+   },
+   "evidence": [
+    {
+     "url": "https://api.llama.fi/summary/fees/phantom-wallet?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/protocol/phantom-wallet",
+     "fields": [
+      "name",
+      "defillama_reference",
+      "metadata_symbol"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/summary/fees/phantom-perps?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/summary/fees/phantom-spot?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/summary/fees/phantom-outcome?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://phantom.com/",
+     "fields": [
+      "user_role",
+      "official_identity"
+     ]
+    }
+   ],
+   "data": {
+    "category": "Wallets",
+    "chains": [
+     "Solana",
+     "Ethereum",
+     "Base"
+    ],
+    "rev30": 5813094,
+    "chg30": -25.3,
+    "tvl": null,
+    "listed": null,
+    "slug": "phantom-wallet",
+    "children": [
+     "Phantom Wallet",
+     "Phantom Perps",
+     "Phantom Spot",
+     "Phantom Outcome"
+    ],
+    "token": false,
+    "token_seen": null,
+    "rev_hist": [
+     [
+      "2026-11-14",
+      5813094
+     ]
+    ]
+   }
+  },
+  {
+   "id": "metamask",
+   "key": "g:parent#metamask",
+   "name": "Metamask",
+   "kind": "tokenless",
+   "discovered": "2026-11-14",
+   "baseline": true,
+   "status": "研究观察",
+   "status_src": "alpha/review/tokenless_checks.json",
+   "bucket": "watch",
+   "entry": [
+    "none"
+   ],
+   "entry_why": "官方表态会发币，但还没开放资金参与 → 预警观察，等发币 / 积分开放",
+   "classes": {
+    "business": {
+     "v": "trading",
+     "src": "auto",
+     "why": "DefiLlama 类目「Interface」→ 映射表"
+    },
+    "right": {
+     "v": "none",
+     "src": "auto",
+     "why": "本协议和母协议都没登记代币"
+    },
+    "opportunity": {
+     "v": "genesis",
+     "src": "auto",
+     "why": "无币 → 初始参与（早期使用 / 积分）"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": 2,
+     "src": "research",
+     "why": "普通人可以「钱包/兑换/衍生品等产品用户；符合当期规则的 Rewards 参与者，不把合作方」参与，全成本未验 → 2"
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": 2,
+     "src": "auto",
+     "why": "近 30 天协议收入 3,760,059 美元 ≥ 100,000 → 2（可识别外部客户但账单未核）"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "通过",
+     "src": "research",
+     "why": "身份经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "research": {
+    "token_stance": "官方表态会发",
+    "token_stance_src": "https://metamask.com/en-GB/news/metamask-expands-trading-with-perpetual-futures-and-rewards-confirms-token",
+    "token_stance_date": "2025-10-08",
+    "revenue_who": "MetaMask / Consensys 产品运营方；Predictions 的部分 builder 费付市场提供方。",
+    "revenue_method": "Perps 是 Hyperliquid builder-code 费；Wallet 是兑换/桥接费；Predictions 按 75% 留存、25% 付市场提供方计收入。",
+    "wash_or_subsidy": "官方 Rewards 有积分、费用优惠及合作方 token allocations；原始 Season1 已结束，2026-05-06 文章说明新活动回归；当前精确周期/预算 U，刷量 U。",
+    "user_role": "钱包/兑换/衍生品等产品用户；符合当期规则的 Rewards 参与者，不把合作方分配当 MASK。",
+    "counter": "奖励可能由合作生态补贴，公司收入并不等于用户能分享的未来 MetaMask 代币价值。",
+    "verdict_reason": "官方积分/奖励和收费归属可核；发行状态不能单靠 2025 新闻标题或旧季积分规则确定。",
+    "missing": [
+     "独立关联地址/自成交及去补贴留存审计未完成。",
+     "未独立重放全部费用与支付，适配器方法可能更新。",
+     "官方计划不等于代币已发行或用户已获得权益；当前链上代币状态/分配需另核。"
+    ],
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00"
+   },
+   "evidence": [
+    {
+     "url": "https://api.llama.fi/summary/fees/metamask-perps?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/protocol/metamask-perps",
+     "fields": [
+      "name",
+      "defillama_reference",
+      "metadata_symbol"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/summary/fees/metamask-wallet?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/summary/fees/metamask-predictions?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://metamask.com",
+     "fields": [
+      "user_role",
+      "official_identity"
+     ]
+    },
+    {
+     "url": "https://metamask.com/en-GB/news/introducing-metamask-rewards",
+     "fields": [
+      "token_stance",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://metamask.com/en-GB/news/metamask-expands-trading-with-perpetual-futures-and-rewards-confirms-token",
+     "fields": [
+      "token_stance",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    }
+   ],
+   "data": {
+    "category": "Interface",
+    "chains": [
+     "Hyperliquid L1",
+     "Polygon",
+     "BSC"
+    ],
+    "rev30": 3760059,
+    "chg30": -6.2,
+    "tvl": null,
+    "listed": null,
+    "slug": "metamask-perps",
+    "children": [
+     "MetaMask Perps",
+     "MetaMask Wallet",
+     "MetaMask Predictions"
+    ],
+    "token": false,
+    "token_seen": null,
+    "rev_hist": [
+     [
+      "2026-11-14",
+      3815725
+     ]
+    ]
+   }
+  },
+  {
+   "id": "pacifica",
+   "key": "g:parent#pacifica",
+   "name": "Pacifica Perps",
+   "kind": "tokenless",
+   "discovered": "2026-11-14",
+   "baseline": true,
+   "status": "研究观察",
+   "status_src": "alpha/review/tokenless_checks.json",
+   "bucket": "invest",
+   "entry": [
+    "use"
+   ],
+   "entry_why": "官方有积分 / 空投计划（研究补证）",
+   "classes": {
+    "business": {
+     "v": "trading",
+     "src": "auto",
+     "why": "DefiLlama 类目「Derivatives」→ 映射表"
+    },
+    "right": {
+     "v": "none",
+     "src": "auto",
+     "why": "本协议和母协议都没登记代币"
+    },
+    "opportunity": {
+     "v": "genesis",
+     "src": "auto",
+     "why": "无币 → 初始参与（早期使用 / 积分）"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": 2,
+     "src": "research",
+     "why": "普通人可以「永续用户、符合规则的做市或积分用户。」参与，全成本未验 → 2"
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": 1,
+     "src": "research",
+     "why": "有积分 / 空投计划 → 1（仅排放或升值预期）"
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": 2,
+     "src": "auto",
+     "why": "近 30 天协议收入 3,360,183 美元 ≥ 100,000 → 2（可识别外部客户但账单未核）"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "通过",
+     "src": "research",
+     "why": "身份经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "research": {
+    "token_stance": "有积分/空投计划",
+    "token_stance_src": "https://app.pacifica.fi/points",
+    "token_stance_date": "U",
+    "revenue_who": "Pacifica 财库；maker 返还归做市方，尚未扣的 affiliate 部分最终归属 U。",
+    "revenue_method": "逐成交实际正手续费和清算费减负手续费 maker rebates；不是按成交额乘固定费率估算，但 API 未披露 affiliate share，收入未扣该项。",
+    "wash_or_subsidy": "积分页面仍可读；有官方活动/竞赛。返还已计入扣减，affiliate 成本未完整扣减；实际刷量 U。",
+    "user_role": "永续用户、符合规则的做市或积分用户。",
+    "counter": "未扣 affiliate 分成及积分交易会同时抬高表观收入与活跃度。",
+    "verdict_reason": "费用来自成交记录，积分公开；保留未扣成本，不能将收入字段称最终利润。",
+    "missing": [
+     "独立关联地址/自成交及去补贴留存审计未完成。",
+     "未独立重放全部费用与支付，适配器方法可能更新。",
+     "官方计划不等于代币已发行或用户已获得权益；当前链上代币状态/分配需另核。",
+     "官方原始表态日期 U，不用页面读取日期代替。"
+    ],
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00"
+   },
+   "evidence": [
+    {
+     "url": "https://api.llama.fi/summary/fees/pacifica-perps?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/protocol/pacifica-perps",
+     "fields": [
+      "name",
+      "defillama_reference",
+      "metadata_symbol"
+     ]
+    },
+    {
+     "url": "https://app.pacifica.fi",
+     "fields": [
+      "user_role",
+      "official_identity"
+     ]
+    },
+    {
+     "url": "https://app.pacifica.fi/events",
+     "fields": [
+      "token_stance",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://app.pacifica.fi/points",
+     "fields": [
+      "token_stance",
+      "token_stance_date"
+     ]
+    }
+   ],
+   "data": {
+    "category": "Derivatives",
+    "chains": [
+     "Off Chain"
+    ],
+    "rev30": 3360183,
+    "chg30": -9.9,
+    "tvl": null,
+    "listed": null,
+    "slug": "pacifica-perps",
+    "children": [
+     "Pacifica Perps"
+    ],
+    "token": false,
+    "token_seen": null,
+    "rev_hist": [
+     [
+      "2026-11-14",
+      3360183
+     ]
+    ]
+   }
+  },
+  {
+   "id": "4990",
+   "key": "g:4990",
+   "name": "DEX Screener",
+   "kind": "tokenless",
+   "discovered": "2026-11-14",
+   "baseline": true,
+   "status": "研究观察",
+   "status_src": "alpha/review/tokenless_checks.json",
+   "bucket": "watch",
+   "entry": [
+    "none"
+   ],
+   "entry_why": "还没查到资金参与方式",
+   "classes": {
+    "business": {
+     "v": "trading",
+     "src": "auto",
+     "why": "DefiLlama 类目「Coins Tracker」→ 映射表"
+    },
+    "right": {
+     "v": "none",
+     "src": "auto",
+     "why": "本协议和母协议都没登记代币"
+    },
+    "opportunity": {
+     "v": "genesis",
+     "src": "auto",
+     "why": "无币 → 初始参与（早期使用 / 积分）"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": 2,
+     "src": "research",
+     "why": "普通人可以「行情工具用户，或购买展示服务的项目方；没有据此获得代币权益的证据。」参与，全成本未验 → 2"
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": 2,
+     "src": "auto",
+     "why": "近 30 天协议收入 2,711,629 美元 ≥ 100,000 → 2（可识别外部客户但账单未核）"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "通过",
+     "src": "research",
+     "why": "身份经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "research": {
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "DEX Screener 公司/运营方。",
+    "revenue_method": "收费来自 token profile/listing 等资料展示服务并全部归运营方，不是平台上展示的 DEX 成交手续费。",
+    "wash_or_subsidy": "付费展示有方法证据；客户留存、独立广告主及返款 U，刷量 U。",
+    "user_role": "行情工具用户，或购买展示服务的项目方；没有据此获得代币权益的证据。",
+    "counter": "广告/资料收费是注意力市场收入，不能当作用户交易变现或空投承诺。",
+    "verdict_reason": "收费对象明确；仅研究工具商业模式，未来自身代币状态 U。",
+    "missing": [
+     "独立关联地址/自成交及去补贴留存审计未完成。",
+     "未独立重放全部费用与支付，适配器方法可能更新。",
+     "当前官方自身 token/积分/空投立场及适用日期 U。",
+     "官方原始表态日期 U，不用页面读取日期代替。"
+    ],
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00"
+   },
+   "evidence": [
+    {
+     "url": "https://api.llama.fi/summary/fees/dex-screener?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/protocol/dex-screener",
+     "fields": [
+      "name",
+      "defillama_reference",
+      "metadata_symbol"
+     ]
+    },
+    {
+     "url": "https://dexscreener.com",
+     "fields": [
+      "user_role",
+      "official_identity"
+     ]
+    }
+   ],
+   "data": {
+    "category": "Coins Tracker",
+    "chains": [
+     "Solana",
+     "Ethereum",
+     "Base"
+    ],
+    "rev30": 2711629,
+    "chg30": -40.9,
+    "tvl": null,
+    "listed": null,
+    "slug": "dex-screener",
+    "children": [
+     "DEX Screener"
+    ],
+    "token": false,
+    "token_seen": null,
+    "rev_hist": [
+     [
+      "2026-11-14",
+      2711629
+     ]
+    ]
+   }
+  },
+  {
+   "id": "6764",
+   "key": "g:6764",
+   "name": "Courtyard",
+   "kind": "tokenless",
+   "discovered": "2026-11-14",
+   "baseline": true,
+   "status": "研究观察",
+   "status_src": "alpha/review/tokenless_checks.json",
+   "bucket": "invest",
+   "entry": [
+    "use"
+   ],
+   "entry_why": "官方有积分 / 空投计划（研究补证）",
+   "classes": {
+    "business": {
+     "v": "culture",
+     "src": "auto",
+     "why": "DefiLlama 类目「Physical TCG」→ 映射表"
+    },
+    "right": {
+     "v": "none",
+     "src": "auto",
+     "why": "本协议和母协议都没登记代币"
+    },
+    "opportunity": {
+     "v": "genesis",
+     "src": "auto",
+     "why": "无币 → 初始参与（早期使用 / 积分）"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": 2,
+     "src": "research",
+     "why": "普通人可以「藏品用户、寄存/赎回用户、按规则积累与兑换积分的用户。」参与，全成本未验 → 2"
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": 1,
+     "src": "research",
+     "why": "有积分 / 空投计划 → 1（仅排放或升值预期）"
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": 2,
+     "src": "auto",
+     "why": "近 30 天协议收入 2,093,920 美元 ≥ 100,000 → 2（可识别外部客户但账单未核）"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "通过",
+     "src": "research",
+     "why": "身份经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "research": {
+    "token_stance": "有积分/空投计划",
+    "token_stance_src": "https://docs.courtyard.io/courtyard/resources/points",
+    "token_stance_date": "U",
+    "revenue_who": "Courtyard 运营方；藏品/卡包购买者取得藏品，不自动取得平台收入。",
+    "revenue_method": "收入含 NFT/卡包销售及市场费/版税；ProtocolRevenue 另扣 NFT buyback 支出。销售额/Revenue 不可直接视为扣除采购保管等成本的净利。",
+    "wash_or_subsidy": "官方积分可兑卡包额度，存在促销补贴；积分不是已承诺平台代币，实际关联成交 U。",
+    "user_role": "藏品用户、寄存/赎回用户、按规则积累与兑换积分的用户。",
+    "counter": "实物采购、回购、库存与履约成本可能让高销售额对应低盈利，积分更像消费券。",
+    "verdict_reason": "收费方法和官方积分兑换可核；不将消费积分包装为代币预期。",
+    "missing": [
+     "独立关联地址/自成交及去补贴留存审计未完成。",
+     "未独立重放全部费用与支付，适配器方法可能更新。",
+     "官方计划不等于代币已发行或用户已获得权益；当前链上代币状态/分配需另核。",
+     "官方原始表态日期 U，不用页面读取日期代替。"
+    ],
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00"
+   },
+   "evidence": [
+    {
+     "url": "https://api.llama.fi/summary/fees/courtyard?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/protocol/courtyard",
+     "fields": [
+      "name",
+      "defillama_reference",
+      "metadata_symbol"
+     ]
+    },
+    {
+     "url": "https://courtyard.io",
+     "fields": [
+      "user_role",
+      "official_identity"
+     ]
+    },
+    {
+     "url": "https://docs.courtyard.io/courtyard/resources/points",
+     "fields": [
+      "token_stance",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://drops.courtyard.io/blog/post/courtyard-quests-rewards-update",
+     "fields": [
+      "token_stance",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    }
+   ],
+   "data": {
+    "category": "Physical TCG",
+    "chains": [
+     "Polygon"
+    ],
+    "rev30": 2093920,
+    "chg30": -6.1,
+    "tvl": null,
+    "listed": null,
+    "slug": "courtyard",
+    "children": [
+     "Courtyard"
+    ],
+    "token": false,
+    "token_seen": null,
+    "rev_hist": [
+     [
+      "2026-11-14",
+      2093920
+     ]
+    ]
+   }
+  },
+  {
+   "id": "5129",
+   "key": "g:5129",
+   "name": "Predict Fun",
+   "kind": "tokenless",
+   "discovered": "2026-11-14",
+   "baseline": true,
+   "status": "研究观察",
+   "status_src": "alpha/review/tokenless_checks.json",
+   "bucket": "invest",
+   "entry": [
+    "use"
+   ],
+   "entry_why": "官方有积分 / 空投计划（研究补证）",
+   "classes": {
+    "business": {
+     "v": "trading",
+     "src": "auto",
+     "why": "DefiLlama 类目「Prediction Market」→ 映射表"
+    },
+    "right": {
+     "v": "none",
+     "src": "auto",
+     "why": "本协议和母协议都没登记代币"
+    },
+    "opportunity": {
+     "v": "genesis",
+     "src": "auto",
+     "why": "无币 → 初始参与（早期使用 / 积分）"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": 2,
+     "src": "research",
+     "why": "普通人可以「预测市场用户、报价者、按官方规则获得 PP 的用户。」参与，全成本未验 → 2"
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": 1,
+     "src": "research",
+     "why": "有积分 / 空投计划 → 1（仅排放或升值预期）"
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": 2,
+     "src": "auto",
+     "why": "近 30 天协议收入 2,077,765 美元 ≥ 100,000 → 2（可识别外部客户但账单未核）"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "通过",
+     "src": "research",
+     "why": "身份经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "research": {
+    "token_stance": "有积分/空投计划",
+    "token_stance_src": "https://docs.predict.fun/knowledge-base/invites",
+    "token_stance_date": "U",
+    "revenue_who": "Predict 协议保留扣分配后的交易费；maker/推荐者领取相应份额。",
+    "revenue_method": "taker token 计费，非 USDT 按交易小时价格换 USD；净收入扣退款、maker rebates、推荐费。",
+    "wash_or_subsidy": "官方 Predict Points、推荐费返还和交易折扣存在；净独立付款、刷量程度 U。",
+    "user_role": "预测市场用户、报价者、按官方规则获得 PP 的用户。",
+    "counter": "积分和推荐激励可使高成交高收入短期化，非 USDT 计价还受交易小时价格影响。",
+    "verdict_reason": "收入扣减及官方积分可核；未来代币与实际份额不作推断。",
+    "missing": [
+     "独立关联地址/自成交及去补贴留存审计未完成。",
+     "未独立重放全部费用与支付，适配器方法可能更新。",
+     "官方计划不等于代币已发行或用户已获得权益；当前链上代币状态/分配需另核。",
+     "官方原始表态日期 U，不用页面读取日期代替。"
+    ],
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00"
+   },
+   "evidence": [
+    {
+     "url": "https://api.llama.fi/summary/fees/predict-fun?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/protocol/predict-fun",
+     "fields": [
+      "name",
+      "defillama_reference",
+      "metadata_symbol"
+     ]
+    },
+    {
+     "url": "https://predict.fun",
+     "fields": [
+      "user_role",
+      "official_identity"
+     ]
+    },
+    {
+     "url": "https://docs.predict.fun/knowledge-base/invites",
+     "fields": [
+      "token_stance",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    }
+   ],
+   "data": {
+    "category": "Prediction Market",
+    "chains": [
+     "BSC"
+    ],
+    "rev30": 2077765,
+    "chg30": 39.3,
+    "tvl": null,
+    "listed": null,
+    "slug": "predict-fun",
+    "children": [
+     "Predict Fun"
+    ],
+    "token": false,
+    "token_seen": null,
+    "rev_hist": [
+     [
+      "2026-11-14",
+      2077765
+     ]
+    ]
+   }
+  },
+  {
+   "id": "arcus",
+   "key": "g:parent#arcus",
+   "name": "Arcus Perps",
+   "kind": "tokenless",
+   "discovered": "2026-11-14",
+   "baseline": true,
+   "status": "研究观察",
+   "status_src": "alpha/review/tokenless_checks.json",
+   "bucket": "invest",
+   "entry": [
+    "use"
+   ],
+   "entry_why": "官方有积分 / 空投计划（研究补证）",
+   "classes": {
+    "business": {
+     "v": "trading",
+     "src": "auto",
+     "why": "DefiLlama 类目「Derivatives」→ 映射表"
+    },
+    "right": {
+     "v": "none",
+     "src": "auto",
+     "why": "本协议和母协议都没登记代币"
+    },
+    "opportunity": {
+     "v": "genesis",
+     "src": "auto",
+     "why": "无币 → 初始参与（早期使用 / 积分）"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": 2,
+     "src": "research",
+     "why": "普通人可以「交易产品用户、按规则积累积分的用户；并非已取得治理币。」参与，全成本未验 → 2"
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": 1,
+     "src": "research",
+     "why": "有积分 / 空投计划 → 1（仅排放或升值预期）"
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": 2,
+     "src": "auto",
+     "why": "近 30 天协议收入 1,648,177 美元 ≥ 100,000 → 2（可识别外部客户但账单未核）"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "通过",
+     "src": "research",
+     "why": "身份经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "research": {
+    "token_stance": "有积分/空投计划",
+    "token_stance_src": "https://arcus.xyz/blog/introducing-arcus-points",
+    "token_stance_date": "2026-10-01",
+    "revenue_who": "Arcus 财库；maker 和推荐合作方有分成。",
+    "revenue_method": "总 taker/maker/清算费扣 maker 返还与推荐款后归财库；方法里的 no token distribution 仅说明该费用分配现状。",
+    "wash_or_subsidy": "官方 2026-10-01 公告 Season0/Season1 积分，按周分配；有奖励激励，实际刷量 U。",
+    "user_role": "交易产品用户、按规则积累积分的用户；并非已取得治理币。",
+    "counter": "积分周期内的交易增长可能是补贴需求，no token distribution 不能解释成永不发币。",
+    "verdict_reason": "官方积分与净费方法可核，但未证明积分可兑换币及独立需求。",
+    "missing": [
+     "独立关联地址/自成交及去补贴留存审计未完成。",
+     "未独立重放全部费用与支付，适配器方法可能更新。",
+     "官方计划不等于代币已发行或用户已获得权益；当前链上代币状态/分配需另核。"
+    ],
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00"
+   },
+   "evidence": [
+    {
+     "url": "https://api.llama.fi/summary/fees/arcus-perps?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/protocol/arcus-perps",
+     "fields": [
+      "name",
+      "defillama_reference",
+      "metadata_symbol"
+     ]
+    },
+    {
+     "url": "https://arcus.xyz/",
+     "fields": [
+      "user_role",
+      "official_identity"
+     ]
+    },
+    {
+     "url": "https://arcus.xyz/blog/introducing-arcus-points",
+     "fields": [
+      "token_stance",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    }
+   ],
+   "data": {
+    "category": "Derivatives",
+    "chains": [
+     "Robinhood Chain"
+    ],
+    "rev30": 1648177,
+    "chg30": 23.3,
+    "tvl": null,
+    "listed": null,
+    "slug": "arcus-perps",
+    "children": [
+     "Arcus Perps"
+    ],
+    "token": false,
+    "token_seen": null,
+    "rev_hist": [
+     [
+      "2026-11-14",
+      1648177
+     ]
+    ]
+   }
+  },
+  {
+   "id": "nado",
+   "key": "g:parent#nado",
+   "name": "Nado",
+   "kind": "tokenless",
+   "discovered": "2026-11-14",
+   "baseline": true,
+   "status": "研究观察",
+   "status_src": "alpha/review/tokenless_checks.json",
+   "bucket": "invest",
+   "entry": [
+    "use"
+   ],
+   "entry_why": "官方有积分 / 空投计划（研究补证）",
+   "classes": {
+    "business": {
+     "v": "trading",
+     "src": "auto",
+     "why": "DefiLlama 类目「Derivatives」→ 映射表"
+    },
+    "right": {
+     "v": "none",
+     "src": "auto",
+     "why": "本协议和母协议都没登记代币"
+    },
+    "opportunity": {
+     "v": "genesis",
+     "src": "auto",
+     "why": "无币 → 初始参与（早期使用 / 积分）"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": 2,
+     "src": "research",
+     "why": "普通人可以「交易用户、NLP 用户及积分用户，按当前官方规则确认资格。」参与，全成本未验 → 2"
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": 1,
+     "src": "research",
+     "why": "有积分 / 空投计划 → 1（仅排放或升值预期）"
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": 2,
+     "src": "auto",
+     "why": "近 30 天协议收入 885,778 美元 ≥ 100,000 → 2（可识别外部客户但账单未核）"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "通过",
+     "src": "research",
+     "why": "身份经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "research": {
+    "token_stance": "有积分/空投计划",
+    "token_stance_src": "https://docs.nado.xyz/incentives-and-rewards/points",
+    "token_stance_date": "U",
+    "revenue_who": "Nado 财库留净交易费，maker 收返还。",
+    "revenue_method": "Perps/Spot 均按交易费扣 maker rebates 计净收入；holders 模板字段不代表已存在实际分红币。",
+    "wash_or_subsidy": "官方 Points 按交易、NLP、推荐积累，不可转让；页面列 Season2 Live/Season1 Ended，具体当期起讫时间 U；实际刷量 U。",
+    "user_role": "交易用户、NLP 用户及积分用户，按当前官方规则确认资格。",
+    "counter": "积分驱动的交易与 LP 规模可能在奖励减少后消失，模板 holders 字段不能补足资产权利。",
+    "verdict_reason": "积分规则与费用扣减可核；保留版本/周期和未来代币兑付缺口。",
+    "missing": [
+     "独立关联地址/自成交及去补贴留存审计未完成。",
+     "未独立重放全部费用与支付，适配器方法可能更新。",
+     "官方计划不等于代币已发行或用户已获得权益；当前链上代币状态/分配需另核。",
+     "官方原始表态日期 U，不用页面读取日期代替。"
+    ],
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00"
+   },
+   "evidence": [
+    {
+     "url": "https://api.llama.fi/summary/fees/nado-perps?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/protocol/nado-perps",
+     "fields": [
+      "name",
+      "defillama_reference",
+      "metadata_symbol"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/summary/fees/nado-spot?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://app.nado.xyz",
+     "fields": [
+      "user_role",
+      "official_identity"
+     ]
+    },
+    {
+     "url": "https://docs.nado.xyz/incentives-and-rewards/points",
+     "fields": [
+      "token_stance",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    }
+   ],
+   "data": {
+    "category": "Derivatives",
+    "chains": [
+     "Ink"
+    ],
+    "rev30": 885778,
+    "chg30": 1.1,
+    "tvl": null,
+    "listed": null,
+    "slug": "nado-perps",
+    "children": [
+     "Nado Perps",
+     "Nado Spot"
+    ],
+    "token": false,
+    "token_seen": null,
+    "rev_hist": [
+     [
+      "2026-11-14",
+      885778
+     ]
+    ]
+   }
+  },
+  {
+   "id": "sentora",
+   "key": "g:parent#sentora",
+   "name": "Sentora Curator",
+   "kind": "tokenless",
+   "discovered": "2026-11-14",
+   "baseline": true,
+   "status": "研究观察",
+   "status_src": "alpha/review/tokenless_checks.json",
+   "bucket": "watch",
+   "entry": [
+    "none"
+   ],
+   "entry_why": "还没查到资金参与方式",
+   "classes": {
+    "business": {
+     "v": "trading",
+     "src": "auto",
+     "why": "DefiLlama 类目「Risk Curators」→ 映射表"
+    },
+    "right": {
+     "v": "none",
+     "src": "auto",
+     "why": "本协议和母协议都没登记代币"
+    },
+    "opportunity": {
+     "v": "genesis",
+     "src": "auto",
+     "why": "无币 → 初始参与（早期使用 / 积分）"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": 2,
+     "src": "research",
+     "why": "普通人可以「其管理 vault 的用户或合作集成方；以具体产品准入为准。」参与，全成本未验 → 2"
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": 2,
+     "src": "auto",
+     "why": "近 30 天协议收入 730,086 美元 ≥ 100,000 → 2（可识别外部客户但账单未核）"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "通过",
+     "src": "research",
+     "why": "身份经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "research": {
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "Sentora 作为 curator 留管理/绩效费；存入者、合作协议/DAO 收剩余收益或费份额。",
+    "revenue_method": "不同 vault 分别提取 Sentora 的绩效/管理费；BoringVault 只取其份额，EtherFi 贷款策略只计 weETH 收益费而非借贷息差，Aave V4 hub 计其 50% liquidity fee。",
+    "wash_or_subsidy": "奖励补贴、相关资金与去激励留存 U；不能把全部底层 staking yield 当 Sentora 收入。",
+    "user_role": "其管理 vault 的用户或合作集成方；以具体产品准入为准。",
+    "counter": "收入可由资产价格和底层收益周期驱动，管理费归 curator 不等于用户拥有协议资产。",
+    "verdict_reason": "多产品 fee split 已披露，当前只观察真实收费业务，不推导未来 token 权利。",
+    "missing": [
+     "独立关联地址/自成交及去补贴留存审计未完成。",
+     "未独立重放全部费用与支付，适配器方法可能更新。",
+     "当前官方自身 token/积分/空投立场及适用日期 U。",
+     "官方原始表态日期 U，不用页面读取日期代替。"
+    ],
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00"
+   },
+   "evidence": [
+    {
+     "url": "https://api.llama.fi/summary/fees/sentora-curator?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/protocol/sentora-curator",
+     "fields": [
+      "name",
+      "defillama_reference",
+      "metadata_symbol"
+     ]
+    },
+    {
+     "url": "https://sentora.com/",
+     "fields": [
+      "user_role",
+      "official_identity"
+     ]
+    }
+   ],
+   "data": {
+    "category": "Risk Curators",
+    "chains": [
+     "Ink",
+     "Ethereum",
+     "Solana"
+    ],
+    "rev30": 730086,
+    "chg30": -0.2,
+    "tvl": null,
+    "listed": null,
+    "slug": "sentora-curator",
+    "children": [
+     "Sentora Curator"
+    ],
+    "token": false,
+    "token_seen": null,
+    "rev_hist": [
+     [
+      "2026-11-14",
+      730086
+     ]
+    ]
+   }
+  },
+  {
+   "id": "4980",
+   "key": "g:4980",
+   "name": "Spiko",
+   "kind": "tokenless",
+   "discovered": "2026-11-14",
+   "baseline": true,
+   "status": "研究观察",
+   "status_src": "alpha/review/tokenless_checks.json",
+   "bucket": "watch",
+   "entry": [
+    "none"
+   ],
+   "entry_why": "还没查到资金参与方式",
+   "classes": {
+    "business": {
+     "v": "realworld",
+     "src": "auto",
+     "why": "DefiLlama 类目「RWA」→ 映射表"
+    },
+    "right": {
+     "v": "none",
+     "src": "auto",
+     "why": "本协议和母协议都没登记代币"
+    },
+    "opportunity": {
+     "v": "genesis",
+     "src": "auto",
+     "why": "无币 → 初始参与（早期使用 / 积分）"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": 2,
+     "src": "research",
+     "why": "普通人可以「符合身份与地区资格的代币化基金份额持有人；不是默认治理币空投用户。」参与，全成本未验 → 2"
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": 2,
+     "src": "auto",
+     "why": "近 30 天协议收入 583,043 美元 ≥ 100,000 → 2（可识别外部客户但账单未核）"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "通过",
+     "src": "research",
+     "why": "身份经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "research": {
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "Spiko 运营方收基金管理费；基金资产净收益归相应受益凭证持有人。",
+    "revenue_method": "Fees 将净 NAV 增长加管理费还原总收益，Revenue 只计管理费；Cash & Carry 的超基准绩效费未被适配器捕获，不能当完整收入。",
+    "wash_or_subsidy": "U；基金收益本身不自动等于补贴，需另核底层风险和费后收益。",
+    "user_role": "符合身份与地区资格的代币化基金份额持有人；不是默认治理币空投用户。",
+    "counter": "基金份额已有明确资产权利，但这与平台治理币机会不同，而且收入统计未含全部绩效费。",
+    "verdict_reason": "真实资产管理收费与可转让白名单份额结构可核；无平台币表态 U，基金份额不能误当项目治理币。",
+    "missing": [
+     "独立关联地址/自成交及去补贴留存审计未完成。",
+     "未独立重放全部费用与支付，适配器方法可能更新。",
+     "当前官方自身 token/积分/空投立场及适用日期 U。",
+     "官方原始表态日期 U，不用页面读取日期代替。"
+    ],
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00"
+   },
+   "evidence": [
+    {
+     "url": "https://api.llama.fi/summary/fees/spiko?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/protocol/spiko",
+     "fields": [
+      "name",
+      "defillama_reference",
+      "metadata_symbol"
+     ]
+    },
+    {
+     "url": "https://www.spiko.io/",
+     "fields": [
+      "user_role",
+      "official_identity"
+     ]
+    },
+    {
+     "url": "https://docs.spiko.io/documentation/tokenization/transfers/",
+     "fields": [
+      "token_stance",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    }
+   ],
+   "data": {
+    "category": "RWA",
+    "chains": [
+     "Polygon",
+     "Ethereum",
+     "Arbitrum"
+    ],
+    "rev30": 583043,
+    "chg30": 6.6,
+    "tvl": null,
+    "listed": null,
+    "slug": "spiko",
+    "children": [
+     "Spiko"
+    ],
+    "token": false,
+    "token_seen": null,
+    "rev_hist": [
+     [
+      "2026-11-14",
+      583043
+     ]
+    ]
+   }
+  },
+  {
+   "id": "fomo",
+   "key": "g:parent#fomo",
+   "name": "Fomo",
+   "kind": "tokenless",
+   "discovered": "2026-11-14",
+   "baseline": true,
+   "status": "待核验",
+   "status_src": "alpha/review/tokenless_checks.json",
+   "bucket": "watch",
+   "entry": [
+    "none"
+   ],
+   "entry_why": "还没查到资金参与方式",
+   "classes": {
+    "business": {
+     "v": "trading",
+     "src": "auto",
+     "why": "DefiLlama 类目「Trading App」→ 映射表"
+    },
+    "right": {
+     "v": "none",
+     "src": "auto",
+     "why": "本协议和母协议都没登记代币"
+    },
+    "opportunity": {
+     "v": "genesis",
+     "src": "auto",
+     "why": "无币 → 初始参与（早期使用 / 积分）"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": 2,
+     "src": "research",
+     "why": "普通人可以「钱包兑换/跨链用户；或使用其衍生品、现货和 outcome 前端。」参与，全成本未验 → 2"
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": 2,
+     "src": "auto",
+     "why": "近 30 天协议收入 9,358,195 美元 ≥ 100,000 → 2（可识别外部客户但账单未核）"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "待核验",
+     "src": "research",
+     "why": "身份未经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "research": {
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "Fomo 财库/各产品 builder；钱包用户不因使用而取得财库权益。",
+    "revenue_method": "Wallet：原生 Solana USDC 收费及 Relay 平台费归 Fomo，排除推荐分成；无法归链的 Relay 费用计在 Solana。Perps/Spot/Outcome 为 Hyperliquid builder-code 费用。",
+    "wash_or_subsidy": "方法已剔除 Relay 推荐分成；自成交、补贴预算及独立付款人 U。",
+    "user_role": "钱包兑换/跨链用户；或使用其衍生品、现货和 outcome 前端。",
+    "counter": "缺官方代币承诺与可验证用户权益，跨链归因规则还可能使单链收入读数失真。",
+    "verdict_reason": "取得各子产品方法，但发行计划、关联交易和奖励政策未取得有效一手证据。",
+    "missing": [
+     "独立关联地址/自成交及去补贴留存审计未完成。",
+     "未独立重放全部费用与支付，适配器方法可能更新。",
+     "当前官方自身 token/积分/空投立场及适用日期 U。",
+     "官方原始表态日期 U，不用页面读取日期代替。"
+    ],
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00"
+   },
+   "evidence": [
+    {
+     "url": "https://api.llama.fi/summary/fees/fomo-wallet?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/protocol/fomo-wallet",
+     "fields": [
+      "name",
+      "defillama_reference",
+      "metadata_symbol"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/summary/fees/fomo-perps?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/summary/fees/fomo-spot?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/summary/fees/fomo-outcome?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://fomo.family",
+     "fields": [
+      "user_role",
+      "official_identity"
+     ]
+    }
+   ],
+   "data": {
+    "category": "Trading App",
+    "chains": [
+     "Solana",
+     "Monad",
+     "BSC"
+    ],
+    "rev30": 9358195,
+    "chg30": -58.2,
+    "tvl": null,
+    "listed": null,
+    "slug": "fomo-wallet",
+    "children": [
+     "fomo Wallet",
+     "fomo Perps",
+     "fomo Spot",
+     "fomo Outcome"
+    ],
+    "token": false,
+    "token_seen": null,
+    "rev_hist": [
+     [
+      "2026-11-14",
+      9358195
+     ]
+    ]
+   }
+  },
+  {
+   "id": "5408",
+   "key": "g:5408",
+   "name": "GMGN",
+   "kind": "tokenless",
+   "discovered": "2026-11-14",
+   "baseline": true,
+   "status": "待核验",
+   "status_src": "alpha/review/tokenless_checks.json",
+   "bucket": "watch",
+   "entry": [
+    "none"
+   ],
+   "entry_why": "还没查到资金参与方式",
+   "classes": {
+    "business": {
+     "v": "trading",
+     "src": "auto",
+     "why": "DefiLlama 类目「Trading App」→ 映射表"
+    },
+    "right": {
+     "v": "none",
+     "src": "auto",
+     "why": "本协议和母协议都没登记代币"
+    },
+    "opportunity": {
+     "v": "genesis",
+     "src": "auto",
+     "why": "无币 → 初始参与（早期使用 / 积分）"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": 2,
+     "src": "research",
+     "why": "普通人可以「交易工具用户；竞赛参加者，不据此认定平台代币或未来空投。」参与，全成本未验 → 2"
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": 2,
+     "src": "auto",
+     "why": "近 30 天协议收入 5,767,625 美元 ≥ 100,000 → 2（可识别外部客户但账单未核）"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "待核验",
+     "src": "research",
+     "why": "身份未经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "research": {
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "GMGN 运营方扣推荐分成后的收入。",
+    "revenue_method": "原生币/USDC 费用经链上或 Dune 汇总；Solana 推荐支出实测；EVM 推荐支出按 Solana 比例估算，不能将 EVM 净收入当精确链上实测。",
+    "wash_or_subsidy": "官方交易竞赛按积分奖励；推荐支出存在。EVM 推荐扣减为估算项；刷量/关联地址占比 U。",
+    "user_role": "交易工具用户；竞赛参加者，不据此认定平台代币或未来空投。",
+    "counter": "交易竞赛和无法隔离的 EVM 推荐款会干扰真实自然收入与净收入判断。",
+    "verdict_reason": "费用业务可识别，但净收入部分依赖估计，尚缺官方自身代币表态及去激励数据。",
+    "missing": [
+     "独立关联地址/自成交及去补贴留存审计未完成。",
+     "未独立重放全部费用与支付，适配器方法可能更新。",
+     "当前官方自身 token/积分/空投立场及适用日期 U。",
+     "官方原始表态日期 U，不用页面读取日期代替。"
+    ],
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00"
+   },
+   "evidence": [
+    {
+     "url": "https://api.llama.fi/summary/fees/gmgn?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/protocol/gmgn",
+     "fields": [
+      "name",
+      "defillama_reference",
+      "metadata_symbol"
+     ]
+    },
+    {
+     "url": "https://gmgn.ai",
+     "fields": [
+      "user_role",
+      "official_identity"
+     ]
+    },
+    {
+     "url": "https://gmgn.ai/static/ggc/rules.html",
+     "fields": [
+      "token_stance",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    }
+   ],
+   "data": {
+    "category": "Trading App",
+    "chains": [
+     "Ethereum",
+     "Solana",
+     "Base"
+    ],
+    "rev30": 5767625,
+    "chg30": -71.1,
+    "tvl": null,
+    "listed": null,
+    "slug": "gmgn",
+    "children": [
+     "GMGN"
+    ],
+    "token": false,
+    "token_seen": null,
+    "rev_hist": [
+     [
+      "2026-11-14",
+      5767625
+     ]
+    ]
+   }
+  },
+  {
+   "id": "4983",
+   "key": "g:4983",
+   "name": "Flap sh",
+   "kind": "tokenless",
+   "discovered": "2026-11-14",
+   "baseline": true,
+   "status": "待核验",
+   "status_src": "alpha/review/tokenless_checks.json",
+   "bucket": "watch",
+   "entry": [
+    "none"
+   ],
+   "entry_why": "还没查到资金参与方式",
+   "classes": {
+    "business": {
+     "v": "trading",
+     "src": "auto",
+     "why": "DefiLlama 类目「Launchpad」→ 映射表"
+    },
+    "right": {
+     "v": "none",
+     "src": "auto",
+     "why": "本协议和母协议都没登记代币"
+    },
+    "opportunity": {
+     "v": "genesis",
+     "src": "auto",
+     "why": "无币 → 初始参与（早期使用 / 积分）"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": 2,
+     "src": "research",
+     "why": "普通人可以「正规协议研究中的发射工具用户、开发者/创建者；不延伸到纯 MEME 或 0–6 」参与，全成本未验 → 2"
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": 2,
+     "src": "auto",
+     "why": "近 30 天协议收入 4,370,160 美元 ≥ 100,000 → 2（可识别外部客户但账单未核）"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "待核验",
+     "src": "research",
+     "why": "身份未经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "research": {
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "Flap 协议 fee Safe；税金的其他部分付给项目营销/vault 或持有人，不能全算 Flap 收入。",
+    "revenue_method": "收入抓取所有发送方进入 fee Safe 的配置报价资产（含 wrapped native）流入；费用还含不归 Safe 的代币税款，供给方部分另列。",
+    "wash_or_subsidy": "适配器未把任何 Safe 流入都逐笔认证为外部用户手续费，可能混入非经营入金；实际关联转账/补贴数额 U。",
+    "user_role": "正规协议研究中的发射工具用户、开发者/创建者；不延伸到纯 MEME 或 0–6 小时打狗。",
+    "counter": "Safe 的所有入金不等于可持续经营收入，平台工具有用也不能替任何发行资产背书。",
+    "verdict_reason": "已核一手协议说明，但收入与非经营流入分离、平台自身发行表态仍缺；不因存在税币模板而认定安全。",
+    "missing": [
+     "独立关联地址/自成交及去补贴留存审计未完成。",
+     "未独立重放全部费用与支付，适配器方法可能更新。",
+     "当前官方自身 token/积分/空投立场及适用日期 U。",
+     "官方原始表态日期 U，不用页面读取日期代替。"
+    ],
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00"
+   },
+   "evidence": [
+    {
+     "url": "https://api.llama.fi/summary/fees/flap-sh?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/protocol/flap-sh",
+     "fields": [
+      "name",
+      "defillama_reference",
+      "metadata_symbol"
+     ]
+    },
+    {
+     "url": "https://docs.flap.sh/en/flap",
+     "fields": [
+      "token_stance",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    }
+   ],
+   "data": {
+    "category": "Launchpad",
+    "chains": [
+     "BSC",
+     "X Layer",
+     "Monad"
+    ],
+    "rev30": 4370160,
+    "chg30": -48.0,
+    "tvl": null,
+    "listed": null,
+    "slug": "flap-sh",
+    "children": [
+     "Flap sh"
+    ],
+    "token": false,
+    "token_seen": null,
+    "rev_hist": [
+     [
+      "2026-11-14",
+      4370160
+     ]
+    ]
+   }
+  },
+  {
+   "id": "7010",
+   "key": "g:7010",
+   "name": "trade[XYZ]",
+   "kind": "tokenless",
+   "discovered": "2026-11-14",
+   "baseline": true,
+   "status": "待核验",
+   "status_src": "alpha/review/tokenless_checks.json",
+   "bucket": "watch",
+   "entry": [
+    "none"
+   ],
+   "entry_why": "还没查到资金参与方式",
+   "classes": {
+    "business": {
+     "v": "trading",
+     "src": "auto",
+     "why": "DefiLlama 类目「Interface」→ 映射表"
+    },
+    "right": {
+     "v": "none",
+     "src": "auto",
+     "why": "本协议和母协议都没登记代币"
+    },
+    "opportunity": {
+     "v": "genesis",
+     "src": "auto",
+     "why": "无币 → 初始参与（早期使用 / 积分）"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": 2,
+     "src": "research",
+     "why": "普通人可以「相关市场用户；具体地区/身份资格需按官方产品规则核验。」参与，全成本未验 → 2"
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": 2,
+     "src": "auto",
+     "why": "近 30 天协议收入 3,296,251 美元 ≥ 100,000 → 2（可识别外部客户但账单未核）"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "待核验",
+     "src": "research",
+     "why": "身份未经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "research": {
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "Trade.xyz 协议方与 Hyperliquid 分成，普通前端用户并无分红权证明。",
+    "revenue_method": "交易者支付其部署市场的交易费，适配器将一半计 Trade.xyz 收入、余下归 Hyperliquid。",
+    "wash_or_subsidy": "U",
+    "user_role": "相关市场用户；具体地区/身份资格需按官方产品规则核验。",
+    "counter": "现有分成不证明未来发币或用户分配，且产品收入依赖底层 Hyperliquid 规则。",
+    "verdict_reason": "分成方法可核；官方自身发行立场、奖励补贴及权益安排 U。",
+    "missing": [
+     "独立关联地址/自成交及去补贴留存审计未完成。",
+     "未独立重放全部费用与支付，适配器方法可能更新。",
+     "当前官方自身 token/积分/空投立场及适用日期 U。",
+     "官方原始表态日期 U，不用页面读取日期代替。"
+    ],
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00"
+   },
+   "evidence": [
+    {
+     "url": "https://api.llama.fi/summary/fees/trade%5Bxyz%5D?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/protocol/trade%5Bxyz%5D",
+     "fields": [
+      "name",
+      "defillama_reference",
+      "metadata_symbol"
+     ]
+    },
+    {
+     "url": "https://app.trade.xyz/",
+     "fields": [
+      "user_role",
+      "official_identity"
+     ]
+    }
+   ],
+   "data": {
+    "category": "Interface",
+    "chains": [
+     "Hyperliquid L1"
+    ],
+    "rev30": 3296251,
+    "chg30": 68.6,
+    "tvl": null,
+    "listed": null,
+    "slug": "trade[xyz]",
+    "children": [
+     "trade[XYZ]"
+    ],
+    "token": false,
+    "token_seen": null,
+    "rev_hist": [
+     [
+      "2026-11-14",
+      3296251
+     ]
+    ]
+   }
+  },
+  {
+   "id": "azverse",
+   "key": "g:parent#azverse",
+   "name": "Azverse",
+   "kind": "tokenless",
+   "discovered": "2026-11-14",
+   "baseline": true,
+   "status": "待核验",
+   "status_src": "alpha/review/tokenless_checks.json",
+   "bucket": "watch",
+   "entry": [
+    "none"
+   ],
+   "entry_why": "还没查到资金参与方式",
+   "classes": {
+    "business": {
+     "v": "trading",
+     "src": "auto",
+     "why": "DefiLlama 类目「Derivatives」→ 映射表"
+    },
+    "right": {
+     "v": "none",
+     "src": "auto",
+     "why": "本协议和母协议都没登记代币"
+    },
+    "opportunity": {
+     "v": "genesis",
+     "src": "auto",
+     "why": "无币 → 初始参与（早期使用 / 积分）"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": 2,
+     "src": "research",
+     "why": "普通人可以「Perps/Spot 产品用户；身份及官方入口尚需确认。」参与，全成本未验 → 2"
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": 2,
+     "src": "auto",
+     "why": "近 30 天协议收入 2,980,340 美元 ≥ 100,000 → 2（可识别外部客户但账单未核）"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "待核验",
+     "src": "research",
+     "why": "身份未经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "research": {
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "AZverse 留存交易费，builder 获取约定分成；治理持有人字段不是已发生分配证据。",
+    "revenue_method": "Perps 与 Spot 都按交易费扣 builder shares 后计协议收入；未取得独立费用分配重放。",
+    "wash_or_subsidy": "U；builder 分成有方法记录，但活动补贴、关联账户与量的独立性未证实。",
+    "user_role": "Perps/Spot 产品用户；身份及官方入口尚需确认。",
+    "counter": "缺稳定一手身份、权限和发行立场核验，高收入读数不能替代项目真实性审查。",
+    "verdict_reason": "收入方法存在，但 API 元数据缺官网，当前无法完成一手身份/发行补证。",
+    "missing": [
+     "独立关联地址/自成交及去补贴留存审计未完成。",
+     "未独立重放全部费用与支付，适配器方法可能更新。",
+     "当前官方自身 token/积分/空投立场及适用日期 U。",
+     "官方原始表态日期 U，不用页面读取日期代替。",
+     "收入方法存在，但 API 元数据缺官网，当前无法完成一手身份/发行补证。"
+    ],
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00"
+   },
+   "evidence": [
+    {
+     "url": "https://api.llama.fi/summary/fees/azverse-perps?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/protocol/azverse-perps",
+     "fields": [
+      "name",
+      "defillama_reference",
+      "metadata_symbol"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/summary/fees/azverse-spot?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    }
+   ],
+   "data": {
+    "category": "Derivatives",
+    "chains": [
+     "Off Chain"
+    ],
+    "rev30": 2980340,
+    "chg30": -3.5,
+    "tvl": null,
+    "listed": null,
+    "slug": "azverse-perps",
+    "children": [
+     "AZverse Perps",
+     "AZverse Spot"
+    ],
+    "token": false,
+    "token_seen": null,
+    "rev_hist": [
+     [
+      "2026-11-14",
+      2980340
+     ]
+    ]
+   }
+  },
+  {
+   "id": "9296",
+   "key": "g:9296",
+   "name": "The Standard Reserve",
+   "kind": "tokenless",
+   "discovered": "2026-11-14",
+   "baseline": true,
+   "status": "待核验",
+   "status_src": "alpha/review/tokenless_checks.json",
+   "bucket": "watch",
+   "entry": [
+    "none"
+   ],
+   "entry_why": "还没查到资金参与方式",
+   "classes": {
+    "business": {
+     "v": "trading",
+     "src": "auto",
+     "why": "DefiLlama 类目「Reserve Currency」→ 映射表"
+    },
+    "right": {
+     "v": "none",
+     "src": "auto",
+     "why": "本协议和母协议都没登记代币"
+    },
+    "opportunity": {
+     "v": "genesis",
+     "src": "auto",
+     "why": "无币 → 初始参与（早期使用 / 积分）"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": 2,
+     "src": "research",
+     "why": "普通人可以「身份核验后才可区分使用者、LP、charter 或 STANDARD 权益；本次」参与，全成本未验 → 2"
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": 2,
+     "src": "auto",
+     "why": "近 30 天协议收入 2,582,269 美元 ≥ 100,000 → 2（可识别外部客户但账单未核）"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "待核验",
+     "src": "research",
+     "why": "身份未经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "research": {
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "STANDARD 协议及相应持有人机制；费用还分给发行者、第三方 LP 等。",
+    "revenue_method": "交易税、charter/license 拍卖、launchpad 与 LP/S-Bills 相关费用减供给方分成；Revenue 与 ProtocolRevenue 不同：已执行回购在后者扣除，销毁/退出等进入持有人收益。",
+    "wash_or_subsidy": "税费、拍卖、回购等反身循环明显；是否独立外部需求与关联自成交 U，不能把回购当新增收入。",
+    "user_role": "身份核验后才可区分使用者、LP、charter 或 STANDARD 权益；本次不确认资产地址。",
+    "counter": "适配器已描述 STANDARD 代币和持有人收益，和无币标签直接冲突，官网又未取得可核正文。",
+    "verdict_reason": "symbol 为横杠不能证明无币；先核 STANDARD 的唯一资产、官方身份和无币归类，暂不按无币机会推进。",
+    "missing": [
+     "独立关联地址/自成交及去补贴留存审计未完成。",
+     "未独立重放全部费用与支付，适配器方法可能更新。",
+     "当前官方自身 token/积分/空投立场及适用日期 U。",
+     "官方原始表态日期 U，不用页面读取日期代替。",
+     "symbol 为横杠不能证明无币；先核 STANDARD 的唯一资产、官方身份和无币归类，暂不按无币机会推进。"
+    ],
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00"
+   },
+   "evidence": [
+    {
+     "url": "https://api.llama.fi/summary/fees/the-standard-reserve?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/protocol/the-standard-reserve",
+     "fields": [
+      "name",
+      "defillama_reference",
+      "metadata_symbol"
+     ]
+    },
+    {
+     "url": "https://www.standardreserve.xyz/",
+     "fields": [
+      "user_role",
+      "official_identity"
+     ]
+    }
+   ],
+   "data": {
+    "category": "Reserve Currency",
+    "chains": [
+     "Robinhood Chain"
+    ],
+    "rev30": 2582269,
+    "chg30": -81.2,
+    "tvl": null,
+    "listed": null,
+    "slug": "the-standard-reserve",
+    "children": [
+     "The Standard Reserve"
+    ],
+    "token": false,
+    "token_seen": null,
+    "rev_hist": [
+     [
+      "2026-11-14",
+      2582269
+     ]
+    ]
+   }
+  },
+  {
+   "id": "txflow",
+   "key": "g:parent#txflow",
+   "name": "TxFlow Perps",
+   "kind": "tokenless",
+   "discovered": "2026-11-14",
+   "baseline": true,
+   "status": "待核验",
+   "status_src": "alpha/review/tokenless_checks.json",
+   "bucket": "watch",
+   "entry": [
+    "none"
+   ],
+   "entry_why": "还没查到资金参与方式",
+   "classes": {
+    "business": {
+     "v": "trading",
+     "src": "auto",
+     "why": "DefiLlama 类目「Derivatives」→ 映射表"
+    },
+    "right": {
+     "v": "none",
+     "src": "auto",
+     "why": "本协议和母协议都没登记代币"
+    },
+    "opportunity": {
+     "v": "genesis",
+     "src": "auto",
+     "why": "无币 → 初始参与（早期使用 / 积分）"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": 2,
+     "src": "research",
+     "why": "普通人可以「衍生品产品用户；官方奖励/积分参与资格 U。」参与，全成本未验 → 2"
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": 2,
+     "src": "auto",
+     "why": "近 30 天协议收入 1,604,975 美元 ≥ 100,000 → 2（可识别外部客户但账单未核）"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "待核验",
+     "src": "research",
+     "why": "身份未经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "research": {
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "TxFlow 协议方，实际 LP/交易者之间的资金费净额分配尚未核清。",
+    "revenue_method": "适配器将交易费及 funding fees 全计协议收入；同时出现 LP/holders 的模板描述，不能仅据字段名认定真实支付。",
+    "wash_or_subsidy": "U",
+    "user_role": "衍生品产品用户；官方奖励/积分参与资格 U。",
+    "counter": "把 funding fees 全算收入可能混同交易者间转移，且尚缺一手产品和补贴核验。",
+    "verdict_reason": "收费方法取得，但费用经济归属与官方身份/发行计划还不足以确认。",
+    "missing": [
+     "独立关联地址/自成交及去补贴留存审计未完成。",
+     "未独立重放全部费用与支付，适配器方法可能更新。",
+     "当前官方自身 token/积分/空投立场及适用日期 U。",
+     "官方原始表态日期 U，不用页面读取日期代替。",
+     "收费方法取得，但费用经济归属与官方身份/发行计划还不足以确认。"
+    ],
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00"
+   },
+   "evidence": [
+    {
+     "url": "https://api.llama.fi/summary/fees/txflow-perps?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/protocol/txflow-perps",
+     "fields": [
+      "name",
+      "defillama_reference",
+      "metadata_symbol"
+     ]
+    },
+    {
+     "url": "https://app.txflow.com/",
+     "fields": [
+      "user_role",
+      "official_identity"
+     ]
+    }
+   ],
+   "data": {
+    "category": "Derivatives",
+    "chains": [
+     "TxFlow"
+    ],
+    "rev30": 1604975,
+    "chg30": 39.8,
+    "tvl": null,
+    "listed": null,
+    "slug": "txflow-perps",
+    "children": [
+     "TxFlow Perps"
+    ],
+    "token": false,
+    "token_seen": null,
+    "rev_hist": [
+     [
+      "2026-11-14",
+      1604975
+     ]
+    ]
+   }
+  },
+  {
+   "id": "9146",
+   "key": "g:9146",
+   "name": "Central City",
+   "kind": "tokenless",
+   "discovered": "2026-11-14",
+   "baseline": true,
+   "status": "待核验",
+   "status_src": "alpha/review/tokenless_checks.json",
+   "bucket": "watch",
+   "entry": [
+    "none"
+   ],
+   "entry_why": "还没查到资金参与方式",
+   "classes": {
+    "business": {
+     "v": "emerging",
+     "src": "auto",
+     "why": "DefiLlama 类目「AI Agents」→ 映射表"
+    },
+    "right": {
+     "v": "none",
+     "src": "auto",
+     "why": "本协议和母协议都没登记代币"
+    },
+    "opportunity": {
+     "v": "genesis",
+     "src": "auto",
+     "why": "无币 → 初始参与（早期使用 / 积分）"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": 2,
+     "src": "research",
+     "why": "普通人可以「AI 服务用户/提供者、开发者；是否收费依 Feed/路由规则，不自动获得协议权」参与，全成本未验 → 2"
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": 2,
+     "src": "auto",
+     "why": "近 30 天协议收入 1,594,460 美元 ≥ 100,000 → 2（可识别外部客户但账单未核）"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "待核验",
+     "src": "research",
+     "why": "身份未经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "research": {
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "Central City 财库留 qualifying Feed 服务付款的 10%，卖方收其余 90%。",
+    "revenue_method": "Base/Arc 的不可变 fee router 识别含费服务支付，10% 归财库；Volume 为完整含费价格，fee-on-top 只移动费用的付款不计该 Volume；包含平台自行创建 agent 活动。",
+    "wash_or_subsidy": "官方 FAQ 明示数据含自营 agent，gas 由平台承担；这可造成激励/关联需求，尚不能据此证明恶意刷量，独立外部付款占比 U。",
+    "user_role": "AI 服务用户/提供者、开发者；是否收费依 Feed/路由规则，不自动获得协议权益。",
+    "counter": "自营 agent 与 gas 资助可能制造循环付款，AI 收费增长仍需证明最终外部客户。",
+    "verdict_reason": "方法与官网对自营活动的披露可对上，但独立需求、外部审计及发行表态未完成。",
+    "missing": [
+     "独立关联地址/自成交及去补贴留存审计未完成。",
+     "未独立重放全部费用与支付，适配器方法可能更新。",
+     "当前官方自身 token/积分/空投立场及适用日期 U。",
+     "官方原始表态日期 U，不用页面读取日期代替。"
+    ],
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00"
+   },
+   "evidence": [
+    {
+     "url": "https://api.llama.fi/summary/fees/central-city?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/protocol/central-city",
+     "fields": [
+      "name",
+      "defillama_reference",
+      "metadata_symbol"
+     ]
+    },
+    {
+     "url": "https://centralcity.ai/faq",
+     "fields": [
+      "token_stance",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    }
+   ],
+   "data": {
+    "category": "AI Agents",
+    "chains": [
+     "Base",
+     "Arc"
+    ],
+    "rev30": 1594460,
+    "chg30": null,
+    "tvl": null,
+    "listed": null,
+    "slug": "central-city",
+    "children": [
+     "Central City"
+    ],
+    "token": false,
+    "token_seen": null,
+    "rev_hist": [
+     [
+      "2026-11-14",
+      1594460
+     ]
+    ]
+   }
+  },
+  {
+   "id": "7016",
+   "key": "g:7016",
+   "name": "Antarctic",
+   "kind": "tokenless",
+   "discovered": "2026-11-14",
+   "baseline": true,
+   "status": "待核验",
+   "status_src": "alpha/review/tokenless_checks.json",
+   "bucket": "watch",
+   "entry": [
+    "none"
+   ],
+   "entry_why": "官方表态会发币，但还没开放资金参与 → 预警观察，等发币 / 积分开放",
+   "classes": {
+    "business": {
+     "v": "trading",
+     "src": "auto",
+     "why": "DefiLlama 类目「Derivatives」→ 映射表"
+    },
+    "right": {
+     "v": "none",
+     "src": "auto",
+     "why": "本协议和母协议都没登记代币"
+    },
+    "opportunity": {
+     "v": "genesis",
+     "src": "auto",
+     "why": "无币 → 初始参与（早期使用 / 积分）"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": 2,
+     "src": "research",
+     "why": "普通人可以「永续/LP 用户；未来空投规则须确认有效文档版本。」参与，全成本未验 → 2"
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": 2,
+     "src": "auto",
+     "why": "近 30 天协议收入 1,479,360 美元 ≥ 100,000 → 2（可识别外部客户但账单未核）"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "待核验",
+     "src": "research",
+     "why": "身份未经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "research": {
+    "token_stance": "官方表态会发",
+    "token_stance_src": "https://docs.antarctic.exchange/tokenomics/token-distribution",
+    "token_stance_date": "U",
+    "revenue_who": "Antarctic 协议收交易费的 40%，LP 收 60%（适配器口径）。",
+    "revenue_method": "收入按永续总交易费的 40% 计；HoldersRevenue 的模板文字不证明已向实际代币持有人支付。",
+    "wash_or_subsidy": "官方 tokenomics 列出交易量/活跃 airdrop 奖励；有激励计划，实际执行预算和刷量 U。",
+    "user_role": "永续/LP 用户；未来空投规则须确认有效文档版本。",
+    "counter": "两套官方分配文档并存且表述不同，不能把未来空投或代币经济模型当当前已落实权益。",
+    "verdict_reason": "取得官方发币/空投设计，但有效版本、实际发行状态及当期权益尚未核定。",
+    "missing": [
+     "独立关联地址/自成交及去补贴留存审计未完成。",
+     "未独立重放全部费用与支付，适配器方法可能更新。",
+     "官方计划不等于代币已发行或用户已获得权益；当前链上代币状态/分配需另核。",
+     "官方原始表态日期 U，不用页面读取日期代替。"
+    ],
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00"
+   },
+   "evidence": [
+    {
+     "url": "https://api.llama.fi/summary/fees/antarctic?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/protocol/antarctic",
+     "fields": [
+      "name",
+      "defillama_reference",
+      "metadata_symbol"
+     ]
+    },
+    {
+     "url": "https://www.antarctic.exchange/",
+     "fields": [
+      "user_role",
+      "official_identity"
+     ]
+    },
+    {
+     "url": "https://docs.antarctic.exchange/tokenomics/token-distribution",
+     "fields": [
+      "token_stance",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://docs.antarctic.exchange/tokenomics-lightpaper/token-distribution",
+     "fields": [
+      "token_stance",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    }
+   ],
+   "data": {
+    "category": "Derivatives",
+    "chains": [
+     "Off Chain"
+    ],
+    "rev30": 1479360,
+    "chg30": 42.0,
+    "tvl": null,
+    "listed": null,
+    "slug": "antarctic",
+    "children": [
+     "Antarctic"
+    ],
+    "token": false,
+    "token_seen": null,
+    "rev_hist": [
+     [
+      "2026-11-14",
+      1479360
+     ]
+    ]
+   }
+  },
+  {
+   "id": "8415",
+   "key": "g:8415",
+   "name": "XOX Perps",
+   "kind": "tokenless",
+   "discovered": "2026-11-14",
+   "baseline": true,
+   "status": "待核验",
+   "status_src": "alpha/review/tokenless_checks.json",
+   "bucket": "watch",
+   "entry": [
+    "none"
+   ],
+   "entry_why": "官方表态会发币，但还没开放资金参与 → 预警观察，等发币 / 积分开放",
+   "classes": {
+    "business": {
+     "v": "trading",
+     "src": "auto",
+     "why": "DefiLlama 类目「Interface」→ 映射表"
+    },
+    "right": {
+     "v": "none",
+     "src": "auto",
+     "why": "本协议和母协议都没登记代币"
+    },
+    "opportunity": {
+     "v": "genesis",
+     "src": "auto",
+     "why": "无币 → 初始参与（早期使用 / 积分）"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": 2,
+     "src": "research",
+     "why": "普通人可以「XOX 交易界面/社交产品用户；不是持有底层币即拥有 XOX 收入。」参与，全成本未验 → 2"
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": 2,
+     "src": "auto",
+     "why": "近 30 天协议收入 1,252,714 美元 ≥ 100,000 → 2（可识别外部客户但账单未核）"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "待核验",
+     "src": "research",
+     "why": "身份未经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "research": {
+    "token_stance": "官方表态会发",
+    "token_stance_src": "https://www.xox.exchange/en",
+    "token_stance_date": "U",
+    "revenue_who": "XOX 前端运营方收 builder fee，底层 AZverse 收剩余路由交易费。",
+    "revenue_method": "只把 XOX 在 AZverse 的 builder share 计 XOX 收入，不能把路由市场总费或 AZverse 的收入重复计给 XOX。",
+    "wash_or_subsidy": "官方路线图含竞赛/社交增长；奖励预算和刷量 U。",
+    "user_role": "XOX 交易界面/社交产品用户；不是持有底层币即拥有 XOX 收入。",
+    "counter": "收入依赖 AZverse 且路线图 TGE 尚非可验证代币权益，生态依赖和稀释条件未知。",
+    "verdict_reason": "官网确有 TGE 路线图，但本次正文显示 Q3–Q4 2027；有效排期、唯一资产与用户分配均未核定。",
+    "missing": [
+     "独立关联地址/自成交及去补贴留存审计未完成。",
+     "未独立重放全部费用与支付，适配器方法可能更新。",
+     "官方计划不等于代币已发行或用户已获得权益；当前链上代币状态/分配需另核。",
+     "官方原始表态日期 U，不用页面读取日期代替。"
+    ],
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00"
+   },
+   "evidence": [
+    {
+     "url": "https://api.llama.fi/summary/fees/xox-perps?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/protocol/xox-perps",
+     "fields": [
+      "name",
+      "defillama_reference",
+      "metadata_symbol"
+     ]
+    },
+    {
+     "url": "https://www.xox.exchange/en",
+     "fields": [
+      "user_role",
+      "official_identity"
+     ]
+    },
+    {
+     "url": "https://www.xox.exchange/en",
+     "fields": [
+      "token_stance",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://docs.xox.exchange/",
+     "fields": [
+      "token_stance",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    }
+   ],
+   "data": {
+    "category": "Interface",
+    "chains": [
+     "Off Chain"
+    ],
+    "rev30": 1252714,
+    "chg30": 59.9,
+    "tvl": null,
+    "listed": null,
+    "slug": "xox-perps",
+    "children": [
+     "XOX Perps"
+    ],
+    "token": false,
+    "token_seen": null,
+    "rev_hist": [
+     [
+      "2026-11-14",
+      1252714
+     ]
+    ]
+   }
+  },
+  {
+   "id": "5864",
+   "key": "g:5864",
+   "name": "TRONSAVE",
+   "kind": "tokenless",
+   "discovered": "2026-11-14",
+   "baseline": true,
+   "status": "待核验",
+   "status_src": "alpha/review/tokenless_checks.json",
+   "bucket": "watch",
+   "entry": [
+    "none"
+   ],
+   "entry_why": "还没查到资金参与方式",
+   "classes": {
+    "business": {
+     "v": "realworld",
+     "src": "auto",
+     "why": "DefiLlama 类目「Services」→ 映射表"
+    },
+    "right": {
+     "v": "none",
+     "src": "auto",
+     "why": "本协议和母协议都没登记代币"
+    },
+    "opportunity": {
+     "v": "genesis",
+     "src": "auto",
+     "why": "无币 → 初始参与（早期使用 / 积分）"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": 2,
+     "src": "research",
+     "why": "普通人可以「TRON 能量采购用户或符合平台规则的资源供给者。」参与，全成本未验 → 2"
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": 2,
+     "src": "auto",
+     "why": "近 30 天协议收入 1,231,156 美元 ≥ 100,000 → 2（可识别外部客户但账单未核）"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "待核验",
+     "src": "research",
+     "why": "身份未经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "research": {
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "TRONSAVE 协议/运营方收取能量购买相关费用。",
+    "revenue_method": "适配器把购买 energy 的用户费用计协议收入；未充分解释资源提供者成本/结算是否已净额化。",
+    "wash_or_subsidy": "U",
+    "user_role": "TRON 能量采购用户或符合平台规则的资源供给者。",
+    "counter": "能量采购流水可能包含转付成本，未核清净费就无法证明协议真实盈利。",
+    "verdict_reason": "真实使用场景可识别，但净收入/供给方成本及自身代币立场不足。",
+    "missing": [
+     "独立关联地址/自成交及去补贴留存审计未完成。",
+     "未独立重放全部费用与支付，适配器方法可能更新。",
+     "当前官方自身 token/积分/空投立场及适用日期 U。",
+     "官方原始表态日期 U，不用页面读取日期代替。",
+     "真实使用场景可识别，但净收入/供给方成本及自身代币立场不足。"
+    ],
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00"
+   },
+   "evidence": [
+    {
+     "url": "https://api.llama.fi/summary/fees/tronsave?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/protocol/tronsave",
+     "fields": [
+      "name",
+      "defillama_reference",
+      "metadata_symbol"
+     ]
+    },
+    {
+     "url": "https://tronsave.io",
+     "fields": [
+      "user_role",
+      "official_identity"
+     ]
+    }
+   ],
+   "data": {
+    "category": "Services",
+    "chains": [
+     "Tron"
+    ],
+    "rev30": 1231156,
+    "chg30": 40.3,
+    "tvl": null,
+    "listed": null,
+    "slug": "tronsave",
+    "children": [
+     "TRONSAVE"
+    ],
+    "token": false,
+    "token_seen": null,
+    "rev_hist": [
+     [
+      "2026-11-14",
+      1231156
+     ]
+    ]
+   }
+  },
+  {
+   "id": "5825",
+   "key": "g:5825",
+   "name": "Veda",
+   "kind": "tokenless",
+   "discovered": "2026-11-14",
+   "baseline": true,
+   "status": "待核验",
+   "status_src": "alpha/review/tokenless_checks.json",
+   "bucket": "watch",
+   "entry": [
+    "none"
+   ],
+   "entry_why": "还没查到资金参与方式",
+   "classes": {
+    "business": {
+     "v": "trading",
+     "src": "auto",
+     "why": "DefiLlama 类目「Onchain Capital Allocator」→ 映射表"
+    },
+    "right": {
+     "v": "none",
+     "src": "auto",
+     "why": "本协议和母协议都没登记代币"
+    },
+    "opportunity": {
+     "v": "genesis",
+     "src": "auto",
+     "why": "无币 → 初始参与（早期使用 / 积分）"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": 2,
+     "src": "research",
+     "why": "普通人可以「相关策略 vault 用户/集成开发者；当前积分资格 U。」参与，全成本未验 → 2"
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": 2,
+     "src": "auto",
+     "why": "近 30 天协议收入 1,121,303 美元 ≥ 100,000 → 2（可识别外部客户但账单未核）"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "待核验",
+     "src": "research",
+     "why": "身份未经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "research": {
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "Veda 协议获取约定收益分成，存入者获取其余资产收益。",
+    "revenue_method": "Fees 为质押资产总收益，SupplySideRevenue 为给 stakers 的收益，Revenue/ProtocolRevenue 仅给 Veda 的部分；不能把总收益都当 Veda 收入。",
+    "wash_or_subsidy": "U；本次官方合作积分页面直读 403，当前活动、规则和激励金额不可核，不把历史线索当今天开放。",
+    "user_role": "相关策略 vault 用户/集成开发者；当前积分资格 U。",
+    "counter": "底层收益、激励和合作方分成可能驱动收入，协议收费不代表存入者拥有未来代币权益。",
+    "verdict_reason": "收入切分可核；当前发行/积分口径尚无本次可读的一手规则，保持 U。",
+    "missing": [
+     "独立关联地址/自成交及去补贴留存审计未完成。",
+     "未独立重放全部费用与支付，适配器方法可能更新。",
+     "当前官方自身 token/积分/空投立场及适用日期 U。",
+     "官方原始表态日期 U，不用页面读取日期代替。",
+     "收入切分可核；当前发行/积分口径尚无本次可读的一手规则，保持 U。"
+    ],
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00"
+   },
+   "evidence": [
+    {
+     "url": "https://api.llama.fi/summary/fees/veda?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/protocol/veda",
+     "fields": [
+      "name",
+      "defillama_reference",
+      "metadata_symbol"
+     ]
+    },
+    {
+     "url": "https://veda.tech",
+     "fields": [
+      "user_role",
+      "official_identity"
+     ]
+    },
+    {
+     "url": "https://www.veda.tech/blog/lombard-launch",
+     "fields": [
+      "token_stance",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    }
+   ],
+   "data": {
+    "category": "Onchain Capital Allocator",
+    "chains": [
+     "Base",
+     "Ethereum",
+     "Sonic"
+    ],
+    "rev30": 1121303,
+    "chg30": 9.7,
+    "tvl": null,
+    "listed": null,
+    "slug": "veda",
+    "children": [
+     "Veda"
+    ],
+    "token": false,
+    "token_seen": null,
+    "rev_hist": [
+     [
+      "2026-11-14",
+      1121303
+     ]
+    ]
+   }
+  },
+  {
+   "id": "hyperdash",
+   "key": "g:parent#hyperdash",
+   "name": "Hyperdash",
+   "kind": "tokenless",
+   "discovered": "2026-11-14",
+   "baseline": true,
+   "status": "待核验",
+   "status_src": "alpha/review/tokenless_checks.json",
+   "bucket": "watch",
+   "entry": [
+    "none"
+   ],
+   "entry_why": "还没查到资金参与方式",
+   "classes": {
+    "business": {
+     "v": "trading",
+     "src": "auto",
+     "why": "DefiLlama 类目「Interface」→ 映射表"
+    },
+    "right": {
+     "v": "none",
+     "src": "auto",
+     "why": "本协议和母协议都没登记代币"
+    },
+    "opportunity": {
+     "v": "genesis",
+     "src": "auto",
+     "why": "无币 → 初始参与（早期使用 / 积分）"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": 2,
+     "src": "research",
+     "why": "普通人可以「交易前端用户；未确认其自身积分/空投。」参与，全成本未验 → 2"
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": 2,
+     "src": "auto",
+     "why": "近 30 天协议收入 888,072 美元 ≥ 100,000 → 2（可识别外部客户但账单未核）"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "待核验",
+     "src": "research",
+     "why": "身份未经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "research": {
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "Hyperdash 前端运营方留存 builder 费用。",
+    "revenue_method": "Perps 为 Hyperliquid builder-code 费；Spot/Outcome 为对应路由的 builder fee，不含底层市场全部费用。",
+    "wash_or_subsidy": "U",
+    "user_role": "交易前端用户；未确认其自身积分/空投。",
+    "counter": "前端可被替代且依赖底层费率，不能将 Hyperliquid 或某交易标的 POINTS 误认成其自身积分。",
+    "verdict_reason": "子模块收入可核，但自身发行立场、独立留存与补贴 U。",
+    "missing": [
+     "独立关联地址/自成交及去补贴留存审计未完成。",
+     "未独立重放全部费用与支付，适配器方法可能更新。",
+     "当前官方自身 token/积分/空投立场及适用日期 U。",
+     "官方原始表态日期 U，不用页面读取日期代替。"
+    ],
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00"
+   },
+   "evidence": [
+    {
+     "url": "https://api.llama.fi/summary/fees/hyperdash-perps?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/protocol/hyperdash-perps",
+     "fields": [
+      "name",
+      "defillama_reference",
+      "metadata_symbol"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/summary/fees/hyperdash-spot?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/summary/fees/hyperdash-outcome?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://hyperdash.com/",
+     "fields": [
+      "user_role",
+      "official_identity"
+     ]
+    }
+   ],
+   "data": {
+    "category": "Interface",
+    "chains": [
+     "Hyperliquid L1"
+    ],
+    "rev30": 888072,
+    "chg30": 179.8,
+    "tvl": null,
+    "listed": null,
+    "slug": "hyperdash-perps",
+    "children": [
+     "HyperDash Perps",
+     "HyperDash Spot",
+     "HyperDash Outcome"
+    ],
+    "token": false,
+    "token_seen": null,
+    "rev_hist": [
+     [
+      "2026-11-14",
+      888072
+     ]
+    ]
+   }
+  },
+  {
+   "id": "rabby",
+   "key": "g:parent#rabby",
+   "name": "Rabby",
+   "kind": "tokenless",
+   "discovered": "2026-11-14",
+   "baseline": true,
+   "status": "待核验",
+   "status_src": "alpha/review/tokenless_checks.json",
+   "bucket": "watch",
+   "entry": [
+    "none"
+   ],
+   "entry_why": "还没查到资金参与方式",
+   "classes": {
+    "business": {
+     "v": "trading",
+     "src": "auto",
+     "why": "DefiLlama 类目「Interface」→ 映射表"
+    },
+    "right": {
+     "v": "none",
+     "src": "auto",
+     "why": "本协议和母协议都没登记代币"
+    },
+    "opportunity": {
+     "v": "genesis",
+     "src": "auto",
+     "why": "无币 → 初始参与（早期使用 / 积分）"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": 2,
+     "src": "research",
+     "why": "普通人可以「钱包与前端用户；积分资格/规则 U。」参与，全成本未验 → 2"
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": 2,
+     "src": "auto",
+     "why": "近 30 天协议收入 808,472 美元 ≥ 100,000 → 2（可识别外部客户但账单未核）"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "待核验",
+     "src": "research",
+     "why": "身份未经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "research": {
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "Rabby 前端/钱包运营方。",
+    "revenue_method": "Perps 是 Hyperliquid builder-code 费用；Wallet 是钱包兑换/桥接收费，两个模块分开统计。",
+    "wash_or_subsidy": "官方 Rabby Points 页面存在，但本次仅取得页面标题、未取得可读规则；奖励周期、规模、自成交 U。",
+    "user_role": "钱包与前端用户；积分资格/规则 U。",
+    "counter": "有 Points 入口不等于有效空投承诺，钱包收入主要归运营方。",
+    "verdict_reason": "确认官方积分页面存在；详细规则与代币计划未读取到，不据标题升级发行结论。",
+    "missing": [
+     "独立关联地址/自成交及去补贴留存审计未完成。",
+     "未独立重放全部费用与支付，适配器方法可能更新。",
+     "当前官方自身 token/积分/空投立场及适用日期 U。",
+     "官方原始表态日期 U，不用页面读取日期代替。",
+     "确认官方积分页面存在；详细规则与代币计划未读取到，不据标题升级发行结论。"
+    ],
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00"
+   },
+   "evidence": [
+    {
+     "url": "https://api.llama.fi/summary/fees/rabby-perps?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/protocol/rabby-perps",
+     "fields": [
+      "name",
+      "defillama_reference",
+      "metadata_symbol"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/summary/fees/rabby-wallet?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://rabby.io/",
+     "fields": [
+      "user_role",
+      "official_identity"
+     ]
+    },
+    {
+     "url": "https://rabby.io/points",
+     "fields": [
+      "token_stance",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    }
+   ],
+   "data": {
+    "category": "Interface",
+    "chains": [
+     "Hyperliquid L1",
+     "Ethereum",
+     "BSC"
+    ],
+    "rev30": 808472,
+    "chg30": 30.7,
+    "tvl": null,
+    "listed": null,
+    "slug": "rabby-perps",
+    "children": [
+     "Rabby Perps",
+     "Rabby Wallet"
+    ],
+    "token": false,
+    "token_seen": null,
+    "rev_hist": [
+     [
+      "2026-11-14",
+      808472
+     ]
+    ]
+   }
+  },
+  {
+   "id": "8916",
+   "key": "g:8916",
+   "name": "Relay",
+   "kind": "tokenless",
+   "discovered": "2026-11-14",
+   "baseline": true,
+   "status": "待核验",
+   "status_src": "alpha/review/tokenless_checks.json",
+   "bucket": "watch",
+   "entry": [
+    "none"
+   ],
+   "entry_why": "还没查到资金参与方式",
+   "classes": {
+    "business": {
+     "v": "infra",
+     "src": "auto",
+     "why": "DefiLlama 类目「Cross Chain Bridge」→ 映射表"
+    },
+    "right": {
+     "v": "none",
+     "src": "auto",
+     "why": "本协议和母协议都没登记代币"
+    },
+    "opportunity": {
+     "v": "genesis",
+     "src": "auto",
+     "why": "无币 → 初始参与（早期使用 / 积分）"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": 2,
+     "src": "research",
+     "why": "普通人可以「桥接/兑换用户、集成方；外部活动奖励不等于 Relay 发币。」参与，全成本未验 → 2"
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": 2,
+     "src": "auto",
+     "why": "近 30 天协议收入 696,932 美元 ≥ 100,000 → 2（可识别外部客户但账单未核）"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "待核验",
+     "src": "research",
+     "why": "身份未经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "research": {
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "Relay 平台方和满足条件的 integrator 分成；具体分成未披露。",
+    "revenue_method": "Fees 含平台费、集成 app 费和 swap 成本（不含 gas）；Revenue 仅平台费但尚未扣未披露的 integrator revenue share，属于上界而非精确净收入。",
+    "wash_or_subsidy": "官方旧 FAQ 说当时没有 Relay 自身奖励/币，只提外部链活动；页面日期 2024-07-24，不能视为 2026 永久承诺。当前补贴和刷量 U。",
+    "user_role": "桥接/兑换用户、集成方；外部活动奖励不等于 Relay 发币。",
+    "counter": "未披露分成让收入只是上界，旧奖励 FAQ 也不能证明今天仍无币或未来分配。",
+    "verdict_reason": "服务收费明确，但收入净额和当前发行/奖励立场仍缺，历史官方声明不延长有效期。",
+    "missing": [
+     "独立关联地址/自成交及去补贴留存审计未完成。",
+     "未独立重放全部费用与支付，适配器方法可能更新。",
+     "当前官方自身 token/积分/空投立场及适用日期 U。",
+     "官方原始表态日期 U，不用页面读取日期代替。",
+     "服务收费明确，但收入净额和当前发行/奖励立场仍缺，历史官方声明不延长有效期。"
+    ],
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00"
+   },
+   "evidence": [
+    {
+     "url": "https://api.llama.fi/summary/fees/relay?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/protocol/relay",
+     "fields": [
+      "name",
+      "defillama_reference",
+      "metadata_symbol"
+     ]
+    },
+    {
+     "url": "https://docs.relay.link/",
+     "fields": [
+      "user_role",
+      "official_identity"
+     ]
+    },
+    {
+     "url": "https://support.relay.link/en/articles/9654203-can-i-earn-rewards",
+     "fields": [
+      "token_stance",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    }
+   ],
+   "data": {
+    "category": "Cross Chain Bridge",
+    "chains": [
+     "Mythos",
+     "XRPL",
+     "Eclipse"
+    ],
+    "rev30": 696932,
+    "chg30": -47.4,
+    "tvl": null,
+    "listed": null,
+    "slug": "relay",
+    "children": [
+     "Relay"
+    ],
+    "token": false,
+    "token_seen": null,
+    "rev_hist": [
+     [
+      "2026-11-14",
+      696932
+     ]
+    ]
+   }
+  },
+  {
+   "id": "okx-dex",
+   "key": "g:parent#okx-dex",
+   "name": "OKX Swap",
+   "kind": "tokenless",
+   "discovered": "2026-11-14",
+   "baseline": true,
+   "status": "待核验",
+   "status_src": "alpha/review/tokenless_checks.json",
+   "bucket": "watch",
+   "entry": [
+    "none"
+   ],
+   "entry_why": "还没查到资金参与方式",
+   "classes": {
+    "business": {
+     "v": "trading",
+     "src": "auto",
+     "why": "DefiLlama 类目「DEX Aggregator」→ 映射表"
+    },
+    "right": {
+     "v": "none",
+     "src": "auto",
+     "why": "本协议和母协议都没登记代币"
+    },
+    "opportunity": {
+     "v": "genesis",
+     "src": "auto",
+     "why": "无币 → 初始参与（早期使用 / 积分）"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": 2,
+     "src": "research",
+     "why": "普通人可以「DEX 兑换用户或 API 集成方；OKX 生态资产不自动代表 Swap 现金流」参与，全成本未验 → 2"
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": 2,
+     "src": "auto",
+     "why": "近 30 天协议收入 687,080 美元 ≥ 100,000 → 2（可识别外部客户但账单未核）"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "待核验",
+     "src": "research",
+     "why": "身份未经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "research": {
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "OKX DEX/Swap 运营方及 API 合作方/推荐方，依实际费地址分配。",
+    "revenue_method": "计入 OKX 自有地址收的接口佣金、其 API partner fees 的 20% 及自有地址取得的正滑点；付第三方推荐方的份额另列，不等于 CEX 全部收入。",
+    "wash_or_subsidy": "U；明确有 partner/referrer 分成，但奖励预算、关联成交和正滑点质量未独立核验。",
+    "user_role": "DEX 兑换用户或 API 集成方；OKX 生态资产不自动代表 Swap 现金流权益。",
+    "counter": "公司 DEX 收费不等于独立无币协议机会，也不能把 OKB 等生态关系当 Swap 的用户权益。",
+    "verdict_reason": "费用归属可核；需先确认该雷达是否纳入中心化公司 DEX 产品及专属资产/发行口径。",
+    "missing": [
+     "独立关联地址/自成交及去补贴留存审计未完成。",
+     "未独立重放全部费用与支付，适配器方法可能更新。",
+     "当前官方自身 token/积分/空投立场及适用日期 U。",
+     "官方原始表态日期 U，不用页面读取日期代替。",
+     "费用归属可核；需先确认该雷达是否纳入中心化公司 DEX 产品及专属资产/发行口径。"
+    ],
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00"
+   },
+   "evidence": [
+    {
+     "url": "https://api.llama.fi/summary/fees/okx-swap?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/protocol/okx-swap",
+     "fields": [
+      "name",
+      "defillama_reference",
+      "metadata_symbol"
+     ]
+    },
+    {
+     "url": "https://www.okx.com/web3/dex-swap",
+     "fields": [
+      "user_role",
+      "official_identity"
+     ]
+    }
+   ],
+   "data": {
+    "category": "DEX Aggregator",
+    "chains": [
+     "Mantle",
+     "Blast",
+     "Sonic"
+    ],
+    "rev30": 687080,
+    "chg30": null,
+    "tvl": null,
+    "listed": null,
+    "slug": "okx-swap",
+    "children": [
+     "OKX Swap"
+    ],
+    "token": false,
+    "token_seen": null,
+    "rev_hist": [
+     [
+      "2026-11-14",
+      687080
+     ]
+    ]
+   }
+  },
+  {
+   "id": "8866",
+   "key": "g:8866",
+   "name": "Loan Meme",
+   "kind": "tokenless",
+   "discovered": "2026-11-14",
+   "baseline": true,
+   "status": "待核验",
+   "status_src": "alpha/review/tokenless_checks.json",
+   "bucket": "watch",
+   "entry": [
+    "none"
+   ],
+   "entry_why": "官方表态会发币，但还没开放资金参与 → 预警观察，等发币 / 积分开放",
+   "classes": {
+    "business": {
+     "v": "trading",
+     "src": "auto",
+     "why": "DefiLlama 类目「Lending」→ 映射表"
+    },
+    "right": {
+     "v": "none",
+     "src": "auto",
+     "why": "本协议和母协议都没登记代币"
+    },
+    "opportunity": {
+     "v": "genesis",
+     "src": "auto",
+     "why": "无币 → 初始参与（早期使用 / 积分）"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": 2,
+     "src": "research",
+     "why": "普通人可以「若经确认则是借款人/出借人；当前生产合约与准入规则未核定，不提供参与路径。」参与，全成本未验 → 2"
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": 2,
+     "src": "auto",
+     "why": "近 30 天协议收入 658,147 美元 ≥ 100,000 → 2（可识别外部客户但账单未核）"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "待核验",
+     "src": "research",
+     "why": "身份未经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "research": {
+    "token_stance": "官方表态会发",
+    "token_stance_src": "https://loanmeme.io/docs/",
+    "token_stance_date": "U",
+    "revenue_who": "方法称费用全归协议，其中 77% 留作未来 LOAN 回购、23% 财库；尚无实际回购收益。",
+    "revenue_method": "计借入、还款、清算及进出费用为协议收入；利息付 lender 另列；预留未来回购不等于已经执行回购或持有人分红。",
+    "wash_or_subsidy": "当前补贴/刷量 U；官方文档仍称没有部署，与运行中的 app/适配器收入状态冲突，应先核唯一身份和生产版本。",
+    "user_role": "若经确认则是借款人/出借人；当前生产合约与准入规则未核定，不提供参与路径。",
+    "counter": "官方文档说无部署无市场无 token 地址，而数据源在计收入，身份或版本冲突未消除就不能信任读数。",
+    "verdict_reason": "有发币/回购设计但执行状态冲突；须核 app、docs、适配器与生产合约是否同一项目，非直接判诈骗。",
+    "missing": [
+     "独立关联地址/自成交及去补贴留存审计未完成。",
+     "未独立重放全部费用与支付，适配器方法可能更新。",
+     "官方计划不等于代币已发行或用户已获得权益；当前链上代币状态/分配需另核。",
+     "官方原始表态日期 U，不用页面读取日期代替。",
+     "有发币/回购设计但执行状态冲突；须核 app、docs、适配器与生产合约是否同一项目，非直接判诈骗。"
+    ],
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00"
+   },
+   "evidence": [
+    {
+     "url": "https://api.llama.fi/summary/fees/loan-meme?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/protocol/loan-meme",
+     "fields": [
+      "name",
+      "defillama_reference",
+      "metadata_symbol"
+     ]
+    },
+    {
+     "url": "https://loanmeme.io/docs/",
+     "fields": [
+      "token_stance",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://app.loanmeme.io/",
+     "fields": [
+      "token_stance",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    }
+   ],
+   "data": {
+    "category": "Lending",
+    "chains": [
+     "Ethereum",
+     "BSC",
+     "Solana"
+    ],
+    "rev30": 658147,
+    "chg30": 403.6,
+    "tvl": null,
+    "listed": null,
+    "slug": "loan-meme",
+    "children": [
+     "Loan Meme"
+    ],
+    "token": false,
+    "token_seen": null,
+    "rev_hist": [
+     [
+      "2026-11-14",
+      658147
+     ]
+    ]
+   }
+  },
+  {
+   "id": "8144",
+   "key": "g:8144",
+   "name": "Catapult Trade",
+   "kind": "tokenless",
+   "discovered": "2026-11-14",
+   "baseline": true,
+   "status": "待核验",
+   "status_src": "alpha/review/tokenless_checks.json",
+   "bucket": "invest",
+   "entry": [
+    "use"
+   ],
+   "entry_why": "官方有积分 / 空投计划（研究补证）",
+   "classes": {
+    "business": {
+     "v": "trading",
+     "src": "auto",
+     "why": "DefiLlama 类目「Derivatives」→ 映射表"
+    },
+    "right": {
+     "v": "none",
+     "src": "auto",
+     "why": "本协议和母协议都没登记代币"
+    },
+    "opportunity": {
+     "v": "genesis",
+     "src": "auto",
+     "why": "无币 → 初始参与（早期使用 / 积分）"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": 2,
+     "src": "research",
+     "why": "普通人可以「产品或免费 Demo 用户；合成交易/奖励用户，无需由此推导可转让 token。」参与，全成本未验 → 2"
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": 1,
+     "src": "research",
+     "why": "有积分 / 空投计划 → 1（仅排放或升值预期）"
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": 2,
+     "src": "auto",
+     "why": "近 30 天协议收入 604,327 美元 ≥ 100,000 → 2（可识别外部客户但账单未核）"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "待核验",
+     "src": "research",
+     "why": "身份未经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "research": {
+    "token_stance": "有积分/空投计划",
+    "token_stance_src": "https://docs.catapult.trade/pult/earn",
+    "token_stance_date": "2026-11-04",
+    "revenue_who": "Catapult 运营方留交易费；不把模板 holders/LP 字段当作已执行分红。",
+    "revenue_method": "自报公共 metrics API 的合成交易开/平/盈利费用计收入；成交额是 synthetic notional volume，不是独立真实资产成交量。",
+    "wash_or_subsidy": "官方交易/推荐积分及 Demo 奖励存在；PULT 暂为应用内余额，官方称待 TGE 可提，兑换公式未公布，实际补贴与刷量 U。",
+    "user_role": "产品或免费 Demo 用户；合成交易/奖励用户，无需由此推导可转让 token。",
+    "counter": "极端杠杆与合成市场的游戏化收费、内部 PULT 余额可能都不具备链上代币可兑现性。",
+    "verdict_reason": "官方有积分转 PULT/TGE 计划；已发可转让币、机制独立性和是否符合正规项目范围需继续核验。",
+    "missing": [
+     "独立关联地址/自成交及去补贴留存审计未完成。",
+     "未独立重放全部费用与支付，适配器方法可能更新。",
+     "官方计划不等于代币已发行或用户已获得权益；当前链上代币状态/分配需另核。",
+     "官方有积分转 PULT/TGE 计划；已发可转让币、机制独立性和是否符合正规项目范围需继续核验。"
+    ],
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00"
+   },
+   "evidence": [
+    {
+     "url": "https://api.llama.fi/summary/fees/catapult-trade?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/protocol/catapult-trade",
+     "fields": [
+      "name",
+      "defillama_reference",
+      "metadata_symbol"
+     ]
+    },
+    {
+     "url": "https://catapult.trade",
+     "fields": [
+      "user_role",
+      "official_identity"
+     ]
+    },
+    {
+     "url": "https://docs.catapult.trade/rewards/points",
+     "fields": [
+      "token_stance",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://docs.catapult.trade/pult/earn",
+     "fields": [
+      "token_stance",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    }
+   ],
+   "data": {
+    "category": "Derivatives",
+    "chains": [
+     "Off Chain"
+    ],
+    "rev30": 604327,
+    "chg30": 12.4,
+    "tvl": null,
+    "listed": null,
+    "slug": "catapult-trade",
+    "children": [
+     "Catapult Trade"
+    ],
+    "token": false,
+    "token_seen": null,
+    "rev_hist": [
+     [
+      "2026-11-14",
+      604327
+     ]
+    ]
+   }
+  },
+  {
+   "id": "9380",
+   "key": "p:9380",
+   "name": "Kinetiq Elysium Bridge",
+   "kind": "listing",
+   "discovered": "2026-11-14",
+   "baseline": true,
+   "status": "原始线索",
+   "status_src": "auto",
+   "bucket": "invest",
+   "entry": [
+    "buy"
+   ],
+   "entry_why": "已有代币，可二级买入",
+   "classes": {
+    "business": {
+     "v": "infra",
+     "src": "auto",
+     "why": "DefiLlama 类目「Canonical Bridge」→ 映射表"
+    },
+    "right": {
+     "v": "governance",
+     "src": "auto",
+     "why": "已有代币，权利待补证"
+    },
+    "opportunity": {
+     "v": "rerate",
+     "src": "auto",
+     "why": "已有代币 → 产品与资产重估"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "身份未经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "research": null,
+   "evidence": [],
+   "data": {
+    "category": "Canonical Bridge",
+    "chains": [
+     "Hyperliquid L1"
+    ],
+    "rev30": null,
+    "chg30": null,
+    "tvl": 50142082,
+    "listed": "2026-11-09",
+    "slug": "kinetiq-elysium-bridge",
+    "children": null,
+    "token": true,
+    "token_seen": null,
+    "rev_hist": []
+   }
+  },
+  {
+   "id": "9393",
+   "key": "p:9393",
+   "name": "Pendle Loop",
+   "kind": "listing",
+   "discovered": "2026-11-14",
+   "baseline": true,
+   "status": "原始线索",
+   "status_src": "auto",
+   "bucket": "invest",
+   "entry": [
+    "buy"
+   ],
+   "entry_why": "已有代币，可二级买入",
+   "classes": {
+    "business": {
+     "v": "trading",
+     "src": "auto",
+     "why": "DefiLlama 类目「Leveraged Farming」→ 映射表"
+    },
+    "right": {
+     "v": "governance",
+     "src": "auto",
+     "why": "已有代币，权利待补证"
+    },
+    "opportunity": {
+     "v": "rerate",
+     "src": "auto",
+     "why": "已有代币 → 产品与资产重估"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "身份未经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "research": null,
+   "evidence": [],
+   "data": {
+    "category": "Leveraged Farming",
+    "chains": [
+     "Ethereum",
+     "Monad",
+     "Base"
+    ],
+    "rev30": null,
+    "chg30": null,
+    "tvl": 38750220,
+    "listed": "2026-11-11",
+    "slug": "pendle-loop",
+    "children": null,
+    "token": true,
+    "token_seen": null,
+    "rev_hist": []
+   }
+  },
+  {
+   "id": "9353",
+   "key": "p:9353",
+   "name": "Vesper V2",
+   "kind": "listing",
+   "discovered": "2026-11-14",
+   "baseline": true,
+   "status": "原始线索",
+   "status_src": "auto",
+   "bucket": "invest",
+   "entry": [
+    "buy"
+   ],
+   "entry_why": "已有代币，可二级买入",
+   "classes": {
+    "business": {
+     "v": "trading",
+     "src": "auto",
+     "why": "DefiLlama 类目「Yield Aggregator」→ 映射表"
+    },
+    "right": {
+     "v": "governance",
+     "src": "auto",
+     "why": "已有代币，权利待补证"
+    },
+    "opportunity": {
+     "v": "rerate",
+     "src": "auto",
+     "why": "已有代币 → 产品与资产重估"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "身份未经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "research": null,
+   "evidence": [],
+   "data": {
+    "category": "Yield Aggregator",
+    "chains": [
+     "Ethereum"
+    ],
+    "rev30": null,
+    "chg30": null,
+    "tvl": 8850269,
+    "listed": "2026-11-07",
+    "slug": "vesper-v2",
+    "children": null,
+    "token": true,
+    "token_seen": null,
+    "rev_hist": []
+   }
+  },
+  {
+   "id": "9415",
+   "key": "p:9415",
+   "name": "Swan DAO",
+   "kind": "listing",
+   "discovered": "2026-11-14",
+   "baseline": true,
+   "status": "原始线索",
+   "status_src": "auto",
+   "bucket": "watch",
+   "entry": [
+    "none"
+   ],
+   "entry_why": "还没查到资金参与方式",
+   "classes": {
+    "business": {
+     "v": "trading",
+     "src": "auto",
+     "why": "DefiLlama 类目「CDP」→ 映射表"
+    },
+    "right": {
+     "v": "none",
+     "src": "auto",
+     "why": "本协议和母协议都没登记代币"
+    },
+    "opportunity": {
+     "v": "genesis",
+     "src": "auto",
+     "why": "无币 → 初始参与（早期使用 / 积分）"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "身份未经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "research": null,
+   "evidence": [],
+   "data": {
+    "category": "CDP",
+    "chains": [
+     "Ethereum"
+    ],
+    "rev30": null,
+    "chg30": null,
+    "tvl": 6207390,
+    "listed": "2026-11-12",
+    "slug": "swan-dao",
+    "children": null,
+    "token": false,
+    "token_seen": null,
+    "rev_hist": []
+   }
+  }
+ ]
+}

@@ -455,7 +455,9 @@ ASSET_SRC = {"site.css": ST.SITE_CSS, "ui.js": ST.UI_JS, "share.js": ST.SHARE_JS
              "leg.js": open(os.path.join(LEG_WEB, "leg.js"), encoding="utf-8").read(),
              "leg.css": open(os.path.join(LEG_WEB, "leg.css"), encoding="utf-8").read(),
              "core.js": open(os.path.join(ROOT, "core", "web", "core.js"), encoding="utf-8").read(),
-             "core.css": open(os.path.join(ROOT, "core", "web", "core.css"), encoding="utf-8").read()}
+             "core.css": open(os.path.join(ROOT, "core", "web", "core.css"), encoding="utf-8").read(),
+             "alpha.js": open(os.path.join(ROOT, "alpha", "web", "alpha.js"), encoding="utf-8").read(),
+             "alpha.css": open(os.path.join(ROOT, "alpha", "web", "alpha.css"), encoding="utf-8").read()}
 ASSET_URL = {k: f"/assets/{k}?v={hashlib.md5(v.encode('utf-8')).hexdigest()[:10]}" for k, v in ASSET_SRC.items()}
 
 # Cloudflare Pages 缓存规则：样式脚本带版本号可以长缓存；走势数据一小时；页面本身每次都向服务器确认
@@ -3931,11 +3933,12 @@ def build_core():
 
 
 # ---------------------------------------------------------------- Alpha 雷达（alpha/：雷达读 data/alpha/alpha_latest.json；方法论 / 案例库 / 进度读 alpha/research/*.md）
-ALPHA_TABS = [("", "雷达", "Radar", "无币协议 · 新上架 · 台账", "Tokenless · new · ledger"),
-              ("pool/", "候选池", "Pool", "补证 · 未知项 · 反方", "Evidence · unknowns · counter"),
-              ("cases/", "案例库", "Cases", "历史机制与冻结评分", "History & frozen scores"),
-              ("method/", "方法论", "Method", "Alpha 标的筛选研究体系", "Screening framework"),
-              ("progress/", "研究进度", "Progress", "阶段 · 口径 · 外部任务", "Stages · rules · tasks")]
+ALPHA_TABS = [("", "机会看板", "Board", "可投资机会 · 预警观察", "Investable · watchlist"),
+              ("radar/", "雷达", "Radar", "无币协议 · 新上架 · 事件流", "Tokenless · new · feed"),
+              ("cases/", "案例库", "Cases", "同一框架看历史", "History, same framework"),
+              ("framework/", "框架", "Framework", "维度 · 流程 · 打分规则", "Dimensions · flow · rules"),
+              ("eval/", "评估器", "Evaluator", "手动给新项目打分", "Score a project by hand"),
+              ("progress/", "研究进度", "Progress", "阶段 · 外部任务", "Stages · tasks")]
 
 
 def write_alpha_data():
@@ -3944,11 +3947,14 @@ def write_alpha_data():
     G["ALPHA_HIST"] = load(os.path.join(src, "alpha_history.json"), []) or []
     if not G["ALPHA"]:
         return
+    G["OPPS"] = load(os.path.join(src, "opps.json"))
     out = os.path.join(SITE, "data", "alpha")
     os.makedirs(out, exist_ok=True)
-    for fn in ("alpha_latest.json", "alpha_history.json", "alpha_leads.json"):
+    for fn in ("alpha_latest.json", "alpha_history.json", "alpha_leads.json", "opps.json", "opp_series.json", "case_metrics.json", "case_series.json"):
         if os.path.exists(os.path.join(src, fn)):
             shutil.copyfile(os.path.join(src, fn), os.path.join(out, fn))
+    for fn in ("framework.json", "cases.json"):   # 框架与案例定义在 alpha/（单一来源），网页按同一份读
+        shutil.copyfile(os.path.join(ROOT, "alpha", fn), os.path.join(out, fn))
 
 
 ALPHA_ST = {"研究观察": ("t-up", "Watching"), "待核验": ("t-warn", "To verify"), "优先研究": ("t-up", "Priority"), "拒绝": ("t-dn", "Rejected")}
@@ -3971,7 +3977,7 @@ def alpha_status_chip(key):
     if not c:
         return '<span class="tnote" style="margin:0">—</span>'
     cls, en = ALPHA_ST.get(c["verdict"], ("", c["verdict"]))
-    return f'<a class="chip {cls}" href="{U("/alpha/pool/")}#{esc(key)}">{T(c["verdict"], en)}</a>'
+    return f'<a class="chip {cls}" href="{U("/alpha/opp/")}#{esc(key.split(":", 1)[1].replace("parent#", ""))}">{T(c["verdict"], en)}</a>'
 
 
 def alpha_pool():
@@ -4044,11 +4050,85 @@ def a_usd(v):
 def alpha_head(cur):
     tabs = "".join(f'<a role="tab" href="{U("/alpha/" + p)}" class="tab{" on" if p == cur else ""}"><span class="tn">{T(zh, en)}</span><span class="ts">{T(dz, de)}</span></a>'
                    for p, zh, en, dz, de in ALPHA_TABS)
-    name = next(T(zh, en) for p, zh, en, _, _ in ALPHA_TABS if p == cur)
+    name = next((T(zh, en) for p, zh, en, _, _ in ALPHA_TABS if p == cur), T("方法论原文", "Method (original)"))
     cr = crumbs([(T("Alpha 雷达", "Alpha Radar"), "/alpha/" if cur else None)] + ([(name, None)] if cur else []))
     return (f'{cr}<div class="ph"><div><div class="eyebrow">Alpha Radar</div><h1>{T("Alpha 雷达", "Alpha radar")}</h1>'
-            f'<p class="lede">{T("和核心选币互补：核心选币看币安上有连续读数的成熟代币；这里看还没成熟的机会——没发币但有真实收入的协议、新协议、新产品、新机制。只研究正规项目，不做部署后几小时的打狗盘。只摆读数、证据和未知项，不打分排名，不是买卖建议。", "Complements Core Picks: Core covers mature tokens with continuous readings on Binance; this page covers what is not mature yet — tokenless protocols with real revenue, new protocols, products and mechanisms. Established projects only, no launch-hour meme sniping. Readings, evidence and unknowns only — no scores, no rankings, not trade advice.")}</p></div></div>'
+            f'<p class="lede">{T("和核心选币互补：核心选币看币安上有连续读数的成熟代币；这里看新东西——新协议、新产品、新机制、没发币但有真实收入的协议。每挖到一个，就按同一套框架拆解打分（系统规则自动打 + 研究补证，未知记 U），资金能参与的进「可投资机会」，暂时不能的进「预警观察」。只研究正规项目，不做打狗盘；不按分数排名，不是买卖建议。", "Complements Core Picks: this tracks new things — new protocols, products, mechanisms and tokenless protocols with real revenue. Each is scored on one framework (system rules + research; unknowns stay U). Capital-accessible ones go to Investable, the rest to Watchlist. Established projects only; no score rankings; not trade advice.")}</p></div></div>'
             f'<div class="tabwrap"><nav class="tabs" role="tablist">{tabs}</nav></div>')
+
+
+def alpha_framework_html():
+    """框架页：直接从 alpha/framework.json 生成（单一来源），把方法论的维度、流程、打分规则做成可浏览的结构。"""
+    fw = load(os.path.join(ROOT, "alpha", "framework.json"))
+    if not fw:
+        return ""
+    e = esc
+    sec = lambda k, title, s, body: f'<section class="fwsec" id="{k}"><h3>{e(title)}<span class="sec">{e(s or "")}</span></h3>{body}</section>'
+    cards = lambda items, f: '<div class="cards">' + "".join(f'<div class="card">{f(x)}</div>' for x in items) + "</div>"
+    ladder = lambda anchors: f'<div class="ladder{" l4" if len(anchors) == 4 else ""}">' + "".join(f'<div><span class="n">{i}</span>{e(a)}</div>' for i, a in enumerate(anchors)) + "</div>"
+    c = fw["classes"]
+    h = (f'<div class="ax">{ZH_ONLY if LANG["v"] == "en" else ""}<p class="small muted">{T("框架版本", "Version")} {e(fw["version"])} · {e(fw["asof"])} · {e(fw["source"])} · '
+         f'<a href="{U("/alpha/method/")}">{T("方法论原文", "Original text")}</a> · <a href="/data/alpha/framework.json">framework.json</a></p>'
+         f'<div class="note">{e(fw["scope"])}</div>'
+         '<div class="flow">' + "".join(f'<a href="#{x["k"]}"><b>{e(x["name"])}</b><span>{e(x["out"])}</span></a>' for x in fw["flow"]) + "</div>")
+    # 1 发现
+    h += sec("discover", "1 · 发现线索", "三", f'<p class="small">{T("发现层的任务是尽早保留异常，不当场完成所有判断。低门槛登记、高门槛执行分开。本站雷达现在接了：无币协议收入榜、新上架协议、研究论坛新帖、治理提案、上所公告；每条记原始发布时间和本站发现时间。", "")} <a href="{U("/alpha/radar/")}">{T("看雷达 →", "Radar →")}</a></p>')
+    # 2 对象
+    u = fw["unit"]
+    body = f'<p class="small"><b>{e(u["text"])}</b></p>' + "".join(f'<p class="small muted" style="margin:2px 0">· {e(n)}</p>' for n in u["notes"])
+    for k in ("stage", "attribute", "mode"):
+        body += f'<p class="small" style="margin:10px 0 4px"><b>{e(c[k]["name"])}</b> <span class="muted">决定：{e(c[k]["decides"])}</span></p><div class="opts">' + "".join(f'<span class="opt{" oos" if o.get("out_of_scope") else ""}" style="cursor:default">{e(o["name"])}</span>' for o in c[k]["opts"]) + "</div>"
+    h += sec("object", "2 · 确定研究对象", u["sec"] + " / 二.2 / 二.6", body)
+    # 3 价值来源
+    body = f'<p class="small muted">{e(c["business"]["rule"])}</p>' + cards(c["business"]["opts"], lambda o: f'<b>{e(o["name"])}</b><p><em>为什么有人付费</em> {e(o["why"])}</p><p><em>重点观察</em> {e(o["watch"])}</p><p><em>不能推出</em> {e(o["not_infer"])}</p>')
+    body += f'<h4>{e(c["right"]["name"])}</h4><p class="small muted">{e(c["right"]["rule"])}</p>' + cards(c["right"]["opts"], lambda o: f'<b>{e(o["name"])}</b><p><em>优先核对</em> {e(o["basis"])}</p><p><em>比较方式</em> {e(o["compare"])}</p>')
+    body += f'<h4>{e(c["capture_case"]["name"])}</h4>' + cards(c["capture_case"]["opts"], lambda o: f'<b>{e(o["name"])}</b><p>{e(o["then"])}</p>')
+    body += f'<h4>{e(c["opportunity"]["name"])}</h4><p class="small muted">{e(c["opportunity"]["rule"])}</p>' + cards(c["opportunity"]["opts"], lambda o: f'<b>{e(o["name"])}</b><p><em>收益来源</em> {e(o["source"])}</p><p><em>必须验证</em> {e(o["core"])}</p>')
+    body += f'<h4>{e(c["path"]["name"])}</h4><div class="opts">' + "".join(f'<span class="opt" style="cursor:default">{e(o["name"])}</span>' for o in c["path"]["opts"]) + f'</div><p class="small muted">{e(c["path"]["rule"])}</p>'
+    en_ = fw["entry"]
+    body += f'<h4>{e(en_["name"])}</h4><p class="small muted">{e(en_["rule"])}</p><div class="opts">' + "".join(f'<span class="opt{"" if o.get("watch") else " on"}" style="cursor:default">{e(o["name"])}</span>' for o in en_["opts"]) + "</div>"
+    q = fw["questions"]
+    body += f'<h4>{e(q["name"])}</h4>' + cards(q["items"], lambda o: f'<b>{e(o["axis"])}</b><p>{e(o["name"])}</p><p><em>{e(o["hint"])}</em></p>')
+    h += sec("value", "3 · 识别价值来源", "一 / 二.3–二.5", body)
+    # 4 参与优势与评分
+    s = fw["scores"]
+    body = f'<p class="small muted">{e(s["rule"])}</p>'
+    for g in ("mech", "part", "token"):
+        body += f'<h4>{e(s[g]["name"])} <span class="small muted">{e(s[g]["sec"])} · {e(s[g]["applies"])} · 每项 0–{s[g]["max"]}</span></h4>'
+        for it in s[g]["items"]:
+            body += f'<div style="margin:8px 0"><b>{e(it["k"])} · {e(it["name"])}</b>{" <span class=" + chr(34) + "tag" + chr(34) + ">执行相关 · 不公开</span>" if it.get("private") else ""} <span class="small muted">{e(it.get("q", ""))}</span>{ladder(it["anchors"])}</div>'
+    body += f'<div class="card small"><b>区间与覆盖</b>：{e(s["formula"]["interval"])}<br>例：{e(s["formula"]["example"])}' + "".join(f'<br><b>{e(p["name"])}</b>：{e(p["rule"])}（{e(p["note"])}）' for p in s["promote"]) + "</div>"
+    ar = fw["auto_rules"]
+    body += f'<h4 id="auto">{e(ar["name"])} <span class="small muted">{e(ar["sec"])}</span></h4><p class="small muted">{e(ar["rule"])}</p><div class="tw"><table><tbody>' + "".join(f'<tr><td class="l"><b>{e(o["name"])}</b></td><td class="l" style="white-space:normal">{e(o["how"])}</td></tr>' for o in ar["items"]) + "</tbody></table></div>"
+    cm = fw["category_map"]
+    biz = {o["k"]: o["name"] for o in c["business"]["opts"]}
+    body += '<details class="card" style="margin-top:8px"><summary class="small">DefiLlama 类目 → 需求来源映射表</summary>' + "".join(f'<p class="small"><b>{e(biz.get(k, k))}</b>：{e("、".join(v))}</p>' for k, v in cm.items() if not k.startswith("_")) + "</details>"
+    h += sec("advantage", "4 · 评分：机制与当前参与优势", "六 / 附录一", body)
+    # 5 门槛
+    g = fw["gates"]
+    h += sec("safety", "5 · " + g["name"], g["sec"], f'<p class="small muted">{e(g["state_rule"])}</p>' + cards(g["items"], lambda o: f'<b>{e(o["name"])}</b>' + "".join(f'<p>· {e(x)}</p>' for x in o["checks"]) + f'<p><em>{e(o["unknown_rule"])}</em></p>' + ('<p><em>个人执行，网站不公开</em></p>' if o.get("private") else "")))
+    # 6 判断
+    d = fw["deep"]; sx = fw["six"]; st = fw["states"]; v = fw["valuation"]; r = fw["reflexive"]
+    body = cards(d["items"], lambda o: f'<b>{e(o["name"])}</b><p>{e(o["prompt"])}</p>')
+    body += f'<h4>{e(sx["name"])}</h4>' + cards(sx["items"], lambda o: f'<b>{e(o["name"])}</b><p>{e(o["need"])}</p>') + f'<p class="small muted">{e(sx["counter"])}</p>'
+    body += f'<h4>{e(v["name"])} <span class="small muted">{e(v["sec"])}</span></h4><div class="tw"><table><thead><tr><th class="l">研究对象</th><th class="l">优先指标</th><th class="l">避免的误用</th></tr></thead><tbody>' + "".join(f'<tr><td class="l"><b>{e(o["name"])}</b></td><td class="l" style="white-space:normal">{e(o["use"])}</td><td class="l" style="white-space:normal">{e(o["avoid"])}</td></tr>' for o in v["rows"]) + "</tbody></table></div>" + "".join(f'<p class="small muted" style="margin:2px 0">· {e(m)}</p>' for m in v["metrics"])
+    body += f'<h4>{e(r["name"])}</h4><p class="small">{e(r["loop"])}</p><p class="small"><b>核心比较：</b>{e(r["core"])}</p>' + cards(r["items"], lambda o: f'<b>{e(o["name"])}</b><p><em>观测</em> {e(o["watch"])}</p><p><em>转折</em> {e(o["turn"])}</p>') + f'<p class="small muted">压力情景：{e(" / ".join(r["stress"]))}</p>'
+    for k in ("community", "listing", "environment"):
+        body += f'<h4>{e(fw[k]["name"])} <span class="small muted">{e(fw[k]["sec"])}</span></h4>' + "".join(f'<p class="small" style="margin:2px 0">· {e(x)}</p>' for x in fw[k]["items"])
+    body += f'<h4>{e(st["name"])}</h4><div class="states">' + "".join(f'<div class="card{" priv" if o.get("private") else ""}"><b>{e(o["name"])}</b><p class="small" style="margin:4px 0"><em class="muted">进入</em> {e(o["enter"])}</p><p class="small" style="margin:4px 0"><em class="muted">下一步</em> {e(o["next"])}</p>{"<p class=" + chr(34) + "small muted" + chr(34) + ">不公开</p>" if o.get("private") else ""}</div>' for o in st["items"]) + f'</div><p class="small muted">{e(st.get("infer", ""))}</p>'
+    h += sec("judge", "6 · 形成判断", "五 / 七 / 八–十 / 十一.1 / 四.1", body)
+    # 7 监控
+    m = fw["monitor"]
+    body = '<div class="tw"><table><thead><tr><th class="l">监控面</th><th class="l">什么变化值得重开判断</th><th class="l">应输出什么</th></tr></thead><tbody>' + "".join(f'<tr><td class="l"><b>{e(o["name"])}</b></td><td class="l" style="white-space:normal">{e(o["trigger"])}</td><td class="l" style="white-space:normal">{e(o["out"])}</td></tr>' for o in m["planes"]) + "</tbody></table></div>"
+    body += f'<p class="small muted">{e(m["rule"])}</p>' + cards(m["cadence"], lambda o: f'<b>{e(o["name"])}</b><p>{e(o["do"])}</p>')
+    h += sec("monitor", "7 · " + m["name"], m["sec"], body)
+    # 8 检验
+    vf = fw["verify"]; ev = fw["evidence"]; oc = fw["outcomes"]
+    body = "".join(f'<p class="small" style="margin:4px 0">· {e(x)}</p>' for x in vf["items"])
+    body += f'<h4>{e(ev["name"])}</h4><div class="tw"><table><thead><tr><th class="l">证据类别</th><th class="l">能支持</th><th class="l">不能独自支持</th></tr></thead><tbody>' + "".join(f'<tr><td class="l"><b>{e(o["name"])}</b></td><td class="l" style="white-space:normal">{e(o["can"])}</td><td class="l" style="white-space:normal">{e(o["cannot"])}</td></tr>' for o in ev["items"]) + "</tbody></table></div>"
+    body += f'<h4 id="outcomes">{e(oc["name"])} <span class="small muted">{e(oc["sec"])}</span></h4><p class="small">{e(oc["purpose"])}</p>' + "".join(f'<p class="small" style="margin:4px 0"><b>{e(o["name"])}</b>：{e(o["how"])}</p>' for o in oc["dims"]) + f'<p class="small"><b>怎么找相似案例</b>：{e(oc["match"])}</p><ul class="cav">' + "".join(f"<li>{e(x)}</li>" for x in oc["caveats"]) + f'</ul><p class="small"><a href="{U("/alpha/cases/")}">{T("看案例库 →", "Cases →")}</a></p>'
+    h += sec("verify", "8 · 用结果检验方法", vf["sec"] + " / 附录三 / 十五", body)
+    return h + "</div>"
 
 
 def alpha_home_card():
@@ -4109,7 +4189,7 @@ def build_alpha():
         radar = (evh
                  + f'<h2>{T("没发币、有收入的协议", "Tokenless protocols with revenue")} <span class="sub">{T("近 30 天协议收入 ≥ 10 万美元，按母协议合并", "30d protocol revenue ≥ $100K, merged by parent")} · {len(d.get("tokenless") or [])}</span></h2>'
                  + f'<p class="tnote">{T("「没发币」= DefiLlama 上本协议和母协议都没登记代币，不等于确认不发币，也不等于会空投。已剔除稳定币发行方、交易所、CeDeFi、区块构建者和传统金融产品。环比 = 近 30 天 ÷ 前 30 天 − 1。", "“Tokenless” = no token registered on DefiLlama for the protocol or its parent; not a confirmation of no token, nor of an airdrop. Stablecoin issuers, CEXs, CeDeFi, block builders and TradFi products excluded. Change = last 30d ÷ prior 30d − 1.")}</p>'
-                 + f'<div class="tw scroll"><table><thead><tr><th>#</th><th style="text-align:left">{T("协议", "Protocol")}</th><th style="text-align:left">{T("类目", "Category")}</th><th style="text-align:left">{T("主要链", "Chains")}</th><th>{T("30 天收入", "30d revenue")}</th><th>{T("环比", "Change")}</th><th>{T("首次进榜", "First seen")}</th><th style="text-align:left">{T("候选池", "Pool")}</th></tr></thead><tbody>{trs}</tbody></table></div>'
+                 + f'<div class="tw scroll"><table><thead><tr><th>#</th><th style="text-align:left">{T("协议", "Protocol")}</th><th style="text-align:left">{T("类目", "Category")}</th><th style="text-align:left">{T("主要链", "Chains")}</th><th>{T("30 天收入", "30d revenue")}</th><th>{T("环比", "Change")}</th><th>{T("首次进榜", "First seen")}</th><th style="text-align:left">{T("机会卡", "Card")}</th></tr></thead><tbody>{trs}</tbody></table></div>'
                  + f'<h2>{T("新上架协议", "Newly listed protocols")} <span class="sub">{T("DefiLlama 最近 14 天收录", "Added to DefiLlama in the last 14 days")} · {len(d.get("listings") or [])}</span></h2>'
                  + f'<p class="tnote">{T("收录日不是部署日，更不是能参与的日子；TVL 是存量，不是收入。", "Listing date is not deployment date or participation date; TVL is a stock, not revenue.")}</p>'
                  + f'<div class="tw scroll"><table><thead><tr><th>{T("收录日", "Listed")}</th><th style="text-align:left">{T("协议", "Protocol")}</th><th style="text-align:left">{T("类目", "Category")}</th><th style="text-align:left">{T("主要链", "Chains")}</th><th>TVL</th><th style="text-align:left">{T("代币", "Token")}</th></tr></thead><tbody>{lrs}</tbody></table></div>'
@@ -4120,10 +4200,22 @@ def build_alpha():
                  + f'<p class="tnote">{T("数据日", "Data day")} {esc(d.get("asof") or "")} · {T("生成于", "Generated")} {TT(d.get("generated"))} · {T("来源 DefiLlama（协议列表、协议收入）", "Source: DefiLlama (protocols, revenue)")}{"" if src_ok else " · " + T("有数据源失败", "a source failed")}</p>')
     else:
         radar = f'<div class="note">{T("雷达数据还没生成。", "Radar data not generated yet.")}</div>'
-    emit("alpha/index.html", T(f"Alpha 雷达 · {BRAND}", f"Alpha Radar · {BRAND_EN}"), alpha_head("") + radar, active="alpha", desc=desc)
-    emit("alpha/pool/index.html", T(f"候选池 · Alpha 雷达 · {BRAND}", f"Pool · Alpha Radar · {BRAND_EN}"), alpha_head("pool/") + alpha_pool(), active="alpha", desc=desc)
+    ver = re.sub(r"[^0-9]", "", (G.get("OPPS") or {}).get("generated") or "")
+    css = f'<link rel="stylesheet" href="{ASSET_URL["alpha.css"]}">'
+    js = f'<script src="{ASSET_URL["alpha.js"]}" defer></script>'
     zh_only = ZH_ONLY if LANG["v"] == "en" else ""
-    for p, fn, toc in (("cases/", "案例库.md", False), ("method/", "Alpha标的筛选研究体系.md", True), ("progress/", "研究进度.md", False)):
+    app = lambda mode: f'{zh_only}<div class="ax" id="alpha-app" data-mode="{mode}" data-v="{ver}"><p class="muted">{T("加载中…", "Loading…")}</p></div><noscript><p class="muted">{T("这一页需要开启 JavaScript。", "This page needs JavaScript.")}</p></noscript>'
+    page_ = lambda rel, p, title, body: emit(rel, T(f"{title} · Alpha 雷达 · {BRAND}", f"{title} · Alpha Radar · {BRAND_EN}"), alpha_head(p) + body, active="alpha", desc=desc, extra_head=css, scripts=js)
+    page_("alpha/index.html", "", T("机会看板", "Board"), app("board"))
+    emit("alpha/opp/index.html", T(f"机会卡 · Alpha 雷达 · {BRAND}", f"Opportunity · Alpha Radar · {BRAND_EN}"),
+         crumbs([(T("Alpha 雷达", "Alpha Radar"), "/alpha/"), (T("机会卡", "Opportunity"), None)]) + app("opp"), active="alpha", desc=desc, extra_head=css, scripts=js)
+    page_("alpha/radar/index.html", "radar/", T("雷达", "Radar"), radar)
+    page_("alpha/cases/index.html", "cases/", T("案例库", "Cases"), app("cases"))
+    page_("alpha/framework/index.html", "framework/", T("框架", "Framework"), alpha_framework_html())
+    page_("alpha/eval/index.html", "eval/", T("评估器", "Evaluator"), app("eval"))
+    emit("alpha/pool/index.html", T(f"Alpha 雷达 · {BRAND}", f"Alpha Radar · {BRAND_EN}"), f'<p><a href="{U("/alpha/")}">{T("候选池已并入机会看板 →", "The pool moved to the board →")}</a></p>',
+         active="alpha", extra_head=f'<meta http-equiv="refresh" content="0; url={U("/alpha/")}">')
+    for p, fn, toc in (("method/", "Alpha标的筛选研究体系.md", True), ("progress/", "研究进度.md", False)):
         src = open(os.path.join(ROOT, "alpha", "research", fn), encoding="utf-8").read()
         nav = ""
         if toc:   # 目录：只列一级章节（## 开头），锚点和 core_md 的 h 编号一致
@@ -4135,7 +4227,7 @@ def build_alpha():
                     if len(m.group(1)) == 2:
                         items.append(f'<a href="#h{k}">{esc(m.group(2))}</a>')
             nav = '<details class="card" style="padding:10px 16px;margin:0 0 16px"><summary>' + T("目录", "Contents") + '</summary><div style="display:flex;flex-direction:column;gap:4px;margin-top:8px;font-size:13px">' + "".join(items) + "</div></details>"
-        name = next(T(zh, en) for q, zh, en, _, _ in ALPHA_TABS if q == p)
+        name = next((T(zh, en) for q, zh, en, _, _ in ALPHA_TABS if q == p), T("方法论原文", "Method (original)"))
         emit(f"alpha/{p}index.html", T(f"{name} · Alpha 雷达 · {BRAND}", f"{name} · Alpha Radar · {BRAND_EN}"),
              alpha_head(p) + zh_only + nav + f'<div class="article alpha-doc">{core_md(src)}</div>', active="alpha", desc=desc)
 
@@ -5840,7 +5932,7 @@ def build_misc(logs, weeks, months):
     if os.path.exists(rd):
         os.remove(rd)
     write("robots.txt", f"User-agent: *\nAllow: /\nSitemap: https://{DOMAIN}/sitemap.xml\n")
-    urls = ["/", "/macro/", "/leg-tracker/", "/calendar/", "/launchpad/", "/ai-agent/", "/ai-agent/agent-id/", "/ai-agent/launchpads/", "/ai-agent/research/", "/rotation/", "/alpha/", "/alpha/pool/", "/alpha/cases/", "/alpha/method/", "/alpha/progress/", "/reports/", "/journal/", "/methodology/", "/corrections/", "/about/",
+    urls = ["/", "/macro/", "/leg-tracker/", "/calendar/", "/launchpad/", "/ai-agent/", "/rotation/", "/alpha/", "/alpha/radar/", "/alpha/cases/", "/alpha/framework/", "/alpha/eval/", "/alpha/method/", "/alpha/progress/", "/reports/", "/journal/", "/methodology/", "/corrections/", "/about/",
             "/launchpad/report/", "/launchpad/report/archive/"]
     urls += [f"/macro/{x['key']}/" for x in R.INDICATORS + R.RETIRED] + ["/changelog/"]
     for p in PILLARS:

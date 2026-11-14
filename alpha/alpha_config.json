@@ -33,5 +33,9 @@
     "binance_drop": "TradFi|bStocks|Tokenized Securit|Exchange Adds",
     "_binance": "只收 Binance「New Cryptocurrency Listing」栏目里的上币 / Launchpool / 空投 / 新永续，剔除 TradFi 永续和代币化股票；公告时间 ≠ 开盘时间",
     "_未接": "Bybit（美国机房被 CloudFront 按国家拦）、Upbit（Cloudflare 人机验证）、OKX（接口不更新）、Coinbase / Tally（无公开结构化源）；EIPs / GitHub 需要 key"
+  },
+  "opps": {
+    "listing_min_tvl": 5000000,
+    "_listing_min_tvl": "新上架协议进机会看板的门槛：TVL ≥ 500 万美元（14 天内能吸引这么多资金才算值得盯的新东西）"
   }
 }
