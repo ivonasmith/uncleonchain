@@ -149,6 +149,83 @@
   "日期": "2026-11-14",
   "模型": "Grok（网页版，大叔手动问）"
  },
+ "binance-alpha": {
+  "内容": {
+   "differentiation_en": "Unlike pump.fun open bonding curves, Binance Alpha is Binance's curated pre-listing pool; users buy selected tokens via Wallet or Exchange interface, not open for anyone to launch. Per Binance official announcements.",
+   "differentiation_zh": "与pump.fun开放联合曲线不同，Binance Alpha是币安精选的预上币池，用户在钱包或交易所界面购买已选代币，非任何人可发射。据币安官方公告。",
+   "fee_split_en": "Platform-specific split not mentioned. Trades mainly pay on-chain gas or small exchange fees (limit orders ~0.01%-0.15%). No open-launch fee structure. Per Binance support docs.",
+   "fee_split_zh": "资料未提及平台特定分成。交易主要支付链上Gas或交易所小额费（限价单约0.01%-0.15%）。无开放发射手续费结构。据币安支持文档。",
+   "one_liner_en": "Curated early-stage token discovery platform inside Binance Wallet/Exchange, not open launch.",
+   "one_liner_zh": "币安钱包/交易所内的精选早期代币发现平台，非开放发射。",
+   "risks_en": [
+    "No guarantee of Binance spot listing",
+    "Selection criteria opaque",
+    "High token volatility",
+    "Depends on Binance account and KYC"
+   ],
+   "risks_zh": [
+    "上币安现货无保证",
+    "精选标准不透明",
+    "代币高波动",
+    "依赖币安账户与KYC"
+   ],
+   "selling_points_en": [
+    "Binance-curated early projects",
+    "Quick Buy simplifies purchases",
+    "Alpha Points for airdrops/TGEs",
+    "May be considered for Binance listing",
+    "Supports multi-chain tokens"
+   ],
+   "selling_points_zh": [
+    "币安精选早期项目",
+    "Quick Buy简化购买",
+    "Alpha Points换空投/TGE",
+    "可能考虑上币安现货",
+    "支持多链代币"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "官方解释Alpha机制与Quick Buy",
+     "url": "https://www.binance.com/en/academy/articles/what-is-binance-alpha"
+    },
+    {
+     "kind": "official",
+     "note": "引入公告：预上币选择池",
+     "url": "https://www.binance.com/en/square/post/17726061692713"
+    },
+    {
+     "kind": "official",
+     "note": "支持文档：如何工作",
+     "url": "https://www.binance.com/en/support/faq/what-is-binance-alpha-on-binance-wallet-43a46bb5c5ec4ba6a1be8bb9a98aa7f8"
+    },
+    {
+     "kind": "x",
+     "note": "据X帖子Alpha空投与更新",
+     "url": "https://x.com/BinanceWallet/status/2120801480106181050"
+    }
+   ],
+   "team_en": "Operated by Binance. Official announcements from Binance team. Specific internal team details not mentioned.",
+   "team_zh": "由币安运营。官方公告由Binance团队发布。具体内部团队资料未提及。",
+   "token_en": "No independent platform token. Uses Binance accounts and Alpha Points system for airdrops/TGEs. Buyback-burn mechanism not mentioned.",
+   "token_zh": "无独立平台币。使用币安账户与Alpha Points系统参与空投/TGE。资料未提及回购销毁机制。",
+   "unknowns_en": [
+    "Exact selection criteria",
+    "Platform fee split details",
+    "Long-term token retention policy",
+    "Incidents or controversy records"
+   ],
+   "unknowns_zh": [
+    "精确选择标准",
+    "平台分成细节",
+    "长期代币留存政策",
+    "事故或争议记录"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
  "bonk.fun-launchpad": {
   "内容": {
    "differentiation_en": "As a third-party platform on Raydium LaunchLab, differs from pure pump.fun-style by routing most revenue to BONK ecosystem (including Bonk Inc. purchases), with curve creator fee often set to 0. Graduation around 85 SOL. Per MemeFees and Raydium analyses.",
@@ -293,6 +370,160 @@
     "团队背景",
     "长期标准采用",
     "精确费执行细节"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "boxa-v1": {
+  "内容": {
+   "differentiation_en": "Unlike pump.fun bonding curves, BOXA launches directly into Uniswap v4 pools with full supply in pool and locked liquidity, no explicit graduation migration step. Per official docs.",
+   "differentiation_zh": "与pump.fun联合曲线不同，BOXA在Uniswap v4池直接启动，全供应入池、流动性锁定，无明确毕业迁移步骤。据官网文档。",
+   "fee_split_en": "Pool fee fixed 1% buy/sell: 70% creator, 30% BOXA. Optional 0-9% extra tax, BOXA takes at most 10%. Per official docs and X posts, platform share used for BOXA buyback-burn, staking etc.",
+   "fee_split_zh": "池费固定1%买卖：创建者70%、BOXA 30%。可选0-9%额外税，BOXA最多取10%。据官网文档与X帖子，平台费部分用于BOXA回购销毁、质押分红等。",
+   "one_liner_en": "Elysium launchpad on Uniswap v4 with 1% pool fee, 70% to creator.",
+   "one_liner_zh": "Elysium上基于Uniswap v4的发射台，1%池费70%归创建者。",
+   "risks_en": [
+    "Early chain volatility and RPC effects",
+    "Fees clarified not 5%",
+    "Depends on Elysium stability",
+    "Full audits not mentioned"
+   ],
+   "risks_zh": [
+    "早期链波动与RPC影响",
+    "费用曾被澄清非5%",
+    "依赖Elysium稳定性",
+    "资料未提及全面审计"
+   ],
+   "selling_points_en": [
+    "One tx creates token and pool",
+    "Full supply starts in pool",
+    "Liquidity permanently locked",
+    "Creator gets 70% of pool fee",
+    "Optional extra tax"
+   ],
+   "selling_points_zh": [
+    "一笔交易创建代币与池",
+    "全供应起始池内",
+    "流动性永久锁定",
+    "创建者拿70%池费",
+    "可选额外税"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "官方文档：1%池费70/30分成与锁定流动性",
+     "url": "https://boxa.club/docs"
+    },
+    {
+     "kind": "official",
+     "note": "DefiLlama描述与费用方法论",
+     "url": "https://defillama.com/protocol/boxa"
+    },
+    {
+     "kind": "x",
+     "note": "据X帖子平台费50%销毁BOXA等",
+     "url": "https://x.com/Boxa_Elysium/status/2119368399264313663"
+    },
+    {
+     "kind": "x",
+     "note": "据X帖子澄清费用固定1%/1%",
+     "url": "https://x.com/Boxa_Elysium/status/2115787742395109818"
+    }
+   ],
+   "team_en": "Official X calls it first DEX and launchpad. Specific team and funding not mentioned.",
+   "team_zh": "官方X称第一DEX与发射台。具体团队、融资方资料未提及。",
+   "token_en": "Platform token $BOXA. Per X posts, 50% of platform fees burn BOXA, 15% streams to stakers etc. Buyback-burn records exist. Per official and X.",
+   "token_zh": "平台币$BOXA。据X帖子，平台费50%销毁BOXA、15%流给质押者等。已有回购销毁记录。据官网与X。",
+   "unknowns_en": [
+    "Team background and funding",
+    "Full BOXA allocation and unlocks",
+    "V1 vs later version differences",
+    "Long-term security audits"
+   ],
+   "unknowns_zh": [
+    "团队背景与融资",
+    "BOXA完整分配与解锁",
+    "V1与后续版本区别",
+    "长期安全审计"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "clanker": {
+  "内容": {
+   "differentiation_en": "Unlike pump.fun bonding curves, Clanker v5 puts 1B supply into Uniswap v4 pool with no LP fee but 1%-10% buy/sell tax, liquidity permanently locked. Per official docs.",
+   "differentiation_zh": "与pump.fun联合曲线不同，Clanker v5直接将1亿供应放入Uniswap v4池，无LP费而用1%-10%买卖税，流动性永久锁定。据官方文档。",
+   "fee_split_en": "v5 trades pay creator-set 1%-10% buy/sell tax. Clanker takes larger of 10% of tax or 0.5% of trade (max 1% of trade). Remainder is creator share, further split to holder dividends, burn or integrator. Per official docs.",
+   "fee_split_zh": "v5每笔交易支付创建者设的1%-10%买卖税。Clanker取税的10%与交易0.5%中较大者（最多交易1%）。剩余为创建者份额，可再分给持有者分红、销毁或集成方。据官方文档。",
+   "one_liner_en": "Multi-chain EVM token deployment protocol; v5 uses buy/sell tax instead of LP fee.",
+   "one_liner_zh": "多链EVM代币部署协议，v5用买卖税而非LP费。",
+   "risks_en": [
+    "Tax and protocol split set by creator",
+    "Earlier versions differ from v5",
+    "Depends on correct bot/frontend",
+    "Full independent audits not mentioned"
+   ],
+   "risks_zh": [
+    "税与协议分成由创建者配置",
+    "早期版本与v5机制不同",
+    "依赖正确机器人/前端",
+    "资料未提及全面独立审计"
+   ],
+   "selling_points_en": [
+    "Launch via site, API, X/Farcaster bot",
+    "Full supply into locked Uniswap v4 pool",
+    "Creator sets tax for holders/burn",
+    "Multi-chain incl. Base",
+    "Creators earn rewards live"
+   ],
+   "selling_points_zh": [
+    "网站、API、X/Farcaster机器人一键发射",
+    "全供应入Uniswap v4池永久锁定",
+    "创建者自定义税并分给持有者/销毁",
+    "多链支持Base等",
+    "创建者实时赚取奖励"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "官方文档：v5税机制与多链部署",
+     "url": "https://docs.clanker.world/"
+    },
+    {
+     "kind": "official",
+     "note": "创建者奖励与Clanker费用分成",
+     "url": "https://clanker.gitbook.io/documentation/general/creator-rewards-and-fees"
+    },
+    {
+     "kind": "official",
+     "note": "DefiLlama费用与描述",
+     "url": "https://defillama.com/protocol/clanker"
+    },
+    {
+     "kind": "web",
+     "note": "据网页报道创始人Jack Dishman",
+     "url": "https://www.gate.com/learn/articles/what-is-clanker-clanker"
+    }
+   ],
+   "team_en": "Per web reports mainly developed by Jack Dishman (@proxystudio), originated on Farcaster. Specific funders not mentioned.",
+   "team_zh": "据网页报道主要由Jack Dishman（@proxystudio）开发，起源于Farcaster。具体融资方资料未提及。",
+   "token_en": "Platform token CLANKER with fixed 1M supply. Automatic buyback-burn details not mentioned; per web reports there were manual buybacks.",
+   "token_zh": "平台币CLANKER，固定供应100万。资料未提及自动回购销毁细节；据网页报道曾有手动回购。",
+   "unknowns_en": [
+    "Full team and funding",
+    "Exact CLANKER buyback rules",
+    "Long-term governance",
+    "Unified audits across chains"
+   ],
+   "unknowns_zh": [
+    "完整团队与融资",
+    "CLANKER精确回购规则",
+    "长期治理",
+    "所有链的统一审计"
    ]
   },
   "方式": "手动",
@@ -597,6 +828,237 @@
   "日期": "2026-11-14",
   "模型": "Grok（网页版，大叔手动问）"
  },
+ "meteora-dynamic-bonding-curve": {
+  "内容": {
+   "differentiation_en": "Unlike pump.fun fixed curves, DBC lets launchpads/creators configure curve shape, fee schedules, graduation thresholds and LP allocation; virtual pool trades then auto-migrates to DAMM v2. Per Meteora official docs.",
+   "differentiation_zh": "不同于pump.fun固定曲线，DBC允许发射台/创建者配置曲线形状、费用调度、毕业阈值与LP分配，虚拟池交易后自动迁移至DAMM v2。据Meteora官方文档。",
+   "fee_split_en": "Fees fully configurable: fixed/scheduled/dynamic, split among launchpad, creator, protocol; includes migration fees and surplus. Protocol-side may include referrals. Overall Meteora revenue funds MET buybacks. Per official docs and DefiLlama.",
+   "fee_split_zh": "费用完全可配置：固定/调度/动态费，可在发射台、创建者、协议间分配，含迁移费与盈余。协议侧费部分可转推荐。整体Meteora收入用于MET回购。据官方文档与DefiLlama。",
+   "one_liner_en": "Configurable bonding curve protocol on Solana that graduates into Meteora DAMM pools.",
+   "one_liner_zh": "Solana上可配置联合曲线协议，毕业后迁移至Meteora DAMM。",
+   "risks_en": [
+    "LP lock level varies by config; some withdrawable",
+    "Post-graduation liquidity depends on config",
+    "Early configs may not lock full LP",
+    "Independent audits not mentioned"
+   ],
+   "risks_zh": [
+    "LP锁定程度因配置而异，部分可提取",
+    "毕业后流动性依赖配置",
+    "早期配置可能不锁全LP",
+    "资料未提及独立审计"
+   ],
+   "selling_points_en": [
+    "Provides configurable templates for other launchpads",
+    "Custom curve, fees, quote assets",
+    "Auto-graduates to DAMM v2",
+    "Supports Token2022 and transfer fees",
+    "Direct Jupiter integrations"
+   ],
+   "selling_points_zh": [
+    "为其他发射台提供可配置模板",
+    "自定义曲线、费用、报价资产",
+    "自动毕业至DAMM v2",
+    "支持Token2022与转账费",
+    "直接整合Jupiter等"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "官方DBC机制与毕业说明",
+     "url": "https://docs.meteora.ag/core-products/dbc/what-is-dbc.md"
+    },
+    {
+     "kind": "official",
+     "note": "DefiLlama描述与费用方法论",
+     "url": "https://defillama.com/protocol/meteora-dynamic-bonding-curve"
+    },
+    {
+     "kind": "official",
+     "note": "协议费用分配逻辑",
+     "url": "https://docs.meteora.ag/protocol/protocol-revenues"
+    },
+    {
+     "kind": "x",
+     "note": "据X帖子宣布DBC转账费功能",
+     "url": "https://x.com/MeteoraAG/status/2113292734408905211"
+    }
+   ],
+   "team_en": "Developed by Meteora team as part of Meteora products. Specific funding not detailed on DBC page; part of larger Meteora ecosystem.",
+   "team_zh": "由Meteora团队开发，属Meteora产品。具体融资方资料未在DBC专页提及，属更大Meteora生态。",
+   "token_en": "Platform token is Meteora's MET. Protocol revenue (incl. DBC) funds MET buybacks (held not fully burned) and DLMM staking rewards. Per Meteora reports and DefiLlama.",
+   "token_zh": "平台币为Meteora的MET。协议收入（含DBC）用于MET回购（持有而非全销毁），并有DLMM质押分红。据Meteora报告与DefiLlama。",
+   "unknowns_en": [
+    "Specific team members",
+    "DBC-specific funding",
+    "Default LP lock ratios in standard configs",
+    "Guaranteed long-term holder yields"
+   ],
+   "unknowns_zh": [
+    "具体团队成员",
+    "DBC独立融资",
+    "标准配置的默认LP锁比例",
+    "长期持有者收益保证"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "montra": {
+  "内容": {
+   "differentiation_en": "Unlike pump.fun-style bonding curves, Montra launches directly into Uniswap v4 pools with full supply locked as liquidity, trading from the first block with no graduation migration. Per official docs, liquidity is permanently locked with no token ownership.",
+   "differentiation_zh": "与pump.fun式联合曲线不同，Montra直接在Uniswap v4池启动，全供应锁定为流动性，从第一块开始交易，无需毕业迁移。据官网文档，流动性永久锁定，无代币所有权。",
+   "fee_split_en": "Trading fees 1%-10% tiers. Protocol takes fixed 0.4% per trade (can lower, never raise): initially 100% to treasury in HYPE; after MONTRA buyback on, 70% buys and burns MONTRA, 30% treasury. Creator share to wallet, splits, or holders. Per official protocol docs.",
+   "fee_split_zh": "交易费1%-10%可选档位。协议固定取0.4%每笔（可降不可升），初期全归金库（HYPE）；MONTRA回购开启后70%买回销毁MONTRA、30%金库。创建者份额可给钱包、多人分账或持有者。据官网协议文档。",
+   "one_liner_en": "Elysium launchpad with no bonding curve; tokens trade directly in Uniswap v4 pools.",
+   "one_liner_zh": "Elysium上无联合曲线的代币发射台，直接在Uniswap v4池交易。",
+   "risks_en": [
+    "New Elysium chain may pause or reset",
+    "Buyback switched on by team multisig",
+    "High volume but early volatility",
+    "Audit details not mentioned"
+   ],
+   "risks_zh": [
+    "Elysium新链可能暂停或重置",
+    "回购由团队多签开启",
+    "高交易量但早期波动大",
+    "资料未提及审计细节"
+   ],
+   "selling_points_en": [
+    "One tx creates token and locked full-supply pool",
+    "No bonding curve or migration",
+    "Fees can go to creator or holders",
+    "Protocol share for MONTRA buyback-burn",
+    "Built on official Uniswap v4"
+   ],
+   "selling_points_zh": [
+    "一笔交易创建代币与锁定全供应池",
+    "无联合曲线、无迁移",
+    "费用可分给创建者或持有者",
+    "协议份额用于MONTRA回购销毁",
+    "基于官方Uniswap v4"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "官网介绍无联合曲线直接池交易",
+     "url": "https://montramarkets.xyz/"
+    },
+    {
+     "kind": "official",
+     "note": "协议费用分成与MONTRA回购细节",
+     "url": "https://montramarkets.xyz/docs/protocol"
+    },
+    {
+     "kind": "official",
+     "note": "DefiLlama费用与描述",
+     "url": "https://defillama.com/protocol/montra"
+    },
+    {
+     "kind": "x",
+     "note": "据X帖子称无融资、团队自有资金",
+     "url": "https://x.com/MontraXYZ/status/2111029753045991459"
+    }
+   ],
+   "team_en": "Official docs mention team multisig controls buyback switch and treasury. Per X post, no fundraising, funds from team itself. Specific founders or investors not mentioned.",
+   "team_zh": "官方文档提及团队多签控制回购开关与金库。据X帖子称无融资、资金来自团队自身。具体创始人或融资方资料未提及。",
+   "token_en": "Platform token MONTRA created by team multisig, no owner, no mint. Once buyback on, 70% of protocol share buys it in its pool and burns, sales capped at 5% pool depth/day. Per official docs.",
+   "token_zh": "平台币MONTRA，团队多签创建，无所有者、不可增发。回购开启后协议份额70%用于其池买回并销毁，日销限池深度5%。据官网文档。",
+   "unknowns_en": [
+    "Specific team members and background",
+    "Funding or investors",
+    "Full audit reports",
+    "Long-term liquidity mechanisms"
+   ],
+   "unknowns_zh": [
+    "团队具体成员与背景",
+    "融资或投资方",
+    "完整审计报告",
+    "长期流动性机制"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "noxa-fun": {
+  "内容": {
+   "differentiation_en": "Unlike pump.fun bonding curves, NOXA Fun puts full supply into locked Uniswap V3 single-sided pool, trades from first block with no graduation migration. Per official docs.",
+   "differentiation_zh": "与pump.fun联合曲线不同，NOXA Fun直接将全供应放入锁定的Uniswap V3单边池，从第一块交易，无毕业迁移。据官方文档。",
+   "fee_split_en": "Pool fee 1% (V3 tier). Per web reports currently ~50/50 creator/protocol; original team once set 100% to creators. No launch fee. Per MemeFees and official.",
+   "fee_split_zh": "池费1%（V3档）。据网页报道当前约50/50创建者/协议，原团队曾设100%给创建者。无发射费。据MemeFees与官网。",
+   "one_liner_en": "Multi-chain hybrid launchpad; direct locked Uniswap V3 pool with no curve migration.",
+   "one_liner_zh": "多链混合发射台，直接入锁定Uniswap V3池无曲线迁移。",
+   "risks_en": [
+    "New launches previously paused",
+    "Operator changes and domain issues",
+    "Historical fee split changes",
+    "Audits not mentioned"
+   ],
+   "risks_zh": [
+    "新发射曾暂停",
+    "操作方变化与域名问题",
+    "费用分成历史变动",
+    "资料未提及审计"
+   ],
+   "selling_points_en": [
+    "One tx full supply into locked single-sided V3 pool",
+    "No bonding curve or migration",
+    "No token tax uses V3 fee",
+    "Creators earn pool fees",
+    "Early multi-chain deploy"
+   ],
+   "selling_points_zh": [
+    "一笔交易全供应入单边V3池永久锁",
+    "无联合曲线无迁移",
+    "无代币税用V3费",
+    "创建者赚取池费",
+    "早期多链部署"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "官方文档：直接V3锁定池无迁移",
+     "url": "https://docs.noxa.fi/"
+    },
+    {
+     "kind": "official",
+     "note": "DefiLlama描述与费用",
+     "url": "https://defillama.com/protocol/noxa-fun"
+    },
+    {
+     "kind": "web",
+     "note": "据网页报道费用分成与暂停情况",
+     "url": "https://memefees.com/reviews/noxa"
+    },
+    {
+     "kind": "official",
+     "note": "当前界面说明锁定与费用",
+     "url": "https://fun.noxa.eth.limo/"
+    }
+   ],
+   "team_en": "Per web reports related to @AmunPhantom, claims no VC. Specific funding and full team not mentioned.",
+   "team_zh": "据网页报道由@AmunPhantom相关，自称无VC。具体融资与完整团队资料未提及。",
+   "token_en": "Independent platform token details or buyback-burn mechanism not mentioned.",
+   "token_zh": "资料未提及独立平台币细节或回购销毁机制。",
+   "unknowns_en": [
+    "Current exact fee split",
+    "Platform token status",
+    "Full team and funding",
+    "Long-term operating status"
+   ],
+   "unknowns_zh": [
+    "当前精确费用分成",
+    "平台币情况",
+    "完整团队与融资",
+    "长期运营状态"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
  "otc": {
   "内容": {
    "differentiation_en": "Allocates fees via public wallets: ~67.5% to holders (buying tokenized stocks etc.), 10% OTC buyback/burn, rest to protocol and desks. Emphasizes transparency and holder value. Per OTC-related pages.",
@@ -654,6 +1116,83 @@
     "完整团队与实体",
     "精确当前费率与执行细节",
     "长期持有人分配稳定性"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "pons-v1": {
+  "内容": {
+   "differentiation_en": "Unlike pump.fun bonding curves, Pons V1 creates token and locked Uniswap V3/V4 pool in one tx with no curve phase, full supply starts in pool. Per official docs and web reports.",
+   "differentiation_zh": "与pump.fun联合曲线不同，Pons V1直接在一笔交易中创建代币与锁定的Uniswap V3/V4池，无曲线阶段，全供应起始池内。据官方文档与网页报道。",
+   "fee_split_en": "V1 pool fee 1%; current factory 70% creator / 30% protocol (legacy 90/10). ~80% of protocol share for automated TWAP buyback and burn of PONS. Launch fee ~0.0005 ETH. Per docs and DefiLlama.",
+   "fee_split_zh": "V1池费1%，当前工厂70%创建者、30%协议（旧版90/10）。协议份额约80%用于自动TWAP买回并销毁PONS。发射费约0.0005 ETH。据文档与DefiLlama。",
+   "one_liner_en": "Non-custodial launchpad on Robinhood Chain; V1 launches directly into locked Uniswap pool.",
+   "one_liner_zh": "Robinhood Chain上的非托管发射台，V1直接锁定Uniswap池。",
+   "risks_en": [
+    "V1 and V2 mechanics differ",
+    "Early high volatility and many launches",
+    "Buyback depends on volume",
+    "Full audits not mentioned"
+   ],
+   "risks_zh": [
+    "V1与V2机制不同",
+    "早期高波动与大量发射",
+    "回购依赖交易量",
+    "资料未提及全面审计"
+   ],
+   "selling_points_en": [
+    "One tx creates token and locked pool",
+    "Fixed 1B supply",
+    "Creator gets most trading fees",
+    "Protocol share for PONS buyback-burn",
+    "Continues trading post-graduation"
+   ],
+   "selling_points_zh": [
+    "一笔交易创建代币与锁定池",
+    "固定10亿供应",
+    "创建者拿大部分交易费",
+    "协议份额用于PONS回购销毁",
+    "支持毕业后继续交易"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "官方文档：V1池费与锁定机制",
+     "url": "https://docs.ponfamily.com/"
+    },
+    {
+     "kind": "official",
+     "note": "DefiLlama费用与回购描述",
+     "url": "https://defillama.com/protocol/pons"
+    },
+    {
+     "kind": "web",
+     "note": "据网页报道70/30分成与80%回购销毁",
+     "url": "https://suibrokers.com/learn/pons-fees-buyback-burn"
+    },
+    {
+     "kind": "official",
+     "note": "官方合约仓库V1/V2说明",
+     "url": "https://github.com/ReptilianHQ/ponsfamily"
+    }
+   ],
+   "team_en": "Per web reports operated by Pons Labs, founder mentioned as Ozzy. Specific funders not mentioned.",
+   "team_zh": "据网页报道由Pons Labs运营，创始人提及Ozzy。具体融资方资料未提及。",
+   "token_en": "Platform token PONS. Majority of protocol revenue used for open-market buyback and burn, reducing supply. Per DefiLlama and web reports.",
+   "token_zh": "平台币PONS。协议收入大部分用于公开市场回购并销毁，减少供应。据DefiLlama与网页报道。",
+   "unknowns_en": [
+    "Full team background",
+    "Exact V1 graduation threshold details",
+    "Long-term buyback guarantees",
+    "Audits of all version contracts"
+   ],
+   "unknowns_zh": [
+    "完整团队背景",
+    "V1精确毕业阈值细节",
+    "长期回购保证",
+    "所有版本合约审计"
    ]
   },
   "方式": "手动",
@@ -1029,6 +1568,83 @@
     "完整融资细节",
     "长期奖励执行稳定性",
     "多链扩展深度"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "stonkbrokers-safe-launch": {
+  "内容": {
+   "differentiation_en": "Unlike pump.fun, offers multiple launch modes including time-decay anti-snipe tax; after graduation liquidity enters permanently locked Safety Deposit Box that cannot be withdrawn. Per official site and DefiLlama.",
+   "differentiation_zh": "与pump.fun不同，提供多种开盘模式（含时间衰减防狙击税），毕业后流动性进入永久锁定的Safety Deposit Box，无法被提取。据官网与DefiLlama。",
+   "fee_split_en": "Includes opening snipe tax (e.g. 16.5% creator / 16.5% protocol etc.) and curve 1% trade fees (~33/33/33). Graduated liquidity locked. Per DefiLlama methodology.",
+   "fee_split_zh": "包含开盘狙击税（如16.5%创建者/16.5%协议等）与曲线1%交易费（约33/33/33）。毕业流动性锁定。据DefiLlama方法论。",
+   "one_liner_en": "Anti-snipe launchpad on Robinhood Chain; LP permanently locked after graduation.",
+   "one_liner_zh": "Robinhood Chain上带防狙击的发射台，毕业后LP永久锁定。",
+   "risks_en": [
+    "Anti-snipe tax may affect early trades",
+    "Lock depends on correct contracts",
+    "Stock token regional restrictions",
+    "Independent audits not mentioned"
+   ],
+   "risks_zh": [
+    "防狙击税可能影响早期交易",
+    "锁定依赖合约正确",
+    "股票代币区域限制",
+    "资料未提及独立审计"
+   ],
+   "selling_points_en": [
+    "Modes: Degen, Fair Launch, anti-snipe",
+    "Post-grad LP into permanent Safety Deposit Box",
+    "Can pair with stock tokens",
+    "Anti-bot opening tax",
+    "Anyone can launch"
+   ],
+   "selling_points_zh": [
+    "多种模式：Degen、Fair Launch、防狙击",
+    "毕业后流动性入Safety Deposit Box永久锁",
+    "可配对股票代币",
+    "防机器人开盘税",
+    "任何人可发射"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "官网介绍Safe Launch与锁定",
+     "url": "https://stonkbrokers.io/home"
+    },
+    {
+     "kind": "official",
+     "note": "DefiLlama费用方法论与描述",
+     "url": "https://defillama.com/protocol/stonkbrokers-safe-launch"
+    },
+    {
+     "kind": "web",
+     "note": "据网页报道团队Clutch Markets",
+     "url": "https://hoodscan.co/project/stonkbrokers"
+    },
+    {
+     "kind": "official",
+     "note": "Smart Launch永久锁定说明",
+     "url": "https://www.stonkbrokers.cash/safe-launch"
+    }
+   ],
+   "team_en": "Per web reports operated by Clutch Markets / Clutch Labs, developer 0xSimpleFarmer. Specific funding not mentioned.",
+   "team_zh": "据网页报道由Clutch Markets / Clutch Labs运营，开发者0xSimpleFarmer。具体融资资料未提及。",
+   "token_en": "Related token $STONKBROKER. Part of fees used for buyback and burn. Per DefiLlama and official site.",
+   "token_zh": "相关代币$STONKBROKER。费用部分用于回购销毁。据DefiLlama与官网。",
+   "unknowns_en": [
+    "Full fee allocation details",
+    "Complete team background",
+    "Exact parameters for all modes",
+    "Long-term security record"
+   ],
+   "unknowns_zh": [
+    "完整费用分配细节",
+    "团队完整背景",
+    "所有模式精确参数",
+    "长期安全记录"
    ]
   },
   "方式": "手动",

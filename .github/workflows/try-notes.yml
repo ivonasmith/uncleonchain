@@ -1,33 +1,49 @@
 name: 试写平台介绍（手动）
 
-# 用 Grok 给指定平台试写 AI 研究摘要，只打印到日志、不提交。独立并发组，不占日更队列。
+# 用 Grok API 给指定平台写 AI 研究摘要。save=false 只打印到日志；save=true 写进 data/onchain/平台AI介绍.json 并提交。
+# 独立并发组，不占日更队列（提交前 rebase 到最新 main）。
 on:
   workflow_dispatch:
     inputs:
       only:
-        description: "平台 slug，逗号分隔（如 montra,graphite-protocol,pump.fun）"
+        description: "平台 slug，逗号分隔（如 montra,graphite-protocol）"
         required: true
-        default: "montra,graphite-protocol,ascend-launchpad"
+        default: "montra"
+      save:
+        description: "写进网站数据并提交（true / false）"
+        required: false
+        default: "false"
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: try-notes
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   try:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: 试写
+      - name: 写
         env:
           XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
           PLATFORM_ONLY: ${{ inputs.only }}
-          PLATFORM_DRY: "1"
+          PLATFORM_DRY: ${{ inputs.save == 'true' && '0' || '1' }}
         run: cd pipeline && python3 -u 写平台介绍.py
+      - name: 提交
+        if: ${{ inputs.save == 'true' }}
+        run: |
+          git config user.name "uncleonchain-bot"
+          git config user.email "bot@uncleonchain.com"
+          git add data/onchain/平台AI介绍.json
+          git diff --cached --quiet && exit 0
+          git commit -m "平台介绍：Grok API 写 ${{ inputs.only }}"
+          for i in 1 2 3 4; do git pull --rebase -X theirs origin main && git push origin HEAD:main && break; sleep $((i*5)); done
