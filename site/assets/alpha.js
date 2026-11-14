@@ -131,6 +131,7 @@
       <h4 style="margin:12px 0 2px">${esc(sc.part.name)} <span class="muted small">${esc(sc.part.applies)}</span></h4>
       ${sc.part.items.map(it => anchorRow('s', it, 4, S.scores[it.k])).join('')}
       <h4 style="margin:12px 0 2px">${esc(sc.token.name)} <span class="muted small">${esc(sc.token.applies)}</span></h4>
+      ${sc.invest ? `<h4 style="margin:12px 0 2px">${esc(sc.invest.name)} <span class="muted small">${esc(sc.invest.applies)} · 0–3</span></h4>${sc.invest.items.map(it => anchorRow('t', it, 3, S.token[it.k], true)).join('')}` : ''}
       ${S.right === 'none' ? `<p class="small muted">${T('资产权利选了「暂无代币」：七项不评。', 'No token: the seven token modules are skipped.')}</p>` : sc.token.items.map(it => anchorRow('t', it, 3, S.token[it.k], true)).join('')}
     </fieldset>`;
     // 6 深度判断 + 六句话
@@ -176,6 +177,7 @@
       mech: interval(sc.mech.items.map(i => S.scores[i.k] === '' ? 'U' : S.scores[i.k]), 4),
       part: interval(sc.part.items.map(i => S.scores[i.k] === '' ? 'U' : S.scores[i.k]), 4),
       token: S.right === 'none' ? null : interval(sc.token.items.map(i => S.token[i.k] == null || S.token[i.k] === '' ? 'U' : S.token[i.k]), 3),
+      inv: sc.invest ? interval(sc.invest.items.map(i => S.token[i.k] == null || S.token[i.k] === '' ? 'U' : S.token[i.k]), 3) : null,
     };
     const bar = x => x ? `<div class="meter"><i style="left:0;width:${x.lo}%"></i><i class="span" style="left:${x.lo}%;width:${x.hi - x.lo}%"></i></div><div class="kv"><span>${T('区间', 'Range')} <b>${x.lo}–${x.hi}</b></span><span>${T('覆盖', 'Coverage')} <b>${Math.round(x.cov * 100)}%</b></span></div>` : `<div class="small muted">${T('不适用', 'n/a')}</div>`;
     const sug = suggest();
@@ -203,7 +205,7 @@
 
     let h = `<div class="card"><div class="kv" style="align-items:center"><span>${T('建议状态', 'Suggested state')}</span><span class="st ${sug.cls}">${esc(sug.st)}</span></div>${sug.why.length ? `<ul class="why">${sug.why.map(w => `<li>${esc(w)}</li>`).join('')}</ul>` : ''}
       <p class="small muted" style="margin:8px 0 0">${T('状态按四.1 / 四.2 自动推断，只是提示；「优先研究」「执行评估」由研究者定，网站不公开执行评估。', 'Inferred from 4.1 / 4.2 as a hint only.')}</p></div>`;
-    h += `<div class="card" style="margin-top:12px"><b>${esc(sc.mech.name)}</b>${bar(iv.mech)}<b style="display:block;margin-top:8px">${esc(sc.part.name)}</b>${bar(iv.part)}<b style="display:block;margin-top:8px">${esc(sc.token.name)}</b>${bar(iv.token)}
+    h += `<div class="card" style="margin-top:12px"><b>${esc(sc.mech.name)}</b>${bar(iv.mech)}<b style="display:block;margin-top:8px">${esc(sc.part.name)}</b>${bar(iv.part)}<b style="display:block;margin-top:8px">${esc(sc.token.name)}</b>${bar(iv.token)}${sc.invest ? `<b style="display:block;margin-top:8px">${esc(sc.invest.name)}</b>${bar(iv.inv)}` : ''}
       <p class="small muted" style="margin:8px 0 0">${esc(sc.formula.interval)}</p>
       <p class="small" style="margin:6px 0 0">${promo.length ? T('达到工作阈值：', 'Meets working threshold: ') + promo.map(esc).join('、') : T('未达到任何晋级工作阈值', 'Below all working thresholds')} <span class="muted">（${esc(sc.promote[0].note)}）</span></p></div>`;
     h += `<div class="card" style="margin-top:12px"><b>${T('估值该用什么', 'Valuation to use')}</b> <span class="muted small">${esc(f.valuation.sec)}</span>
@@ -295,7 +297,8 @@
   const ENTRY = () => Object.fromEntries(FW.entry.opts.map(o => [o.k, o.name]));
   function cardIntervals(card) {
     const val = k => { const s = card.scores[k]; return s == null || s.v === '' || s.v == null ? 'U' : s.v; };
-    return { mech: interval(FW.scores.mech.items.map(i => val(i.k)), 4), part: interval(FW.scores.part.items.filter(i => !i.private).map(i => val(i.k)), 4) };
+    return { mech: interval(FW.scores.mech.items.map(i => val(i.k)), 4), part: interval(FW.scores.part.items.filter(i => !i.private).map(i => val(i.k)), 4),
+             inv: FW.scores.invest ? interval(FW.scores.invest.items.map(i => val(i.k)), 3) : null };
   }
   function miniBar(x, label) {
     if (!x) return '';
@@ -340,6 +343,8 @@
     h += `<div class="card" style="margin-top:12px"><b>2 · ${T('评分', 'Scores')}</b> <span class="small muted">${T('附录一锚点 · 每项 0–4 · U = 未知', 'App. 1 anchors · 0–4 · U = unknown')}</span>
       ${miniBar(iv.mech, FW.scores.mech.name)}<div class="tw" style="margin:6px 0"><table><tbody>${FW.scores.mech.items.map(scRow).join('')}</tbody></table></div>
       ${miniBar(iv.part, FW.scores.part.name + T('（不含执行项 P / L）', ' (excl. P / L)'))}<div class="tw" style="margin:6px 0"><table><tbody>${FW.scores.part.items.filter(i => !i.private).map(scRow).join('')}</tbody></table></div>
+      ${FW.scores.invest && !card.caseId ? `${miniBar(iv.inv, FW.scores.invest.name + T('（0–3）', ' (0–3)'))}<div class="tw" style="margin:6px 0"><table><tbody>${FW.scores.invest.items.map(it => { const s = card.scores[it.k] || {}; const v = s.v; const known = v !== 'U' && v !== 'NA' && v != null && v !== '';
+        return `<tr><td class="l"><b>${it.k}</b> ${esc(it.name)}<div class="small muted">${esc(it.q || '')}</div></td><td>${known ? `<b>${v}</b>` : `<span class="muted">${v === 'NA' ? 'NA' : 'U'}</span>`}</td><td class="l small" style="white-space:normal">${known ? esc(it.anchors[v]) : `<span class="muted">${v === 'NA' ? T('不适用', 'n/a') : T('待研究补证', 'pending research')}</span>`}${s.why ? `<div class="muted">${esc(s.why)}</div>` : ''}</td><td class="l">${srcTag(s.src)}</td></tr>`; }).join('')}</tbody></table></div><p class="small muted">${T('融资只记事实（金额、投资方、估值、日期、来源），不打分。', 'Funding: facts only, not scored.')}</p>` : ''}
       ${card.classes.right.v !== 'none' ? `<p class="small muted">${esc(FW.scores.token.name)}：${T('有代币的对象另评七项（0–3），第一版待研究补证。', 'seven token modules (0–3), pending research.')}</p>` : ''}</div>`;
     h += card.caseId ? `<div class="card" style="margin-top:12px"><b>3 · ${T('门槛', 'Gates')}</b><p class="small muted">${T('历史案例不评门槛（当时的控制权、数据和退出条件没有逐项复原）。', 'Gates are not scored for historical cases.')}</p></div>` : `<div class="card" style="margin-top:12px"><b>3 · ${T('门槛（高分不能抵消）', 'Gates')}</b>${FW.gates.items.filter(x => !x.private).map(x => { const s = g[x.k] || {}; return `<div class="kv"><span>${esc(x.name)}</span><span><span class="st ${s.v === '通过' ? 'ok' : s.v === '否决' ? 'no' : 'wait'}" style="font-size:12px">${esc(s.v || 'U')}</span> ${srcTag(s.src)}</span></div>${s.why ? `<div class="small muted" style="text-align:right">${esc(s.why)}</div>` : ''}`; }).join('')}
       <p class="small muted" style="margin:6px 0 0">${T('执行门槛（指定金额能否进出）属于个人执行，不公开。', 'The execution gate is personal and not published.')}</p></div>`;

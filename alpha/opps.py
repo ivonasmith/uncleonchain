@@ -92,6 +92,8 @@ def build():
                                       "没有表态": "官方没有表态发币，也没查到积分计划"}.get(stance, "还没查到资金参与方式")
         # ---- 评分（附录一 B / C；系统规则 framework.auto_rules）
         sc = {k2: S() for k2 in "MAFEVGPDLT"}
+        sc["TM"] = S()                                                                   # 投资补充：团队可识别度（研究补证）
+        sc["TE"] = S("U") if has_token else S("NA", "auto", "还没有代币，代币经济不适用")   # 投资补充：代币经济
         rev30 = r.get("rev30")
         if rev30 and rev30 >= min_rev:
             sc["D"] = S(2, "auto", f"近 30 天协议收入 {rev30:,.0f} 美元 ≥ {min_rev:,.0f} → 2（可识别外部客户但账单未核）")
