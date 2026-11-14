@@ -1,0 +1,70 @@
+# 核心选币观测台：每天 UTC 04:13 跑 core/core_daily.py → data/core/（core_latest.json、series/<币>.json、core_history.json），再重出网站。
+# 基本面 DefiLlama（手续费 / 收入 / 持有人收入 / 业务量）、资金面币安现货日线 + U 本位永续（data.binance.vision 公开归档，fapi 在美国机房 451）、
+# 技术面币安现货收盘、估值 CoinGecko。人工登记（分层 / 叙事阶段 / 解锁 / 事件 / 风险）在 core/core_config.json。
+# 永续归档首次回填约 5 分钟，之后走 actions/cache（core/cache/，不进仓库）只补新日期。
+name: 核心选币日更
+
+on:
+  schedule:
+    - cron: "13 4 * * *"
+  workflow_dispatch: {}
+  push:
+    branches: [main]
+    paths:
+      - "core/**"
+      - ".github/workflows/core-daily.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-pipeline
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 恢复永续成交额缓存
+        uses: actions/cache@v4
+        with:
+          path: core/cache
+          key: core-cache-${{ github.run_id }}
+          restore-keys: core-cache-
+
+      - name: 跑核心选币日更
+        run: python3 core/core_daily.py
+
+      - name: 重出网站（看板素材 → 网站）
+        env:
+          LP_DATA: ${{ github.workspace }}/data
+          LP_OUT: ${{ github.workspace }}/build
+        run: |
+          python3 pipeline/出看板.py
+          python3 pipeline/出网站.py
+
+      - name: 提交 data/core 与 site/
+        run: |
+          git config user.name "uncleonchain-bot"
+          git config user.email "bot@uncleonchain.com"
+          git add data/core site/
+          git diff --cached --quiet && echo "没有变化，跳过提交" && exit 0
+          git commit -m "核心选币日更 $(date -u +%Y-%m-%d)"
+          BASE=$(git rev-parse HEAD~1)   # 本次出网站用的代码版本
+          git pull --rebase --autostash -X theirs origin main
+          # 运行期间别人推了代码：用最新代码重出一次网站再推，别拿旧代码出的页面盖掉新的（2026-11-10 出过）
+          if ! git diff --quiet "$BASE" HEAD -- pipeline leg core config content assets; then
+            LP_DATA="$GITHUB_WORKSPACE/data" LP_OUT="$GITHUB_WORKSPACE/build" python3 pipeline/出看板.py
+            LP_DATA="$GITHUB_WORKSPACE/data" LP_OUT="$GITHUB_WORKSPACE/build" python3 pipeline/出网站.py
+            git add site/ && (git diff --cached --quiet || git commit -m "重出网站（运行期间有代码更新）")
+          fi
+          git push

@@ -1,0 +1,839 @@
+{
+ "_说明": "核心选币观测台的人工登记部分（来源：大叔 Notion《核心标的基本面与叙事追踪》+ 观测台原型 obs.html，2026-11-13）。数字由 core_daily.py 每天自动拉；这里只放拉不到、需要人工核对的：分层 / 回购口径 / 叙事阶段 / 解锁 / 事件 / 证伪条件 / 风险记录 / 重大发现。改完推送即可，下次日更生效。",
+ "asof": "2026-11-13",
+ "btc_floor": 58525,
+ "coins": [
+  {
+   "sym": "UNI",
+   "name": "Uniswap",
+   "llama": "uniswap",
+   "cg": "uniswap",
+   "tier": "T1",
+   "tag": "ambush",
+   "note": "费用开关:协议费买入并销毁 UNI",
+   "act": "dexs",
+   "track": "pool",
+   "sector": "DEX 基础设施",
+   "pos": "RWA 代币化股票流动性池龙头",
+   "stage": "已兑现，证据最扎实",
+   "basis": "Robinhood Chain 6 周拿下 99% 流动性份额；fee switch 已上线，v4 协议费第 1 部分 7/27 已执行。持有人收入 30 日日均 $53.7 万、P/持有人收入 30–38 倍（09-26）。收入与 Robinhood Chain meme 活跃度是同一风险因子。",
+   "asof": "2026-09-26"
+  },
+  {
+   "sym": "HYPE",
+   "name": "Hyperliquid",
+   "llama": "hyperliquid",
+   "cg": "hyperliquid",
+   "tier": "T1",
+   "tag": "",
+   "note": "协议费回购并销毁(Assistance Fund)",
+   "act": null,
+   "track": "pool",
+   "sector": "DEX / 永续",
+   "pos": "去中心化交易所赛道第一，99% 协议费回购销毁",
+   "stage": "机制已兑现，价格已跑在收入前面",
+   "basis": "HIP-3 成交量过半，99% 回购销毁真实运行；但 2026-03 起价格 / 收入比从约 1 升到 1.5–3.6，近 30 日收入只有 2025-08 的 53%，市值 / 年化收入从约 11 倍升到约 32 倍。累计回购 4,750.58 万枚，成本约 $13.21 亿。",
+   "asof": "2026-09-26"
+  },
+  {
+   "sym": "CAKE",
+   "name": "PancakeSwap",
+   "llama": "pancakeswap",
+   "cg": "pancakeswap-token",
+   "tier": "T1",
+   "tag": "",
+   "note": "连续净销毁,燃烧看板可查",
+   "act": "dexs",
+   "track": "pool",
+   "sector": "DEX 基础设施",
+   "pos": "BSC 链交易基座，Grayscale 点名的 Top15 收入协议之一"
+  },
+  {
+   "sym": "AAVE",
+   "name": "Aave",
+   "llama": "aave",
+   "cg": "aave",
+   "tier": "T2",
+   "tag": "ambush",
+   "note": "回购自 04-19 起暂停;Aavenomics 3.0 无正式提案",
+   "act": "tvl",
+   "track": "pool",
+   "sector": "借贷",
+   "pos": "Aave Will Win 已让协议收入 100% 导向 DAO + 回购",
+   "stage": "进行中，早期",
+   "basis": "Horizon 规模远小于协议总 TVL（已更正）。11-13：V3.8 于 11-12 上线；回购自 04-19 起暂停；Aavenomics 3.0 的销毁尚无正式提案；Horizon 存款数字未取到。",
+   "asof": "2026-11-13"
+  },
+  {
+   "sym": "PUMP",
+   "name": "pump.fun",
+   "llama": "pump.fun",
+   "cg": "pump-fun",
+   "tier": "T2",
+   "tag": "channelB",
+   "note": "收入 50/50:回购 / 运营",
+   "act": "dexs",
+   "track": "pool",
+   "sector": "发射台",
+   "pos": "发币 + DEX 一体化龙头，已在币安现货上线",
+   "stage": "发射台数据看本站",
+   "basis": "手续费、份额改读本站 /launchpad/。36% 供给销毁已于 4 月执行完毕；每月约 68.75 亿枚解锁（日期存疑）。",
+   "asof": "2026-11-13"
+  },
+  {
+   "sym": "SKY",
+   "name": "Sky(原 Maker)",
+   "llama": "sky",
+   "cg": "sky",
+   "tier": "T2",
+   "tag": "",
+   "note": "回购口径待核",
+   "act": "tvl",
+   "track": "pool",
+   "sector": "借贷 + 稳定币",
+   "pos": "链上银行型协议（原 MakerDAO），Grayscale 同批点名"
+  },
+  {
+   "sym": "RAY",
+   "name": "Raydium",
+   "llama": "raydium",
+   "cg": "raydium",
+   "tier": "T2",
+   "tag": "ambush",
+   "note": "持有人收入口径存在,回购机制待核",
+   "act": "dexs",
+   "track": "pool",
+   "sector": "DEX 基础设施",
+   "pos": "Solana 核心 AMM",
+   "stage": "流动性最薄",
+   "basis": "11-13：距 10/07 高点约 −34.6%，高于 MA200 约 50.8%；无待解锁，DefiLlama 记录累计回购并销毁约 8,798 万枚。",
+   "asof": "2026-11-13"
+  },
+  {
+   "sym": "JUP",
+   "name": "Jupiter",
+   "llama": "jupiter",
+   "cg": "jupiter-exchange-solana",
+   "tier": "T2",
+   "tag": "",
+   "note": "回购口径待核",
+   "act": "dexs",
+   "track": "pool",
+   "sector": "DEX 聚合",
+   "pos": "Solana 最大 DEX 聚合器"
+  },
+  {
+   "sym": "ETHFI",
+   "name": "ether.fi",
+   "llama": "ether.fi",
+   "cg": "ether-fi",
+   "tier": "T2",
+   "tag": "",
+   "note": "回购口径待核",
+   "act": "tvl",
+   "track": "pool",
+   "sector": "再质押",
+   "pos": "Grayscale 点名的 restaking 代表"
+  },
+  {
+   "sym": "MORPHO",
+   "name": "Morpho",
+   "llama": "morpho",
+   "cg": "morpho",
+   "tier": "T3",
+   "tag": "",
+   "note": "费用开关最高 25% 仍未开(外部说法)",
+   "act": "tvl",
+   "track": "pool",
+   "sector": "借贷",
+   "pos": "借贷撮合层；费用开关最高 25% 仍未开"
+  },
+  {
+   "sym": "ENA",
+   "name": "Ethena",
+   "llama": "ethena-usde",
+   "cg": "ethena",
+   "tier": "T3",
+   "tag": "ambush",
+   "note": "fee switch 未上线;USDe 达 $75 亿才触发回购",
+   "act": "tvl",
+   "track": "pool",
+   "sector": "稳定币收益",
+   "pos": "USDe / sUSDe 合成美元收益类代表",
+   "stage": "基本面下行，待复核",
+   "basis": "USDe 约 $49.7 亿，离 $75 亿回购触发线仍远（回购为 0）。9/19“基本面下行”的判断需要用 USDe 供给曲线和 sUSDe 收益率复核，11-13 未取到。",
+   "asof": "2026-11-13"
+  },
+  {
+   "sym": "NEAR",
+   "name": "NEAR Intents",
+   "llama": "near-intents",
+   "cg": "near",
+   "tier": "T3",
+   "tag": "ambush",
+   "note": "通缩门槛未到;HSP-029 否决窗口 11-16 截止",
+   "act": "dexs",
+   "track": "pool",
+   "sector": "AI Agent 基建 / 隐私",
+   "pos": "核心仍是 AI Agent 基建，隐私只是多条叙事线之一",
+   "stage": "进行中，要分清“蹭”和“自有”",
+   "basis": "隐私只是多条叙事线之一，核心仍是 AI Agent 基建。11-13：HSP-029 否决窗口 11-16 截止，最早约 2027-02-14 生效；Intents 成交量本次未取到。",
+   "asof": "2026-11-13"
+  },
+  {
+   "sym": "PENDLE",
+   "name": "Pendle",
+   "llama": "pendle",
+   "cg": "pendle",
+   "tier": "W",
+   "tag": "",
+   "note": "",
+   "act": "tvl",
+   "track": "watch",
+   "sector": "收益衍生品",
+   "pos": "收益类赛道龙头，拆分 PT / YT，与 ENA 强相关"
+  },
+  {
+   "sym": "LDO",
+   "name": "Lido",
+   "llama": "lido",
+   "cg": "lido-dao",
+   "tier": "W",
+   "tag": "",
+   "note": "",
+   "act": "tvl",
+   "track": "watch",
+   "sector": "流动性质押",
+   "pos": "以太坊最大 liquid staking"
+  },
+  {
+   "sym": "AERO",
+   "name": "Aerodrome",
+   "llama": "aerodrome",
+   "cg": "aerodrome-finance",
+   "tier": "W",
+   "tag": "",
+   "note": "",
+   "act": "dexs",
+   "track": "watch",
+   "sector": "DEX 基础设施",
+   "pos": "Base 最大 DEX，ve(3,3) 代币模型"
+  },
+  {
+   "sym": "ONDO",
+   "name": "Ondo Finance",
+   "llama": "ondo-finance",
+   "cg": "ondo-finance",
+   "tier": "W",
+   "tag": "",
+   "note": "",
+   "act": "tvl",
+   "track": "watch",
+   "sector": "RWA 收益",
+   "pos": "代币化美债 / RWA 收益产品"
+  },
+  {
+   "sym": "GMX",
+   "name": "GMX",
+   "llama": "gmx",
+   "cg": "gmx",
+   "tier": "W",
+   "tag": "",
+   "note": "",
+   "act": null,
+   "track": "watch",
+   "sector": "永续 / 衍生品 DEX",
+   "pos": "永续 DEX 老龙头，与 HYPE 做新旧对照"
+  },
+  {
+   "sym": "ZEC",
+   "name": "Zcash",
+   "llama": null,
+   "cg": "zcash",
+   "tier": "W",
+   "tag": "",
+   "note": "",
+   "act": null,
+   "track": "watch",
+   "sector": "隐私",
+   "pos": "Grayscale ZCSH 上市触发；没有协议收入，按“资金驱动”管理",
+   "stage": "已兑现，延续中",
+   "basis": "Grayscale ETF（ZCSH）8/25 上市直接触发暴涨；截至 9/24 累计净流入约 3.06 亿（含 DCG 约 1 亿实物注入，外部新增约 2 亿）。没有协议收入，按“资金驱动”管理。",
+   "asof": "2026-09-26"
+  },
+  {
+   "sym": "ARB",
+   "name": "Arbitrum",
+   "llama": null,
+   "cg": "arbitrum",
+   "tier": "W",
+   "tag": "",
+   "note": "",
+   "act": null,
+   "track": "watch",
+   "sector": "L2 / Rollup",
+   "pos": "以太坊扩容层，叠加 Robinhood Chain RWA 叙事",
+   "stage": "有合约化分成但未到账",
+   "basis": "Robinhood Chain 按 AEP 分 10%（8% 进 DAO 国库），链上已累计 1,988.89 ETH 但停在基金会多签，DAO 国库到账为 0；国库不向持币人分配，仍非直接费用捕获。",
+   "asof": "2026-09-26"
+  },
+  {
+   "sym": "OP",
+   "name": "Optimism",
+   "llama": null,
+   "cg": "optimism",
+   "tier": "W",
+   "tag": "",
+   "note": "",
+   "act": null,
+   "track": "watch",
+   "sector": "L2 / Rollup",
+   "pos": "Superchain 回购叙事"
+  },
+  {
+   "sym": "SOL",
+   "name": "Solana",
+   "llama": null,
+   "cg": "solana",
+   "tier": "W",
+   "tag": "",
+   "note": "",
+   "act": null,
+   "track": "watch",
+   "sector": "L1 公链",
+   "pos": "智能合约平台层，跟生态整体活跃度绑定",
+   "stage": "升级兑现",
+   "basis": "Alpenglow 2026-10-21 主网上线（epoch 1064），略晚于 Q3 末；SIMD-0550 于 08-28 以 67.001% 通过，但还需实现步骤（SIMD-0607）才生效；SIMD-0553 结果未取到明确来源。",
+   "asof": "2026-11-13"
+  },
+  {
+   "sym": "AVAX",
+   "name": "Avalanche",
+   "llama": null,
+   "cg": "avalanche-2",
+   "tier": "W",
+   "tag": "",
+   "note": "",
+   "act": null,
+   "track": "watch",
+   "sector": "L1 公链",
+   "pos": "智能合约平台层"
+  },
+  {
+   "sym": "SUI",
+   "name": "Sui",
+   "llama": null,
+   "cg": "sui",
+   "tier": "W",
+   "tag": "",
+   "note": "",
+   "act": null,
+   "track": "watch",
+   "sector": "新一代 Move 语系 L1",
+   "pos": "对象化数据模型，机构合作领先 Aptos"
+  },
+  {
+   "sym": "BNB",
+   "name": "BNB",
+   "llama": null,
+   "cg": "binancecoin",
+   "tier": "W",
+   "tag": "",
+   "note": "",
+   "act": null,
+   "track": "watch",
+   "sector": "交易所生态代币",
+   "pos": "CEX 业务销毁 + 链上 gas 双轮驱动"
+  },
+  {
+   "sym": "LINK",
+   "name": "Chainlink",
+   "llama": null,
+   "cg": "chainlink",
+   "tier": "W",
+   "tag": "",
+   "note": "",
+   "act": null,
+   "track": "watch",
+   "sector": "预言机 / 跨链中间件",
+   "pos": "横跨所有链的基础设施税，不套入轮动顺序框架"
+  },
+  {
+   "sym": "TAO",
+   "name": "Bittensor",
+   "llama": null,
+   "cg": "bittensor",
+   "tier": "W",
+   "tag": "",
+   "note": "",
+   "act": null,
+   "track": "watch",
+   "sector": "AI crypto",
+   "pos": "去中心化训练龙头，跟 AI Agent 支付是两码事"
+  },
+  {
+   "sym": "RENDER",
+   "name": "Render",
+   "llama": null,
+   "cg": "render-token",
+   "tier": "W",
+   "tag": "",
+   "note": "",
+   "act": null,
+   "track": "watch",
+   "sector": "AI 算力",
+   "pos": "去中心化 GPU 渲染 / 算力"
+  },
+  {
+   "sym": "DOGE",
+   "name": "Dogecoin",
+   "llama": null,
+   "cg": "dogecoin",
+   "tier": "W",
+   "tag": "",
+   "note": "",
+   "act": null,
+   "track": "watch",
+   "sector": "MEME",
+   "pos": "大市值 meme 板块温度计"
+  },
+  {
+   "sym": "BCH",
+   "name": "Bitcoin Cash",
+   "llama": null,
+   "cg": "bitcoin-cash",
+   "tier": "W",
+   "tag": "",
+   "note": "",
+   "act": null,
+   "track": "watch",
+   "sector": "BTC 分叉 / 支付",
+   "pos": "2026-10-19 与 UNI 一起登上 CME 期货；消息面驱动的高 Beta 交易标的"
+  },
+  {
+   "sym": "XRP",
+   "name": "XRP",
+   "llama": null,
+   "cg": "ripple",
+   "tier": "W",
+   "tag": "",
+   "note": "",
+   "act": null,
+   "track": "watch",
+   "sector": "对照组（监管定性）",
+   "pos": "“没跟上这轮”的对照组",
+   "stage": "关键催化剂失败（对照组）",
+   "basis": "CLARITY 法案 9/15 cloture 投票失败（49–50）。",
+   "asof": "2026-09-19"
+  }
+ ],
+ "unlocks": {
+  "HYPE": {
+   "tokens": 9916666,
+   "note": "核心贡献者每月线性约 991.7 万枚(238M/24 个月,至 2027-10 前后);每月约 6 日",
+   "dated": false,
+   "src": "Tokenomist 白皮书口径",
+   "lvl": "外部佐证",
+   "actual_tokens": 180000,
+   "actual_note": "11-06 实际发放 18 万枚(约 \\$1,450 万);2025-11 至 2026-04 团队月领取 14 万~175 万枚,远低于条款值"
+  },
+  "PUMP": {
+   "tokens": 6875000000,
+   "note": "每月约 68.75 亿枚;日期存疑(社区说 11-14,按归属条款推算每月 12 日)",
+   "dated": false,
+   "src": "11-13 数据回收",
+   "lvl": "外部佐证·存疑"
+  },
+  "RAY": {
+   "tokens": 0,
+   "note": "团队与种子轮归属 2024-02 已完成;截至 2026-10-18 无待解锁",
+   "dated": false,
+   "src": "DefiLlama Unlocks / Raydium 文档",
+   "lvl": "外部佐证"
+  },
+  "JUP": {
+   "tokens": 0,
+   "note": "归属已结束:团队最后一次 2026-01-27,Mercurial 2026-02-25 一次性加速;Jupuary 余量取消,净增发≈0",
+   "dated": false,
+   "src": "DefiLlama Unlocks / Tokenomist",
+   "lvl": "外部佐证"
+  },
+  "ETHFI": {
+   "tokens": 8811000,
+   "note": "核心贡献者每日线性约 29.4 万枚(≈每月 881 万枚),至 2027-03 结束",
+   "dated": false,
+   "src": "Coinlaunch 解锁明细 / Tokenomics.com",
+   "lvl": "外部佐证"
+  },
+  "MORPHO": {
+   "tokens": 11600000,
+   "note": "按月约 1,160 万枚(7 月口径,每月 21 日);另 11-20 做市商 cliff 约 100 万枚(\\$252 万)",
+   "dated": false,
+   "src": "Tokenomics.com / DefiLlama",
+   "lvl": "外部佐证·待核 11 月数量"
+  },
+  "ENA": {
+   "tokens": 134375000,
+   "note": "12-02 约 4,062.5 万 + 12-05 约 9,375 万(枚)",
+   "dated": true,
+   "src": "11-13 数据回收(Grok 日历 + 条款)",
+   "lvl": "外部佐证"
+  },
+  "NEAR": {
+   "tokens": 2730000,
+   "note": "增发上限 2.5%/年 折合每月约 273 万枚(上限,非解锁);HSP-029 拟降至 1.6%",
+   "dated": false,
+   "src": "Tokenomist 周报 11-02",
+   "lvl": "外部佐证"
+  }
+ },
+ "under5": [
+  "UNI",
+  "AAVE"
+ ],
+ "events": [
+  {
+   "d": "2026-11-16",
+   "s": "NEAR",
+   "k": "warn",
+   "t": "HSP-029 否决窗口截止:拟将最大年增发从 2.5% 降到 1.6%;投票 11-02 截止,仍需验证者升级才生效(最早约 2027-02-14)",
+   "src": "Tokenomist 周报 11-02 / 11-13 数据回收",
+   "lvl": "外部佐证",
+   "cal": true
+  },
+  {
+   "d": "2026-11-20",
+   "s": "MORPHO",
+   "k": "warn",
+   "t": "做市商 cliff 解锁约 100 万枚(约 \\$252 万,占流通 0.15%)",
+   "src": "DefiLlama Unlocks",
+   "lvl": "外部佐证",
+   "cal": true
+  },
+  {
+   "d": "2026-12-02",
+   "s": "ENA",
+   "k": "warn",
+   "t": "解锁约 4,062.5 万枚(占流通约 0.30%)",
+   "src": "11-13 数据回收",
+   "lvl": "外部佐证",
+   "cal": true
+  },
+  {
+   "d": "2026-12-05",
+   "s": "ENA",
+   "k": "warn",
+   "t": "解锁约 9,375 万枚(占流通约 0.69%)",
+   "src": "11-13 数据回收",
+   "lvl": "外部佐证",
+   "cal": true
+  },
+  {
+   "d": "2026-12-06",
+   "s": "HYPE",
+   "k": "warn",
+   "t": "核心贡献者月度领取(约每月 6 日;条款值约 991.7 万枚,近月实际仅 18 万枚)",
+   "src": "Tokenomist / BlockBeats",
+   "lvl": "外部佐证·日期推算",
+   "cal": true
+  },
+  {
+   "d": "2026-12-12",
+   "s": "PUMP",
+   "k": "warn",
+   "t": "月度解锁约 68.75 亿枚(占流通约 1.5%);日期存疑,社区说 11-14",
+   "src": "11-13 数据回收",
+   "lvl": "外部佐证·存疑",
+   "cal": true
+  },
+  {
+   "d": "2026-12-21",
+   "s": "MORPHO",
+   "k": "warn",
+   "t": "按月解锁约 1,160 万枚(7 月口径,11 月数量待核)",
+   "src": "Tokenomics.com",
+   "lvl": "外部佐证·待核",
+   "cal": true
+  },
+  {
+   "d": "2026-11-12",
+   "s": "AAVE",
+   "k": "good",
+   "t": "V3.8 上线;回购自 04-19 暂停;Aavenomics 3.0(100% 协议与 GHO 收入自动回购)6-25 预告,至今无正式提案",
+   "src": "11-13 数据回收 / Tokenomist",
+   "lvl": "外部佐证"
+  },
+  {
+   "d": "2026-11-06",
+   "s": "HYPE",
+   "k": "warn",
+   "t": "核心贡献者实际发放 18 万枚(约 \\$1,450 万),条款值 991.7 万枚——纸面与实际相差约 50 倍",
+   "src": "BlockBeats / Tokenomist",
+   "lvl": "外部佐证"
+  },
+  {
+   "d": "2026-11-02",
+   "s": "PUMP",
+   "k": "good",
+   "t": "10-26 至 11-01 周回购 \\$255 万;同周 HYPE \\$1,074 万居首(Tokenomist 周回购榜)",
+   "src": "Tokenomist 周报",
+   "lvl": "外部佐证"
+  },
+  {
+   "d": "2026-11-13",
+   "s": "ETHFI",
+   "k": "warn",
+   "t": "口径冲突:DefiLlama 持有人收入为 0,但基金会治理文档列有 ETHFI 回购计划——执行情况待核",
+   "src": "DefiLlama / Blockworks 透明度报告",
+   "lvl": "待核"
+  },
+  {
+   "d": "2026-02-25",
+   "s": "JUP",
+   "k": "good",
+   "t": "净零增发已落地:团队最后一次解锁 2026-01-27,Mercurial 2026-02-25 一次性加速,Jupuary 余量取消",
+   "src": "DefiLlama Unlocks / Tokenomist",
+   "lvl": "外部佐证"
+  },
+  {
+   "d": "2026-11-13",
+   "s": "UNI",
+   "k": "warn",
+   "t": "VolatilePair hook RFC 讨论中,日期未定;Pons 毕业池走自定义 hook,不收 UNI 协议费",
+   "src": "11-13 数据回收 / 09-26 叙事研究",
+   "lvl": "外部佐证"
+  },
+  {
+   "d": "2026-11-13",
+   "s": "RAY",
+   "k": "good",
+   "t": "无待解锁(截至 10-18);DefiLlama 记录累计回购并销毁约 8,798 万枚",
+   "src": "DefiLlama Unlocks / Universal Token Rating",
+   "lvl": "外部佐证"
+  }
+ ],
+ "fals": {
+  "UNI": [
+   {
+    "k": "na",
+    "t": "Robinhood Chain 成交量连续下降,或份额被蚕食",
+    "x": "直接数据未取。代理:UNI 日成交额 7日均对30日均 −15.6%,手续费 −31%,方向偏弱,但不是该条件本身。"
+   }
+  ],
+  "ENA": [
+   {
+    "k": "na",
+    "t": "USDe 供给恢复净增长",
+    "x": "代理:ENA 协议 TVL 7日均对30日均 +3.3%,30日环比 −3.3%,方向混合,无法判定。"
+   },
+   {
+    "k": "na",
+    "t": "sUSDe 收益率回升",
+    "x": "本期未取到。"
+   },
+   {
+    "k": "warn",
+    "t": "fee switch 上线",
+    "x": "未见上线;DefiLlama 口径协议收入只占手续费 0.3%,持有人收入为 0。"
+   }
+  ],
+  "NEAR": [
+   {
+    "k": "na",
+    "t": "Intents 成交增长停滞;通缩门槛仍远",
+    "x": "代理:Intents 日成交额 7日均对30日均 +8.2%,30日环比 −21.6%,方向混合。HSP-029 否决窗口 11-16 截止。"
+   }
+  ],
+  "RAY": [
+   {
+    "k": "na",
+    "t": "8–9 月反弹未延续到 10 月",
+    "x": "价格距 10/07 高点回撤约 35%;收入 7日均对30日均 +20%,但30日环比为负(前30日含高峰),需要费用日序列复核。"
+   }
+  ],
+  "AAVE": [
+   {
+    "k": "serious",
+    "t": "协议 TVL 恢复停滞 / Horizon 存款连续两季不增长",
+    "x": "代理:AAVE TVL 7日均对30日均 −4.2%,30日环比 −8.7%,偏向条件成立(待核);Horizon 存款数字未取。"
+   }
+  ]
+ },
+ "sixq": {
+  "UNI": "未写(缺收入口径复核与池外筛选,待 Codex-2)",
+  "HYPE": "不适用(未入候选)",
+  "CAKE": "不适用(未入候选)",
+  "AAVE": "未写(缺收入口径复核与池外筛选,待 Codex-2)",
+  "PUMP": "未写(缺收入口径复核与池外筛选,待 Codex-2)",
+  "SKY": "不适用(未入候选)",
+  "RAY": "未写(缺收入口径复核与池外筛选,待 Codex-2)",
+  "JUP": "不适用(未入候选)",
+  "ETHFI": "不适用(未入候选)",
+  "MORPHO": "不适用(未入候选)",
+  "ENA": "未写(缺收入口径复核与池外筛选,待 Codex-2)",
+  "NEAR": "未写(缺收入口径复核与池外筛选,待 Codex-2)"
+ },
+ "risks": [
+  {
+   "s": "ONDO",
+   "cat": "团队与治理",
+   "t": "创始人 Nathan Allman 今年 5 月去世，7 月遗产方与现任 CEO Ian De Bode 爆发控制权争夺，法院未裁决",
+   "asof": "2026-09-19"
+  },
+  {
+   "s": "GMX",
+   "cat": "团队与治理",
+   "t": "原核心开发者已退出主动开发，转做另一个项目 ZZZ；2 月已有多名创始贡献者提案退出日常运营",
+   "asof": "2026-09-19"
+  },
+  {
+   "s": "ZEC",
+   "cat": "团队与治理",
+   "t": "Electric Coin Company 全体员工 1 月集体离职（治理冲突），大概率已重组为 3 月拿到 $2,500 万种子轮的 ZODL",
+   "asof": "2026-09-19"
+  },
+  {
+   "s": "AAVE",
+   "cat": "团队与治理",
+   "t": "BGD Labs、Aave Chan Initiative、Chaos Labs 三个外部核心团队 2–4 月相继离开",
+   "asof": "2026-09-19"
+  },
+  {
+   "s": "SUI",
+   "cat": "团队与治理",
+   "t": "Move 语言创造者兼 CTO Sam Blackshear 8 月离职",
+   "asof": "2026-09-19"
+  },
+  {
+   "s": "TAO",
+   "cat": "团队与治理",
+   "t": "两位联合创始人 2 月已退出 Opentensor Foundation 执行层，早于 4 月 Covenant AI 退网冲突",
+   "asof": "2026-09-19"
+  },
+  {
+   "s": "ARB",
+   "cat": "团队与治理",
+   "t": "Growth Lead Marcin Pawel 5 月离职转投 Nansen",
+   "asof": "2026-09-19"
+  },
+  {
+   "s": "PUMP",
+   "cat": "法律与合规",
+   "t": "三位创始人仍是纽约 RICO 集体诉讼被告，证据开示进行中；联合创始人被媒体指过往涉嫌 rug pull（未定罪）",
+   "asof": "2026-09-19"
+  },
+  {
+   "s": "JUP",
+   "cat": "法律与合规",
+   "t": "联合创始人被列入 meme 币欺诈流动性安排集体诉讼（仍是指控，无判决）",
+   "asof": "2026-09-19"
+  },
+  {
+   "s": "AAVE",
+   "cat": "安全事故",
+   "t": "KelpDAO 跨链桥被攻击，Aave 面临 $1.24–2.3 亿潜在坏账，是此前 TVL 暴跌的真实原因",
+   "asof": "2026-09-19"
+  },
+  {
+   "s": "HYPE",
+   "cat": "安全事故",
+   "t": "JELLY 事件 HLP 敞口 $0.7–13.5M，团队直接介入干预，留下中心化先例",
+   "asof": "2026-09-19"
+  },
+  {
+   "s": "AERO",
+   "cat": "安全事故",
+   "t": "2025 年 11 月 DNS 劫持，约 $70 万用户损失",
+   "asof": "2026-09-19"
+  },
+  {
+   "s": "SKY",
+   "cat": "资金 / 供给",
+   "t": "NovaBay（现 Stablecoin Development Corp）3 月斥资 $1.34 亿买入约占流通量 8.78% 的 SKY，单一机构持仓集中度值得跟踪",
+   "asof": "2026-09-19"
+  },
+  {
+   "s": "PUMP",
+   "cat": "资金 / 供给",
+   "t": "36% 供给销毁已于 4 月执行完毕（不是此前误传的“Q4 计划”）",
+   "asof": "2026-09-19"
+  }
+ ],
+ "findings": [
+  {
+   "d": "2026-11-13",
+   "title": "首次补课：9/28 后的第一次更新（全部为事实记录）",
+   "items": [
+    "价格：UNI 距 9/22 高点约 −42.5%；ENA 距 9/27 高点约 −49%；RAY 距 10/07 高点约 −34.6%（高于 MA200 约 50.8%，流动性最薄）；AAVE 11-12 收盘 114.07，较 9/25 收盘 153.62 低 25.7%；SOL 低于 MA200 约 8.2%。",
+    "SOL 证伪点核对：Alpenglow 已于 2026-10-21 主网上线（epoch 1064）；SIMD-0550 于 08-28 以 67.001% 通过，但还需实现步骤（SIMD-0607）才生效；SIMD-0553 结果未取到明确来源。",
+    "解锁：ENA 12-02 约 4,062.5 万枚（约 0.30%）、12-05 约 9,375 万枚（约 0.69%）；PUMP 每月约 68.75 亿枚（约 1.5% 流通，日期存疑）；UNI、NEAR、RAY、AAVE 未查到 30 日内 ≥5% 的流通量解锁。",
+    "ENA：USDe 约 $49.7 亿，离 $75 亿回购触发线仍远（回购为 0）。",
+    "NEAR：HSP-029 否决窗口 11-16 截止，最早约 2027-02-14 生效；Intents 成交量未取到。",
+    "AAVE：V3.8 于 11-12 上线；回购自 04-19 起暂停；Aavenomics 3.0 的销毁尚无正式提案；Horizon 存款数字未取到。",
+    "发射台数据源已迁到本站 /launchpad/：11-12 pump.fun 日手续费约 $136 万，7 日合计约 $860 万，30 日合计约 $4,862 万（7 日日均比 30 日日均低 24.2%）。",
+    "凡标“未取到”的项不代表为 0，也不代表没有变化。"
+   ]
+  },
+  {
+   "d": "2026-09-28",
+   "title": "历史回测 + 宏观背景",
+   "items": [
+    "选币时“它最近比 BTC 强”不加分：17 个 BTC 急拉窗口、56 个币里，点火前 30/60 天相对 BTC 最强的五分之一只在 5–7 个窗口跑赢篮子，相关性还是负的。",
+    "宏观背景：美联储净流动性 × 美元方向经自己数据验证（美元走强会盖掉流动性效应，三个年代方向一致、幅度在缩小）；美国 M2 2022 年后失效。",
+    "PONS 回购市盈率 2.1 倍看着便宜，但处在见顶后的回落段，便宜不等于进场信号。"
+   ]
+  },
+  {
+   "d": "2026-09-27",
+   "title": "外部观点核对",
+   "items": [
+    "埋伏仓不能用窄止损：发帖后、点火前普遍先回撤，中位 −11.5%，最深 −23%；设 −12% 收盘止损，11 个里 7 个会被洗掉，包括 UNI 和 LIT。",
+    "待核的外部说法（外部佐证）：PENDLE 2026-01 改 sPENDLE，80% 协议收入回购；MORPHO 费用开关最高 25% 仍未开；JTO 的 JIP-38（JTX 80% 手续费买 JTO 销毁），解锁 12 月结束；HYPE 回购比例外部写 97%，本站记录为 99%，两者不一致。"
+   ]
+  },
+  {
+   "d": "2026-09-26",
+   "title": "叙事主线研究",
+   "items": [
+    "HYPE：2026 年 3 月起价格与收入脱钩——现价是 2025 年高点的 1.57 倍，近 30 日收入只有 2025 年 8 月的 53%，市值 / 年化收入从约 11 倍升到约 32 倍。机制是真的，但当前属于资金驱动、价格先于收入。",
+    "ARB：AEP 10% 分成链上已累计 1,988.89 ETH，但停在 Arbitrum 基金会的以太坊多签里，DAO 国库实际到账为 0。",
+    "UNI：链上销毁 80% 来自 L2 跨链到账（Robinhood Chain 占 55%）；Pons 毕业池挂自定义 hook，不收 UNI 协议费；v4 协议费第 1 部分 7/27 已执行。",
+    "ZEC：ZCSH 累计净流入 3.06 亿里约 1 亿是 DCG 实物注入，外部新增资金约 2 亿（此前记录的“3.6 亿”已更正）。",
+    "AI Agent 支付：x402.org 首页“近 30 日 $24.24M”是网站源码里写死的常量；x402scan 实时约 $99 万 / 月；逐个核查后仍没有代币拿到可计量的支付收入。"
+   ]
+  }
+ ],
+ "exclude": [
+  "AEUR",
+  "BFUSD",
+  "BNSOL",
+  "BUSD",
+  "CRVUSD",
+  "DAI",
+  "EUR",
+  "EURC",
+  "EURI",
+  "FDUSD",
+  "FRAX",
+  "GHO",
+  "LUSD",
+  "PAXG",
+  "PYUSD",
+  "RLUSD",
+  "RWUSD",
+  "TUSD",
+  "USD1",
+  "USDC",
+  "USDD",
+  "USDE",
+  "USDF",
+  "USDP",
+  "USDS",
+  "USDT",
+  "USTC",
+  "WBETH",
+  "WBTC",
+  "XAUT",
+  "XUSD"
+ ]
+}

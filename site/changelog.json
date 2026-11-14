@@ -1,5 +1,24 @@
 [
  {
+  "version": "2026.11.14",
+  "date": "2026-11-14",
+  "notify": true,
+  "title_zh": "新模块：核心选币观测台",
+  "title_en": "New: core picks monitor",
+  "items": [
+   {
+    "type": "new",
+    "zh": "左侧导航新增「核心选币」（/core/）：把大叔的核心标的追踪（12 个回购 / 收入型协议 + 18 个叙事 / 赛道观察标的）搬上网站，每天自动更新。基本面看 DefiLlama 手续费、协议收入、持有人收入、业务量和估值倍数；资金面看币安成交额、现货 + 永续合并成交额榜（常客 / 新进榜 / 掉榜）；技术面看均线、RSI、回撤；每个标的有走势图、叙事阶段、解锁、风险记录。",
+    "en": "New “Core Picks” page (/core/): the core-asset tracker (12 buyback / revenue protocols + 18 narrative / sector watch names), updated daily. Fundamentals: DefiLlama fees, revenue, holder revenue, activity and valuation multiples; flows: Binance volume and a combined spot + perp volume board (regulars / entrants / exits); technicals: MAs, RSI, drawdowns. Each asset has charts, narrative stage, unlocks and risk notes."
+   },
+   {
+    "type": "new",
+    "zh": "建仓条件检查和风险提示：三道闸门直接读本站 L2 周期状态、BTC 本轮最低收盘和 L1 净流动性闸门；评分和规则全部标【假设】，只做排序和条件检查，不是买卖建议。代币化美股 / ETF 和黄金不进任何统计。",
+    "en": "Entry checklist and risk alerts: the three gates read this site’s L2 cycle state, the BTC cycle-low close and the L1 net-liquidity gate; all scores and rules are marked as hypotheses, for sorting and condition checks only, not trade advice. Tokenized stocks / ETFs and gold are excluded everywhere."
+   }
+  ]
+ },
+ {
   "version": "2026.11.13",
   "date": "2026-11-13",
   "notify": false,

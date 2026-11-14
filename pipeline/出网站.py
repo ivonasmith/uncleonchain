@@ -180,6 +180,7 @@ ICON = {
     "launchpad": '<path d="M3 14V8.5M8 14V2.5M13 14V6"/><path d="M1.5 14h13"/>',
     "aiagent": '<rect x="3" y="4.5" width="10" height="8.5" rx="2"/><path d="M8 2v2.5M6 8.2v1M10 8.2v1M1.5 8.5v2M14.5 8.5v2"/>',
     "rotation": '<path d="M13.2 6A5.5 5.5 0 0 0 3.1 5.4M2.8 10a5.5 5.5 0 0 0 10.1.6M13.4 2.6v3.5H9.9M2.6 13.4V9.9h3.5"/>',
+    "core": '<path d="M8 1.8l1.9 3.9 4.3.6-3.1 3 .7 4.3L8 11.6l-3.8 2 .7-4.3-3.1-3 4.3-.6z"/>',
     "narrative": '<circle cx="8" cy="8" r="6"/><circle cx="8" cy="8" r="2.4"/><path d="M8 8l4.2-4.2"/>',
     "reports": '<path d="M3 1.8h7l3 3v9.4H3z"/><path d="M10 1.8v3h3M5.5 11.5V9.5M8 11.5V7.5M10.5 11.5V8.5"/>',
     "journal": '<path d="M3.5 1.8h9v12.4h-9z"/><path d="M6 5h4M6 8h4M6 11h2.5"/>',
@@ -189,7 +190,7 @@ ICON = {
 }
 NAV_MAIN = [("home", "/", "终端总览", "Overview"), ("macro", "/macro/", "宏观仪表盘", "Macro"),
             ("calendar", "/calendar/", "事件日历", "Calendar"), ("launchpad", "/launchpad/", "发射台矩阵", "Launchpads"), ("aiagent", "/ai-agent/", "AI Agent", "AI Agent"), ("rotation", "/rotation/", "板块轮动", "Rotation"),
-            ("narrative", "/narrative/", "叙事埋伏", "Narratives"), ("reports", "/reports/", "分析报告", "Reports"),
+            ("core", "/core/", "核心选币", "Core Picks"), ("narrative", "/narrative/", "叙事埋伏", "Narratives"), ("reports", "/reports/", "分析报告", "Reports"),
             ("journal", "/journal/", "解读日志", "Journal")]
 NAV_MORE = [("methodology", "/methodology/", "口径与规则", "Methodology"), ("corrections", "/corrections/", "更正记录", "Corrections"),
             ("about", "/about/", "关于", "About")]
@@ -450,7 +451,9 @@ import hashlib                                                           # noqa:
 LEG_WEB = os.path.join(ROOT, "leg", "web")                              # 涨腿追踪：设计稿拆出来的脚本和样式（页面 + 首页卡片共用）
 ASSET_SRC = {"site.css": ST.SITE_CSS, "ui.js": ST.UI_JS, "share.js": ST.SHARE_JS, "chart.js": ST.CHART_JS,
              "leg.js": open(os.path.join(LEG_WEB, "leg.js"), encoding="utf-8").read(),
-             "leg.css": open(os.path.join(LEG_WEB, "leg.css"), encoding="utf-8").read()}
+             "leg.css": open(os.path.join(LEG_WEB, "leg.css"), encoding="utf-8").read(),
+             "core.js": open(os.path.join(ROOT, "core", "web", "core.js"), encoding="utf-8").read(),
+             "core.css": open(os.path.join(ROOT, "core", "web", "core.css"), encoding="utf-8").read()}
 ASSET_URL = {k: f"/assets/{k}?v={hashlib.md5(v.encode('utf-8')).hexdigest()[:10]}" for k, v in ASSET_SRC.items()}
 
 # Cloudflare Pages 缓存规则：样式脚本带版本号可以长缓存；走势数据一小时；页面本身每次都向服务器确认
@@ -1119,6 +1122,7 @@ def build_home(sd, S, logs, weeks, months, rot, matrix):
 <h2>{T("四层信号灯", "Four-layer signals")} <span class="sub">{T("点进去看每层结论、依据和每个指标的全部历史", "Click through for each layer's verdict, evidence and every gauge's full history")}</span></h2>
 {signal_tiles(G["VS"], G["JBY"], G.get("L2"))}
 {leg_home_card()}
+{core_home_card()}
 {cal_home_card(G.get("CAL"))}
 <div class="grid g2" style="margin-top:22px;align-items:start">
 <div><h2 style="margin-top:12px">{T("发射台矩阵 · 当日 Top6", "Launchpads · top 6 today")} {cycle_tag()} <a class="sub" href="{U("/launchpad/")}">{T("全部", "All")} {len((matrix or {}).get("协议", []))} {T("个协议 →", "protocols →")}</a></h2>{lp_tbl}</div>
@@ -1129,7 +1133,7 @@ def build_home(sd, S, logs, weeks, months, rot, matrix):
 {jl}"""
     js = f"<script>function shareHome(){{ucShare({json.dumps(share_obj, ensure_ascii=False)})}}</script>"
     emit("index.html", T(f"{BRAND} · 链上数据情报终端", f"{BRAND_EN} · Onchain research terminal"), body, active="home", share=True,
-         scripts=js + leg_assets()[1], extra_head=leg_assets()[0],
+         scripts=js + leg_assets()[1], extra_head=leg_assets()[0] + f'<link rel="stylesheet" href="{ASSET_URL["core.css"]}">',
          desc=LF(comp or {}, "一句话") or T(SLOGAN, SLOGAN_EN))
 
 
@@ -3758,6 +3762,83 @@ def cal_home_card(cal):
             f'<div class="card calhome"><ul>{rows}</ul></div>')
 
 
+# ---------------------------------------------------------------- 核心选币观测台（数据 core/core_daily.py → data/core/；页面由 core/web/core.js 渲染）
+CORE_L2_PASS = ("BEAR_ZONE", "RECOVERY")      # 闸门 1：熊底区或熊末→牛初才过（大叔原型的建仓闸门）
+
+
+def core_gates():
+    """三道闸门里读本站数据的两道：L2 周期状态、L1 净流动性闸门（13 周 ≤ −2.72% 且美元走强，同 宏观规则 的判定）。"""
+    st_ = ((G.get("L2") or {}).get("state") or {})
+    code = st_.get("code")
+    l2 = {"code": code, "ok": code in CORE_L2_PASS, "since": st_.get("since"),
+          "name_zh": (R.L2_STATES.get(code) or ("",))[0] if code else None, "name_en": (R.L2_STATES.get(code) or ("", ""))[1] if code else None} if code else None
+    j = G.get("JBY") or {}
+    nl, us = j.get("netliq13"), j.get("usd13")
+    liq = None
+    if nl and nl.get("值") is not None:
+        liq = {"netliq": nl["值"], "usd": us.get("值") if us else None, "asof": nl.get("截至"),
+               "tripped": nl["值"] <= -2.72 and us is not None and (us.get("值") or 0) > 0}
+    return {"l2": l2, "liq": liq}
+
+
+def write_core_data():
+    """data/core → site/data/core（构建时注入闸门）。"""
+    src = os.path.join(DATA, "core")
+    d = load(os.path.join(src, "core_latest.json"))
+    G["CORE"] = d
+    if not d:
+        return
+    out = os.path.join(SITE, "data", "core")
+    os.makedirs(os.path.join(out, "series"), exist_ok=True)
+    d = dict(d, gates=core_gates())
+    with open(os.path.join(out, "core_latest.json"), "w", encoding="utf-8") as fh:
+        json.dump(d, fh, ensure_ascii=False, separators=(",", ":"))
+    for fn in ("core_history.json",):
+        if os.path.exists(os.path.join(src, fn)):
+            shutil.copyfile(os.path.join(src, fn), os.path.join(out, fn))
+    for fn in os.listdir(os.path.join(src, "series")) if os.path.isdir(os.path.join(src, "series")) else []:
+        shutil.copyfile(os.path.join(src, "series", fn), os.path.join(out, "series", fn))
+
+
+def core_home_card():
+    d = G.get("CORE")
+    if not d:
+        return ""
+    cs = d.get("coins") or {}
+    pool = [c for c in cs.values() if c.get("track") == "pool"]
+    wr = [c for c in pool if ((c.get("fees") or {}).get("revenue") or {}).get("d7v30") is not None]
+    up = sum(1 for c in wr if c["fees"]["revenue"]["d7v30"] > 0)
+    top = sorted((c for c in pool if (c.get("sc") or {}).get("n", 0) >= 4), key=lambda c: -c["sc"]["total"])[:5]
+    m = d.get("market") or {}
+    b30 = (m.get("bench") or {}).get("r30") or {}
+    vb = m.get("vol") or {}
+    fp = lambda x: "—" if x is None else f"{x:+.1f}%"
+    tops = " ".join(f'<a href="{U("/core/")}#coin/{esc(c["sym"])}">{esc(c["sym"])} <b>{c["sc"]["total"]}</b></a>' for c in top)
+    ent = "、".join(x["sym"] for x in vb.get("entrants") or []) or T("无", "none")
+    return (f'<h2>{T("核心选币观测", "Core picks monitor")} <span class="sub">{T("基本面 · 资金面 · 技术面，只做条件检查", "Fundamentals · flows · technicals; condition checks only")}</span>'
+            f' <a class="sub" href="{U("/core/")}">{T("进观测台 →", "Open →")}</a></h2>'
+            f'<div class="card core-home"><div class="row"><span>{T("观测池收入 7 日均 > 30 日均", "Pool revenue 7d > 30d")} <b>{up} / {len(wr)}</b></span>'
+            f'<span>{T("观测池 30 日中位", "Pool 30d median")} <b>{fp(b30.get("pool_med"))}</b> · {T("全市场篮子", "market basket")} <b>{fp(b30.get("ew_med"))}</b></span>'
+            f'<span>{T("成交额新进榜", "Volume entrants")} <b>{esc(ent)}</b></span></div>'
+            f'<div class="row" style="margin-top:6px">{T("评分前 5（假设）：", "Top-5 score (hypothesis): ")}{tops}</div>'
+            f'<div class="row" style="margin-top:6px;font-size:12px;color:var(--muted)">{T("数据日", "Data day")} {esc(d.get("last_complete_day") or "")} · {T("评分只用于排序，不是买卖建议", "Score is for sorting only, not advice")}</div></div>')
+
+
+def build_core():
+    cr = crumbs([(T("核心选币", "Core Picks"), None)])
+    v = esc((G.get("CORE") or {}).get("last_complete_day") or "")
+    body = f"""{cr}
+<div class="ph"><div><div class="eyebrow">Core Picks Monitor</div><h1>{T("核心选币观测台", "Core picks monitor")}</h1></div></div>
+<p class="lede">{T("回购 / 收入型协议和叙事标的的基本面（手续费、收入、持有人收入、业务量）、资金面（成交额、现货 + 永续排名）、技术面（均线、RSI、回撤）。每天自动更新；评分和规则判定全部是【假设】，只做条件检查和风险提示，不是买卖建议。",
+                   "Fundamentals (fees, revenue, holder revenue, activity), flows (volume, spot + perp rank) and technicals (MAs, RSI, drawdown) for buyback / revenue protocols and narrative names. Updated daily; scores and rule checks are hypotheses for condition checks and risk alerts, not trade advice.")}</p>
+<div class="core" id="core" data-src="/data/core/core_latest.json?v={v}" data-series="/data/core/series/" data-hist="/data/core/core_history.json"></div>
+<noscript><p class="muted">{T("这一页需要开启 JavaScript。", "This page needs JavaScript.")}</p></noscript>"""
+    emit("core/index.html", T(f"核心选币观测台 · {BRAND}", f"Core Picks Monitor · {BRAND_EN}"), body, active="core",
+         extra_head=f'<link rel="stylesheet" href="{ASSET_URL["core.css"]}">', scripts=f'<script src="{ASSET_URL["core.js"]}" defer></script>',
+         desc=T("核心标的的基本面、资金面、技术面每日观测：协议收入趋势、估值、解锁、成交额榜、均线与回撤，加建仓条件检查和风险提示。",
+                "Daily fundamentals, flows and technicals for core assets: revenue trend, valuation, unlocks, volume board, MAs and drawdowns, with an entry checklist and risk alerts."))
+
+
 # ---------------------------------------------------------------- 涨腿追踪（只读 data/leg/leg_latest.json；规则在 leg/leg_data.py，文案与统计在 leg/web/leg.js）
 def leg_src(fn="leg_latest.json"):
     """数据文件链接带 ?v=<asof>（设计稿要求）；页面 / 卡片由 leg.js 取数渲染，停更判断在浏览器里按当天日期算。"""
@@ -4909,6 +4990,7 @@ def main():
     for fn in ("leg_latest.json", "leg_history.json"):
         if os.path.exists(os.path.join(DATA, "leg", fn)):
             shutil.copyfile(os.path.join(DATA, "leg", fn), os.path.join(SITE, "data", fn))
+    write_core_data()
     copy_report_files()
     for lang in ("zh", "en"):
         LANG["v"] = lang
@@ -4927,6 +5009,7 @@ def main():
         build_narrative()
         build_calendar()
         build_leg_tracker()
+        build_core()
         build_ai_agent()
         build_posts()
         build_reports()
