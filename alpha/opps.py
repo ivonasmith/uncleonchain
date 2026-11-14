@@ -35,6 +35,15 @@ def get(url, timeout=60):
 
 
 FW = load(os.path.join(HERE, "framework.json"))
+
+
+def home(url):
+    """官网只留域名首页：DefiLlama 有的链接带推荐码（如 axiom.trade/@defillama），不替别人带推荐。"""
+    if not url:
+        return None
+    from urllib.parse import urlsplit
+    u = urlsplit(url if "://" in url else "https://" + url)
+    return f"{u.scheme or 'https'}://{u.netloc}" if u.netloc else None
 CFG = load(os.path.join(HERE, "alpha_config.json"))
 CAT2BIZ = {c: k for k, cs in FW["category_map"].items() if not k.startswith("_") for c in cs}
 
@@ -144,6 +153,7 @@ def build():
             "evidence": [{"url": e.get("url"), "fields": e.get("fields")} for e in (c or {}).get("evidence") or [] if str(e.get("url", "")).startswith("http")],
             "data": {"category": cat, "chains": r.get("chains") or li.get("chains"), "rev30": rev30, "chg30": r.get("chg30"),
                      "tvl": li.get("tvl"), "listed": li.get("listed"), "slug": r.get("slug") or li.get("slug") or L.get("slug"),
+                     "url": home(r.get("url") or li.get("url")), "logo": r.get("logo") or li.get("logo"), "twitter": r.get("twitter") or li.get("twitter"),
                      "children": r.get("children"), "token": has_token, "token_seen": L.get("token_seen"), "rev_hist": rev_hist},
         })
     order = {"研究观察": 0, "优先研究": 0, "待核验": 1, "原始线索": 2, "拒绝": 3}

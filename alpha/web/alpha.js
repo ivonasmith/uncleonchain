@@ -297,6 +297,10 @@
   const ENTRY = () => Object.fromEntries(FW.entry.opts.map(o => [o.k, o.name]));
   const tip = t => t ? `<button type="button" class="info" data-tip="${esc(t)}">i</button>` : '';
   const chip = (txt, tone) => `<span class="chip t-${tone || 'neutral'}"><i></i>${esc(txt)}</span>`;
+  const logo = (src, name, size) => { const ini = esc(String(name || '?').replace(/[^A-Za-z0-9\u4e00-\u9fa5]/g, '').slice(0, 1).toUpperCase() || '?');
+    return `<span class="ax-logo" style="width:${size || 22}px;height:${size || 22}px">${src ? `<img src="${esc(src)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">` : ''}<b>${ini}</b></span>`; };
+  const links = (url, tw, slug) => [url ? `<a href="${esc(url)}" target="_blank" rel="noopener">${T('官网', 'Website')} ↗</a>` : '',
+    tw ? `<a href="https://x.com/${esc(tw)}" target="_blank" rel="noopener">X ↗</a>` : '', slug ? `<a href="https://defillama.com/protocol/${esc(slug)}" target="_blank" rel="noopener">DefiLlama ↗</a>` : ''].filter(Boolean).join('');
   const pct = v => v == null ? '' : `<span class="t-${v >= 0 ? 'up' : 'dn'}">${v >= 0 ? '+' : ''}${Math.round(v)}%</span>`;
   function sparkSvg(vals, tone, w, h) {
     const v = (vals || []).filter(x => x != null);
@@ -328,6 +332,24 @@
     return `<div class="tw"><table><tbody>${g.items.filter(i => !i.private).map(it => { const s = card.scores[it.k] || {}; const v = s.v; const known = v !== 'U' && v !== 'NA' && v != null && v !== '';
       return `<tr><td class="l" style="width:34%"><b>${it.k}</b> ${esc(it.name)}<div class="small muted">${esc(it.q || '')}</div></td><td style="width:44px">${known ? `<b>${v}</b><span class="muted">/${max}</span>` : `<span class="muted">${v === 'NA' ? 'NA' : 'U'}</span>`}</td><td class="l small wrapc">${known ? esc(it.anchors[v]) : `<span class="muted">${v === 'NA' ? T('不适用', 'n/a') : T('待研究补证', 'pending research')}</span>`}${s.why ? `<div class="muted">${esc(s.why)}</div>` : ''}</td><td class="l" style="width:52px">${srcTag(s.src)}</td></tr>`; }).join('')}</tbody></table></div>`;
   }
+  function classRows(card) {
+    const A = Object.fromEntries(FW.classes.attribute.opts.map(o => [o.k, o.name]));
+    return `<dl class="ax-dl">${[['business', BIZ(), T('需求来源', 'Demand')], ['right', RIGHT(), T('资产权利', 'Right')], ['opportunity', OPP(), T('机会类型', 'Opportunity')], ['attribute', A, T('研究属性', 'Attribute')]]
+      .map(([k, m, l]) => { const c = card.classes[k] || {}; return `<dt>${l}</dt><dd>${esc(m[c.v] || (c.v === 'U' ? T('尚未判明', 'unknown') : c.v || '—'))} ${srcTag(c.src)}${c.why ? ` <span class="muted">${esc(c.why)}</span>` : ''}</dd>`; }).join('')}</dl>`;
+  }
+  function rangeRows(w) {
+    const rng = (arr, fmt) => { const v = arr.filter(x => x != null && isFinite(x)).sort((a, b) => a - b); return v.length ? `${fmt(v[0])} · <b>${fmt(med(v))}</b> · ${fmt(v[v.length - 1])}` : '—'; };
+    return `<dl class="ax-dl"><dt>${T('估值峰值', 'Peak val.')}</dt><dd>${rng(w.map(x => x.o.tok.val_peak), usd)}</dd><dt>${T('首周后倍数', '×wk-1')}</dt><dd>${rng(w.map(x => x.o.tok.mult_p7), mx)}</dd>
+      <dt>${T('相对 BTC', 'vs BTC')}</dt><dd>${rng(w.map(x => x.o.tok.rel_btc_peak_p7), mx)}</dd><dt>${T('到峰天数', 'To peak')}</dt><dd>${rng(w.map(x => x.o.tok.days_to_peak), v => Math.round(v))}</dd>
+      <dt>${T('一年内 ≥2× 天数', '≥2× days yr-1')}</dt><dd>${rng(w.map(x => x.o.tok.days_ge2x_365), v => Math.round(v))}</dd></dl>`;
+  }
+  function monitorPlanes(card) {
+    const want = new Set(['mech', 'safety', 'data']);
+    if (['cashflow', 'governance'].includes(card.classes.right.v)) want.add('capture');
+    if (card.classes.opportunity.v === 'genesis') want.add('reflexive');
+    if (card.classes.right.v !== 'none') { want.add('supply'); want.add('structure'); }
+    return FW.monitor.planes.filter(p => want.has(p.k)).map(p => `<p class="small"><b>${esc(p.name)}</b> · ${T('触发：', 'Trigger: ')}${esc(p.trigger)}<br><span class="muted">${T('输出：', 'Output: ')}${esc(p.out)}</span></p>`).join('') + `<p class="small muted">${esc(FW.monitor.rule)}</p>`;
+  }
   function valuationRows(card) {
     const rt = FW.classes.right.opts.find(o => o.k === card.classes.right.v);
     const bizVal = { trading: 'trading', realworld: 'payment', infra: 'resource' }[card.classes.business.v];
@@ -347,7 +369,7 @@
     const groups = [[T('新发现 · 3 天内', 'New · last 3 days'), fresh], [T('已补证', 'Researched'), rest.filter(o => DONE.includes(o.status))], [T('待补证', 'Pending research'), rest.filter(o => !DONE.includes(o.status))]];
     const row = o => { const d = o.data; const v = d.rev30 != null ? d.rev30 : d.tvl;
       return `<button type="button" class="md-row${o.id === SELID ? ' on' : ''}" data-id="${esc(o.id)}">
-        <span class="r1"><b>${esc(o.name)}</b><i class="dot t-${STC[o.status] || 'neutral'}" title="${esc(o.status)}"></i></span>
+        <span class="r1"><span class="nm">${logo(d.logo, o.name, 20)}<b>${esc(o.name)}</b></span><i class="dot t-${STC[o.status] || 'neutral'}" title="${esc(o.status)}"></i></span>
         <span class="r2"><span>${d.rev30 != null ? usd(v) : (v ? 'TVL ' + usd(v) : '—')} ${pct(d.chg30)}</span>${sparkSvg(o.spark, (d.chg30 || 0) >= 0 ? 'up' : 'dn', 64, 18)}</span>
         <span class="r3">${o.entry.filter(e => e !== 'none').map(e => esc(ENTRY()[e])).join(' · ') || `<span class="muted">${T('暂无资金入口', 'No entry yet')}</span>`}</span></button>`; };
     return `<div class="fg md-filter">${[['invest', T('可投资', 'Investable')], ['watch', T('预警观察', 'Watchlist')], ['all', T('全部', 'All')], ['reject', T('已拒绝', 'Rejected')]]
@@ -363,10 +385,10 @@
     const list = (OPPS.opps.filter(x => BF === 'all' ? x.bucket !== 'reject' : x.bucket === BF));
     const idx = list.findIndex(x => x.id === o.id);
     let h = `<div class="md-nav"><button type="button" class="pill" data-nav="back">← ${T('列表', 'List')}</button><span class="muted small">${idx + 1} / ${list.length}</span><button type="button" class="pill" data-nav="-1">${T('上一个', 'Prev')}</button><button type="button" class="pill" data-nav="1">${T('下一个', 'Next')}</button></div>`;
-    h += `<div class="glass ax-head"><div class="ax-title"><h2>${esc(o.name)}</h2>${chip(o.status, STC[o.status])}${o.fresh ? chip(T('新发现', 'New'), 'up') : ''}</div>
+    h += `<div class="glass ax-head"><div class="ax-title">${logo(d.logo, o.name, 34)}<h2>${esc(o.name)}</h2>${chip(o.status, STC[o.status])}${o.fresh ? chip(T('新发现', 'New'), 'up') : ''}<span class="ax-links">${links(d.url, d.twitter, d.slug)}</span></div>
       <p class="ax-one">${esc(oneLiner(o))}</p>
       <div class="ax-entry">${o.entry.map(e => `<span class="ent${e === 'none' ? ' none' : ''}">${esc(En[e] || e)}</span>`).join('')}<span class="muted small">${esc(o.entry_why || '')}</span></div>
-      <div class="ax-meta small muted">${T('发现', 'Seen')} ${esc(o.discovered || '—')} · ${o.reviewer === 'claude-auto' ? T('补证：Claude 自动', 'Research: Claude (auto)') : o.reviewer ? T('补证：Codex', 'Research: Codex') : T('还没补证：只有系统按数据打的分', 'Not researched yet: system scores only')}${R.checked_utc ? ' · ' + esc(R.checked_utc.slice(0, 10)) : ''}${d.slug ? ` · <a href="https://defillama.com/protocol/${esc(d.slug)}" target="_blank" rel="noopener">DefiLlama ↗</a>` : ''}</div></div>`;
+      <div class="ax-meta small muted">${T('发现', 'Seen')} ${esc(o.discovered || '—')} · ${o.reviewer === 'claude-auto' ? T('补证：Claude 自动', 'Research: Claude (auto)') : o.reviewer ? T('补证：Codex', 'Research: Codex') : T('还没补证：只有系统按数据打的分', 'Not researched yet: system scores only')}${R.checked_utc ? ' · ' + esc(R.checked_utc.slice(0, 10)) : ''}</div></div>`;
     h += `<div class="grid g4 ax-kpis">
       <div class="glass hero"><div class="k">${d.rev30 != null ? T('30 天协议收入', '30d protocol revenue') : 'TVL'}<span>${d.rev30 != null ? T('环比', 'vs prior') : ''}</span></div><div class="v">${usd(d.rev30 != null ? d.rev30 : d.tvl)}</div><div class="s">${d.rev30 != null ? (d.chg30 == null ? T('前 30 天没有收入', 'no prior revenue') : pct(d.chg30) + T(' 比前 30 天', ' vs prior 30d')) : T('新上架，还没有收入读数', 'new listing, no revenue yet')}</div>${sparkSvg(o.spark, (d.chg30 || 0) >= 0 ? 'up' : 'dn', 200, 30)}</div>
       <div class="glass hero"><div class="k">${T('机制与扩张', 'Mechanism')}${tip(T('新参与机制、可达性、分配公平、独立扩散、价值归属五项，每项 0–4。区间下沿 = 已查清的得分，上沿 = 未知项全按满分；覆盖率 = 查清了几成。', 'Five items 0–4; range low = scored so far, high = unknowns at max.'))}</div><div class="v">${iv.mech.lo}–${iv.mech.hi}</div><div class="s">${T('查清', 'covered')} ${Math.round(iv.mech.cov * 100)}%</div>${meter(iv.mech)}</div>
@@ -379,11 +401,17 @@
     if (sims.length) h += `<div class="card ax-box" style="margin-top:12px"><h3>${T('最像它的历史案例', 'Closest historical cases')}${tip(ANALOG_TIP)}</h3>${analogTable(sims)}</div>`;
     const vr = valuationRows(o);
     h += `<details class="card ax-more"><summary>${T('完整拆解', 'Full teardown')} <span class="muted small">${T('逐项评分 · 研究字段 · 估值口径 · 证据', 'scores · research · valuation · evidence')}</span></summary>
-      <h4>${esc(FW.scores.mech.name)}</h4>${scoreTable(o, 'mech', 4)}<h4>${esc(FW.scores.part.name)}</h4>${scoreTable(o, 'part', 4)}${FW.scores.invest ? `<h4>${esc(FW.scores.invest.name)}</h4>${scoreTable(o, 'invest', 3)}` : ''}
+      <h4>${T('分类', 'Classes')}</h4>${classRows(o)}
+      <h4>${esc(FW.scores.mech.name)}</h4>${scoreTable(o, 'mech', 4)}<h4>${esc(FW.scores.part.name)}</h4>${scoreTable(o, 'part', 4)}${FW.scores.invest ? `<h4>${esc(FW.scores.invest.name)}</h4>${scoreTable(o, 'invest', 3)}<p class="small muted">${esc(FW.scores.invest.facts.name)}：${esc(FW.scores.invest.facts.rule)}</p>` : ''}
+      ${o.classes.right.v !== 'none' ? `<p class="small muted">${esc(FW.scores.token.name)}：${T('有代币的对象另评七项（0–3），待研究补证。', 'seven token modules (0–3), pending research.')}</p>` : ''}
       <h4>${T('门槛', 'Gates')}</h4>${FW.gates.items.filter(x => !x.private).map(x => { const s = o.gates[x.k] || {}; return `<div class="kv small"><span>${esc(x.name)}</span><span>${esc(s.v || 'U')} ${srcTag(s.src)} <span class="muted">${esc(s.why || '')}</span></span></div>`; }).join('')}
       ${o.research ? `<h4>${T('研究补证', 'Research')}</h4><dl class="ax-dl"><dt>${T('发币表态', 'Token stance')}</dt><dd>${esc(R.token_stance || 'U')}${R.token_stance_src && R.token_stance_src !== 'U' ? ` · <a href="${esc(R.token_stance_src)}" target="_blank" rel="noopener">${T('来源', 'source')}</a>` : ''}</dd>
         <dt>${T('收入归谁', 'Revenue goes to')}</dt><dd>${esc(R.revenue_who || 'U')}</dd><dt>${T('收入口径', 'Revenue method')}</dt><dd>${esc(R.revenue_method || 'U')}</dd></dl>
         ${(R.missing || []).length ? `<p class="small"><b>${T('还没查清', 'Still unknown')}</b></p><ul class="why">${R.missing.map(m => `<li>${esc(m)}</li>`).join('')}</ul>` : ''}` : ''}
+      <h4>${T('四个问题（缺一项先查，不能用总分弥补）', 'Four questions')}</h4>${FW.questions.items.map(q => `<p class="small"><b>${esc(q.axis)}</b> · ${esc(q.name)}<br><span class="muted">${esc(q.hint)}</span></p>`).join('')}
+      ${w.length ? `<h4>${T('历史对照区间（最低 · 中位 · 最高）', 'Historical ranges (min · median · max)')}</h4>${rangeRows(w)}` : ''}
+      <h4>${T('持续监控', 'Monitoring')}</h4>${monitorPlanes(o)}
+      <h4>${T('基础数据', 'Data')}</h4><dl class="ax-dl"><dt>${T('类型', 'Kind')}</dt><dd>${o.kind === 'tokenless' ? T('无币协议', 'tokenless protocol') : T('新上架协议', 'new listing')}</dd><dt>DefiLlama ${T('类目', 'category')}</dt><dd>${esc(d.category || '—')}</dd><dt>${T('链', 'Chains')}</dt><dd>${esc((d.chains || []).join(' · ') || '—')}</dd>${(d.children || []).length > 1 ? `<dt>${T('子产品', 'Products')}</dt><dd>${esc(d.children.join('、'))}</dd>` : ''}${d.listed ? `<dt>${T('收录日', 'Listed')}</dt><dd>${esc(d.listed)}</dd>` : ''}${d.tvl ? `<dt>TVL</dt><dd>${usd(d.tvl)}</dd>` : ''}${d.token_seen ? `<dt>${T('发币日', 'Token since')}</dt><dd>${esc(d.token_seen)}</dd>` : ''}<dt>${T('状态来源', 'State from')}</dt><dd>${esc(o.status_src)}</dd></dl>
       <h4>${T('估值该用什么', 'Valuation to use')}</h4>${vr.map(r => `<p class="small"><b>${esc(r.name)}</b> · ${T('用', 'use')}：${esc(r.use)}<br><span class="t-dn">${T('别', 'avoid')}</span>：${esc(r.avoid)}</p>`).join('') || '<p class="small muted">—</p>'}
       ${(o.evidence || []).length ? `<h4>${T('证据', 'Evidence')}</h4><p class="small">${o.evidence.map((e, i) => `<a href="${esc(e.url)}" target="_blank" rel="noopener">${i + 1}</a>`).join(' · ')}</p>` : ''}
       <p class="small muted">${T('框架和打分规则见「框架与方法」。', 'Rules: see Framework.')}</p></details>`;
@@ -402,7 +430,11 @@
         <div class="glass hero"><div class="k">${T('新发现 · 3 天内', 'New · 3 days')}</div><div class="v">${freshN}</div><div class="s">${T('不等补证，先放出来', 'shown before research')}</div></div>
         <div class="glass hero"><div class="k">${T('补证进度', 'Research progress')}${tip(T('每天自动补证一批，顺序：新发现 → 可投资 → 收入高。待补证清单可以下载交给 Codex。', 'Daily research works through the queue; downloadable for Codex.'))}</div><div class="v">${doneN}<span class="muted" style="font-size:15px"> / ${act.length}</span></div><div class="s"><a href="/data/alpha/research_queue.json" download>${T('下载待补证清单', 'Download queue')}</a></div></div></div>
       <div class="md"><aside class="md-list">${boardList()}</aside><section class="md-detail" id="ax-detail">${boardDetail(os.find(o => o.id === SELID))}</section></div>
-      <p class="small muted" style="margin-top:12px">${T('数据日', 'Data day')} ${esc(OPPS.asof || '')} · ${T('框架', 'Framework')} ${esc(OPPS.framework)} · ${T('不按分数排名，不是买卖建议', 'no rankings, not trade advice')}</p>`;
+      <p class="small muted" style="margin-top:12px">${T('数据日', 'Data day')} ${esc(OPPS.asof || '')} · ${T('框架', 'Framework')} ${esc(OPPS.framework)} · ${T('自动规则', 'Rules')} ${esc(OPPS.rules || '')} · <a href="${EN ? '/en' : ''}/alpha/framework/#auto">${T('打分规则', 'Scoring rules')}</a> · ${T('不按分数排名，不是买卖建议', 'no rankings, not trade advice')}</p>
+      <details class="card ax-more"><summary>${T('待补证清单（每天自动生成）', 'Research queue (generated daily)')} <span class="muted small">${OPPS.queue_n == null ? '' : OPPS.queue_n + T(' 个', ' items')}</span></summary>
+        <p class="small"><a href="/data/alpha/research_queue.json" download>${T('下载 JSON（含给 Codex 的提示词和交付格式）', 'Download JSON (with prompt and schema)')}</a></p>
+        <p class="small muted">${T('每天的自动补证会话先补排在最前面的几个；想加快就把这个文件交给 Codex，交回的 <日期>_checks.json 放进 alpha/review/ 就会自动并入。', 'The daily session researches the top items; to go faster hand this file to Codex and drop the returned <date>_checks.json into alpha/review/.')}</p>
+        <p class="small muted">${T('已拒绝的卡不删，左上「已拒绝」里能看到保留原因。', 'Rejected cards are kept with reasons under the Rejected filter.')}</p></details>`;
     const sel = (id, push) => {
       SELID = id;
       app.querySelectorAll('.md-row').forEach(b => b.classList.toggle('on', b.dataset.id === id));
@@ -434,7 +466,7 @@
   /* ====================================================================== 案例库：同样左列表 + 右详情；量级对照放下面 */
   let CSEL = null, CF = 'all';
   function rowsData() {
-    return CASES.cases.map(c => { const o = outcome(c); const t = o.tok || {}; return { c, o, t,
+    const B = BIZ(); return CASES.cases.map(c => { const o = outcome(c); const t = o.tok || {}; return { c, o, t, name: c.name, biz: B[c.classes.business] || '',
       val: t.val_peak, mult: t.mult, mult7: t.mult_p7, rel: t.rel_btc_peak_p7, tp: t.days_to_peak, d2: t.days_ge2x_365, back: t.days_peak_to_below_p0,
       fee: o.fees && o.fees.peak30, hot: o.fees && !o.fees.late ? o.fees.hot_days : null, tvl: o.tvl && o.tvl.peak, M: c.scores.M, D: c.scores.D, E: c.scores.E, V: c.scores.V }; });
   }
@@ -443,6 +475,36 @@
     const row = l => { const g = rs.filter(r => r[dim] === l); const w = g.filter(r => r.t.sym);
       return `<tr><td class="l"><b>${l}</b> <span class="small muted">${esc((FW.scores.mech.items.concat(FW.scores.part.items).find(i => i.k === dim) || {}).anchors[l] || '')}</span></td><td>${g.length}</td><td>${usd(med(w.map(r => r.val)))}</td><td>${mx(med(w.map(r => r.mult7)))}</td><td>${med(w.map(r => r.tp)) == null ? '—' : Math.round(med(w.map(r => r.tp)))}</td><td class="l small">${g.map(r => esc(r.c.name.split(/[ /]/)[0])).join('、')}</td></tr>`; };
     return `<div class="tw"><table><thead><tr><th class="l">${label}</th><th>${T('案例', 'n')}</th><th>${T('估值峰值中位', 'Median peak val.')}</th><th>${T('首周后倍数中位', 'Median ×wk-1')}</th><th>${T('到峰中位（天）', 'Median to peak')}</th><th class="l">${T('有哪些', 'Which')}</th></tr></thead><tbody>${[0, 1, 2, 3, 4].map(row).join('')}</tbody></table></div>`;
+  }
+  let SORT = { k: 'val', d: -1 }, FILTER = { business: '', control: 'all' };
+  const bars = v => v === 'U' || v == null ? '<span class="muted">U</span>' : `<span class="sc5">${[0, 1, 2, 3].map(i => `<i class="${i < v ? 'f' : ''}"></i>`).join('')}</span> ${v}`;
+  function caseTable() {
+    let rs = rowsData();
+    if (FILTER.business) rs = rs.filter(r => r.c.classes.business === FILTER.business);
+    if (FILTER.control === 'main') rs = rs.filter(r => !r.c.control);
+    if (FILTER.control === 'ctl') rs = rs.filter(r => r.c.control);
+    rs.sort((a, b) => { const x = a[SORT.k], y = b[SORT.k]; if (x == null || x === 'U') return 1; if (y == null || y === 'U') return -1; return typeof x === 'string' ? SORT.d * x.localeCompare(y) : SORT.d * (x - y); });
+    const B = BIZ();
+    const th = (k, l, cls) => `<th data-s="${k}" class="${cls || ''}">${l}${SORT.k === k ? (SORT.d > 0 ? ' ↑' : ' ↓') : ''}</th>`;
+    return `<div class="tw" style="max-height:640px;overflow:auto"><table><thead><tr>${th('name', T('案例', 'Case'), 'l')}${th('biz', T('需求来源', 'Demand'), 'l')}${th('M', T('创新 M', 'Innov. M'))}${th('D', T('需求独立 D', 'Demand D'))}${th('val', T('估值峰值', 'Peak val.'))}${th('mult7', T('首周后倍数', 'From wk-1'))}${th('mult', T('首日倍数', 'From day-1'))}${th('rel', T('相对 BTC', 'vs BTC'))}${th('tp', T('到峰', 'To peak'))}${th('d2', T('≥2× 天', '≥2× days'))}${th('back', T('峰后跌回起点', 'Back below P0'))}${th('fee', T('30 天手续费峰值', 'Peak 30d fees'))}${th('hot', T('热度天数', 'Hot days'))}${th('tvl', T('TVL 峰值', 'Peak TVL'))}</tr></thead><tbody>
+      ${rs.map(r => `<tr data-id="${r.c.id}" class="${r.c.control ? 'ctl' : ''}${CSEL === r.c.id ? ' sel' : ''}"><td class="l"><b>${esc(r.c.name)}</b>${r.c.control ? `<span class="tag ctl">${T('对照', 'control')}</span>` : ''}<div class="small muted">${esc(r.c.period)}</div></td>
+        <td class="l small">${esc(B[r.c.classes.business] || '')}</td><td>${bars(r.M)}</td><td>${bars(r.D)}</td>
+        <td>${usd(r.val)}${r.val != null ? `<div><span class="tier">${esc(tierOf(r.val))}</span></div>` : ''}</td><td><b>${mx(r.mult7)}</b></td><td class="muted">${mx(r.mult)}</td><td>${mx(r.rel)}</td><td>${dd(r.tp)}</td><td>${r.d2 == null ? '—' : r.d2}</td>
+        <td>${r.back == null ? (r.t.sym ? T('至今没有', 'never') : '—') : dd(r.back)}</td><td>${usd(r.fee)}${r.o.fees && r.o.fees.late ? `<div class="small muted">${T('覆盖晚', 'late data')}</div>` : ''}</td><td>${r.hot == null ? '—' : r.hot}</td><td>${usd(r.tvl)}</td></tr>`).join('')}</tbody></table></div>`;
+  }
+  function scatter(dim, label) {
+    const rs = rowsData().filter(r => r.val != null && r[dim] !== 'U' && r[dim] != null);
+    const W = 560, H = 300, L = 54, R = 14, Tp = 12, Bt = 34;
+    const ys = rs.map(r => Math.log10(r.val)); const y0 = Math.floor(Math.min(...ys)), y1 = Math.ceil(Math.max(...ys));
+    const X = v => L + (W - L - R) * (v + 0.5) / 5, Y = v => Tp + (H - Tp - Bt) * (1 - (v - y0) / (y1 - y0));
+    let g = '';
+    for (let y = y0; y <= y1; y++) g += `<line class="ax-grid" x1="${L}" x2="${W - R}" y1="${Y(y)}" y2="${Y(y)}"/><text x="${L - 6}" y="${Y(y) + 3}" text-anchor="end">${usd(Math.pow(10, y))}</text>`;
+    for (let x = 0; x <= 4; x++) g += `<text x="${X(x)}" y="${H - 14}" text-anchor="middle">${x}</text>`;
+    g += `<text x="${(L + W - R) / 2}" y="${H - 1}" text-anchor="middle">${esc(label)}</text>`;
+    const seen = {};
+    rs.forEach(r => { const k = r[dim]; seen[k] = (seen[k] || 0) + 1; const j = ((seen[k] % 5) - 2) * 9; const cx = X(k) + j, cy = Y(Math.log10(r.val));
+      g += `<circle class="pt${r.c.control ? ' ctl' : ''}${CSEL === r.c.id ? ' hi' : ''}" data-id="${r.c.id}" cx="${cx}" cy="${cy}" r="5"><title>${esc(r.c.name)} · ${usd(r.val)}</title></circle><text class="lbl" x="${cx + 7}" y="${cy + 3}">${esc(r.c.name.split(/[ /]/)[0])}</text>`; });
+    return `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="${esc(label)}">${g}</svg>`;
   }
   function caseCard(c) {
     const S2 = (v, src) => ({ v, src });
@@ -456,7 +518,7 @@
     const toks = (MET.cases[c.id] || {}).tokens || [];
     const B = BIZ(), Rt = RIGHT();
     let h = `<div class="md-nav"><button type="button" class="pill" data-nav="back">← ${T('列表', 'List')}</button></div>
-      <div class="glass ax-head"><div class="ax-title"><h2>${esc(c.name)}</h2>${c.control ? chip(T('对照组', 'Control'), 'warn') : chip(esc(c.period), 'neutral')}${t.val_peak != null ? chip(tierOf(t.val_peak), 'up') : ''}</div>
+      <div class="glass ax-head"><div class="ax-title">${logo(c.logo, c.name, 34)}<h2>${esc(c.name)}</h2>${c.control ? chip(T('对照组', 'Control'), 'warn') : chip(esc(c.period), 'neutral')}${t.val_peak != null ? chip(tierOf(t.val_peak), 'up') : ''}<span class="ax-links">${links(c.url, null, null)}</span></div>
         <p class="ax-one">${esc(c.change)}</p><div class="ax-meta small muted">${esc(B[c.classes.business] || '')} · ${esc(Rt[c.classes.right] || '')} · ${esc(c.period)} · ${esc(c.src)}</div></div>
       <div class="grid g4 ax-kpis">
         <div class="glass hero"><div class="k">${T('估值峰值', 'Peak valuation')}${tip(t.val_kind || T('供给无上限或有迁移，不算估值', 'no valuation'))}</div><div class="v">${usd(t.val_peak)}</div><div class="s">${t.val_peak_date ? esc(t.val_peak_date) : T('没有价格结果', 'no price data')}</div></div>
@@ -468,7 +530,11 @@
     h += `<div class="grid g2" style="margin-top:12px"><div class="card ax-box up"><h3>${T('当时怎么参与、解决了什么', 'Entry & problem solved')}</h3><p>${esc(c.entry)}</p><p class="muted">${esc(c.problem)}</p></div>
       <div class="card ax-box dn"><h3>${T('教训', 'Lesson')}</h3><p>${esc(c.lesson)}</p>${c.why_control ? `<p class="small muted">${T('为什么是对照：', 'Why control: ')}${esc(c.why_control)}</p>` : ''}${c.note ? `<p class="small muted">${esc(c.note)}</p>` : ''}</div></div>
       <details class="card ax-more"><summary>${T('框架拆解（回溯评分）', 'Framework teardown (retrospective)')} <span class="muted small">${T('机制', 'mech')} ${iv.mech.lo}–${iv.mech.hi} · ${T('参与', 'part')} ${iv.part.lo}–${iv.part.hi}</span></summary>
-        <p class="small muted">${esc(CASES.score_basis)}</p><h4>${esc(FW.scores.mech.name)}</h4>${scoreTable(card, 'mech', 4)}<h4>${esc(FW.scores.part.name)}</h4>${scoreTable(card, 'part', 4)}</details>`;
+        <p class="small muted">${esc(CASES.score_basis)}</p><h4>${T('分类', 'Classes')}</h4>${classRows(card)}<h4>${esc(FW.scores.mech.name)}</h4>${scoreTable(card, 'mech', 4)}<h4>${esc(FW.scores.part.name)}</h4>${scoreTable(card, 'part', 4)}
+        <h4>${T('结果明细（接口算出）', 'Outcome detail (computed)')}</h4>${toks.length ? toks.map(x => `<dl class="ax-dl"><dt>${esc(x.sym)}</dt><dd>P0 ${esc(x.p0_date)} → ${T('峰值', 'peak')} ${esc(x.peak_date)} · ${T('首日', 'day-1')} ${mx(x.mult)} · ${T('首周后', 'wk-1')} ${mx(x.mult_p7)}</dd>
+          <dt>${T('估值口径', 'Valuation')}</dt><dd>${esc(x.val_kind || T('不算估值', 'none'))} ${x.val_peak != null ? usd(x.val_peak) : ''}</dd><dt>${T('相对 BTC', 'vs BTC')}</dt><dd>${T('首日起', 'from day-1')} ${mx(x.rel_btc_peak)} · ${T('首周后', 'wk-1')} ${mx(x.rel_btc_peak_p7)}</dd>
+          <dt>${T('一年内 ≥2× 天数', '≥2× days yr-1')}</dt><dd>${x.days_ge2x_365}</dd><dt>${T('峰后跌回起点', 'Back below P0')}</dt><dd>${x.days_peak_to_below_p0 == null ? T('至今没有', 'never') : dd(x.days_peak_to_below_p0)}</dd><dt>${T('价格覆盖率', 'Coverage')}</dt><dd>${Math.round(x.coverage * 100)}%</dd></dl>`).join('') : `<p class="small muted">${T('没有同质化代币或价格源。', 'No fungible token / price source.')}</p>`}
+        ${o.fees ? `<p class="small">${T('手续费序列起点', 'Fees series from')} ${esc(o.fees.first)} · ${T('30 天峰值', 'peak 30d')} ${usd(o.fees.peak30)}（${esc(o.fees.peak30_date)}）· ${T('热度天数', 'hot days')} ${o.fees.hot_days}</p>` : ''}${o.tvl ? `<p class="small">TVL ${T('峰值', 'peak')} ${usd(o.tvl.peak)}（${esc(o.tvl.peak_date)}）</p>` : ''}</details>`;
     return h;
   }
   function renderCases() {
@@ -482,13 +548,22 @@
         <div class="glass hero"><div class="k">${T('有价格结果', 'With price outcome')}</div><div class="v">${nP}</div><div class="s">${T('其余是 NFT / 无单一代币', 'others: NFTs / no single token')}</div></div>
         <div class="glass hero"><div class="k">${T('怎么用', 'How to use')}${tip(ANALOG_TIP)}</div><div class="v" style="font-size:15px;line-height:1.5">${T('给新机会做预期管理', 'Expectation management')}</div><div class="s">${T('不是预测，不是目标价', 'not a forecast')}</div></div></div>
       <div class="md"><aside class="md-list"><div class="fg md-filter">${[['all', T('全部', 'All')], ['ctl', T('只看对照组', 'Controls')]].map(([k, l]) => `<button type="button" class="pill${CF === k ? ' on' : ''}" data-cf="${k}">${l}</button>`).join('')}</div>
-        ${pool.map(r => `<button type="button" class="md-row${r.c.id === CSEL ? ' on' : ''}" data-id="${r.c.id}"><span class="r1"><b>${esc(r.c.name)}</b>${r.c.control ? `<span class="tag ctl">${T('对照', 'ctl')}</span>` : ''}</span>
+        ${pool.map(r => `<button type="button" class="md-row${r.c.id === CSEL ? ' on' : ''}" data-id="${r.c.id}"><span class="r1"><span class="nm">${logo(r.c.logo, r.c.name, 20)}<b>${esc(r.c.name)}</b></span>${r.c.control ? `<span class="tag ctl">${T('对照', 'ctl')}</span>` : ''}</span>
           <span class="r2"><span>${r.val != null ? usd(r.val) : '—'}</span><span class="t-up">${r.mult7 != null ? mx(r.mult7) : ''}</span></span><span class="r3">${esc(r.c.period)}</span></button>`).join('')}</aside>
         <section class="md-detail" id="ax-detail">${caseDetail(CASES.cases.find(c => c.id === CSEL))}</section></div>
       <details class="card ax-more" style="margin-top:16px"><summary>${T('创新级别 × 结果量级', 'Innovation level × outcome')} <span class="muted small">${T('不含对照组 · 中位数只描述这批样本', 'controls excluded · medians describe this sample only')}</span></summary>
-        <h4>${T('按创新级别 M', 'By innovation M')}</h4>${groupTable('M', 'M')}<h4>${T('按需求独立性 D', 'By demand independence D')}</h4>${groupTable('D', 'D')}</details>`;
+        <h4>${T('按创新级别 M', 'By innovation M')}</h4>${groupTable('M', 'M')}<h4>${T('按需求独立性 D', 'By demand independence D')}</h4>${groupTable('D', 'D')}
+        <div class="grid g2" style="margin-top:12px"><div>${scatter('M', T('创新 M（横）× 估值峰值（纵，对数）', 'Innovation M × peak valuation (log)'))}</div><div>${scatter('D', T('需求独立 D（横）× 估值峰值（纵，对数）', 'Demand D × peak valuation (log)'))}</div></div></details>
+      <details class="card ax-more"><summary>${T('全部案例明细表', 'All cases · full table')} <span class="muted small">${T('点表头排序', 'click headers to sort')}</span></summary><div class="fg" style="margin:8px 0"><select class="pill" style="width:auto" data-filt="business"><option value="">${T('全部需求来源', 'All demand sources')}</option>${FW.classes.business.opts.map(o => `<option value="${o.k}">${esc(o.name)}</option>`).join('')}</select><select class="pill" style="width:auto" data-filt="control"><option value="all">${T('含对照组', 'Incl. controls')}</option><option value="main">${T('不含对照组', 'Excl. controls')}</option><option value="ctl">${T('只看对照组', 'Controls only')}</option></select></div><div id="ax-table">${caseTable()}</div>
+        <h4>${T('口径', 'Definitions')}</h4>${FW.outcomes.dims.map(d => `<p class="small"><b>${esc(d.name)}</b>：${esc(d.how)}</p>`).join('')}<ul class="why">${FW.outcomes.caveats.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
+        <p class="small muted">${T('结果数据生成于', 'Outcome data generated')} ${esc((MET.generated || '').slice(0, 10))}</p></details>`;
     if (window.ucBootCharts) window.ucBootCharts(app);
+    app.querySelectorAll('select[data-filt]').forEach(el => { el.value = FILTER[el.dataset.filt]; el.onchange = () => { FILTER[el.dataset.filt] = el.value; document.getElementById('ax-table').innerHTML = caseTable(); }; });
     app.onclick = e => {
+      const so = e.target.closest('th[data-s]');
+      if (so) { const k = so.dataset.s; SORT = { k, d: SORT.k === k ? -SORT.d : -1 }; document.getElementById('ax-table').innerHTML = caseTable(); return; }
+      const pt = e.target.closest('circle[data-id], #ax-table tr[data-id]');
+      if (pt) { CSEL = pt.dataset.id; renderCases(); document.getElementById('ax-detail').scrollIntoView({ block: 'start' }); return; }
       const f = e.target.closest('[data-cf]');
       if (f) { CF = f.dataset.cf; CSEL = null; renderCases(); return; }
       const r = e.target.closest('.md-row');

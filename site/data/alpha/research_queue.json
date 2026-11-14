@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-14T18:14:41+00:00",
+ "generated": "2026-11-14T18:30:11+00:00",
  "n": 22,
  "prompt": "你在给「链上大叔研究台」Alpha 雷达补证（只研究正规项目，不写买卖建议）。对清单里每个协议，查官方网站 / 文档 / 公告、DefiLlama 方法论和可核对的链上信息，\n按下面格式交一个 JSON 数组（文件名 <日期>_checks.json）。第一项 one_liner 用一句大白话说清它是什么（给没听过的人看）。每条事实带来源链接和核对日期；查不到写 \"U\"，不要估，不要编。\n结论 verdict 只能是：研究观察（对象明确、有可证伪假设、没查到否决项）/ 待核验（关键事实缺失或冲突，写清缺什么）/ 拒绝（身份错误、已确认风险、其实已有代币、不是对普通人开放的正规项目，写证据）。\n分数按 framework.json 附录一锚点给（M A F E G T 是 0–4，TM TE 是 0–3，不知道写 U，没有代币时 TE 写 NA），每个分数写 why 和 src。\n资金参与方式 entry 从 buy / stake / points / use / presale / mine / none 里选（none = 暂时没有资金入口），写 entry_why。",
  "schema": {
@@ -60,7 +60,7 @@
     "Hyperliquid L1"
    ],
    "rev30": null,
-   "tvl": 49759035,
+   "tvl": 48610826,
    "defillama": "https://defillama.com/protocol/kinetiq-elysium-bridge",
    "pending": [
     "M",
@@ -120,7 +120,7 @@
     "Ethereum"
    ],
    "rev30": null,
-   "tvl": 8846186,
+   "tvl": 8545396,
    "defillama": "https://defillama.com/protocol/vesper-v2",
    "pending": [
     "M",

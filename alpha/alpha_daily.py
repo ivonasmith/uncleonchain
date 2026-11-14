@@ -172,7 +172,7 @@ def main():
             r30, r60 = x.get("total30d") or 0, x.get("total60dto30d") or 0
             g["rev30"] += r30
             g["rev_prev30"] += r60
-            g["children"].append({"name": x.get("name"), "slug": x.get("slug"), "rev30": round(r30)})
+            g["children"].append({"name": x.get("name"), "slug": x.get("slug"), "rev30": round(r30), "id": pid})
             g["cats"][x.get("category")] = g["cats"].get(x.get("category"), 0) + r30
             for c in x.get("chains") or []:
                 g["chains"][c] = g["chains"].get(c, 0) + r30
@@ -183,7 +183,7 @@ def main():
         g["children"].sort(key=lambda c: -c["rev30"])
         top = g["children"][0]
         name = top["name"] if len(g["children"]) == 1 else g["key"].split("#", 1)[-1].replace("-", " ").title()
-        rows.append({"key": "g:" + g["key"], "name": name, "slug": top["slug"],
+        rows.append({"key": "g:" + g["key"], "name": name, "slug": top["slug"], "url": (byid.get(top["id"]) or {}).get("url"), "logo": (byid.get(top["id"]) or {}).get("logo"), "twitter": (byid.get(top["id"]) or {}).get("twitter"),
                      "children": [c["name"] for c in g["children"]],
                      "category": max(g["cats"], key=g["cats"].get),
                      "chains": [c for c, _ in sorted(g["chains"].items(), key=lambda t: -t[1])][:3],
@@ -199,6 +199,7 @@ def main():
         if (p.get("listedAt") or 0) >= cut:
             par = p.get("parentProtocol")
             lst.append({"key": "p:" + p["id"], "name": p.get("name"), "slug": p.get("slug"), "category": p.get("category"),
+                        "url": p.get("url"), "logo": p.get("logo"), "twitter": p.get("twitter"),
                         "chains": (p.get("chains") or [])[:3], "tvl": round(p.get("tvl") or 0),
                         "listed": dt.datetime.fromtimestamp(p["listedAt"], dt.timezone.utc).date().isoformat(),
                         "token": has_tok(p) or bool(par and ptok.get(par)), "parent": par})
