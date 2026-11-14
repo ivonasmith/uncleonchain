@@ -1,5 +1,29 @@
 [
  {
+  "version": "2026.11.14.5",
+  "date": "2026-11-14",
+  "notify": true,
+  "title_zh": "涨跌腿：分阶段刻度 + 跌腿 45 天提示线",
+  "title_en": "Leg tracker: phase-matched ticks + a day-45 marker for down-legs",
+  "items": [
+   {
+    "type": "new",
+    "zh": "BTC 和山寨整体的卡片都加了刻度：跌腿有天数条和跌幅刻度，涨腿有涨幅刻度（天数条和 89 天线照旧）。刻度按 L2 当前状态选同阶段的历史腿——牛市里的跌腿和牛市比，熊市里的和熊市比；标「一半」「九成」两条线，并直接写出「比 N 条里的 M 条走得久 / 跌得深」。",
+    "en": "BTC and altcoin cards now carry ticks: down-legs get a duration bar and drop ticks, up-legs get gain ticks (the duration bar and day-89 line are unchanged). Ticks compare with legs from the same cycle phase, picked from the current L2 state, show the half and 9-in-10 marks, and state how many comparable legs this one already outlasted or outdid."
+   },
+   {
+    "type": "new",
+    "zh": "BTC 跌腿加 45 天提示线（假设级）：2017 年以来走过第 45 天的 9 条跌腿，8 条在之后 2–16 天内见底、再跌 2.1%–13.2%；例外是 2018-09 的投降段。只有 9 条样本，详情页写了作废条件；不进交易计划。山寨整体没检验过，不画提示线。",
+    "en": "A hypothesis-grade day-45 marker for BTC down-legs: of 9 down-legs since 2017 that passed day 45, 8 bottomed within 2–16 days, 2.1%–13.2% lower; the exception was the 2018-09 capitulation. Only 9 samples; the retirement rule is on the detail page. Not used by the trading plan. No marker for altcoins (untested)."
+   },
+   {
+    "type": "improve",
+    "zh": "/leg-tracker/ 撤掉山寨轮动窗口的规律说明一节（读数卡 11-13 已撤），页首导语同步去掉那一问。",
+    "en": "/leg-tracker/ drops the altcoin-window section (its reading card went on 11-13), and the intro no longer asks about it."
+   }
+  ]
+ },
+ {
   "version": "2026.11.14.4",
   "date": "2026-11-14",
   "notify": false,

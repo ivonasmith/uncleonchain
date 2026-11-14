@@ -1,642 +1,666 @@
 [
-  {
-    "version": "2026.11.14.4",
-    "date": "2026-11-14",
-    "notify": false,
-    "title_zh": "核心选币：公开选币规则 v1（草案）",
-    "title_en": "Core picks: selection rules v1 (draft) published",
-    "items": [
-      {
-        "type": "new",
-        "zh": "观测台「口径与规则」最上面公开选币规则 v1 草案：币安上市 + 近 90 天合并成交额排名中位数前 100；五大类（共识储备 / 主流公链 / 现金流有用 / 博弈控盘 / 注意力情绪），大类按价格的真实驱动力判，每个子类按流动性取前 3，共识储备型全列；有用型的回购状态（已执行 / 承诺未执行 / 暂停）只标注不剔除；博弈控盘型用“机制拆解卡”。名单生成还在做，上线后每天冻结、事后对账。",
-        "en": "Selection rules v1 (draft) are now at the top of the Method tab: Binance-listed and within the top 100 by 90-day median combined volume; five classes judged by what actually drives price, top 3 per sub-class by liquidity (all consensus-reserve assets listed); buyback status is labelled, not used to exclude; speculative coins get a mechanism card. List generation is in progress."
-      }
-    ]
-  },
-  {
-    "version": "2026.11.14.3",
-    "date": "2026-11-14",
-    "notify": false,
-    "title_zh": "接入访问统计（无 cookie）",
-    "title_en": "Privacy-friendly analytics",
-    "items": [
-      {
-        "type": "new",
-        "zh": "接入 Umami 访问统计：只统计页面访问量和少量点击（生成长图、语言切换、新手说明、报告是否读完、核心选币页签），用来了解哪些内容有人看。不用 cookie，不收集个人信息，说明写在「关于」页。",
-        "en": "Added Umami analytics: page views plus a few clicks (share image, language switch, guide, report read-through, Core tabs) to learn which content is useful. No cookies, no personal data; noted on the About page."
-      }
-    ]
-  },
-  {
-    "version": "2026.11.14.2",
-    "date": "2026-11-14",
-    "notify": true,
-    "title_zh": "核心选币：成交额全口径、评分回测、拉盘复盘",
-    "title_en": "Core picks: full Binance volume, score backtest, rally replay",
-    "items": [
-      {
-        "type": "data",
-        "zh": "成交额榜改成币安全口径：一个币 = 全部现货交易对（USDT / USDC / USD1 / FDUSD / BTC / 法币…按当天收盘折美元）+ U 本位（USDT、USDC 保证金，永续 + 交割）+ 币本位合约。榜单合成一张表，每个币后面贴「常客 / 新进榜 / 掉榜 / 新上」标签，可筛选排序。全市场基准改用宏观页「山寨整体」同一个篮子。",
-        "en": "Volume board now covers all of Binance: every spot pair (USDT / USDC / USD1 / FDUSD / BTC / fiat, converted at the day’s close) + USDⓈ-M (USDT and USDC margined, perpetual + delivery) + COIN-M. One table with regular / entrant / dropped / new tags, filterable and sortable. The market benchmark now uses the Macro page’s altcoin basket.",
-        "corrections_anchor": "2026-11-14-corevol"
-      },
-      {
-        "type": "data",
-        "zh": "评分研究立项：原型的 R / C / V / D 评分阈值是拍定的，第一轮回测（38 个有协议收入的代币，2023-03 起每月一次，判定标准事先写死）一项都没通过。已立项一轮评分研究（观测台「评分研究」页签放立项书：要检验哪些读数、数据、事先写死的判定标准、分工、阶段），研究出结论前不打分、不按分数排名，只摆读数和检验结论。建仓条件检查按证据等级拆开：已验证的和流程规则进判定，没验证过的只作提示。单币页新增「选币卡片」（《核心选币方法论》六问 + 卡片格式）。",
-        "en": "Score research opened: the prototype’s R/C/V/D thresholds were never tested and none passed the first backtest. A research plan (what to test, data, pre-set pass rules, roles, stages) is on the new “Score research” tab; until it concludes the page shows readings and test results, with no scores or score rankings. The entry checklist now counts only verified and process rules. Asset pages gain a six-question pick card.",
-        "corrections_anchor": "2026-11-14-corescore"
-      },
-      {
-        "type": "new",
-        "zh": "新增「拉盘复盘」：大叔 2026-07～10 的龙头与轮动研究（125 个币，锚点 08-19），单币详情显示它在上一轮 BTC 拉升里是龙头、跟涨还是落后。详情页新增日活用户、供给侧收入、国库、核心开发者（GitHub，下一次日更起）；规则和评分每一条都加了大白话说明。",
-        "en": "New “Rally replay” tab (Jul–Oct 2026 leaders-and-rotation study, 125 coins, anchor 08-19); asset pages show each coin’s class in the last BTC rally, plus active users, supply-side revenue, treasury and core developers (GitHub, from the next run). Every rule and score now has a plain-language explanation."
-      }
-    ]
-  },
-  {
-    "version": "2026.11.14",
-    "date": "2026-11-14",
-    "notify": true,
-    "title_zh": "新模块：核心选币观测台",
-    "title_en": "New: core picks monitor",
-    "items": [
-      {
-        "type": "new",
-        "zh": "左侧导航新增「核心选币」（/core/）：把大叔的核心标的追踪（12 个回购 / 收入型协议 + 18 个叙事 / 赛道观察标的）搬上网站，每天自动更新。基本面看 DefiLlama 手续费、协议收入、持有人收入、业务量和估值倍数；资金面看币安成交额、现货 + 永续合并成交额榜（常客 / 新进榜 / 掉榜）；技术面看均线、RSI、回撤；每个标的有走势图、叙事阶段、解锁、风险记录。",
-        "en": "New “Core Picks” page (/core/): the core-asset tracker (12 buyback / revenue protocols + 18 narrative / sector watch names), updated daily. Fundamentals: DefiLlama fees, revenue, holder revenue, activity and valuation multiples; flows: Binance volume and a combined spot + perp volume board (regulars / entrants / exits); technicals: MAs, RSI, drawdowns. Each asset has charts, narrative stage, unlocks and risk notes."
-      },
-      {
-        "type": "new",
-        "zh": "建仓条件检查和风险提示：三道闸门直接读本站 L2 周期状态、BTC 本轮最低收盘和 L1 净流动性闸门；评分和规则全部标【假设】，只做排序和条件检查，不是买卖建议。代币化美股 / ETF 和黄金不进任何统计。",
-        "en": "Entry checklist and risk alerts: the three gates read this site’s L2 cycle state, the BTC cycle-low close and the L1 net-liquidity gate; all scores and rules are marked as hypotheses, for sorting and condition checks only, not trade advice. Tokenized stocks / ETFs and gold are excluded everywhere."
-      }
-    ]
-  },
-  {
-    "version": "2026.11.13",
-    "date": "2026-11-13",
-    "notify": false,
-    "title_zh": "平台页 AI 研究摘要 · 发射台历史自动补齐",
-    "title_en": "Platform AI summaries · launchpad history backfill",
-    "items": [
-      {
-        "type": "data",
-        "zh": "发射台矩阵：每天按 DefiLlama 逐日序列重新同步近 60 天历史。DefiLlama 对新上榜平台会事后补历史（Montra、Ascend 上榜当天只给 2 天，第二天补到 11-05），以前只有前 60 名会补上，现在所有显示的平台都补。",
-        "en": "Launchpads: the last 60 days of history are re-synced daily from DefiLlama’s daily series. DefiLlama backfills new listings (Montra and Ascend had 2 days on listing, backfilled to 11-05 the next day); previously only the top 60 were refreshed, now every platform shown is.",
-        "corrections_anchor": "2026-11-13-lpresync"
-      },
-      {
-        "type": "new",
-        "zh": "平台二级页面：只要进过 0.1% 份额就一直保留；加「AI 研究摘要」（核心卖点、和其他发射台的区别、手续费怎么分、平台币、团队与背景、风险与疑点），只根据本站收集的 DefiLlama 资料与官网 / 文档正文整理，标明未人工核实（配好 API key 后自动生成）。",
-        "en": "Platform pages stay once a platform has crossed 0.1% share, and gain an AI research summary (selling points, how it differs, fee split, token, team, risks) written only from the DefiLlama data and site/docs text we collect, marked as unverified (generated once the API key is set)."
-      },
-      {
-        "type": "fix",
-        "zh": "链上扫描撤掉 Avalanche（发射台手续费份额不到 0.01%，免费节点一天都扫不完）；Elysium 上一个每天铸几千个币但都没有交易池的合约标为批量铸币，不算发射台。",
-        "en": "On-chain scan drops Avalanche (under 0.01% of launchpad fees; free nodes can’t finish a day). An Elysium contract minting thousands of tokens a day with no trading pools is marked as batch minting, not a launchpad."
-      }
-    ]
-  },
-  {
-    "version": "2026.11.13",
-    "date": "2026-11-13",
-    "notify": false,
-    "title_zh": "涨跌腿详情页：去掉山寨轮动窗口读数卡",
-    "title_en": "Leg tracker page: altcoin-window card removed",
-    "items": [
-      {
-        "type": "improve",
-        "zh": "/leg-tracker/ 的「当前读数」只留 BTC 当前这一腿和山寨整体两张卡，和宏观页、热币海报一致；山寨轮动窗口不再显示读数卡，规律说明那一节保留",
-        "en": "The leg tracker page now shows only the current BTC leg and the altcoin-wide leg, matching the macro page and the daily poster; the altcoin-window reading card is gone, its rule section stays."
-      }
-    ]
-  },
-  {
-    "version": "2026.11.11.1",
-    "date": "2026-11-11",
-    "notify": false,
-    "title_zh": "周期图：每一腿都标百分比",
-    "title_en": "Cycle chart: every leg shows its move",
-    "items": [
-      {
-        "type": "new",
-        "zh": "发射台矩阵：近 30 日或近 7 日手续费份额 ≥ 0.1% 的平台都有二级页面（现在 30 个，如 Montra、Graphite、Bags、Clanker），排行里点名字直接进：手续费走势、份额与排名、分链，「产品与基本面」（一句话介绍并注明出处、叙事标签、代币、上 DefiLlama 时间、审计、融资、安全事件、团队信息待补），「钱怎么收、怎么分」（DefiLlama 口径原文），以及官网 / X / DefiLlama 数据源 / GitHub 入口。份额不到 0.1% 的仍直接跳 DefiLlama。pump.fun、Flap 等深度追踪页也加上了这两块。",
-        "en": "Launchpads: every platform with ≥ 0.1% of 30-day or 7-day fees now has its own page (30 today, e.g. Montra, Graphite, Bags, Clanker), linked from the ranking: fee history, share and rank, chain split, product & fundamentals (sourced one-liner, angle tags, token, DefiLlama listing date, audits, raises, incidents; team info pending), how fees are charged and split (DefiLlama methodology), and links to the site, X, the DefiLlama source and GitHub. Below 0.1% still opens DefiLlama. Deep-tracked pages (pump.fun, Flap…) get the same sections."
-      },
-      {
-        "type": "new",
-        "zh": "链上新币扫描加 Hyperliquid 系新链 Elysium（Kinetiq，chainId 99901，官方免费节点）：它上面的 Montra、Ascend 两个发射台 11-10 刚上 DefiLlama，近 30 天已占全网发射台手续费约 1%。",
-        "en": "On-chain scan adds Elysium (Kinetiq’s Hyperliquid-linked chain, chainId 99901, free official node): its launchpads Montra and Ascend joined DefiLlama on 11-10 and already take about 1% of launchpad fees over 30 days."
-      },
-      {
-        "type": "fix",
-        "zh": "周期图上的涨腿 / 跌腿标注改成两行（名字在上、百分比在下），窄的腿也写得下百分比；百分比直接取涨跌腿数据里每条腿的涨跌幅（和读数卡、详情页同一个数），放大缩小或只看一段时也不会少算",
-        "en": "Leg labels on the cycle chart now use two lines (name over percentage) so narrow legs also show their move; percentages come straight from the leg data, so they match the cards and stay correct when zoomed."
-      }
-    ]
-  },
-  {
-    "version": "2026.11.11",
-    "date": "2026-11-11",
-    "notify": true,
-    "title_zh": "综合研判下面加「结合短期」",
-    "title_en": "Overall read: short-term context",
-    "items": [
-      {
-        "type": "improve",
-        "zh": "四层综合研判下面加一段「结合短期」：BTC 这一腿在历史同类腿里的位置（天数和幅度各排第几），以及 2017 年以来跌（涨）到这个深度的腿最终走到哪、按中位还剩多少空间。只摆历史数字，不是买卖建议。截至 11-09：跌腿第 49 天、最深 −13.6%，时长比 99 条牛市跌腿里的 96 条都长、跌幅只比 21 条深；2017 年以来同类 35 条最终中位 −18.9%，按中位还有约 5 个百分点（一半情况 2～9 个）",
-        "en": "A \"short-term context\" paragraph now follows the four-layer read: where the current BTC leg ranks among comparable legs on duration and size, and where legs since 2017 that went this far ended up. Historical numbers only, not advice."
-      }
-    ]
-  },
-  {
-    "version": "2026.11.10.1",
-    "date": "2026-11-10",
-    "notify": false,
-    "title_zh": "周期里的涨跌腿：可以放大看，图上直接标名字",
-    "title_en": "Legs-in-the-cycle chart: zoom and on-chart labels",
-    "items": [
-      {
-        "type": "improve",
-        "zh": "宏观页顶部的周期图可以放大缩小：图上方 ＋ / － / ← / → / 复位，电脑上也能直接拖选一段放大、双击复位。背景区间直接写周期状态名字（牛市、牛市·顶部风险区、熊市…），每一腿直接写「涨腿 +48%」「跌腿 −13%」，不用再对着图例找颜色",
-        "en": "The cycle chart on the macro page now zooms (+ / − / ← / → / reset, or drag to zoom on desktop), cycle states are written inside their bands, and each leg is labelled with its move."
-      }
-    ]
-  },
-  {
-    "version": "2026.11.10",
-    "date": "2026-11-10",
-    "notify": true,
-    "title_zh": "宏观页顶部：周期里的涨跌腿",
-    "title_en": "Macro page: legs inside the cycle",
-    "items": [
-      {
-        "type": "new",
-        "zh": "宏观页最上面加一张图：BTC 价格按涨腿 / 跌腿分色（青绿 = 涨腿，红 = 跌腿），背景色是当天的 L2 周期状态。一眼看出大周期在哪一段、短期在走哪一腿。默认看近 1 年，可切 3 年 / 本轮 / 全部（2012 年起）",
-        "en": "A new chart tops the macro page: BTC price coloured by up-leg / down-leg over the daily L2 cycle-state background, so the cycle stage and the current short-term leg read at a glance. Default 1Y; 3Y / this cycle / all (since 2012)."
-      },
-      {
-        "type": "improve",
-        "zh": "标清时间尺度：涨跌腿卡片标「短期 · 波段」（按天看，一条腿通常一到两周），四层综合研判标「长期 · 周期」（按月看）。长短期方向相反时，中间自动加一行历史对比，天数和幅度都写：例如现在「这一条已走 49 天、最深跌了 13.6%：时长比 99 条牛市跌腿里的 96 条都长，跌幅只比其中 21 条深」",
-        "en": "Time horizons are labelled: the leg cards are \"short term · swings\" (days; a leg usually lasts one to two weeks), the four-layer read is \"long term · cycle\" (months). When the two point different ways, a line compares the current leg with history on both duration and size."
-      },
-      {
-        "type": "improve",
-        "zh": "涨跌腿卡片只留 BTC 涨跌腿和山寨整体，山寨轮动窗口移到详情页；卡片配色改成全站终端风",
-        "en": "The leg card keeps only BTC and altcoins overall; the altcoin window moves to the detail page. Card colours now match the site."
-      }
-    ]
-  },
-  {
-    "version": "2026.11.09.2",
-    "date": "2026-11-09",
-    "notify": true,
-    "title_zh": "加「山寨整体」涨跌腿",
-    "title_en": "New: altcoin-wide up/down leg",
-    "items": [
-      {
-        "type": "new",
-        "zh": "涨跌腿追踪卡片加一块「山寨整体」：把币安成交额前 50 左右的山寨币做成等权指数（每月 1 日按 30 日成交额重排，停牌 / 崩盘立刻剔除），用和 BTC 一样的折线规则切涨腿和跌腿，阈值 15%（山寨波动约是 BTC 的 1.5 倍）。截至 11-08：山寨整体跌腿第 42 天，−28.2%，反弹 15% 才算涨腿重新开始",
-        "en": "The leg tracker adds \"Altcoins overall\": an equal-weight index of ~50 top-volume Binance altcoins (re-ranked monthly by 30-day volume; halted or collapsed coins dropped at once), cut into up- and down-legs with the BTC rules at a 15% threshold. As of 11-08: day 42 of a down-leg, −28.2%."
-      },
-      {
-        "type": "data",
-        "zh": "篮子不含 BTC、ETH、稳定币、包装币，也不含代币化股票（币安 2026-06 起上线的 NVDAB、TSLAB 这类，10～11 月有 8 个按成交额挤进了前 50）。已下架币的历史照算，没有幸存者偏差。阈值对比：10%～25% 四档给出的当前方向一致",
-        "en": "The basket excludes BTC, ETH, stablecoins, wrapped coins and tokenized stocks (NVDAB, TSLAB etc.). Delisted coins keep their history, so no survivorship bias. Thresholds of 10–25% all give the same current direction."
-      }
-    ]
-  },
-  {
-    "version": "2026.11.09.1",
-    "date": "2026-11-09",
-    "notify": true,
-    "title_zh": "AI Agent 页补上 Gang、Flap、Four.meme：交易地址、成交 BNB、新发币、毕业不再只算 AgentPad",
-    "title_en": "AI Agent page now includes Gang, Flap and Four.meme: traders, BNB volume, launches and graduations beyond AgentPad",
-    "items": [
-      {
-        "type": "new",
-        "zh": "再加入 Flap（只算发币时设了 Binance Agent ID 门禁的币，内盘每笔买卖链上要求持有 Agent ID）和 Four.meme（合约标记为 Agent 钱包创建的币，买卖不限 ID，单独标注）；页面新增「分平台（最近 7 天）」表。Four.meme 另有一个未公开文档的发币合约（交易者不全持有 Agent ID），未证实属于 Agent 生态，暂不计入",
-        "en": "Also added Flap (only tokens launched with the Binance Agent ID gate, where every curve trade requires an Agent ID on-chain) and Four.meme (tokens its contract marks as created by an Agent wallet; trading not ID-gated, labelled separately), plus a by-platform table for the last 7 days. A separate undocumented Four.meme launch contract (whose traders don't all hold an Agent ID) is not counted until it can be shown to be part of the Agent ecosystem"
-      },
-      {
-        "type": "data",
-        "zh": "每日买卖交易地址、成交 BNB、新发币、毕业币加入 Gang（gang.fun，合约强制只有持 Agent ID 的钱包能发币和买卖）。从 10-19 起全部重算；之前只算 AgentPad，而 AgentPad 10-24 后基本没人用，所以这几项长期接近 0。成交额只算 BNB 计价的币；Four.meme Agent、Flap Agent 还在接入中，范围见页面「范围」",
-        "en": "Daily traders, BNB volume, new launches and graduations now include Gang (gang.fun, whose contracts only let Agent ID holders launch and trade), recomputed from 10-19. Previously only AgentPad was counted, which went almost idle after 10-24. Volume counts BNB-quoted tokens only; Four.meme Agent and Flap Agent are still being added",
-        "corrections_anchor": "#rc-2026-11-09-gang"
-      }
-    ]
-  },
-  {
-    "version": "2026.11.09",
-    "date": "2026-11-09",
-    "notify": true,
-    "title_zh": "涨腿追踪升级为「涨跌腿追踪」",
-    "title_en": "Leg Tracker now covers down-legs too",
-    "items": [
-      {
-        "type": "improve",
-        "zh": "BTC 每天必在一条涨腿或一条跌腿之中，不再有「没有进行中的涨腿」的空状态。跌腿显示：已走天数、高点到最低收盘的跌幅（对照历史牛市回撤分位）、现价距高点、反弹确认线（最低收盘 ×1.10，收盘站上 = 涨腿重新开始）。现在是跌腿第 48 天，−13.6%（截至 11-08）",
-        "en": "BTC is always in either an up-leg or a down-leg, so there is no more empty \"no rally\" state. Down-legs show days so far, drop from the peak to the lowest close (against historical bull drawdown percentiles), distance from the peak, and the reversal line (lowest close ×1.10). Currently day 48 of a down-leg, −13.6% (as of 11-08)."
-      },
-      {
-        "type": "new",
-        "zh": "详情页加「全部行情的涨腿与跌腿」：2010-07-18 起全部日线用同一套 10% 折线逐条切开，不分牛熊的持续天数与幅度分位、当前这一腿在历史里的位置、最近几条腿、牛熊拆开四组。上线前回放核对：截至 2026-09-27 共 5,916 天、305 条腿，牛市涨 103 / 跌 99、熊市涨 49 / 跌 54，与研究原件逐条一致",
-        "en": "The detail page adds \"Every up-leg and down-leg\": all daily closes since 2010-07-18 cut with the same 10% zigzag; duration and size percentiles, where the current leg sits, recent legs, and a bull/bear split. Replay check: 5,916 days and 305 legs as of 2026-09-27, matching the research original leg by leg."
-      },
-      {
-        "type": "data",
-        "zh": "数据：2017-08-17 起币安现货 BTCUSDT 已收盘日线，之前用 Coin Metrics PriceUSD（缓存在仓库，历史不变）。新增 /data/leg_history.json",
-        "en": "Data: closed Binance BTCUSDT daily candles from 2017-08-17, Coin Metrics PriceUSD before that (cached in the repo). New file /data/leg_history.json."
-      }
-    ]
-  },
-  {
-    "version": "2026.11.08.2",
-    "date": "2026-11-08",
-    "notify": true,
-    "title_zh": "新增「涨腿追踪」与山寨轮动窗口",
-    "title_en": "New: Leg Tracker and the altcoin window",
-    "items": [
-      {
-        "type": "new",
-        "zh": "新页面 /leg-tracker/：BTC 这一轮上涨走了多少天、涨了多少、腿内最大回撤，对照历史 103 条牛市涨腿的长度和回撤分布；89 天提示线（假设级）；我们测过但不成立的说法单独列出。读数卡放在宏观页最上面、四层综合研判之上（首页也有一张）",
-        "en": "New page /leg-tracker/: days, gain and max in-leg drawdown of the current BTC rally, against the length and drawdown distribution of 103 historical bull-market rallies; the day-89 marker (hypothesis grade); claims we tested that failed are listed separately. The reading card sits at the top of the macro page, above the four-layer overall read (also on the home page)."
-      },
-      {
-        "type": "new",
-        "zh": "山寨轮动窗口：BTC 收盘 10 日涨幅 ≥15% 记点火，点火后 7 天内最高收盘日为 D0，D0+24 只减不加、D0+30 清零，BTC 收盘跌破 D0×0.90 提前关闭。只是纸面观察读数，不是开仓信号，不给个币名单",
-        "en": "Altcoin window: a 10-day BTC close gain ≥15% is an ignition; D0 is the highest close within 7 days; trim only from D0+24, cleared at D0+30, closed early if BTC closes below D0×0.90. A paper observation, not an entry signal; no coin list."
-      },
-      {
-        "type": "data",
-        "zh": "数据：币安现货 BTCUSDT 已收盘 UTC 日线，每天 UTC 00:53 更新；上线前回放 2026-09-25～09-28 四天与海报读数逐项一致（第 89 天 +47.8%、回撤 6.9%，第 90 天亮「多头只减不加」，D0=08-27）",
-        "en": "Data: closed Binance BTCUSDT UTC daily candles, updated daily; replays of 2026-09-25 to 09-28 matched the poster readings item by item."
-      }
-    ]
-  },
-  {
-    "version": "2026.11.08",
-    "date": "2026-11-08",
-    "notify": true,
-    "title_zh": "发射台名录（logo + 叙事） · 事件日历加监管 / 立法二元表决",
-    "title_en": "Launchpad directory (logos + angles) · Calendar adds regulatory / legislative votes",
-    "items": [
-      {
-        "type": "new",
-        "zh": "新发射台监控页加「发射台名录」：链上扫到、认得出名字的发射台做成卡片，带 logo、所在链与设施、叙事标签（如 代币化股票 / RWA、AI Agent、税币、持币分红）、一句话介绍（标明出处）、活跃度和官网 / X / DefiLlama 链接，可按名字、叙事搜索和按链筛选；同一平台的多个合约 / 配置合并成一张（如 Float 的几套 LaunchLab 配置、Flap 的 Portal 与 VaultPortal）。logo 和官网简介每天自动抓，认不出名字的合约折进「扫描明细」。",
-        "en": "New launchpad monitor adds a launchpad directory: cards for every launchpad we see on-chain and can name, with logo, chain and venue, angle tags (tokenized stocks / RWA, AI Agent, tax tokens, holder rewards…), a sourced one-liner, activity and site / X / DefiLlama links; searchable by name or angle and filterable by chain. Multiple contracts/configs of one platform are merged (e.g. Float’s LaunchLab configs; Flap’s Portal and VaultPortal). Logos and site blurbs are fetched daily; unnamed contracts move into the scan details."
-      },
-      {
-        "type": "new",
-        "zh": "事件日历的比特币大事件里加「监管 / 立法表决」（REG）：国会 / 委员会对加密法案的表决、SEC 对加密产品的最终决定日、其他地区的监管表决。只收有官方日期和官方来源的，标「未检验」，不给统计数字。2026-11-08 核对：未来 60 天没有符合条件的（JitoSOL ETF 申请已撤回；ISE 加密信托期权 11-11 截止日不是最终决定）",
-        "en": "BTC events now include regulatory / legislative votes (REG): congressional and committee votes on crypto bills, SEC final decision dates on crypto products, and votes elsewhere. Only items with an official date and source; marked untested, no statistics. Checked 2026-11-08: none qualify in the next 60 days."
-      },
-      {
-        "type": "new",
-        "zh": "SEC 对加密产品的最终批准 / 否决期限改为每天自动从 Federal Register 官方接口扫描：只收不能再延期的最终期限，出了批准 / 否决令或撤回就自动拿掉。回测今年能抓到 iShares 比特币备兑收益 ETF（5-30）、Nasdaq 比特币指数期权（5-27）、JitoSOL ETF（11-15，后撤回）",
-        "en": "SEC final approve/disapprove deadlines for crypto products are now scanned daily from the Federal Register API: only final deadlines, dropped automatically once an order or withdrawal appears."
-      },
-      {
-        "type": "new",
-        "zh": "国会委员会对加密法案的表决会（参院 Business Meeting、众院 Markup，带官方钟点）和加密法案的总统签署期限，也改为每天自动从国会图书馆官方接口扫描。院会表决和其他国家的表决每周人工核对一次",
-        "en": "Congressional committee votes on crypto bills (with official times) and presidential signing deadlines are now scanned daily from the Library of Congress API. Floor votes and non-US votes are checked by hand weekly."
-      }
-    ]
-  },
-  {
-    "version": "2026.11.06",
-    "date": "2026-11-06",
-    "notify": true,
-    "title_zh": "新发射台监控 · 中文站改用新加坡时间 · 宝可梦报告英文版 · L3 恢复 · 日更提前",
-    "title_en": "New launchpad monitor · Chinese site in Singapore time · Pokémon report in English · L3 restored · earlier daily run",
-    "items": [
-      {
-        "type": "new",
-        "zh": "新发射台监控（二级页面 /launchpad/discovery/）：不等 DefiLlama 收录，每天扫 22 条 EVM 链前一个 UTC 日的新币，按发币合约归到「工厂」，标新出现和起量的；Solana 按 Meteora DBC、Raydium LaunchLab 的配置拆出各发射台前端；另列 GeckoTerminal 新收录入口和自称发射台的项目。发射台矩阵页上加了入口卡片",
-        "en": "New launchpad monitor (/launchpad/discovery/): before DefiLlama lists them, we scan the previous UTC day's new tokens on 22 EVM chains and group them by creating contract, flagging new and ramping factories; on Solana we split Meteora DBC and Raydium LaunchLab into front ends; plus new GeckoTerminal entries and self-described launchpads. An entry card sits on the launchpad matrix page"
-      },
-      {
-        "type": "new",
-        "zh": "新发射台监控页加「AI Agent 发射台 · 重点关注」：DefiLlama 上和 AI Agent 叙事有关的发射台单独列出（强相关 / 待确认两档，含 Clanker、Virtuals、Ignix、AGNT 等），附链上扫描里名字带 Agent / AI 的工厂和前端；入口卡片加 AI Agent 摘要。另加「链覆盖」表：按近 30 天发射台手续费份额标出哪些链在扫、哪些达门槛待接入",
-        "en": "The new launchpad monitor adds 'AI Agent launchpads · focus': launchpads tied to the AI-agent narrative on DefiLlama (strong / to confirm, incl. Clanker, Virtuals, Ignix, AGNT), plus on-chain factories and front ends named Agent / AI; the entry card shows an AI-agent summary. A chain coverage table shows which chains are scanned and which are above the bar to add"
-      },
-      {
-        "type": "data",
-        "zh": "发射台矩阵：全网手续费汇总趋势、当日变化拆解和「钱在哪」的前 8 名，改成和跨链排行一样按近 7 日手续费排序（原来按近 90 天），平台配色随之调整；跨链排行等表格标题、表头写明是手续费，不是成交量",
-        "en": "Launchpad matrix: the top 8 in the sector trend, day-over-day breakdown and 'where the money is' now follow the cross-chain ranking's 7-day fees (was 90 days), with colors updated; ranking titles and headers now say fees, not volume"
-      },
-      {
-        "type": "fix",
-        "zh": "AI Agent 页恢复日更并补齐 10-29 至 11-05：采集从大叔电脑搬到 GitHub 云端，每天自动跑；从注册表部署起独立重算全部历史，和原有 10-19 至 10-28 逐项一致。范围仍是已核的 AgentPad 子集",
-        "en": "The AI Agent page updates daily again, with 10-29 to 11-05 filled in: collection moved to GitHub's cloud; full history independently recomputed from the registry deployment and matching the earlier 10-19 to 10-28 values exactly. Scope remains the verified AgentPad subset"
-      },
-      {
-        "type": "data",
-        "zh": "发射台矩阵标出「沿用前一日」的平台：DefiLlama 还没出当天数据的平台（如 StonkFun），排行、头部指标、当日变化拆解里标「沿用 MM-DD」，头部写明沿用几家、占比多少；补出后自动换成真实值",
-        "en": "The launchpad matrix now tags platforms carried over from their last day (not yet published by DefiLlama, e.g. StonkFun) in the ranking, headline and day-over-day breakdown, with the count and share noted; real values replace them once published",
-        "corrections_anchor": "#rc-2026-11-06-carry"
-      },
-      {
-        "type": "data",
-        "zh": "时间显示：后端统计统一 UTC+0 不变；前端中文站显示新加坡时间（UTC+8，原「北京时间」，钟点相同），英文站显示美东时间",
-        "en": "Time display: statistics stay in UTC+0; the Chinese site shows Singapore time (UTC+8), the English site US Eastern time",
-        "corrections_anchor": "#rc-2026-11-06-utc"
-      },
-      {
-        "type": "new",
-        "zh": "《宝可梦线下卡价翻了一倍，链上抽卡却在降温：持有 CARDS，该看什么？》补英文版，PDF 中英文都可下载",
-        "en": "English edition of the Pokémon card RWA / CARDS report, with PDF"
-      },
-      {
-        "type": "fix",
-        "zh": "L2 周期层、L3 筹码层恢复日更：数据源 bitview 10-31 前后升级接口（查询参数改名、分龄与地址序列改名、筹码分布去掉日期列表），L3 停在 10-29、L2 一直在用缓存。已按新接口改好，历史数值逐日核对一致；筹码分布改取前一个已收盘日",
-        "en": "L2 cycle and L3 supply layers update again: bitview upgraded its API around 10-31 (renamed query parameter, renamed age-band and address series, no date list for the supply distribution); L3 had stopped at 10-29 and L2 was running on cache. Both now use the new API, with history checked day by day; the supply distribution now uses the last closed day"
-      },
-      {
-        "type": "fix",
-        "zh": "日更加一个早场（UTC 03:40）：GitHub 定时任务近来常晚 6–8 小时，前一天的数据要拖到新加坡时间次日凌晨 2 点左右才上线",
-        "en": "An earlier daily run (03:40 UTC): GitHub schedules have recently started 6–8 hours late, pushing the previous day's data to around 1 PM ET"
-      }
-    ]
-  },
-  {
-    "version": "2026.11.03",
-    "date": "2026-11-03",
-    "notify": true,
-    "title_zh": "两篇报告补英文版、统一版式",
-    "title_en": "Two reports now in English, unified layout",
-    "items": [
-      {
-        "type": "new",
-        "zh": "两篇旧报告补英文版并统一版式：《发币回暖了，找币的没有》《2,263 场众筹，55 场毕业，无人赚钱：pools.trade 拆解报告》换成和其他报告一样的报告头，pools.trade 那篇配色改成全站报告统一的暖白蓝红；文字和数字不变，PDF 中英文都可下载",
-        "en": "English editions of two earlier reports, now in the same layout as the rest: 'Launches are back, discovery isn't' and the pools.trade teardown; text and numbers unchanged, PDF in both languages"
-      }
-    ]
-  },
-  {
-    "version": "2026.11.02",
-    "date": "2026-11-02",
-    "notify": true,
-    "title_zh": "发射台阶段补「缓慢降温 / 缓慢升温」 · 新报告：发币回暖了，找币的没有",
-    "title_en": "Launchpad slow-cooling / slow-warming stages · New report: launches are back, discovery isn't",
-    "items": [
-      {
-        "type": "data",
-        "zh": "发射台活动温度阶段新增「缓慢降温 / 缓慢升温」：单周没跌（涨）满 10%、但近两周累计跌（涨）超 10% 时不再叫「盘整」；「一般持续几天」不再计入 1–2 天的来回跳动",
-        "en": "Launchpad stages add Slow cooling / Slow warming: a two-week move beyond ±10% without a 10% week is no longer called Steady; 'usually lasts' no longer counts 1–2 day flickers",
-        "corrections_anchor": "#rc-2026-11-02-lpstage"
-      },
-      {
-        "type": "new",
-        "zh": "补发报告《发币回暖了，找币的没有：二级发现层为什么掉队》（2026-09-08 写成，数据口径日 2026-08-29；中文，可下载 PDF）",
-        "en": "Published 'Launches are back, discovery isn't: why the secondary discovery layer fell behind' (written 2026-09-08, data as of 2026-08-29; Chinese only, PDF available)"
-      }
-    ]
-  },
-  {
-    "version": "2026.10.29",
-    "date": "2026-10-29",
-    "notify": true,
-    "title_zh": "发射台长周期位置 · AI Agent 页 · 时间与价格口径统一 · pools.trade 报告",
-    "title_en": "Launchpad long-run position · AI Agent page · unified time and price basis · pools.trade report",
-    "items": [
-      {
-        "type": "new",
-        "zh": "发射台活动温度第一屏改成两个尺度：近 2 年温度（仪表盘，0 ≈ 近 2 年常态下沿）+ 长周期位置（全部历史小图、比可比段最高低多少、是常态下沿的几倍）；周期页加全部历史大图（全部 / 2 年 / 1 年、线性 / 对数）",
-        "en": "Launchpad activity temperature now shows two scales: the 2-year temperature dial and a long-run position card (full-history sparkline, distance from the comparable peak, multiple of the normal lower edge); the cycles page adds a full-history chart (All / 2Y / 1Y, linear / log)"
-      },
-      {
-        "type": "new",
-        "zh": "「已在这个阶段 N 天」下面直接显示这个阶段一般持续几天和进度条；底部改写扫描覆盖：DefiLlama 收录的全部发射台、几条链、计入部分占类目手续费多少",
-        "en": "'In this stage for N days' now shows the stage's usual duration with a progress bar; the footer states coverage: all launchpads DefiLlama lists, how many chains, and the share of category fees counted"
-      },
-      {
-        "type": "new",
-        "zh": "新增 AI Agent 页：币安 Agent ID 生态六项核心数据（累计 / 新增 Agent ID、交易地址、曲线成交额、新发币、毕业），交易类数据目前只覆盖 AgentPad",
-        "en": "New AI Agent page: six core Binance Agent ID metrics (cumulative / new IDs, trading addresses, curve volume, launches, graduations); trading metrics cover AgentPad only for now"
-      },
-      {
-        "type": "data",
-        "zh": "时间与价格口径统一：所有数据按 UTC 0 点收盘的完整日对齐，L2 刻度尺、L3 价格位置改用收盘价并写明收盘时刻；页面钟点中文站写北京时间、英文站写美东时间",
-        "en": "Unified time and price basis: data aligns to full UTC days closing at 00:00 UTC; the L2 ruler and L3 price bar use that close and show its time; clock times read Beijing time (Chinese) / US Eastern (English)",
-        "corrections_anchor": "#rc-2026-10-29-close"
-      },
-      {
-        "type": "new",
-        "zh": "补发报告《2,263 场众筹，55 场毕业，无人赚钱：pools.trade 拆解报告》（2026-08-18 写成）",
-        "en": "Published the pools.trade teardown report (written 2026-08-18; Chinese only)"
-      }
-    ]
-  },
-  {
-    "version": "2026.10.26",
-    "date": "2026-10-26",
-    "notify": true,
-    "title_zh": "新报告：宝可梦卡 RWA · 报告按分类筛选",
-    "title_en": "New report: Pokémon card RWA · reports filterable by category",
-    "items": [
-      {
-        "type": "new",
-        "zh": "新报告《宝可梦线下卡价翻了一倍，链上抽卡却在降温：持有 CARDS，该看什么？》（中文，可下载 PDF）",
-        "en": "New report on tokenized Pokémon cards and the CARDS token (Chinese only, PDF available)"
-      },
-      {
-        "type": "new",
-        "zh": "分析报告页加分类按钮：全部 / BTC / MEME / RWA / AI Agent，网址带分类（如 /reports/#RWA）可直接分享",
-        "en": "Reports page now filters by category: All / BTC / MEME / RWA / AI Agent; the URL keeps the category (e.g. /reports/#RWA) for sharing"
-      }
-    ]
-  },
-  {
-    "version": "2026.10.22",
-    "date": "2026-10-22",
-    "notify": true,
-    "title_zh": "L4 重做 + 事件日历 + 发射台活动温度 + 交易所与 ETF 持币",
-    "title_en": "L4 rebuilt, event calendar, launchpad activity temperature, exchange + ETF holdings",
-    "items": [
-      {
-        "type": "data",
-        "zh": "L4 换成检验过的版本：只有「资金费率 30 日均转负」（空头拥挤）一条会改动作；其余 8 个读数按过去两年分位只描述温度；撤掉旧的恐慌贪婪 / 资金费率 / 未平仓打分",
-        "en": "L4 now uses the tested version: only '30-day average funding below zero' (crowded shorts) changes the action; eight other readings describe temperature by two-year percentile; the old Fear & Greed / funding / OI score is retired",
-        "corrections_anchor": "#rc-2026-10-22-l4"
-      },
-      {
-        "type": "new",
-        "zh": "事件日历：美联储议息、CPI、非农公布前后 BTC 一般会晃多大（已单独检验，只说幅度不说方向），以及 Web3 行业会议与代币事件汇总；首页加「未来 7 天」",
-        "en": "Event calendar: how much BTC typically swings around FOMC, CPI and payrolls (individually tested; magnitude, not direction), plus a digest of Web3 conferences and token events; 'Next 7 days' on the home page"
-      },
-      {
-        "type": "new",
-        "zh": "发射台活动温度（MEME 发射台赛道冷热）放到发射台矩阵页最上面，每日更新：温度仪表、当前阶段（寒冬 / 回暖 / 盛夏 / 退潮 / 盘整）、这一轮热潮走到哪、各阶段一般持续几天；新增「钱在哪」，看手续费份额在各链、各平台之间怎么分。研究快照截至 2026-10-17，之后每天接矩阵页的同一类目数据，热潮按同一套规则每天重算",
-        "en": "Launchpad activity temperature (how hot MEME launchpads are) now leads the launchpad matrix page and updates daily: the dial, current stage (Winter / Warming / Summer / Cooling / Steady), where this wave stands and how long stages usually last; plus 'Where the money is' — fee share by chain and platform. The research snapshot runs to 2026-10-17; after that the same category total is pulled daily and waves are recomputed with the same rules"
-      },
-      {
-        "type": "new",
-        "zh": "L3 新增现货 ETF 持币和「交易所 + ETF 合计」：看交易所流出的币是去了 ETF，还是去了链上自托管",
-        "en": "L3 adds spot ETF holdings and 'exchanges + ETFs combined': did coins leaving exchanges go into ETFs or into on-chain self-custody?"
-      }
-    ]
-  },
-  {
-    "version": "2026.10.11",
-    "date": "2026-10-11",
-    "notify": true,
-    "title_zh": "L3 筹码层重做 + 周末特辑第 3 期 + 报告可下载 PDF",
-    "title_en": "L3 supply layer rebuilt, weekend special #3 and report PDFs",
-    "items": [
-      {
-        "type": "new",
-        "zh": "L3 筹码层按新研究重做：短期持有者成本 +1σ 上方压力区、短期持有者成本参考支撑、筹码集中度 + 30 天波动的「大波动预警」，每张卡都能点进去看全部历史；新增价格位置条、筹码分布图和最近几次碰线记录",
-        "en": "L3 rebuilt on new research: the STH cost +1σ pressure zone, STH cost as reference support and a large-move warning from supply concentration + 30-day volatility, each with a full-history page; plus a price-position bar, a supply map and recent touch records"
-      },
-      {
-        "type": "data",
-        "zh": "L3 层结论从「交易所 7 日净流量」改为「价格相对压力区的位置 + 大波动预警」；交易所流量和大户 / 散户持币保留，改为只作描述",
-        "en": "The L3 verdict moved from 7-day exchange net flow to price position vs the pressure zone + the large-move warning; exchange flows and whale/retail holdings stay as descriptive lines",
-        "corrections_anchor": "#rc-2026-10-11-l3"
-      },
-      {
-        "type": "data",
-        "zh": "综合研判的 L3 段改写价格位置和大波动预警，不再判断筹码和周期方向「一致 / 背离」",
-        "en": "The overall read's L3 paragraph now covers price position and the large-move warning instead of flow/cycle agreement",
-        "corrections_anchor": "#rc-2026-10-11-comp"
-      },
-      {
-        "type": "new",
-        "zh": "《37 条比特币周期规则，我挨个回测了一遍：15 条已经失灵》中英文版上线",
-        "en": "New report: 'I Back-tested 37 Bitcoin Cycle Rules One by One: 15 Have Stopped Working' (Chinese and English)"
-      },
-      {
-        "type": "new",
-        "zh": "报告页可以下载 PDF：按你正在看的语言下载，统一为浅色版，方便阅读和打印",
-        "en": "Reports can be downloaded as PDF in the language you are reading, always in the light layout for reading and printing"
-      },
-      {
-        "type": "improve",
-        "zh": "宏观仪表盘：综合研判的结论和分层说明拉开间距；四层 Tab 加大、加底色，点击时页面不再跳动；「标签说明」加展开箭头",
-        "en": "Macro dashboard: more breathing room in the overall read; bigger, clearer layer tabs that no longer jump the page when clicked; an arrow on 'What the tags mean'"
-      }
-    ]
-  },
-  {
-    "version": "2026.10.08",
-    "date": "2026-10-08",
-    "notify": true,
-    "title_zh": "宏观仪表盘改版：四层切换 + 四层综合研判 + 周期层指标卡",
-    "title_en": "Macro dashboard redesign: layer tabs, a four-layer overall read and cycle gauges",
-    "items": [
-      {
-        "type": "new",
-        "zh": "宏观仪表盘改为 L1~L4 标签切换，每个标签直接显示该层结论、主要依据、切换条件和与昨日比",
-        "en": "The macro dashboard now switches between L1–L4 tabs; each shows the layer verdict, main evidence, switch conditions and the change from yesterday"
-      },
-      {
-        "type": "new",
-        "zh": "综合研判改为四层合成：方向看 L2 周期，节奏看 L1 宏观，筹码和情绪负责确认与提醒",
-        "en": "The overall read now combines all four layers: the cycle sets direction, macro sets pace, flows and sentiment confirm and caution"
-      },
-      {
-        "type": "new",
-        "zh": "L2 周期层改为状态机；「估值与持有者」6 个指标可点进去看全部历史、区间规则和状态解读；关键价位改为刻度尺；周期状态图扩展到 2012 年至今",
-        "en": "L2 is now a state machine; its six valuation & holder gauges open full histories, zone rules and interpretations; key levels are drawn as a ruler; the cycle chart now starts in 2012"
-      },
-      {
-        "type": "new",
-        "zh": "新手说明、更新日志、反馈入口（一键在 X 上 @ 站长）",
-        "en": "A guide, this changelog and a feedback button (one click to mention us on X)"
-      },
-      {
-        "type": "improve",
-        "zh": "指标详情页支持 1 年 / 3 年 / 5 年 / 全部切换，展示数据源能提供的最长历史，新增当前解读、状态切换记录和上一个 / 下一个指标",
-        "en": "Indicator pages switch between 1Y / 3Y / 5Y / All, show the longest history each source offers, and add an interpretation, zone-switch history and previous / next links"
-      },
-      {
-        "type": "fix",
-        "zh": "首页与宏观页同一指标数值不一致：首页改读最新数据，日志摘要标明冻结时间",
-        "en": "The same gauge showed different numbers on the home and macro pages: the home page now reads the latest data and log excerpts are marked with their freeze time"
-      },
-      {
-        "type": "fix",
-        "zh": "L2 信号同时写「本轮已出现」和「本轮未触发」的矛盾：名字里改写规则类型，另起标签写实际情况",
-        "en": "L2 signals no longer say both 'seen this cycle' and 'not triggered': the rule type moves into the name and the actual status gets its own tag"
-      },
-      {
-        "type": "data",
-        "zh": "链上类和百分比变化类指标调整统计起点，排除早期基数过小的时段",
-        "en": "On-chain and percentage-change gauges get new statistics windows that drop the early small-base period",
-        "corrections_anchor": "#rc-2026-10-08-stats"
-      },
-      {
-        "type": "data",
-        "zh": "综合研判规则改为四层合成",
-        "en": "The overall read now combines all four layers",
-        "corrections_anchor": "#rc-2026-10-08-comp"
-      },
-      {
-        "type": "data",
-        "zh": "L2 周期层改为状态机，下线单指标估值卡（MVRV Z-Score、NUPL、Mayer、Puell、Pi Cycle 等，旧链接有停用说明页）",
-        "en": "L2 became a state machine and the single-gauge valuation cards were retired (MVRV Z-Score, NUPL, Mayer, Puell, Pi Cycle…; old links now explain where they went)",
-        "corrections_anchor": "#rc-2026-10-08"
-      }
-    ]
-  },
-  {
-    "version": "2026.10.05",
-    "date": "2026-10-05",
-    "notify": false,
-    "title_zh": "周末特辑英文版 + 网站提速",
-    "title_en": "English weekend report + faster pages",
-    "items": [
-      {
-        "type": "new",
-        "zh": "《宏观到底管不管比特币？》英文版上线",
-        "en": "English edition of 'Does Macro Actually Move Bitcoin?'"
-      },
-      {
-        "type": "improve",
-        "zh": "去掉国内常打不开的 Google Fonts，样式和脚本独立缓存，悬停预取，点击响应更快",
-        "en": "Dropped Google Fonts, cached styles and scripts separately and prefetch on hover for faster clicks"
-      }
-    ]
-  },
-  {
-    "version": "2026.10.04",
-    "date": "2026-10-04",
-    "notify": false,
-    "title_zh": "L1-B 加密资金通道 + 分析报告板块",
-    "title_en": "L1-B crypto funding channels + reports",
-    "items": [
-      {
-        "type": "data",
-        "zh": "「L1.5」改名「L1-B 加密资金通道（只确认、不预测）」，稳定币主线改为去重口径，新增 ETF 13 周与资金轮动矩阵",
-        "en": "'L1.5' became 'L1-B crypto funding channels'; the stablecoin main line is de-duplicated; ETF 13-week flows and the rotation matrix were added",
-        "corrections_anchor": "#rc-2026-10-04"
-      },
-      {
-        "type": "new",
-        "zh": "分析报告板块上线，报告自动生成深色版",
-        "en": "Reports section with automatic dark versions"
-      }
-    ]
-  },
-  {
-    "version": "2026.10.02",
-    "date": "2026-10-02",
-    "notify": false,
-    "title_zh": "L1 宏观层重建 + 中英双语",
-    "title_en": "L1 rebuild + bilingual site",
-    "items": [
-      {
-        "type": "data",
-        "zh": "L1 宏观流动性按《L1 宏观层数据维度规格》重建：乐观度第一、实际利率四态与情境格、流动性闸门",
-        "en": "L1 rebuilt per the L1 spec: optimism first, real-yield states and the scenario grid, liquidity gate",
-        "corrections_anchor": "#rc-2026-10-02"
-      },
-      {
-        "type": "new",
-        "zh": "中英双语、深浅主题、指标详情页全历史与正常波动范围",
-        "en": "Bilingual site, light/dark themes, full-history indicator pages with normal ranges"
-      }
-    ]
-  }
+ {
+  "version": "2026.11.14.5",
+  "date": "2026-11-14",
+  "notify": true,
+  "title_zh": "涨跌腿：分阶段刻度 + 跌腿 45 天提示线",
+  "title_en": "Leg tracker: phase-matched ticks + a day-45 marker for down-legs",
+  "items": [
+   {
+    "type": "new",
+    "zh": "BTC 和山寨整体的卡片都加了刻度：跌腿有天数条和跌幅刻度，涨腿有涨幅刻度（天数条和 89 天线照旧）。刻度按 L2 当前状态选同阶段的历史腿——牛市里的跌腿和牛市比，熊市里的和熊市比；标「一半」「九成」两条线，并直接写出「比 N 条里的 M 条走得久 / 跌得深」。",
+    "en": "BTC and altcoin cards now carry ticks: down-legs get a duration bar and drop ticks, up-legs get gain ticks (the duration bar and day-89 line are unchanged). Ticks compare with legs from the same cycle phase, picked from the current L2 state, show the half and 9-in-10 marks, and state how many comparable legs this one already outlasted or outdid."
+   },
+   {
+    "type": "new",
+    "zh": "BTC 跌腿加 45 天提示线（假设级）：2017 年以来走过第 45 天的 9 条跌腿，8 条在之后 2–16 天内见底、再跌 2.1%–13.2%；例外是 2018-09 的投降段。只有 9 条样本，详情页写了作废条件；不进交易计划。山寨整体没检验过，不画提示线。",
+    "en": "A hypothesis-grade day-45 marker for BTC down-legs: of 9 down-legs since 2017 that passed day 45, 8 bottomed within 2–16 days, 2.1%–13.2% lower; the exception was the 2018-09 capitulation. Only 9 samples; the retirement rule is on the detail page. Not used by the trading plan. No marker for altcoins (untested)."
+   },
+   {
+    "type": "improve",
+    "zh": "/leg-tracker/ 撤掉山寨轮动窗口的规律说明一节（读数卡 11-13 已撤），页首导语同步去掉那一问。",
+    "en": "/leg-tracker/ drops the altcoin-window section (its reading card went on 11-13), and the intro no longer asks about it."
+   }
+  ]
+ },
+ {
+  "version": "2026.11.14.4",
+  "date": "2026-11-14",
+  "notify": false,
+  "title_zh": "核心选币：公开选币规则 v1（草案）",
+  "title_en": "Core picks: selection rules v1 (draft) published",
+  "items": [
+   {
+    "type": "new",
+    "zh": "观测台「口径与规则」最上面公开选币规则 v1 草案：币安上市 + 近 90 天合并成交额排名中位数前 100；五大类（共识储备 / 主流公链 / 现金流有用 / 博弈控盘 / 注意力情绪），大类按价格的真实驱动力判，每个子类按流动性取前 3，共识储备型全列；有用型的回购状态（已执行 / 承诺未执行 / 暂停）只标注不剔除；博弈控盘型用“机制拆解卡”。名单生成还在做，上线后每天冻结、事后对账。",
+    "en": "Selection rules v1 (draft) are now at the top of the Method tab: Binance-listed and within the top 100 by 90-day median combined volume; five classes judged by what actually drives price, top 3 per sub-class by liquidity (all consensus-reserve assets listed); buyback status is labelled, not used to exclude; speculative coins get a mechanism card. List generation is in progress."
+   }
+  ]
+ },
+ {
+  "version": "2026.11.14.3",
+  "date": "2026-11-14",
+  "notify": false,
+  "title_zh": "接入访问统计（无 cookie）",
+  "title_en": "Privacy-friendly analytics",
+  "items": [
+   {
+    "type": "new",
+    "zh": "接入 Umami 访问统计：只统计页面访问量和少量点击（生成长图、语言切换、新手说明、报告是否读完、核心选币页签），用来了解哪些内容有人看。不用 cookie，不收集个人信息，说明写在「关于」页。",
+    "en": "Added Umami analytics: page views plus a few clicks (share image, language switch, guide, report read-through, Core tabs) to learn which content is useful. No cookies, no personal data; noted on the About page."
+   }
+  ]
+ },
+ {
+  "version": "2026.11.14.2",
+  "date": "2026-11-14",
+  "notify": true,
+  "title_zh": "核心选币：成交额全口径、评分回测、拉盘复盘",
+  "title_en": "Core picks: full Binance volume, score backtest, rally replay",
+  "items": [
+   {
+    "type": "data",
+    "zh": "成交额榜改成币安全口径：一个币 = 全部现货交易对（USDT / USDC / USD1 / FDUSD / BTC / 法币…按当天收盘折美元）+ U 本位（USDT、USDC 保证金，永续 + 交割）+ 币本位合约。榜单合成一张表，每个币后面贴「常客 / 新进榜 / 掉榜 / 新上」标签，可筛选排序。全市场基准改用宏观页「山寨整体」同一个篮子。",
+    "en": "Volume board now covers all of Binance: every spot pair (USDT / USDC / USD1 / FDUSD / BTC / fiat, converted at the day’s close) + USDⓈ-M (USDT and USDC margined, perpetual + delivery) + COIN-M. One table with regular / entrant / dropped / new tags, filterable and sortable. The market benchmark now uses the Macro page’s altcoin basket.",
+    "corrections_anchor": "2026-11-14-corevol"
+   },
+   {
+    "type": "data",
+    "zh": "评分研究立项：原型的 R / C / V / D 评分阈值是拍定的，第一轮回测（38 个有协议收入的代币，2023-03 起每月一次，判定标准事先写死）一项都没通过。已立项一轮评分研究（观测台「评分研究」页签放立项书：要检验哪些读数、数据、事先写死的判定标准、分工、阶段），研究出结论前不打分、不按分数排名，只摆读数和检验结论。建仓条件检查按证据等级拆开：已验证的和流程规则进判定，没验证过的只作提示。单币页新增「选币卡片」（《核心选币方法论》六问 + 卡片格式）。",
+    "en": "Score research opened: the prototype’s R/C/V/D thresholds were never tested and none passed the first backtest. A research plan (what to test, data, pre-set pass rules, roles, stages) is on the new “Score research” tab; until it concludes the page shows readings and test results, with no scores or score rankings. The entry checklist now counts only verified and process rules. Asset pages gain a six-question pick card.",
+    "corrections_anchor": "2026-11-14-corescore"
+   },
+   {
+    "type": "new",
+    "zh": "新增「拉盘复盘」：大叔 2026-07～10 的龙头与轮动研究（125 个币，锚点 08-19），单币详情显示它在上一轮 BTC 拉升里是龙头、跟涨还是落后。详情页新增日活用户、供给侧收入、国库、核心开发者（GitHub，下一次日更起）；规则和评分每一条都加了大白话说明。",
+    "en": "New “Rally replay” tab (Jul–Oct 2026 leaders-and-rotation study, 125 coins, anchor 08-19); asset pages show each coin’s class in the last BTC rally, plus active users, supply-side revenue, treasury and core developers (GitHub, from the next run). Every rule and score now has a plain-language explanation."
+   }
+  ]
+ },
+ {
+  "version": "2026.11.14",
+  "date": "2026-11-14",
+  "notify": true,
+  "title_zh": "新模块：核心选币观测台",
+  "title_en": "New: core picks monitor",
+  "items": [
+   {
+    "type": "new",
+    "zh": "左侧导航新增「核心选币」（/core/）：把大叔的核心标的追踪（12 个回购 / 收入型协议 + 18 个叙事 / 赛道观察标的）搬上网站，每天自动更新。基本面看 DefiLlama 手续费、协议收入、持有人收入、业务量和估值倍数；资金面看币安成交额、现货 + 永续合并成交额榜（常客 / 新进榜 / 掉榜）；技术面看均线、RSI、回撤；每个标的有走势图、叙事阶段、解锁、风险记录。",
+    "en": "New “Core Picks” page (/core/): the core-asset tracker (12 buyback / revenue protocols + 18 narrative / sector watch names), updated daily. Fundamentals: DefiLlama fees, revenue, holder revenue, activity and valuation multiples; flows: Binance volume and a combined spot + perp volume board (regulars / entrants / exits); technicals: MAs, RSI, drawdowns. Each asset has charts, narrative stage, unlocks and risk notes."
+   },
+   {
+    "type": "new",
+    "zh": "建仓条件检查和风险提示：三道闸门直接读本站 L2 周期状态、BTC 本轮最低收盘和 L1 净流动性闸门；评分和规则全部标【假设】，只做排序和条件检查，不是买卖建议。代币化美股 / ETF 和黄金不进任何统计。",
+    "en": "Entry checklist and risk alerts: the three gates read this site’s L2 cycle state, the BTC cycle-low close and the L1 net-liquidity gate; all scores and rules are marked as hypotheses, for sorting and condition checks only, not trade advice. Tokenized stocks / ETFs and gold are excluded everywhere."
+   }
+  ]
+ },
+ {
+  "version": "2026.11.13",
+  "date": "2026-11-13",
+  "notify": false,
+  "title_zh": "平台页 AI 研究摘要 · 发射台历史自动补齐",
+  "title_en": "Platform AI summaries · launchpad history backfill",
+  "items": [
+   {
+    "type": "data",
+    "zh": "发射台矩阵：每天按 DefiLlama 逐日序列重新同步近 60 天历史。DefiLlama 对新上榜平台会事后补历史（Montra、Ascend 上榜当天只给 2 天，第二天补到 11-05），以前只有前 60 名会补上，现在所有显示的平台都补。",
+    "en": "Launchpads: the last 60 days of history are re-synced daily from DefiLlama’s daily series. DefiLlama backfills new listings (Montra and Ascend had 2 days on listing, backfilled to 11-05 the next day); previously only the top 60 were refreshed, now every platform shown is.",
+    "corrections_anchor": "2026-11-13-lpresync"
+   },
+   {
+    "type": "new",
+    "zh": "平台二级页面：只要进过 0.1% 份额就一直保留；加「AI 研究摘要」（核心卖点、和其他发射台的区别、手续费怎么分、平台币、团队与背景、风险与疑点），只根据本站收集的 DefiLlama 资料与官网 / 文档正文整理，标明未人工核实（配好 API key 后自动生成）。",
+    "en": "Platform pages stay once a platform has crossed 0.1% share, and gain an AI research summary (selling points, how it differs, fee split, token, team, risks) written only from the DefiLlama data and site/docs text we collect, marked as unverified (generated once the API key is set)."
+   },
+   {
+    "type": "fix",
+    "zh": "链上扫描撤掉 Avalanche（发射台手续费份额不到 0.01%，免费节点一天都扫不完）；Elysium 上一个每天铸几千个币但都没有交易池的合约标为批量铸币，不算发射台。",
+    "en": "On-chain scan drops Avalanche (under 0.01% of launchpad fees; free nodes can’t finish a day). An Elysium contract minting thousands of tokens a day with no trading pools is marked as batch minting, not a launchpad."
+   }
+  ]
+ },
+ {
+  "version": "2026.11.13",
+  "date": "2026-11-13",
+  "notify": false,
+  "title_zh": "涨跌腿详情页：去掉山寨轮动窗口读数卡",
+  "title_en": "Leg tracker page: altcoin-window card removed",
+  "items": [
+   {
+    "type": "improve",
+    "zh": "/leg-tracker/ 的「当前读数」只留 BTC 当前这一腿和山寨整体两张卡，和宏观页、热币海报一致；山寨轮动窗口不再显示读数卡，规律说明那一节保留",
+    "en": "The leg tracker page now shows only the current BTC leg and the altcoin-wide leg, matching the macro page and the daily poster; the altcoin-window reading card is gone, its rule section stays."
+   }
+  ]
+ },
+ {
+  "version": "2026.11.11.1",
+  "date": "2026-11-11",
+  "notify": false,
+  "title_zh": "周期图：每一腿都标百分比",
+  "title_en": "Cycle chart: every leg shows its move",
+  "items": [
+   {
+    "type": "new",
+    "zh": "发射台矩阵：近 30 日或近 7 日手续费份额 ≥ 0.1% 的平台都有二级页面（现在 30 个，如 Montra、Graphite、Bags、Clanker），排行里点名字直接进：手续费走势、份额与排名、分链，「产品与基本面」（一句话介绍并注明出处、叙事标签、代币、上 DefiLlama 时间、审计、融资、安全事件、团队信息待补），「钱怎么收、怎么分」（DefiLlama 口径原文），以及官网 / X / DefiLlama 数据源 / GitHub 入口。份额不到 0.1% 的仍直接跳 DefiLlama。pump.fun、Flap 等深度追踪页也加上了这两块。",
+    "en": "Launchpads: every platform with ≥ 0.1% of 30-day or 7-day fees now has its own page (30 today, e.g. Montra, Graphite, Bags, Clanker), linked from the ranking: fee history, share and rank, chain split, product & fundamentals (sourced one-liner, angle tags, token, DefiLlama listing date, audits, raises, incidents; team info pending), how fees are charged and split (DefiLlama methodology), and links to the site, X, the DefiLlama source and GitHub. Below 0.1% still opens DefiLlama. Deep-tracked pages (pump.fun, Flap…) get the same sections."
+   },
+   {
+    "type": "new",
+    "zh": "链上新币扫描加 Hyperliquid 系新链 Elysium（Kinetiq，chainId 99901，官方免费节点）：它上面的 Montra、Ascend 两个发射台 11-10 刚上 DefiLlama，近 30 天已占全网发射台手续费约 1%。",
+    "en": "On-chain scan adds Elysium (Kinetiq’s Hyperliquid-linked chain, chainId 99901, free official node): its launchpads Montra and Ascend joined DefiLlama on 11-10 and already take about 1% of launchpad fees over 30 days."
+   },
+   {
+    "type": "fix",
+    "zh": "周期图上的涨腿 / 跌腿标注改成两行（名字在上、百分比在下），窄的腿也写得下百分比；百分比直接取涨跌腿数据里每条腿的涨跌幅（和读数卡、详情页同一个数），放大缩小或只看一段时也不会少算",
+    "en": "Leg labels on the cycle chart now use two lines (name over percentage) so narrow legs also show their move; percentages come straight from the leg data, so they match the cards and stay correct when zoomed."
+   }
+  ]
+ },
+ {
+  "version": "2026.11.11",
+  "date": "2026-11-11",
+  "notify": true,
+  "title_zh": "综合研判下面加「结合短期」",
+  "title_en": "Overall read: short-term context",
+  "items": [
+   {
+    "type": "improve",
+    "zh": "四层综合研判下面加一段「结合短期」：BTC 这一腿在历史同类腿里的位置（天数和幅度各排第几），以及 2017 年以来跌（涨）到这个深度的腿最终走到哪、按中位还剩多少空间。只摆历史数字，不是买卖建议。截至 11-09：跌腿第 49 天、最深 −13.6%，时长比 99 条牛市跌腿里的 96 条都长、跌幅只比 21 条深；2017 年以来同类 35 条最终中位 −18.9%，按中位还有约 5 个百分点（一半情况 2～9 个）",
+    "en": "A \"short-term context\" paragraph now follows the four-layer read: where the current BTC leg ranks among comparable legs on duration and size, and where legs since 2017 that went this far ended up. Historical numbers only, not advice."
+   }
+  ]
+ },
+ {
+  "version": "2026.11.10.1",
+  "date": "2026-11-10",
+  "notify": false,
+  "title_zh": "周期里的涨跌腿：可以放大看，图上直接标名字",
+  "title_en": "Legs-in-the-cycle chart: zoom and on-chart labels",
+  "items": [
+   {
+    "type": "improve",
+    "zh": "宏观页顶部的周期图可以放大缩小：图上方 ＋ / － / ← / → / 复位，电脑上也能直接拖选一段放大、双击复位。背景区间直接写周期状态名字（牛市、牛市·顶部风险区、熊市…），每一腿直接写「涨腿 +48%」「跌腿 −13%」，不用再对着图例找颜色",
+    "en": "The cycle chart on the macro page now zooms (+ / − / ← / → / reset, or drag to zoom on desktop), cycle states are written inside their bands, and each leg is labelled with its move."
+   }
+  ]
+ },
+ {
+  "version": "2026.11.10",
+  "date": "2026-11-10",
+  "notify": true,
+  "title_zh": "宏观页顶部：周期里的涨跌腿",
+  "title_en": "Macro page: legs inside the cycle",
+  "items": [
+   {
+    "type": "new",
+    "zh": "宏观页最上面加一张图：BTC 价格按涨腿 / 跌腿分色（青绿 = 涨腿，红 = 跌腿），背景色是当天的 L2 周期状态。一眼看出大周期在哪一段、短期在走哪一腿。默认看近 1 年，可切 3 年 / 本轮 / 全部（2012 年起）",
+    "en": "A new chart tops the macro page: BTC price coloured by up-leg / down-leg over the daily L2 cycle-state background, so the cycle stage and the current short-term leg read at a glance. Default 1Y; 3Y / this cycle / all (since 2012)."
+   },
+   {
+    "type": "improve",
+    "zh": "标清时间尺度：涨跌腿卡片标「短期 · 波段」（按天看，一条腿通常一到两周），四层综合研判标「长期 · 周期」（按月看）。长短期方向相反时，中间自动加一行历史对比，天数和幅度都写：例如现在「这一条已走 49 天、最深跌了 13.6%：时长比 99 条牛市跌腿里的 96 条都长，跌幅只比其中 21 条深」",
+    "en": "Time horizons are labelled: the leg cards are \"short term · swings\" (days; a leg usually lasts one to two weeks), the four-layer read is \"long term · cycle\" (months). When the two point different ways, a line compares the current leg with history on both duration and size."
+   },
+   {
+    "type": "improve",
+    "zh": "涨跌腿卡片只留 BTC 涨跌腿和山寨整体，山寨轮动窗口移到详情页；卡片配色改成全站终端风",
+    "en": "The leg card keeps only BTC and altcoins overall; the altcoin window moves to the detail page. Card colours now match the site."
+   }
+  ]
+ },
+ {
+  "version": "2026.11.09.2",
+  "date": "2026-11-09",
+  "notify": true,
+  "title_zh": "加「山寨整体」涨跌腿",
+  "title_en": "New: altcoin-wide up/down leg",
+  "items": [
+   {
+    "type": "new",
+    "zh": "涨跌腿追踪卡片加一块「山寨整体」：把币安成交额前 50 左右的山寨币做成等权指数（每月 1 日按 30 日成交额重排，停牌 / 崩盘立刻剔除），用和 BTC 一样的折线规则切涨腿和跌腿，阈值 15%（山寨波动约是 BTC 的 1.5 倍）。截至 11-08：山寨整体跌腿第 42 天，−28.2%，反弹 15% 才算涨腿重新开始",
+    "en": "The leg tracker adds \"Altcoins overall\": an equal-weight index of ~50 top-volume Binance altcoins (re-ranked monthly by 30-day volume; halted or collapsed coins dropped at once), cut into up- and down-legs with the BTC rules at a 15% threshold. As of 11-08: day 42 of a down-leg, −28.2%."
+   },
+   {
+    "type": "data",
+    "zh": "篮子不含 BTC、ETH、稳定币、包装币，也不含代币化股票（币安 2026-06 起上线的 NVDAB、TSLAB 这类，10～11 月有 8 个按成交额挤进了前 50）。已下架币的历史照算，没有幸存者偏差。阈值对比：10%～25% 四档给出的当前方向一致",
+    "en": "The basket excludes BTC, ETH, stablecoins, wrapped coins and tokenized stocks (NVDAB, TSLAB etc.). Delisted coins keep their history, so no survivorship bias. Thresholds of 10–25% all give the same current direction."
+   }
+  ]
+ },
+ {
+  "version": "2026.11.09.1",
+  "date": "2026-11-09",
+  "notify": true,
+  "title_zh": "AI Agent 页补上 Gang、Flap、Four.meme：交易地址、成交 BNB、新发币、毕业不再只算 AgentPad",
+  "title_en": "AI Agent page now includes Gang, Flap and Four.meme: traders, BNB volume, launches and graduations beyond AgentPad",
+  "items": [
+   {
+    "type": "new",
+    "zh": "再加入 Flap（只算发币时设了 Binance Agent ID 门禁的币，内盘每笔买卖链上要求持有 Agent ID）和 Four.meme（合约标记为 Agent 钱包创建的币，买卖不限 ID，单独标注）；页面新增「分平台（最近 7 天）」表。Four.meme 另有一个未公开文档的发币合约（交易者不全持有 Agent ID），未证实属于 Agent 生态，暂不计入",
+    "en": "Also added Flap (only tokens launched with the Binance Agent ID gate, where every curve trade requires an Agent ID on-chain) and Four.meme (tokens its contract marks as created by an Agent wallet; trading not ID-gated, labelled separately), plus a by-platform table for the last 7 days. A separate undocumented Four.meme launch contract (whose traders don't all hold an Agent ID) is not counted until it can be shown to be part of the Agent ecosystem"
+   },
+   {
+    "type": "data",
+    "zh": "每日买卖交易地址、成交 BNB、新发币、毕业币加入 Gang（gang.fun，合约强制只有持 Agent ID 的钱包能发币和买卖）。从 10-19 起全部重算；之前只算 AgentPad，而 AgentPad 10-24 后基本没人用，所以这几项长期接近 0。成交额只算 BNB 计价的币；Four.meme Agent、Flap Agent 还在接入中，范围见页面「范围」",
+    "en": "Daily traders, BNB volume, new launches and graduations now include Gang (gang.fun, whose contracts only let Agent ID holders launch and trade), recomputed from 10-19. Previously only AgentPad was counted, which went almost idle after 10-24. Volume counts BNB-quoted tokens only; Four.meme Agent and Flap Agent are still being added",
+    "corrections_anchor": "#rc-2026-11-09-gang"
+   }
+  ]
+ },
+ {
+  "version": "2026.11.09",
+  "date": "2026-11-09",
+  "notify": true,
+  "title_zh": "涨腿追踪升级为「涨跌腿追踪」",
+  "title_en": "Leg Tracker now covers down-legs too",
+  "items": [
+   {
+    "type": "improve",
+    "zh": "BTC 每天必在一条涨腿或一条跌腿之中，不再有「没有进行中的涨腿」的空状态。跌腿显示：已走天数、高点到最低收盘的跌幅（对照历史牛市回撤分位）、现价距高点、反弹确认线（最低收盘 ×1.10，收盘站上 = 涨腿重新开始）。现在是跌腿第 48 天，−13.6%（截至 11-08）",
+    "en": "BTC is always in either an up-leg or a down-leg, so there is no more empty \"no rally\" state. Down-legs show days so far, drop from the peak to the lowest close (against historical bull drawdown percentiles), distance from the peak, and the reversal line (lowest close ×1.10). Currently day 48 of a down-leg, −13.6% (as of 11-08)."
+   },
+   {
+    "type": "new",
+    "zh": "详情页加「全部行情的涨腿与跌腿」：2010-07-18 起全部日线用同一套 10% 折线逐条切开，不分牛熊的持续天数与幅度分位、当前这一腿在历史里的位置、最近几条腿、牛熊拆开四组。上线前回放核对：截至 2026-09-27 共 5,916 天、305 条腿，牛市涨 103 / 跌 99、熊市涨 49 / 跌 54，与研究原件逐条一致",
+    "en": "The detail page adds \"Every up-leg and down-leg\": all daily closes since 2010-07-18 cut with the same 10% zigzag; duration and size percentiles, where the current leg sits, recent legs, and a bull/bear split. Replay check: 5,916 days and 305 legs as of 2026-09-27, matching the research original leg by leg."
+   },
+   {
+    "type": "data",
+    "zh": "数据：2017-08-17 起币安现货 BTCUSDT 已收盘日线，之前用 Coin Metrics PriceUSD（缓存在仓库，历史不变）。新增 /data/leg_history.json",
+    "en": "Data: closed Binance BTCUSDT daily candles from 2017-08-17, Coin Metrics PriceUSD before that (cached in the repo). New file /data/leg_history.json."
+   }
+  ]
+ },
+ {
+  "version": "2026.11.08.2",
+  "date": "2026-11-08",
+  "notify": true,
+  "title_zh": "新增「涨腿追踪」与山寨轮动窗口",
+  "title_en": "New: Leg Tracker and the altcoin window",
+  "items": [
+   {
+    "type": "new",
+    "zh": "新页面 /leg-tracker/：BTC 这一轮上涨走了多少天、涨了多少、腿内最大回撤，对照历史 103 条牛市涨腿的长度和回撤分布；89 天提示线（假设级）；我们测过但不成立的说法单独列出。读数卡放在宏观页最上面、四层综合研判之上（首页也有一张）",
+    "en": "New page /leg-tracker/: days, gain and max in-leg drawdown of the current BTC rally, against the length and drawdown distribution of 103 historical bull-market rallies; the day-89 marker (hypothesis grade); claims we tested that failed are listed separately. The reading card sits at the top of the macro page, above the four-layer overall read (also on the home page)."
+   },
+   {
+    "type": "new",
+    "zh": "山寨轮动窗口：BTC 收盘 10 日涨幅 ≥15% 记点火，点火后 7 天内最高收盘日为 D0，D0+24 只减不加、D0+30 清零，BTC 收盘跌破 D0×0.90 提前关闭。只是纸面观察读数，不是开仓信号，不给个币名单",
+    "en": "Altcoin window: a 10-day BTC close gain ≥15% is an ignition; D0 is the highest close within 7 days; trim only from D0+24, cleared at D0+30, closed early if BTC closes below D0×0.90. A paper observation, not an entry signal; no coin list."
+   },
+   {
+    "type": "data",
+    "zh": "数据：币安现货 BTCUSDT 已收盘 UTC 日线，每天 UTC 00:53 更新；上线前回放 2026-09-25～09-28 四天与海报读数逐项一致（第 89 天 +47.8%、回撤 6.9%，第 90 天亮「多头只减不加」，D0=08-27）",
+    "en": "Data: closed Binance BTCUSDT UTC daily candles, updated daily; replays of 2026-09-25 to 09-28 matched the poster readings item by item."
+   }
+  ]
+ },
+ {
+  "version": "2026.11.08",
+  "date": "2026-11-08",
+  "notify": true,
+  "title_zh": "发射台名录（logo + 叙事） · 事件日历加监管 / 立法二元表决",
+  "title_en": "Launchpad directory (logos + angles) · Calendar adds regulatory / legislative votes",
+  "items": [
+   {
+    "type": "new",
+    "zh": "新发射台监控页加「发射台名录」：链上扫到、认得出名字的发射台做成卡片，带 logo、所在链与设施、叙事标签（如 代币化股票 / RWA、AI Agent、税币、持币分红）、一句话介绍（标明出处）、活跃度和官网 / X / DefiLlama 链接，可按名字、叙事搜索和按链筛选；同一平台的多个合约 / 配置合并成一张（如 Float 的几套 LaunchLab 配置、Flap 的 Portal 与 VaultPortal）。logo 和官网简介每天自动抓，认不出名字的合约折进「扫描明细」。",
+    "en": "New launchpad monitor adds a launchpad directory: cards for every launchpad we see on-chain and can name, with logo, chain and venue, angle tags (tokenized stocks / RWA, AI Agent, tax tokens, holder rewards…), a sourced one-liner, activity and site / X / DefiLlama links; searchable by name or angle and filterable by chain. Multiple contracts/configs of one platform are merged (e.g. Float’s LaunchLab configs; Flap’s Portal and VaultPortal). Logos and site blurbs are fetched daily; unnamed contracts move into the scan details."
+   },
+   {
+    "type": "new",
+    "zh": "事件日历的比特币大事件里加「监管 / 立法表决」（REG）：国会 / 委员会对加密法案的表决、SEC 对加密产品的最终决定日、其他地区的监管表决。只收有官方日期和官方来源的，标「未检验」，不给统计数字。2026-11-08 核对：未来 60 天没有符合条件的（JitoSOL ETF 申请已撤回；ISE 加密信托期权 11-11 截止日不是最终决定）",
+    "en": "BTC events now include regulatory / legislative votes (REG): congressional and committee votes on crypto bills, SEC final decision dates on crypto products, and votes elsewhere. Only items with an official date and source; marked untested, no statistics. Checked 2026-11-08: none qualify in the next 60 days."
+   },
+   {
+    "type": "new",
+    "zh": "SEC 对加密产品的最终批准 / 否决期限改为每天自动从 Federal Register 官方接口扫描：只收不能再延期的最终期限，出了批准 / 否决令或撤回就自动拿掉。回测今年能抓到 iShares 比特币备兑收益 ETF（5-30）、Nasdaq 比特币指数期权（5-27）、JitoSOL ETF（11-15，后撤回）",
+    "en": "SEC final approve/disapprove deadlines for crypto products are now scanned daily from the Federal Register API: only final deadlines, dropped automatically once an order or withdrawal appears."
+   },
+   {
+    "type": "new",
+    "zh": "国会委员会对加密法案的表决会（参院 Business Meeting、众院 Markup，带官方钟点）和加密法案的总统签署期限，也改为每天自动从国会图书馆官方接口扫描。院会表决和其他国家的表决每周人工核对一次",
+    "en": "Congressional committee votes on crypto bills (with official times) and presidential signing deadlines are now scanned daily from the Library of Congress API. Floor votes and non-US votes are checked by hand weekly."
+   }
+  ]
+ },
+ {
+  "version": "2026.11.06",
+  "date": "2026-11-06",
+  "notify": true,
+  "title_zh": "新发射台监控 · 中文站改用新加坡时间 · 宝可梦报告英文版 · L3 恢复 · 日更提前",
+  "title_en": "New launchpad monitor · Chinese site in Singapore time · Pokémon report in English · L3 restored · earlier daily run",
+  "items": [
+   {
+    "type": "new",
+    "zh": "新发射台监控（二级页面 /launchpad/discovery/）：不等 DefiLlama 收录，每天扫 22 条 EVM 链前一个 UTC 日的新币，按发币合约归到「工厂」，标新出现和起量的；Solana 按 Meteora DBC、Raydium LaunchLab 的配置拆出各发射台前端；另列 GeckoTerminal 新收录入口和自称发射台的项目。发射台矩阵页上加了入口卡片",
+    "en": "New launchpad monitor (/launchpad/discovery/): before DefiLlama lists them, we scan the previous UTC day's new tokens on 22 EVM chains and group them by creating contract, flagging new and ramping factories; on Solana we split Meteora DBC and Raydium LaunchLab into front ends; plus new GeckoTerminal entries and self-described launchpads. An entry card sits on the launchpad matrix page"
+   },
+   {
+    "type": "new",
+    "zh": "新发射台监控页加「AI Agent 发射台 · 重点关注」：DefiLlama 上和 AI Agent 叙事有关的发射台单独列出（强相关 / 待确认两档，含 Clanker、Virtuals、Ignix、AGNT 等），附链上扫描里名字带 Agent / AI 的工厂和前端；入口卡片加 AI Agent 摘要。另加「链覆盖」表：按近 30 天发射台手续费份额标出哪些链在扫、哪些达门槛待接入",
+    "en": "The new launchpad monitor adds 'AI Agent launchpads · focus': launchpads tied to the AI-agent narrative on DefiLlama (strong / to confirm, incl. Clanker, Virtuals, Ignix, AGNT), plus on-chain factories and front ends named Agent / AI; the entry card shows an AI-agent summary. A chain coverage table shows which chains are scanned and which are above the bar to add"
+   },
+   {
+    "type": "data",
+    "zh": "发射台矩阵：全网手续费汇总趋势、当日变化拆解和「钱在哪」的前 8 名，改成和跨链排行一样按近 7 日手续费排序（原来按近 90 天），平台配色随之调整；跨链排行等表格标题、表头写明是手续费，不是成交量",
+    "en": "Launchpad matrix: the top 8 in the sector trend, day-over-day breakdown and 'where the money is' now follow the cross-chain ranking's 7-day fees (was 90 days), with colors updated; ranking titles and headers now say fees, not volume"
+   },
+   {
+    "type": "fix",
+    "zh": "AI Agent 页恢复日更并补齐 10-29 至 11-05：采集从大叔电脑搬到 GitHub 云端，每天自动跑；从注册表部署起独立重算全部历史，和原有 10-19 至 10-28 逐项一致。范围仍是已核的 AgentPad 子集",
+    "en": "The AI Agent page updates daily again, with 10-29 to 11-05 filled in: collection moved to GitHub's cloud; full history independently recomputed from the registry deployment and matching the earlier 10-19 to 10-28 values exactly. Scope remains the verified AgentPad subset"
+   },
+   {
+    "type": "data",
+    "zh": "发射台矩阵标出「沿用前一日」的平台：DefiLlama 还没出当天数据的平台（如 StonkFun），排行、头部指标、当日变化拆解里标「沿用 MM-DD」，头部写明沿用几家、占比多少；补出后自动换成真实值",
+    "en": "The launchpad matrix now tags platforms carried over from their last day (not yet published by DefiLlama, e.g. StonkFun) in the ranking, headline and day-over-day breakdown, with the count and share noted; real values replace them once published",
+    "corrections_anchor": "#rc-2026-11-06-carry"
+   },
+   {
+    "type": "data",
+    "zh": "时间显示：后端统计统一 UTC+0 不变；前端中文站显示新加坡时间（UTC+8，原「北京时间」，钟点相同），英文站显示美东时间",
+    "en": "Time display: statistics stay in UTC+0; the Chinese site shows Singapore time (UTC+8), the English site US Eastern time",
+    "corrections_anchor": "#rc-2026-11-06-utc"
+   },
+   {
+    "type": "new",
+    "zh": "《宝可梦线下卡价翻了一倍，链上抽卡却在降温：持有 CARDS，该看什么？》补英文版，PDF 中英文都可下载",
+    "en": "English edition of the Pokémon card RWA / CARDS report, with PDF"
+   },
+   {
+    "type": "fix",
+    "zh": "L2 周期层、L3 筹码层恢复日更：数据源 bitview 10-31 前后升级接口（查询参数改名、分龄与地址序列改名、筹码分布去掉日期列表），L3 停在 10-29、L2 一直在用缓存。已按新接口改好，历史数值逐日核对一致；筹码分布改取前一个已收盘日",
+    "en": "L2 cycle and L3 supply layers update again: bitview upgraded its API around 10-31 (renamed query parameter, renamed age-band and address series, no date list for the supply distribution); L3 had stopped at 10-29 and L2 was running on cache. Both now use the new API, with history checked day by day; the supply distribution now uses the last closed day"
+   },
+   {
+    "type": "fix",
+    "zh": "日更加一个早场（UTC 03:40）：GitHub 定时任务近来常晚 6–8 小时，前一天的数据要拖到新加坡时间次日凌晨 2 点左右才上线",
+    "en": "An earlier daily run (03:40 UTC): GitHub schedules have recently started 6–8 hours late, pushing the previous day's data to around 1 PM ET"
+   }
+  ]
+ },
+ {
+  "version": "2026.11.03",
+  "date": "2026-11-03",
+  "notify": true,
+  "title_zh": "两篇报告补英文版、统一版式",
+  "title_en": "Two reports now in English, unified layout",
+  "items": [
+   {
+    "type": "new",
+    "zh": "两篇旧报告补英文版并统一版式：《发币回暖了，找币的没有》《2,263 场众筹，55 场毕业，无人赚钱：pools.trade 拆解报告》换成和其他报告一样的报告头，pools.trade 那篇配色改成全站报告统一的暖白蓝红；文字和数字不变，PDF 中英文都可下载",
+    "en": "English editions of two earlier reports, now in the same layout as the rest: 'Launches are back, discovery isn't' and the pools.trade teardown; text and numbers unchanged, PDF in both languages"
+   }
+  ]
+ },
+ {
+  "version": "2026.11.02",
+  "date": "2026-11-02",
+  "notify": true,
+  "title_zh": "发射台阶段补「缓慢降温 / 缓慢升温」 · 新报告：发币回暖了，找币的没有",
+  "title_en": "Launchpad slow-cooling / slow-warming stages · New report: launches are back, discovery isn't",
+  "items": [
+   {
+    "type": "data",
+    "zh": "发射台活动温度阶段新增「缓慢降温 / 缓慢升温」：单周没跌（涨）满 10%、但近两周累计跌（涨）超 10% 时不再叫「盘整」；「一般持续几天」不再计入 1–2 天的来回跳动",
+    "en": "Launchpad stages add Slow cooling / Slow warming: a two-week move beyond ±10% without a 10% week is no longer called Steady; 'usually lasts' no longer counts 1–2 day flickers",
+    "corrections_anchor": "#rc-2026-11-02-lpstage"
+   },
+   {
+    "type": "new",
+    "zh": "补发报告《发币回暖了，找币的没有：二级发现层为什么掉队》（2026-09-08 写成，数据口径日 2026-08-29；中文，可下载 PDF）",
+    "en": "Published 'Launches are back, discovery isn't: why the secondary discovery layer fell behind' (written 2026-09-08, data as of 2026-08-29; Chinese only, PDF available)"
+   }
+  ]
+ },
+ {
+  "version": "2026.10.29",
+  "date": "2026-10-29",
+  "notify": true,
+  "title_zh": "发射台长周期位置 · AI Agent 页 · 时间与价格口径统一 · pools.trade 报告",
+  "title_en": "Launchpad long-run position · AI Agent page · unified time and price basis · pools.trade report",
+  "items": [
+   {
+    "type": "new",
+    "zh": "发射台活动温度第一屏改成两个尺度：近 2 年温度（仪表盘，0 ≈ 近 2 年常态下沿）+ 长周期位置（全部历史小图、比可比段最高低多少、是常态下沿的几倍）；周期页加全部历史大图（全部 / 2 年 / 1 年、线性 / 对数）",
+    "en": "Launchpad activity temperature now shows two scales: the 2-year temperature dial and a long-run position card (full-history sparkline, distance from the comparable peak, multiple of the normal lower edge); the cycles page adds a full-history chart (All / 2Y / 1Y, linear / log)"
+   },
+   {
+    "type": "new",
+    "zh": "「已在这个阶段 N 天」下面直接显示这个阶段一般持续几天和进度条；底部改写扫描覆盖：DefiLlama 收录的全部发射台、几条链、计入部分占类目手续费多少",
+    "en": "'In this stage for N days' now shows the stage's usual duration with a progress bar; the footer states coverage: all launchpads DefiLlama lists, how many chains, and the share of category fees counted"
+   },
+   {
+    "type": "new",
+    "zh": "新增 AI Agent 页：币安 Agent ID 生态六项核心数据（累计 / 新增 Agent ID、交易地址、曲线成交额、新发币、毕业），交易类数据目前只覆盖 AgentPad",
+    "en": "New AI Agent page: six core Binance Agent ID metrics (cumulative / new IDs, trading addresses, curve volume, launches, graduations); trading metrics cover AgentPad only for now"
+   },
+   {
+    "type": "data",
+    "zh": "时间与价格口径统一：所有数据按 UTC 0 点收盘的完整日对齐，L2 刻度尺、L3 价格位置改用收盘价并写明收盘时刻；页面钟点中文站写北京时间、英文站写美东时间",
+    "en": "Unified time and price basis: data aligns to full UTC days closing at 00:00 UTC; the L2 ruler and L3 price bar use that close and show its time; clock times read Beijing time (Chinese) / US Eastern (English)",
+    "corrections_anchor": "#rc-2026-10-29-close"
+   },
+   {
+    "type": "new",
+    "zh": "补发报告《2,263 场众筹，55 场毕业，无人赚钱：pools.trade 拆解报告》（2026-08-18 写成）",
+    "en": "Published the pools.trade teardown report (written 2026-08-18; Chinese only)"
+   }
+  ]
+ },
+ {
+  "version": "2026.10.26",
+  "date": "2026-10-26",
+  "notify": true,
+  "title_zh": "新报告：宝可梦卡 RWA · 报告按分类筛选",
+  "title_en": "New report: Pokémon card RWA · reports filterable by category",
+  "items": [
+   {
+    "type": "new",
+    "zh": "新报告《宝可梦线下卡价翻了一倍，链上抽卡却在降温：持有 CARDS，该看什么？》（中文，可下载 PDF）",
+    "en": "New report on tokenized Pokémon cards and the CARDS token (Chinese only, PDF available)"
+   },
+   {
+    "type": "new",
+    "zh": "分析报告页加分类按钮：全部 / BTC / MEME / RWA / AI Agent，网址带分类（如 /reports/#RWA）可直接分享",
+    "en": "Reports page now filters by category: All / BTC / MEME / RWA / AI Agent; the URL keeps the category (e.g. /reports/#RWA) for sharing"
+   }
+  ]
+ },
+ {
+  "version": "2026.10.22",
+  "date": "2026-10-22",
+  "notify": true,
+  "title_zh": "L4 重做 + 事件日历 + 发射台活动温度 + 交易所与 ETF 持币",
+  "title_en": "L4 rebuilt, event calendar, launchpad activity temperature, exchange + ETF holdings",
+  "items": [
+   {
+    "type": "data",
+    "zh": "L4 换成检验过的版本：只有「资金费率 30 日均转负」（空头拥挤）一条会改动作；其余 8 个读数按过去两年分位只描述温度；撤掉旧的恐慌贪婪 / 资金费率 / 未平仓打分",
+    "en": "L4 now uses the tested version: only '30-day average funding below zero' (crowded shorts) changes the action; eight other readings describe temperature by two-year percentile; the old Fear & Greed / funding / OI score is retired",
+    "corrections_anchor": "#rc-2026-10-22-l4"
+   },
+   {
+    "type": "new",
+    "zh": "事件日历：美联储议息、CPI、非农公布前后 BTC 一般会晃多大（已单独检验，只说幅度不说方向），以及 Web3 行业会议与代币事件汇总；首页加「未来 7 天」",
+    "en": "Event calendar: how much BTC typically swings around FOMC, CPI and payrolls (individually tested; magnitude, not direction), plus a digest of Web3 conferences and token events; 'Next 7 days' on the home page"
+   },
+   {
+    "type": "new",
+    "zh": "发射台活动温度（MEME 发射台赛道冷热）放到发射台矩阵页最上面，每日更新：温度仪表、当前阶段（寒冬 / 回暖 / 盛夏 / 退潮 / 盘整）、这一轮热潮走到哪、各阶段一般持续几天；新增「钱在哪」，看手续费份额在各链、各平台之间怎么分。研究快照截至 2026-10-17，之后每天接矩阵页的同一类目数据，热潮按同一套规则每天重算",
+    "en": "Launchpad activity temperature (how hot MEME launchpads are) now leads the launchpad matrix page and updates daily: the dial, current stage (Winter / Warming / Summer / Cooling / Steady), where this wave stands and how long stages usually last; plus 'Where the money is' — fee share by chain and platform. The research snapshot runs to 2026-10-17; after that the same category total is pulled daily and waves are recomputed with the same rules"
+   },
+   {
+    "type": "new",
+    "zh": "L3 新增现货 ETF 持币和「交易所 + ETF 合计」：看交易所流出的币是去了 ETF，还是去了链上自托管",
+    "en": "L3 adds spot ETF holdings and 'exchanges + ETFs combined': did coins leaving exchanges go into ETFs or into on-chain self-custody?"
+   }
+  ]
+ },
+ {
+  "version": "2026.10.11",
+  "date": "2026-10-11",
+  "notify": true,
+  "title_zh": "L3 筹码层重做 + 周末特辑第 3 期 + 报告可下载 PDF",
+  "title_en": "L3 supply layer rebuilt, weekend special #3 and report PDFs",
+  "items": [
+   {
+    "type": "new",
+    "zh": "L3 筹码层按新研究重做：短期持有者成本 +1σ 上方压力区、短期持有者成本参考支撑、筹码集中度 + 30 天波动的「大波动预警」，每张卡都能点进去看全部历史；新增价格位置条、筹码分布图和最近几次碰线记录",
+    "en": "L3 rebuilt on new research: the STH cost +1σ pressure zone, STH cost as reference support and a large-move warning from supply concentration + 30-day volatility, each with a full-history page; plus a price-position bar, a supply map and recent touch records"
+   },
+   {
+    "type": "data",
+    "zh": "L3 层结论从「交易所 7 日净流量」改为「价格相对压力区的位置 + 大波动预警」；交易所流量和大户 / 散户持币保留，改为只作描述",
+    "en": "The L3 verdict moved from 7-day exchange net flow to price position vs the pressure zone + the large-move warning; exchange flows and whale/retail holdings stay as descriptive lines",
+    "corrections_anchor": "#rc-2026-10-11-l3"
+   },
+   {
+    "type": "data",
+    "zh": "综合研判的 L3 段改写价格位置和大波动预警，不再判断筹码和周期方向「一致 / 背离」",
+    "en": "The overall read's L3 paragraph now covers price position and the large-move warning instead of flow/cycle agreement",
+    "corrections_anchor": "#rc-2026-10-11-comp"
+   },
+   {
+    "type": "new",
+    "zh": "《37 条比特币周期规则，我挨个回测了一遍：15 条已经失灵》中英文版上线",
+    "en": "New report: 'I Back-tested 37 Bitcoin Cycle Rules One by One: 15 Have Stopped Working' (Chinese and English)"
+   },
+   {
+    "type": "new",
+    "zh": "报告页可以下载 PDF：按你正在看的语言下载，统一为浅色版，方便阅读和打印",
+    "en": "Reports can be downloaded as PDF in the language you are reading, always in the light layout for reading and printing"
+   },
+   {
+    "type": "improve",
+    "zh": "宏观仪表盘：综合研判的结论和分层说明拉开间距；四层 Tab 加大、加底色，点击时页面不再跳动；「标签说明」加展开箭头",
+    "en": "Macro dashboard: more breathing room in the overall read; bigger, clearer layer tabs that no longer jump the page when clicked; an arrow on 'What the tags mean'"
+   }
+  ]
+ },
+ {
+  "version": "2026.10.08",
+  "date": "2026-10-08",
+  "notify": true,
+  "title_zh": "宏观仪表盘改版：四层切换 + 四层综合研判 + 周期层指标卡",
+  "title_en": "Macro dashboard redesign: layer tabs, a four-layer overall read and cycle gauges",
+  "items": [
+   {
+    "type": "new",
+    "zh": "宏观仪表盘改为 L1~L4 标签切换，每个标签直接显示该层结论、主要依据、切换条件和与昨日比",
+    "en": "The macro dashboard now switches between L1–L4 tabs; each shows the layer verdict, main evidence, switch conditions and the change from yesterday"
+   },
+   {
+    "type": "new",
+    "zh": "综合研判改为四层合成：方向看 L2 周期，节奏看 L1 宏观，筹码和情绪负责确认与提醒",
+    "en": "The overall read now combines all four layers: the cycle sets direction, macro sets pace, flows and sentiment confirm and caution"
+   },
+   {
+    "type": "new",
+    "zh": "L2 周期层改为状态机；「估值与持有者」6 个指标可点进去看全部历史、区间规则和状态解读；关键价位改为刻度尺；周期状态图扩展到 2012 年至今",
+    "en": "L2 is now a state machine; its six valuation & holder gauges open full histories, zone rules and interpretations; key levels are drawn as a ruler; the cycle chart now starts in 2012"
+   },
+   {
+    "type": "new",
+    "zh": "新手说明、更新日志、反馈入口（一键在 X 上 @ 站长）",
+    "en": "A guide, this changelog and a feedback button (one click to mention us on X)"
+   },
+   {
+    "type": "improve",
+    "zh": "指标详情页支持 1 年 / 3 年 / 5 年 / 全部切换，展示数据源能提供的最长历史，新增当前解读、状态切换记录和上一个 / 下一个指标",
+    "en": "Indicator pages switch between 1Y / 3Y / 5Y / All, show the longest history each source offers, and add an interpretation, zone-switch history and previous / next links"
+   },
+   {
+    "type": "fix",
+    "zh": "首页与宏观页同一指标数值不一致：首页改读最新数据，日志摘要标明冻结时间",
+    "en": "The same gauge showed different numbers on the home and macro pages: the home page now reads the latest data and log excerpts are marked with their freeze time"
+   },
+   {
+    "type": "fix",
+    "zh": "L2 信号同时写「本轮已出现」和「本轮未触发」的矛盾：名字里改写规则类型，另起标签写实际情况",
+    "en": "L2 signals no longer say both 'seen this cycle' and 'not triggered': the rule type moves into the name and the actual status gets its own tag"
+   },
+   {
+    "type": "data",
+    "zh": "链上类和百分比变化类指标调整统计起点，排除早期基数过小的时段",
+    "en": "On-chain and percentage-change gauges get new statistics windows that drop the early small-base period",
+    "corrections_anchor": "#rc-2026-10-08-stats"
+   },
+   {
+    "type": "data",
+    "zh": "综合研判规则改为四层合成",
+    "en": "The overall read now combines all four layers",
+    "corrections_anchor": "#rc-2026-10-08-comp"
+   },
+   {
+    "type": "data",
+    "zh": "L2 周期层改为状态机，下线单指标估值卡（MVRV Z-Score、NUPL、Mayer、Puell、Pi Cycle 等，旧链接有停用说明页）",
+    "en": "L2 became a state machine and the single-gauge valuation cards were retired (MVRV Z-Score, NUPL, Mayer, Puell, Pi Cycle…; old links now explain where they went)",
+    "corrections_anchor": "#rc-2026-10-08"
+   }
+  ]
+ },
+ {
+  "version": "2026.10.05",
+  "date": "2026-10-05",
+  "notify": false,
+  "title_zh": "周末特辑英文版 + 网站提速",
+  "title_en": "English weekend report + faster pages",
+  "items": [
+   {
+    "type": "new",
+    "zh": "《宏观到底管不管比特币？》英文版上线",
+    "en": "English edition of 'Does Macro Actually Move Bitcoin?'"
+   },
+   {
+    "type": "improve",
+    "zh": "去掉国内常打不开的 Google Fonts，样式和脚本独立缓存，悬停预取，点击响应更快",
+    "en": "Dropped Google Fonts, cached styles and scripts separately and prefetch on hover for faster clicks"
+   }
+  ]
+ },
+ {
+  "version": "2026.10.04",
+  "date": "2026-10-04",
+  "notify": false,
+  "title_zh": "L1-B 加密资金通道 + 分析报告板块",
+  "title_en": "L1-B crypto funding channels + reports",
+  "items": [
+   {
+    "type": "data",
+    "zh": "「L1.5」改名「L1-B 加密资金通道（只确认、不预测）」，稳定币主线改为去重口径，新增 ETF 13 周与资金轮动矩阵",
+    "en": "'L1.5' became 'L1-B crypto funding channels'; the stablecoin main line is de-duplicated; ETF 13-week flows and the rotation matrix were added",
+    "corrections_anchor": "#rc-2026-10-04"
+   },
+   {
+    "type": "new",
+    "zh": "分析报告板块上线，报告自动生成深色版",
+    "en": "Reports section with automatic dark versions"
+   }
+  ]
+ },
+ {
+  "version": "2026.10.02",
+  "date": "2026-10-02",
+  "notify": false,
+  "title_zh": "L1 宏观层重建 + 中英双语",
+  "title_en": "L1 rebuild + bilingual site",
+  "items": [
+   {
+    "type": "data",
+    "zh": "L1 宏观流动性按《L1 宏观层数据维度规格》重建：乐观度第一、实际利率四态与情境格、流动性闸门",
+    "en": "L1 rebuilt per the L1 spec: optimism first, real-yield states and the scenario grid, liquidity gate",
+    "corrections_anchor": "#rc-2026-10-02"
+   },
+   {
+    "type": "new",
+    "zh": "中英双语、深浅主题、指标详情页全历史与正常波动范围",
+    "en": "Bilingual site, light/dark themes, full-history indicator pages with normal ranges"
+   }
+  ]
+ }
 ]

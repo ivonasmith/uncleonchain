@@ -1,627 +1,1118 @@
 {
-  "schema": 4,
-  "generated_at": "2026-11-14T07:13:24Z",
-  "asof": "2026-11-13",
-  "source": "Coin Metrics PriceUSD (2010-07-18~2017-08-16) + Binance spot BTCUSDT 1d (2017-08-17~, closed candles, UTC)",
-  "btc_leg": {
-    "direction": "down",
-    "leg": {
-      "start_date": "2026-09-21",
-      "start_close": 86620.0,
-      "confirm_date": "2026-10-30",
-      "day": 53,
-      "drop_pct": 21.1,
-      "low_close": 68314.0,
-      "low_date": "2026-11-13",
-      "btc_close": 68314.0,
-      "from_peak_pct": -21.1,
-      "reversal_line": 75145.4,
-      "to_reversal_pct": 10.0
-    },
-    "badge": null,
-    "prev_leg": {
-      "dir": "up",
-      "start_date": "2026-06-30",
-      "end_date": "2026-09-21",
-      "days": 83,
-      "pct": 47.8
-    }
+ "schema": 4,
+ "generated_at": "2026-11-14T07:13:24Z",
+ "asof": "2026-11-13",
+ "source": "Coin Metrics PriceUSD (2010-07-18~2017-08-16) + Binance spot BTCUSDT 1d (2017-08-17~, closed candles, UTC)",
+ "btc_leg": {
+  "direction": "down",
+  "leg": {
+   "start_date": "2026-09-21",
+   "start_close": 86620.0,
+   "confirm_date": "2026-10-30",
+   "day": 53,
+   "drop_pct": 21.1,
+   "low_close": 68314.0,
+   "low_date": "2026-11-13",
+   "btc_close": 68314.0,
+   "from_peak_pct": -21.1,
+   "reversal_line": 75145.4,
+   "to_reversal_pct": 10.0
   },
-  "alt_leg": {
-    "direction": "down",
-    "leg": {
-      "start_date": "2026-09-27",
-      "start_close": 45.66,
-      "confirm_date": "2026-10-22",
-      "day": 47,
-      "drop_pct": 31.7,
-      "low_close": 31.2,
-      "low_date": "2026-11-13",
-      "from_peak_pct": -31.7,
-      "reversal_line": 35.89,
-      "to_reversal_pct": 15.0,
-      "idx_close": 31.2
-    },
-    "badge": null,
-    "prev_leg": {
-      "dir": "up",
-      "start_date": "2026-08-16",
-      "end_date": "2026-09-27",
-      "days": 42,
-      "pct": 58.8
-    },
-    "basket": {
-      "threshold_pct": 15.0,
-      "coins_today": 57,
-      "n_members": 57,
-      "n_ever": 325,
-      "members": [
-        {
-          "symbol": "SOL",
-          "rank": 1,
-          "vol_m": 192.0,
-          "joined": "2020-12-01"
-        },
-        {
-          "symbol": "ZEC",
-          "rank": 2,
-          "vol_m": 172.5,
-          "joined": "2025-11-01"
-        },
-        {
-          "symbol": "NEAR",
-          "rank": 3,
-          "vol_m": 138.3,
-          "joined": "2021-09-01"
-        },
-        {
-          "symbol": "XRP",
-          "rank": 4,
-          "vol_m": 108.4,
-          "joined": "2018-09-01"
-        },
-        {
-          "symbol": "BNB",
-          "rank": 5,
-          "vol_m": 75.3,
-          "joined": "2018-02-04"
-        },
-        {
-          "symbol": "SUI",
-          "rank": 6,
-          "vol_m": 45.9,
-          "joined": "2023-08-01"
-        },
-        {
-          "symbol": "DOGE",
-          "rank": 7,
-          "vol_m": 45.6,
-          "joined": "2020-08-01"
-        },
-        {
-          "symbol": "UNI",
-          "rank": 8,
-          "vol_m": 43.7,
-          "joined": "2022-06-01"
-        },
-        {
-          "symbol": "ENA",
-          "rank": 9,
-          "vol_m": 40.7,
-          "joined": "2024-07-01"
-        },
-        {
-          "symbol": "WLD",
-          "rank": 10,
-          "vol_m": 40.3,
-          "joined": "2023-11-01"
-        },
-        {
-          "symbol": "PEPE",
-          "rank": 11,
-          "vol_m": 29.1,
-          "joined": "2023-09-01"
-        },
-        {
-          "symbol": "TRX",
-          "rank": 12,
-          "vol_m": 25.6,
-          "joined": "2018-10-01"
-        },
-        {
-          "symbol": "PUMP",
-          "rank": 13,
-          "vol_m": 23.1,
-          "joined": "2026-01-01"
-        },
-        {
-          "symbol": "TAO",
-          "rank": 14,
-          "vol_m": 22.6,
-          "joined": "2024-08-01"
-        },
-        {
-          "symbol": "AVAX",
-          "rank": 15,
-          "vol_m": 22.5,
-          "joined": "2021-02-01"
-        },
-        {
-          "symbol": "ADA",
-          "rank": 16,
-          "vol_m": 21.8,
-          "joined": "2018-08-01"
-        },
-        {
-          "symbol": "QNT",
-          "rank": 17,
-          "vol_m": 18.7,
-          "joined": "2026-11-01"
-        },
-        {
-          "symbol": "LINK",
-          "rank": 18,
-          "vol_m": 17.8,
-          "joined": "2019-06-01"
-        },
-        {
-          "symbol": "AAVE",
-          "rank": 19,
-          "vol_m": 17.6,
-          "joined": "2024-09-01"
-        },
-        {
-          "symbol": "LTC",
-          "rank": 20,
-          "vol_m": 17.2,
-          "joined": "2018-04-01"
-        },
-        {
-          "symbol": "FET",
-          "rank": 21,
-          "vol_m": 16.5,
-          "joined": "2023-01-01"
-        },
-        {
-          "symbol": "ONDO",
-          "rank": 22,
-          "vol_m": 15.4,
-          "joined": "2025-08-01"
-        },
-        {
-          "symbol": "ZRO",
-          "rank": 23,
-          "vol_m": 14.9,
-          "joined": "2026-03-01"
-        },
-        {
-          "symbol": "ARB",
-          "rank": 24,
-          "vol_m": 13.9,
-          "joined": "2023-07-01"
-        },
-        {
-          "symbol": "INJ",
-          "rank": 25,
-          "vol_m": 13.5,
-          "joined": "2026-06-01"
-        },
-        {
-          "symbol": "HBAR",
-          "rank": 26,
-          "vol_m": 12.6,
-          "joined": "2024-12-01"
-        },
-        {
-          "symbol": "FIL",
-          "rank": 27,
-          "vol_m": 12.2,
-          "joined": "2021-02-01"
-        },
-        {
-          "symbol": "STRK",
-          "rank": 28,
-          "vol_m": 12.0,
-          "joined": "2026-11-01"
-        },
-        {
-          "symbol": "TIA",
-          "rank": 29,
-          "vol_m": 11.1,
-          "joined": "2026-11-01"
-        },
-        {
-          "symbol": "XLM",
-          "rank": 30,
-          "vol_m": 9.9,
-          "joined": "2024-12-01"
-        },
-        {
-          "symbol": "APT",
-          "rank": 31,
-          "vol_m": 9.4,
-          "joined": "2023-02-01"
-        },
-        {
-          "symbol": "DOT",
-          "rank": 32,
-          "vol_m": 9.4,
-          "joined": "2020-12-01"
-        },
-        {
-          "symbol": "BCH",
-          "rank": 33,
-          "vol_m": 9.2,
-          "joined": "2023-08-01"
-        },
-        {
-          "symbol": "TRUMP",
-          "rank": 34,
-          "vol_m": 8.9,
-          "joined": "2025-05-01"
-        },
-        {
-          "symbol": "GTC",
-          "rank": 35,
-          "vol_m": 8.2,
-          "joined": "2026-11-01"
-        },
-        {
-          "symbol": "ASTER",
-          "rank": 36,
-          "vol_m": 8.1,
-          "joined": "2026-02-01"
-        },
-        {
-          "symbol": "PENGU",
-          "rank": 37,
-          "vol_m": 6.7,
-          "joined": "2025-04-01"
-        },
-        {
-          "symbol": "ICP",
-          "rank": 38,
-          "vol_m": 6.5,
-          "joined": "2021-09-01"
-        },
-        {
-          "symbol": "GRAM",
-          "rank": 39,
-          "vol_m": 6.5,
-          "joined": "2026-10-01"
-        },
-        {
-          "symbol": "DASH",
-          "rank": 40,
-          "vol_m": 6.2,
-          "joined": "2025-11-01"
-        },
-        {
-          "symbol": "OP",
-          "rank": 41,
-          "vol_m": 6.1,
-          "joined": "2022-09-01"
-        },
-        {
-          "symbol": "SEI",
-          "rank": 42,
-          "vol_m": 5.6,
-          "joined": "2026-10-01"
-        },
-        {
-          "symbol": "AERO",
-          "rank": 43,
-          "vol_m": 5.6,
-          "joined": "2026-11-01"
-        },
-        {
-          "symbol": "XPL",
-          "rank": 44,
-          "vol_m": 5.3,
-          "joined": "2026-01-01"
-        },
-        {
-          "symbol": "ERA",
-          "rank": 45,
-          "vol_m": 5.1,
-          "joined": "2026-11-01"
-        },
-        {
-          "symbol": "ZAMA",
-          "rank": 46,
-          "vol_m": 5.0,
-          "joined": "2026-09-01"
-        },
-        {
-          "symbol": "RAY",
-          "rank": 47,
-          "vol_m": 4.9,
-          "joined": "2026-10-01"
-        },
-        {
-          "symbol": "POL",
-          "rank": 48,
-          "vol_m": 4.5,
-          "joined": "2025-09-01"
-        },
-        {
-          "symbol": "ETHFI",
-          "rank": 49,
-          "vol_m": 4.5,
-          "joined": "2026-09-01"
-        },
-        {
-          "symbol": "MUBARAK",
-          "rank": 50,
-          "vol_m": 4.4,
-          "joined": "2026-11-01"
-        },
-        {
-          "symbol": "WLFI",
-          "rank": 51,
-          "vol_m": 4.3,
-          "joined": "2025-12-01"
-        },
-        {
-          "symbol": "RENDER",
-          "rank": 54,
-          "vol_m": 3.8,
-          "joined": "2024-11-01"
-        },
-        {
-          "symbol": "CAKE",
-          "rank": 57,
-          "vol_m": 3.7,
-          "joined": "2026-10-01"
-        },
-        {
-          "symbol": "CRV",
-          "rank": 58,
-          "vol_m": 3.7,
-          "joined": "2026-09-01"
-        },
-        {
-          "symbol": "JUP",
-          "rank": 60,
-          "vol_m": 3.4,
-          "joined": "2026-10-01"
-        },
-        {
-          "symbol": "VIRTUAL",
-          "rank": 63,
-          "vol_m": 3.2,
-          "joined": "2025-08-01"
-        },
-        {
-          "symbol": "SHIB",
-          "rank": 68,
-          "vol_m": 3.0,
-          "joined": "2021-09-01"
-        }
-      ],
-      "rules": {
-        "n_enter": 50,
-        "n_keep": 75,
-        "vol_enter_usd": 2000000.0,
-        "vol_keep_usd": 500000.0,
-        "min_age_days": 90,
-        "vol_window_days": 30,
-        "stale_days": 3,
-        "collapse_pct": 10,
-        "collapse_window_days": 90,
-        "stable_band": [
-          0.97,
-          1.03
-        ],
-        "rebalance": "monthly",
-        "min_coins": 8,
-        "excluded": [
-          "AEUR",
-          "ARS",
-          "BETH",
-          "BNSOL",
-          "BRL",
-          "BTC",
-          "BUSD",
-          "CBETH",
-          "COP",
-          "CZK",
-          "DAI",
-          "ETH",
-          "EUR",
-          "EURI",
-          "FDUSD",
-          "GBP",
-          "IDR",
-          "JPY",
-          "MXN",
-          "NGN",
-          "PAXG",
-          "PLN",
-          "PYUSD",
-          "RETH",
-          "RON",
-          "RUB",
-          "STETH",
-          "TRY",
-          "TUSD",
-          "UAH",
-          "USD1",
-          "USDC",
-          "USDE",
-          "USDP",
-          "USDS",
-          "UST",
-          "WBETH",
-          "WBTC",
-          "WEETH",
-          "WSTETH",
-          "XAUT",
-          "ZAR"
-        ],
-        "stock_tokens": "名字以 B 结尾且 2026-06-11 起上市的代币化股票 / ETF 不入篮"
-      },
-      "recent_changes": [
-        {
-          "date": "2026-10-01",
-          "symbol": "LSK",
-          "action": "join",
-          "reason": "rank",
-          "rank": 42
-        },
-        {
-          "date": "2026-10-01",
-          "symbol": "RAY",
-          "action": "join",
-          "reason": "rank",
-          "rank": 35
-        },
-        {
-          "date": "2026-10-01",
-          "symbol": "SAGA",
-          "action": "join",
-          "reason": "rank",
-          "rank": 37
-        },
-        {
-          "date": "2026-10-01",
-          "symbol": "SEI",
-          "action": "join",
-          "reason": "rank",
-          "rank": 47
-        },
-        {
-          "date": "2026-10-01",
-          "symbol": "ZEN",
-          "action": "join",
-          "reason": "rank",
-          "rank": 43
-        },
-        {
-          "date": "2026-11-01",
-          "symbol": "ACE",
-          "action": "exit",
-          "reason": "rank"
-        },
-        {
-          "date": "2026-11-01",
-          "symbol": "BONK",
-          "action": "exit",
-          "reason": "rank"
-        },
-        {
-          "date": "2026-11-01",
-          "symbol": "GIGGLE",
-          "action": "exit",
-          "reason": "rank"
-        },
-        {
-          "date": "2026-11-01",
-          "symbol": "HEMI",
-          "action": "exit",
-          "reason": "rank"
-        },
-        {
-          "date": "2026-11-01",
-          "symbol": "LSK",
-          "action": "exit",
-          "reason": "rank"
-        },
-        {
-          "date": "2026-11-01",
-          "symbol": "PROM",
-          "action": "exit",
-          "reason": "rank"
-        },
-        {
-          "date": "2026-11-01",
-          "symbol": "SAGA",
-          "action": "exit",
-          "reason": "rank"
-        },
-        {
-          "date": "2026-11-01",
-          "symbol": "ZEN",
-          "action": "exit",
-          "reason": "rank"
-        },
-        {
-          "date": "2026-11-01",
-          "symbol": "AERO",
-          "action": "join",
-          "reason": "rank",
-          "rank": 43
-        },
-        {
-          "date": "2026-11-01",
-          "symbol": "ERA",
-          "action": "join",
-          "reason": "rank",
-          "rank": 45
-        },
-        {
-          "date": "2026-11-01",
-          "symbol": "GTC",
-          "action": "join",
-          "reason": "rank",
-          "rank": 35
-        },
-        {
-          "date": "2026-11-01",
-          "symbol": "MUBARAK",
-          "action": "join",
-          "reason": "rank",
-          "rank": 50
-        },
-        {
-          "date": "2026-11-01",
-          "symbol": "QNT",
-          "action": "join",
-          "reason": "rank",
-          "rank": 17
-        },
-        {
-          "date": "2026-11-01",
-          "symbol": "STRK",
-          "action": "join",
-          "reason": "rank",
-          "rank": 28
-        },
-        {
-          "date": "2026-11-01",
-          "symbol": "TIA",
-          "action": "join",
-          "reason": "rank",
-          "rank": 29
-        }
-      ],
-      "coverage": {
-        "universe": 706,
-        "with_data": 704,
-        "from_api": 501,
-        "from_archive": 0,
-        "no_data": 1,
-        "failed": [
-          "币安人生",
-          "牛来"
-        ]
-      },
-      "index_from": "2018-08-31",
-      "asof": "2026-11-13",
-      "note": "动态篮子：每月 1 日按 30 日成交额排名评定进出，停牌/崩盘立刻剔除；等权、每日再平衡；对 USDT。"
-    }
-  },
-  "alt_window": {
-    "stage": "cleared",
-    "ignition_date": "2026-08-21",
-    "d0_date": "2026-08-27",
-    "d0_close": 80249.58,
-    "n": 78,
-    "days_to_clear": 0,
-    "clear_date": "2026-09-26",
-    "stop_line": 72224.62,
-    "stopped_date": null,
-    "btc_close": 68314.0,
-    "btc_vs_stop_pct": -5.4
+  "badge": null,
+  "prev_leg": {
+   "dir": "up",
+   "start_date": "2026-06-30",
+   "end_date": "2026-09-21",
+   "days": 83,
+   "pct": 47.8
   }
+ },
+ "alt_leg": {
+  "direction": "down",
+  "leg": {
+   "start_date": "2026-09-27",
+   "start_close": 45.66,
+   "confirm_date": "2026-10-22",
+   "day": 47,
+   "drop_pct": 31.7,
+   "low_close": 31.2,
+   "low_date": "2026-11-13",
+   "from_peak_pct": -31.7,
+   "reversal_line": 35.89,
+   "to_reversal_pct": 15.0,
+   "idx_close": 31.2
+  },
+  "badge": null,
+  "prev_leg": {
+   "dir": "up",
+   "start_date": "2026-08-16",
+   "end_date": "2026-09-27",
+   "days": 42,
+   "pct": 58.8
+  },
+  "basket": {
+   "threshold_pct": 15.0,
+   "coins_today": 57,
+   "n_members": 57,
+   "n_ever": 325,
+   "members": [
+    {
+     "symbol": "SOL",
+     "rank": 1,
+     "vol_m": 192.0,
+     "joined": "2020-12-01"
+    },
+    {
+     "symbol": "ZEC",
+     "rank": 2,
+     "vol_m": 172.5,
+     "joined": "2025-11-01"
+    },
+    {
+     "symbol": "NEAR",
+     "rank": 3,
+     "vol_m": 138.3,
+     "joined": "2021-09-01"
+    },
+    {
+     "symbol": "XRP",
+     "rank": 4,
+     "vol_m": 108.4,
+     "joined": "2018-09-01"
+    },
+    {
+     "symbol": "BNB",
+     "rank": 5,
+     "vol_m": 75.3,
+     "joined": "2018-02-04"
+    },
+    {
+     "symbol": "SUI",
+     "rank": 6,
+     "vol_m": 45.9,
+     "joined": "2023-08-01"
+    },
+    {
+     "symbol": "DOGE",
+     "rank": 7,
+     "vol_m": 45.6,
+     "joined": "2020-08-01"
+    },
+    {
+     "symbol": "UNI",
+     "rank": 8,
+     "vol_m": 43.7,
+     "joined": "2022-06-01"
+    },
+    {
+     "symbol": "ENA",
+     "rank": 9,
+     "vol_m": 40.7,
+     "joined": "2024-07-01"
+    },
+    {
+     "symbol": "WLD",
+     "rank": 10,
+     "vol_m": 40.3,
+     "joined": "2023-11-01"
+    },
+    {
+     "symbol": "PEPE",
+     "rank": 11,
+     "vol_m": 29.1,
+     "joined": "2023-09-01"
+    },
+    {
+     "symbol": "TRX",
+     "rank": 12,
+     "vol_m": 25.6,
+     "joined": "2018-10-01"
+    },
+    {
+     "symbol": "PUMP",
+     "rank": 13,
+     "vol_m": 23.1,
+     "joined": "2026-01-01"
+    },
+    {
+     "symbol": "TAO",
+     "rank": 14,
+     "vol_m": 22.6,
+     "joined": "2024-08-01"
+    },
+    {
+     "symbol": "AVAX",
+     "rank": 15,
+     "vol_m": 22.5,
+     "joined": "2021-02-01"
+    },
+    {
+     "symbol": "ADA",
+     "rank": 16,
+     "vol_m": 21.8,
+     "joined": "2018-08-01"
+    },
+    {
+     "symbol": "QNT",
+     "rank": 17,
+     "vol_m": 18.7,
+     "joined": "2026-11-01"
+    },
+    {
+     "symbol": "LINK",
+     "rank": 18,
+     "vol_m": 17.8,
+     "joined": "2019-06-01"
+    },
+    {
+     "symbol": "AAVE",
+     "rank": 19,
+     "vol_m": 17.6,
+     "joined": "2024-09-01"
+    },
+    {
+     "symbol": "LTC",
+     "rank": 20,
+     "vol_m": 17.2,
+     "joined": "2018-04-01"
+    },
+    {
+     "symbol": "FET",
+     "rank": 21,
+     "vol_m": 16.5,
+     "joined": "2023-01-01"
+    },
+    {
+     "symbol": "ONDO",
+     "rank": 22,
+     "vol_m": 15.4,
+     "joined": "2025-08-01"
+    },
+    {
+     "symbol": "ZRO",
+     "rank": 23,
+     "vol_m": 14.9,
+     "joined": "2026-03-01"
+    },
+    {
+     "symbol": "ARB",
+     "rank": 24,
+     "vol_m": 13.9,
+     "joined": "2023-07-01"
+    },
+    {
+     "symbol": "INJ",
+     "rank": 25,
+     "vol_m": 13.5,
+     "joined": "2026-06-01"
+    },
+    {
+     "symbol": "HBAR",
+     "rank": 26,
+     "vol_m": 12.6,
+     "joined": "2024-12-01"
+    },
+    {
+     "symbol": "FIL",
+     "rank": 27,
+     "vol_m": 12.2,
+     "joined": "2021-02-01"
+    },
+    {
+     "symbol": "STRK",
+     "rank": 28,
+     "vol_m": 12.0,
+     "joined": "2026-11-01"
+    },
+    {
+     "symbol": "TIA",
+     "rank": 29,
+     "vol_m": 11.1,
+     "joined": "2026-11-01"
+    },
+    {
+     "symbol": "XLM",
+     "rank": 30,
+     "vol_m": 9.9,
+     "joined": "2024-12-01"
+    },
+    {
+     "symbol": "APT",
+     "rank": 31,
+     "vol_m": 9.4,
+     "joined": "2023-02-01"
+    },
+    {
+     "symbol": "DOT",
+     "rank": 32,
+     "vol_m": 9.4,
+     "joined": "2020-12-01"
+    },
+    {
+     "symbol": "BCH",
+     "rank": 33,
+     "vol_m": 9.2,
+     "joined": "2023-08-01"
+    },
+    {
+     "symbol": "TRUMP",
+     "rank": 34,
+     "vol_m": 8.9,
+     "joined": "2025-05-01"
+    },
+    {
+     "symbol": "GTC",
+     "rank": 35,
+     "vol_m": 8.2,
+     "joined": "2026-11-01"
+    },
+    {
+     "symbol": "ASTER",
+     "rank": 36,
+     "vol_m": 8.1,
+     "joined": "2026-02-01"
+    },
+    {
+     "symbol": "PENGU",
+     "rank": 37,
+     "vol_m": 6.7,
+     "joined": "2025-04-01"
+    },
+    {
+     "symbol": "ICP",
+     "rank": 38,
+     "vol_m": 6.5,
+     "joined": "2021-09-01"
+    },
+    {
+     "symbol": "GRAM",
+     "rank": 39,
+     "vol_m": 6.5,
+     "joined": "2026-10-01"
+    },
+    {
+     "symbol": "DASH",
+     "rank": 40,
+     "vol_m": 6.2,
+     "joined": "2025-11-01"
+    },
+    {
+     "symbol": "OP",
+     "rank": 41,
+     "vol_m": 6.1,
+     "joined": "2022-09-01"
+    },
+    {
+     "symbol": "SEI",
+     "rank": 42,
+     "vol_m": 5.6,
+     "joined": "2026-10-01"
+    },
+    {
+     "symbol": "AERO",
+     "rank": 43,
+     "vol_m": 5.6,
+     "joined": "2026-11-01"
+    },
+    {
+     "symbol": "XPL",
+     "rank": 44,
+     "vol_m": 5.3,
+     "joined": "2026-01-01"
+    },
+    {
+     "symbol": "ERA",
+     "rank": 45,
+     "vol_m": 5.1,
+     "joined": "2026-11-01"
+    },
+    {
+     "symbol": "ZAMA",
+     "rank": 46,
+     "vol_m": 5.0,
+     "joined": "2026-09-01"
+    },
+    {
+     "symbol": "RAY",
+     "rank": 47,
+     "vol_m": 4.9,
+     "joined": "2026-10-01"
+    },
+    {
+     "symbol": "POL",
+     "rank": 48,
+     "vol_m": 4.5,
+     "joined": "2025-09-01"
+    },
+    {
+     "symbol": "ETHFI",
+     "rank": 49,
+     "vol_m": 4.5,
+     "joined": "2026-09-01"
+    },
+    {
+     "symbol": "MUBARAK",
+     "rank": 50,
+     "vol_m": 4.4,
+     "joined": "2026-11-01"
+    },
+    {
+     "symbol": "WLFI",
+     "rank": 51,
+     "vol_m": 4.3,
+     "joined": "2025-12-01"
+    },
+    {
+     "symbol": "RENDER",
+     "rank": 54,
+     "vol_m": 3.8,
+     "joined": "2024-11-01"
+    },
+    {
+     "symbol": "CAKE",
+     "rank": 57,
+     "vol_m": 3.7,
+     "joined": "2026-10-01"
+    },
+    {
+     "symbol": "CRV",
+     "rank": 58,
+     "vol_m": 3.7,
+     "joined": "2026-09-01"
+    },
+    {
+     "symbol": "JUP",
+     "rank": 60,
+     "vol_m": 3.4,
+     "joined": "2026-10-01"
+    },
+    {
+     "symbol": "VIRTUAL",
+     "rank": 63,
+     "vol_m": 3.2,
+     "joined": "2025-08-01"
+    },
+    {
+     "symbol": "SHIB",
+     "rank": 68,
+     "vol_m": 3.0,
+     "joined": "2021-09-01"
+    }
+   ],
+   "rules": {
+    "n_enter": 50,
+    "n_keep": 75,
+    "vol_enter_usd": 2000000.0,
+    "vol_keep_usd": 500000.0,
+    "min_age_days": 90,
+    "vol_window_days": 30,
+    "stale_days": 3,
+    "collapse_pct": 10,
+    "collapse_window_days": 90,
+    "stable_band": [
+     0.97,
+     1.03
+    ],
+    "rebalance": "monthly",
+    "min_coins": 8,
+    "excluded": [
+     "AEUR",
+     "ARS",
+     "BETH",
+     "BNSOL",
+     "BRL",
+     "BTC",
+     "BUSD",
+     "CBETH",
+     "COP",
+     "CZK",
+     "DAI",
+     "ETH",
+     "EUR",
+     "EURI",
+     "FDUSD",
+     "GBP",
+     "IDR",
+     "JPY",
+     "MXN",
+     "NGN",
+     "PAXG",
+     "PLN",
+     "PYUSD",
+     "RETH",
+     "RON",
+     "RUB",
+     "STETH",
+     "TRY",
+     "TUSD",
+     "UAH",
+     "USD1",
+     "USDC",
+     "USDE",
+     "USDP",
+     "USDS",
+     "UST",
+     "WBETH",
+     "WBTC",
+     "WEETH",
+     "WSTETH",
+     "XAUT",
+     "ZAR"
+    ],
+    "stock_tokens": "名字以 B 结尾且 2026-06-11 起上市的代币化股票 / ETF 不入篮"
+   },
+   "recent_changes": [
+    {
+     "date": "2026-10-01",
+     "symbol": "LSK",
+     "action": "join",
+     "reason": "rank",
+     "rank": 42
+    },
+    {
+     "date": "2026-10-01",
+     "symbol": "RAY",
+     "action": "join",
+     "reason": "rank",
+     "rank": 35
+    },
+    {
+     "date": "2026-10-01",
+     "symbol": "SAGA",
+     "action": "join",
+     "reason": "rank",
+     "rank": 37
+    },
+    {
+     "date": "2026-10-01",
+     "symbol": "SEI",
+     "action": "join",
+     "reason": "rank",
+     "rank": 47
+    },
+    {
+     "date": "2026-10-01",
+     "symbol": "ZEN",
+     "action": "join",
+     "reason": "rank",
+     "rank": 43
+    },
+    {
+     "date": "2026-11-01",
+     "symbol": "ACE",
+     "action": "exit",
+     "reason": "rank"
+    },
+    {
+     "date": "2026-11-01",
+     "symbol": "BONK",
+     "action": "exit",
+     "reason": "rank"
+    },
+    {
+     "date": "2026-11-01",
+     "symbol": "GIGGLE",
+     "action": "exit",
+     "reason": "rank"
+    },
+    {
+     "date": "2026-11-01",
+     "symbol": "HEMI",
+     "action": "exit",
+     "reason": "rank"
+    },
+    {
+     "date": "2026-11-01",
+     "symbol": "LSK",
+     "action": "exit",
+     "reason": "rank"
+    },
+    {
+     "date": "2026-11-01",
+     "symbol": "PROM",
+     "action": "exit",
+     "reason": "rank"
+    },
+    {
+     "date": "2026-11-01",
+     "symbol": "SAGA",
+     "action": "exit",
+     "reason": "rank"
+    },
+    {
+     "date": "2026-11-01",
+     "symbol": "ZEN",
+     "action": "exit",
+     "reason": "rank"
+    },
+    {
+     "date": "2026-11-01",
+     "symbol": "AERO",
+     "action": "join",
+     "reason": "rank",
+     "rank": 43
+    },
+    {
+     "date": "2026-11-01",
+     "symbol": "ERA",
+     "action": "join",
+     "reason": "rank",
+     "rank": 45
+    },
+    {
+     "date": "2026-11-01",
+     "symbol": "GTC",
+     "action": "join",
+     "reason": "rank",
+     "rank": 35
+    },
+    {
+     "date": "2026-11-01",
+     "symbol": "MUBARAK",
+     "action": "join",
+     "reason": "rank",
+     "rank": 50
+    },
+    {
+     "date": "2026-11-01",
+     "symbol": "QNT",
+     "action": "join",
+     "reason": "rank",
+     "rank": 17
+    },
+    {
+     "date": "2026-11-01",
+     "symbol": "STRK",
+     "action": "join",
+     "reason": "rank",
+     "rank": 28
+    },
+    {
+     "date": "2026-11-01",
+     "symbol": "TIA",
+     "action": "join",
+     "reason": "rank",
+     "rank": 29
+    }
+   ],
+   "coverage": {
+    "universe": 706,
+    "with_data": 704,
+    "from_api": 501,
+    "from_archive": 0,
+    "no_data": 1,
+    "failed": [
+     "币安人生",
+     "牛来"
+    ]
+   },
+   "index_from": "2018-08-31",
+   "asof": "2026-11-13",
+   "note": "动态篮子：每月 1 日按 30 日成交额排名评定进出，停牌/崩盘立刻剔除；等权、每日再平衡；对 USDT。"
+  }
+ },
+ "alt_window": {
+  "stage": "cleared",
+  "ignition_date": "2026-08-21",
+  "d0_date": "2026-08-27",
+  "d0_close": 80249.58,
+  "n": 78,
+  "days_to_clear": 0,
+  "clear_date": "2026-09-26",
+  "stop_line": 72224.62,
+  "stopped_date": null,
+  "btc_close": 68314.0,
+  "btc_vs_stop_pct": -5.4
+ },
+ "site_scale": {
+  "phase": "bull",
+  "l2": {
+   "code": "RECOVERY",
+   "zh": "熊末→牛初（底部已确认）",
+   "en": "Late bear → early bull (bottom confirmed)"
+  },
+  "from": "2017-08-17",
+  "note": "按 L2 当前状态选同阶段历史腿；阶段按价格周期事后划分（腿按终点日归类）；只是位置刻度，不是信号",
+  "up": {
+   "n": 54,
+   "days": {
+    "p25": 5.2,
+    "p50": 15.5,
+    "p75": 35.8,
+    "p90": 81.2,
+    "max": 127
+   },
+   "pct": {
+    "p25": 15.1,
+    "p50": 25.2,
+    "p75": 57.1,
+    "p90": 89.2,
+    "max": 185.6
+   },
+   "days_all": [
+    1,
+    2,
+    3,
+    3,
+    3,
+    3,
+    4,
+    4,
+    4,
+    4,
+    5,
+    5,
+    5,
+    5,
+    6,
+    7,
+    8,
+    8,
+    9,
+    10,
+    10,
+    12,
+    12,
+    12,
+    13,
+    13,
+    14,
+    17,
+    19,
+    19,
+    20,
+    20,
+    21,
+    22,
+    22,
+    25,
+    25,
+    29,
+    29,
+    35,
+    36,
+    42,
+    43,
+    48,
+    51,
+    51,
+    59,
+    77,
+    83,
+    91,
+    97,
+    102,
+    119,
+    127
+   ],
+   "pct_all": [
+    10.5,
+    11.3,
+    11.8,
+    11.8,
+    11.9,
+    12.1,
+    13.2,
+    13.4,
+    13.7,
+    13.8,
+    14.4,
+    14.4,
+    14.4,
+    15.0,
+    15.2,
+    15.6,
+    15.6,
+    17.0,
+    18.1,
+    18.9,
+    20.0,
+    20.7,
+    21.4,
+    22.2,
+    22.4,
+    23.9,
+    25.2,
+    25.2,
+    26.1,
+    26.5,
+    26.6,
+    28.6,
+    30.3,
+    35.6,
+    36.3,
+    40.5,
+    47.8,
+    50.8,
+    51.2,
+    56.2,
+    57.4,
+    61.6,
+    62.0,
+    71.7,
+    76.8,
+    84.7,
+    86.6,
+    89.1,
+    89.2,
+    96.7,
+    104.6,
+    136.8,
+    140.4,
+    185.6
+   ]
+  },
+  "down": {
+   "n": 51,
+   "days": {
+    "p25": 6.5,
+    "p50": 11.0,
+    "p75": 19.5,
+    "p90": 32.0,
+    "max": 61
+   },
+   "pct": {
+    "p25": 12.7,
+    "p50": 16.1,
+    "p75": 20.9,
+    "p90": 24.7,
+    "max": 53.6
+   },
+   "days_all": [
+    2,
+    3,
+    3,
+    3,
+    3,
+    3,
+    4,
+    4,
+    4,
+    5,
+    5,
+    5,
+    6,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    8,
+    8,
+    8,
+    10,
+    11,
+    11,
+    12,
+    12,
+    12,
+    13,
+    13,
+    13,
+    14,
+    15,
+    15,
+    18,
+    18,
+    18,
+    21,
+    21,
+    22,
+    23,
+    26,
+    27,
+    28,
+    32,
+    36,
+    48,
+    51,
+    60,
+    61
+   ],
+   "pct_all": [
+    10.1,
+    10.5,
+    10.9,
+    10.9,
+    11.2,
+    11.5,
+    11.7,
+    11.7,
+    11.8,
+    11.8,
+    11.9,
+    12.2,
+    12.6,
+    12.8,
+    12.8,
+    12.9,
+    14.3,
+    14.4,
+    14.5,
+    14.8,
+    14.9,
+    15.2,
+    15.2,
+    15.7,
+    16.0,
+    16.1,
+    16.2,
+    16.6,
+    17.0,
+    17.5,
+    17.5,
+    18.5,
+    18.9,
+    18.9,
+    20.0,
+    20.6,
+    20.8,
+    20.9,
+    21.0,
+    21.4,
+    21.8,
+    22.0,
+    22.4,
+    22.7,
+    22.8,
+    24.7,
+    27.6,
+    30.2,
+    32.0,
+    37.7,
+    53.6
+   ]
+  },
+  "alt": {
+   "from": "2018-08-31",
+   "up": {
+    "n": 46,
+    "days": {
+     "p25": 8.2,
+     "p50": 16.5,
+     "p75": 40.2,
+     "p90": 52.5,
+     "max": 165
+    },
+    "pct": {
+     "p25": 19.4,
+     "p50": 35.5,
+     "p75": 73.5,
+     "p90": 119.7,
+     "max": 301.4
+    },
+    "days_all": [
+     1,
+     2,
+     3,
+     4,
+     4,
+     5,
+     5,
+     5,
+     6,
+     7,
+     7,
+     8,
+     9,
+     11,
+     12,
+     12,
+     12,
+     13,
+     14,
+     15,
+     15,
+     15,
+     16,
+     17,
+     19,
+     20,
+     21,
+     28,
+     29,
+     30,
+     31,
+     34,
+     35,
+     38,
+     41,
+     42,
+     47,
+     47,
+     48,
+     50,
+     52,
+     53,
+     59,
+     66,
+     112,
+     165
+    ],
+    "pct_all": [
+     15.1,
+     16.6,
+     16.8,
+     17.4,
+     18.0,
+     18.2,
+     18.2,
+     19.0,
+     19.1,
+     19.1,
+     19.2,
+     19.3,
+     19.5,
+     20.7,
+     21.1,
+     22.6,
+     25.1,
+     25.6,
+     26.0,
+     26.8,
+     26.8,
+     26.9,
+     35.5,
+     35.5,
+     37.2,
+     38.9,
+     41.7,
+     47.3,
+     49.5,
+     54.6,
+     58.8,
+     59.3,
+     62.6,
+     70.5,
+     74.5,
+     82.9,
+     86.8,
+     97.9,
+     104.4,
+     109.2,
+     117.8,
+     121.5,
+     122.5,
+     147.8,
+     196.7,
+     301.4
+    ]
+   },
+   "down": {
+    "n": 46,
+    "days": {
+     "p25": 8.0,
+     "p50": 14.5,
+     "p75": 22.0,
+     "p90": 49.0,
+     "max": 98
+    },
+    "pct": {
+     "p25": 20.5,
+     "p50": 26.8,
+     "p75": 32.4,
+     "p90": 43.2,
+     "max": 56.9
+    },
+    "days_all": [
+     1,
+     3,
+     3,
+     3,
+     4,
+     5,
+     6,
+     6,
+     6,
+     7,
+     7,
+     8,
+     8,
+     9,
+     10,
+     11,
+     11,
+     12,
+     12,
+     13,
+     13,
+     13,
+     14,
+     15,
+     15,
+     15,
+     16,
+     17,
+     18,
+     19,
+     19,
+     19,
+     21,
+     22,
+     22,
+     23,
+     23,
+     30,
+     32,
+     35,
+     48,
+     50,
+     52,
+     57,
+     60,
+     98
+    ],
+    "pct_all": [
+     15.0,
+     15.1,
+     16.7,
+     17.6,
+     18.2,
+     18.6,
+     19.1,
+     19.3,
+     20.0,
+     20.1,
+     20.4,
+     20.4,
+     20.8,
+     20.9,
+     21.1,
+     21.6,
+     22.7,
+     23.2,
+     24.0,
+     24.5,
+     25.9,
+     26.5,
+     26.6,
+     26.9,
+     26.9,
+     27.7,
+     29.4,
+     30.1,
+     30.1,
+     30.4,
+     30.6,
+     30.7,
+     31.4,
+     32.4,
+     32.4,
+     33.5,
+     36.4,
+     37.4,
+     38.9,
+     39.3,
+     42.8,
+     43.7,
+     44.6,
+     44.6,
+     56.2,
+     56.9
+    ]
+   }
+  }
+ }
 }

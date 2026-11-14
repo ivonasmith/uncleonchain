@@ -3928,6 +3928,37 @@ def leg_src(fn="leg_latest.json"):
     return f'/data/{fn}?v={esc((G.get("LEG") or {}).get("asof") or G["今天"])}'
 
 
+LEG_SCALE_FROM = "2017-08-17"   # 卡片刻度只用币安时代已走完的腿（和实时读数同一数据源）
+
+
+def leg_scale():
+    """卡片刻度（大叔 11-14 定）：按 L2 当前状态选同阶段的历史腿（偏多 → 牛市阶段，偏空 → 熊市阶段；和「结合短期」同一口径），
+    2017-08 起已走完的腿，给天数 / 幅度分位。写进 site/data/leg_latest.json 的 site_scale，leg.js 画刻度；不足 10 条不给。"""
+    l2, hist = G.get("L2"), load(os.path.join(DATA, "leg", "leg_history.json"))
+    code = ((l2 or {}).get("state") or {}).get("code")
+    if not code or code not in R.L2_STATES or not hist:
+        return None
+    reg = "bull" if code in L2_BULLISH else "bear"
+    out = {"phase": reg, "l2": {"code": code, "zh": R.L2_STATES[code][0], "en": R.L2_STATES[code][1]}, "from": LEG_SCALE_FROM,
+           "note": "按 L2 当前状态选同阶段历史腿；阶段按价格周期事后划分（腿按终点日归类）；只是位置刻度，不是信号"}
+    q = lambda v: {k: round(_qs(v, p), 1) for k, p in (("p25", .25), ("p50", .5), ("p75", .75), ("p90", .9))} | {"max": round(max(v), 1)}
+    # 页面上说「比 N 条里的 M 条走得久 / 跌得深」，所以把每一组的天数、幅度原样带上（几十个数）
+    grp = lambda xs: {"n": len(xs), "days": q([x["days"] for x in xs]), "pct": q([abs(x["pct"]) for x in xs]),
+                      "days_all": sorted(x["days"] for x in xs), "pct_all": sorted(round(abs(x["pct"]), 1) for x in xs)}
+    for d in ("up", "down"):
+        xs = [x for x in hist.get("legs") or [] if x["dir"] == d and x.get("regime") == reg and not x.get("ongoing") and x["start_date"] >= LEG_SCALE_FROM]
+        if len(xs) < 10:
+            continue
+        out[d] = grp(xs)
+    # 山寨整体：同一个 L2 阶段，指数 2018-08 起全部已走完的腿（牛熊标注借用 BTC 周期口径）
+    alt = (hist.get("alt") or {})
+    for d in ("up", "down"):
+        xs = [x for x in alt.get("legs") or [] if x["dir"] == d and x.get("regime") == reg and not x.get("ongoing")]
+        if len(xs) >= 10:
+            out.setdefault("alt", {"from": alt.get("index_from")})[d] = grp(xs)
+    return out
+
+
 def leg_assets():
     return (f'<link rel="stylesheet" href="{ASSET_URL["leg.css"]}">', f'<script src="{ASSET_URL["leg.js"]}" defer></script>')
 
@@ -4068,7 +4099,7 @@ def build_leg_tracker():
 <div class="callout" data-i18n="callout"></div>
 <nav class="chips" id="legChips"></nav>
 <div id="liveMount"></div>
-<section class="blk" id="how"><h2 data-i18n="how_h"></h2><ul class="plain" data-i18n="how_ul"></ul></section>
+<section class="blk" id="how"><h2 data-i18n="how_h"></h2><ul class="plain" data-i18n="how_ul"></ul><p class="small" id="scaleNote"></p></section>
 <section class="blk" id="def"><h2 data-i18n="def_h"></h2><div data-i18n="def_body"></div></section>
 <section class="blk" id="len"><h2><span data-i18n="len_h"></span>{tags["desc"]}</h2><p data-i18n="len_p1"></p>
 <div class="sw"><div id="lenPinMount"></div><div class="strip"><i style="width:25%"></i><i style="width:25%"></i><i style="width:25%"></i><i style="width:15%"></i><i style="width:10%"></i></div></div>
@@ -4078,10 +4109,8 @@ def build_leg_tracker():
 <section class="blk" id="hist"><h2><span data-i18n="hist_h"></span>{tags["desc"]}</h2><div id="histMount"></div></section>
 <section class="blk" id="l89"><h2><span data-i18n="l89_h"></span>{tags["hyp"]}</h2><p data-i18n="l89_p1"></p><div class="bars" id="l89Bars"></div>
 <p class="muted small" data-i18n="l89_pre"></p><p data-i18n="l89_p2"></p><div class="callout" data-i18n="l89_falsify"></div></section>
-<section class="blk" id="alt"><h2><span data-i18n="alt_h"></span>{tags["ver"]}</h2><p data-i18n="alt_p1"></p><div class="bw" id="altStatic"></div>
-<ul class="plain" data-i18n="alt_ul"></ul><h3><span data-i18n="alt_t_h"></span>{tags["ver"]}</h3><table class="t" id="altTable"></table>
-<p class="muted small" data-i18n="alt_note"></p><h3><span data-i18n="alt_peak_h"></span>{tags["desc"]}</h3><p data-i18n="alt_peak_p"></p>
-<div class="callout" data-i18n="alt_notsel"></div><h3><span data-i18n="alt_f_h"></span>{tags["fals"]}</h3><p data-i18n="alt_f_p"></p></section>
+<section class="blk" id="d45"><h2><span id="d45H"></span>{tags["hyp"]}</h2><p id="d45P1"></p><div class="bars" id="d45Bars"></div>
+<p class="muted small" id="d45Exc"></p><p id="d45P2"></p><div class="callout" id="d45F"></div></section>
 <section class="blk" id="false"><h2><span data-i18n="f_h"></span>{tags["fals"]}</h2><p data-i18n="f_intro"></p>
 <h3 data-i18n="f1_h"></h3><table class="t" id="f1Table"></table><p data-i18n="f1_p"></p><h3 data-i18n="f2_h"></h3><p data-i18n="f2_p"></p><p class="muted small" data-i18n="f3_p"></p></section>
 <section class="blk" id="method"><h2 data-i18n="m_h"></h2><ul class="plain" data-i18n="m_ul"></ul><p class="small muted" id="statsAsof"></p>
@@ -4093,8 +4122,8 @@ def build_leg_tracker():
     css, js = leg_assets()
     emit("leg-tracker/index.html", T(f"涨跌腿追踪 · {BRAND}", f"Leg Tracker · {BRAND_EN}"), body, active="macro", narrow=True,
          extra_head=css, scripts=js,
-         desc=T("比特币每一轮上涨走了多久、涨了多少、回撤多深，急拉之后山寨窗口什么时候开、什么时候关：历史规律和当前读数。",
-                "How long BTC rallies last, how far they go, how deep the dips are, and when the altcoin window opens and closes: historical patterns and current readings."))
+         desc=T("比特币每一条涨腿、跌腿走了多久、涨跌了多少，放到同一周期阶段的历史里看在什么位置：历史规律和当前读数。",
+                "How long each BTC up- and down-leg lasts and how far it goes, compared with legs from the same cycle phase: historical patterns and current readings."))
 
 
 AGENT_DIR = os.path.join(ROOT, "public", "ai-agent", "monitor")      # tools/agent-id 的导出目录（交接包原样）
@@ -5075,6 +5104,9 @@ def main():
     for fn in ("leg_latest.json", "leg_history.json"):
         if os.path.exists(os.path.join(DATA, "leg", fn)):
             shutil.copyfile(os.path.join(DATA, "leg", fn), os.path.join(SITE, "data", fn))
+    if G.get("LEG"):   # 站点版多一个 site_scale（卡片刻度），原始数据 data/leg/leg_latest.json 不动
+        with open(os.path.join(SITE, "data", "leg_latest.json"), "w", encoding="utf-8") as f:
+            json.dump(dict(G["LEG"], site_scale=leg_scale()), f, ensure_ascii=False, indent=1)
     write_core_data()
     copy_report_files()
     for lang in ("zh", "en"):
