@@ -34,8 +34,8 @@
 <div class="ph"><div><div class="eyebrow">Core Picks Monitor</div><h1>核心选币观测台</h1></div></div>
 <p class="lede">回购 / 收入型协议和叙事标的的基本面（手续费、收入、持有人收入、业务量）、资金面（成交额、现货 + 永续排名）、技术面（均线、RSI、回撤）。每天自动更新；评分和规则判定全部是【假设】，只做条件检查和风险提示，不是买卖建议。</p>
 <div class="core" id="core" data-src="/data/core/core_latest.json?v=202611140359" data-series="/data/core/series/" data-hist="/data/core/core_history.json" data-rot="/data/core/rotation.json" data-bt="/data/core/score_backtest.json"></div>
-<template id="core-research"><h2>核心选币评分研究 · 立项书（草案 v0.1，2026-11-14）</h2>
-<p>状态：<b>立项待大叔确认</b>。研究结束前，观测台不展示评分、不按分数排名；读数照常每天更新，评分仍在后台记录（样本外检验用）。</p>
+<template id="core-research"><h2>核心选币评分研究 · 立项书（v0.2，2026-11-14）</h2>
+<p>状态：<b>进行中</b>（2026-11-14 大叔要求立即开始；当前阶段 M1–M2）。研究结束前，观测台不展示评分、不按分数排名；读数照常每天更新，评分仍在后台记录（样本外检验用）。</p>
 <h3>一、为什么立项</h3>
 <ul class="plain"><li>观测台原型给 6 个模块打 0–3 分（R 收入趋势、C 价值捕获、V 估值、D 价格×收入、B 业务量、S 供给），分数阈值是拍定的，没有检验过。</li><li>第一轮回测（2026-11-14，<code>core/score_backtest.py</code>）：38 个有协议收入的代币，2023-03 起每月一次，判定标准事先写死，<b>R / C / V / D 和合计分 0 / 5 通过</b>。 R（收入趋势）和 V（估值）方向是对的但不显著，C、D 看不出区分能力，B、S 没有历史数据未检验。</li><li>结论：现在的评分不能拿来选币，也不能拿来排名。要先回答“哪些读数真的有用、怎么合成”，再上线评分。</li></ul>
 <h3>二、要回答的问题</h3>
@@ -67,6 +67,6 @@
 <script src="/assets/ui.js?v=08e76d0458"></script>
 
 
-<script src="/assets/core.js?v=e965d2d6cc" defer></script>
+<script src="/assets/core.js?v=63ae936562" defer></script>
 </body>
 </html>
