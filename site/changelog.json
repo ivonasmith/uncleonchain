@@ -1,5 +1,29 @@
 [
  {
+  "version": "2026.11.14.12",
+  "date": "2026-11-14",
+  "notify": true,
+  "title_zh": "Alpha 雷达改版：左边切换、右边看详情",
+  "title_en": "Alpha Radar redesign: pick on the left, read on the right",
+  "items": [
+   {
+    "type": "improve",
+    "zh": "机会看板和案例库改成左边列表、右边详情，直接在列表里切换标的，配色和宏观仪表盘、发射台矩阵统一；每个标的先看一句话、资金参与方式、30 天收入、评分区间和相近历史案例，再看收入走势、为什么在看和最大的风险。",
+    "en": "The board and case library now use a list on the left and details on the right, styled like the rest of the site. Each item leads with a one-liner, how capital can take part, 30-day revenue, score ranges and the closest historical cases, followed by the revenue chart, why it is here and the biggest risk."
+   },
+   {
+    "type": "improve",
+    "zh": "每个标的带官网、X 和 DefiLlama 链接（官网只留域名首页，不带别人的推荐码）和项目 logo（取不到就显示首字母）。",
+    "en": "Each item links to its website (domain root only, no referral codes), X and DefiLlama, and shows the project logo (initials when unavailable)."
+   },
+   {
+    "type": "improve",
+    "zh": "完整的打分明细、门槛、研究补证、分类依据、四个问题、历史对照区间、监控计划、基础数据，以及案例库的散点图和全部案例明细表，都收进各页底部可展开的「完整拆解」里，没有删。打分流程、评估器、研究进度、方法论原文归到「框架与方法」页签。",
+    "en": "Full score tables, gates, research notes, class reasoning, the four questions, historical ranges, monitoring plan, raw data, and the case scatter plots and full table are all kept in expandable sections at the bottom. Scoring flow, evaluator, progress and the methodology text sit under the “Framework” tab."
+   }
+  ]
+ },
+ {
   "version": "2026.11.14.11",
   "date": "2026-11-14",
   "notify": false,
