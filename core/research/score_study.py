@@ -29,6 +29,22 @@ import core_daily as C   # noqa: E402
 CACHE = os.path.join(CORE, "cache", "study")
 os.makedirs(CACHE, exist_ok=True)
 START, TRAIN_END = "2023-03-01", "2025-06-30"
+# ==== M3 模式（2026-11-14，判定标准见 core/review/M3_分工.md，跑之前写死）====
+# --mode holdout：2021-01 ～ 2023-02 老数据当第二个样本外，方向用 M2 的 direction，全部月份都算检验
+# --mode cmval  ：Coin Metrics 社区版历史市值子样本，2021-03 ～ 2026-10 全段重测估值类（每月 ≥ 8 个币）
+# --mode fixid  ：身份核对多试一层（同符号子协议的 gecko_id），补回被误剔的币，按 M2 原标准重跑 2023-03 ～ 2026-10
+MODE = sys.argv[sys.argv.index("--mode") + 1] if "--mode" in sys.argv else "m2"
+END_T, PX_FROM, LP_FROM, MIN_N, OUT = None, "2022-09-01", "2023-01-01", 12, "score_study_results.json"
+if MODE == "holdout":
+    START, TRAIN_END, END_T, PX_FROM, LP_FROM, OUT = "2021-01-01", "2000-01-01", "2023-02-01", "2020-06-01", "2020-06-01", "score_study_m3_holdout.json"
+elif MODE == "cmval":
+    START, TRAIN_END, PX_FROM, LP_FROM, MIN_N, OUT = "2021-03-01", "2000-01-01", "2020-06-01", "2020-06-01", 8, "score_study_m3_cmval.json"
+elif MODE == "fixid":
+    OUT = "score_study_m3_fixid.json"
+M2_DIR = {}
+if MODE in ("holdout", "cmval"):
+    _m2 = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "score_study_results.json"), encoding="utf-8"))
+    M2_DIR = {k: v.get("direction") for k, v in _m2["factors"].items()}
 MIN_REV30 = 300_000
 HS = (30, 60, 90)
 TODAY = C.TODAY.isoformat()
@@ -101,7 +117,7 @@ def llama_fees(slug):
 
 def binance_px(sym):
     """{date: [close, quote_volume]}，API 取不到（已下架）就读月度归档。"""
-    rows, cur = {}, int(dt.datetime(2022, 9, 1, tzinfo=dt.timezone.utc).timestamp() * 1000)
+    rows, cur = {}, int(dt.datetime.fromisoformat(PX_FROM).replace(tzinfo=dt.timezone.utc).timestamp() * 1000)
     try:
         while True:
             d = C.spot_get(f"/api/v3/klines?symbol={urllib.parse.quote(sym)}USDT&interval=1d&startTime={cur}&limit=1000")
@@ -115,7 +131,7 @@ def binance_px(sym):
     except Exception:  # noqa
         pass
     if not rows:   # 已下架：月度归档
-        m = dt.date(2022, 9, 1)
+        m = dt.date.fromisoformat(PX_FROM)
         while m.isoformat() < TODAY:
             ym = m.strftime("%Y-%m")
             q = urllib.parse.quote(sym + "USDT")
@@ -136,7 +152,7 @@ def binance_px(sym):
 
 def llama_price(gid):
     """coins.llama.fi 一次最多 500 个点：2023-01 起按 500 天分段取。"""
-    out, s = {}, int(dt.datetime(2023, 1, 1, tzinfo=dt.timezone.utc).timestamp())
+    out, s = {}, int(dt.datetime.fromisoformat(LP_FROM).replace(tzinfo=dt.timezone.utc).timestamp())
     while s < time.time():
         d = C.get(f"https://coins.llama.fi/chart/coingecko:{gid}?start={s}&span=500&period=1d") or {}
         for p in ((d.get("coins") or {}).get(f"coingecko:{gid}") or {}).get("prices") or []:
@@ -163,6 +179,28 @@ def tvl(slug):
     return {dt.datetime.fromtimestamp(r["date"], dt.timezone.utc).strftime("%Y-%m-%d"): r["totalLiquidityUSD"] for r in d.get("tvl") or []}
 
 
+def alt_geckos(sy, gid):
+    """同符号的其他 DefiLlama 协议（子协议）登记的 gecko_id，用来补身份核对。"""
+    protos = cached("protocols_all", lambda: [{k: p.get(k) for k in ("symbol", "gecko_id", "slug", "parentProtocol")} for p in C.get(f"{C.LLAMA}/protocols")], 240)
+    return sorted({p["gecko_id"] for p in protos if (p.get("symbol") or "").upper() == sy and p.get("gecko_id") and p["gecko_id"] != gid})
+
+
+def cm_mcap():
+    """Coin Metrics 社区版 CapMrktCurUSD：{资产代码: {date: 市值}}。"""
+    cat = C.get("https://community-api.coinmetrics.io/v4/catalog-v2/asset-metrics?metrics=CapMrktCurUSD&page_size=1000")
+    assets = sorted({x["asset"] for x in cat["data"]})
+    out = {}
+    for a in assets:
+        try:
+            d = C.get(f"https://community-api.coinmetrics.io/v4/timeseries/asset-metrics?assets={a}&metrics=CapMrktCurUSD&start_time=2020-06-01&frequency=1d&page_size=10000")
+        except Exception:  # noqa
+            continue
+        ser = {r["time"][:10]: float(r["CapMrktCurUSD"]) for r in (d or {}).get("data") or [] if r.get("CapMrktCurUSD")}
+        if ser:
+            out[a] = ser
+    return out
+
+
 def build():
     ever = cached("binance_ever", binance_symbols_ever, 240)
     cand = cached("candidates", lambda: candidates(ever), 240)
@@ -184,7 +222,7 @@ def build():
     uni, drop = {}, {}
 
     def pjob(sy):
-        return sy, cached(f"px_{sy}", lambda: binance_px(sy), 72)
+        return sy, cached(f"px_{sy}" + ("" if PX_FROM == "2022-09-01" else "_" + PX_FROM[:7]), lambda: binance_px(sy), 72)
     pxs = dict(ThreadPoolExecutor(8).map(pjob, sorted({sy for sy, _ in fees})))
     for (sy, sl), f in sorted(fees.items(), key=lambda kv: -sum((kv[1].get("revenue") or {}).values())):
         if sy in uni:
@@ -195,13 +233,19 @@ def build():
             drop[f"{sy}/{sl}"] = "币安没有价格"; continue
         if not gid:
             drop[f"{sy}/{sl}"] = "母协议没有 gecko_id，无法核对身份"; continue
-        lp = cached(f"lp_{gid}", lambda: llama_price(gid), 240)
-        both = [d for d in sorted(px) if d in lp and lp[d]][::10]
-        if len(both) < 5:
-            drop[f"{sy}/{sl}"] = f"历史价格重叠不足（{gid}）"; continue
-        dev = st.median(abs(px[d][0] / lp[d] - 1) for d in both)
-        if dev > 0.05:
-            drop[f"{sy}/{sl}"] = f"币安收盘与 {gid} 历史价格中位偏差 {dev*100:.0f}%（同名不同币）"; continue
+        ok, why = False, ""
+        for g in [gid] + (alt_geckos(sy, gid) if MODE == "fixid" else []):
+            lp = cached(f"lp_{g}" + ("" if LP_FROM == "2023-01-01" else "_" + LP_FROM[:7]), lambda: llama_price(g), 240)
+            both = [d for d in sorted(px) if d in lp and lp[d]][::10]
+            if len(both) < 5:
+                why = why or f"历史价格重叠不足（{g}）"; continue
+            dev = st.median(abs(px[d][0] / lp[d] - 1) for d in both)
+            if dev > 0.05:
+                why = why or f"币安收盘与 {g} 历史价格中位偏差 {dev*100:.0f}%（同名不同币）"; continue
+            ok, gid = True, g
+            break
+        if not ok:
+            drop[f"{sy}/{sl}"] = why; continue
         uni[sy] = {"slug": sl, "gecko": gid, "name": f["meta"].get("name"), "cat": f["meta"].get("category"), "f": f, "px": px,
                    "delisted": max(px) < day(TODAY, -5)}
     C.log(f"身份核对通过 {len(uni)} 个（其中已下架 {sum(1 for u in uni.values() if u['delisted'])} 个）；剔除 {len(drop)} 组")
@@ -210,7 +254,17 @@ def build():
             u["tvl"] = cached(f"tvl_{u['slug']}", lambda: tvl(u["slug"]), 240)
         else:
             u["tvl"] = {}
-        u["mc"] = cached(f"mc_{u['gecko']}", lambda: (time.sleep(3), mcaps365(u["gecko"]))[1], 72)
+        u["mc"] = cached(f"mc_{u['gecko']}", lambda: (time.sleep(3), mcaps365(u["gecko"]))[1], 72) if MODE != "cmval" else {}
+    if MODE == "cmval":     # 只留 Coin Metrics 有历史市值的币，市值换成 Coin Metrics 的
+        cm = cached("cm_mcap", cm_mcap, 240)
+        keep = {}
+        for sy, u in uni.items():
+            ser = cm.get(sy.lower())
+            if ser:
+                u["mc"] = ser
+                keep[sy] = u
+        C.log(f"Coin Metrics 有历史市值的：{len(keep)} 个（{'、'.join(sorted(keep))}）")
+        uni = keep
     return uni, drop
 
 
@@ -343,7 +397,7 @@ def main():
     uni, drop = build()
     last = max(max(u["px"]) for u in uni.values())
     dates, d = [], dt.date.fromisoformat(START)
-    while d.isoformat() <= last:
+    while d.isoformat() <= last and (END_T is None or d.isoformat() <= END_T):
         dates.append(d.isoformat())
         d = (d.replace(day=28) + dt.timedelta(days=4)).replace(day=1)
     # 每月读数 + 之后收益
@@ -376,7 +430,7 @@ def main():
             for t in dates:
                 rows = [(o[fk], o[f"_fwd{h}"], o.get("_vol30"), o.get("ret30")) for o in panel[t].values()
                         if o.get(fk) is not None and o.get(f"_fwd{h}") is not None and o.get("_vol30") and o.get("ret30") is not None]
-                if len(rows) < 12 or len({r[0] for r in rows}) < 3:
+                if len(rows) < MIN_N or len({r[0] for r in rows}) < 3:
                     continue
                 fx, fy = rank([r[0] for r in rows]), rank([r[1] for r in rows])
                 ic = corr(fx, fy)
@@ -406,7 +460,7 @@ def main():
             out[h] = {"train": tr, "test": te, "ptrain": ptr, "ptest": pte, "q_test": qmean,
                       "mono": round(corr(rank([0, 1, 2, 3, 4]), rank(qmean)), 2) if qmean and len(set(qmean)) > 1 else None}
         # 方向与判定
-        dirn = PRIOR[fk] or ((1 if out[30]["train"]["ic"] > 0 else -1) if out[30].get("train") else 0)
+        dirn = (M2_DIR.get(fk) or PRIOR[fk]) if MODE in ("holdout", "cmval") else (PRIOR[fk] or ((1 if out[30]["train"]["ic"] > 0 else -1) if out[30].get("train") else 0))
         out["direction"] = dirn
         te30, te60 = (out[30] or {}).get("test"), (out[60] or {}).get("test")
         if not te30 or not dirn:
@@ -441,7 +495,9 @@ def main():
     meta = {"generated": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M UTC"), "dates": [dates[0], dates[-1]], "train_end": TRAIN_END,
             "universe": len(uni), "delisted": sorted(s for s, u in uni.items() if u["delisted"]), "coins": sorted(uni),
             "per_month": {t: len(panel[t]) for t in dates}, "dropped": drop}
-    json.dump(C.clean({"meta": meta, "factors": res, "phase": phase}), open(os.path.join(HERE, "score_study_results.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    meta["mode"] = MODE
+    meta["holder_coins_per_month"] = {t: sum(1 for o in panel[t].values() if (o.get("holder_share") or 0) > 0) for t in dates}
+    json.dump(C.clean({"meta": meta, "factors": res, "phase": phase}), open(os.path.join(HERE, OUT), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     C.log("完成")
 
 
@@ -456,7 +512,7 @@ def binary_test():
     uni, _ = build()
     last = max(max(u["px"]) for u in uni.values())
     dates, d = [], dt.date.fromisoformat(START)
-    while d.isoformat() <= last:
+    while d.isoformat() <= last and (END_T is None or d.isoformat() <= END_T):
         dates.append(d.isoformat())
         d = (d.replace(day=28) + dt.timedelta(days=4)).replace(day=1)
     out = {}
@@ -493,7 +549,7 @@ def binary_test():
     else:
         v = "未通过"
     out["verdict"] = v
-    p = os.path.join(HERE, "score_study_results.json")
+    p = os.path.join(HERE, OUT)
     R = json.load(open(p, encoding="utf-8"))
     R["factors"]["flag_r3"].update({"binary": out, "verdict": v})
     json.dump(R, open(p, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
