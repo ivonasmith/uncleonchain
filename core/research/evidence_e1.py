@@ -14,7 +14,7 @@ MAP = {"HYPE": ["hyperliquid"], "PUMP": ["pumpdotfun", "pump-swap", "pump-fun"],
        "MORPHO": ["morpho"], "RENDER": ["render"], "NEAR": ["near"], "LINK": ["chainlink"], "PYTH": ["pyth"], "ASTER": ["aster"],
        "BNB": ["bsc", "bnb"], "TRX": ["tron"], "VIRTUAL": ["virtuals", "virtual"]}
 KW = re.compile(r"buy ?back|burn|holders?revenue|HoldersRevenue|treasury|staker|revenue ?share|fee ?(recipient|collector|receiver|wallet)|distribut", re.I)
-EVM = re.compile(r"0x[0-9a-fA-F]{40}")
+EVM = re.compile(r"(?<![0-9a-fA-Fx])0x[0-9a-fA-F]{40}(?![0-9a-fA-F])")   # 前后都不许再接十六进制，避免把 32 字节哈希 / 事件主题截成地址（Codex 11-14 核查指出）
 SOL = re.compile(r"(?<![0-9A-Za-z])[1-9A-HJ-NP-Za-km-z]{32,44}(?![0-9A-Za-z])")
 DIRS = ["fees", "dexs", "aggregators", "aggregator-derivatives", "options", "incentives", "helpers"]
 
