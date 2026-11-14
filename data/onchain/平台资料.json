@@ -573,7 +573,7 @@
 "官网简介": null,
 "审计数": "0",
 "审计链接": [],
-"市值": 10000027.327804664,
+"市值": 10009546.851342957,
 "日期": "2026-11-14",
 "母协议": null,
 "融资": [],
@@ -1420,6 +1420,38 @@
 "融资": [],
 "链": [
 "Solana"
+]
+},
+"volta": {
+"GitHub": [],
+"X": "VoltaFamily",
+"gecko_id": null,
+"上线DefiLlama": "2026-11-13",
+"介绍": "Volta is a token launchpad on Elysium that creates Uniswap v4 liquidity pools with configurable trading fees, token buybacks and holder rewards",
+"代币": "VOLTA",
+"分叉自": [],
+"口径": {
+"Fees": "Swap fees of 1-5%, fixed by each coin's creator at launch, paid by traders on every trade in a Volta launch pool. They are counted in the pool's pair asset (HYPE, KNTQ, VOLTA or USDC) when the hook distributes them; fees taken in the launched coin count once the hook has sold them for the pair asset. The optional anti-snipe premium, taken in the launched coin and burned, is not counted, and pools paired with unpriced assets are not valued.",
+"HoldersRevenue": "VOLTA bought back and burned: 80% of the protocol's 30% share of every Volta swap fee, plus the 70% creator share of the VOLTA pool's own fees.",
+"ProtocolRevenue": "The 20% of the protocol's 30% share of Volta swap fees that stays in the Volta owner wallet.",
+"Revenue": "The protocol's 30% of every swap fee in Volta launch pools, plus the 70% creator share of the VOLTA pool's own fees, which Volta set entirely to VOLTA buyback and burn.",
+"SupplySideRevenue": "The 70% of every swap fee in launched coins' pools that goes to the creator side, split as each creator chose at launch between the creator, buyback and burn of the coin, and pair-asset rewards to the coin's holders."
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/volta",
+"合约": "elysium:0x0f79931689Af199e7CF868ed1107bBA2C83c68f7",
+"名称": "Volta",
+"大事记": [],
+"安全事件": [],
+"官网": null,
+"审计数": "0",
+"审计链接": [],
+"市值": null,
+"日期": "2026-11-14",
+"母协议": null,
+"融资": [],
+"进门槛": "2026-11-14",
+"链": [
+"Elysium"
 ]
 }
 }
