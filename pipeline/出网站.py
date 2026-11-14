@@ -4145,6 +4145,7 @@ def build_alpha():
 # ---------------------------------------------------------------- RWA（rwa/：看板读 data/rwa/rwa_latest.json；研究标的读其中 research 段（来自 rwa/research/watchlist.json）；方法框架 / 进度读 rwa/research/*.md）
 RWA_TABS = [("", "看板", "Board", "规模 · 谁在收钱 · 平台币", "Size · who earns · tokens"),
             ("watch/", "研究标的", "Watchlist", "判断卡 · 待核问题", "Judgment cards · open questions"),
+            ("library/", "研究库", "Library", "记录 · 合约 · 市场", "Records · contracts · markets"),
             ("method/", "方法框架", "Framework", "身份 · 口径 · 证据", "Identity · metrics · evidence"),
             ("progress/", "研究进度", "Progress", "阶段 · 审查 · 外部任务", "Stages · review · tasks")]
 RWA_STATE = {"pending_recheck": ("待重核", "Pending re-check", "warn"), "watch": ("观察", "Watch", "cool"),
@@ -4167,6 +4168,12 @@ RWA_CSS = """<style>
 .rwacard .chips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 8px}.rwacard dl{display:grid;grid-template-columns:86px 1fr;gap:4px 10px;margin:8px 0;font-size:12.5px}
 .rwacard dt{color:var(--muted)}.rwacard dd{margin:0}.rwacard ul{margin:4px 0 0;padding-left:16px;font-size:12.5px;line-height:1.7}
 .rwacard details{margin-top:8px;font-size:12px;color:var(--ink2)}
+.libf{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}.libf input,.libf select{background:var(--card);color:var(--ink);border:1px solid var(--line2);border-radius:8px;padding:7px 10px;font:inherit;font-size:13px}
+.libf input{flex:1 1 220px}.lib{border-bottom:1px solid var(--line)}.lib>summary{display:grid;grid-template-columns:minmax(160px,1.4fr) 1fr 1fr 130px;gap:10px;align-items:center;padding:9px 6px;cursor:pointer;list-style:none;font-size:13px}
+.lib>summary::-webkit-details-marker{display:none}.lib>summary:hover,.lib>summary:focus-visible{background:var(--hover)}.lib>summary .nm b{font-weight:600}.lib>summary .nm small{display:block;color:var(--muted);font-size:11.5px}
+.lib .bd{padding:4px 10px 14px;font-size:12.5px;line-height:1.7}.lib .bd table{font-size:12px}.lib .mono{font-family:var(--mono);font-size:11.5px;word-break:break-all}.lib .bd h4{margin:10px 0 4px;font-size:12.5px;color:var(--muted);font-weight:600}
+.libsum{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;padding:12px 16px}.libsum b{font-family:var(--mono)}
+@media (max-width:820px){.lib>summary{grid-template-columns:1fr auto}.lib>summary .c3,.lib>summary .c4{display:none}}
 @media (max-width:820px){.rwa3,.rwacards{grid-template-columns:1fr}.rwabar{grid-template-columns:1fr 84px}.rwabar .tr{grid-column:1/3;grid-row:2}}
 </style>"""
 
@@ -4183,6 +4190,9 @@ def write_rwa_data():
     with open(os.path.join(out, "rwa_latest.json"), "w", encoding="utf-8") as f:
         json.dump(pub, f, ensure_ascii=False, indent=1)
     shutil.copyfile(os.path.join(src, "rwa_history.json"), os.path.join(out, "rwa_history.json"))
+    G["RWA_LIB"] = load(os.path.join(src, "universe.json"))
+    if G["RWA_LIB"]:
+        shutil.copyfile(os.path.join(src, "universe.json"), os.path.join(out, "universe.json"))
 
 
 def rwa_head(cur):
@@ -4386,12 +4396,18 @@ def rwa_watch(d):
         fld = lambda k: esc(T(cur.get(k + "_zh") or cur.get(k) or "", cur.get(k + "_en") or cur.get(k) or "")) or na
         oq = "".join(f"<li>{esc(q)}</li>" for q in it.get("open_questions") or [])
         facts = "".join(f'<li>{esc(f.get("claim"))} · {rwa_a(T("来源", "source"), f.get("src") if str(f.get("src", "")).startswith("https://") else None)} · {esc(f.get("checked_utc") or "")}</li>' for f in it.get("facts") or [])
-        vers = "".join(f'<li>{esc(v.get("v"))} · {esc(T(RWA_STATE.get(v.get("state"), (v.get("state"),) * 2)[0], RWA_STATE.get(v.get("state"), (v.get("state"),) * 2)[1]))}</li>' for v in it.get("versions") or [])
+        vers = "".join(f'<li>{esc(v.get("v"))} · {esc(T(RWA_STATE.get(v.get("state"), (v.get("state"),) * 2)[0], RWA_STATE.get(v.get("state"), (v.get("state"),) * 2)[1]))}'
+                       + (f' · {T("原状态", "was")}「{esc(v["old_state"])}」' if v.get("old_state") else "") + "</li>" for v in it.get("versions") or [])
+        lk = it.get("links") or {}
+        links = " · ".join(x for x in (rwa_a(T("官网", "Official"), lk.get("official")) if str(lk.get("official") or "").startswith("https://") else "",
+                                        rwa_a(T("来源", "Source"), lk.get("source")) if str(lk.get("source") or "").startswith("https://") else "",
+                                        f'<a href="{U("/rwa/library/")}#{lib_anchor(it["library_rid"])}">{T("研究库记录", "Library record")}</a>' if it.get("library_rid") else "") if x)
         cards.append(
             f'<div class="card rwacard" id="{esc(it.get("id", "").replace(":", "-"))}"><h3>{esc(it.get("name"))}</h3><div class="chips">'
             f'<span class="chip{" t-" + st[2] if st[2] else ""}">{esc(T(st[0], st[1]))}</span><span class="chip">{esc(T(ptl[0], ptl[1]))}</span>'
             f'<span class="chip">{esc(fresh)}</span></div>'
-            f'<div style="font-size:13px;line-height:1.7">{fld("why")}</div>'
+            + (f'<div style="font-size:12px;margin:0 0 6px">{links}</div>' if links else "")
+            + f'<div style="font-size:13px;line-height:1.7">{fld("why")}</div>'
             f'<dl><dt>{T("触发条件", "Trigger")}</dt><dd>{fld("trigger")}</dd><dt>{T("失效条件", "Invalidation")}</dt><dd>{fld("invalid")}</dd>'
             f'<dt>{T("谁能参与", "Eligibility")}</dt><dd>{fld("eligibility")}</dd><dt>{T("参与成本", "Cost")}</dt><dd>{fld("cost")}</dd><dt>{T("退出路径", "Exit")}</dt><dd>{fld("exit")}</dd></dl>'
             + (f'<div style="font-size:12.5px;color:var(--muted)">{T("已核事实", "Verified facts")}</div><ul>{facts}</ul>' if facts else "")
@@ -4403,12 +4419,84 @@ def rwa_watch(d):
     return head + pb + f'<div class="rwacards">{"".join(cards)}</div>' + f'<p class="tnote">{T("研究库更新于", "Library updated")} {esc(rs.get("updated_utc") or "")} · {T("任务包", "Task pack")}: rwa/review/README.md</p>'
 
 
+def lib_anchor(rid):
+    return "r-" + re.sub(r"[^a-z0-9]+", "-", str(rid).lower()).strip("-")
+
+
+RWA_SEG_EN = {"fund": "Funds & treasuries", "equity": "Equities", "commodity": "Commodities", "credit": "Credit", "realestate": "Real estate",
+              "collectible": "Collectibles", "stablecoin": "Stablecoins / deposits", "trading": "Trading & aggregation", "derivatives": "Derivatives",
+              "settlement": "Issuance / settlement / custody", "identity": "Identity & compliance", "data": "Data / oracles", "other": "Other"}
+RWA_ROLE = {"platform_token": ("平台币", "Platform token"), "asset_token": ("资产币", "Asset token"), "business": ("业务合约", "Business contract")}
+
+
+def rwa_library():
+    from collections import Counter
+    L = G.get("RWA_LIB")
+    if not L:
+        return f'<div class="note">{T("研究库还没导入。", "Library not imported yet.")}</div>'
+    c = L["counts"]
+    segz = L.get("segments") or {}
+    seg_name = lambda k: T(segz.get(k, k), RWA_SEG_EN.get(k, k))
+    ptn = lambda k: T(*RWA_PT.get(k, (k, k)))
+    pt_tone = {"issued": " t-cool", "declared_none": "", "tradfi": "", "unverified": " t-warn"}
+    ent = {e["id"]: e for e in L["entities"]}
+    summ = (f'<div class="card libsum"><span>{T("记录", "Records")} <b>{c["records"]}</b>（{T("主库", "main")} {c["main"]} + {T("发现队列", "discovery")} {c["discovery"]}{T("，其中缺 id 的旧记录", "; legacy without id")} {c["missing_id"]}）</span>'
+            f'<span>{T("独立实体", "Entities")} <b>{c["entities"]}</b></span>'
+            + "".join(f'<span>{ptn(k)} <b>{v}</b></span>' for k, v in sorted(c["pt"].items(), key=lambda t: -t[1]))
+            + f'<span>{T("合约", "Contracts")} ' + " · ".join(f'{T(*RWA_ROLE.get(k, (k, k)))} <b>{v}</b>' for k, v in c["contracts"].items()) + '</span>'
+            + f'<span>{T("DEX 池子", "DEX pools")} <b>{c["markets_dex"]}</b>（{T("挂上同链代币", "linked to a same-chain token")} {c["markets_dex_linked"]}）· {T("CEX 交易对", "CEX pairs")} <b>{c["markets_cex"]}</b></span></div>')
+    r1n = c.get("r1_entities")
+    note = (f'<p class="tnote">{T(f"实体按官网 / 产品页的主域名去重；数据平台、新闻稿、社交站的域名不当身份，没有官网的按 DefiLlama 母协议或单条记录算（Codex 原件按来源域名并成 {r1n} 个，把 41 个项目并成了「defillama.com」，已纠正）。分类按关键词粗分，可能有误。平台币状态是研究库原记录的映射，大多数是「未确认」，不等于没有。合约「核对级别」写的是原记录怎么来的：目录提示 ≠ 官方确认 ≠ 链上验证。", "Entities are deduplicated by official / product domain; data-platform, press-release and social domains are not identities. Segments are keyword-based and rough. Platform-token status maps the library’s original labels; most are “unverified”, which is not “none”. Contract check level says how the record was obtained: directory hint ≠ official ≠ onchain.")}</p>'
+            f'<p class="tnote">{T("研究库导出于", "Exported")} {TT(L["source"].get("exported_utc"))} · {T("导入于", "Imported")} {TT(L.get("generated"))} · {T("这是研究底稿，记录里的说法大多没有逐条复核", "Research working file; most statements are not individually re-verified")} · <a href="/data/rwa/universe.json">JSON</a></p>')
+    segs = Counter(x["segment"] for x in L["records"])
+    fl = (f'<div class="libf" role="search"><input type="search" id="libq" placeholder="{T("搜名字 / symbol / 合约地址 / 链", "Search name / symbol / address / chain")}" aria-label="{T("搜索研究库", "Search library")}">'
+          f'<select id="libseg" aria-label="{T("分类", "Segment")}"><option value="">{T("全部分类", "All segments")}</option>' + "".join(f'<option value="{k}">{esc(seg_name(k))}（{n}）</option>' for k, n in segs.most_common()) + '</select>'
+          f'<select id="libpt" aria-label="{T("平台币状态", "Platform token")}"><option value="">{T("全部平台币状态", "Any token status")}</option>' + "".join(f'<option value="{k}">{esc(ptn(k))}</option>' for k in c["pt"]) + '</select>'
+          f'<select id="libpool" aria-label="{T("来源", "Pool")}"><option value="">{T("主库 + 发现队列", "Main + discovery")}</option><option value="main">{T("主库", "Main")}</option><option value="discovery">{T("发现队列", "Discovery")}</option></select>'
+          f'<span id="libn" class="muted" style="align-self:center;font-size:12.5px"></span></div>')
+    def fmt_t(x):
+        return esc(str(x)[:10]) if x else "—"
+    def link(u, txt):
+        return rwa_a(txt, u) if str(u or "").startswith("https://") else (esc(txt) if u else "")
+    rows = []
+    for x in sorted(L["records"], key=lambda r: (r["pool"] != "main", (r["name"] or "").lower())):
+        e = ent.get(x["entity"]) or {}
+        cts = "".join(f'<tr><td class="l">{esc(T(*RWA_ROLE.get(k["role"], (k["role"], k["role"]))))}{" · " + esc(k["sub"]) if k.get("sub") else ""}</td><td class="l">{esc(k.get("chain") or "—")}</td>'
+                      f'<td class="l mono">{esc(k.get("address") or "—")}</td><td class="l">{esc(k.get("check") or "U")}</td><td class="l">{fmt_t(k.get("at"))}</td><td class="l">{link(k.get("src"), T("来源", "src"))}</td></tr>' for k in x["contracts"])
+        mks = "".join(f'<tr><td class="l">{esc(m["venue"].upper())} · {esc(m.get("name") or "")}</td><td class="l">{esc(m.get("chain") or "—")}</td><td class="l">{esc(m.get("pair") or "")}</td>'
+                      f'<td class="l mono">{esc(m.get("pool") or "—")}</td><td>{a_usd(m.get("liq")) if m.get("liq") is not None else "—"}</td><td class="l">{fmt_t(m.get("at"))}</td>'
+                      f'<td class="l">{T("同链代币", "linked") if m.get("linked") else ("—" if m["venue"] == "cex" else T("未挂上", "unlinked"))}</td></tr>' for m in x["markets"])
+        nts = "".join(f'<li>{fmt_t(n.get("at"))} · {esc(n.get("text"))} {link(n.get("src"), T("来源", "src"))}{" · " + esc(n["level"]) if n.get("level") else ""}</li>' for n in x["notes"])
+        hay = " ".join([x["name"] or "", x.get("symbol") or "", " ".join(x["chains"] or []), " ".join(k.get("address") or "" for k in x["contracts"]), e.get("name") or "", x["rid"]]).lower()
+        body = (f'<div>{T("实体", "Entity")}：{esc(e.get("name") or "")} <span class="muted">（{esc(e.get("domain") or e.get("basis") or "")}，{len(e.get("records") or [])} {T("条记录", "records")}）</span>'
+                f' · {link(x.get("official"), T("官网", "Official"))} {link(x.get("source"), T("来源", "Source"))}</div>'
+                + (f'<div>{T("业务", "Business")}：{esc(x["role_text"])}</div>' if x.get("role_text") else "")
+                + f'<div class="muted">{T("平台币原标签", "Raw token label")} <span class="mono">{esc(x.get("pt_raw") or "—")}</span>'
+                + (f' · symbol {esc(x["symbol"])}（{T("只作提示", "hint only")}）' if x.get("symbol") else "")
+                + (f' · <span class="mono">{esc(x["symbol_role"])}</span>' if x.get("symbol_role") else "")
+                + f' · {T("分类原文", "Raw segment")} {esc((x.get("segment_raw") or "—")[:60])} · {T("证据级别", "Evidence")} {esc(x.get("evidence") or "U")}</div>'
+                + f'<div class="muted">{T("首次发现", "First seen")} {fmt_t(x.get("first_seen"))} · {T("最后检查", "Last checked")} {fmt_t(x.get("last_checked"))} · {T("资料核实", "Verified")} {fmt_t(x.get("verified_at"))} · {T("目录核实", "Directory checked")} {fmt_t(x.get("directory_checked"))}</div>'
+                + (f'<h4>{T("合约", "Contracts")}</h4><div class="scroll"><table><thead><tr><th class="l">{T("角色", "Role")}</th><th class="l">{T("链", "Chain")}</th><th class="l">{T("地址", "Address")}</th><th class="l">{T("核对级别", "Check")}</th><th class="l">{T("时间", "At")}</th><th class="l"></th></tr></thead><tbody>{cts}</tbody></table></div>' if cts else "")
+                + (f'<h4>{T("交易场所", "Markets")}</h4><div class="scroll"><table><thead><tr><th class="l">{T("场所", "Venue")}</th><th class="l">{T("链", "Chain")}</th><th class="l">{T("交易对", "Pair")}</th><th class="l">{T("池子 ID", "Pool ID")}</th><th>{T("流动性", "Liquidity")}</th><th class="l">{T("观测", "Observed")}</th><th class="l">{T("身份", "Identity")}</th></tr></thead><tbody>{mks}</tbody></table></div>' if mks else "")
+                + (f'<h4>{T("研究记录（未复核）", "Research notes (not re-verified)")}</h4><ul>{nts}</ul>' if nts else ""))
+        rows.append(f'<details class="lib" id="{lib_anchor(x["rid"])}" data-q="{esc(hay)}" data-seg="{x["segment"]}" data-pt="{esc(x["pt"])}" data-pool="{x["pool"]}">'
+                    f'<summary><span class="nm"><b>{esc(x["name"])}</b><small>{esc(" · ".join(x["chains"][:3]))}{" …" if len(x["chains"]) > 3 else ""}</small></span>'
+                    f'<span class="c2"><span class="chip{pt_tone.get(x["pt"], "")}">{esc(ptn(x["pt"]))}</span></span><span class="c3 muted">{esc(seg_name(x["segment"]))}</span>'
+                    f'<span class="c4 muted" style="font-size:12px">{T("主库", "Main") if x["pool"] == "main" else T("发现", "Disc.")} · {fmt_t(x.get("first_seen"))}</span></summary><div class="bd">{body}</div></details>')
+    js = """<script>(function(){const q=document.getElementById('libq'),s=document.getElementById('libseg'),p=document.getElementById('libpt'),o=document.getElementById('libpool'),n=document.getElementById('libn');
+const rs=[...document.querySelectorAll('details.lib')];function f(){const t=q.value.trim().toLowerCase();let k=0;rs.forEach(r=>{const ok=(!t||r.dataset.q.includes(t))&&(!s.value||r.dataset.seg===s.value)&&(!p.value||r.dataset.pt===p.value)&&(!o.value||r.dataset.pool===o.value);r.hidden=!ok;if(ok)k++});n.textContent=k+' / '+rs.length}
+[q,s,p,o].forEach(e=>e.addEventListener('input',f));f();const h=location.hash&&document.getElementById(location.hash.slice(1));if(h&&h.tagName==='DETAILS'){h.open=true;h.scrollIntoView()}})();</script>"""
+    return summ + note + fl + f'<div class="card" style="padding:4px 10px">{"".join(rows)}</div>', js
+
 def build_rwa():
     d = G.get("RWA") or {}
     desc = T("RWA 现实资产板块：代币化国债、黄金、股票、信贷的规模，RWA 协议的手续费、协议收入和持有人收入，平台币身份，研究标的判断卡。不是买卖建议。",
              "RWA board: size of tokenized treasuries, gold, stocks and credit; RWA protocol fees, revenue and holder revenue; platform-token identity; research judgment cards. Not trade advice.")
     emit("rwa/index.html", T(f"RWA · {BRAND}", f"RWA · {BRAND_EN}"), rwa_head("") + rwa_board(d), active="rwa", desc=desc, extra_head=RWA_CSS)
     emit("rwa/watch/index.html", T(f"研究标的 · RWA · {BRAND}", f"Watchlist · RWA · {BRAND_EN}"), rwa_head("watch/") + rwa_watch(d), active="rwa", desc=desc, extra_head=RWA_CSS)
+    lib = rwa_library()
+    lib_html, lib_js = lib if isinstance(lib, tuple) else (lib, "")
+    emit("rwa/library/index.html", T(f"研究库 · RWA · {BRAND}", f"Library · RWA · {BRAND_EN}"), rwa_head("library/") + lib_html, active="rwa", desc=desc, extra_head=RWA_CSS, scripts=lib_js)
     zh_only = ZH_ONLY if LANG["v"] == "en" else ""
     for p, fn in (("method/", "方法框架.md"), ("progress/", "研究进度.md")):
         src = open(os.path.join(ROOT, "rwa", "research", fn), encoding="utf-8").read()

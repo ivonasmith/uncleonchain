@@ -3,40 +3,383 @@
  "schema": 1,
  "updated_utc": "2026-11-14",
  "migration": {
-  "status": "未迁入",
-  "note_zh": "Codex 本地研究库（主库 225 条 + 发现队列 137 条，截至 2026-11-14）还没按数据契约导出进仓库；10-30 的 6 项机会判断也没复核。下表只有交接包点名的复核案例，全部待重核，首发不给结论。",
-  "note_en": "The local research library (225 main + 137 discovery records as of 2026-11-14) has not been exported into the repo yet, and the six 10-30 judgments have not been re-checked. Only the review cases named in the handoff are listed; all pending re-check, no conclusions at launch."
+  "status": "已导入（待重核）",
+  "note_zh": "研究库 362 条已导入（研究库页签），实体按官网域名重新去重。10-30 的 6 项判断和 5 个复核案例已并入，但 Codex 这一轮没有按原始来源重核（答案全部为 U），所以全部标「待重核」，不给当前结论。",
+  "note_en": "The 362-record library is imported (Library tab), with entities re-deduplicated by official domain. The six 10-30 judgments and five review cases are merged, but this Codex round did not re-check at source (all answers U), so all are pending re-check with no current conclusion."
  },
  "items": [
   {
-   "id": "case:kyte", "name": "KYTE", "segment": "trading", "token_kind": "platform_token",
-   "platform_token": {"status": "unverified", "raw": "交接包：平台币、链、池 ID 已核（未附证据进仓库）"},
-   "versions": [{"v": "2026-11-12", "state": "pending_recheck", "why_zh": "交接包称 11-12 因报价和深度恶化下调过风险观察；报价时点、gas 假设、池子身份都要重核。", "why_en": "Handoff says risk view was downgraded on 11-12 after quotes and depth worsened; quote time, gas assumption and pool identity need re-checking.", "reviewed_utc": null}],
-   "open_questions": ["平台币合约、链、DEX 池 ID 分别是什么（原始来源 + 核对时间）", "只读卖出报价的区块高度、报价规模、gas 假设", "11-12 之后深度和报价是否继续恶化"]
+   "id": "case:kyte",
+   "name": "KYTE",
+   "segment": "trading",
+   "token_kind": "platform_token",
+   "platform_token": {
+    "status": "unverified",
+    "raw": "交接包：平台币、链、池 ID 已核（未附证据进仓库）"
+   },
+   "versions": [
+    {
+     "v": "2026-11-12",
+     "state": "pending_recheck",
+     "why_zh": "交接包称 11-12 因报价和深度恶化下调过风险观察；报价时点、gas 假设、池子身份都要重核。",
+     "why_en": "Handoff says risk view was downgraded on 11-12 after quotes and depth worsened; quote time, gas assumption and pool identity need re-checking.",
+     "reviewed_utc": null,
+     "r3_20261114": "Codex 11-14 交付：待核问题全部为 U，未按原始来源重核"
+    }
+   ],
+   "open_questions": [
+    "平台币合约、链、DEX 池 ID 分别是什么（原始来源 + 核对时间）",
+    "只读卖出报价的区块高度、报价规模、gas 假设",
+    "11-12 之后深度和报价是否继续恶化",
+    "区分期权权利金、平台币成交额及真实分费。核实连续分配、来源、退出滑点。"
+   ],
+   "links": {
+    "official": "https://kyte.sh/",
+    "source": "https://kyte.sh/docs"
+   },
+   "library_rid": "llama:kyte",
+   "entity": "Kyte（法律实体待核）"
   },
   {
-   "id": "case:xash", "name": "Xash", "segment": "issuance", "token_kind": "none_declared?",
-   "platform_token": {"status": "unverified", "raw": "交接包：官方声明无平台币（待附原文链接）"},
-   "versions": [{"v": "2026-11-14", "state": "pending_recheck", "why_zh": "PYUSD 活动的黄金奖励属于营销补贴；可提现收益、普通使用和积分预期要分开算。", "why_en": "Gold rewards on the PYUSD campaign are marketing subsidies; withdrawable yield, normal usage and points expectations must be separated.", "reviewed_utc": null}],
-   "open_questions": ["「无平台币」声明原文与日期", "Phase B 前奖励能否提取、何时可提", "奖励资金来源与持续期"]
+   "id": "case:xash",
+   "name": "Xash",
+   "segment": "issuance",
+   "token_kind": "none_declared?",
+   "platform_token": {
+    "status": "unverified",
+    "raw": "交接包：官方声明无平台币（待附原文链接）"
+   },
+   "versions": [
+    {
+     "v": "2026-11-14",
+     "state": "pending_recheck",
+     "why_zh": "PYUSD 活动的黄金奖励属于营销补贴；可提现收益、普通使用和积分预期要分开算。",
+     "why_en": "Gold rewards on the PYUSD campaign are marketing subsidies; withdrawable yield, normal usage and points expectations must be separated.",
+     "reviewed_utc": null,
+     "r3_20261114": "Codex 11-14 交付：待核问题全部为 U，未按原始来源重核"
+    }
+   ],
+   "open_questions": [
+    "「无平台币」声明原文与日期",
+    "Phase B 前奖励能否提取、何时可提",
+    "奖励资金来源与持续期",
+    "首次 PAXG 对外发放的交易能否与官方批次对应？扣除费用后的奖励有多少？"
+   ],
+   "links": {
+    "official": "https://xash.com/",
+    "source": "https://app.xash.com/terms"
+   },
+   "library_rid": "official:xash-gold-rewards",
+   "entity": "Xash, Inc."
   },
   {
-   "id": "case:buidl-ethena", "name": "BUIDL × Ethena", "segment": "fund", "token_kind": "asset_token",
-   "platform_token": {"status": "tradfi", "raw": "BUIDL = 基金份额；ENA = Ethena 的平台币，二者身份分开"},
-   "versions": [{"v": "2026-11-14", "state": "pending_recheck", "why_zh": "交接包称流动性设施初始两侧合计 5,000 万美元、有条件上限 1 亿美元；真实使用量、谁能用、ENA 是否受益都需要证据。", "why_en": "Handoff cites a liquidity facility of $50M initial (both sides) and a conditional $100M cap; real usage, eligibility and any ENA benefit need evidence.", "reviewed_utc": null}],
-   "open_questions": ["设施规模原文（官方公告链接）", "实际使用量（链上或披露）", "谁有资格使用（机构白名单？）", "ENA 持有人从这条业务拿到什么"]
+   "id": "case:buidl-ethena",
+   "name": "BUIDL × Ethena",
+   "segment": "fund",
+   "token_kind": "asset_token",
+   "platform_token": {
+    "status": "tradfi",
+    "raw": "BUIDL = 基金份额；ENA = Ethena 的平台币，二者身份分开"
+   },
+   "versions": [
+    {
+     "v": "2026-11-14",
+     "state": "pending_recheck",
+     "why_zh": "交接包称流动性设施初始两侧合计 5,000 万美元、有条件上限 1 亿美元；真实使用量、谁能用、ENA 是否受益都需要证据。",
+     "why_en": "Handoff cites a liquidity facility of $50M initial (both sides) and a conditional $100M cap; real usage, eligibility and any ENA benefit need evidence.",
+     "reviewed_utc": null,
+     "r3_20261114": "Codex 11-14 交付：待核问题全部为 U，未按原始来源重核"
+    }
+   ],
+   "open_questions": [
+    "设施规模原文（官方公告链接）",
+    "实际使用量（链上或披露）",
+    "谁有资格使用（机构白名单？）",
+    "ENA 持有人从这条业务拿到什么",
+    "核实周末实际兑换、流动性补充、费用归属及 ENA 收益路径。"
+   ],
+   "links": {
+    "official": "https://securitize.io/",
+    "source": "https://www.prnewswire.com/news-releases/securitize-and-ethena-launch-100-million-liquidity-facility-for-blackrocks-buidl-302937776.html"
+   },
+   "library_rid": "official:buidl-ethena-liquidity",
+   "entity": "Securitize / Ethena Labs"
   },
   {
-   "id": "case:rwaxyz-represented", "name": "RWA.xyz Represented 快照下降", "segment": "data", "token_kind": "n/a",
-   "platform_token": {"status": "n/a"},
-   "versions": [{"v": "2026-11-14", "state": "pending_recheck", "why_zh": "11-14 快照较上一轮明显下降，当期 Broadridge DLR 权重很高；缺同期单项余额前不推断赎回原因。", "why_en": "The 11-14 snapshot fell sharply with Broadridge DLR carrying a large weight; no redemption story until like-for-like line items exist.", "reviewed_utc": null}],
-   "open_questions": ["Broadridge DLR 前后两期余额", "数据方是否改了口径 / 覆盖", "rwa.xyz 数据的再分发条款"]
+   "id": "case:rwaxyz-represented",
+   "name": "RWA.xyz Represented 快照下降",
+   "segment": "data",
+   "token_kind": "n/a",
+   "platform_token": {
+    "status": "n/a"
+   },
+   "versions": [
+    {
+     "v": "2026-11-14",
+     "state": "pending_recheck",
+     "why_zh": "11-14 快照较上一轮明显下降，当期 Broadridge DLR 权重很高；缺同期单项余额前不推断赎回原因。",
+     "why_en": "The 11-14 snapshot fell sharply with Broadridge DLR carrying a large weight; no redemption story until like-for-like line items exist.",
+     "reviewed_utc": null,
+     "r3_20261114": "Codex 11-14 交付：待核问题全部为 U，未按原始来源重核"
+    }
+   ],
+   "open_questions": [
+    "Broadridge DLR 前后两期余额",
+    "数据方是否改了口径 / 覆盖",
+    "rwa.xyz 数据的再分发条款",
+    "补齐逐日面值、换手与方法变更，解释余额跳变。"
+   ],
+   "links": {
+    "official": "https://www.broadridge.com/capability/middle-and-back-office-solutions/post-trade-processing/distributed-ledger-repo-solutions",
+    "source": "https://app.rwa.xyz/platforms/broadridge-dlr"
+   },
+   "library_rid": "official:broadridge-dlr",
+   "entity": "Broadridge Financial Solutions"
   },
   {
-   "id": "case:townsquare", "name": "TownSquare / TOWN", "segment": "lending", "token_kind": "platform_token",
-   "platform_token": {"status": "unverified", "raw": "交接包：TOWN 有治理规则（待附原文）"},
-   "versions": [{"v": "2026-11-14", "state": "pending_recheck", "why_zh": "产品估值、发行方储备证明、借贷 TVL、TOWN 治理规则是四类不同证据；一笔链上证明交易不能验证线下资产和个人可参与性。", "why_en": "Product valuation, issuer reserve attestations, lending TVL and TOWN governance are four different kinds of evidence; one onchain proof tx does not verify offchain assets or personal eligibility.", "reviewed_utc": null}],
-   "open_questions": ["储备证明出具方与日期", "TOWN 持有人有无收入权", "普通用户的参与资格与地区限制"]
+   "id": "case:townsquare",
+   "name": "TownSquare / TOWN",
+   "segment": "lending",
+   "token_kind": "platform_token",
+   "platform_token": {
+    "status": "unverified",
+    "raw": "交接包：TOWN 有治理规则（待附原文）"
+   },
+   "versions": [
+    {
+     "v": "2026-11-14",
+     "state": "pending_recheck",
+     "why_zh": "产品估值、发行方储备证明、借贷 TVL、TOWN 治理规则是四类不同证据；一笔链上证明交易不能验证线下资产和个人可参与性。",
+     "why_en": "Product valuation, issuer reserve attestations, lending TVL and TOWN governance are four different kinds of evidence; one onchain proof tx does not verify offchain assets or personal eligibility.",
+     "reviewed_utc": null,
+     "r3_20261114": "Codex 11-14 交付：待核问题全部为 U，未按原始来源重核"
+    }
+   ],
+   "open_questions": [
+    "储备证明出具方与日期",
+    "TOWN 持有人有无收入权",
+    "普通用户的参与资格与地区限制",
+    "核实还款、受托人及季度赎回执行；TOWN 的独立合约和交易场所待核。"
+   ],
+   "links": {
+    "official": "https://app.townsq.xyz/townRWA/townAIROBO",
+    "source": "https://app.rwa.xyz/assets/townAIROBO"
+   },
+   "library_rid": "official:townsquare-townairobo",
+   "entity": "TownSquare"
+  },
+  {
+   "id": "j:maple",
+   "name": "Maple / SYRUP",
+   "segment": "credit",
+   "source": "10-30 机会判断",
+   "platform_token": {
+    "status": "issued",
+    "raw": "研究库平台币状态（未复核）"
+   },
+   "versions": [
+    {
+     "v": "2026-11-14",
+     "state": "pending_recheck",
+     "why_zh": "10-30 原判断「等收入确认」。Codex 11-14 交付没有按原始来源重核（资格、成本、退出全部为 U），条件照 10-30 原文，不当当前结论。",
+     "why_en": "10-30 judgment carried over. The 11-14 Codex delivery did not re-check at source (eligibility, cost and exit all U); conditions are the 10-30 text, not a current conclusion.",
+     "trigger_zh": "10 月收入公布后，核对回购是否按 MIP-021 规则执行；月收入超过 200 万美元时，回购比例按规则进入 30% 档",
+     "trigger_en": "After October revenue is published, check the buyback ran under MIP-021; above $2M monthly revenue the rule moves to the 30% tier",
+     "invalid_zh": "月收入回落到 150 万美元以下、回购没按规则执行，或出现重大信用损失",
+     "invalid_en": "Monthly revenue back under $1.5M, buyback not run per rule, or a major credit loss",
+     "reviewed_utc": null
+    },
+    {
+     "v": "2026-10-30",
+     "state": "historical",
+     "old_state": "等收入确认"
+    }
+   ],
+   "links": {
+    "source": "https://community.maple.finance/t/mip-021-a-rules-based-buyback-that-scales-with-revenue/1153"
+   },
+   "open_questions": [
+    "10-30 原记录：回购按年化 ÷ 流通市值约 2.15%、Q3 收入环比持平——按原始来源（Maple 透明度页、论坛 MIP-021、Q3 报告）重算",
+    "10 月收入和回购执行的原文与链上记录"
+   ],
+   "library_rid": "llama:maple"
+  },
+  {
+   "id": "j:pendle",
+   "name": "Pendle / PENDLE",
+   "segment": "trading",
+   "source": "10-30 机会判断",
+   "platform_token": {
+    "status": "issued",
+    "raw": "研究库平台币状态（未复核）"
+   },
+   "versions": [
+    {
+     "v": "2026-11-14",
+     "state": "pending_recheck",
+     "why_zh": "10-30 原判断「等收入企稳」。Codex 11-14 交付没有按原始来源重核（资格、成本、退出全部为 U），条件照 10-30 原文，不当当前结论。",
+     "why_en": "10-30 judgment carried over. The 11-14 Codex delivery did not re-check at source (eligibility, cost and exit all U); conditions are the 10-30 text, not a current conclusion.",
+     "trigger_zh": "连续两个完整 7 日窗口的持有人收入不再下降，并核实实际分配；RWA 相关市场要有持续成交和费用",
+     "trigger_en": "Holder revenue stops falling for two full 7-day windows and actual distributions are verified; RWA markets show sustained volume and fees",
+     "invalid_zh": "分配继续缩减，或 RWA 市场只有规模、没有交易",
+     "invalid_en": "Distributions keep shrinking, or RWA markets have size but no trading",
+     "reviewed_utc": null
+    },
+    {
+     "v": "2026-10-30",
+     "state": "historical",
+     "old_state": "等收入企稳"
+    }
+   ],
+   "links": {
+    "source": "https://docs.pendle.finance/pendle-v2/ProtocolMechanics/Mechanisms/sPENDLE"
+   },
+   "open_questions": [
+    "10-30 原记录：近 30 日持有人收入 331,510 美元、年化约占流通市值 1.37%——按原始来源重算并写清期间、分母和年化方法",
+    "RWA 相关市场的成交和费用占比"
+   ]
+  },
+  {
+   "id": "j:ondo",
+   "name": "Ondo / ONDO",
+   "segment": "fund",
+   "source": "10-30 机会判断",
+   "platform_token": {
+    "status": "issued",
+    "raw": "研究库平台币状态（未复核）"
+   },
+   "versions": [
+    {
+     "v": "2026-11-14",
+     "state": "pending_recheck",
+     "why_zh": "10-30 原判断「只列叙事观察」。Codex 11-14 交付没有按原始来源重核（资格、成本、退出全部为 U），条件照 10-30 原文，不当当前结论。",
+     "why_en": "10-30 judgment carried over. The 11-14 Codex delivery did not re-check at source (eligibility, cost and exit all U); conditions are the 10-30 text, not a current conclusion.",
+     "trigger_zh": "官方公告出现明确的代币权益变化或具体催化",
+     "trigger_en": "An official announcement of a concrete token-rights change or catalyst",
+     "invalid_zh": "催化延期、权益变化没通过；叙事不能改口成分红逻辑",
+     "invalid_en": "Catalyst delayed or rights change fails; the story must not turn into a dividend thesis",
+     "reviewed_utc": null
+    },
+    {
+     "v": "2026-10-30",
+     "state": "historical",
+     "old_state": "只列叙事观察"
+    }
+   ],
+   "links": {
+    "source": "https://docs.ondo.foundation/ondo-token"
+   },
+   "open_questions": [
+    "ONDO 现行代币权益原文（docs.ondo.foundation）",
+    "资管收入有没有任何路径分给 ONDO 持有人"
+   ]
+  },
+  {
+   "id": "j:curve",
+   "name": "Curve × Stellar",
+   "segment": "trading",
+   "source": "10-30 机会判断",
+   "platform_token": {
+    "status": "issued",
+    "raw": "研究库平台币状态（未复核）"
+   },
+   "versions": [
+    {
+     "v": "2026-11-14",
+     "state": "pending_recheck",
+     "why_zh": "10-30 原判断「不追上线消息」。Codex 11-14 交付没有按原始来源重核（资格、成本、退出全部为 U），条件照 10-30 原文，不当当前结论。",
+     "why_en": "10-30 judgment carried over. The 11-14 Codex delivery did not re-check at source (eligibility, cost and exit all U); conditions are the 10-30 text, not a current conclusion.",
+     "trigger_zh": "Stellar 上的池子出现持续成交，费用流向可以验证，再和 CRV 整体收入比较",
+     "trigger_en": "Stellar pools show sustained volume and verifiable fee flows, then compare with total CRV revenue",
+     "invalid_zh": "只部署没使用，或新增费用进不了能归属 CRV 的路径",
+     "invalid_en": "Deployed but unused, or new fees cannot reach CRV",
+     "reviewed_utc": null
+    },
+    {
+     "v": "2026-10-30",
+     "state": "historical",
+     "old_state": "不追上线消息"
+    }
+   ],
+   "links": {
+    "source": "https://stellar.org/press/curve-brings-onchain-liquidity-infrastructure-to-the-stellar-network-in-its-first-native-non-evm-integration"
+   },
+   "open_questions": [
+    "Stellar 池子的地址、成交额、费用（带时间）",
+    "费用分配路径（官方文档）"
+   ]
+  },
+  {
+   "id": "j:ixs",
+   "name": "IXS（Robinhood Chain 迁移）",
+   "segment": "trading",
+   "source": "10-30 机会判断",
+   "platform_token": {
+    "status": "unverified",
+    "raw": "研究库平台币状态（未复核）"
+   },
+   "versions": [
+    {
+     "v": "2026-11-14",
+     "state": "pending_recheck",
+     "why_zh": "10-30 原判断「保留早期探索」。Codex 11-14 交付没有按原始来源重核（资格、成本、退出全部为 U），条件照 10-30 原文，不当当前结论。",
+     "why_en": "10-30 judgment carried over. The 11-14 Codex delivery did not re-check at source (eligibility, cost and exit all U); conditions are the 10-30 text, not a current conclusion.",
+     "trigger_zh": "新旧合约和兑换规则、实际池子和可卖出深度、已执行的回购都核实",
+     "trigger_en": "Old/new contracts and swap rules, actual pools and sell-side depth, and executed buybacks all verified",
+     "invalid_zh": "迁移后权益不一致、费用没有执行记录、无法正常退出",
+     "invalid_en": "Post-migration rights inconsistent, no fee execution, or no normal exit",
+     "reviewed_utc": null
+    },
+    {
+     "v": "2026-10-30",
+     "state": "historical",
+     "old_state": "保留早期探索"
+    }
+   ],
+   "links": {
+    "source": "https://robinhood.ixs.finance"
+   },
+   "open_questions": [
+    "新旧合约地址与兑换规则原文",
+    "实际池子 ID 与深度（带区块 / 时间）",
+    "回购执行交易"
+   ]
+  },
+  {
+   "id": "j:tickerspring",
+   "name": "TickerSpring",
+   "segment": "equity",
+   "source": "10-30 机会判断",
+   "platform_token": {
+    "status": "unverified",
+    "raw": "研究库平台币状态（未复核）"
+   },
+   "versions": [
+    {
+     "v": "2026-11-14",
+     "state": "pending_recheck",
+     "why_zh": "10-30 原判断「保留早期探索」。Codex 11-14 交付没有按原始来源重核（资格、成本、退出全部为 U），条件照 10-30 原文，不当当前结论。",
+     "why_en": "10-30 judgment carried over. The 11-14 Codex delivery did not re-check at source (eligibility, cost and exit all U); conditions are the 10-30 text, not a current conclusion.",
+     "trigger_zh": "官方合约和运行合约对得上、市场有双向流动性、真实收费和回购交易都核实",
+     "trigger_en": "Official contract matches the running contract, two-sided liquidity, and real fees and buybacks verified",
+     "invalid_zh": "资产权利、收费流向或退出路径无法验证",
+     "invalid_en": "Asset rights, fee flows or exit path cannot be verified",
+     "reviewed_utc": null
+    },
+    {
+     "v": "2026-10-30",
+     "state": "historical",
+     "old_state": "保留早期探索"
+    }
+   ],
+   "links": {
+    "source": "https://tickerspring.com"
+   },
+   "open_questions": [
+    "官方合约地址与运行合约",
+    "股票组合的资产权利（谁托管、持有人有什么索取权）",
+    "收费和回购交易"
+   ]
   }
  ]
 }

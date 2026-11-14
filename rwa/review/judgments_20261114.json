@@ -1,0 +1,194 @@
+{
+ "reviewed_utc": "2026-11-14T14:40:00Z",
+ "source": "outputs/rwa-opportunity-decisions-2026-10-30.json",
+ "records": [
+  {
+   "id": "ent:maple",
+   "name": "Maple",
+   "old_version": "2026-10-30",
+   "old_state": "等收入确认",
+   "state": "pending_recheck",
+   "why": "原判断来自历史版本，当前复核所需的全部原始来源和资格条件尚未在本轮重新核对。",
+   "trigger": "10月收入公布后复核回购执行；若月收入超过$2M，按规则进入30%档，再以当时价格评估。",
+   "invalid": "收入落回$1.5M以下、回购未按规则执行或出现重大信用损失，放弃本轮增长逻辑。",
+   "trigger_happened": "U",
+   "trigger_evidence": "U",
+   "eligibility": "U",
+   "cost": "U",
+   "exit": "U",
+   "facts": [
+    {
+     "claim": "现价约$0.150；9月回购金额按年重复，对流通市值强度约2.15%。Q3收入环比持平，当前不是增长加速已确认。",
+     "src": "https://community.maple.finance/t/mip-021-a-rules-based-buyback-that-scales-with-revenue/1153",
+     "kind": "U",
+     "checked_utc": "2026-11-14T14:40:00Z",
+     "same_as_handoff": false
+    },
+    {
+     "claim": "现价约$0.150；9月回购金额按年重复，对流通市值强度约2.15%。Q3收入环比持平，当前不是增长加速已确认。",
+     "src": "https://maple.finance/transparency/syrup",
+     "kind": "U",
+     "checked_utc": "2026-11-14T14:40:00Z",
+     "same_as_handoff": false
+    },
+    {
+     "claim": "现价约$0.150；9月回购金额按年重复，对流通市值强度约2.15%。Q3收入环比持平，当前不是增长加速已确认。",
+     "src": "https://maple.finance/insights/maple-q3-ecosystem-update",
+     "kind": "U",
+     "checked_utc": "2026-11-14T14:40:00Z",
+     "same_as_handoff": false
+    }
+   ],
+   "reviewed_utc": "2026-11-14T14:40:00Z",
+   "next_review": "U"
+  },
+  {
+   "id": "ent:pendle",
+   "name": "Pendle",
+   "old_version": "2026-10-30",
+   "old_state": "等收入企稳",
+   "state": "pending_recheck",
+   "why": "原判断来自历史版本，当前复核所需的全部原始来源和资格条件尚未在本轮重新核对。",
+   "trigger": "连续两个完整7日窗口的持有人收入不再下降，再核实际分配；RWA逻辑还须有相关市场持续成交和费用。",
+   "invalid": "分配继续缩减或RWA市场只有规模没有交易，撤销本轮扩张判断。",
+   "trigger_happened": "U",
+   "trigger_evidence": "U",
+   "eligibility": "U",
+   "cost": "U",
+   "exit": "U",
+   "facts": [
+    {
+     "claim": "近30日持有人收入$331,510，按365/30年化约占流通市值1.37%、FDV 0.84%。最近7日日均较前23日低约32%。",
+     "src": "https://docs.pendle.finance/pendle-v2/ProtocolMechanics/Mechanisms/sPENDLE",
+     "kind": "U",
+     "checked_utc": "2026-11-14T14:40:00Z",
+     "same_as_handoff": false
+    },
+    {
+     "claim": "近30日持有人收入$331,510，按365/30年化约占流通市值1.37%、FDV 0.84%。最近7日日均较前23日低约32%。",
+     "src": "https://defillama.com/protocol/pendle",
+     "kind": "U",
+     "checked_utc": "2026-11-14T14:40:00Z",
+     "same_as_handoff": false
+    },
+    {
+     "claim": "近30日持有人收入$331,510，按365/30年化约占流通市值1.37%、FDV 0.84%。最近7日日均较前23日低约32%。",
+     "src": "https://docs.pendle.finance/pendle-v2/ProtocolMechanics/Mechanisms/Tokenomics",
+     "kind": "U",
+     "checked_utc": "2026-11-14T14:40:00Z",
+     "same_as_handoff": false
+    }
+   ],
+   "reviewed_utc": "2026-11-14T14:40:00Z",
+   "next_review": "U"
+  },
+  {
+   "id": "ent:ondo",
+   "name": "Ondo",
+   "old_version": "2026-10-30",
+   "old_state": "只列叙事观察",
+   "state": "pending_recheck",
+   "why": "原判断来自历史版本，当前复核所需的全部原始来源和资格条件尚未在本轮重新核对。",
+   "trigger": "出现明确代币权益变化或具体催化，再评估消息时点、相对价格与可执行深度。",
+   "invalid": "催化延期、权益变化未通过或市场先行计价；叙事不能改口成分红投资。",
+   "trigger_happened": "U",
+   "trigger_evidence": "U",
+   "eligibility": "U",
+   "cost": "U",
+   "exit": "U",
+   "facts": [
+    {
+     "claim": "官方定位是治理币，未核实资管收入向ONDO分配的现行路径；产品规模不能直接给币估值。",
+     "src": "https://docs.ondo.foundation/ondo-token",
+     "kind": "U",
+     "checked_utc": "2026-11-14T14:40:00Z",
+     "same_as_handoff": false
+    }
+   ],
+   "reviewed_utc": "2026-11-14T14:40:00Z",
+   "next_review": "U"
+  },
+  {
+   "id": "ent:curve",
+   "name": "Curve",
+   "old_version": "2026-10-30",
+   "old_state": "不追上线消息",
+   "state": "pending_recheck",
+   "why": "原判断来自历史版本，当前复核所需的全部原始来源和资格条件尚未在本轮重新核对。",
+   "trigger": "Stellar池出现持续成交且费流向可验证，再与CRV整体收入、估值比较。",
+   "invalid": "只是部署无使用，或新增费用不进入可归属CRV的路径。",
+   "trigger_happened": "U",
+   "trigger_evidence": "U",
+   "eligibility": "U",
+   "cost": "U",
+   "exit": "U",
+   "facts": [
+    {
+     "claim": "公告证明新增业务部署；实际成交、费用归属及向CRV的增量传导仍缺证据。",
+     "src": "https://stellar.org/press/curve-brings-onchain-liquidity-infrastructure-to-the-stellar-network-in-its-first-native-non-evm-integration",
+     "kind": "U",
+     "checked_utc": "2026-11-14T14:40:00Z",
+     "same_as_handoff": false
+    }
+   ],
+   "reviewed_utc": "2026-11-14T14:40:00Z",
+   "next_review": "U"
+  },
+  {
+   "id": "ent:ixs",
+   "name": "IXS",
+   "old_version": "2026-10-30",
+   "old_state": "保留早期探索",
+   "state": "pending_recheck",
+   "why": "原判断来自历史版本，当前复核所需的全部原始来源和资格条件尚未在本轮重新核对。",
+   "trigger": "验证新旧CA及兑换规则、实际池与可卖出深度、已执行回购，再评估小额探索。",
+   "invalid": "迁移权益不一致、费用缺执行、无法正常退出。",
+   "trigger_happened": "U",
+   "trigger_evidence": "U",
+   "eligibility": "U",
+   "cost": "U",
+   "exit": "U",
+   "facts": [
+    {
+     "claim": "官网有迁移及机制声明，尚未把新币、执行、深度和费用连成可核查链条。",
+     "src": "https://robinhood.ixs.finance",
+     "kind": "U",
+     "checked_utc": "2026-11-14T14:40:00Z",
+     "same_as_handoff": false
+    }
+   ],
+   "reviewed_utc": "2026-11-14T14:40:00Z",
+   "next_review": "U"
+  },
+  {
+   "id": "ent:tickerspring",
+   "name": "TickerSpring",
+   "old_version": "2026-10-30",
+   "old_state": "保留早期探索",
+   "state": "pending_recheck",
+   "why": "原判断来自历史版本，当前复核所需的全部原始来源和资格条件尚未在本轮重新核对。",
+   "trigger": "官方CA与运行合约对应、市场双向流动性、真实收费与回购交易均完成核验。",
+   "invalid": "无法验证资产权利、收费流向或退出路径。",
+   "trigger_happened": "U",
+   "trigger_evidence": "U",
+   "eligibility": "U",
+   "cost": "U",
+   "exit": "U",
+   "facts": [
+    {
+     "claim": "股票组合与平台币机制值得拆解；现有证据只有官网声明和CA链接，不能认定收入或回购属实。",
+     "src": "https://tickerspring.com",
+     "kind": "U",
+     "checked_utc": "2026-11-14T14:40:00Z",
+     "same_as_handoff": false
+    }
+   ],
+   "reviewed_utc": "2026-11-14T14:40:00Z",
+   "next_review": "U"
+  }
+ ],
+ "notes": [
+  "历史判断未直接视为当前事实",
+  "本文件保留原状态并将当前可执行条件标为U，待原始来源逐条复核"
+ ]
+}
