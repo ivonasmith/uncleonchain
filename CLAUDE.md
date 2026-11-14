@@ -79,7 +79,8 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
   分工（大叔 11-14 定）：代码和推送网站 Claude 做，查证和出数据交 Codex，任务包 `alpha/review/README.md`（T1 发现源验收、T2 10-16 冻结评分 D30 复查、T3 无币协议前 30 补证），结果回到 `alpha/review/*.json` 再由 Claude 并入。
   11-14 三个任务已交回并入：候选池 /alpha/pool/（`出网站.alpha_pool`，读 `alpha/review/*_checks.json`；`alpha_daily.py` 把 verdict 写进台账 `status` / `status_history`，只追加）；研究观察 12、待核验 18。
   A4 判定标准已写死在 `研究进度.md`（研究观察组 vs 对照组 90 天收入保持率，各 ≥ 20 个才判），`alpha_history.json` 每天的 `rev30` 就是它的数据，**别删这个字段**。T2 九个全部待判（原卡没冻结合约 / 发现价）。
-  T1 可接源（ethresear.ch、Snapshot、Binance、Bybit、Upbit）还没接：云端环境没放行这些域名，本地验证不了。
+  A2 事件流（11-14 接）：`alpha_daily.py` 的 `feed_ethresearch` / `feed_snapshot` / `feed_binance` → `data/alpha/alpha_feed.json`（只追加，记原始发布时间 + 首次抓到时间 = 发现延迟，首跑为基线），过滤词在 `alpha_config.json` 的 `feeds`；雷达页 `alpha_feed_html`。
+  云端环境 uncleonchain 11-14 已放行 ethresear.ch、hub.snapshot.org、www.binance.com、api.bybit.com、api-manager.upbit.com；Bybit（CloudFront 按国家拦）、Upbit（Cloudflare 人机验证）实测不通，没接。Binance pageSize 超过 20 会 400。
 - 发射台活动温度（`pipeline/周期观察.py` 数据与热潮识别、`周期仪表盘.py` 展示）：每日更新。序列 = 研究快照 `content/cycle/snapshot.json`（截至 2026-10-17，sha256 在 manifest）+ 之后接 `发射台矩阵.json`「历史」的类目合计；热潮规则重算快照区间 27 轮逐字段对上（对不上会打 ⚠️）。
   仪表盘 `周期仪表盘.hero` 放在矩阵页最上面（先看温度再看细节），周期页 /launchpad/cycle/ 看这一轮、各阶段时长、历史；全站统一叫「发射台活动温度」，颜色用 `--cyc-*` 变量，文案要大白话。「钱在哪」= `出网站.money_where`。
 - 发射台长周期（2026-10-29）：`周期观察.long_view` / `coverage`。全部历史 2021-09-18 起只作背景，比高低只用可比段（`COMPARABLE_FROM` = 2024-03-01，pump.fun 开始报数；之前只有 1–6 家融资型平台报数）；
@@ -130,4 +131,4 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
    DefiLlama 稳定币分组（附注里有实际匹配到的币）、ETF（haturatu 镜像）、CME 升水（Yahoo 合约代码能否取到）是否都通；
    乐观度 z 在 2026-09-25 应约为 +0.49、净流动性约 $5.77T（研究报告 §7.1），对不上就查口径。
 2. 宏观 v2：Coinglass（多空比 / 爆仓，需 key）、Deribit 期权 P/C 与 IV。2026 年底复核净流动性闸门（规格 D1）。
-3. Alpha 雷达 A2：接 T1 验收可接的发现源（ethresear.ch、Snapshot、Binance / Bybit / Upbit 上新公告），先放行域名再本地验证；待核验 18 个的下一轮补证。
+3. Alpha 雷达：等 Codex T4（待核验 18 个补缺口 → `alpha/review/t4_checks.json`）和 T5（Bybit / Upbit 替代源）；EIPs / GitHub 版本源要 key（可用 Actions 的 GITHUB_TOKEN）。

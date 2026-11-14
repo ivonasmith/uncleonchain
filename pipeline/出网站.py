@@ -4008,6 +4008,31 @@ def alpha_pool():
             + (ZH_ONLY if LANG["v"] == "en" else "") + secs)
 
 
+ALPHA_FEED_SRC = {"ethresearch": ("研究论坛", "Research forum", "ethresear.ch"), "snapshot": ("治理提案", "Governance", "Snapshot"), "binance": ("上所公告", "Listing", "Binance")}
+
+
+def alpha_feed_html(d):
+    fs = d.get("feed") or []
+    st = d.get("sources") or {}
+    def cell(x):
+        e = x.get("extra") or {}
+        if x["src"] == "snapshot":
+            return esc(f'{e.get("space") or ""}') + (f' · {T("投票截止", "vote ends")} {TT(e["end"])}' if e.get("end") else "")
+        if x["src"] == "ethresearch":
+            return T(f'{e.get("posts") or 0} 帖 · {e.get("views") or 0} 次浏览', f'{e.get("posts") or 0} posts · {e.get("views") or 0} views')
+        return ""
+    rows = "".join(
+        f'<tr><td class="l">{T(*ALPHA_FEED_SRC[x["src"]][:2])}</td><td>{TT(x["created"])}</td>'
+        f'<td class="wrap" style="min-width:260px;text-align:left"><a href="{esc(x["url"])}" target="_blank" rel="noopener">{esc(x["title"])}</a></td>'
+        f'<td class="wrap" style="text-align:left;color:var(--muted)">{cell(x)}</td>'
+        f'<td>{"—" if x.get("delay_h") is None else (str(round(x["delay_h"])) + T(" 小时", "h"))}</td></tr>' for x in fs)
+    health = " · ".join(f'{ALPHA_FEED_SRC[k][2]} {T("正常", "ok") if (st.get(k) or {}).get("ok") else T("今天失败", "failed today")}' for k in ALPHA_FEED_SRC)
+    return (f'<h2>{T("事件流", "Event feed")} <span class="sub">{T("研究论坛新帖 · 治理提案 · 上所公告，最近 14 天", "New research posts · governance proposals · listings, last 14 days")} · {len(fs)}</span></h2>'
+            f'<p class="tnote">{T("只摆原始事件，不判断。ethresear.ch 只收新开的帖（旧帖被顶上来不算）；Snapshot 只收关注数 ≥ 1000 的空间、标题含收费 / 回购 / 激励 / 升级等词的提案，投票结束不等于执行；Binance 只收上币、Launchpool、空投和新永续，剔除 TradFi 永续和代币化股票，公告时间不等于开盘时间。发现延迟 = 本站首次抓到的时间 − 原始发布时间（11-14 首次接入的为基线，不算延迟）。Bybit、Upbit 在美国机房被拦，暂未接入。", "Raw events, no judgement. ethresear.ch: newly opened topics only; Snapshot: spaces with ≥ 1,000 followers and titles about fees / buybacks / incentives / upgrades — a vote ending is not execution; Binance: listings, Launchpool, airdrops and new perps, excluding TradFi perps and tokenized stocks — announcement time is not trading start. Discovery delay = first fetched here − original publish time (the 11-14 first fetch is the baseline). Bybit and Upbit block US data centres and are not connected yet.")}</p>'
+            + (f'<div class="tw scroll"><table><thead><tr><th style="text-align:left">{T("来源", "Source")}</th><th>{T("发布", "Published")}</th><th style="text-align:left">{T("标题", "Title")}</th><th style="text-align:left">{T("备注", "Notes")}</th><th>{T("发现延迟", "Delay")}</th></tr></thead><tbody>{rows}</tbody></table></div>' if fs else f'<div class="note">{T("最近 14 天没有符合条件的事件。", "No matching events in the last 14 days.")}</div>')
+            + f'<p class="tnote">{T("来源状态", "Source status")}：{health}</p>')
+
+
 def a_usd(v):
     if v is None:
         return "—"
@@ -4087,6 +4112,7 @@ def build_alpha():
                  + f'<h2>{T("新上架协议", "Newly listed protocols")} <span class="sub">{T("DefiLlama 最近 14 天收录", "Added to DefiLlama in the last 14 days")} · {len(d.get("listings") or [])}</span></h2>'
                  + f'<p class="tnote">{T("收录日不是部署日，更不是能参与的日子；TVL 是存量，不是收入。", "Listing date is not deployment date or participation date; TVL is a stock, not revenue.")}</p>'
                  + f'<div class="tw scroll"><table><thead><tr><th>{T("收录日", "Listed")}</th><th style="text-align:left">{T("协议", "Protocol")}</th><th style="text-align:left">{T("类目", "Category")}</th><th style="text-align:left">{T("主要链", "Chains")}</th><th>TVL</th><th style="text-align:left">{T("代币", "Token")}</th></tr></thead><tbody>{lrs}</tbody></table></div>'
+                 + alpha_feed_html(d)
                  + f'<h2>{T("线索台账", "Lead ledger")} <span class="sub">{T("保留全部分母：只追加，不删除", "All denominators kept: append-only")}</span></h2>'
                  + f'<div class="card" style="padding:12px 16px;font-size:13px">{T("累计登记", "Logged")} <b>{lg.get("n", 0)}</b> · {T("来自无币收入榜", "from revenue board")} <b>{lg.get("tokenless_rev", 0)}</b> · {T("来自新上架", "from new listings")} <b>{lg.get("new_listing", 0)}</b> · {T("之后发币", "later launched a token")} <b>{lg.get("token_seen", 0)}</b>'
                  + f' · <a href="/data/alpha/alpha_leads.json">{T("下载台账 JSON", "Ledger JSON")}</a></div>'

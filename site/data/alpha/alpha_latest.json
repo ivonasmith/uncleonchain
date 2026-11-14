@@ -1,16 +1,28 @@
 {
- "generated": "2026-11-14T14:21:45+00:00",
+ "generated": "2026-11-14T14:43:08+00:00",
  "asof": "2026-11-13",
  "stale": false,
  "baseline_day": "2026-11-14",
  "sources": {
   "defillama_protocols": {
    "ok": true,
-   "n": 9042
+   "n": 9045
   },
   "defillama_revenue": {
    "ok": true,
    "n": 2860
+  },
+  "ethresearch": {
+   "ok": true,
+   "n": 16
+  },
+  "snapshot": {
+   "ok": true,
+   "n": 6
+  },
+  "binance": {
+   "ok": true,
+   "n": 5
   }
  },
  "params": {
@@ -1849,7 +1861,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 561506,
+   "tvl": 561545,
    "listed": "2026-11-14",
    "token": false,
    "parent": "parent#drakewell"
@@ -1902,6 +1914,39 @@
    "key": "p:9441",
    "name": "Cashi Card",
    "slug": "cashi-card",
+   "category": "Crypto Card Issuer",
+   "chains": [],
+   "tvl": 0,
+   "listed": "2026-11-14",
+   "token": false,
+   "parent": null
+  },
+  {
+   "key": "p:9442",
+   "name": "Exodus Pay",
+   "slug": "exodus-pay",
+   "category": "Crypto Card Issuer",
+   "chains": [],
+   "tvl": 0,
+   "listed": "2026-11-14",
+   "token": false,
+   "parent": null
+  },
+  {
+   "key": "p:9443",
+   "name": "Send Card",
+   "slug": "send-card",
+   "category": "Crypto Card Issuer",
+   "chains": [],
+   "tvl": 0,
+   "listed": "2026-11-14",
+   "token": false,
+   "parent": null
+  },
+  {
+   "key": "p:9444",
+   "name": "COCA Card",
+   "slug": "coca-card",
    "category": "Crypto Card Issuer",
    "chains": [],
    "tvl": 0,
@@ -1987,7 +2032,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 6230358,
+   "tvl": 6207390,
    "listed": "2026-11-12",
    "token": false,
    "parent": null
@@ -2581,7 +2626,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 9265,
+   "tvl": 9172,
    "listed": "2026-11-09",
    "token": true,
    "parent": null
@@ -2941,7 +2986,7 @@
    "chains": [
     "Base"
    ],
-   "tvl": 7343,
+   "tvl": 7277,
    "listed": "2026-11-05",
    "token": false,
    "parent": null
@@ -3615,10 +3660,337 @@
   }
  ],
  "events": [],
+ "feed": [
+  {
+   "id": "snap:0x3a61c64d6f7d0546d76c8b7d93d29becf262a30240109c4ea9fa8d067ad6c2e2",
+   "src": "snapshot",
+   "title": "[ARFC] Permissioned GSM - USAT Aave V4 Avalanche",
+   "url": "https://snapshot.box/#/s:aavedao.eth/proposal/0x3a61c64d6f7d0546d76c8b7d93d29becf262a30240109c4ea9fa8d067ad6c2e2",
+   "created": "2026-11-14T08:25:48+00:00",
+   "extra": {
+    "space": "Aave DAO",
+    "followers": 157636,
+    "end": "2026-11-18T08:25:48+00:00"
+   },
+   "first_seen": "2026-11-14T14:43:08+00:00",
+   "delay_h": null,
+   "baseline": true
+  },
+  {
+   "id": "snap:0x6910f1e7fafaa4f1dd003503fd025752d0de4fbcc9a46c69cad59941bfd35b4d",
+   "src": "snapshot",
+   "title": "[1IP-107] Aqua LP Incentive Program — Season 2",
+   "url": "https://snapshot.box/#/s:1inch.eth/proposal/0x6910f1e7fafaa4f1dd003503fd025752d0de4fbcc9a46c69cad59941bfd35b4d",
+   "created": "2026-11-13T10:31:47+00:00",
+   "extra": {
+    "space": "1inch Network",
+    "followers": 13752,
+    "end": "2026-11-18T11:31:47+00:00"
+   },
+   "first_seen": "2026-11-14T14:43:08+00:00",
+   "delay_h": null,
+   "baseline": true
+  },
+  {
+   "id": "ethr:26246",
+   "src": "ethresearch",
+   "title": "[RFC] WARCoin: Deterministic 1:1 USD Stablecoin via Serialized 7-Day Color Ring Buffers and Burn-on-Egress Invariants",
+   "url": "https://ethresear.ch/t/rfc-warcoin-deterministic-1-1-usd-stablecoin-via-serialized-7-day-color-ring-buffers-and-burn-on-egress-invariants/26246",
+   "created": "2026-11-13T00:47:41+00:00",
+   "extra": {
+    "posts": 1,
+    "views": 39
+   },
+   "first_seen": "2026-11-14T14:43:08+00:00",
+   "delay_h": null,
+   "baseline": true
+  },
+  {
+   "id": "ethr:26244",
+   "src": "ethresearch",
+   "title": "More Meters or More Prices? One- vs. Multi-dimensional Fee Mechanisms on Ethereum",
+   "url": "https://ethresear.ch/t/more-meters-or-more-prices-one-vs-multi-dimensional-fee-mechanisms-on-ethereum/26244",
+   "created": "2026-11-12T15:28:58+00:00",
+   "extra": {
+    "posts": 1,
+    "views": 60
+   },
+   "first_seen": "2026-11-14T14:43:08+00:00",
+   "delay_h": null,
+   "baseline": true
+  },
+  {
+   "id": "ethr:26242",
+   "src": "ethresearch",
+   "title": "Multi-dimensional decentralization metrics, and an open question on first-broadcast double-spend rules",
+   "url": "https://ethresear.ch/t/multi-dimensional-decentralization-metrics-and-an-open-question-on-first-broadcast-double-spend-rules/26242",
+   "created": "2026-11-12T08:16:17+00:00",
+   "extra": {
+    "posts": 1,
+    "views": 36
+   },
+   "first_seen": "2026-11-14T14:43:08+00:00",
+   "delay_h": null,
+   "baseline": true
+  },
+  {
+   "id": "ethr:26239",
+   "src": "ethresearch",
+   "title": "Seam: verifying Zcash headers on Base with EIP-152, and proving shielded payments without linking the chains",
+   "url": "https://ethresear.ch/t/seam-verifying-zcash-headers-on-base-with-eip-152-and-proving-shielded-payments-without-linking-the-chains/26239",
+   "created": "2026-11-11T20:55:52+00:00",
+   "extra": {
+    "posts": 1,
+    "views": 75
+   },
+   "first_seen": "2026-11-14T14:43:08+00:00",
+   "delay_h": null,
+   "baseline": true
+  },
+  {
+   "id": "snap:0xefca6aa727e1bef4183c0427510a8091c522aec1eaf4b98d911aed577d9595ef",
+   "src": "snapshot",
+   "title": "[ARFC] Extend HyperLend's Friendly Fork Recognition to Elysium (Aave v3.7)",
+   "url": "https://snapshot.box/#/s:aavedao.eth/proposal/0xefca6aa727e1bef4183c0427510a8091c522aec1eaf4b98d911aed577d9595ef",
+   "created": "2026-11-11T18:20:54+00:00",
+   "extra": {
+    "space": "Aave DAO",
+    "followers": 157636,
+    "end": "2026-11-15T18:20:54+00:00"
+   },
+   "first_seen": "2026-11-14T14:43:08+00:00",
+   "delay_h": null,
+   "baseline": true
+  },
+  {
+   "id": "ethr:26236",
+   "src": "ethresearch",
+   "title": "Elastic Ethereum",
+   "url": "https://ethresear.ch/t/elastic-ethereum/26236",
+   "created": "2026-11-11T11:40:49+00:00",
+   "extra": {
+    "posts": 2,
+    "views": 169
+   },
+   "first_seen": "2026-11-14T14:43:08+00:00",
+   "delay_h": null,
+   "baseline": true
+  },
+  {
+   "id": "bn:289715",
+   "src": "binance",
+   "title": "Binance Futures Will Launch USDⓈ-Margined HYPEUSDC and TRXUSDC Perpetual Contracts (2026-11-16)",
+   "url": "https://www.binance.com/en/support/announcement/2d89a5966b174a2689ab2c2a15db1757",
+   "created": "2026-11-11T05:00:31+00:00",
+   "extra": {},
+   "first_seen": "2026-11-14T14:43:08+00:00",
+   "delay_h": null,
+   "baseline": true
+  },
+  {
+   "id": "snap:0xe84f20a814602ed82a81a7d9365e4765930774595a69fc7d248f971f72b201a4",
+   "src": "snapshot",
+   "title": "(REPUSH) SDGP-69: Claim Deadline for sdPENDLE and sdBAL Voting-Power Rewards",
+   "url": "https://snapshot.box/#/s:stakedao.eth/proposal/0xe84f20a814602ed82a81a7d9365e4765930774595a69fc7d248f971f72b201a4",
+   "created": "2026-11-10T18:51:58+00:00",
+   "extra": {
+    "space": "Stake DAO",
+    "followers": 1584,
+    "end": "2026-11-17T18:51:00+00:00"
+   },
+   "first_seen": "2026-11-14T14:43:08+00:00",
+   "delay_h": null,
+   "baseline": true
+  },
+  {
+   "id": "ethr:26229",
+   "src": "ethresearch",
+   "title": "Solving PQC Bandwidth via Nybrind Wiesner Money & Lattice HSMs",
+   "url": "https://ethresear.ch/t/solving-pqc-bandwidth-via-nybrind-wiesner-money-lattice-hsms/26229",
+   "created": "2026-11-08T17:35:57+00:00",
+   "extra": {
+    "posts": 3,
+    "views": 110
+   },
+   "first_seen": "2026-11-14T14:43:08+00:00",
+   "delay_h": null,
+   "baseline": true
+  },
+  {
+   "id": "ethr:26227",
+   "src": "ethresearch",
+   "title": "Folding vs full-verifier recursion for PQ signature aggregation in leanVM: measurements and negative results",
+   "url": "https://ethresear.ch/t/folding-vs-full-verifier-recursion-for-pq-signature-aggregation-in-leanvm-measurements-and-negative-results/26227",
+   "created": "2026-11-08T12:33:52+00:00",
+   "extra": {
+    "posts": 1,
+    "views": 82
+   },
+   "first_seen": "2026-11-14T14:43:08+00:00",
+   "delay_h": null,
+   "baseline": true
+  },
+  {
+   "id": "ethr:26226",
+   "src": "ethresearch",
+   "title": "GKR with a Machine-Checked Core, and a Sparse Prover Made Faster with Byte-Identical Proofs",
+   "url": "https://ethresear.ch/t/gkr-with-a-machine-checked-core-and-a-sparse-prover-made-faster-with-byte-identical-proofs/26226",
+   "created": "2026-11-07T15:08:19+00:00",
+   "extra": {
+    "posts": 1,
+    "views": 77
+   },
+   "first_seen": "2026-11-14T14:43:08+00:00",
+   "delay_h": null,
+   "baseline": true
+  },
+  {
+   "id": "ethr:26224",
+   "src": "ethresearch",
+   "title": "How large can EIP-8141's validation budget be? A mempool DoS benchmark",
+   "url": "https://ethresear.ch/t/how-large-can-eip-8141s-validation-budget-be-a-mempool-dos-benchmark/26224",
+   "created": "2026-11-06T23:26:40+00:00",
+   "extra": {
+    "posts": 1,
+    "views": 140
+   },
+   "first_seen": "2026-11-14T14:43:08+00:00",
+   "delay_h": null,
+   "baseline": true
+  },
+  {
+   "id": "snap:0x5f63f0a2d3c12a0eae3ce70577a32c4001dd035464f03ce18c8656e40edc76d1",
+   "src": "snapshot",
+   "title": "Strategy Update for QuickSwap Protocol Revenue Reallocation",
+   "url": "https://snapshot.box/#/s:quickvote.eth/proposal/0x5f63f0a2d3c12a0eae3ce70577a32c4001dd035464f03ce18c8656e40edc76d1",
+   "created": "2026-11-06T15:00:09+00:00",
+   "extra": {
+    "space": "QuickSwap",
+    "followers": 25543,
+    "end": "2026-11-11T12:00:00+00:00"
+   },
+   "first_seen": "2026-11-14T14:43:08+00:00",
+   "delay_h": null,
+   "baseline": true
+  },
+  {
+   "id": "ethr:26223",
+   "src": "ethresearch",
+   "title": "A privacy pool on frame transactions: what works, and the case that does not yet",
+   "url": "https://ethresear.ch/t/a-privacy-pool-on-frame-transactions-what-works-and-the-case-that-does-not-yet/26223",
+   "created": "2026-11-06T13:00:55+00:00",
+   "extra": {
+    "posts": 4,
+    "views": 189
+   },
+   "first_seen": "2026-11-14T14:43:08+00:00",
+   "delay_h": null,
+   "baseline": true
+  },
+  {
+   "id": "ethr:26219",
+   "src": "ethresearch",
+   "title": "Walraswap: equilibrium-based decentralized exchange integrating external AMM liquidity",
+   "url": "https://ethresear.ch/t/walraswap-equilibrium-based-decentralized-exchange-integrating-external-amm-liquidity/26219",
+   "created": "2026-11-05T16:00:48+00:00",
+   "extra": {
+    "posts": 1,
+    "views": 165
+   },
+   "first_seen": "2026-11-14T14:43:08+00:00",
+   "delay_h": null,
+   "baseline": true
+  },
+  {
+   "id": "snap:0x83f578d707966014cd4ef7c7972f4af89c14964970f3f7088c688c07a6d915c0",
+   "src": "snapshot",
+   "title": "[ARFC] Onboard Native BTC as Collateral to Aave V4 via Babylon Trustless Bitcoin Vaults",
+   "url": "https://snapshot.box/#/s:aavedao.eth/proposal/0x83f578d707966014cd4ef7c7972f4af89c14964970f3f7088c688c07a6d915c0",
+   "created": "2026-11-05T14:03:21+00:00",
+   "extra": {
+    "space": "Aave DAO",
+    "followers": 157636,
+    "end": "2026-11-09T14:03:21+00:00"
+   },
+   "first_seen": "2026-11-14T14:43:08+00:00",
+   "delay_h": null,
+   "baseline": true
+  },
+  {
+   "id": "ethr:26212",
+   "src": "ethresearch",
+   "title": "Storage-optimized replay protection: from hash => bool to packed flag lanes, and can the protocol offer better?",
+   "url": "https://ethresear.ch/t/storage-optimized-replay-protection-from-hash-bool-to-packed-flag-lanes-and-can-the-protocol-offer-better/26212",
+   "created": "2026-11-02T21:15:40+00:00",
+   "extra": {
+    "posts": 1,
+    "views": 70
+   },
+   "first_seen": "2026-11-14T14:43:08+00:00",
+   "delay_h": null,
+   "baseline": true
+  },
+  {
+   "id": "ethr:26211",
+   "src": "ethresearch",
+   "title": "Why searchers and builders like candle auctions (and why it matters for the builder market post-Glamsterdam)",
+   "url": "https://ethresear.ch/t/why-searchers-and-builders-like-candle-auctions-and-why-it-matters-for-the-builder-market-post-glamsterdam/26211",
+   "created": "2026-11-02T13:00:47+00:00",
+   "extra": {
+    "posts": 1,
+    "views": 159
+   },
+   "first_seen": "2026-11-14T14:43:08+00:00",
+   "delay_h": null,
+   "baseline": true
+  },
+  {
+   "id": "ethr:26208",
+   "src": "ethresearch",
+   "title": "It's time to scale the trust: EIP-8288 on OP Stack",
+   "url": "https://ethresear.ch/t/its-time-to-scale-the-trust-eip-8288-on-op-stack/26208",
+   "created": "2026-11-02T02:05:03+00:00",
+   "extra": {
+    "posts": 1,
+    "views": 170
+   },
+   "first_seen": "2026-11-14T14:43:08+00:00",
+   "delay_h": null,
+   "baseline": true
+  },
+  {
+   "id": "ethr:26205",
+   "src": "ethresearch",
+   "title": "Asset-level spending limits and recovery: should rate limiting live in the asset rather than the account?",
+   "url": "https://ethresear.ch/t/asset-level-spending-limits-and-recovery-should-rate-limiting-live-in-the-asset-rather-than-the-account/26205",
+   "created": "2026-11-01T17:15:34+00:00",
+   "extra": {
+    "posts": 1,
+    "views": 60
+   },
+   "first_seen": "2026-11-14T14:43:08+00:00",
+   "delay_h": null,
+   "baseline": true
+  },
+  {
+   "id": "ethr:26201",
+   "src": "ethresearch",
+   "title": "PropAMM fills on Ethereum mainnet and PropAMM support for TEMBRI (toolbox): same-block quotes, a small spread, and flow taken from lagging AMMs",
+   "url": "https://ethresear.ch/t/propamm-fills-on-ethereum-mainnet-and-propamm-support-for-tembri-toolbox-same-block-quotes-a-small-spread-and-flow-taken-from-lagging-amms/26201",
+   "created": "2026-10-31T21:25:55+00:00",
+   "extra": {
+    "posts": 2,
+    "views": 180
+   },
+   "first_seen": "2026-11-14T14:43:08+00:00",
+   "delay_h": null,
+   "baseline": true
+  }
+ ],
  "ledger": {
-  "n": 252,
+  "n": 255,
   "tokenless_rev": 105,
-  "new_listing": 147,
+  "new_listing": 150,
   "token_seen": 0,
   "status": {
    "待核验": 18,

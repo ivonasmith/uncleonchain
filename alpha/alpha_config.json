@@ -22,5 +22,16 @@
     "days": 14,
     "_days": "新上架协议：DefiLlama listedAt 在最近 14 天内"
   },
-  "_范围": "大叔 2026-11-14 定：只研究正规项目的新协议 / 新产品 / 新机制；部署后 0–6 小时、纯 MEME 打狗不在本板块（要做另起一套，不上网站）"
+  "_范围": "大叔 2026-11-14 定：只研究正规项目的新协议 / 新产品 / 新机制；部署后 0–6 小时、纯 MEME 打狗不在本板块（要做另起一套，不上网站）",
+  "feeds": {
+    "window_days": 14,
+    "_window_days": "事件流页面只显示最近 14 天发布的（台账 alpha_feed.json 全部保留）",
+    "snapshot_min_followers": 1000,
+    "snapshot_keywords": "fee|buyback|revenue|tokenomic|emission|airdrop|reward|incentive|treasury|burn|staking|upgrade|v[2-9]\\b|launch|deploy|switch|distribution",
+    "_snapshot": "Snapshot 只收关注数 ≥ 1000 的空间、标题含价值捕获 / 激励 / 升级关键词的提案；投票结束 ≠ 执行（执行交易要另查链上）",
+    "binance_keep": "Will List|Launchpool|HODLer Airdrop|Megadrop|Will Launch USD.?-Margined",
+    "binance_drop": "TradFi|bStocks|Tokenized Securit|Exchange Adds",
+    "_binance": "只收 Binance「New Cryptocurrency Listing」栏目里的上币 / Launchpool / 空投 / 新永续，剔除 TradFi 永续和代币化股票；公告时间 ≠ 开盘时间",
+    "_未接": "Bybit（美国机房被 CloudFront 按国家拦）、Upbit（Cloudflare 人机验证）、OKX（接口不更新）、Coinbase / Tally（无公开结构化源）；EIPs / GitHub 需要 key"
+  }
 }

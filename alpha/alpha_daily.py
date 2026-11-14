@@ -5,6 +5,8 @@
 这一版只接「日级、协议级」的发现源，不点名小市值代币：
   ① 无币协议收入榜   DefiLlama dailyRevenue × 协议列表：本协议和母协议都没有代币、近 30 天协议收入 ≥ 门槛（按母协议合并）
   ② 新上架协议       DefiLlama 协议列表 listedAt 在最近 N 天
+  ③ 事件流（A2，Codex T1 验收后 11-14 接）：ethresear.ch 新帖、Snapshot 治理提案（大空间 + 价值捕获关键词）、Binance 上新公告（剔除 TradFi / 代币化股票）
+     → data/alpha/alpha_feed.json（只追加：原始发布时间 + 本方首次发现时间，发现延迟 = 两者之差）
 线索台账（第十三章「保留全部分母」）：进过 ①② 的对象都登记一条，只追加不删除；之后每天回查是否发币（token 出现）。
 
 输出（data/alpha/）：
@@ -13,7 +15,7 @@
   alpha_history.json  每天一行（样本外，不回填）
 参数：alpha/alpha_config.json。用法：python3 alpha/alpha_daily.py
 """
-import json, os, sys, time, urllib.request
+import json, os, re, sys, time, urllib.request
 import datetime as dt
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -48,6 +50,58 @@ def dump(p, obj):
     os.makedirs(os.path.dirname(p), exist_ok=True)
     with open(p, "w", encoding="utf-8") as f:
         json.dump(obj, f, ensure_ascii=False, indent=1)
+
+
+def post(url, body, timeout=60):
+    req = urllib.request.Request(url, data=json.dumps(body).encode(), headers=dict(UA, **{"content-type": "application/json"}))
+    with urllib.request.urlopen(req, timeout=timeout) as r:
+        return json.load(r)
+
+
+def iso(ts):
+    return dt.datetime.fromtimestamp(ts, dt.timezone.utc).isoformat(timespec="seconds")
+
+
+def feed_ethresearch(fc):
+    d = get("https://ethresear.ch/latest.json")
+    cut = time.time() - fc["window_days"] * 86400
+    out = []
+    for t in d["topic_list"]["topics"]:
+        c = dt.datetime.fromisoformat(t["created_at"].replace("Z", "+00:00"))
+        if c.timestamp() < cut or t.get("pinned"):
+            continue   # latest 按最后活动排序：只收窗口内新开的帖，旧帖被顶上来不算新
+        out.append({"id": f"ethr:{t['id']}", "src": "ethresearch", "title": t["title"], "url": f"https://ethresear.ch/t/{t['slug']}/{t['id']}",
+                    "created": c.isoformat(timespec="seconds"), "extra": {"posts": t.get("posts_count"), "views": t.get("views")}})
+    return out
+
+
+def feed_snapshot(fc):
+    since = int(time.time() - fc["window_days"] * 86400)
+    q = ("{proposals(first:1000,orderBy:\"created\",orderDirection:desc,where:{created_gte:%d})"
+         "{id title created end state link space{id name followersCount verified}}}" % since).replace('\\"', '"')
+    d = post("https://hub.snapshot.org/graphql", {"query": q})
+    kw = re.compile(fc["snapshot_keywords"], re.I)
+    out = []
+    for x in d["data"]["proposals"]:
+        sp = x.get("space") or {}
+        if (sp.get("followersCount") or 0) < fc["snapshot_min_followers"] or not kw.search(x["title"] or ""):
+            continue
+        out.append({"id": f"snap:{x['id']}", "src": "snapshot", "title": x["title"], "url": x.get("link") or f"https://snapshot.box/#/{sp.get('id')}/proposal/{x['id']}",
+                    "created": iso(x["created"]), "extra": {"space": sp.get("name") or sp.get("id"), "followers": sp.get("followersCount"), "end": iso(x["end"]) if x.get("end") else None}})
+    return out
+
+
+def feed_binance(fc):
+    d = get("https://www.binance.com/bapi/composite/v1/public/cms/article/list/query?type=1&pageNo=1&pageSize=20&catalogId=48")
+    keep, drop = re.compile(fc["binance_keep"], re.I), re.compile(fc["binance_drop"], re.I)
+    out = []
+    for c in d["data"]["catalogs"]:
+        for a in c.get("articles") or []:
+            if not keep.search(a["title"]) or drop.search(a["title"]):
+                continue
+            out.append({"id": f"bn:{a['id']}", "src": "binance", "title": a["title"], "url": f"https://www.binance.com/en/support/announcement/{a['code']}",
+                        "created": iso(a["releaseDate"] / 1000), "extra": {}})
+    return out
 
 
 def has_tok(p):
@@ -192,13 +246,37 @@ def main():
             v["status"] = c["verdict"]
             events.append({"type": "status", "key": c["key"], "name": v["name"], "status": c["verdict"]})
 
+    # ③ 事件流
+    fc = CFG["feeds"]
+    feed = load(os.path.join(OUT, "alpha_feed.json"), {"items": {}})
+    FI = feed["items"]
+    feed_base = not FI          # 第一次跑：已经发布的都记基线，发现延迟没有意义
+    feed_new = 0
+    for name, fn in (("ethresearch", feed_ethresearch), ("snapshot", feed_snapshot), ("binance", feed_binance)):
+        try:
+            got = fn(fc)
+            src[name] = {"ok": True, "n": len(got)}
+        except Exception as e:
+            print(f"{name} 失败：", e)
+            src[name] = {"ok": False, "err": str(e)[:200]}
+            continue
+        for it in got:
+            if it["id"] not in FI:
+                it["first_seen"] = now.isoformat(timespec="seconds")
+                it["delay_h"] = None if feed_base else round((now - dt.datetime.fromisoformat(it["created"])).total_seconds() / 3600, 1)
+                it["baseline"] = feed_base
+                FI[it["id"]] = it
+                feed_new += 1
+    fcut = (now - dt.timedelta(days=fc["window_days"])).isoformat()
+    feed_recent = sorted((v for v in FI.values() if v["created"] >= fcut), key=lambda v: v["created"], reverse=True)
+
     first = {k: v["first_seen"] for k, v in L.items()}
     for r in rows:
         r["first_seen"] = first.get(r["key"])
     out = {"generated": now.isoformat(timespec="seconds"), "asof": asof, "stale": rev is None,
            "baseline_day": min((v["first_seen"] for v in L.values() if v.get("baseline")), default=today),
            "sources": src, "params": {"min_rev30_usd": tc["min_rev30_usd"], "listing_days": days},
-           "tokenless": rows, "listings": lst, "events": events,
+           "tokenless": rows, "listings": lst, "events": events, "feed": feed_recent,
            "ledger": {"n": len(L), "tokenless_rev": sum(1 for v in L.values() if "tokenless_rev" in v["source"]),
                       "new_listing": sum(1 for v in L.values() if "new_listing" in v["source"]),
                       "token_seen": sum(1 for v in L.values() if v.get("token_seen")),
@@ -206,14 +284,15 @@ def main():
     if rev is None and prev:       # 收入源失败：榜单沿用上次
         out["tokenless"] = prev.get("tokenless", [])
     row = {"date": today, "asof": asof, "baseline": baseline, "n_tokenless": len(rows), "rev30_sum": round(sum(r["rev30"] for r in rows)),
-           "n_listings": len(lst), "n_leads": len(L), "events": {t: sum(1 for e in events if e["type"] == t) for t in ("new_rank", "new_listing", "token", "status")},
+           "n_listings": len(lst), "n_leads": len(L), "feed_new": feed_new, "events": {t: sum(1 for e in events if e["type"] == t) for t in ("new_rank", "new_listing", "token", "status")},
            # A4 结果追踪：台账里每个协议组今天的 30 天收入（含已发币、跌出门槛的；取不到 = 不记，不当 0）
            "rev30": {k: round(allrev[k[2:]]) for k in L if k.startswith("g:") and k[2:] in allrev} if rev is not None else None}
     hist = [h for h in hist if h["date"] != today] + [row]
     dump(os.path.join(OUT, "alpha_latest.json"), out)
     dump(os.path.join(OUT, "alpha_leads.json"), leads)
+    dump(os.path.join(OUT, "alpha_feed.json"), feed)
     dump(os.path.join(OUT, "alpha_history.json"), hist)
-    print(f"无币协议 {len(rows)} 个 · 新上架 {len(lst)} 个 · 台账 {len(L)} 条 · 事件 {len(events)}")
+    print(f"无币协议 {len(rows)} 个 · 新上架 {len(lst)} 个 · 台账 {len(L)} 条 · 事件 {len(events)} · 事件流新增 {feed_new}（{', '.join(f'{k}:{v.get("n", "失败")}' for k, v in src.items())}）")
 
 
 if __name__ == "__main__":
