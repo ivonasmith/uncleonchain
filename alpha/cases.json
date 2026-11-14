@@ -1,0 +1,967 @@
+{
+ "version": "v0",
+ "asof": "2026-11-14",
+ "score_basis": "回溯评分口径：项目进入可交易后约 3 个月内已经能观察到的事实（T+90 视角），按 framework.json 附录一锚点；D = 当前参与优势组的需求独立性。Claude 回溯打分，有后见之明偏差，待 Codex 盲评对比。",
+ "cases": [
+  {
+   "id": "btc",
+   "name": "BTC",
+   "period": "2009–2010",
+   "src": "H01",
+   "entry": "普通 PC 提供计算，取得初始发行",
+   "change": "全新的去中介货币与工作量证明生产方式",
+   "problem": "无需中介的价值转移与结算",
+   "lesson": "资源投入、后来的货币共识与实际卖出是三个阶段，不能用后来的最高价反推当年确定收益",
+   "classes": {
+    "business": "infra",
+    "right": "money",
+    "opportunity": "genesis",
+    "attribute": "mechanism"
+   },
+   "scores": {
+    "M": 4,
+    "A": 3,
+    "F": 3,
+    "E": 1,
+    "V": 3,
+    "D": 1
+   },
+   "tokens": [
+    {
+     "cg": "bitcoin",
+     "sym": "BTC",
+     "role": "main",
+     "supply": "cm:btc"
+    }
+   ],
+   "llama": {
+    "fees": null,
+    "tvl": null
+   },
+   "control": false,
+   "why_control": null,
+   "note": "价格数据从 2013 年才有，远晚于创世；倍数不代表早期矿工收益"
+  },
+  {
+   "id": "eth",
+   "name": "ETH 公开预售",
+   "period": "2014-07-22 预售；2015-08 可交易",
+   "src": "H02",
+   "entry": "公开以 BTC 认购，承担研发与交付等待",
+   "change": "图灵完备的智能合约平台",
+   "problem": "让任何人部署可组合的链上程序",
+   "lesson": "公开发行给了普通人取得份额的入口，但一个成功案例不能证明所有 ICO 有优势",
+   "classes": {
+    "business": "infra",
+    "right": "resource",
+    "opportunity": "genesis",
+    "attribute": "mechanism"
+   },
+   "scores": {
+    "M": 4,
+    "A": 3,
+    "F": 3,
+    "E": 2,
+    "V": 2,
+    "D": 1
+   },
+   "tokens": [
+    {
+     "cg": "ethereum",
+     "sym": "ETH",
+     "role": "main",
+     "supply": "cm:eth"
+    }
+   ],
+   "llama": {
+    "fees": null,
+    "tvl": null
+   },
+   "control": false,
+   "why_control": null,
+   "note": "P0 是 2015-08 首个交易日，不是预售价"
+  },
+  {
+   "id": "punks",
+   "name": "CryptoPunks",
+   "period": "2017",
+   "src": "H03",
+   "entry": "公开领取，随后形成收藏市场",
+   "change": "早期链上原生收藏品",
+   "problem": "数字稀缺收藏与身份展示",
+   "lesson": "无经营现金流不等于没有文化价值，但地板 / 头奖价格不能当所有领取者的退出价",
+   "classes": {
+    "business": "culture",
+    "right": "narrative",
+    "opportunity": "genesis",
+    "attribute": "community"
+   },
+   "scores": {
+    "M": 3,
+    "A": 3,
+    "F": 3,
+    "E": 1,
+    "V": 2,
+    "D": 1
+   },
+   "tokens": [],
+   "llama": {
+    "fees": null,
+    "tvl": null
+   },
+   "control": false,
+   "why_control": null,
+   "note": "无同质化代币，第一版没有价格结果"
+  },
+  {
+   "id": "axie",
+   "name": "Axie Infinity",
+   "period": "2018 起；重点 2021–2022",
+   "src": "H07 / C06",
+   "entry": "玩家投入资产与时间，或经公会分成参与；AXS 与 SLP 分开",
+   "change": "边玩边赚：繁殖、对战产出代币",
+   "problem": "游戏资产归玩家、可交易",
+   "lesson": "繁殖和升级可能只是扩大未来产量；玩家时薪、公会收入和二级币价不能混算",
+   "classes": {
+    "business": "culture",
+    "right": "governance",
+    "opportunity": "genesis",
+    "attribute": "mechanism"
+   },
+   "scores": {
+    "M": 3,
+    "A": 2,
+    "F": 2,
+    "E": 2,
+    "V": 2,
+    "D": 1
+   },
+   "tokens": [
+    {
+     "cg": "axie-infinity",
+     "sym": "AXS",
+     "role": "main",
+     "supply": "max"
+    },
+    {
+     "cg": "smooth-love-potion",
+     "sym": "SLP",
+     "role": "aux",
+     "supply": "none"
+    }
+   ],
+   "llama": {
+    "fees": "axie-infinity",
+    "tvl": "axie-infinity"
+   },
+   "control": false,
+   "why_control": null,
+   "note": null
+  },
+  {
+   "id": "helium",
+   "name": "Helium",
+   "period": "2019-07-29 起",
+   "src": "H09",
+   "entry": "购买和部署热点，贡献覆盖并领取发行",
+   "change": "用代币激励众包无线网络覆盖（证明覆盖）",
+   "problem": "低成本物联网连接",
+   "lesson": "真实网络需求与部署补贴分账；设备增长不能单独证明客户购买连接服务",
+   "classes": {
+    "business": "infra",
+    "right": "resource",
+    "opportunity": "genesis",
+    "attribute": "mechanism"
+   },
+   "scores": {
+    "M": 4,
+    "A": 3,
+    "F": 3,
+    "E": 2,
+    "V": 3,
+    "D": 1
+   },
+   "tokens": [
+    {
+     "cg": "helium",
+     "sym": "HNT",
+     "role": "main",
+     "supply": "max"
+    }
+   ],
+   "llama": {
+    "fees": "helium-network",
+    "tvl": null
+   },
+   "control": false,
+   "why_control": null,
+   "note": "DefiLlama 手续费序列 2025-10 才开始，覆盖不到 2021 年的热潮"
+  },
+  {
+   "id": "comp",
+   "name": "Compound / COMP",
+   "period": "2020-06",
+   "src": "H04",
+   "entry": "存贷、提供流动性和使用协议取得分配",
+   "change": "流动性挖矿：按使用量分配治理币",
+   "problem": "去中介借贷",
+   "lesson": "提供资本的服务收入与持有奖励币收益分开；新增排放既能引流也形成退出压力",
+   "classes": {
+    "business": "trading",
+    "right": "governance",
+    "opportunity": "genesis",
+    "attribute": "product"
+   },
+   "scores": {
+    "M": 3,
+    "A": 2,
+    "F": 2,
+    "E": 3,
+    "V": 1,
+    "D": 3
+   },
+   "tokens": [
+    {
+     "cg": "compound-governance-token",
+     "sym": "COMP",
+     "role": "main",
+     "supply": "cm:comp"
+    }
+   ],
+   "llama": {
+    "fees": "compound-finance",
+    "tvl": "compound-finance"
+   },
+   "control": false,
+   "why_control": null,
+   "note": null
+  },
+  {
+   "id": "yfi",
+   "name": "Yearn / YFI",
+   "period": "2020-07",
+   "src": "H04",
+   "entry": "向协议提供流动性取得全部分配（无预挖）",
+   "change": "公平发行 + 收益聚合策略",
+   "problem": "自动寻找最优收益",
+   "lesson": "同 COMP：初始分配不代表永无增发；排放既引流也形成卖压",
+   "classes": {
+    "business": "trading",
+    "right": "governance",
+    "opportunity": "genesis",
+    "attribute": "product"
+   },
+   "scores": {
+    "M": 3,
+    "A": 2,
+    "F": 4,
+    "E": 3,
+    "V": 2,
+    "D": 2
+   },
+   "tokens": [
+    {
+     "cg": "yearn-finance",
+     "sym": "YFI",
+     "role": "main",
+     "supply": "cm:yfi"
+    }
+   ],
+   "llama": {
+    "fees": "yearn-finance",
+    "tvl": "yearn-finance"
+   },
+   "control": false,
+   "why_control": null,
+   "note": null
+  },
+  {
+   "id": "uni",
+   "name": "Uniswap / UNI 空投",
+   "period": "2020-09-01 快照；09-17 可交易",
+   "src": "H05 / C07",
+   "entry": "快照前使用者按规则领取；公告后买币为另一角色",
+   "change": "回溯空投给历史用户（产品 AMM 已存在）",
+   "problem": "无许可交易与做市",
+   "lesson": "一次性资格不可事后复制；领取价值不含此前使用成本，不能当空投策略命中率",
+   "classes": {
+    "business": "trading",
+    "right": "governance",
+    "opportunity": "genesis",
+    "attribute": "product"
+   },
+   "scores": {
+    "M": 3,
+    "A": 4,
+    "F": 3,
+    "E": 4,
+    "V": 1,
+    "D": 3
+   },
+   "tokens": [
+    {
+     "cg": "uniswap",
+     "sym": "UNI",
+     "role": "main",
+     "supply": "cm:uni"
+    }
+   ],
+   "llama": {
+    "fees": "uniswap",
+    "tvl": "uniswap"
+   },
+   "control": false,
+   "why_control": null,
+   "note": "手续费归 LP，UNI 当时没有收费开关；手续费是协议用户付的总费用，不是 UNI 持有人所得"
+  },
+  {
+   "id": "ohm",
+   "name": "OlympusDAO / OHM",
+   "period": "2021 年",
+   "src": "C04",
+   "entry": "研究债券、质押 / 再基准与国库的反身性关系",
+   "change": "协议自有流动性 + 债券 + 高 APY 质押",
+   "problem": "储备货币叙事",
+   "lesson": "高 APY、国库增长和持有人净回报不是一回事；P0 冲突时不跳到有利日期制造收益",
+   "classes": {
+    "business": "trading",
+    "right": "narrative",
+    "opportunity": "genesis",
+    "attribute": "mechanism"
+   },
+   "scores": {
+    "M": 3,
+    "A": 3,
+    "F": 2,
+    "E": 3,
+    "V": 2,
+    "D": 1
+   },
+   "tokens": [
+    {
+     "cg": "olympus",
+     "sym": "OHM",
+     "role": "main",
+     "supply": "none"
+    }
+   ],
+   "llama": {
+    "fees": "olympus-dao",
+    "tvl": "olympus-dao"
+   },
+   "control": false,
+   "why_control": null,
+   "note": "OHM 有 v1 / v2 迁移与再基准，价格倍数和估值不可比，第一版只作参考"
+  },
+  {
+   "id": "anchor",
+   "name": "Anchor / UST",
+   "period": "2021 年",
+   "src": "C05",
+   "entry": "研究稳定币存入与收益承诺的资金来源",
+   "change": "稳定币固定高收益存款",
+   "problem": "稳定收益储蓄",
+   "lesson": "TVL 是可退出负债 / 存量，不是收入；研究收益储备、补贴、抵押与赎回压力",
+   "classes": {
+    "business": "trading",
+    "right": "governance",
+    "opportunity": "genesis",
+    "attribute": "product"
+   },
+   "scores": {
+    "M": 2,
+    "A": 4,
+    "F": 2,
+    "E": 2,
+    "V": 2,
+    "D": 1
+   },
+   "tokens": [],
+   "llama": {
+    "fees": null,
+    "tvl": "anchor"
+   },
+   "control": false,
+   "why_control": null,
+   "note": "ANC 价格源已下架，第一版没有价格结果；TVL 可用"
+  },
+  {
+   "id": "loot",
+   "name": "Loot",
+   "period": "2021",
+   "src": "H10",
+   "entry": "领取文本装备，围绕可组合资产开发衍生物",
+   "change": "自下而上、可组合的收藏原语",
+   "problem": "让社区在同一底层资产上自由搭建",
+   "lesson": "生态数量要验证独立团队、真实玩家与付款；可组合性不能自动传给每个衍生资产",
+   "classes": {
+    "business": "culture",
+    "right": "narrative",
+    "opportunity": "genesis",
+    "attribute": "community"
+   },
+   "scores": {
+    "M": 3,
+    "A": 3,
+    "F": 3,
+    "E": 2,
+    "V": 1,
+    "D": 1
+   },
+   "tokens": [],
+   "llama": {
+    "fees": null,
+    "tvl": null
+   },
+   "control": false,
+   "why_control": null,
+   "note": "无同质化代币，第一版没有价格结果"
+  },
+  {
+   "id": "ens",
+   "name": "ENS 空投",
+   "period": "2021-11",
+   "src": "H06",
+   "entry": "历史域名使用者取得治理分配",
+   "change": "回溯空投给付费域名用户",
+   "problem": "链上可读名称",
+   "lesson": "产品实际使用可以产生一次性分配，不表示未来任何付费操作都有确定空投",
+   "classes": {
+    "business": "infra",
+    "right": "governance",
+    "opportunity": "genesis",
+    "attribute": "product"
+   },
+   "scores": {
+    "M": 2,
+    "A": 4,
+    "F": 3,
+    "E": 3,
+    "V": 1,
+    "D": 3
+   },
+   "tokens": [
+    {
+     "cg": "ethereum-name-service",
+     "sym": "ENS",
+     "role": "main",
+     "supply": "max"
+    }
+   ],
+   "llama": {
+    "fees": "ens",
+    "tvl": "ens"
+   },
+   "control": false,
+   "why_control": null,
+   "note": null
+  },
+  {
+   "id": "stepn",
+   "name": "STEPN / GMT",
+   "period": "2022 年",
+   "src": "H08 / C02",
+   "entry": "购买鞋 NFT，运动、升级或繁殖获取奖励",
+   "change": "边走边赚：运动产出代币",
+   "problem": "运动激励",
+   "lesson": "GMT 上涨不能证明运动玩家赚钱；代币、鞋资产、时间劳动与新增玩家资金分别核算",
+   "classes": {
+    "business": "culture",
+    "right": "governance",
+    "opportunity": "genesis",
+    "attribute": "mechanism"
+   },
+   "scores": {
+    "M": 3,
+    "A": 2,
+    "F": 2,
+    "E": 2,
+    "V": 2,
+    "D": 1
+   },
+   "tokens": [
+    {
+     "cg": "stepn",
+     "sym": "GMT",
+     "role": "main",
+     "supply": "max"
+    },
+    {
+     "cg": "green-satoshi-token",
+     "sym": "GST",
+     "role": "aux",
+     "supply": "none"
+    }
+   ],
+   "llama": {
+    "fees": null,
+    "tvl": null
+   },
+   "control": false,
+   "why_control": null,
+   "note": null
+  },
+  {
+   "id": "spacemesh",
+   "name": "Spacemesh",
+   "period": "2022 家用设计；早期主网",
+   "src": "H16",
+   "entry": "用已有家用电脑与硬盘提供空间时间证明，参与共识",
+   "change": "空间时间证明：用硬盘而不是算力参与共识",
+   "problem": "降低普通人参与共识的门槛",
+   "lesson": "这是共识资源而非商业网盘；已有设备增量成本与新购设备全成本分开，专业扩容会稀释优势",
+   "classes": {
+    "business": "infra",
+    "right": "resource",
+    "opportunity": "genesis",
+    "attribute": "mechanism"
+   },
+   "scores": {
+    "M": 3,
+    "A": 3,
+    "F": 3,
+    "E": 1,
+    "V": 3,
+    "D": 1
+   },
+   "tokens": [
+    {
+     "cg": "spacemesh",
+     "sym": "SMH",
+     "role": "main",
+     "supply": "max"
+    }
+   ],
+   "llama": {
+    "fees": null,
+    "tvl": null
+   },
+   "control": false,
+   "why_control": null,
+   "note": "早期成交稀薄，完全稀释估值只是数学上的峰值，不代表能按这个价退出"
+  },
+  {
+   "id": "ordinals",
+   "name": "Ordinals / BRC-20",
+   "period": "2023",
+   "src": "H11",
+   "entry": "部署、铭刻、铸造和交易新的资产规则",
+   "change": "在比特币上铭刻资产的新标准",
+   "problem": "比特币上的原生资产发行",
+   "lesson": "索引、发行顺序、拥堵费与退出共同决定结果；不能只留 ORDI 等赢家",
+   "classes": {
+    "business": "culture",
+    "right": "narrative",
+    "opportunity": "genesis",
+    "attribute": "mechanism"
+   },
+   "scores": {
+    "M": 3,
+    "A": 3,
+    "F": 3,
+    "E": 3,
+    "V": 1,
+    "D": 1
+   },
+   "tokens": [
+    {
+     "cg": "ordinals",
+     "sym": "ORDI",
+     "role": "main",
+     "supply": "max"
+    }
+   ],
+   "llama": {
+    "fees": null,
+    "tvl": null
+   },
+   "control": false,
+   "why_control": null,
+   "note": "ORDI 只是众多 BRC-20 里的赢家，其余发行没有进样本"
+  },
+  {
+   "id": "blur",
+   "name": "Blur",
+   "period": "2023-02-14 可交易",
+   "src": "C10",
+   "entry": "研究 NFT 交易激励、竞价和空投；代币买家另列",
+   "change": "积分 + 竞价激励的 NFT 交易市场",
+   "problem": "专业 NFT 交易",
+   "lesson": "有限活动窗口不能称完整生命周期；NFT 成交额、协议费、奖励领取与币价分别评价",
+   "classes": {
+    "business": "trading",
+    "right": "governance",
+    "opportunity": "genesis",
+    "attribute": "product"
+   },
+   "scores": {
+    "M": 2,
+    "A": 3,
+    "F": 2,
+    "E": 1,
+    "V": 1,
+    "D": 1
+   },
+   "tokens": [
+    {
+     "cg": "blur",
+     "sym": "BLUR",
+     "role": "main",
+     "supply": "max"
+    }
+   ],
+   "llama": {
+    "fees": "blur",
+    "tvl": "blur"
+   },
+   "control": false,
+   "why_control": null,
+   "note": null
+  },
+  {
+   "id": "arb",
+   "name": "Arbitrum / ARB 空投",
+   "period": "2023-02-06 快照；03-23 可交易",
+   "src": "H12 / C08",
+   "entry": "快照前跨链和使用取得资格，随后领取 / 交易",
+   "change": "以太坊二层的治理代币空投（rollup 已运行）",
+   "problem": "更便宜的以太坊交易",
+   "lesson": "不能用公告后的资格倒填此前一定可获得的收益，也不能把地址数当自然人数",
+   "classes": {
+    "business": "infra",
+    "right": "governance",
+    "opportunity": "genesis",
+    "attribute": "product"
+   },
+   "scores": {
+    "M": 1,
+    "A": 4,
+    "F": 3,
+    "E": 3,
+    "V": 1,
+    "D": 3
+   },
+   "tokens": [
+    {
+     "cg": "arbitrum",
+     "sym": "ARB",
+     "role": "main",
+     "supply": "max"
+    }
+   ],
+   "llama": {
+    "fees": null,
+    "tvl": null
+   },
+   "control": false,
+   "why_control": null,
+   "note": null
+  },
+  {
+   "id": "friend",
+   "name": "friend.tech",
+   "period": "2023-08 产品；2024-05 代币",
+   "src": "C01",
+   "entry": "社交份额与交易费用；FRIEND 代币在后续价格窗口出现",
+   "change": "按联合曲线交易社交「钥匙」",
+   "problem": "为社交关系定价",
+   "lesson": "产品早期热潮不等于后发代币早期机会；费用高峰在代币 P0 之前",
+   "classes": {
+    "business": "culture",
+    "right": "narrative",
+    "opportunity": "event",
+    "attribute": "mechanism"
+   },
+   "scores": {
+    "M": 3,
+    "A": 3,
+    "F": 2,
+    "E": 2,
+    "V": 1,
+    "D": 1
+   },
+   "tokens": [
+    {
+     "cg": "friend-tech",
+     "sym": "FRIEND",
+     "role": "main",
+     "supply": "max"
+    }
+   ],
+   "llama": {
+    "fees": "friend.tech",
+    "tvl": null
+   },
+   "control": false,
+   "why_control": null,
+   "note": "代币发行时产品热度已过，倍数从代币首日算"
+  },
+  {
+   "id": "jto",
+   "name": "Jito / JTO",
+   "period": "2023-12-07 可交易",
+   "src": "H13",
+   "entry": "JitoSOL 使用 / 贡献与积分分档",
+   "change": "MEV 收益分给质押者的流动性质押",
+   "problem": "Solana 质押收益 + MEV",
+   "lesson": "资本占用、服务需求和补贴分开；最终规则已知不等于事前能精准预测分档",
+   "classes": {
+    "business": "infra",
+    "right": "governance",
+    "opportunity": "genesis",
+    "attribute": "product"
+   },
+   "scores": {
+    "M": 2,
+    "A": 3,
+    "F": 3,
+    "E": 3,
+    "V": 1,
+    "D": 3
+   },
+   "tokens": [
+    {
+     "cg": "jito-governance-token",
+     "sym": "JTO",
+     "role": "main",
+     "supply": "max"
+    }
+   ],
+   "llama": {
+    "fees": "jito",
+    "tvl": "jito"
+   },
+   "control": false,
+   "why_control": null,
+   "note": null
+  },
+  {
+   "id": "pump",
+   "name": "Pump.fun / PUMP",
+   "period": "2024 产品；2025-07 代币",
+   "src": "H15 / C03",
+   "entry": "低门槛发行与曲线交易；平台、创作者和买家分别受益",
+   "change": "一键发币 + 联合曲线毕业的发行标准",
+   "problem": "人人可发币",
+   "lesson": "平台收费可以真实增长，普通买家仍可能亏损；每币全集、未毕业与无法卖出样本必须保留",
+   "classes": {
+    "business": "trading",
+    "right": "cashflow",
+    "opportunity": "rerate",
+    "attribute": "product"
+   },
+   "scores": {
+    "M": 3,
+    "A": 4,
+    "F": 2,
+    "E": 3,
+    "V": 3,
+    "D": 2
+   },
+   "tokens": [
+    {
+     "cg": "pump-fun",
+     "sym": "PUMP",
+     "role": "main",
+     "supply": "max"
+    }
+   ],
+   "llama": {
+    "fees": "pump.fun",
+    "tvl": null
+   },
+   "control": false,
+   "why_control": null,
+   "note": "PUMP 代币晚于产品热潮一年多；已执行回购"
+  },
+  {
+   "id": "runes",
+   "name": "Runes 符文",
+   "period": "2024",
+   "src": "H14",
+   "entry": "新标准下的公开 mint、预挖或其他分发",
+   "change": "比特币上的同质化代币标准",
+   "problem": "比特币原生资产（BRC-20 之后的改进）",
+   "lesson": "前置资产持有人、mint 者、二级买家和矿工分四类；要看价值最后归谁",
+   "classes": {
+    "business": "culture",
+    "right": "narrative",
+    "opportunity": "genesis",
+    "attribute": "mechanism"
+   },
+   "scores": {
+    "M": 2,
+    "A": 3,
+    "F": 2,
+    "E": 2,
+    "V": 1,
+    "D": 1
+   },
+   "tokens": [],
+   "llama": {
+    "fees": null,
+    "tvl": null
+   },
+   "control": false,
+   "why_control": null,
+   "note": "没有单一代表代币，第一版没有价格结果"
+  },
+  {
+   "id": "hype",
+   "name": "Hyperliquid / HYPE",
+   "period": "2024-11-29 可交易",
+   "src": "C09",
+   "entry": "衍生品产品、用户分配与 HYPE 二级资产分别研究",
+   "change": "自建链上订单簿永续交易所，无机构份额的大额用户空投",
+   "problem": "链上高性能永续交易",
+   "lesson": "真实产品与币价机会要打通使用—费用—实际捕获—供给；高涨幅与过程回撤同时展示",
+   "classes": {
+    "business": "trading",
+    "right": "cashflow",
+    "opportunity": "genesis",
+    "attribute": "product"
+   },
+   "scores": {
+    "M": 3,
+    "A": 3,
+    "F": 4,
+    "E": 3,
+    "V": 3,
+    "D": 3
+   },
+   "tokens": [
+    {
+     "cg": "hyperliquid",
+     "sym": "HYPE",
+     "role": "main",
+     "supply": "max"
+    }
+   ],
+   "llama": {
+    "fees": "hyperliquid",
+    "tvl": "hyperliquid"
+   },
+   "control": false,
+   "why_control": null,
+   "note": null
+  },
+  {
+   "id": "sushi",
+   "name": "SushiSwap / SUSHI",
+   "period": "2020-08",
+   "src": "对照组",
+   "entry": "向池子提供流动性挖 SUSHI，再把 Uniswap 的流动性迁过来",
+   "change": "复制 Uniswap + 流动性挖矿迁移（吸血鬼攻击）",
+   "problem": "同 Uniswap",
+   "lesson": "机制复制 + 高排放能短期抢到流动性，但不等于持续优势",
+   "classes": {
+    "business": "trading",
+    "right": "cashflow",
+    "opportunity": "genesis",
+    "attribute": "product"
+   },
+   "scores": {
+    "M": 1,
+    "A": 3,
+    "F": 2,
+    "E": 2,
+    "V": 2,
+    "D": 3
+   },
+   "tokens": [
+    {
+     "cg": "sushi",
+     "sym": "SUSHI",
+     "role": "main",
+     "supply": "cm:sushi"
+    }
+   ],
+   "llama": {
+    "fees": "sushi",
+    "tvl": "sushi"
+   },
+   "control": true,
+   "why_control": "和 UNI 同期同类，机制是复制",
+   "note": null
+  },
+  {
+   "id": "looks",
+   "name": "LooksRare / LOOKS",
+   "period": "2022-01",
+   "src": "对照组",
+   "entry": "在市场交易挖 LOOKS，质押分 WETH 手续费",
+   "change": "复制 OpenSea 模式 + 交易挖矿 + 手续费分成",
+   "problem": "同 OpenSea",
+   "lesson": "交易奖励会被刷量吃掉；分红执行了也挡不住排放",
+   "classes": {
+    "business": "trading",
+    "right": "cashflow",
+    "opportunity": "genesis",
+    "attribute": "product"
+   },
+   "scores": {
+    "M": 1,
+    "A": 3,
+    "F": 2,
+    "E": 1,
+    "V": 3,
+    "D": 1
+   },
+   "tokens": [
+    {
+     "cg": "looksrare",
+     "sym": "LOOKS",
+     "role": "main",
+     "supply": "max"
+    }
+   ],
+   "llama": {
+    "fees": "looksrare",
+    "tvl": "looksrare"
+   },
+   "control": true,
+   "why_control": "和 Blur 同类、更早，激励被刷量消耗",
+   "note": "手续费峰值里主要是刷量交易（交易挖矿激励下的自买自卖），不能当真实需求"
+  },
+  {
+   "id": "blast",
+   "name": "Blast / BLAST",
+   "period": "2024-06",
+   "src": "对照组",
+   "entry": "存入资产赚积分与原生收益，换 BLAST 空投",
+   "change": "原生收益二层 + 积分",
+   "problem": "资产在二层自动生息",
+   "lesson": "积分换来的 TVL 不等于真实使用；空投后资金离场",
+   "classes": {
+    "business": "infra",
+    "right": "governance",
+    "opportunity": "genesis",
+    "attribute": "product"
+   },
+   "scores": {
+    "M": 2,
+    "A": 3,
+    "F": 2,
+    "E": 2,
+    "V": 1,
+    "D": 1
+   },
+   "tokens": [
+    {
+     "cg": "blast",
+     "sym": "BLAST",
+     "role": "main",
+     "supply": "max",
+     "from": "2024-06-26"
+    }
+   ],
+   "llama": {
+    "fees": "blast",
+    "tvl": null
+   },
+   "control": true,
+   "why_control": "和 ARB 同类二层空投，用积分拉存量",
+   "note": null
+  }
+ ]
+}
