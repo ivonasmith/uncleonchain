@@ -18,10 +18,10 @@
 """
 import csv, io, json, math, os, re, statistics as st, sys, time, urllib.error, urllib.parse, urllib.request, zipfile
 import datetime as dt
-import xml.etree.ElementTree as ET
 from concurrent.futures import ThreadPoolExecutor
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
 ROOT = os.path.dirname(HERE)
 OUT = os.environ.get("CORE_OUT") or os.path.join(ROOT, "data", "core")
 CACHE = os.path.join(HERE, "cache")
@@ -36,7 +36,8 @@ N_RANK = 90            # 成交额榜窗口（天），同 volume_rank.py
 BASKET = 50            # 全市场等权篮子：30 日均成交额前 50（不含 BTC）
 MKT_ROWS = 80          # 全市场表：30 日均成交额前 80 + 观测池全部
 EXCLUDE = set(CFG.get("exclude", []))
-STOCK_FROM = "2026-06-11"   # 同 leg：B 结尾且 2026-06-11 起上市的代币化股票不算
+STOCK_FROM = "2026-06-11"
+FIAT = {"TRY", "EUR", "BRL", "JPY", "IDR", "ARS", "MXN", "ZAR", "THB", "COP", "KZT", "AED", "PLN", "UAH", "RUB", "NGN", "GBP", "AUD", "CZK", "RON", "USD"}   # 同 leg：B 结尾且 2026-06-11 起上市的代币化股票不算
 ERR = []
 
 
@@ -121,96 +122,6 @@ def fetch_spot(bases, limit=400, workers=8):
     return out
 
 
-# ---------------------------------------------------------------- 永续：data.binance.vision 公开归档（增量缓存）
-def s3_symbols():
-    syms, marker = [], ""
-    while True:
-        b = get(f"{S3}?prefix=data/futures/um/daily/klines/&delimiter=/&marker={marker}", raw=True)
-        root = ET.fromstring(b)
-        ns = {"s": root.tag.split("}")[0][1:]}
-        for p in root.findall("s:CommonPrefixes/s:Prefix", ns):
-            s = p.text.rstrip("/").split("/")[-1]
-            if s.endswith("USDT") and "_" not in s:
-                syms.append(s)
-        nxt = root.find("s:NextMarker", ns)
-        if nxt is None or not nxt.text:
-            break
-        marker = nxt.text
-    return syms
-
-
-def arch_rows(path):
-    b = get(f"{ARCH}/{path}", raw=True, tries=2)
-    if not b:
-        return None
-    z = zipfile.ZipFile(io.BytesIO(b))
-    rows = {}
-    for line in csv.reader(io.TextIOWrapper(z.open(z.namelist()[0]), encoding="utf-8")):
-        if not line or not line[0].isdigit():
-            continue
-        rows[D(int(line[0]))] = float(line[7])
-    return rows
-
-
-def fut_volumes(window_days):
-    """{合约: {日期: 成交额 USDT}}。只保留最新一天还有归档的合约（= 仍在交易）。"""
-    os.makedirs(CACHE, exist_ok=True)
-    fp = os.path.join(CACHE, "fut_daily.json")
-    cache = json.load(open(fp)) if os.path.exists(fp) else {}
-    # 最新一天：归档通常次日几小时内出，往前找 BTCUSDT 有文件的那天
-    last = None
-    for k in range(1, 5):
-        d = (TODAY - dt.timedelta(days=k)).isoformat()
-        if arch_rows(f"data/futures/um/daily/klines/BTCUSDT/1d/BTCUSDT-1d-{d}.zip"):
-            last = d
-            break
-    if not last:
-        raise RuntimeError("永续归档找不到最近 4 天的 BTCUSDT 日线")
-    start = (dt.date.fromisoformat(last) - dt.timedelta(days=window_days + 3)).isoformat()
-    syms = s3_symbols()
-    log(f"永续归档：{len(syms)} 个合约目录，最新日 {last}")
-
-    def day(sym, d):
-        q = urllib.parse.quote(sym)
-        return arch_rows(f"data/futures/um/daily/klines/{q}/1d/{q}-1d-{d}.zip") or {}
-
-    def job(sym):
-        try:
-            have = dict(cache.get(sym, {}))
-            got = day(sym, last)
-            if not got:
-                return sym, None          # 最新日没有 = 已下架 / 暂停
-            have.update(got)
-            days = [(dt.date.fromisoformat(start) + dt.timedelta(days=i)).isoformat()
-                    for i in range((dt.date.fromisoformat(last) - dt.date.fromisoformat(start)).days)]
-            miss = [d for d in days if d not in have]
-            if len(miss) > 20:            # 缺得多：按月包补（当月之前的月份），再逐日补剩下的
-                for ym in sorted({d[:7] for d in miss if d[:7] < last[:7]}):
-                    q = urllib.parse.quote(sym)
-                    have.update(arch_rows(f"data/futures/um/monthly/klines/{q}/1d/{q}-1d-{ym}.zip") or {})
-                miss = [d for d in days if d not in have]
-            for d in miss:
-                if d[:7] == last[:7] or len(miss) <= 20:
-                    have.update(day(sym, d))
-            return sym, {d: v for d, v in have.items() if d >= start}
-        except Exception as e:  # noqa
-            return sym, e
-    out = {}
-    with ThreadPoolExecutor(12) as ex:
-        for sym, r in ex.map(job, syms):
-            if isinstance(r, Exception):
-                ERR.append(f"永续 {sym}: {r}")
-            elif r:
-                out[sym] = r
-    json.dump(out, open(fp, "w"))
-    return out, last
-
-
-def norm_fut(sym):
-    b = sym[:-4]
-    return re.sub(r"^(1000000|10000|1000|1M)", "", b)
-
-
 # ---------------------------------------------------------------- DefiLlama
 def llama_chart(path):
     d = get(f"{LLAMA}{path}")
@@ -232,6 +143,109 @@ def win_stats(ser):
     a7, a30 = sum(v[-7:]) / 7, s30 / 30
     return {"last_day": ds[-1], "avg7": a7, "avg30": a30, "sum30": s30, "prev30": p30,
             "d7v30": pct(a7, a30), "mom30": pct(s30, p30) if p30 else None}
+
+
+def weekly(name, fn):
+    """一周取一次的东西（国库一次几 MB～十几 MB、GitHub 要几十次请求）：缓存 7 天，失败用旧值。"""
+    os.makedirs(CACHE, exist_ok=True)
+    fp = os.path.join(CACHE, "weekly.json")
+    db = json.load(open(fp)) if os.path.exists(fp) else {}
+    x = db.get(name)
+    if x and (TODAY - dt.date.fromisoformat(x["at"])).days < 7:
+        return x["v"]
+    try:
+        v = fn()
+    except Exception as e:  # noqa
+        ERR.append(f"{name}: {e}")
+        return x["v"] if x else None
+    db[name] = {"at": TODAY.isoformat(), "v": v}
+    json.dump(db, open(fp, "w"), ensure_ascii=False)
+    return v
+
+
+def treasury(slug):
+    """DefiLlama 国库：当前总额、其中自家代币、其余（稳定币 / 主流币等）。"""
+    d = get(f"{LLAMA}/treasury/{slug}", timeout=90)
+    if not d:
+        return None
+    ct = d.get("currentChainTvls") or {}
+    own = ct.get("OwnTokens") or 0
+    other = sum(v for k, v in ct.items() if "-" not in k and k != "OwnTokens" and k not in ("borrowed", "staking", "pool2", "vesting"))
+    return {"total": own + other, "own": own, "other": other, "own_pct": own / (own + other) * 100 if own + other else None}
+
+
+GH = "https://api.github.com"
+
+
+def github_devs(orgs):
+    """近 30 天在组织最近活跃的 10 个公开仓库里提交过代码的人数（按作者去重，剔除 [bot]），和前 30 天对比。
+    需要 GITHUB_TOKEN（Actions 自带）；没有就返回 None（页面写「待接入」）。"""
+    tok = os.environ.get("GITHUB_TOKEN")
+    if not tok:
+        return None
+    hd = {"Authorization": f"Bearer {tok}", "Accept": "application/vnd.github+json", **UA}
+
+    def gh(path):
+        with urllib.request.urlopen(urllib.request.Request(GH + path, headers=hd), timeout=30) as r:
+            return json.loads(r.read())
+    since60 = (TODAY - dt.timedelta(days=60)).isoformat() + "T00:00:00Z"
+    cut = (TODAY - dt.timedelta(days=30)).isoformat()
+    a30, a_prev, c30, repos = set(), set(), 0, 0
+    for org in orgs[:3]:
+        try:
+            rs = gh(f"/orgs/{org}/repos?type=public&sort=pushed&per_page=10")
+        except urllib.error.HTTPError as e:
+            if e.code != 404:
+                raise
+            rs = gh(f"/users/{org}/repos?type=public&sort=pushed&per_page=10")
+        for r in rs:
+            if r.get("fork") or (r.get("pushed_at") or "") < since60:
+                continue
+            repos += 1
+            for page in range(1, 4):
+                cs = gh(f"/repos/{r['full_name']}/commits?since={since60}&per_page=100&page={page}")
+                for cmt in cs:
+                    who = (cmt.get("author") or {}).get("login") or ((cmt.get("commit") or {}).get("author") or {}).get("email")
+                    when = ((cmt.get("commit") or {}).get("author") or {}).get("date") or ""
+                    if not who or who.endswith("[bot]") or "noreply@github.com" == who:
+                        continue
+                    if when[:10] >= cut:
+                        a30.add(who)
+                        c30 += 1
+                    else:
+                        a_prev.add(who)
+                if len(cs) < 100:
+                    break
+    return {"devs30": len(a30), "devs_prev30": len(a_prev), "commits30": c30, "repos": repos, "orgs": orgs[:3]}
+
+
+def extras(slug):
+    """日活（DefiLlama active-users，同一个接口顺带给 GitHub 组织名、国库适配器）、国库、核心开发者。"""
+    out = {"users_ser": {}, "users": None, "treasury": None, "dev": None}
+    try:
+        d = get(f"{LLAMA}/summary/active-users/{slug}?excludeTotalDataChartBreakdown=true")
+    except Exception as e:  # noqa
+        ERR.append(f"DefiLlama 日活 {slug}: {e}")
+        d = None
+    if not d:
+        return out
+    ser = {dt.datetime.fromtimestamp(t, dt.timezone.utc).strftime("%Y-%m-%d"): v for t, v in (d.get("totalDataChart") or [])
+           if dt.datetime.fromtimestamp(t, dt.timezone.utc).date() < TODAY and v is not None}
+    out["users_ser"] = ser
+    if len(ser) >= 30:
+        ds = sorted(ser)
+        a7, a30 = mean([ser[x] for x in ds[-7:]]), mean([ser[x] for x in ds[-30:]])
+        prev = [ser[x] for x in ds[-60:-30]] if len(ds) >= 60 else None
+        out["users"] = {"last": ser[ds[-1]], "last_day": ds[-1], "avg7": a7, "avg30": a30, "d7v30": pct(a7, a30),
+                        "mom30": pct(a30, mean(prev)) if prev else None, "days": len(ds)}
+    if d.get("treasury"):
+        out["treasury"] = weekly(f"treasury:{slug}", lambda: treasury(slug))
+    orgs = [o for o in d.get("github") or [] if o]
+    if orgs:
+        out["dev"] = weekly(f"github:{','.join(orgs)}", lambda: github_devs(orgs)) if os.environ.get("GITHUB_TOKEN") else None
+        if out["dev"] is None:
+            out["dev"] = {"orgs": orgs[:3], "pending": True}
+    return out
 
 
 def tvl_series(slug):
@@ -378,7 +392,8 @@ def rk_stats(rank, days, s):
             "spark": rk[-30:]}
 
 
-def volume_board(spot_q, fut_q):
+def volume_board(spot_q, fut_q, keep=()):
+    """一张榜：合并成交额（现货 + 合约）当日排名，每个币带标签 regular（常客）/ entrant（新进榜）/ exit（掉榜）/ new（窗口内新上）。"""
     comb = {}
     for s in set(spot_q) | set(fut_q):
         d = {}
@@ -386,12 +401,14 @@ def volume_board(spot_q, fut_q):
             for t, q in src.items():
                 d[t] = d.get(t, 0) + q
         comb[s] = d
-    common = sorted(set(t for d in spot_q.values() for t in d) & (set(t for d in fut_q.values() for t in d) if fut_q else set(t for d in spot_q.values() for t in d)))
+    sd = set(t for d in spot_q.values() for t in d)
+    common = sorted(sd & set(t for d in fut_q.values() for t in d)) if fut_q else sorted(sd)
     days = common[-N_RANK:]
     if not days:
         return None
     rs, rf, rc = ranks(spot_q, days), (ranks(fut_q, days) if fut_q else {}), ranks(comb, days)
     last, last30 = days[-1], days[-30:]
+    n = len(days)
     rows = []
     for s in comb:
         c = rk_stats(rc, days, s)
@@ -399,23 +416,30 @@ def volume_board(spot_q, fut_q):
             continue
         sv = sum(spot_q.get(s, {}).get(t, 0) for t in last30)
         fv = sum(fut_q.get(s, {}).get(t, 0) for t in last30)
-        rows.append({"sym": s, "comb": c, "spot": (rk_stats(rs, days, s) or {}).get("cur"), "fut": (rk_stats(rf, days, s) or {}).get("cur") if fut_q else None,
-                     "fut_share_30d": fv / (sv + fv) * 100 if fut_q and sv + fv > 0 else None,
-                     "qv_today": comb[s].get(last), "qv30": (sv + fv) / 30})
-    n = len(days)
-    rows.sort(key=lambda r: (-r["comb"]["d30"], r["comb"]["med"]))
-    reg = [r for r in rows if r["comb"]["d30"] >= 0.8 * n]
-    ent = [r for r in rows if r["comb"]["cur"] and r["comb"]["cur"] <= 50 and r["comb"]["d30_prior"] <= 3 and r["comb"]["d30_recent7"] >= 2]
-    ext = [r for r in rows if r["comb"]["d30_prior"] >= 0.5 * max(n - 7, 1) and r["comb"]["d30_recent7"] == 0]
+        seen = sum(1 for t in days if comb[s].get(t, 0) > 0)
+        tags = []
+        if c["d30"] >= 0.8 * n:
+            tags.append("regular")
+        if c["cur"] and c["cur"] <= 50 and c["d30_prior"] <= 3 and c["d30_recent7"] >= 2:
+            tags.append("entrant")
+        if c["d30_prior"] >= 0.5 * max(n - 7, 1) and c["d30_recent7"] == 0:
+            tags.append("exit")
+        if seen < n - 3:
+            tags.append("new")
+        rows.append({"sym": s, "cur": c["cur"], "med": c["med"], "best": c["best"], "d30": c["d30"], "d50": c["d50"],
+                     "spot": rs[last].get(s), "fut": rf[last].get(s) if fut_q else None,
+                     "fut_share_30d": fv / (sv + fv) * 100 if sv + fv > 0 else None,
+                     "qv_today": comb[s].get(last), "spot_today": spot_q.get(s, {}).get(last), "fut_today": fut_q.get(s, {}).get(last),
+                     "qv30": (sv + fv) / 30, "tags": tags, "spark": c["spark"]})
     tot_s = sum(d.get(last, 0) for d in spot_q.values())
     tot_f = sum(d.get(last, 0) for d in fut_q.values())
-    slim = lambda r: {"sym": r["sym"], "cur": r["comb"]["cur"], "med": r["comb"]["med"], "best": r["comb"]["best"], "d30": r["comb"]["d30"],
-                      "spot": r["spot"], "fut": r["fut"], "fut_share_30d": r["fut_share_30d"], "qv_today": r["qv_today"], "spark": r["comb"]["spark"]}
-    top = sorted((r for r in rows if r["comb"]["cur"]), key=lambda r: r["comb"]["cur"])[:50]
-    return {"last_day": last, "window_days": n, "universe": {"spot": len(spot_q), "fut": len(fut_q)},
+    by = {r["sym"]: r for r in rows}
+    show = sorted((r for r in rows if r["cur"] and (r["cur"] <= 150 or r["tags"] and r["cur"] <= 300 or r["sym"] in keep)), key=lambda r: r["cur"])
+    show += [r for r in rows if not r["cur"] and (r["tags"] or r["sym"] in keep)]
+    cnt = {k: sum(1 for r in rows if k in r["tags"]) for k in ("regular", "entrant", "exit", "new")}
+    return {"last_day": last, "window_days": n, "universe": {"coins": len(comb), "spot": len(spot_q), "fut": len(fut_q)},
             "market_fut_share_pct": tot_f / (tot_s + tot_f) * 100 if fut_q and tot_s + tot_f else None,
-            "regulars": [slim(r) for r in reg], "entrants": [slim(r) for r in ent], "exits": [slim(r) for r in ext],
-            "top": [slim(r) for r in top], "by_sym": {r["sym"]: slim(r) for r in rows}}
+            "total_today": tot_s + tot_f, "counts": cnt, "rows": show, "by_sym": by}
 
 
 # ---------------------------------------------------------------- 主流程
@@ -456,7 +480,7 @@ def main():
         fees = {}
         if cf.get("llama"):
             try:
-                for key, dtp in (("fees", "dailyFees"), ("revenue", "dailyRevenue"), ("holders", "dailyHoldersRevenue")):
+                for key, dtp in (("fees", "dailyFees"), ("revenue", "dailyRevenue"), ("holders", "dailyHoldersRevenue"), ("supply", "dailySupplySideRevenue")):
                     ch = llama_chart(f"/summary/fees/{cf['llama']}?dataType={dtp}&excludeTotalDataChartBreakdown=true")
                     ser[key] = ch
                     fees[key] = win_stats(ch)
@@ -465,6 +489,11 @@ def main():
         c["fees"] = fees
         fr, ff, fh = fees.get("revenue"), fees.get("fees"), fees.get("holders")
         c["take"] = fr["sum30"] / ff["sum30"] * 100 if fr and ff and ff["sum30"] else None
+        # 待补维度（11-14 接入）：日活用户、国库、核心开发者
+        users_ser, c["users"], c["treasury"], c["dev"] = {}, None, None, None
+        if cf.get("llama"):
+            ext = extras(cf["llama"])
+            users_ser, c["users"], c["treasury"], c["dev"] = ext["users_ser"], ext["users"], ext["treasury"], ext["dev"]
         c["hshare"] = (fh["sum30"] / fr["sum30"] * 100 if fh else None) if fr and fr["sum30"] else None
         llama_mcap = None
         act_ser = {}
@@ -535,7 +564,9 @@ def main():
         ds = sorted(ser.get("fees") or {})[-120:]
         series_out[s] = {"sym": s, "fees": {"dates": ds, "fees": [ser["fees"].get(d) for d in ds],
                                             "revenue": [(ser.get("revenue") or {}).get(d) for d in ds],
-                                            "holders": [(ser.get("holders") or {}).get(d) for d in ds]} if ds else None,
+                                            "holders": [(ser.get("holders") or {}).get(d) for d in ds],
+                                            "supply": [(ser.get("supply") or {}).get(d) for d in ds]} if ds else None,
+                         "users": tail(users_ser, 120) if users_ser else None,
                          "act": dict(tail(act_ser, 120), label=c["act"]["label"]) if c.get("act") and act_ser else None,
                          "price": pser}
         log(f"{s}: 评分 {c['sc']['total']}（{c['sc']['n']}/6）")
@@ -558,7 +589,20 @@ def main():
                          "watch": b in pool_syms and next(x for x in coins_cfg if x["sym"] == b)["track"] == "watch",
                          "tag": (next((x for x in coins_cfg if x["sym"] == b), {}) or {}).get("tag", "")})
         rows.sort(key=lambda x: -(x["qv30"] or 0))
-        bask = [x for x in rows if x["sym"] != "BTC"][:BASKET]
+        # 等权篮子 = 宏观页「山寨整体」同一个篮子（leg/leg_data.py：币安成交额前 50 进、跌出 75 出，每月 1 日重排）
+        leg = {}
+        try:
+            leg = json.load(open(os.path.join(ROOT, "data", "leg", "leg_latest.json"), encoding="utf-8"))
+        except Exception as e:  # noqa
+            ERR.append(f"山寨篮子成员（leg_latest.json）: {e}")
+        lb = ((leg.get("alt_leg") or {}).get("basket") or {})
+        members = [m["symbol"] for m in lb.get("members") or []]
+        bsrc = {"src": "leg", "asof": leg.get("asof"), "n_members": len(members)}
+        bask = [x for x in rows if x["sym"] in set(members)]
+        if len(bask) < 20:     # 篮子读不到才退回自己按成交额取前 50，并在页面标出来
+            ERR.append("山寨篮子成员读不到，基准退回 USDT 现货成交额前 50")
+            bask, bsrc = [x for x in rows if x["sym"] != "BTC"][:BASKET], {"src": "fallback", "n_members": BASKET}
+        bsrc["missing"] = sorted(set(members) - {x["sym"] for x in bask})
         bench = {}
         for k in ("r7", "r30", "r90"):
             v = [x[k] for x in bask if x[k] is not None]
@@ -589,21 +633,25 @@ def main():
         # 成交额榜
         vb = None
         try:
-            spot_q = {b: {d: q for d, _, q in r if d < TODAY.isoformat()} for b, r in spot.items() if b not in stock and b not in EXCLUDE}
+            import binance_vol as BV
+            # 不进榜：稳定币 / 法币 / 黄金 / 包装币（EXCLUDE + 收盘 90 天都在 0.97~1.03）、代币化美股 / ETF
+            stable = {b for b, r in spot.items() if len(r) >= 90 and min(x[1] for x in r[-90:]) >= 0.97 and max(x[1] for x in r[-90:]) <= 1.03}
+            drop = EXCLUDE | stock | stable | BV.STABLE_Q | FIAT
+            usdt = {b: r for b, r in spot.items()}
+            spot_all, vcov = BV.spot_all(sys.modules[__name__], usdt, N_RANK + 5, TODAY)
+            spot_q = {b: d for b, d in spot_all.items() if b not in drop}
             fut_q = {}
             if not no_fut:
-                fv, _ = fut_volumes(N_RANK + 5)
-                for sym, dd in fv.items():
-                    b = norm_fut(sym)
-                    # 归档没有标的类型字段，美股 / 黄金永续（SNDK、XAU…）分不出来：只算币安现货也有 USDT 对的币
-                    if b in EXCLUDE or b not in spot_q:
-                        continue
-                    cur = fut_q.setdefault(b, {})
-                    for d, q in dd.items():
-                        cur[d] = cur.get(d, 0) + q
-            vb = volume_board(spot_q, fut_q)
+                fv, _, fcov = BV.fut_all(sys.modules[__name__], N_RANK + 5, TODAY)
+                vcov.update(fcov)
+                # 合约归档没有标的类型：美股 / 黄金 / 指数合约分不出来，只算币安现货有交易对的币（大叔 11-14 定：直接去掉）
+                fut_q = {b: d for b, d in fv.items() if b in spot_q}
+                vcov["fut_dropped"] = sorted(b for b in fv if b not in spot_q)[:80]
+            vb = volume_board(spot_q, fut_q, keep=pool_syms)
+            if vb:
+                vb["coverage"] = vcov
             if not fut_q:
-                ERR.append("永续成交额未取到：成交额榜只算现货")
+                ERR.append("合约成交额未取到：成交额榜只算现货")
         except Exception as e:  # noqa
             ERR.append(f"成交额榜: {e}")
         if vb:
@@ -612,9 +660,9 @@ def main():
                 x["vrank"] = r["cur"] if r else None
             for s, c in coins.items():
                 r = vb["by_sym"].get(s)
-                c["vrank"] = {k: r[k] for k in ("cur", "med", "best", "d30", "spot", "fut", "fut_share_30d")} if r else None
+                c["vrank"] = {k: r[k] for k in ("cur", "med", "best", "d30", "spot", "fut", "fut_share_30d", "tags", "qv30")} if r else None
             vb.pop("by_sym")
-        market = {"date": last_day, "n_basket": len(bask), "bench": bench, "miss": {"top15_30d": top15, "top10_7d": top10_7,
+        market = {"date": last_day, "n_basket": len(bask), "basket_src": bsrc, "basket": sorted(x["sym"] for x in bask), "bench": bench, "miss": {"top15_30d": top15, "top10_7d": top10_7,
                   "in_pool": [s for s in top15 if s in pool_syms and coins[s]["track"] == "pool"]}, "rows": show, "vol": vb,
                   "n_universe": len(rows), "stock_excluded": len(stock)}
     res = {"generated": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M UTC"), "last_complete_day": last_day,

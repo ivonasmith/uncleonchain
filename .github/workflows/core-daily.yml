@@ -42,6 +42,8 @@ jobs:
           restore-keys: core-cache-
 
       - name: 跑核心选币日更
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   # 只读公开仓库提交记录（核心开发者人数），每周一次
         run: python3 core/core_daily.py
 
       - name: 重出网站（看板素材 → 网站）

@@ -3793,7 +3793,7 @@ def write_core_data():
     d = dict(d, gates=core_gates())
     with open(os.path.join(out, "core_latest.json"), "w", encoding="utf-8") as fh:
         json.dump(d, fh, ensure_ascii=False, separators=(",", ":"))
-    for fn in ("core_history.json",):
+    for fn in ("core_history.json", "rotation.json", "score_backtest.json"):
         if os.path.exists(os.path.join(src, fn)):
             shutil.copyfile(os.path.join(src, fn), os.path.join(out, fn))
     for fn in os.listdir(os.path.join(src, "series")) if os.path.isdir(os.path.join(src, "series")) else []:
@@ -3831,7 +3831,7 @@ def build_core():
 <div class="ph"><div><div class="eyebrow">Core Picks Monitor</div><h1>{T("核心选币观测台", "Core picks monitor")}</h1></div></div>
 <p class="lede">{T("回购 / 收入型协议和叙事标的的基本面（手续费、收入、持有人收入、业务量）、资金面（成交额、现货 + 永续排名）、技术面（均线、RSI、回撤）。每天自动更新；评分和规则判定全部是【假设】，只做条件检查和风险提示，不是买卖建议。",
                    "Fundamentals (fees, revenue, holder revenue, activity), flows (volume, spot + perp rank) and technicals (MAs, RSI, drawdown) for buyback / revenue protocols and narrative names. Updated daily; scores and rule checks are hypotheses for condition checks and risk alerts, not trade advice.")}</p>
-<div class="core" id="core" data-src="/data/core/core_latest.json?v={v}" data-series="/data/core/series/" data-hist="/data/core/core_history.json"></div>
+<div class="core" id="core" data-src="/data/core/core_latest.json?v={v}" data-series="/data/core/series/" data-hist="/data/core/core_history.json" data-rot="/data/core/rotation.json" data-bt="/data/core/score_backtest.json"></div>
 <noscript><p class="muted">{T("这一页需要开启 JavaScript。", "This page needs JavaScript.")}</p></noscript>"""
     emit("core/index.html", T(f"核心选币观测台 · {BRAND}", f"Core Picks Monitor · {BRAND_EN}"), body, active="core",
          extra_head=f'<link rel="stylesheet" href="{ASSET_URL["core.css"]}">', scripts=f'<script src="{ASSET_URL["core.js"]}" defer></script>',
