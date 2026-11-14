@@ -66,6 +66,8 @@ def fmt(x, unit="", d=1):
     if x is None:
         return "未取到"
     a = abs(x)
+    if a < 1:
+        return "≈0" + unit
     s = f"{x/1e9:.{d}f}B" if a >= 1e9 else f"{x/1e6:.{d}f}M" if a >= 1e6 else f"{x/1e3:.{d}f}K" if a >= 1e3 else f"{x:.{d}f}"
     return s + unit
 
@@ -181,6 +183,12 @@ def main():
             out["coins"][sym] = fn(latest)
         except Exception as e:  # noqa
             ERR.append(f"{sym}: {e}")
+            try:                                   # 这次取不到就沿用上次那张卡，标 stale
+                prev = json.load(open(OUT, encoding="utf-8"))["coins"][sym]
+                prev["stale"] = True
+                out["coins"][sym] = prev
+            except Exception:  # noqa
+                pass
     out["errors"] = ERR
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     json.dump(out, open(OUT, "w", encoding="utf-8"), ensure_ascii=False, indent=1)

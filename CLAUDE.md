@@ -69,6 +69,10 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
   外部复核包 `core/review/README.md`（给 Codex / Gemini / Grok 的分工和提示词）。拉盘复盘 = 大叔的龙头与轮动研究，原件 `core/research/`，`core/rotation_import.py` → `data/core/rotation.json`（静态快照，不日更）。
   待补维度：供给侧收入 / 日活（DefiLlama active-users，同接口带 GitHub 组织名和国库适配器）/ 国库（每周，`weekly.json` 缓存）/ 核心开发者（GitHub，Actions 的 GITHUB_TOKEN，沙盒 403）已接；代币激励只有付费源，待接入。
   「六问卡」原文在大叔的《核心选币方法论》里，网站还没有，等大叔给。
+  选币规则 v1（11-14 大叔定，`core/research/选币规则_v1.md`，口径页公开）：`core/core_universe.py` + 配置 `core/core_classes.json` → `data/core/universe.json`、`universe_history.json`（每天冻结一份，不回改；错了改规则）。
+  五大类 共识储备 / 主流公链 / 现金流有用（7 个子类）/ 博弈控盘（叙事 / 反身性 / 控盘）/ 注意力情绪；入场 = 币安上市 + 90 日成交额排名中位 ≤ 100，每类（子类）流动性前 3，共识全列，原观测池保留。页签 #list，首页摘要卡替换原「埋伏仓候选」。
+  机制拆解卡（博弈控盘型，先 TAO / WLD）：`tools/core_mech/mech.py`（只在 Actions 跑：taostats 要原始 Authorization 头、Etherscan key 在 URL 里）→ `data/core/mech.json`，页面 #mech/TAO。静态事实出自 `core/research/TAO_WLD供给与排放核查_20261114_codex.md`。
+  **CoinMarketCap data-api 不许用**（安全审查拦过）。
 - 发射台活动温度（`pipeline/周期观察.py` 数据与热潮识别、`周期仪表盘.py` 展示）：每日更新。序列 = 研究快照 `content/cycle/snapshot.json`（截至 2026-10-17，sha256 在 manifest）+ 之后接 `发射台矩阵.json`「历史」的类目合计；热潮规则重算快照区间 27 轮逐字段对上（对不上会打 ⚠️）。
   仪表盘 `周期仪表盘.hero` 放在矩阵页最上面（先看温度再看细节），周期页 /launchpad/cycle/ 看这一轮、各阶段时长、历史；全站统一叫「发射台活动温度」，颜色用 `--cyc-*` 变量，文案要大白话。「钱在哪」= `出网站.money_where`。
 - 发射台长周期（2026-10-29）：`周期观察.long_view` / `coverage`。全部历史 2021-09-18 起只作背景，比高低只用可比段（`COMPARABLE_FROM` = 2024-03-01，pump.fun 开始报数；之前只有 1–6 家融资型平台报数）；

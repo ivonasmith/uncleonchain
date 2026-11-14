@@ -1,0 +1,2039 @@
+{
+ "generated": "2026-11-14 13:13 UTC",
+ "data_day": "2026-11-12",
+ "rules": "core/research/选币规则_v1.md",
+ "liquidity_med_max": 100,
+ "count": 46,
+ "by_class": {
+  "共识储备型": 11,
+  "主流公链型": 3,
+  "现金流有用型": 24,
+  "博弈控盘型": 5,
+  "注意力情绪型": 3
+ },
+ "items": [
+  {
+   "sym": "BTC",
+   "med": 1.0,
+   "cur": 1,
+   "qv30": 16067400000.0,
+   "fut_share": 89.6225,
+   "vtags": [
+    "regular"
+   ],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": "Canonical Bridge",
+   "llama_names": [
+    "Bitcoin",
+    "Alpha",
+    "BlackrockFund"
+   ],
+   "tags": [
+    "ETF"
+   ],
+   "liquid": true,
+   "class": "共识储备型",
+   "sub": null,
+   "why": "有美国现货 ETF，协议收入相对市值很小",
+   "pick": "共识储备型全列",
+   "in": true
+  },
+  {
+   "sym": "ETH",
+   "med": 2.0,
+   "cur": 2,
+   "qv30": 11205600000.0,
+   "fut_share": 91.9576,
+   "vtags": [
+    "regular"
+   ],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": "Foundation",
+   "llama_names": [
+    "Ethereum Foundation"
+   ],
+   "tags": [
+    "ETF"
+   ],
+   "liquid": true,
+   "class": "共识储备型",
+   "sub": null,
+   "why": "有美国现货 ETF，协议收入相对市值很小",
+   "pick": "共识储备型全列",
+   "in": true
+  },
+  {
+   "sym": "SOL",
+   "med": 3.5,
+   "cur": 4,
+   "qv30": 1972920000.0,
+   "fut_share": 86.9874,
+   "vtags": [
+    "regular"
+   ],
+   "rev30": 1563273,
+   "hold30": 1563273,
+   "hold1y": 25159979,
+   "llama_cat": "Canonical Bridge",
+   "llama_names": [
+    "Solana Farm",
+    "Solana"
+   ],
+   "tags": [
+    "ETF"
+   ],
+   "liquid": true,
+   "class": "共识储备型",
+   "sub": null,
+   "why": "有美国现货 ETF，协议收入相对市值很小",
+   "pick": "共识储备型全列",
+   "in": true
+  },
+  {
+   "sym": "ZEC",
+   "med": 4.0,
+   "cur": 3,
+   "qv30": 2159050000.0,
+   "fut_share": 89.8276,
+   "vtags": [
+    "regular"
+   ],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": null,
+   "llama_names": null,
+   "tags": [
+    "ETF"
+   ],
+   "liquid": true,
+   "class": "共识储备型",
+   "sub": null,
+   "why": "有美国现货 ETF，协议收入相对市值很小",
+   "pick": "共识储备型全列",
+   "in": true
+  },
+  {
+   "sym": "XRP",
+   "med": 5.0,
+   "cur": 5,
+   "qv30": 942510000.0,
+   "fut_share": 81.0648,
+   "vtags": [
+    "regular"
+   ],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": null,
+   "llama_names": null,
+   "tags": [
+    "ETF"
+   ],
+   "liquid": true,
+   "class": "共识储备型",
+   "sub": null,
+   "why": "有美国现货 ETF，协议收入相对市值很小",
+   "pick": "共识储备型全列",
+   "in": true
+  },
+  {
+   "sym": "DOGE",
+   "med": 10.0,
+   "cur": 9,
+   "qv30": 390544000.0,
+   "fut_share": 88.3653,
+   "vtags": [
+    "regular"
+   ],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": "Chain",
+   "llama_names": [
+    "Dogecoin"
+   ],
+   "tags": [
+    "ETF"
+   ],
+   "liquid": true,
+   "class": "共识储备型",
+   "sub": null,
+   "why": "有美国现货 ETF，协议收入相对市值很小",
+   "pick": "共识储备型全列",
+   "in": true
+  },
+  {
+   "sym": "SUI",
+   "med": 13.0,
+   "cur": 15,
+   "qv30": 269566000.0,
+   "fut_share": 73.767,
+   "vtags": [
+    "regular"
+   ],
+   "rev30": 259110,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": "Canonical Bridge",
+   "llama_names": [
+    "Sui Foundation"
+   ],
+   "tags": [
+    "ETF"
+   ],
+   "liquid": true,
+   "class": "共识储备型",
+   "sub": null,
+   "why": "有美国现货 ETF，协议收入相对市值很小",
+   "pick": "共识储备型全列",
+   "in": true
+  },
+  {
+   "sym": "AVAX",
+   "med": 22.0,
+   "cur": 18,
+   "qv30": 149066000.0,
+   "fut_share": 84.347,
+   "vtags": [
+    "regular"
+   ],
+   "rev30": 347711,
+   "hold30": 347711,
+   "hold1y": 2649615,
+   "llama_cat": "Canonical Bridge",
+   "llama_names": [
+    "Avalanche Core Bridge",
+    "Avalanche"
+   ],
+   "tags": [
+    "ETF"
+   ],
+   "liquid": true,
+   "class": "共识储备型",
+   "sub": null,
+   "why": "有美国现货 ETF，协议收入相对市值很小",
+   "pick": "共识储备型全列",
+   "in": true
+  },
+  {
+   "sym": "LTC",
+   "med": 30.0,
+   "cur": 26,
+   "qv30": 86237300.0,
+   "fut_share": 81.1721,
+   "vtags": [],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": "Chain",
+   "llama_names": [
+    "Litecoin"
+   ],
+   "tags": [
+    "ETF"
+   ],
+   "liquid": true,
+   "class": "共识储备型",
+   "sub": null,
+   "why": "有美国现货 ETF，协议收入相对市值很小",
+   "pick": "共识储备型全列",
+   "in": true
+  },
+  {
+   "sym": "DOT",
+   "med": 41.0,
+   "cur": 44,
+   "qv30": 58102100.0,
+   "fut_share": 86.9046,
+   "vtags": [],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": "Liquid Staking",
+   "llama_names": [
+    "Acala LCDOT",
+    "Acala Liquid Staking",
+    "Acala Euphrates"
+   ],
+   "tags": [
+    "ETF"
+   ],
+   "liquid": true,
+   "class": "共识储备型",
+   "sub": null,
+   "why": "有美国现货 ETF，协议收入相对市值很小",
+   "pick": "共识储备型全列",
+   "in": true
+  },
+  {
+   "sym": "HBAR",
+   "med": 48.0,
+   "cur": 37,
+   "qv30": 49822300.0,
+   "fut_share": 78.3477,
+   "vtags": [],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": "Chain",
+   "llama_names": [
+    "Hedera"
+   ],
+   "tags": [
+    "ETF"
+   ],
+   "liquid": true,
+   "class": "共识储备型",
+   "sub": null,
+   "why": "有美国现货 ETF，协议收入相对市值很小",
+   "pick": "共识储备型全列",
+   "in": true
+  },
+  {
+   "sym": "ADA",
+   "med": 18.0,
+   "cur": 17,
+   "qv30": 162136000.0,
+   "fut_share": 87.5862,
+   "vtags": [
+    "regular"
+   ],
+   "rev30": 11293,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": "Chain",
+   "llama_names": [
+    "Cardano"
+   ],
+   "tags": [],
+   "liquid": true,
+   "class": "主流公链型",
+   "sub": null,
+   "why": "主流公链原生币，没有美国现货 ETF",
+   "pick": "主流公链型按流动性第 1",
+   "in": true
+  },
+  {
+   "sym": "ARB",
+   "med": 28.0,
+   "cur": 25,
+   "qv30": 107522000.0,
+   "fut_share": 84.5909,
+   "vtags": [],
+   "rev30": 94134,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": "Foundation",
+   "llama_names": [
+    "Arbitrum Bridge",
+    "Arbitrum Nova Bridge",
+    "Arbitrum Nitro"
+   ],
+   "tags": [],
+   "liquid": true,
+   "class": "主流公链型",
+   "sub": null,
+   "why": "主流公链原生币，没有美国现货 ETF",
+   "pick": "主流公链型按流动性第 2",
+   "in": true
+  },
+  {
+   "sym": "FIL",
+   "med": 28.0,
+   "cur": 30,
+   "qv30": 119959000.0,
+   "fut_share": 91.9813,
+   "vtags": [],
+   "rev30": 115298,
+   "hold30": 115298,
+   "hold1y": 1953837,
+   "llama_cat": "Chain",
+   "llama_names": [
+    "Filecoin"
+   ],
+   "tags": [],
+   "liquid": true,
+   "class": "主流公链型",
+   "sub": null,
+   "why": "主流公链原生币，没有美国现货 ETF",
+   "pick": "主流公链型按流动性第 3",
+   "in": true
+  },
+  {
+   "sym": "VIRTUAL",
+   "med": 70.0,
+   "cur": 68,
+   "qv30": 16411700.0,
+   "fut_share": 85.4122,
+   "vtags": [],
+   "rev30": 46025,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": "AI Agents",
+   "llama_names": [
+    "Virtuals Protocol"
+   ],
+   "tags": [
+    "AI Agent"
+   ],
+   "liquid": true,
+   "class": "现金流有用型",
+   "sub": "AI新兴需求",
+   "why": "人工：Agent 发行与交易收费（收入很小）",
+   "capture": "无 / 未核",
+   "capture_note": "",
+   "buyback_12m": null,
+   "pick": "AI新兴需求按流动性第 1",
+   "in": true
+  },
+  {
+   "sym": "RENDER",
+   "med": 75.0,
+   "cur": 59,
+   "qv30": 20561200.0,
+   "fut_share": 81.2976,
+   "vtags": [],
+   "rev30": 786176,
+   "hold30": 746867,
+   "hold1y": 2388072,
+   "llama_cat": "DePIN",
+   "llama_names": [
+    "Render Network BME"
+   ],
+   "tags": [],
+   "liquid": true,
+   "class": "现金流有用型",
+   "sub": "AI新兴需求",
+   "why": "DefiLlama 近 30 天协议收入 $0.8M，类别 DePIN",
+   "capture": "已执行·直接销毁",
+   "capture_note": "BME：用户付费对应销毁 RENDER",
+   "buyback_12m": 2388072,
+   "pick": "AI新兴需求按流动性第 2",
+   "in": true
+  },
+  {
+   "sym": "BNB",
+   "med": 9.0,
+   "cur": 6,
+   "qv30": 635545000.0,
+   "fut_share": 74.4039,
+   "vtags": [
+    "regular"
+   ],
+   "rev30": 805216,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": "Launchpad",
+   "llama_names": [
+    "Binance CEX",
+    "Binance Smart Chain",
+    "Binance Alpha"
+   ],
+   "tags": [
+    "交易所平台币"
+   ],
+   "liquid": true,
+   "class": "现金流有用型",
+   "sub": "交易所和DEX",
+   "why": "人工：币安平台币，季度自动销毁",
+   "capture": "已执行·直接销毁",
+   "capture_note": "季度自动销毁 + BEP-95 实时销毁",
+   "buyback_12m": null,
+   "pick": "交易所和DEX按流动性第 1",
+   "in": true
+  },
+  {
+   "sym": "UNI",
+   "med": 14.0,
+   "cur": 12,
+   "qv30": 265505000.0,
+   "fut_share": 82.8902,
+   "vtags": [
+    "regular"
+   ],
+   "rev30": 8109588,
+   "hold30": 8109588,
+   "hold1y": 65013927,
+   "llama_cat": "Dexs",
+   "llama_names": [
+    "Uniswap V3",
+    "Uniswap V4",
+    "Uniswap V2"
+   ],
+   "tags": [],
+   "liquid": true,
+   "class": "现金流有用型",
+   "sub": "交易所和DEX",
+   "why": "DefiLlama 近 30 天协议收入 $8.1M，类别 Dexs",
+   "capture": "已执行·回购销毁",
+   "capture_note": "2025-12-27～29 费用开关执行，token jar 销毁 UNI",
+   "buyback_12m": 65013927,
+   "pick": "交易所和DEX按流动性第 2",
+   "in": true
+  },
+  {
+   "sym": "CRV",
+   "med": 58.0,
+   "cur": 62,
+   "qv30": 34075700.0,
+   "fut_share": 88.7279,
+   "vtags": [],
+   "rev30": 2636549,
+   "hold30": 2457874,
+   "hold1y": 24829617,
+   "llama_cat": "Dexs",
+   "llama_names": [
+    "Curve DEX",
+    "Curve LlamaLend",
+    "crvUSD"
+   ],
+   "tags": [],
+   "liquid": true,
+   "class": "现金流有用型",
+   "sub": "交易所和DEX",
+   "why": "DefiLlama 近 30 天协议收入 $2.6M，类别 Dexs",
+   "capture": "已执行·分红",
+   "capture_note": "约 50% 交易费给 veCRV",
+   "buyback_12m": 24829617,
+   "pick": "交易所和DEX按流动性第 3",
+   "in": true
+  },
+  {
+   "sym": "AERO",
+   "med": 65.5,
+   "cur": 56,
+   "qv30": 29800300.0,
+   "fut_share": 84.6606,
+   "vtags": [],
+   "rev30": 7578290.0,
+   "hold30": 7298990.0,
+   "hold1y": 85405100.0,
+   "llama_cat": "Dexs",
+   "llama_names": [
+    "Aero Slipstream",
+    "Aerodrome Slipstream",
+    "Aero Basic"
+   ],
+   "tags": [],
+   "liquid": true,
+   "class": "现金流有用型",
+   "sub": "交易所和DEX",
+   "why": "DefiLlama 近 30 天协议收入 $7.6M，类别 Dexs",
+   "capture": "已执行·分红",
+   "capture_note": "交易费全部给 veAERO 投票者",
+   "buyback_12m": 85405100.0,
+   "miss": "交易所和DEX第 4，只取前 3",
+   "pick": "原观测池保留",
+   "in": true
+  },
+  {
+   "sym": "CAKE",
+   "med": 96.5,
+   "cur": 98,
+   "qv30": 11828600.0,
+   "fut_share": 71.2038,
+   "vtags": [],
+   "rev30": 3597760.0,
+   "hold30": 2344700.0,
+   "hold1y": 36944100.0,
+   "llama_cat": "Dexs",
+   "llama_names": [
+    "PancakeSwap AMM",
+    "PancakeSwap AMM V3",
+    "PancakeSwap Infinity"
+   ],
+   "tags": [],
+   "liquid": true,
+   "class": "现金流有用型",
+   "sub": "交易所和DEX",
+   "why": "DefiLlama 近 30 天协议收入 $3.6M，类别 Dexs",
+   "capture": "已执行·回购销毁",
+   "capture_note": "多产品手续费回购销毁，净通缩",
+   "buyback_12m": 36944100.0,
+   "miss": "交易所和DEX第 5，只取前 3",
+   "pick": "原观测池保留",
+   "in": true
+  },
+  {
+   "sym": "RAY",
+   "med": 173.0,
+   "cur": 240,
+   "qv30": 3775250.0,
+   "fut_share": 0.0,
+   "vtags": [],
+   "rev30": 2051609,
+   "hold30": 1267497,
+   "hold1y": 17463929,
+   "llama_cat": "Dexs",
+   "llama_names": [
+    "Raydium AMM",
+    "Raydium Perps",
+    "LaunchLab"
+   ],
+   "tags": [
+    "流动性不足"
+   ],
+   "liquid": false,
+   "class": "现金流有用型",
+   "sub": "交易所和DEX",
+   "why": "DefiLlama 近 30 天协议收入 $2.1M，类别 Dexs",
+   "capture": "已执行·回购持有",
+   "capture_note": "12% 交易费回购持有",
+   "buyback_12m": 17463929,
+   "pick": "原观测池保留",
+   "in": true
+  },
+  {
+   "sym": "AAVE",
+   "med": 26.0,
+   "cur": 21,
+   "qv30": 121986000.0,
+   "fut_share": 84.9914,
+   "vtags": [],
+   "rev30": 5366876,
+   "hold30": 0,
+   "hold1y": 18327222,
+   "llama_cat": "Lending",
+   "llama_names": [
+    "Aave V3",
+    "Aave V4",
+    "Aave Horizon RWA"
+   ],
+   "tags": [],
+   "liquid": true,
+   "class": "现金流有用型",
+   "sub": "借贷与抵押",
+   "why": "DefiLlama 近 30 天协议收入 $5.4M，类别 Lending",
+   "capture": "暂停中",
+   "capture_note": "2025-04-09 起回购，2026-04-19 起暂停",
+   "buyback_12m": 18327222,
+   "pick": "借贷与抵押按流动性第 1",
+   "in": true
+  },
+  {
+   "sym": "LDO",
+   "med": 76.0,
+   "cur": 83,
+   "qv30": 18493200.0,
+   "fut_share": 85.5592,
+   "vtags": [],
+   "rev30": 2840005,
+   "hold30": 0,
+   "hold1y": 7061751,
+   "llama_cat": "Liquid Staking",
+   "llama_names": [
+    "Lido"
+   ],
+   "tags": [],
+   "liquid": true,
+   "class": "现金流有用型",
+   "sub": "借贷与抵押",
+   "why": "DefiLlama 近 30 天协议收入 $2.8M，类别 Liquid Staking",
+   "capture": "承诺未执行",
+   "capture_note": "NEST 自动回购 2026-08-14 上线，收入未过阈值从未触发",
+   "buyback_12m": 7061751,
+   "pick": "借贷与抵押按流动性第 2",
+   "in": true
+  },
+  {
+   "sym": "PENDLE",
+   "med": 79.0,
+   "cur": 89,
+   "qv30": 17866300.0,
+   "fut_share": 81.9046,
+   "vtags": [],
+   "rev30": 524774,
+   "hold30": 416793,
+   "hold1y": 10040827,
+   "llama_cat": "Yield",
+   "llama_names": [
+    "Pendle V2",
+    "Pendle Loop"
+   ],
+   "tags": [],
+   "liquid": true,
+   "class": "现金流有用型",
+   "sub": "借贷与抵押",
+   "why": "DefiLlama 近 30 天协议收入 $0.5M，类别 Yield",
+   "capture": "已执行·回购分给质押者",
+   "capture_note": "sPENDLE：80% 收入回购（2026-01-20 起）",
+   "buyback_12m": 10040827,
+   "pick": "借贷与抵押按流动性第 3",
+   "in": true
+  },
+  {
+   "sym": "MORPHO",
+   "med": 98.0,
+   "cur": 102,
+   "qv30": 12327500.0,
+   "fut_share": 79.3242,
+   "vtags": [],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": "Lending",
+   "llama_names": [
+    "Morpho Blue",
+    "Morpho Midnight",
+    "Morpho Optimizer AaveV2"
+   ],
+   "tags": [],
+   "liquid": true,
+   "class": "现金流有用型",
+   "sub": "借贷与抵押",
+   "why": "人工：借贷撮合层，费用开关未开（DefiLlama 协议收入记为 0）",
+   "capture": "承诺未执行",
+   "capture_note": "费用开关最高 25%，未开",
+   "buyback_12m": null,
+   "unlock_12m": 212285000.0,
+   "unlock_note": "每月约 910 万（第三方），待核",
+   "scissors": -212285000.0,
+   "miss": "借贷与抵押第 4，只取前 3",
+   "pick": "原观测池保留",
+   "in": true
+  },
+  {
+   "sym": "SKY",
+   "med": 130.0,
+   "cur": 135,
+   "qv30": 7266710.0,
+   "fut_share": 76.5497,
+   "vtags": [],
+   "rev30": 13340721,
+   "hold30": 5496994,
+   "hold1y": 54043879,
+   "llama_cat": "CDP",
+   "llama_names": [
+    "Sky Lending",
+    "Sky Money",
+    "Sky RWA"
+   ],
+   "tags": [
+    "流动性不足"
+   ],
+   "liquid": false,
+   "class": "现金流有用型",
+   "sub": "借贷与抵押",
+   "why": "DefiLlama 近 30 天协议收入 $13.3M，类别 CDP",
+   "capture": "已执行·回购销毁",
+   "capture_note": "Smart Burn Engine，净盈余回购",
+   "buyback_12m": 54043879,
+   "pick": "原观测池保留",
+   "in": true
+  },
+  {
+   "sym": "NEAR",
+   "med": 7.5,
+   "cur": 10,
+   "qv30": 742074000.0,
+   "fut_share": 80.0284,
+   "vtags": [
+    "regular"
+   ],
+   "rev30": 1807441,
+   "hold30": 1807441,
+   "hold1y": 8203170.0,
+   "llama_cat": "Bridge",
+   "llama_names": [
+    "NEAR Intents",
+    "NEAR Bridge"
+   ],
+   "tags": [
+    "ETF",
+    "公链"
+   ],
+   "liquid": true,
+   "class": "现金流有用型",
+   "sub": "卖水人过路费",
+   "why": "人工：Intents 跨链兑换收费并回购",
+   "capture": "已执行·回购销毁",
+   "capture_note": "Intents 费用回购（2026-02 起）",
+   "buyback_12m": 8203170.0,
+   "pick": "卖水人过路费按流动性第 1",
+   "in": true
+  },
+  {
+   "sym": "LINK",
+   "med": 19.0,
+   "cur": 19,
+   "qv30": 155472000.0,
+   "fut_share": 82.9443,
+   "vtags": [
+    "regular"
+   ],
+   "rev30": 5340836,
+   "hold30": 5340836,
+   "hold1y": 58614987,
+   "llama_cat": "Services",
+   "llama_names": [
+    "Chainlink Requests",
+    "Chainlink Staking"
+   ],
+   "tags": [
+    "ETF",
+    "预言机"
+   ],
+   "liquid": true,
+   "class": "现金流有用型",
+   "sub": "卖水人过路费",
+   "why": "人工：预言机，Reserve 回购持有",
+   "capture": "已执行·储备",
+   "capture_note": "Chainlink Reserve 买入持有",
+   "buyback_12m": 58614987,
+   "pick": "卖水人过路费按流动性第 2",
+   "in": true
+  },
+  {
+   "sym": "PYTH",
+   "med": 81.0,
+   "cur": 66,
+   "qv30": 29568100.0,
+   "fut_share": 80.8098,
+   "vtags": [],
+   "rev30": 622456.0,
+   "hold30": 0,
+   "hold1y": 1.16,
+   "llama_cat": "Oracle",
+   "llama_names": [
+    "Pyth Network",
+    "Pyth Entropy",
+    "Pyth Express Relay"
+   ],
+   "tags": [],
+   "liquid": true,
+   "class": "现金流有用型",
+   "sub": "卖水人过路费",
+   "why": "DefiLlama 近 30 天协议收入 $0.6M，类别 Oracle",
+   "capture": "无 / 未核",
+   "capture_note": "",
+   "buyback_12m": 1.16,
+   "pick": "卖水人过路费按流动性第 3",
+   "in": true
+  },
+  {
+   "sym": "PUMP",
+   "med": 17.0,
+   "cur": 29,
+   "qv30": 168374000.0,
+   "fut_share": 87.0069,
+   "vtags": [
+    "regular"
+   ],
+   "rev30": 47988500.0,
+   "hold30": 21265837,
+   "hold1y": 291842875,
+   "llama_cat": "Launchpad",
+   "llama_names": [
+    "PumpSwap",
+    "PumpBTC",
+    "Pumpkin DAO"
+   ],
+   "tags": [],
+   "liquid": true,
+   "class": "现金流有用型",
+   "sub": "发射台",
+   "why": "人工：pump.fun 发射台（CoinGecko 把它标成 meme，以收入为准）",
+   "capture": "已执行·回购销毁",
+   "capture_note": "2026-04-28 起 50% 净收入",
+   "buyback_12m": 291842875,
+   "unlock_12m": 284460000.0,
+   "unlock_note": "每月约 68.75 亿（Notion 11-13），另有 92 亿 / 月的第三方说法，待核",
+   "scissors": 7382880.0,
+   "pick": "发射台按流动性第 1",
+   "in": true
+  },
+  {
+   "sym": "ENA",
+   "med": 13.5,
+   "cur": 13,
+   "qv30": 329403000.0,
+   "fut_share": 82.0134,
+   "vtags": [
+    "regular"
+   ],
+   "rev30": 61099.3,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": "Basis Trading",
+   "llama_names": [
+    "Ethena USDe",
+    "Ethena USDtb"
+   ],
+   "tags": [
+    "合成美元"
+   ],
+   "liquid": true,
+   "class": "现金流有用型",
+   "sub": "现实摩擦解决",
+   "why": "人工：USDe 合成美元；费用开关未开",
+   "capture": "承诺未执行",
+   "capture_note": "USDe 达 75 亿美元才触发回购，当前约 49.7 亿",
+   "buyback_12m": null,
+   "unlock_12m": 216814000.0,
+   "unlock_note": "每月约 1.34 亿（团队 + 基金会，第三方），待核",
+   "scissors": -216814000.0,
+   "pick": "现实摩擦解决按流动性第 1",
+   "in": true
+  },
+  {
+   "sym": "TRX",
+   "med": 38.0,
+   "cur": 38,
+   "qv30": 104429000.0,
+   "fut_share": 61.1004,
+   "vtags": [],
+   "rev30": 24490245,
+   "hold30": 24490245,
+   "hold1y": 332245877,
+   "llama_cat": "Chain",
+   "llama_names": [
+    "Tron"
+   ],
+   "tags": [
+    "ETF",
+    "公链"
+   ],
+   "liquid": true,
+   "class": "现金流有用型",
+   "sub": "现实摩擦解决",
+   "why": "人工：USDT 支付主干道，手续费收入大",
+   "capture": "已执行·直接销毁",
+   "capture_note": "能量 / 带宽费销毁（待核比例）",
+   "buyback_12m": 332245877,
+   "pick": "现实摩擦解决按流动性第 2",
+   "in": true
+  },
+  {
+   "sym": "ETHFI",
+   "med": 58.0,
+   "cur": 42,
+   "qv30": 29877100.0,
+   "fut_share": 83.5914,
+   "vtags": [],
+   "rev30": 3923233,
+   "hold30": 0,
+   "hold1y": 7309488,
+   "llama_cat": "Crypto Card Issuer",
+   "llama_names": [
+    "ether.fi Stake",
+    "ether.fi Liquid",
+    "EtherFi Borrowing Market"
+   ],
+   "tags": [
+    "加密卡"
+   ],
+   "liquid": true,
+   "class": "现金流有用型",
+   "sub": "现实摩擦解决",
+   "why": "人工：收入主要来自 ether.fi 加密卡与质押",
+   "capture": "已执行·回购持有",
+   "capture_note": "回购后多用于返利 / 基金会持有",
+   "buyback_12m": 7309488,
+   "unlock_12m": 60993500.0,
+   "unlock_note": "每月约 890 万至 2027-03，这里按 12 个月上限，待核",
+   "scissors": -53684000.0,
+   "pick": "现实摩擦解决按流动性第 3",
+   "in": true
+  },
+  {
+   "sym": "HYPE",
+   "med": 8.0,
+   "cur": 8,
+   "qv30": 698434000.0,
+   "fut_share": 93.8239,
+   "vtags": [
+    "regular"
+   ],
+   "rev30": 69328957,
+   "hold30": 69328957,
+   "hold1y": 679339876,
+   "llama_cat": "Derivatives",
+   "llama_names": [
+    "Hyperliquid Bridge",
+    "Hyperliquid Earn",
+    "Hyperliquid HLP"
+   ],
+   "tags": [
+    "公链"
+   ],
+   "liquid": true,
+   "class": "现金流有用型",
+   "sub": "衍生品",
+   "why": "人工：永续 DEX，99% 手续费回购",
+   "capture": "已执行·回购销毁",
+   "capture_note": "perps 99% 手续费；spot 2025-08-30 起 99%",
+   "buyback_12m": 679339876,
+   "pick": "衍生品按流动性第 1",
+   "in": true
+  },
+  {
+   "sym": "ASTER",
+   "med": 44.0,
+   "cur": 34,
+   "qv30": 44850700.0,
+   "fut_share": 82.8753,
+   "vtags": [],
+   "rev30": 0,
+   "hold30": 2714416,
+   "hold1y": 30182807,
+   "llama_cat": "Basis Trading",
+   "llama_names": [
+    "Aster USDF",
+    "Aster asBNB",
+    "APX Bridge"
+   ],
+   "tags": [],
+   "liquid": true,
+   "class": "现金流有用型",
+   "sub": "衍生品",
+   "why": "人工：永续 DEX，DefiLlama 有持有人收入（回购）记录",
+   "capture": "DefiLlama 有记录·未核",
+   "capture_note": "近 30 天持有人收入约 $2.7M（回购），未人工核实",
+   "buyback_12m": 30182807,
+   "pick": "衍生品按流动性第 2",
+   "in": true
+  },
+  {
+   "sym": "JUP",
+   "med": 71.5,
+   "cur": 53,
+   "qv30": 17519500.0,
+   "fut_share": 83.6239,
+   "vtags": [],
+   "rev30": 6204260.0,
+   "hold30": 2256510.0,
+   "hold1y": 38058100.0,
+   "llama_cat": "Derivatives",
+   "llama_names": [
+    "Jupiter Lend",
+    "Jupiter Perpetual Exchange",
+    "Jupiter Staked SOL"
+   ],
+   "tags": [
+    "聚合器"
+   ],
+   "liquid": true,
+   "class": "现金流有用型",
+   "sub": "衍生品",
+   "why": "人工：收入主要来自永续，Litterbox 回购持有",
+   "capture": "已执行·回购持有",
+   "capture_note": "50% 链上收入进 Litterbox",
+   "buyback_12m": 38058100.0,
+   "pick": "衍生品按流动性第 3",
+   "in": true
+  },
+  {
+   "sym": "GMX",
+   "med": 252.5,
+   "cur": 232,
+   "qv30": 3093030.0,
+   "fut_share": 85.565,
+   "vtags": [],
+   "rev30": 512000,
+   "hold30": 373628,
+   "hold1y": 6979960,
+   "llama_cat": "Derivatives",
+   "llama_names": [
+    "GMX EVM",
+    "GMX V1 EVM",
+    "GMX V1 AMM"
+   ],
+   "tags": [
+    "流动性不足"
+   ],
+   "liquid": false,
+   "class": "现金流有用型",
+   "sub": "衍生品",
+   "why": "DefiLlama 近 30 天协议收入 $0.5M，类别 Derivatives",
+   "capture": "已执行·回购持有",
+   "capture_note": "V2 约 27% 手续费回购",
+   "buyback_12m": 6979960,
+   "pick": "原观测池保留",
+   "in": true
+  },
+  {
+   "sym": "WLD",
+   "med": 17.5,
+   "cur": 23,
+   "qv30": 253640000.0,
+   "fut_share": 85.5463,
+   "vtags": [
+    "regular"
+   ],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": "Chain",
+   "llama_names": [
+    "Worldcoin"
+   ],
+   "tags": [
+    "空投激励",
+    "解锁抛压"
+   ],
+   "liquid": true,
+   "class": "博弈控盘型",
+   "sub": "反身性",
+   "why": "人工：靠用户发放与团队 / 投资人解锁，无收入回流持币人",
+   "pick": "反身性按流动性第 1",
+   "in": true
+  },
+  {
+   "sym": "TAO",
+   "med": 24.0,
+   "cur": 24,
+   "qv30": 111214000.0,
+   "fut_share": 84.1711,
+   "vtags": [
+    "regular"
+   ],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": "Chain",
+   "llama_names": [
+    "Bittensor"
+   ],
+   "tags": [
+    "AI 叙事",
+    "挖矿排放"
+   ],
+   "liquid": true,
+   "class": "博弈控盘型",
+   "sub": "反身性",
+   "why": "人工：质押收益来自排放，无外部收入回流 TAO；2026-11-14 大叔确认",
+   "pick": "反身性按流动性第 2",
+   "in": true
+  },
+  {
+   "sym": "ONDO",
+   "med": 31.0,
+   "cur": 36,
+   "qv30": 81111700.0,
+   "fut_share": 84.8737,
+   "vtags": [],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": "RWA",
+   "llama_names": [
+    "Ondo Yield Assets",
+    "Ondo Global Markets",
+    "Ondo Perps"
+   ],
+   "tags": [
+    "RWA"
+   ],
+   "liquid": true,
+   "class": "博弈控盘型",
+   "sub": "叙事",
+   "why": "人工：RWA 叙事，代币无价值捕获",
+   "pick": "叙事按流动性第 1",
+   "in": true
+  },
+  {
+   "sym": "QNT",
+   "med": 35.5,
+   "cur": 32,
+   "qv30": 92738100.0,
+   "fut_share": 85.7826,
+   "vtags": [],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": null,
+   "llama_names": null,
+   "tags": [
+    "企业互操作"
+   ],
+   "liquid": true,
+   "class": "博弈控盘型",
+   "sub": "叙事",
+   "why": "人工：无可核实链上收入",
+   "pick": "叙事按流动性第 2",
+   "in": true
+  },
+  {
+   "sym": "FET",
+   "med": 43.0,
+   "cur": 40,
+   "qv30": 53745300.0,
+   "fut_share": 76.3405,
+   "vtags": [],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": null,
+   "llama_names": null,
+   "tags": [
+    "AI"
+   ],
+   "liquid": true,
+   "class": "博弈控盘型",
+   "sub": "叙事",
+   "why": "人工：AI 叙事，无协议收入",
+   "pick": "叙事按流动性第 3",
+   "in": true
+  },
+  {
+   "sym": "PEPE",
+   "med": 15.0,
+   "cur": 7,
+   "qv30": 488254000.0,
+   "fut_share": 84.5921,
+   "vtags": [
+    "regular"
+   ],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": null,
+   "llama_names": null,
+   "tags": [],
+   "liquid": true,
+   "class": "注意力情绪型",
+   "sub": "Meme",
+   "why": "CoinGecko meme 类目",
+   "pick": "Meme按流动性第 1",
+   "in": true
+  },
+  {
+   "sym": "TRUMP",
+   "med": 28.0,
+   "cur": 28,
+   "qv30": 107069000.0,
+   "fut_share": 88.3787,
+   "vtags": [],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": "Meme",
+   "llama_names": [
+    "Official Trump"
+   ],
+   "tags": [],
+   "liquid": true,
+   "class": "注意力情绪型",
+   "sub": "Meme",
+   "why": "CoinGecko meme 类目",
+   "pick": "Meme按流动性第 2",
+   "in": true
+  },
+  {
+   "sym": "PENGU",
+   "med": 40.0,
+   "cur": 47,
+   "qv30": 54186300.0,
+   "fut_share": 88.3941,
+   "vtags": [],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": "Chain",
+   "llama_names": [
+    "Pudgy Penguins"
+   ],
+   "tags": [],
+   "liquid": true,
+   "class": "注意力情绪型",
+   "sub": "Meme",
+   "why": "CoinGecko meme 类目",
+   "pick": "Meme按流动性第 3",
+   "in": true
+  },
+  {
+   "sym": "BCH",
+   "med": 31.0,
+   "cur": 35,
+   "qv30": 95369700.0,
+   "fut_share": 89.8686,
+   "vtags": [],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": null,
+   "llama_names": null,
+   "tags": [
+    "ETF 申请中"
+   ],
+   "liquid": true,
+   "class": "主流公链型",
+   "sub": null,
+   "why": "主流公链原生币，没有美国现货 ETF",
+   "miss": "主流公链型第 4，只取前 3",
+   "in": false
+  },
+  {
+   "sym": "INJ",
+   "med": 38.5,
+   "cur": 27,
+   "qv30": 114967000.0,
+   "fut_share": 84.5676,
+   "vtags": [],
+   "rev30": 136671,
+   "hold30": 136671,
+   "hold1y": 3227233,
+   "llama_cat": "Chain",
+   "llama_names": [
+    "Injective Bridge",
+    "Injective Perps",
+    "Injective"
+   ],
+   "tags": [],
+   "liquid": true,
+   "class": "主流公链型",
+   "sub": null,
+   "why": "主流公链原生币，没有美国现货 ETF",
+   "miss": "主流公链型第 5，只取前 3",
+   "in": false
+  },
+  {
+   "sym": "XLM",
+   "med": 39.0,
+   "cur": 31,
+   "qv30": 52692100.0,
+   "fut_share": 80.793,
+   "vtags": [],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": null,
+   "llama_names": null,
+   "tags": [
+    "ETF 申请中"
+   ],
+   "liquid": true,
+   "class": "主流公链型",
+   "sub": null,
+   "why": "主流公链原生币，没有美国现货 ETF",
+   "miss": "主流公链型第 6，只取前 3",
+   "in": false
+  },
+  {
+   "sym": "DASH",
+   "med": 46.5,
+   "cur": 51,
+   "qv30": 36592600.0,
+   "fut_share": 83.5723,
+   "vtags": [],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": null,
+   "llama_names": null,
+   "tags": [],
+   "liquid": true,
+   "class": "主流公链型",
+   "sub": null,
+   "why": "主流公链原生币，没有美国现货 ETF",
+   "miss": "主流公链型第 7，只取前 3",
+   "in": false
+  },
+  {
+   "sym": "APT",
+   "med": 47.0,
+   "cur": 46,
+   "qv30": 45501800.0,
+   "fut_share": 83.8372,
+   "vtags": [],
+   "rev30": 121805,
+   "hold30": 121805,
+   "hold1y": 877707,
+   "llama_cat": "Canonical Bridge",
+   "llama_names": [
+    "Apricot Finance",
+    "Aptos"
+   ],
+   "tags": [
+    "ETF 申请中"
+   ],
+   "liquid": true,
+   "class": "主流公链型",
+   "sub": null,
+   "why": "主流公链原生币，没有美国现货 ETF",
+   "miss": "主流公链型第 8，只取前 3",
+   "in": false
+  },
+  {
+   "sym": "XPL",
+   "med": 47.0,
+   "cur": 48,
+   "qv30": 46355700.0,
+   "fut_share": 82.0761,
+   "vtags": [],
+   "rev30": 5812,
+   "hold30": 5812,
+   "hold1y": 104648.0,
+   "llama_cat": "Chain",
+   "llama_names": [
+    "Plasma"
+   ],
+   "tags": [],
+   "liquid": true,
+   "class": "主流公链型",
+   "sub": null,
+   "why": "主流公链原生币，没有美国现货 ETF",
+   "miss": "主流公链型第 9，只取前 3",
+   "in": false
+  },
+  {
+   "sym": "OP",
+   "med": 55.0,
+   "cur": 52,
+   "qv30": 43181300.0,
+   "fut_share": 87.5331,
+   "vtags": [],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": "Canonical Bridge",
+   "llama_names": [
+    "Optimism Bridge",
+    "Optimism OP Unlocks"
+   ],
+   "tags": [],
+   "liquid": true,
+   "class": "主流公链型",
+   "sub": null,
+   "why": "主流公链原生币，没有美国现货 ETF",
+   "miss": "主流公链型第 10，只取前 3",
+   "in": false
+  },
+  {
+   "sym": "ICP",
+   "med": 60.5,
+   "cur": 43,
+   "qv30": 26296900.0,
+   "fut_share": 79.6677,
+   "vtags": [],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": "Chain",
+   "llama_names": [
+    "Internet Computer"
+   ],
+   "tags": [],
+   "liquid": true,
+   "class": "主流公链型",
+   "sub": null,
+   "why": "主流公链原生币，没有美国现货 ETF",
+   "miss": "主流公链型第 11，只取前 3",
+   "in": false
+  },
+  {
+   "sym": "ETC",
+   "med": 66.0,
+   "cur": 63,
+   "qv30": 22792700.0,
+   "fut_share": 90.426,
+   "vtags": [],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": null,
+   "llama_names": null,
+   "tags": [],
+   "liquid": true,
+   "class": "主流公链型",
+   "sub": null,
+   "why": "主流公链原生币，没有美国现货 ETF",
+   "miss": "主流公链型第 12，只取前 3",
+   "in": false
+  },
+  {
+   "sym": "STRK",
+   "med": 68.0,
+   "cur": 55,
+   "qv30": 90890600.0,
+   "fut_share": 85.5314,
+   "vtags": [],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 189,
+   "llama_cat": "Canonical Bridge",
+   "llama_names": [
+    "Starknet Bridge",
+    "Strike"
+   ],
+   "tags": [],
+   "liquid": true,
+   "class": "主流公链型",
+   "sub": null,
+   "why": "主流公链原生币，没有美国现货 ETF",
+   "miss": "主流公链型第 13，只取前 3",
+   "in": false
+  },
+  {
+   "sym": "ATOM",
+   "med": 74.0,
+   "cur": 70,
+   "qv30": 19998500.0,
+   "fut_share": 87.731,
+   "vtags": [],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": null,
+   "llama_names": null,
+   "tags": [],
+   "liquid": true,
+   "class": "主流公链型",
+   "sub": null,
+   "why": "主流公链原生币，没有美国现货 ETF",
+   "miss": "主流公链型第 14，只取前 3",
+   "in": false
+  },
+  {
+   "sym": "POL",
+   "med": 75.5,
+   "cur": 65,
+   "qv30": 15552700.0,
+   "fut_share": 74.0258,
+   "vtags": [],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": "Canonical Bridge",
+   "llama_names": [
+    "Polygon Bridge"
+   ],
+   "tags": [],
+   "liquid": true,
+   "class": "主流公链型",
+   "sub": null,
+   "why": "主流公链原生币，没有美国现货 ETF",
+   "miss": "主流公链型第 15，只取前 3",
+   "in": false
+  },
+  {
+   "sym": "GRAM",
+   "med": 80.0,
+   "cur": 20,
+   "qv30": 27725100.0,
+   "fut_share": 65.9793,
+   "vtags": [
+    "entrant"
+   ],
+   "rev30": 33394,
+   "hold30": 33394,
+   "hold1y": 878398,
+   "llama_cat": "Chain",
+   "llama_names": [
+    "TON"
+   ],
+   "tags": [],
+   "liquid": true,
+   "class": "主流公链型",
+   "sub": null,
+   "why": "主流公链原生币，没有美国现货 ETF",
+   "miss": "主流公链型第 16，只取前 3",
+   "in": false
+  },
+  {
+   "sym": "SEI",
+   "med": 80.0,
+   "cur": 91,
+   "qv30": 19051000.0,
+   "fut_share": 78.0715,
+   "vtags": [],
+   "rev30": 1640,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": "Chain",
+   "llama_names": [
+    "Sei"
+   ],
+   "tags": [],
+   "liquid": true,
+   "class": "主流公链型",
+   "sub": null,
+   "why": "主流公链原生币，没有美国现货 ETF",
+   "miss": "主流公链型第 17，只取前 3",
+   "in": false
+  },
+  {
+   "sym": "PROM",
+   "med": 83.0,
+   "cur": 61,
+   "qv30": 16746000.0,
+   "fut_share": 79.6367,
+   "vtags": [],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": null,
+   "llama_names": null,
+   "tags": [],
+   "liquid": true,
+   "class": "主流公链型",
+   "sub": null,
+   "why": "主流公链原生币，没有美国现货 ETF",
+   "miss": "主流公链型第 18，只取前 3",
+   "in": false
+  },
+  {
+   "sym": "STX",
+   "med": 87.0,
+   "cur": 73,
+   "qv30": 19004800.0,
+   "fut_share": 84.2557,
+   "vtags": [],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": "Chain",
+   "llama_names": [
+    "Stacks Staking"
+   ],
+   "tags": [],
+   "liquid": true,
+   "class": "主流公链型",
+   "sub": null,
+   "why": "主流公链原生币，没有美国现货 ETF",
+   "miss": "主流公链型第 19，只取前 3",
+   "in": false
+  },
+  {
+   "sym": "LSK",
+   "med": 91.0,
+   "cur": 99,
+   "qv30": 46702500.0,
+   "fut_share": 91.5879,
+   "vtags": [],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": null,
+   "llama_names": null,
+   "tags": [],
+   "liquid": true,
+   "class": "主流公链型",
+   "sub": null,
+   "why": "主流公链原生币，没有美国现货 ETF",
+   "miss": "主流公链型第 20，只取前 3",
+   "in": false
+  },
+  {
+   "sym": "ALGO",
+   "med": 93.0,
+   "cur": 94,
+   "qv30": 12404900.0,
+   "fut_share": 80.4591,
+   "vtags": [],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": null,
+   "llama_names": null,
+   "tags": [],
+   "liquid": true,
+   "class": "主流公链型",
+   "sub": null,
+   "why": "主流公链原生币，没有美国现货 ETF",
+   "miss": "主流公链型第 21，只取前 3",
+   "in": false
+  },
+  {
+   "sym": "ZEN",
+   "med": 98.5,
+   "cur": 108,
+   "qv30": 9087100.0,
+   "fut_share": 79.5932,
+   "vtags": [],
+   "rev30": 69.04,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": "Services",
+   "llama_names": [
+    "Zena Finance",
+    "Zenland"
+   ],
+   "tags": [],
+   "liquid": true,
+   "class": "主流公链型",
+   "sub": null,
+   "why": "主流公链原生币，没有美国现货 ETF",
+   "miss": "主流公链型第 22，只取前 3",
+   "in": false
+  },
+  {
+   "sym": "JTO",
+   "med": 84.0,
+   "cur": 92,
+   "qv30": 13428800.0,
+   "fut_share": 85.2485,
+   "vtags": [],
+   "rev30": 358277,
+   "hold30": 1669,
+   "hold1y": 1669,
+   "llama_cat": "DAO Service Provider",
+   "llama_names": [
+    "Jito Liquid Staking",
+    "Jito Restaking",
+    "Jito DAO"
+   ],
+   "tags": [],
+   "liquid": true,
+   "class": "现金流有用型",
+   "sub": "卖水人过路费",
+   "why": "DefiLlama 近 30 天协议收入 $0.4M，类别 DAO Service Provider",
+   "capture": "承诺未执行",
+   "capture_note": "JIP-38：JTX 80% 手续费回购销毁（待核执行情况）",
+   "buyback_12m": 1669,
+   "miss": "卖水人过路费第 4，只取前 3",
+   "in": false
+  },
+  {
+   "sym": "WLFI",
+   "med": 65.0,
+   "cur": 39,
+   "qv30": 34289900.0,
+   "fut_share": 83.8287,
+   "vtags": [],
+   "rev30": 10697799,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": "Lending",
+   "llama_names": [
+    "World Liberty Financial"
+   ],
+   "tags": [
+    "稳定币 USD1"
+   ],
+   "liquid": true,
+   "class": "现金流有用型",
+   "sub": "现实摩擦解决",
+   "why": "人工：USD1 稳定币发行方",
+   "capture": "无 / 未核",
+   "capture_note": "",
+   "buyback_12m": null,
+   "miss": "现实摩擦解决第 4，只取前 3",
+   "in": false
+  },
+  {
+   "sym": "ZRO",
+   "med": 48.5,
+   "cur": 49,
+   "qv30": 61476800.0,
+   "fut_share": 81.2752,
+   "vtags": [],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 3391192,
+   "llama_cat": "Bridge",
+   "llama_names": [
+    "LayerZero V2",
+    "LayerZero V1"
+   ],
+   "tags": [
+    "跨链"
+   ],
+   "liquid": true,
+   "class": "博弈控盘型",
+   "sub": "叙事",
+   "why": "人工：费用开关未通过，无收入回流",
+   "miss": "叙事第 4，只取前 3",
+   "in": false
+  },
+  {
+   "sym": "TIA",
+   "med": 50.5,
+   "cur": 33,
+   "qv30": 98893300.0,
+   "fut_share": 87.1693,
+   "vtags": [],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": "Canonical Bridge",
+   "llama_names": [
+    "Celestia"
+   ],
+   "tags": [
+    "数据可用性"
+   ],
+   "liquid": true,
+   "class": "博弈控盘型",
+   "sub": "叙事",
+   "why": "人工：DA 叙事，收入极小",
+   "miss": "叙事第 5，只取前 3",
+   "in": false
+  },
+  {
+   "sym": "SAND",
+   "med": 86.0,
+   "cur": 84,
+   "qv30": 38501600.0,
+   "fut_share": 90.7015,
+   "vtags": [],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": "Gaming",
+   "llama_names": [
+    "The Sandbox"
+   ],
+   "tags": [
+    "游戏"
+   ],
+   "liquid": true,
+   "class": "博弈控盘型",
+   "sub": "叙事",
+   "why": "人工：元宇宙叙事",
+   "miss": "叙事第 6，只取前 3",
+   "in": false
+  },
+  {
+   "sym": "ZAMA",
+   "med": 88.5,
+   "cur": 82,
+   "qv30": 17162400.0,
+   "fut_share": 72.3634,
+   "vtags": [],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": "Privacy",
+   "llama_names": [
+    "Zama"
+   ],
+   "tags": [
+    "隐私计算"
+   ],
+   "liquid": true,
+   "class": "博弈控盘型",
+   "sub": "叙事",
+   "why": "人工：无协议收入",
+   "miss": "叙事第 7，只取前 3",
+   "in": false
+  },
+  {
+   "sym": "EIGEN",
+   "med": 91.5,
+   "cur": 96,
+   "qv30": 16609500.0,
+   "fut_share": 77.3678,
+   "vtags": [],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": "Restaking",
+   "llama_names": [
+    "EigenCloud"
+   ],
+   "tags": [
+    "再质押"
+   ],
+   "liquid": true,
+   "class": "博弈控盘型",
+   "sub": "叙事",
+   "why": "人工：无协议收入回流",
+   "miss": "叙事第 8，只取前 3",
+   "in": false
+  },
+  {
+   "sym": "MARSCOIN",
+   "med": 50,
+   "cur": 85,
+   "qv30": 23592400.0,
+   "fut_share": 64.222,
+   "vtags": [
+    "new"
+   ],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": null,
+   "llama_names": null,
+   "tags": [],
+   "liquid": true,
+   "class": "注意力情绪型",
+   "sub": "Meme",
+   "why": "CoinGecko meme 类目",
+   "miss": "Meme第 4，只取前 3",
+   "in": false
+  },
+  {
+   "sym": "SHIB",
+   "med": 53.0,
+   "cur": 45,
+   "qv30": 32856300.0,
+   "fut_share": 89.8489,
+   "vtags": [],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": "Dexs",
+   "llama_names": [
+    "Shibex"
+   ],
+   "tags": [],
+   "liquid": true,
+   "class": "注意力情绪型",
+   "sub": "Meme",
+   "why": "CoinGecko meme 类目",
+   "miss": "Meme第 5，只取前 3",
+   "in": false
+  },
+  {
+   "sym": "牛来",
+   "med": 57,
+   "cur": 67,
+   "qv30": 24230800.0,
+   "fut_share": 79.098,
+   "vtags": [
+    "new"
+   ],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": null,
+   "llama_names": null,
+   "tags": [],
+   "liquid": true,
+   "class": "注意力情绪型",
+   "sub": "Meme",
+   "why": "CoinGecko meme 类目",
+   "miss": "Meme第 6，只取前 3",
+   "in": false
+  },
+  {
+   "sym": "BONK",
+   "med": 68.0,
+   "cur": 60,
+   "qv30": 21426200.0,
+   "fut_share": 84.7335,
+   "vtags": [],
+   "rev30": 1646430.0,
+   "hold30": 1557070.0,
+   "hold1y": 14332000.0,
+   "llama_cat": "Launchpad",
+   "llama_names": [
+    "Bonk Staked SOL",
+    "Bonkswap",
+    "BONKbot"
+   ],
+   "tags": [
+    "发射台收入"
+   ],
+   "liquid": true,
+   "class": "注意力情绪型",
+   "sub": "Meme",
+   "why": "人工：价格主要靠 meme 注意力，letsbonk 发射台收入只占小头",
+   "miss": "Meme第 7，只取前 3",
+   "in": false
+  },
+  {
+   "sym": "WIF",
+   "med": 78.5,
+   "cur": 80,
+   "qv30": 16121200.0,
+   "fut_share": 91.7286,
+   "vtags": [],
+   "rev30": 19285,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": "Onchain Voting",
+   "llama_names": [
+    "World is Flat"
+   ],
+   "tags": [],
+   "liquid": true,
+   "class": "注意力情绪型",
+   "sub": "Meme",
+   "why": "CoinGecko meme 类目",
+   "miss": "Meme第 8，只取前 3",
+   "in": false
+  },
+  {
+   "sym": "MUBARAK",
+   "med": 86.0,
+   "cur": 128,
+   "qv30": 15532200.0,
+   "fut_share": 69.3473,
+   "vtags": [],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": null,
+   "llama_names": null,
+   "tags": [],
+   "liquid": true,
+   "class": "注意力情绪型",
+   "sub": "Meme",
+   "why": "CoinGecko meme 类目",
+   "miss": "Meme第 9，只取前 3",
+   "in": false
+  },
+  {
+   "sym": "BOME",
+   "med": 88.0,
+   "cur": 74,
+   "qv30": 12386400.0,
+   "fut_share": 86.9782,
+   "vtags": [],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": null,
+   "llama_names": null,
+   "tags": [],
+   "liquid": true,
+   "class": "注意力情绪型",
+   "sub": "Meme",
+   "why": "CoinGecko meme 类目",
+   "miss": "Meme第 10，只取前 3",
+   "in": false
+  },
+  {
+   "sym": "CHIP",
+   "med": 79.5,
+   "cur": 105,
+   "qv30": 22078200.0,
+   "fut_share": 79.3123,
+   "vtags": [],
+   "rev30": 272103,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": "RWA",
+   "llama_names": [
+    "USD AI"
+   ],
+   "tags": [],
+   "liquid": true,
+   "class": null,
+   "sub": null,
+   "why": "中间态：没有 ETF、没有可核实收入、不是公链或 meme，也没有人工归类",
+   "miss": "中间态：没有 ETF、没有可核实收入、不是公链或 meme，也没有人工归类",
+   "in": false
+  },
+  {
+   "sym": "NIL",
+   "med": 89.0,
+   "cur": 104,
+   "qv30": 28848000.0,
+   "fut_share": 74.6409,
+   "vtags": [],
+   "rev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": "Yield",
+   "llama_names": [
+    "Nileriver"
+   ],
+   "tags": [],
+   "liquid": true,
+   "class": null,
+   "sub": null,
+   "why": "中间态：没有 ETF、没有可核实收入、不是公链或 meme，也没有人工归类",
+   "miss": "中间态：没有 ETF、没有可核实收入、不是公链或 meme，也没有人工归类",
+   "in": false
+  }
+ ]
+}
