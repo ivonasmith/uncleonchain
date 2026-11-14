@@ -1,4 +1,37 @@
 {
+"anoncoin": {
+"GitHub": [],
+"X": "anoncoinit",
+"gecko_id": "anoncoin-2",
+"上线DefiLlama": "2026-04-16",
+"介绍": "Anoncoin is a launchpad that enables users to create meme coins anonymously",
+"代币": "ANONCOIN",
+"分叉自": [],
+"口径": {
+"Fees": "Partner trading fees (SOL) claimed by Anoncoin from Meteora bonding curve and DAMM V2 pools.",
+"ProtocolRevenue": "All the revenue goes to the protocol.",
+"Revenue": "All the fees are revenue."
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/anoncoin",
+"合约": "solana:D25bi7oHQjqkVrzbfuM6k2gzVNHTSpBLhtakDCzCCDUB",
+"名称": "Anoncoin",
+"大事记": [],
+"安全事件": [],
+"官网": "https://anoncoin.it/",
+"官网X": "dogeofficialceo",
+"官网标题": "Anoncoin - Launch coin with SpaceX anonymously",
+"官网简介": "Create a coin anonymously. 24-hour ticker exclusivity.",
+"审计数": "0",
+"审计链接": [],
+"市值": 1877479.8462436511,
+"日期": "2026-11-14",
+"母协议": null,
+"融资": [],
+"进门槛": "2026-11-14",
+"链": [
+"Solana"
+]
+},
 "argus-world": {
 "GitHub": [],
 "X": "arguspad",
@@ -162,6 +195,40 @@
 "日期": "2026-11-11",
 "母协议": "bonk.fun",
 "融资": [],
+"链": [
+"Solana"
+]
+},
+"boop.fun": {
+"GitHub": [],
+"X": "boopdotfun",
+"gecko_id": "boop-4",
+"上线DefiLlama": "2025-05-02",
+"介绍": "A Solana-based memecoin launchpad that incentivizes influencers and creators with BOOP tokens for deploying tokens meeting market cap thresholds",
+"代币": "BOOP",
+"分叉自": [],
+"口径": {
+"Fees": "Total fees paid by users, comprising all SOL and BOOP tokens collected by the protocol, staker, and buyback wallets.",
+"HoldersRevenue": "Includes frontend fees(0.9%), instant unstaking fees 5% (BOOP to buyback), Raydium trading fees(0.1%), and Staking rewards 5% supply at graduation(approx 20 SOL).",
+"ProtocolRevenue": "Includes boopfun frontend fees(0.1%), graduation fees(0.1%), and Raydium Initial liquidity fees(0.1%)",
+"Revenue": "Total fees paid by users."
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/boop-fun",
+"合约": "solana:boopkpWqe68MSxLqBGogs8ZbUDN4GXaLhFwNP7mpP1i",
+"名称": "boop.fun",
+"大事记": [],
+"安全事件": [],
+"官网": "https://boop.fun/",
+"官网X": null,
+"官网标题": "boop | start ur cult",
+"官网简介": "start ur memecoin cult with boop and earn rewards for staking, participating and creating! (๑>◡<๑)",
+"审计数": "0",
+"审计链接": [],
+"市值": 1209480.2500179603,
+"日期": "2026-11-14",
+"母协议": null,
+"融资": [],
+"进门槛": "2026-11-14",
 "链": [
 "Solana"
 ]
@@ -515,6 +582,71 @@
 "Solana"
 ]
 },
+"jupiter-studio": {
+"GitHub": [],
+"X": "JupiterExchange",
+"gecko_id": null,
+"上线DefiLlama": null,
+"介绍": "Token creation lab for culture. With hyper customizable tools, anyone can architect their social economy.",
+"代币": "JUP",
+"分叉自": [],
+"口径": {
+"Fees": "Trading fees paid by users on Jup Studio bonding curves, and the fees Jupiter's LP position earns in graduated Meteora DAMM v2 pools, counted when claimed.",
+"ProtocolRevenue": "All of Jup Studio's revenue, kept by Jupiter. Not used for JUP buybacks.",
+"Revenue": "Jup Studio's share of bonding-curve trading fees (after the token creator's share) and its fees from migrated DAMM v2 pools.",
+"SupplySideRevenue": "Fees paid to referrals, to token creators (their configured share of the trading fee) and to Meteora (its protocol fee)."
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/jup-studio",
+"合约": "solana:JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN",
+"名称": "Jupiter Studio",
+"大事记": [],
+"安全事件": [],
+"官网": "https://jup.ag/?ref=f6y1ryr2snn3",
+"官网X": "JupiterExchange",
+"官网标题": "Jupiter: The Home of Onchain Finance",
+"官网简介": "Swap, Borrow, Lend, Predict, Perps, Wallets, and More. For everything DeFi, just Use Jupiter",
+"审计数": "0",
+"审计链接": [],
+"市值": null,
+"日期": "2026-11-14",
+"母协议": "jupiter",
+"融资": [],
+"进门槛": "2026-11-14",
+"链": [
+"Solana"
+]
+},
+"launch-coin-on-believe": {
+"GitHub": [],
+"X": "launchcoin",
+"gecko_id": "ben-pasternak",
+"上线DefiLlama": null,
+"介绍": "Allows users to reply to any tweet with @launchcoin +name to turn it into a coin. Powered by the Believe app",
+"代币": "LAUNCHCOIN",
+"分叉自": [],
+"口径": {
+"Fees": "Trading fees paid by users.",
+"ProtocolRevenue": "Fees collected by Believe protocol.",
+"Revenue": "Fees collected by Believe protocol.",
+"SupplySideRevenue": "Fees collected by referrals."
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/believe",
+"合约": "solana:Ey59PH7Z4BFU4HjyKnyMdWt5GGN76KazTAwQihoUXRnk",
+"名称": "Launch Coin on Believe",
+"大事记": [],
+"安全事件": [],
+"官网": null,
+"审计数": "0",
+"审计链接": [],
+"市值": 2207762.3305368116,
+"日期": "2026-11-14",
+"母协议": null,
+"融资": [],
+"进门槛": "2026-11-14",
+"链": [
+"Solana"
+]
+},
 "launchlab": {
 "GitHub": [],
 "X": "RaydiumProtocol",
@@ -652,6 +784,73 @@
 "进门槛": "2026-11-13",
 "链": [
 "Elysium"
+]
+},
+"moon.it": {
+"GitHub": [],
+"X": "dexscreener",
+"gecko_id": null,
+"上线DefiLlama": null,
+"介绍": "Launchpad on Solana made by DexScreener Team",
+"代币": null,
+"分叉自": [],
+"口径": {
+"Fees": "All fees paid by users for buy/sell and launch tokens.",
+"ProtocolRevenue": "All fees paid by users.",
+"Revenue": "All fees paid by users."
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/moonshot.ts",
+"合约": null,
+"名称": "moon.it",
+"大事记": [],
+"安全事件": [],
+"官网": "https://moon.it/",
+"官网X": null,
+"官网标题": "Back soon!",
+"官网简介": "moon.it will be back soon.",
+"审计数": "0",
+"审计链接": [],
+"市值": null,
+"日期": "2026-11-14",
+"母协议": null,
+"融资": [],
+"进门槛": "2026-11-14",
+"链": [
+"Solana"
+]
+},
+"moonshot-create": {
+"GitHub": [],
+"X": "moonshot",
+"gecko_id": null,
+"上线DefiLlama": null,
+"介绍": "The easiest way for anyone to launch a memecoin with Apple Pay",
+"代币": null,
+"分叉自": [],
+"口径": {
+"Fees": "All fees collected from token trading on Moonshot, including trading fees, protocol fees, and referral fees.",
+"ProtocolRevenue": "Trading fees and protocol fees collected by Moonshot protocol.",
+"Revenue": "Trading fees and protocol fees collected by Moonshot protocol.",
+"SupplySideRevenue": "Referral fees distributed to referrers."
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/moonshot-create.ts",
+"合约": null,
+"名称": "Moonshot Create",
+"大事记": [],
+"安全事件": [],
+"官网": "https://moonshot.money/",
+"官网X": "moonshot",
+"官网标题": "Moonshot — Buy & Sell Memecoins, Stocks & Leverage",
+"官网简介": "Trade the latest memecoins, trending tokenized stocks, and leverage — all in one mobile-first app. Discover, evaluate, and buy coins on Moonshot.",
+"审计数": "0",
+"审计链接": [],
+"市值": null,
+"日期": "2026-11-14",
+"母协议": "moonshot.com",
+"融资": [],
+"进门槛": "2026-11-14",
+"链": [
+"Solana"
 ]
 },
 "noxa-fun": {
@@ -956,6 +1155,40 @@
 "Solana"
 ]
 },
+"ride-launchpad": {
+"GitHub": [],
+"X": "ridemarkets",
+"gecko_id": null,
+"上线DefiLlama": "2026-10-31",
+"介绍": "Platform where traders launch trading positions backed by community capital and share in profits.",
+"代币": null,
+"分叉自": [],
+"口径": {
+"Fees": "Trading fees paid in USDC on coins launched through the Ride Launchpad, while they trade on their bonding curve and after they graduate to an AMM pool.",
+"ProtocolRevenue": "Ride's share of the trading fees on coins launched through the Ride Launchpad, kept by the protocol.",
+"Revenue": "Ride's share of the trading fees on coins launched through the Ride Launchpad: its cut of bonding curve fees and the AMM fees earned by its locked liquidity.",
+"SupplySideRevenue": "Trading fees on coins launched through the Ride Launchpad that are paid to the coins' creators and to the other liquidity providers in their AMM pools."
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/ride-launchpad",
+"合约": null,
+"名称": "Ride Launchpad",
+"大事记": [],
+"安全事件": [],
+"官网": "https://ride.markets/",
+"官网X": "ridemarkets",
+"官网标题": "Start a Ride | Ride Markets",
+"官网简介": "Call any token on Solana. Funds back you with real capital — keep your share of the profit when you're right.",
+"审计数": "0",
+"审计链接": [],
+"市值": null,
+"日期": "2026-11-14",
+"母协议": "ride-markets",
+"融资": [],
+"进门槛": "2026-11-14",
+"链": [
+"Solana"
+]
+},
 "rise.rich": {
 "GitHub": [
 "riserich"
@@ -1022,6 +1255,75 @@
 "融资": [],
 "进门槛": "2026-11-13",
 "链": [
+"Solana"
+]
+},
+"smithii": {
+"GitHub": [],
+"X": "SmithiiTools",
+"gecko_id": "shrimp-2",
+"上线DefiLlama": null,
+"介绍": "Launch and Manage your token without Coding",
+"代币": "SHRIMP",
+"分叉自": [],
+"口径": {
+"Fees": "All fees paid by users to use a particular Smithii tool.",
+"ProtocolRevenue": "Trading fees are collected by smithii.io protocol.",
+"Revenue": "All fees are collected by smithii.io protocol."
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/smithii",
+"合约": "solana:9QMwCyTFDRvPZF14hFHUP7fdiewf1a3PQeP4bewYCLJV",
+"名称": "Smithii",
+"大事记": [],
+"安全事件": [],
+"官网": "https://smithii.io/",
+"官网X": "SmithiiTools",
+"官网标题": "Smithii - El #1 Toolkit para Lanzar y Gestionar Tokens",
+"官网简介": "Lanza y gestiona tus tokens fácilmente. El #1 Toolkit no-code con soporte 24/7. Disponible en Solana, Ethereum, Base, Binance, Sui y más.",
+"审计数": "0",
+"审计链接": [],
+"市值": null,
+"日期": "2026-11-14",
+"母协议": null,
+"融资": [],
+"进门槛": "2026-11-14",
+"链": [
+"Solana"
+]
+},
+"squeeze": {
+"GitHub": [],
+"X": "Squeezerun",
+"gecko_id": null,
+"上线DefiLlama": null,
+"介绍": "Squeeze — multi-chain token launchpad (Base + Robinhood via Doppler Airlock, Solana via Raydium LaunchLab",
+"代币": null,
+"分叉自": [],
+"口径": {
+"Fees": "On Base/Robinhood: gross Doppler pool trading fees (2.5%), extrapolated from Squeeze’s 47.5% Doppler fee-collect receipts. On Solana: LaunchLab *platform* fees claimed to Squeeze’s claim wallet only (not creator/protocol/referral cuts).",
+"ProtocolRevenue": "Squeeze platform share — EVM: 47.5% of Doppler swap fees claimed via collectFees; Solana: LaunchLab platform fees to the claim wallet.",
+"Revenue": "Squeeze platform share — EVM: 47.5% of Doppler swap fees claimed via collectFees; Solana: LaunchLab platform fees to the claim wallet.",
+"SupplySideRevenue": "On EVM: extrapolated creator share (47.5%) and Doppler protocol-owner share (5%). On Solana: not attributed in v1 (those cuts never hit the Squeeze claim wallet)."
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/squeeze.ts",
+"合约": null,
+"名称": "Squeeze",
+"大事记": [],
+"安全事件": [],
+"官网": "https://squeeze.run",
+"官网X": null,
+"官网标题": "SQUEEZE — flat. fair. then it squeezes.",
+"官网简介": "Dual-curve launch protocol. Flat entry on Curve 1, squeeze into Curve 2.",
+"审计数": "0",
+"审计链接": [],
+"市值": null,
+"日期": "2026-11-14",
+"母协议": null,
+"融资": [],
+"进门槛": "2026-11-14",
+"链": [
+"Base",
+"Robinhood Chain",
 "Solana"
 ]
 },
