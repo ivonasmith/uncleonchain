@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-14T14:03:09+00:00",
+ "generated": "2026-11-14T14:32:49+00:00",
  "asof_llama": "2026-11-13",
  "categories": [
   {
@@ -1321,7 +1321,7 @@
    "tvl": 2205646804,
    "fees30": 9778002,
    "rev30": 1495084,
-   "hrev30": 299019,
+   "hrev30": 194475,
    "chg30": 10.2,
    "token_status": "registered",
    "token": {
@@ -2662,7 +2662,7 @@
     "Solana"
    ],
    "category": "RWA",
-   "tvl": 2427046,
+   "tvl": 2416526,
    "fees30": null,
    "rev30": null,
    "hrev30": null,
@@ -2752,7 +2752,7 @@
     "Canto"
    ],
    "category": "RWA",
-   "tvl": 1727405,
+   "tvl": 1727414,
    "fees30": null,
    "rev30": null,
    "hrev30": null,
@@ -2819,7 +2819,7 @@
     "Arbitrum"
    ],
    "category": "RWA",
-   "tvl": 1402812,
+   "tvl": 1402864,
    "fees30": null,
    "rev30": null,
    "hrev30": null,
@@ -2928,7 +2928,7 @@
     "Base"
    ],
    "category": "RWA",
-   "tvl": 229221,
+   "tvl": 229228,
    "fees30": 0,
    "rev30": 0,
    "hrev30": 0,
@@ -3088,7 +3088,7 @@
   "n_tradfi": 3,
   "fees30_onchain": 56908876,
   "rev30_onchain": 3640553,
-  "hrev30_onchain": 668066,
+  "hrev30_onchain": 563522,
   "fees30_tradfi": 30159630,
   "rev30_tradfi": 19389978,
   "n_registered": 33,
@@ -3098,17 +3098,19 @@
  },
  "sources": {
   "coingecko": {
-   "ok": true,
+   "ok": false,
    "last_ok": "2026-11-14T14:03:09+00:00",
-   "n": 13
+   "n": 13,
+   "err": "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&category=tokenized-commodities&per_page=250&order=market_cap_desc: HTTP Error 429: Too Many Requests",
+   "failed_at": "2026-11-14T14:32:49+00:00"
   },
   "defillama": {
    "ok": true,
-   "last_ok": "2026-11-14T14:03:09+00:00",
+   "last_ok": "2026-11-14T14:32:49+00:00",
    "n": 86
   }
  },
- "stale": false,
+ "stale": true,
  "research": {
   "updated_utc": "2026-11-14",
   "migration": {
