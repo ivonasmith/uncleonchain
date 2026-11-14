@@ -266,7 +266,7 @@ def factors(u, t):
     w = cc[-30:]
     o["pos30"] = (p0[0] - min(w)) / (max(w) - min(w)) * 100 if len(w) >= 25 and max(w) > min(w) else None
     m = u["mc"].get(day(t, -1)) if u.get("mc") else None
-    if m:
+    if m and m > 0:   # CoinGecko 缺数据的日子填 −1，当缺失
         hr = sum(h) * 365 / 30 if h else 0
         o["val_p_hr"] = -math.log(m / hr) if hr > 0 else None          # 便宜 = 高分
         o["val_p_rev"] = -math.log(m / (s30 * 365 / 30))
@@ -447,3 +447,58 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+# ==== 补充：0/1 规则（R3）的检验（2026-11-14 写死于跑之前） ====
+# 每月：被标记组平均收益 − 未标记组平均收益（两组都 ≥ 3 个币才算这个月）。
+# 通过 = 样本外差值均值 < 0 且 t ≤ −2，60 天差值同号；证伪 = 样本外差值均值 > 0 且 t ≥ 1；其余 = 未通过。
+def binary_test():
+    uni, _ = build()
+    last = max(max(u["px"]) for u in uni.values())
+    dates, d = [], dt.date.fromisoformat(START)
+    while d.isoformat() <= last:
+        dates.append(d.isoformat())
+        d = (d.replace(day=28) + dt.timedelta(days=4)).replace(day=1)
+    out = {}
+    for h in HS:
+        diffs = []
+        for t in dates:
+            fl, nf = [], []
+            for sy, u in uni.items():
+                o = factors(u, t)
+                if not o or o.get("flag_r3") is None:
+                    continue
+                p1 = u["px"].get(day(t, h - 1))
+                if not p1:
+                    continue
+                r = (p1[0] / o["_px"] - 1) * 100
+                (fl if o["flag_r3"] else nf).append(r)
+            if len(fl) >= 3 and len(nf) >= 3:
+                diffs.append((t, st.mean(fl) - st.mean(nf), len(fl), len(nf)))
+        step = {30: 1, 60: 2, 90: 3}[h]
+        res = {}
+        for name, sel in (("train", [x for x in diffs if x[0] <= TRAIN_END]), ("test", [x for x in diffs if x[0] > TRAIN_END])):
+            if sel:
+                v = [x[1] for x in sel[::step]]
+                res[name] = {"months": len(sel), "diff": round(st.mean(x[1] for x in sel), 2), "t": None if tstat(v) is None else round(tstat(v), 2),
+                             "flagged_avg": round(st.mean(x[2] for x in sel), 1), "others_avg": round(st.mean(x[3] for x in sel), 1)}
+        out[h] = res
+    te, te60 = out[30].get("test"), out[60].get("test")
+    if not te:
+        v = "样本不足"
+    elif te["diff"] < 0 and (te["t"] or 0) <= -2 and te60 and te60["diff"] < 0:
+        v = "通过"
+    elif te["diff"] > 0 and (te["t"] or 0) >= 1:
+        v = "证伪"
+    else:
+        v = "未通过"
+    out["verdict"] = v
+    p = os.path.join(HERE, "score_study_results.json")
+    R = json.load(open(p, encoding="utf-8"))
+    R["factors"]["flag_r3"].update({"binary": out, "verdict": v})
+    json.dump(R, open(p, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    C.log(f"R3 0/1 检验：{v} {json.dumps(out, ensure_ascii=False)}")
+
+
+if "--binary" in sys.argv:
+    binary_test()
