@@ -59,7 +59,13 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
   来源：DefiLlama（手续费 / 收入 / 持有人收入 / DEX 成交额 / TVL）、币安现货日线（data-api）、U 本位永续 = data.binance.vision 公开归档（fapi 在美国 451；缓存 `core/cache/` 走 actions/cache，首次回填约 5 分钟）、CoinGecko 供给（云端环境已放行 api.coingecko.com）。
   人工登记全在 `core/core_config.json`（12 个观测池 T1–T3 + 18 个观察标的 W、叙事阶段、解锁、事件、证伪条件、风险记录、重大发现），Notion 有新核对就改这里。
   评分 R/C/V/D/B/S 和建仓条件检查照原型，全部标【假设】；页面只说「条件齐备 / 条件未齐 / 有硬条件未过」和风险提示，**不写买入 / 卖出**。
-  大叔 11-14 定：美股和黄金直接去掉——现货剔除 B 结尾且 2026-06-11 起上市的代币化股票 / ETF，永续只算币安现货也有 USDT 对的币（归档没有标的类型，SNDK、XAU 这类分不出来）。
+  大叔 11-14 定：美股和黄金直接去掉——现货剔除 B 结尾且 2026-06-11 起上市的代币化股票 / ETF，合约只算币安现货有交易对的币（归档没有标的类型，SNDK、XAU 这类分不出来）。
+  11-14 第二轮（大叔反馈）：成交额 = 币安全口径（`core/binance_vol.py`：全部现货交易对按当天收盘折美元，无 USDT 对的法币走 BTC 交叉；U 本位 USDT/USDC 保证金永续 + 交割；币本位 × 收盘），
+  缓存 `core/cache/spot_pairs.json`、`fut_all.json`；榜单一张表，标签 regular / entrant / exit / new。等权篮子 = `leg_latest.json` 的 `alt_leg.basket.members`（和宏观页同一个）。
+  评分回测 `core/score_backtest.py`（每周一在 core-daily 里跑，判定标准写在文件头，**跑完不许改标准**）→ `data/core/score_backtest.json`；第一轮 38 个币全部「未通过」（R、V 方向对不显著，C、D 无区分力）。
+  外部复核包 `core/review/README.md`（给 Codex / Gemini / Grok 的分工和提示词）。拉盘复盘 = 大叔的龙头与轮动研究，原件 `core/research/`，`core/rotation_import.py` → `data/core/rotation.json`（静态快照，不日更）。
+  待补维度：供给侧收入 / 日活（DefiLlama active-users，同接口带 GitHub 组织名和国库适配器）/ 国库（每周，`weekly.json` 缓存）/ 核心开发者（GitHub，Actions 的 GITHUB_TOKEN，沙盒 403）已接；代币激励只有付费源，待接入。
+  「六问卡」原文在大叔的《核心选币方法论》里，网站还没有，等大叔给。
 - 发射台活动温度（`pipeline/周期观察.py` 数据与热潮识别、`周期仪表盘.py` 展示）：每日更新。序列 = 研究快照 `content/cycle/snapshot.json`（截至 2026-10-17，sha256 在 manifest）+ 之后接 `发射台矩阵.json`「历史」的类目合计；热潮规则重算快照区间 27 轮逐字段对上（对不上会打 ⚠️）。
   仪表盘 `周期仪表盘.hero` 放在矩阵页最上面（先看温度再看细节），周期页 /launchpad/cycle/ 看这一轮、各阶段时长、历史；全站统一叫「发射台活动温度」，颜色用 `--cyc-*` 变量，文案要大白话。「钱在哪」= `出网站.money_where`。
 - 发射台长周期（2026-10-29）：`周期观察.long_view` / `coverage`。全部历史 2021-09-18 起只作背景，比高低只用可比段（`COMPARABLE_FROM` = 2024-03-01，pump.fun 开始报数；之前只有 1–6 家融资型平台报数）；

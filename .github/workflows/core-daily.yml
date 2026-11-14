@@ -46,6 +46,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   # 只读公开仓库提交记录（核心开发者人数），每周一次
         run: python3 core/core_daily.py
 
+      # 评分模块回测（core/score_backtest.py）：每周一重跑一次，约 7 分钟；失败不影响日更
+      - name: 评分回测（每周一）
+        run: |
+          if [ "$(date -u +%u)" = "1" ]; then python3 core/score_backtest.py || echo "回测失败，沿用上次结果"; fi
+
       - name: 重出网站（看板素材 → 网站）
         env:
           LP_DATA: ${{ github.workspace }}/data
@@ -58,7 +63,7 @@ jobs:
         run: |
           git config user.name "uncleonchain-bot"
           git config user.email "bot@uncleonchain.com"
-          git add data/core site/
+          git add data/core core/review site/
           git diff --cached --quiet && echo "没有变化，跳过提交" && exit 0
           git commit -m "核心选币日更 $(date -u +%Y-%m-%d)"
           BASE=$(git rev-parse HEAD~1)   # 本次出网站用的代码版本

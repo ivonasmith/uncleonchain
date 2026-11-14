@@ -1955,3 +1955,10 @@ RULE_CHANGES.append(
      "原因EN": "DefiLlama backfills new listings and revises recent days. On 2026-11-11 Montra and Ascend had only Nov 9–10 at listing and were backfilled to Nov 5 the next day; the matrix only re-pulled the top 60, so others never caught up.",
      "内容": "每天对矩阵上显示的所有平台，按 DefiLlama 逐日序列重新同步近 60 天；补出来的天数、改过的数直接替换。汇总趋势、温度和平台页的近期数字可能随之小幅变动。",
      "EN": "Every day, the last 60 days of every platform shown are re-synced from DefiLlama's daily series, replacing backfilled or revised days. Recent totals, the temperature gauge and platform pages may shift slightly."})
+
+RULE_CHANGES.append(
+    {"日期": "2026-11-14", "锚": "2026-11-14-corevol", "范围": "核心选币 · 成交额榜与基准篮子", "EN范围": "Core picks · volume board and benchmark",
+     "原因": "大叔反馈：一个币的成交额不只是 USDT 现货和 U 本位永续；全市场基准也应该和宏观页「山寨整体」用同一个篮子。上线首日的榜单只算 USDT 现货 + USDT 永续，USDC / USD1 / FDUSD / BTC / 法币计价的现货、USDC 保证金合约、交割合约和币本位合约都没算。",
+     "原因EN": "Feedback: a coin's volume is more than USDT spot plus USDT perps, and the benchmark should be the Macro page's altcoin basket. The first version counted only USDT spot and USDT perps.",
+     "内容": "成交额 = 币安全部现货交易对（计价币按当天收盘折美元，没有 USDT 对的法币用 BTC 交叉汇率）+ U 本位（USDT、USDC 保证金，永续 + 交割）+ 币本位合约（标的币数 × 收盘），按币汇总。常客 / 新进榜 / 掉榜规则不变，改成贴在每个币后面的标签。等权篮子改读 leg/leg_data.py 的山寨篮子成员（成交额前 50 进、75 出、每月重排）。",
+     "EN": "Volume = all Binance spot pairs (converted at the day's close; fiat without a USDT pair via the BTC cross) + USDⓈ-M (USDT and USDC margined, perpetual + delivery) + COIN-M (base volume × close), summed per coin. Regular / entrant / dropped rules unchanged, now shown as tags. The equal-weight basket now reads the Macro page's altcoin basket members."})

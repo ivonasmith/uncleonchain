@@ -32,7 +32,9 @@ def spot_all(C, usdt_rows, window, today):
     fp = os.path.join(C.CACHE, "spot_pairs.json")
     cache = json.load(open(fp)) if os.path.exists(fp) else {}
     start = (today - dt.timedelta(days=window + 3)).isoformat()
-    todo = [p for p, (b, q) in pairs.items() if q != "USDT"]
+    quotes = {q for _, q in pairs.values()}
+    # 非 USDT 计价对 + 折汇率要用的 USDT 对（USDCUSDT、EURUSDT、USDTTRY…：这些币不在主流程的 USDT 名单里）
+    todo = [p for p, (b, q) in pairs.items() if q != "USDT" or (b not in usdt_rows and (b in quotes or b in STABLE_Q))]
 
     def job(p):
         old = cache.get(p) or {}
@@ -70,6 +72,9 @@ def spot_all(C, usdt_rows, window, today):
             return {d: v[0] for d, v in data[q + "USDT"].items()}
         if "USDT" + q in data:
             return {d: 1 / v[0] for d, v in data["USDT" + q].items() if v[0]}
+        if "BTC" + q in data and "BTCUSDT" in data:     # 没有 USDT 对的法币（如 JPY）：用 BTC 交叉汇率
+            bu, bq = data["BTCUSDT"], data["BTC" + q]
+            return {d: bu[d][0] / bq[d][0] for d in bq if d in bu and bq[d][0]}
         return {}
     rates = {}
     spot_usd, tot, miss = {}, 0.0, {}

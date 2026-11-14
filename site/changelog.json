@@ -1,5 +1,30 @@
 [
  {
+  "version": "2026.11.14.2",
+  "date": "2026-11-14",
+  "notify": false,
+  "title_zh": "核心选币：成交额全口径、评分回测、拉盘复盘",
+  "title_en": "Core picks: full Binance volume, score backtest, rally replay",
+  "items": [
+   {
+    "type": "data",
+    "zh": "成交额榜改成币安全口径：一个币 = 全部现货交易对（USDT / USDC / USD1 / FDUSD / BTC / 法币…按当天收盘折美元）+ U 本位（USDT、USDC 保证金，永续 + 交割）+ 币本位合约。榜单合成一张表，每个币后面贴「常客 / 新进榜 / 掉榜 / 新上」标签，可筛选排序。全市场基准改用宏观页「山寨整体」同一个篮子。",
+    "en": "Volume board now covers all of Binance: every spot pair (USDT / USDC / USD1 / FDUSD / BTC / fiat, converted at the day’s close) + USDⓈ-M (USDT and USDC margined, perpetual + delivery) + COIN-M. One table with regular / entrant / dropped / new tags, filterable and sortable. The market benchmark now uses the Macro page’s altcoin basket.",
+    "corrections_anchor": "2026-11-14-corevol"
+   },
+   {
+    "type": "new",
+    "zh": "评分模块做了历史回测（38 个有协议收入的代币，2023-03 起每月一次，判定标准事先写死）：R / C / V / D 和合计分都没达到“方向有效”，R（收入趋势）和 V（估值）方向对但不显著，C、D 看不出区分能力。结果放在口径页，每个模块旁边标回测结论，每周一重跑。",
+    "en": "Score modules backtested (38 revenue tokens, monthly since 2023-03, rules fixed in advance): none passed; R and V point the right way but are not significant, C and D show no edge. Results are on the Method tab and rerun weekly."
+   },
+   {
+    "type": "new",
+    "zh": "新增「拉盘复盘」：大叔 2026-07～10 的龙头与轮动研究（125 个币，锚点 08-19），单币详情显示它在上一轮 BTC 拉升里是龙头、跟涨还是落后。详情页新增日活用户、供给侧收入、国库、核心开发者（GitHub，下一次日更起）；规则和评分每一条都加了大白话说明。",
+    "en": "New “Rally replay” tab (Jul–Oct 2026 leaders-and-rotation study, 125 coins, anchor 08-19); asset pages show each coin’s class in the last BTC rally, plus active users, supply-side revenue, treasury and core developers (GitHub, from the next run). Every rule and score now has a plain-language explanation."
+   }
+  ]
+ },
+ {
   "version": "2026.11.14",
   "date": "2026-11-14",
   "notify": true,

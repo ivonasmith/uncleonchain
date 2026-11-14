@@ -163,6 +163,12 @@ def weekly(name, fn):
     return v
 
 
+def weekly_get(name):
+    fp = os.path.join(CACHE, "weekly.json")
+    db = json.load(open(fp)) if os.path.exists(fp) else {}
+    return (db.get(name) or {}).get("v")
+
+
 def treasury(slug):
     """DefiLlama 国库：当前总额、其中自家代币、其余（稳定币 / 主流币等）。"""
     d = get(f"{LLAMA}/treasury/{slug}", timeout=90)
@@ -175,6 +181,23 @@ def treasury(slug):
 
 
 GH = "https://api.github.com"
+GH_OK = {}
+
+
+def gh_ok():
+    """这次运行能不能访问 GitHub API（Actions 自带 GITHUB_TOKEN 能；云端沙盒和没 token 时不能）。只探测一次。"""
+    if "v" not in GH_OK:
+        tok = os.environ.get("GITHUB_TOKEN")
+        ok = False
+        if tok:
+            try:
+                req = urllib.request.Request(GH + "/repos/ethereum/go-ethereum", headers={"Authorization": f"Bearer {tok}", **UA})
+                with urllib.request.urlopen(req, timeout=20) as r:
+                    ok = r.status == 200
+            except Exception as e:  # noqa
+                ERR.append(f"GitHub API 访问不了（{e}），核心开发者本次不更新")
+        GH_OK["v"] = ok
+    return GH_OK["v"]
 
 
 def github_devs(orgs):
@@ -242,7 +265,7 @@ def extras(slug):
         out["treasury"] = weekly(f"treasury:{slug}", lambda: treasury(slug))
     orgs = [o for o in d.get("github") or [] if o]
     if orgs:
-        out["dev"] = weekly(f"github:{','.join(orgs)}", lambda: github_devs(orgs)) if os.environ.get("GITHUB_TOKEN") else None
+        out["dev"] = weekly(f"github:{','.join(orgs)}", lambda: github_devs(orgs)) if gh_ok() else weekly_get(f"github:{','.join(orgs)}")
         if out["dev"] is None:
             out["dev"] = {"orgs": orgs[:3], "pending": True}
     return out
