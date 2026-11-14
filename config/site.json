@@ -1,5 +1,9 @@
 {
  "_说明": "全站配置。定时任务的时间不在这里写死：出网站时从 .github/workflows/ 里的 cron 读出来，页面文案（含欢迎弹窗）一律引用这里生成的结果。",
+ "统计": {
+  "_说明": "访问统计 Umami Cloud（无 cookie）。umami_id 是公开的站点标识，留空则不加载统计脚本。看板：cloud.umami.is",
+  "umami_id": "a4ab5991-72d0-4aa6-8670-4990dd3643b5"
+ },
  "定时任务": [
   {
    "文件": "cal-daily.yml",

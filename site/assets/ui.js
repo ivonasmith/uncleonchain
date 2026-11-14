@@ -103,6 +103,24 @@ if(innerWidth<641)document.querySelectorAll('details.segd').forEach(d=>d.removeA
 document.querySelectorAll('[data-feedback]').forEach(a=>{const zh=document.documentElement.lang.startsWith('zh');
  a.href='https://x.com/intent/post?text='+encodeURIComponent((zh?'@Uncle_Onchain 反馈：':'@Uncle_Onchain Feedback: ')+document.title.split(' · ')[0]+' ')+'&url='+encodeURIComponent(location.href.split('#')[0]);
  a.target='_blank';a.rel='noopener'});
+// ---- 访问统计（Umami，无 cookie）：页面浏览自动记，这里只补几个动作；统计脚本被拦截时什么都不做
+(function(){
+ const tk=(n,d)=>{try{if(window.umami)window.umami.track(n,d)}catch(e){}};window.ucTrack=tk;const pg=location.pathname;
+ document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('a,button');if(!t)return;
+  if(t.matches('[data-guide]'))tk('guide_open');
+  else if(t.matches('[data-feedback],a.fb'))tk('feedback',{page:pg});
+  else if(t.closest('.lang')){if(!t.classList.contains('on'))tk('lang_switch',{to:t.getAttribute('hreflang')||''})}
+  else if(t.matches('.btn-dl'))tk('pdf_download',{page:pg});
+  else if(/^share\w*\(/.test(t.getAttribute('onclick')||''))tk('share_image',{page:pg});
+  else if(t.tagName==='A'&&/^https:\/\/(x|twitter)\.com\/Uncle_Onchain\/?$/i.test(t.href))tk('x_click',{page:pg})},true);
+ // 报告 / 日志 / 文章读到底（滚到 90%）记一次
+ if(/\/(reports|journal|macro|rotation|narrative)\/[^/]+\/$/.test(pg)&&document.querySelector('#rf,.article')){let done=false;
+  const chk=()=>{if(done)return;const h=document.documentElement.scrollHeight;if(h<innerHeight*1.5)return;
+   if(scrollY+innerHeight>=h*0.9){done=true;tk('read_end',{page:pg})}};
+  window.addEventListener('scroll',chk,{passive:true})}
+ // 核心选币页签走 #hash，不算页面浏览，单独记
+ if(/\/core\/$/.test(pg))window.addEventListener('hashchange',()=>tk('core_tab',{tab:location.hash.slice(1)||'home'}));
+})();
 // ---- 术语与标签解释（G7）：术语第一次出现加虚下划线；悬停（桌面）/ 点按（手机）显示一句话
 (function(){
  const g=document.getElementById('uc-gloss');if(!g)return;let G;try{G=JSON.parse(g.textContent)}catch(e){return}
