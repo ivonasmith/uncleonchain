@@ -285,6 +285,46 @@
    ],
    "def_zh": "当天被卖出的币，卖价 ÷ 买价。STH-SOPR 只算短期持有者。「= 1 是多空分界」研究里已证伪。",
    "def_en": "For coins spent that day, sell price ÷ buy price; STH-SOPR covers short-term holders only. 'SOPR = 1 is the bull/bear line' failed testing."
+  },
+  {
+   "zh": [
+    "资产币"
+   ],
+   "en": [
+    "asset token"
+   ],
+   "def_zh": "代表一份基金、国债、黄金、股票等现实资产的链上份额。它的规模是底层资产的规模，不是发行平台的价值。",
+   "def_en": "An onchain share of a fund, treasury, gold, stock or other real-world asset. Its size is the underlying asset's size, not the issuing platform's value."
+  },
+  {
+   "zh": [
+    "平台币"
+   ],
+   "en": [
+    "platform token"
+   ],
+   "def_zh": "发行平台或协议自己的代币。平台币价格和平台上的资产规模不一定相关；有没有分到收入要看「持有人收入」。",
+   "def_en": "The issuing platform's or protocol's own token. Its price need not track assets on the platform; whether it earns anything shows in holder revenue."
+  },
+  {
+   "zh": [
+    "持有人收入"
+   ],
+   "en": [
+    "holder revenue"
+   ],
+   "def_zh": "协议收入里真正分给代币持有人的部分（回购、分红、质押分成）。DefiLlama 口径。",
+   "def_en": "The part of protocol revenue actually passed to token holders (buybacks, distributions, staking share). DefiLlama definition."
+  },
+  {
+   "zh": [
+    "协议收入"
+   ],
+   "en": [
+    "protocol revenue"
+   ],
+   "def_zh": "用户付的手续费里，协议自己留下的部分（扣掉付给 LP、基金管理人等的）。",
+   "def_en": "The part of user-paid fees the protocol keeps after paying LPs, fund managers and others."
   }
  ],
  "tags": {
@@ -331,6 +371,22 @@
   "记录中": [
    "自录数据不满 90 天，暂不给分位。",
    "Self-recorded for fewer than 90 days; no percentiles yet."
+  ],
+  "rwa_tok_reg": [
+   "DefiLlama 给这个协议登记了代币。登记的不一定是平台币，平台币身份要研究层核对。",
+   "DefiLlama lists a token for this protocol; it is not necessarily a platform token — identity is checked in research."
+  ],
+  "rwa_tok_asset": [
+   "登记的代币其实是资产币（产品份额 / 黄金 / 质押凭证），不是平台币。",
+   "The listed token is an asset token (product share / gold / staking receipt), not a platform token."
+  ],
+  "rwa_tok_none": [
+   "DefiLlama 没登记代币。这不等于确认没有平台币，也不等于会空投。",
+   "No token listed on DefiLlama. Not a confirmation of no platform token, nor of an airdrop."
+  ],
+  "rwa_tradfi": [
+   "传统机构发行的基金 / ETF：收入是管理费，归发行机构，没有平台币可言。",
+   "A fund / ETF from a traditional institution: revenue is management fees to the issuer; no platform token."
   ]
  }
 }

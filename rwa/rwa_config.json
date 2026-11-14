@@ -1,0 +1,163 @@
+{
+ "_说明": "RWA 板块参数（2026-11-14 首版）。改了在 content/changelog.json 记一条；已写入的 data/rwa/rwa_history.json 不回改。",
+ "categories": [
+  {
+   "id": "tokenized-treasuries",
+   "zh": "代币化国债",
+   "en": "Tokenized treasuries",
+   "role": "asset",
+   "group": "fund"
+  },
+  {
+   "id": "tokenized-money-market-fund-mmfs",
+   "zh": "代币化货币基金",
+   "en": "Tokenized MMFs",
+   "role": "asset",
+   "group": "fund",
+   "overlap": "tokenized-treasuries"
+  },
+  {
+   "id": "us-treasury-backed-stablecoin",
+   "zh": "国债支持的生息美元",
+   "en": "Treasury-backed yield dollars",
+   "role": "asset",
+   "group": "fund",
+   "overlap": "tokenized-treasuries"
+  },
+  {
+   "id": "tokenized-private-credit",
+   "zh": "代币化私募信贷",
+   "en": "Tokenized private credit",
+   "role": "asset",
+   "group": "credit"
+  },
+  {
+   "id": "tokenized-credit",
+   "zh": "代币化信贷（其他）",
+   "en": "Tokenized credit (other)",
+   "role": "asset",
+   "group": "credit"
+  },
+  {
+   "id": "tokenized-gold",
+   "zh": "代币化黄金",
+   "en": "Tokenized gold",
+   "role": "asset",
+   "group": "commodity",
+   "nested_in": "tokenized-commodities"
+  },
+  {
+   "id": "tokenized-commodities",
+   "zh": "代币化商品（含黄金）",
+   "en": "Tokenized commodities (incl. gold)",
+   "role": "asset",
+   "group": "commodity"
+  },
+  {
+   "id": "tokenized-stock",
+   "zh": "代币化股票",
+   "en": "Tokenized stocks",
+   "role": "asset",
+   "group": "equity"
+  },
+  {
+   "id": "tokenized-exchange-traded-funds-etfs",
+   "zh": "代币化 ETF",
+   "en": "Tokenized ETFs",
+   "role": "asset",
+   "group": "equity"
+  },
+  {
+   "id": "real-estate",
+   "zh": "代币化房地产",
+   "en": "Tokenized real estate",
+   "role": "asset",
+   "group": "realestate",
+   "no_identity": true,
+   "note_zh": "这个分类里多数是房地产代币化平台自己的平台币（RNT、PROPS 等），不全是房产份额",
+   "note_en": "Mostly platform tokens of real-estate tokenization platforms (RNT, PROPS …), not property shares"
+  },
+  {
+   "id": "trading-card-rwa-platform",
+   "zh": "收藏卡 RWA 平台",
+   "en": "Trading-card RWA platforms",
+   "role": "platform",
+   "group": "collectible"
+  },
+  {
+   "id": "rwa-protocol",
+   "zh": "RWA 协议币 / 平台币",
+   "en": "RWA protocol / platform tokens",
+   "role": "platform",
+   "group": "platform"
+  },
+  {
+   "id": "real-world-assets-rwa",
+   "zh": "RWA 大类（混合）",
+   "en": "RWA umbrella (mixed)",
+   "role": "mixed",
+   "group": "mixed"
+  }
+ ],
+ "_categories": "CoinGecko 分类（/coins/categories 市值 + /coins/markets 成员）。role：asset = 资产币（代表一份基金 / 黄金 / 股票等的份额），platform = 平台币 / 协议币，mixed = 两者混在一起（只作参考，不和别的分类相加）。nested_in / overlap：分类之间有包含或重叠，页面不求和。 no_identity：分类混了平台币，不拿来自动判定「资产币」身份。",
+ "coin_roles": {
+  "chainlink": {
+   "zh": "相邻：预言机，收入大头不来自 RWA",
+   "en": "Adjacent: oracle; most revenue is not RWA"
+  },
+  "figure-heloc": {
+   "zh": "Figure 自家链上的房屋净值贷款记录，不能自由转让，不代表普通人可买",
+   "en": "Figure's own-chain HELOC records; not freely transferable, not retail-accessible"
+  },
+  "zebec-network": {
+   "zh": "支付 / 薪资，RWA 只是标签之一",
+   "en": "Payments / payroll; RWA is one of several tags"
+  },
+  "polymesh": {
+   "zh": "证券型代币专用链的原生币",
+   "en": "Native coin of a security-token chain"
+  },
+  "plume": {
+   "zh": "RWA 专用链的原生币",
+   "en": "Native coin of an RWA chain"
+  },
+  "chromaway": {
+   "zh": "相邻：数据库链，RWA 只是标签之一",
+   "en": "Adjacent: database chain; RWA is one tag"
+  }
+ },
+ "_coin_roles": "CoinGecko 分类里身份需要特别说明的币：页面在名字下面多一行。只写能从项目自身定位确认的身份，不写判断。",
+ "llama": {
+  "categories": [
+   "RWA"
+  ],
+  "extra": {
+   "parent#maple-finance": "Lending",
+   "parent#figure-markets": "Lending"
+  },
+  "_extra": "DefiLlama 不归在 RWA 类目、但业务是现实资产信贷的（按母协议纳入）：Maple（机构信贷）、Figure Markets（房屋净值贷款）",
+  "tradfi": [
+   "Grayscale",
+   "WisdomTree",
+   "Fidelity Crypto Fund",
+   "VanEck Treasury Fund",
+   "Blockchain Capital",
+   "Hamilton Lane Senior Credit Opportunities Securitize Fund",
+   "Apollo Diversified Credit Securitize Fund",
+   "BlackRock BUIDL",
+   "Mantle Index Four Fund",
+   "Securitize Tokenized AAA CLO Fund"
+  ],
+  "_tradfi": "传统机构发行的基金 / ETF：收入是管理费，归发行机构，没有平台币可言。Grayscale 收的是 BTC / ETH 现货 ETF 管理费，DefiLlama 把它归在 RWA，页面单列、不算进链上协议合计。",
+  "token_overrides": {
+   "Tether Gold": "asset_token",
+   "stUSDT": "asset_token",
+   "parent#openeden": "asset_token",
+   "Paxos Gold": "asset_token",
+   "Brickken": "registered"
+  },
+  "_token_overrides": "DefiLlama 登记的 symbol 实际是资产币（产品份额 / 黄金 / 质押凭证）的：按母协议键或协议名标 asset_token。OpenEden 登记的是 PRISM（基金产品份额），平台币 EDEN 另算。 值为 registered = 不做资产币自动判定（例：Brickken 的 BKN 是平台币，但 CoinGecko 把它放进了资产类分类）。"
+ },
+ "research_stale_days": 14,
+ "_research_stale_days": "研究判断最后复核超过 14 天：页面标「过期待复核」，不当当前结论"
+}

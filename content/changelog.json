@@ -1,5 +1,29 @@
 [
  {
+  "version": "2026.11.14.7",
+  "date": "2026-11-14",
+  "notify": true,
+  "title_zh": "新板块：RWA 现实资产",
+  "title_en": "New section: RWA (real-world assets)",
+  "items": [
+   {
+    "type": "new",
+    "zh": "RWA 看板一屏三块：发生什么（代币化国债、黄金、股票、信贷的规模和变化）、谁在收钱（RWA 协议近 30 天手续费 → 协议收入 → 持有人收入）、研究标的的状态。每天自动更新，来源 CoinGecko 和 DefiLlama。",
+    "en": "The RWA board answers three things on one screen: what is happening (size and change of tokenized treasuries, gold, stocks, credit), who earns (30-day fees → protocol revenue → holder revenue of RWA protocols) and the state of research items. Updated daily from CoinGecko and DefiLlama."
+   },
+   {
+    "type": "new",
+    "zh": "身份分开记：资产币（基金份额、黄金）、平台币、传统机构产品分别标注；DefiLlama 没登记代币写「未登记 ≠ 无币」，登记的其实是资产币的（如 XAUt）改标「资产币」。数据平台自己的口径问题直接在页面提醒（例：CoinGecko「代币化私募信贷」几乎全是 Figure 一个 HELOC 记录）。",
+    "en": "Identities kept apart: asset tokens (fund shares, gold), platform tokens and TradFi products are labeled separately; “none listed ≠ no token”, and tokens that are really asset tokens (e.g. XAUt) are relabeled. Data-provider pitfalls are flagged on the page (e.g. CoinGecko’s “tokenized private credit” is almost entirely one Figure HELOC record)."
+   },
+   {
+    "type": "new",
+    "zh": "研究标的、方法框架、研究进度页一起上线。之前在本地跑的 RWA 研究库还在迁入，交接包点名的案例全部标「待重核」，首发不给结论；判断卡写触发 / 失效条件、谁能参与、成本和退出路径，不写买卖建议。",
+    "en": "Watchlist, framework and progress pages go live with it. The local RWA research library is still being migrated; the cases named in the handoff are all marked pending re-check, with no conclusions at launch. Judgment cards carry trigger / invalidation conditions, eligibility, cost and exit — no trade advice."
+   }
+  ]
+ },
+ {
   "version": "2026.11.14.6",
   "date": "2026-11-14",
   "notify": true,

@@ -183,6 +183,7 @@ ICON = {
     "core": '<path d="M8 1.8l1.9 3.9 4.3.6-3.1 3 .7 4.3L8 11.6l-3.8 2 .7-4.3-3.1-3 4.3-.6z"/>',
     "narrative": '<circle cx="8" cy="8" r="6"/><circle cx="8" cy="8" r="2.4"/><path d="M8 8l4.2-4.2"/>',
     "alpha": '<circle cx="8" cy="8" r="6"/><circle cx="8" cy="8" r="2.4"/><path d="M8 8l4.2-4.2"/>',
+    "rwa": '<rect x="2.5" y="6.5" width="11" height="7.5" rx="1"/><path d="M1.5 6.5 8 2l6.5 4.5M5.5 9v2.5M8 9v2.5M10.5 9v2.5"/>',
     "reports": '<path d="M3 1.8h7l3 3v9.4H3z"/><path d="M10 1.8v3h3M5.5 11.5V9.5M8 11.5V7.5M10.5 11.5V8.5"/>',
     "journal": '<path d="M3.5 1.8h9v12.4h-9z"/><path d="M6 5h4M6 8h4M6 11h2.5"/>',
     "methodology": '<path d="M2 12.5 12.5 2l1.5 1.5L3.5 14H2z"/><path d="M9.5 5l1.5 1.5M7.5 7l1 1M5.5 9l1.5 1.5"/>',
@@ -191,7 +192,7 @@ ICON = {
 }
 NAV_MAIN = [("home", "/", "终端总览", "Overview"), ("macro", "/macro/", "宏观仪表盘", "Macro"),
             ("calendar", "/calendar/", "事件日历", "Calendar"), ("launchpad", "/launchpad/", "发射台矩阵", "Launchpads"), ("aiagent", "/ai-agent/", "AI Agent", "AI Agent"), ("rotation", "/rotation/", "板块轮动", "Rotation"),
-            ("core", "/core/", "核心选币", "Core Picks"), ("alpha", "/alpha/", "Alpha 雷达", "Alpha Radar"), ("reports", "/reports/", "分析报告", "Reports"),
+            ("core", "/core/", "核心选币", "Core Picks"), ("alpha", "/alpha/", "Alpha 雷达", "Alpha Radar"), ("rwa", "/rwa/", "RWA", "RWA"), ("reports", "/reports/", "分析报告", "Reports"),
             ("journal", "/journal/", "解读日志", "Journal")]
 NAV_MORE = [("methodology", "/methodology/", "口径与规则", "Methodology"), ("corrections", "/corrections/", "更正记录", "Corrections"),
             ("about", "/about/", "关于", "About")]
@@ -1131,6 +1132,7 @@ def build_home(sd, S, logs, weeks, months, rot, matrix):
 {leg_home_card()}
 {core_home_card()}
 {alpha_home_card()}
+{rwa_home_card()}
 {cal_home_card(G.get("CAL"))}
 <div class="grid g2" style="margin-top:22px;align-items:start">
 <div><h2 style="margin-top:12px">{T("发射台矩阵 · 当日 Top6", "Launchpads · top 6 today")} {cycle_tag()} <a class="sub" href="{U("/launchpad/")}">{T("全部", "All")} {len((matrix or {}).get("协议", []))} {T("个协议 →", "protocols →")}</a></h2>{lp_tbl}</div>
@@ -4049,6 +4051,282 @@ def build_alpha():
 
 
 # ---------------------------------------------------------------- 涨腿追踪（只读 data/leg/leg_latest.json；规则在 leg/leg_data.py，文案与统计在 leg/web/leg.js）
+
+# ---------------------------------------------------------------- RWA（rwa/：看板读 data/rwa/rwa_latest.json；研究标的读其中 research 段（来自 rwa/research/watchlist.json）；方法框架 / 进度读 rwa/research/*.md）
+RWA_TABS = [("", "看板", "Board", "规模 · 谁在收钱 · 平台币", "Size · who earns · tokens"),
+            ("watch/", "研究标的", "Watchlist", "判断卡 · 待核问题", "Judgment cards · open questions"),
+            ("method/", "方法框架", "Framework", "身份 · 口径 · 证据", "Identity · metrics · evidence"),
+            ("progress/", "研究进度", "Progress", "阶段 · 审查 · 外部任务", "Stages · review · tasks")]
+RWA_STATE = {"pending_recheck": ("待重核", "Pending re-check", "warn"), "watch": ("观察", "Watch", "cool"),
+             "waiting_evidence": ("等待证据", "Waiting for evidence", "cool"), "conditions_met": ("条件齐备", "Conditions met", "up"),
+             "invalidated": ("已失效", "Invalidated", "dn"), "historical": ("历史", "Historical", "")}
+RWA_PT = {"issued": ("已发平台币", "Platform token issued"), "declared_none": ("明确声明不发", "Declared no token"),
+          "unverified": ("平台币未确认", "Platform token unverified"), "tradfi": ("传统机构产品", "TradFi product"), "n/a": ("不适用", "N/A")}
+RWA_CSS = """<style>
+.rwa3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0 0 8px}
+.rwa3 .card{padding:14px 16px}.rwa3 h3{margin:0 0 8px;font-size:13px;color:var(--muted);font-weight:600;letter-spacing:.3px}
+.rwa3 .big{font:600 22px/1.25 var(--mono);margin:2px 0 6px}.rwa3 ul{margin:0;padding-left:16px;font-size:13px;line-height:1.7}
+.rwafun{display:flex;flex-direction:column;gap:6px;font-size:13px}.rwafun .r{display:flex;align-items:center;gap:8px}
+.rwafun .lb{flex:0 0 96px;color:var(--ink2)}.rwafun .tr{flex:1;height:10px;background:var(--wash);border:1px solid var(--line);border-radius:5px;overflow:hidden}
+.rwafun .tr i{display:block;height:100%;background:var(--cool)}.rwafun .v{flex:0 0 74px;text-align:right;font-family:var(--mono)}
+.rwabars{display:flex;flex-direction:column;gap:2px}.rwabar{display:grid;grid-template-columns:minmax(150px,220px) 1fr 92px;gap:10px;align-items:center;padding:8px 4px;border-bottom:1px solid var(--line)}
+.rwabar .nm{font-size:13.5px}.rwabar .nm small{display:block;color:var(--muted);font-size:11.5px;margin-top:2px;line-height:1.5}
+.rwabar .tr{height:12px;background:var(--wash);border-radius:6px;overflow:hidden}.rwabar .tr i{display:block;height:100%;background:var(--up);opacity:.75}
+.rwabar .tr i.w{background:var(--warn)}.rwabar .v{text-align:right;font-family:var(--mono);font-size:13px}.rwabar .v small{display:block;font-size:11px}
+.rwacards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.rwacard{padding:14px 16px}.rwacard h3{margin:0 0 6px;font-size:15px}
+.rwacard .chips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 8px}.rwacard dl{display:grid;grid-template-columns:86px 1fr;gap:4px 10px;margin:8px 0;font-size:12.5px}
+.rwacard dt{color:var(--muted)}.rwacard dd{margin:0}.rwacard ul{margin:4px 0 0;padding-left:16px;font-size:12.5px;line-height:1.7}
+.rwacard details{margin-top:8px;font-size:12px;color:var(--ink2)}
+@media (max-width:820px){.rwa3,.rwacards{grid-template-columns:1fr}.rwabar{grid-template-columns:1fr 84px}.rwabar .tr{grid-column:1/3;grid-row:2}}
+</style>"""
+
+
+def write_rwa_data():
+    src = os.path.join(DATA, "rwa")
+    G["RWA"] = load(os.path.join(src, "rwa_latest.json"))
+    G["RWA_HIST"] = load(os.path.join(src, "rwa_history.json"), []) or []
+    if not G["RWA"]:
+        return
+    out = os.path.join(SITE, "data", "rwa")
+    os.makedirs(out, exist_ok=True)
+    pub = {k: v for k, v in G["RWA"].items() if k != "asset_ids"}
+    with open(os.path.join(out, "rwa_latest.json"), "w", encoding="utf-8") as f:
+        json.dump(pub, f, ensure_ascii=False, indent=1)
+    shutil.copyfile(os.path.join(src, "rwa_history.json"), os.path.join(out, "rwa_history.json"))
+
+
+def rwa_head(cur):
+    tabs = "".join(f'<a role="tab" href="{U("/rwa/" + p)}" class="tab{" on" if p == cur else ""}"><span class="tn">{T(zh, en)}</span><span class="ts">{T(dz, de)}</span></a>'
+                   for p, zh, en, dz, de in RWA_TABS)
+    name = next(T(zh, en) for p, zh, en, _, _ in RWA_TABS if p == cur)
+    cr = crumbs([("RWA", "/rwa/" if cur else None)] + ([(name, None)] if cur else []))
+    return (f'{cr}<div class="ph"><div><div class="eyebrow">Real-World Assets</div><h1>{T("RWA 现实资产", "RWA · real-world assets")}</h1>'
+            f'<p class="lede">{T("把基金、国债、黄金、股票、信贷搬上链的整条产业链：规模在哪、谁付费谁收钱、哪些有平台币、研究标的的判断和待核问题。资产币、平台币、传统机构产品分开记；只摆读数、证据和未知项，不是买卖建议。", "The whole chain that brings funds, treasuries, gold, stocks and credit onchain: where the size is, who pays and who earns, which have platform tokens, and research judgments with open questions. Asset tokens, platform tokens and TradFi products are kept apart; readings, evidence and unknowns only — not trade advice.")}</p></div></div>'
+            f'<div class="tabwrap"><nav class="tabs" role="tablist">{tabs}</nav></div>')
+
+
+def rwa_cat(d, cid):
+    return next((c for c in (d or {}).get("categories") or [] if c.get("id") == cid and not c.get("missing")), None)
+
+
+def rwa_home_card():
+    d = G.get("RWA")
+    if not d:
+        return ""
+    t = d.get("totals") or {}
+    rs = (d.get("research") or {})
+    tre, gold = rwa_cat(d, "tokenized-treasuries"), rwa_cat(d, "tokenized-gold")
+    v = lambda c: a_usd(c.get("mcap")) if c else "—"
+    return (f'<h2>RWA <span class="sub">{T("现实资产上链：规模 · 谁在收钱 · 研究标的", "Real-world assets: size · who earns · watchlist")}</span>'
+            f' <a class="sub" href="{U("/rwa/")}">{T("进看板 →", "Open →")}</a></h2>'
+            f'<div class="card core-home"><div class="row"><span>{T("代币化国债", "Tokenized treasuries")} <b>{v(tre)}</b></span>'
+            f'<span>{T("代币化黄金", "Tokenized gold")} <b>{v(gold)}</b></span>'
+            f'<span>{T("链上 RWA 协议 30 天手续费", "Onchain RWA fees, 30d")} <b>{a_usd(t.get("fees30_onchain"))}</b> → {T("归代币持有人", "to token holders")} <b>{a_usd(t.get("hrev30_onchain"))}</b></span></div>'
+            f'<div class="row" style="margin-top:6px;font-size:12px;color:var(--muted)">{T("研究标的", "Watchlist")} {len(rs.get("items") or [])} {T("条，全部待重核（研究库迁入中）", "items, all pending re-check (library migration in progress)") if all(i["current"].get("state") == "pending_recheck" for i in rs.get("items") or []) else ""}'
+            f' · {T("采样", "Sampled")} {TT(d.get("cg_sampled"))} · CoinGecko / DefiLlama</div></div>')
+
+
+def rwa_link(kind, slug):
+    from urllib.parse import quote
+    if not slug:
+        return None
+    return (f"https://defillama.com/protocol/{quote(str(slug), safe='')}" if kind == "llama" else f"https://www.coingecko.com/en/coins/{quote(str(slug), safe='')}")
+
+
+def rwa_a(text, href):
+    return f'<a href="{esc(href)}" target="_blank" rel="noopener noreferrer">{esc(text)}</a>' if href else esc(text)
+
+
+def rwa_tok(r):
+    st, tk = r.get("token_status"), r.get("token") or {}
+    sym = esc(tk.get("symbol") or "")
+    if st == "registered":
+        return f'<span class="chip" data-tag="rwa_tok_reg">{T("登记代币", "Token")} {sym}</span>'
+    if st == "asset_token":
+        return f'<span class="chip t-cool" data-tag="rwa_tok_asset">{T("资产币", "Asset token")} {sym}</span>'
+    if st == "tradfi":
+        return f'<span class="chip" data-tag="rwa_tradfi">{T("传统机构", "TradFi")}</span>'
+    return f'<span class="chip t-warn" data-tag="rwa_tok_none">{T("未登记 ≠ 无币", "None listed ≠ no token")}</span>'
+
+
+def rwa_pct(v):
+    if v is None:
+        return '<span class="muted">—</span>'
+    return f'<span style="color:var(--{"up" if v >= 0 else "dn"})">{v:+.1f}%</span>'
+
+
+def rwa_board(d):
+    if not d:
+        return f'<div class="note">{T("RWA 数据还没生成。", "RWA data not generated yet.")}</div>'
+    src = d.get("sources") or {}
+    warn = ""
+    for k, nm in (("coingecko", "CoinGecko"), ("defillama", "DefiLlama")):
+        s = src.get(k) or {}
+        if s and not s.get("ok"):
+            warn += f'<div class="note">{nm} {T("这次没取到，下面沿用上次成功的结果（", "failed this run; showing the last good result (")}{TT(s.get("last_ok")) if s.get("last_ok") else T("无", "none")}{T("）。", ").")}</div>'
+    t = d.get("totals") or {}
+    cats = [c for c in d.get("categories") or [] if not c.get("missing")]
+    assets = [c for c in cats if c.get("role") == "asset" and c.get("mcap")]
+    hist = [h for h in G.get("RWA_HIST") or [] if h.get("cats")]
+    prev = hist[-2] if len(hist) >= 2 else None
+    # ① 发生什么
+    big = sorted(assets, key=lambda c: -(c.get("mcap") or 0))
+    def cname(c):
+        return T(c["zh"], c["en"])
+    happen = []
+    tre = rwa_cat(d, "tokenized-treasuries")
+    if tre:
+        tp = (tre.get("top") or [{}])[0]
+        happen.append(T(f"代币化国债 <b>{a_usd(tre['mcap'])}</b>，{tre['n']} 个币，最大 {esc(tp.get('sym'))} 占 {tp.get('share')}%",
+                        f"Tokenized treasuries <b>{a_usd(tre['mcap'])}</b>, {tre['n']} tokens; largest {esc(tp.get('sym'))} is {tp.get('share')}%"))
+    mv = [c for c in assets if c.get("chg24") is not None and not c.get("nested_in") and not c.get("overlap")]
+    if mv:
+        hi = max(mv, key=lambda c: abs(c["chg24"]))
+        happen.append(T(f"24 小时市值变动最大：{cname(hi)} {rwa_pct(hi['chg24'])}（CoinGecko 口径，含价格变动）", f"Biggest 24h market-cap move: {cname(hi)} {rwa_pct(hi['chg24'])} (CoinGecko, includes price)"))
+    conc = [c for c in assets if (c.get("top") or [{}])[0].get("share", 0) >= 90 and c.get("n", 0) <= 3]
+    for c in conc:
+        happen.append(T(f"{cname(c)} {a_usd(c['mcap'])} 几乎全是 {esc(c['top'][0]['sym'])} 一个，不能当行业规模读", f"{cname(c)} {a_usd(c['mcap'])} is almost entirely {esc(c['top'][0]['sym'])}; not an industry-size reading"))
+    if prev:
+        happen.append(T(f"上次采样 {TT(prev.get('cg_sampled'))}，变化见下方「规模」每行右侧", f"Previous sample {TT(prev.get('cg_sampled'))}; changes shown per row below"))
+    else:
+        happen.append(T("历史从今天开始逐日记录（不回填），满两次采样后显示「比上次」", "History is recorded daily from today (no backfill); “vs previous” appears from the second sample"))
+    # ② 谁在收钱：漏斗，宽度按手续费归一
+    f30 = t.get("fees30_onchain") or 0
+    fun = "".join(f'<div class="r"><span class="lb">{lb}</span><span class="tr"><i style="width:{(v / f30 * 100) if f30 else 0:.1f}%"></i></span><span class="v">{a_usd(v)}</span></div>'
+                  for lb, v in ((T("用户付的手续费", "Fees paid"), f30), (T("协议留下的", "Protocol revenue"), t.get("rev30_onchain") or 0), (T("归代币持有人", "To token holders"), t.get("hrev30_onchain") or 0)))
+    # ③ 研究
+    rs = d.get("research") or {}
+    items = rs.get("items") or []
+    mig = rs.get("migration") or {}
+    cnt = rs.get("counts") or {}
+    cnt_h = " · ".join(f'{T(RWA_STATE[k][0], RWA_STATE[k][1])} {v}' for k, v in cnt.items() if k in RWA_STATE)
+    top3 = f"""<div class="rwa3">
+<div class="card"><h3>{T("发生什么", "What's happening")}</h3><ul>{"".join(f"<li>{x}</li>" for x in happen)}</ul></div>
+<div class="card"><h3>{T("谁在收钱 · 链上 RWA 协议近 30 天", "Who earns · onchain RWA protocols, 30d")}</h3><div class="rwafun">{fun}</div>
+<p class="tnote" style="margin-top:8px">{T(f"{t.get('n_onchain', 0)} 个协议里只有 {t.get('n_hrev_pos', 0)} 个有持有人收入。传统机构产品（Grayscale ETF 管理费等）另有手续费 {a_usd(t.get('fees30_tradfi'))}，不算在内。", f"Only {t.get('n_hrev_pos', 0)} of {t.get('n_onchain', 0)} protocols pay token holders. TradFi products (Grayscale ETF fees etc.) add {a_usd(t.get('fees30_tradfi'))} in fees, excluded.")}</p></div>
+<div class="card"><h3>{T("研究标的 · 现在能做什么", "Watchlist · what can be done now")}</h3><div class="big">{len(items)} <span style="font-size:13px;color:var(--muted)">{T("条", "items")}</span></div>
+<div style="font-size:13px">{cnt_h}</div><p class="tnote" style="margin-top:6px">{esc(T(mig.get("note_zh", ""), mig.get("note_en", "")))}</p>
+<p style="margin:6px 0 0;font-size:13px"><a href="{U("/rwa/watch/")}">{T("看判断卡和待核问题 →", "Judgment cards & open questions →")}</a></p></div>
+</div>"""
+    # 规模
+    mx = max((c["mcap"] for c in assets), default=1)
+    def bar(c):
+        tp = (c.get("top") or [{}])[0]
+        one = tp.get("share", 0) >= 90
+        tags = []
+        if c.get("nested_in"):
+            tags.append(T("包含在「商品」里", "inside “commodities”"))
+        if c.get("overlap"):
+            tags.append(T("和「国债」大量重叠", "overlaps “treasuries”"))
+        n = (("≥" if c.get("truncated") else "") + str(c.get("n")))
+        sub = T(f"{n} 个币 · 最大 ", f"{n} tokens · top ") + rwa_a(tp.get("sym") or "", rwa_link("cg", tp.get("id"))) + f" {tp.get('share')}%"
+        if tp.get("role"):
+            sub += " · " + esc(T(tp["role"]["zh"], tp["role"]["en"]))
+        if c.get("note_zh"):
+            tags.append(T(c["note_zh"], c.get("note_en", "")))
+        if tags:
+            sub += " · " + " · ".join(tags)
+        vs = ""
+        if prev and prev["cats"].get(c["id"]) and c.get("mcap"):
+            vs = f'<small>{T("比上次", "vs prev")} {rwa_pct((c["mcap"] / prev["cats"][c["id"]] - 1) * 100)}</small>'
+        else:
+            vs = f'<small>24h {rwa_pct(c.get("chg24"))}</small>'
+        return (f'<div class="rwabar"><div class="nm">{esc(cname(c))}<small>{sub}</small></div>'
+                f'<div class="tr" title="{esc(a_usd(c["mcap"]))}"><i class="{"w" if one else ""}" style="width:{c["mcap"] / mx * 100:.1f}%"></i></div>'
+                f'<div class="v">{a_usd(c["mcap"])}{vs}</div></div>')
+    bars = "".join(bar(c) for c in big)
+    mixed = rwa_cat(d, "real-world-assets-rwa")
+    mixed_cap = a_usd((mixed or {}).get("mcap"))
+    # 谁在收钱表
+    on = [r for r in d.get("protocols") or [] if r["kind"] == "onchain" and (r.get("fees30") or 0) > 0][:30]
+    tf = [r for r in d.get("protocols") or [] if r["kind"] == "tradfi"]
+    def prow(i, r):
+        sub = ""
+        if len(r.get("children") or []) > 1:
+            sub = f'<div class="tnote" style="margin:2px 0 0;white-space:normal">{esc("、".join(r["children"][:3]))}{"…" if len(r["children"]) > 3 else ""}</div>'
+        return (f'<tr><td class="rk">{i}</td><td class="wrap" style="min-width:170px;text-align:left">{rwa_a(r["name"], rwa_link("llama", r.get("slug")))}{sub}</td>'
+                f'<td class="l">{esc(" · ".join(r.get("chains") or []))}</td><td>{a_usd(r.get("fees30"))}</td><td>{a_usd(r.get("rev30"))}</td>'
+                f'<td>{a_usd(r.get("hrev30")) if r.get("hrev30") else "—"}</td><td>{rwa_pct(r.get("chg30"))}</td><td class="l">{rwa_tok(r)}</td></tr>')
+    th = (f'<thead><tr><th>#</th><th style="text-align:left">{T("协议（按母协议合并）", "Protocol (by parent)")}</th><th style="text-align:left">{T("主要链", "Chains")}</th>'
+          f'<th>{T("手续费", "Fees")}</th><th>{T("协议收入", "Revenue")}</th><th>{T("持有人收入", "Holders")}</th><th>{T("手续费环比", "Fees chg")}</th><th style="text-align:left">{T("代币身份", "Token identity")}</th></tr></thead>')
+    ptbl = f'<div class="tw scroll"><table>{th}<tbody>{"".join(prow(i, r) for i, r in enumerate(on, 1))}</tbody></table></div>'
+    ttbl = f'<div class="tw scroll"><table>{th}<tbody>{"".join(prow(i, r) for i, r in enumerate(tf, 1))}</tbody></table></div>' if tf else ""
+    # 平台币
+    pl = (d.get("platform") or [])[:25]
+    plr = "".join(
+        f'<tr><td class="rk">{i}</td><td class="wrap" style="min-width:160px;text-align:left">{rwa_a(p["name"], rwa_link("cg", p["id"]))} <span class="muted">{esc(p["sym"])}</span>'
+        + (f'<div class="tnote" style="margin:2px 0 0;white-space:normal">{esc(T(p["role"]["zh"], p["role"]["en"]))}</div>' if p.get("role") else "")
+        + f'</td><td>{a_usd(p.get("mcap"))}</td><td>{a_usd(p.get("fdv"))}</td><td>{a_usd(p.get("vol24"))}</td><td>{rwa_pct(p.get("chg24"))}</td></tr>'
+        for i, p in enumerate(pl, 1))
+    plc = rwa_cat(d, "rwa-protocol") or {}
+    pltop = (plc.get("top") or [{}])[0]
+    pl_cap, pl_sym, pl_sh = a_usd(plc.get("mcap")), esc(pltop.get("sym") or "—"), pltop.get("share")
+    return (warn + top3
+            + f'<h2>{T("规模 · 按资产类", "Size by asset class")} <span class="sub">{T("CoinGecko 分类市值 · 资产币", "CoinGecko category market cap · asset tokens")}</span></h2>'
+            + f'<p class="tnote">{T("分类之间有包含和重叠，不求和。条宽按本表最大值等比；琥珀色 = 单个币占 90% 以上。CoinGecko 分类只覆盖它收录的币，许可制基金（只在白名单之间转让）常常缺价格或缺席，所以这里偏小，不是行业全量。", "Categories nest and overlap; not summed. Bar width is proportional to the largest row; amber = one token is over 90%. CoinGecko only covers tokens it lists; permissioned funds are often missing, so these figures understate the industry.")}</p>'
+            + f'<div class="card" style="padding:6px 14px"><div class="rwabars">{bars}</div></div>'
+            + (f'<p class="tnote">{T(f"CoinGecko 的「RWA」大类 {mixed_cap} 把资产币和平台币混在一起，只作参考。", f"CoinGecko’s “RWA” umbrella ({mixed_cap}) mixes asset and platform tokens; reference only.")}</p>' if mixed else "")
+            + f'<h2>{T("谁在收钱", "Who earns")} <span class="sub">{T("DefiLlama · 近 30 天 · 链上 RWA 协议", "DefiLlama · last 30d · onchain RWA protocols")} · {len(on)}</span></h2>'
+            + f'<p class="tnote">{T("手续费 = 用户付的总额（多数是基金管理费，归管理人）；协议收入 = 协议自己留下的；持有人收入 = 分给代币持有人的。「登记代币」是 DefiLlama 登记的代币，平台币身份还要研究层核对；「资产币」= 登记的其实是产品份额 / 黄金，不是平台币；「未登记 ≠ 无币」。环比 = 近 30 天 ÷ 前 30 天 − 1。", "Fees = total paid by users (mostly fund management fees to managers); revenue = what the protocol keeps; holders = paid to token holders. “Token” = registered on DefiLlama, platform-token identity still to be checked; “asset token” = the registered token is a product share / gold, not a platform token; “none listed ≠ no token”. Change = last 30d ÷ prior 30d − 1.")}</p>'
+            + ptbl
+            + (f'<h3 style="margin:18px 0 8px;font-size:14px">{T("传统机构产品（单列，不算进上面的合计）", "TradFi products (separate, not in the totals above)")}</h3>' + ttbl if ttbl else "")
+            + f'<h2>{T("平台币 / 协议币", "Platform & protocol tokens")} <span class="sub">{T("CoinGecko「RWA Protocol」分类", "CoinGecko “RWA Protocol” category")} · {plc.get("n", "—")}</span></h2>'
+            + f'<p class="tnote">{T(f"这个分类合计 {pl_cap}，其中 {pl_sym} 占 {pl_sh}%。平台币价格和底层资产规模不一定相关；身份特殊的在名字下面注明。", f"Category total {pl_cap}; {pl_sym} alone is {pl_sh}%. Platform-token prices need not track underlying asset size; special identities are noted under the name.")}</p>'
+            + f'<div class="tw scroll"><table><thead><tr><th>#</th><th style="text-align:left">{T("代币", "Token")}</th><th>{T("流通市值", "Market cap")}</th><th>FDV</th><th>{T("24h 成交额", "24h volume")}</th><th>24h</th></tr></thead><tbody>{plr}</tbody></table></div>'
+            + f'<p class="tnote">{T("CoinGecko 采样", "CoinGecko sampled")} {TT(d.get("cg_sampled"))} · {T("DefiLlama 30 天窗口截至", "DefiLlama 30d window to")} {esc(d.get("asof_llama") or "")} · {T("生成于", "Generated")} {TT(d.get("generated"))}'
+            + f' · <a href="/data/rwa/rwa_latest.json">{T("下载 JSON", "JSON")}</a> · <a href="/data/rwa/rwa_history.json">{T("历史", "History")}</a></p>')
+
+
+def rwa_watch(d):
+    rs = (d or {}).get("research") or {}
+    mig = rs.get("migration") or {}
+    items = rs.get("items") or []
+    lim = rs.get("stale_days", 14)
+    head = (f'<div class="note">{esc(T(mig.get("note_zh", ""), mig.get("note_en", "")))} '
+            f'{T(f"判断最后复核超过 {lim} 天的标「过期待复核」。", f"Judgments not re-checked for over {lim} days are marked stale.")}</div>')
+    na = f'<span class="muted">{T("— 待复核后填写", "— to be filled after re-check")}</span>'
+    cards = []
+    for it in items:
+        cur = it.get("current") or {}
+        st = RWA_STATE.get(cur.get("state"), (cur.get("state") or "?", cur.get("state") or "?", "warn"))
+        pt = it.get("platform_token") or {}
+        ptl = RWA_PT.get(pt.get("status"), (pt.get("status") or "?", pt.get("status") or "?"))
+        fresh = {"never": T("从未按原始来源复核", "never re-checked at source"), "stale": T(f"过期待复核（{it.get('age_days')} 天）", f"stale ({it.get('age_days')}d)"),
+                 "fresh": T(f"{it.get('age_days')} 天前复核", f"re-checked {it.get('age_days')}d ago")}.get(it.get("fresh"), "")
+        fld = lambda k: esc(T(cur.get(k + "_zh") or cur.get(k) or "", cur.get(k + "_en") or cur.get(k) or "")) or na
+        oq = "".join(f"<li>{esc(q)}</li>" for q in it.get("open_questions") or [])
+        facts = "".join(f'<li>{esc(f.get("claim"))} · {rwa_a(T("来源", "source"), f.get("src") if str(f.get("src", "")).startswith("https://") else None)} · {esc(f.get("checked_utc") or "")}</li>' for f in it.get("facts") or [])
+        vers = "".join(f'<li>{esc(v.get("v"))} · {esc(T(RWA_STATE.get(v.get("state"), (v.get("state"),) * 2)[0], RWA_STATE.get(v.get("state"), (v.get("state"),) * 2)[1]))}</li>' for v in it.get("versions") or [])
+        cards.append(
+            f'<div class="card rwacard" id="{esc(it.get("id", "").replace(":", "-"))}"><h3>{esc(it.get("name"))}</h3><div class="chips">'
+            f'<span class="chip{" t-" + st[2] if st[2] else ""}">{esc(T(st[0], st[1]))}</span><span class="chip">{esc(T(ptl[0], ptl[1]))}</span>'
+            f'<span class="chip">{esc(fresh)}</span></div>'
+            f'<div style="font-size:13px;line-height:1.7">{fld("why")}</div>'
+            f'<dl><dt>{T("触发条件", "Trigger")}</dt><dd>{fld("trigger")}</dd><dt>{T("失效条件", "Invalidation")}</dt><dd>{fld("invalid")}</dd>'
+            f'<dt>{T("谁能参与", "Eligibility")}</dt><dd>{fld("eligibility")}</dd><dt>{T("参与成本", "Cost")}</dt><dd>{fld("cost")}</dd><dt>{T("退出路径", "Exit")}</dt><dd>{fld("exit")}</dd></dl>'
+            + (f'<div style="font-size:12.5px;color:var(--muted)">{T("已核事实", "Verified facts")}</div><ul>{facts}</ul>' if facts else "")
+            + (f'<div style="font-size:12.5px;color:var(--muted);margin-top:6px">{T("待核问题", "Open questions")}</div><ul>{oq}</ul>' if oq else "")
+            + (f'<details><summary>{T("平台币原始标注 · 判断版本", "Raw token label · versions")}</summary><div style="margin-top:6px">{esc(pt.get("raw") or "—")}</div><ul>{vers}</ul></details>')
+            + "</div>")
+    prob = rs.get("problems") or []
+    pb = (f'<div class="note">{T("研究库校验提示：", "Library validation: ")}' + "；".join(esc(p) for p in prob) + "</div>") if prob else ""
+    return head + pb + f'<div class="rwacards">{"".join(cards)}</div>' + f'<p class="tnote">{T("研究库更新于", "Library updated")} {esc(rs.get("updated_utc") or "")} · {T("任务包", "Task pack")}: rwa/review/README.md</p>'
+
+
+def build_rwa():
+    d = G.get("RWA") or {}
+    desc = T("RWA 现实资产板块：代币化国债、黄金、股票、信贷的规模，RWA 协议的手续费、协议收入和持有人收入，平台币身份，研究标的判断卡。不是买卖建议。",
+             "RWA board: size of tokenized treasuries, gold, stocks and credit; RWA protocol fees, revenue and holder revenue; platform-token identity; research judgment cards. Not trade advice.")
+    emit("rwa/index.html", T(f"RWA · {BRAND}", f"RWA · {BRAND_EN}"), rwa_head("") + rwa_board(d), active="rwa", desc=desc, extra_head=RWA_CSS)
+    emit("rwa/watch/index.html", T(f"研究标的 · RWA · {BRAND}", f"Watchlist · RWA · {BRAND_EN}"), rwa_head("watch/") + rwa_watch(d), active="rwa", desc=desc, extra_head=RWA_CSS)
+    zh_only = ZH_ONLY if LANG["v"] == "en" else ""
+    for p, fn in (("method/", "方法框架.md"), ("progress/", "研究进度.md")):
+        src = open(os.path.join(ROOT, "rwa", "research", fn), encoding="utf-8").read()
+        name = next(T(zh, en) for q, zh, en, _, _ in RWA_TABS if q == p)
+        emit(f"rwa/{p}index.html", T(f"{name} · RWA · {BRAND}", f"{name} · RWA · {BRAND_EN}"),
+             rwa_head(p) + zh_only + f'<div class="article alpha-doc">{core_md(src)}</div>', active="rwa", desc=desc)
+
+
 def leg_src(fn="leg_latest.json"):
     """数据文件链接带 ?v=<asof>（设计稿要求）；页面 / 卡片由 leg.js 取数渲染，停更判断在浏览器里按当天日期算。"""
     return f'/data/{fn}?v={esc((G.get("LEG") or {}).get("asof") or G["今天"])}'
@@ -5094,7 +5372,7 @@ def build_misc(logs, weeks, months):
     if os.path.exists(rd):
         os.remove(rd)
     write("robots.txt", f"User-agent: *\nAllow: /\nSitemap: https://{DOMAIN}/sitemap.xml\n")
-    urls = ["/", "/macro/", "/leg-tracker/", "/calendar/", "/launchpad/", "/ai-agent/", "/rotation/", "/alpha/", "/alpha/cases/", "/alpha/method/", "/alpha/progress/", "/reports/", "/journal/", "/methodology/", "/corrections/", "/about/",
+    urls = ["/", "/macro/", "/leg-tracker/", "/calendar/", "/launchpad/", "/ai-agent/", "/rotation/", "/alpha/", "/alpha/cases/", "/alpha/method/", "/alpha/progress/", "/rwa/", "/rwa/watch/", "/rwa/method/", "/rwa/progress/", "/reports/", "/journal/", "/methodology/", "/corrections/", "/about/",
             "/launchpad/report/", "/launchpad/report/archive/"]
     urls += [f"/macro/{x['key']}/" for x in R.INDICATORS + R.RETIRED] + ["/changelog/"]
     for p in PILLARS:
@@ -5234,6 +5512,7 @@ def main():
             json.dump(dict(G["LEG"], site_scale=leg_scale()), f, ensure_ascii=False, indent=1)
     write_core_data()
     write_alpha_data()
+    write_rwa_data()
     copy_report_files()
     for lang in ("zh", "en"):
         LANG["v"] = lang
@@ -5254,6 +5533,7 @@ def main():
         build_leg_tracker()
         build_core()
         build_alpha()
+        build_rwa()
         build_ai_agent()
         build_posts()
         build_reports()

@@ -1,0 +1,42 @@
+{
+ "_说明": "RWA 研究标的与判断（人工 / Codex 核对后由 Claude 并入）。每条判断带版本；新判断追加到 versions 最前面，旧版本不删不改。没核对过的事实不写进 facts，只写 open_questions。字段说明见 rwa/review/README.md「数据契约」。",
+ "schema": 1,
+ "updated_utc": "2026-11-14",
+ "migration": {
+  "status": "未迁入",
+  "note_zh": "Codex 本地研究库（主库 225 条 + 发现队列 137 条，截至 2026-11-14）还没按数据契约导出进仓库；10-30 的 6 项机会判断也没复核。下表只有交接包点名的复核案例，全部待重核，首发不给结论。",
+  "note_en": "The local research library (225 main + 137 discovery records as of 2026-11-14) has not been exported into the repo yet, and the six 10-30 judgments have not been re-checked. Only the review cases named in the handoff are listed; all pending re-check, no conclusions at launch."
+ },
+ "items": [
+  {
+   "id": "case:kyte", "name": "KYTE", "segment": "trading", "token_kind": "platform_token",
+   "platform_token": {"status": "unverified", "raw": "交接包：平台币、链、池 ID 已核（未附证据进仓库）"},
+   "versions": [{"v": "2026-11-12", "state": "pending_recheck", "why_zh": "交接包称 11-12 因报价和深度恶化下调过风险观察；报价时点、gas 假设、池子身份都要重核。", "why_en": "Handoff says risk view was downgraded on 11-12 after quotes and depth worsened; quote time, gas assumption and pool identity need re-checking.", "reviewed_utc": null}],
+   "open_questions": ["平台币合约、链、DEX 池 ID 分别是什么（原始来源 + 核对时间）", "只读卖出报价的区块高度、报价规模、gas 假设", "11-12 之后深度和报价是否继续恶化"]
+  },
+  {
+   "id": "case:xash", "name": "Xash", "segment": "issuance", "token_kind": "none_declared?",
+   "platform_token": {"status": "unverified", "raw": "交接包：官方声明无平台币（待附原文链接）"},
+   "versions": [{"v": "2026-11-14", "state": "pending_recheck", "why_zh": "PYUSD 活动的黄金奖励属于营销补贴；可提现收益、普通使用和积分预期要分开算。", "why_en": "Gold rewards on the PYUSD campaign are marketing subsidies; withdrawable yield, normal usage and points expectations must be separated.", "reviewed_utc": null}],
+   "open_questions": ["「无平台币」声明原文与日期", "Phase B 前奖励能否提取、何时可提", "奖励资金来源与持续期"]
+  },
+  {
+   "id": "case:buidl-ethena", "name": "BUIDL × Ethena", "segment": "fund", "token_kind": "asset_token",
+   "platform_token": {"status": "tradfi", "raw": "BUIDL = 基金份额；ENA = Ethena 的平台币，二者身份分开"},
+   "versions": [{"v": "2026-11-14", "state": "pending_recheck", "why_zh": "交接包称流动性设施初始两侧合计 5,000 万美元、有条件上限 1 亿美元；真实使用量、谁能用、ENA 是否受益都需要证据。", "why_en": "Handoff cites a liquidity facility of $50M initial (both sides) and a conditional $100M cap; real usage, eligibility and any ENA benefit need evidence.", "reviewed_utc": null}],
+   "open_questions": ["设施规模原文（官方公告链接）", "实际使用量（链上或披露）", "谁有资格使用（机构白名单？）", "ENA 持有人从这条业务拿到什么"]
+  },
+  {
+   "id": "case:rwaxyz-represented", "name": "RWA.xyz Represented 快照下降", "segment": "data", "token_kind": "n/a",
+   "platform_token": {"status": "n/a"},
+   "versions": [{"v": "2026-11-14", "state": "pending_recheck", "why_zh": "11-14 快照较上一轮明显下降，当期 Broadridge DLR 权重很高；缺同期单项余额前不推断赎回原因。", "why_en": "The 11-14 snapshot fell sharply with Broadridge DLR carrying a large weight; no redemption story until like-for-like line items exist.", "reviewed_utc": null}],
+   "open_questions": ["Broadridge DLR 前后两期余额", "数据方是否改了口径 / 覆盖", "rwa.xyz 数据的再分发条款"]
+  },
+  {
+   "id": "case:townsquare", "name": "TownSquare / TOWN", "segment": "lending", "token_kind": "platform_token",
+   "platform_token": {"status": "unverified", "raw": "交接包：TOWN 有治理规则（待附原文）"},
+   "versions": [{"v": "2026-11-14", "state": "pending_recheck", "why_zh": "产品估值、发行方储备证明、借贷 TVL、TOWN 治理规则是四类不同证据；一笔链上证明交易不能验证线下资产和个人可参与性。", "why_en": "Product valuation, issuer reserve attestations, lending TVL and TOWN governance are four different kinds of evidence; one onchain proof tx does not verify offchain assets or personal eligibility.", "reviewed_utc": null}],
+   "open_questions": ["储备证明出具方与日期", "TOWN 持有人有无收入权", "普通用户的参与资格与地区限制"]
+  }
+ ]
+}
