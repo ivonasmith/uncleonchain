@@ -1,0 +1,1392 @@
+{
+ "meta": {
+  "generated": "2026-11-14 05:39 UTC",
+  "dates": [
+   "2021-03-01",
+   "2026-11-01"
+  ],
+  "train_end": "2000-01-01",
+  "universe": 11,
+  "delisted": [
+   "BAL"
+  ],
+  "coins": [
+   "AAVE",
+   "BAL",
+   "COMP",
+   "CRV",
+   "KNC",
+   "LDO",
+   "LINK",
+   "SNX",
+   "SUSHI",
+   "UNI",
+   "YFI"
+  ],
+  "per_month": {
+   "2021-03-01": 5,
+   "2021-04-01": 5,
+   "2021-05-01": 5,
+   "2021-06-01": 5,
+   "2021-07-01": 6,
+   "2021-08-01": 6,
+   "2021-09-01": 6,
+   "2021-10-01": 6,
+   "2021-11-01": 6,
+   "2021-12-01": 6,
+   "2022-01-01": 6,
+   "2022-02-01": 6,
+   "2022-03-01": 5,
+   "2022-04-01": 5,
+   "2022-05-01": 6,
+   "2022-06-01": 6,
+   "2022-07-01": 6,
+   "2022-08-01": 6,
+   "2022-09-01": 6,
+   "2022-10-01": 5,
+   "2022-11-01": 5,
+   "2022-12-01": 6,
+   "2023-01-01": 5,
+   "2023-02-01": 5,
+   "2023-03-01": 6,
+   "2023-04-01": 5,
+   "2023-05-01": 5,
+   "2023-06-01": 5,
+   "2023-07-01": 5,
+   "2023-08-01": 5,
+   "2023-09-01": 6,
+   "2023-10-01": 6,
+   "2023-11-01": 5,
+   "2023-12-01": 6,
+   "2024-01-01": 7,
+   "2024-02-01": 6,
+   "2024-03-01": 6,
+   "2024-04-01": 7,
+   "2024-05-01": 7,
+   "2024-06-01": 6,
+   "2024-07-01": 6,
+   "2024-08-01": 7,
+   "2024-09-01": 6,
+   "2024-10-01": 5,
+   "2024-11-01": 6,
+   "2024-12-01": 6,
+   "2025-01-01": 8,
+   "2025-02-01": 7,
+   "2025-03-01": 8,
+   "2025-04-01": 5,
+   "2025-05-01": 4,
+   "2025-06-01": 4,
+   "2025-07-01": 4,
+   "2025-08-01": 5,
+   "2025-09-01": 7,
+   "2025-10-01": 6,
+   "2025-11-01": 6,
+   "2025-12-01": 6,
+   "2026-01-01": 7,
+   "2026-02-01": 8,
+   "2026-03-01": 7,
+   "2026-04-01": 7,
+   "2026-05-01": 7,
+   "2026-06-01": 7,
+   "2026-07-01": 7,
+   "2026-08-01": 7,
+   "2026-09-01": 7,
+   "2026-10-01": 7,
+   "2026-11-01": 8
+  },
+  "dropped": {
+   "AERO/aero-protocol": "历史价格重叠不足（aero）",
+   "LIT/lighter": "历史价格重叠不足（lighter）",
+   "BNB/binance-alpha": "母协议没有 gecko_id，无法核对身份",
+   "XAI/sideshift": "币安收盘与 sideshift-token 历史价格中位偏差 84%（同名不同币）",
+   "FUN/sport.fun": "币安收盘与 football-fun 历史价格中位偏差 97%（同名不同币）",
+   "TREE/tree-news": "币安收盘与 tree-capital 历史价格中位偏差 66%（同名不同币）",
+   "ADX/adrena-protocol": "币安收盘与 adrena 历史价格中位偏差 556%（同名不同币）",
+   "MASK/nullmask": "币安收盘与 nullmask 历史价格中位偏差 1767%（同名不同币）",
+   "ALPHA/alphafi": "币安收盘与 alpha-fi 历史价格中位偏差 97%（同名不同币）",
+   "GENIUS/genius-terminal": "母协议没有 gecko_id，无法核对身份"
+  },
+  "mode": "cmval",
+  "holder_coins_per_month": {
+   "2021-03-01": 1,
+   "2021-04-01": 1,
+   "2021-05-01": 1,
+   "2021-06-01": 1,
+   "2021-07-01": 2,
+   "2021-08-01": 2,
+   "2021-09-01": 2,
+   "2021-10-01": 2,
+   "2021-11-01": 2,
+   "2021-12-01": 3,
+   "2022-01-01": 3,
+   "2022-02-01": 3,
+   "2022-03-01": 3,
+   "2022-04-01": 3,
+   "2022-05-01": 3,
+   "2022-06-01": 3,
+   "2022-07-01": 4,
+   "2022-08-01": 4,
+   "2022-09-01": 4,
+   "2022-10-01": 3,
+   "2022-11-01": 3,
+   "2022-12-01": 4,
+   "2023-01-01": 3,
+   "2023-02-01": 3,
+   "2023-03-01": 4,
+   "2023-04-01": 3,
+   "2023-05-01": 3,
+   "2023-06-01": 3,
+   "2023-07-01": 3,
+   "2023-08-01": 3,
+   "2023-09-01": 3,
+   "2023-10-01": 2,
+   "2023-11-01": 2,
+   "2023-12-01": 3,
+   "2024-01-01": 4,
+   "2024-02-01": 3,
+   "2024-03-01": 3,
+   "2024-04-01": 4,
+   "2024-05-01": 4,
+   "2024-06-01": 3,
+   "2024-07-01": 3,
+   "2024-08-01": 4,
+   "2024-09-01": 4,
+   "2024-10-01": 3,
+   "2024-11-01": 4,
+   "2024-12-01": 4,
+   "2025-01-01": 5,
+   "2025-02-01": 5,
+   "2025-03-01": 5,
+   "2025-04-01": 2,
+   "2025-05-01": 2,
+   "2025-06-01": 2,
+   "2025-07-01": 2,
+   "2025-08-01": 3,
+   "2025-09-01": 4,
+   "2025-10-01": 4,
+   "2025-11-01": 4,
+   "2025-12-01": 4,
+   "2026-01-01": 4,
+   "2026-02-01": 5,
+   "2026-03-01": 5,
+   "2026-04-01": 5,
+   "2026-05-01": 5,
+   "2026-06-01": 4,
+   "2026-07-01": 5,
+   "2026-08-01": 5,
+   "2026-09-01": 5,
+   "2026-10-01": 4,
+   "2026-11-01": 4
+  }
+ },
+ "factors": {
+  "rev_7v30": {
+   "name": "收入 7 日均 vs 30 日均",
+   "group": "基本面",
+   "prior": 1,
+   "year_only": false,
+   "30": {
+    "train": null,
+    "test": {
+     "months": 3,
+     "ic": 0.1905,
+     "t": 1.06,
+     "hit": 67,
+     "n": 8
+    },
+    "ptrain": null,
+    "ptest": {
+     "months": 3,
+     "ic": 0.0714,
+     "t": 0.35,
+     "hit": 33,
+     "n": 0
+    },
+    "q_test": [
+     -5.05,
+     -2.49,
+     -0.26,
+     6.07,
+     -2.19
+    ],
+    "mono": 0.7
+   },
+   "60": {
+    "train": null,
+    "test": {
+     "months": 2,
+     "ic": 0.0357,
+     "t": null,
+     "hit": 50,
+     "n": 8
+    },
+    "ptrain": null,
+    "ptest": {
+     "months": 2,
+     "ic": 0.0833,
+     "t": null,
+     "hit": 50,
+     "n": 0
+    },
+    "q_test": [
+     3.49,
+     -6.79,
+     0.87,
+     5.53,
+     -4.39
+    ],
+    "mono": 0.0
+   },
+   "90": {
+    "train": null,
+    "test": {
+     "months": 2,
+     "ic": -0.1548,
+     "t": null,
+     "hit": 50,
+     "n": 8
+    },
+    "ptrain": null,
+    "ptest": {
+     "months": 2,
+     "ic": -0.131,
+     "t": null,
+     "hit": 50,
+     "n": 0
+    },
+    "q_test": [
+     7.59,
+     2.48,
+     1.96,
+     0.19,
+     -2.81
+    ],
+    "mono": -1.0
+   },
+   "direction": 1,
+   "verdict": "未通过"
+  },
+  "rev_30v30": {
+   "name": "收入近 30 天 vs 前 30 天",
+   "group": "基本面",
+   "prior": 1,
+   "year_only": false,
+   "30": {
+    "train": null,
+    "test": {
+     "months": 3,
+     "ic": 0.2143,
+     "t": 1.19,
+     "hit": 67,
+     "n": 8
+    },
+    "ptrain": null,
+    "ptest": {
+     "months": 3,
+     "ic": 0.1825,
+     "t": 0.56,
+     "hit": 33,
+     "n": 0
+    },
+    "q_test": [
+     -4.2,
+     5.79,
+     -11.67,
+     -1.5,
+     2.38
+    ],
+    "mono": 0.2
+   },
+   "60": {
+    "train": null,
+    "test": {
+     "months": 2,
+     "ic": -0.0714,
+     "t": null,
+     "hit": 50,
+     "n": 8
+    },
+    "ptrain": null,
+    "ptest": {
+     "months": 2,
+     "ic": 0.1071,
+     "t": null,
+     "hit": 50,
+     "n": 0
+    },
+    "q_test": [
+     -7.28,
+     6.03,
+     -4.42,
+     -6.03,
+     2.36
+    ],
+    "mono": 0.3
+   },
+   "90": {
+    "train": null,
+    "test": {
+     "months": 2,
+     "ic": -0.1548,
+     "t": null,
+     "hit": 50,
+     "n": 8
+    },
+    "ptrain": null,
+    "ptest": {
+     "months": 2,
+     "ic": -0.1548,
+     "t": null,
+     "hit": 50,
+     "n": 0
+    },
+    "q_test": [
+     11.78,
+     3.09,
+     -2.83,
+     -1.55,
+     -1.38
+    ],
+    "mono": -0.6
+   },
+   "direction": 1,
+   "verdict": "未通过"
+  },
+  "rev_90v90": {
+   "name": "收入近 90 天 vs 前 90 天",
+   "group": "基本面",
+   "prior": 1,
+   "year_only": false,
+   "30": {
+    "train": null,
+    "test": {
+     "months": 2,
+     "ic": 0.0238,
+     "t": null,
+     "hit": 50,
+     "n": 8
+    },
+    "ptrain": null,
+    "ptest": {
+     "months": 2,
+     "ic": 0.1011,
+     "t": null,
+     "hit": 50,
+     "n": 0
+    },
+    "q_test": [
+     -4.01,
+     6.52,
+     3.25,
+     -4.92,
+     -3.19
+    ],
+    "mono": -0.2
+   },
+   "60": {
+    "train": null,
+    "test": {
+     "months": 1,
+     "ic": 0.119,
+     "t": null,
+     "hit": 100,
+     "n": 8
+    },
+    "ptrain": null,
+    "ptest": {
+     "months": 1,
+     "ic": -0.1557,
+     "t": null,
+     "hit": 0,
+     "n": 0
+    },
+    "q_test": [
+     -16.64,
+     4.69,
+     -2.26,
+     -2.47,
+     -5.19
+    ],
+    "mono": 0.0
+   },
+   "90": {
+    "train": null,
+    "test": {
+     "months": 1,
+     "ic": -0.1667,
+     "t": null,
+     "hit": 0,
+     "n": 8
+    },
+    "ptrain": null,
+    "ptest": {
+     "months": 1,
+     "ic": -0.1078,
+     "t": null,
+     "hit": 0,
+     "n": 0
+    },
+    "q_test": [
+     3.96,
+     -0.2,
+     -0.56,
+     -4.28,
+     -0.4
+    ],
+    "mono": -0.7
+   },
+   "direction": 1,
+   "verdict": "未通过"
+  },
+  "holder_share": {
+   "name": "持有人收入占协议收入（价值捕获）",
+   "group": "基本面",
+   "prior": 1,
+   "year_only": false,
+   "30": {
+    "train": null,
+    "test": {
+     "months": 3,
+     "ic": -0.0311,
+     "t": -0.07,
+     "hit": 67,
+     "n": 8
+    },
+    "ptrain": null,
+    "ptest": {
+     "months": 3,
+     "ic": -0.1984,
+     "t": -0.59,
+     "hit": 67,
+     "n": 0
+    },
+    "q_test": [
+     -2.92,
+     1.23,
+     -1.03,
+     -2.3,
+     1.78
+    ],
+    "mono": 0.6
+   },
+   "60": {
+    "train": null,
+    "test": {
+     "months": 2,
+     "ic": -0.2493,
+     "t": null,
+     "hit": 50,
+     "n": 8
+    },
+    "ptrain": null,
+    "ptest": {
+     "months": 2,
+     "ic": -0.4048,
+     "t": null,
+     "hit": 0,
+     "n": 0
+    },
+    "q_test": [
+     -1.95,
+     3.59,
+     4.04,
+     -3.76,
+     -4.36
+    ],
+    "mono": -0.6
+   },
+   "90": {
+    "train": null,
+    "test": {
+     "months": 2,
+     "ic": -0.2263,
+     "t": null,
+     "hit": 0,
+     "n": 8
+    },
+    "ptrain": null,
+    "ptest": {
+     "months": 2,
+     "ic": -0.2262,
+     "t": null,
+     "hit": 0,
+     "n": 0
+    },
+    "q_test": [
+     1.45,
+     7.91,
+     7.54,
+     -6.5,
+     -1.27
+    ],
+    "mono": -0.6
+   },
+   "direction": 1,
+   "verdict": "未通过"
+  },
+  "take_rate": {
+   "name": "抽成率（协议收入 ÷ 手续费）",
+   "group": "基本面",
+   "prior": 1,
+   "year_only": false,
+   "30": {
+    "train": null,
+    "test": {
+     "months": 3,
+     "ic": -0.1508,
+     "t": -0.43,
+     "hit": 33,
+     "n": 8
+    },
+    "ptrain": null,
+    "ptest": {
+     "months": 3,
+     "ic": -0.1032,
+     "t": -0.28,
+     "hit": 67,
+     "n": 0
+    },
+    "q_test": [
+     -2.73,
+     4.46,
+     -4.19,
+     -3.03,
+     0.77
+    ],
+    "mono": -0.1
+   },
+   "60": {
+    "train": null,
+    "test": {
+     "months": 2,
+     "ic": -0.0476,
+     "t": null,
+     "hit": 50,
+     "n": 8
+    },
+    "ptrain": null,
+    "ptest": {
+     "months": 2,
+     "ic": -0.0714,
+     "t": null,
+     "hit": 50,
+     "n": 0
+    },
+    "q_test": [
+     2.27,
+     1.42,
+     -1.37,
+     -5.08,
+     -0.26
+    ],
+    "mono": -0.7
+   },
+   "90": {
+    "train": null,
+    "test": {
+     "months": 2,
+     "ic": 0.1548,
+     "t": null,
+     "hit": 50,
+     "n": 8
+    },
+    "ptrain": null,
+    "ptest": {
+     "months": 2,
+     "ic": 0.1548,
+     "t": null,
+     "hit": 50,
+     "n": 0
+    },
+    "q_test": [
+     0.65,
+     -3.77,
+     13.47,
+     0.84,
+     0.5
+    ],
+    "mono": 0.1
+   },
+   "direction": 1,
+   "verdict": "未通过"
+  },
+  "rev_lead": {
+   "name": "收入领先价格（收入 30 天变化 − 价格 30 天涨跌）",
+   "group": "基本面",
+   "prior": 1,
+   "year_only": false,
+   "30": {
+    "train": null,
+    "test": {
+     "months": 3,
+     "ic": 0.1667,
+     "t": 1.32,
+     "hit": 67,
+     "n": 8
+    },
+    "ptrain": null,
+    "ptest": {
+     "months": 3,
+     "ic": 0.0476,
+     "t": 0.31,
+     "hit": 33,
+     "n": 0
+    },
+    "q_test": [
+     -4.2,
+     1.47,
+     1.3,
+     -3.66,
+     2.38
+    ],
+    "mono": 0.6
+   },
+   "60": {
+    "train": null,
+    "test": {
+     "months": 2,
+     "ic": 0.131,
+     "t": null,
+     "hit": 50,
+     "n": 8
+    },
+    "ptrain": null,
+    "ptest": {
+     "months": 2,
+     "ic": -0.0476,
+     "t": null,
+     "hit": 50,
+     "n": 0
+    },
+    "q_test": [
+     -7.28,
+     -2.39,
+     2.82,
+     -1.22,
+     2.36
+    ],
+    "mono": 0.7
+   },
+   "90": {
+    "train": null,
+    "test": {
+     "months": 2,
+     "ic": -0.1548,
+     "t": null,
+     "hit": 50,
+     "n": 8
+    },
+    "ptrain": null,
+    "ptest": {
+     "months": 2,
+     "ic": -0.3452,
+     "t": null,
+     "hit": 50,
+     "n": 0
+    },
+    "q_test": [
+     11.78,
+     1.55,
+     0.6,
+     -1.72,
+     -1.38
+    ],
+    "mono": -0.9
+   },
+   "direction": 1,
+   "verdict": "未通过"
+  },
+  "act_30v30": {
+   "name": "业务量增速（DEX 成交额 30v30 / TVL 7 日均对 60 天前）",
+   "group": "基本面",
+   "prior": 1,
+   "year_only": false,
+   "30": {
+    "train": null,
+    "test": null,
+    "ptrain": null,
+    "ptest": null,
+    "q_test": null,
+    "mono": null
+   },
+   "60": {
+    "train": null,
+    "test": null,
+    "ptrain": null,
+    "ptest": null,
+    "q_test": null,
+    "mono": null
+   },
+   "90": {
+    "train": null,
+    "test": null,
+    "ptrain": null,
+    "ptest": null,
+    "q_test": null,
+    "mono": null
+   },
+   "direction": 1,
+   "verdict": "样本不足"
+  },
+  "val_p_hr": {
+   "name": "估值：市值 ÷ 年化持有人收入（越便宜越高）",
+   "group": "基本面·估值",
+   "prior": 1,
+   "year_only": true,
+   "30": {
+    "train": null,
+    "test": null,
+    "ptrain": null,
+    "ptest": null,
+    "q_test": null,
+    "mono": null
+   },
+   "60": {
+    "train": null,
+    "test": null,
+    "ptrain": null,
+    "ptest": null,
+    "q_test": null,
+    "mono": null
+   },
+   "90": {
+    "train": null,
+    "test": null,
+    "ptrain": null,
+    "ptest": null,
+    "q_test": null,
+    "mono": null
+   },
+   "direction": 1,
+   "verdict": "样本不足"
+  },
+  "val_p_rev": {
+   "name": "估值：市值 ÷ 年化协议收入（越便宜越高）",
+   "group": "基本面·估值",
+   "prior": 1,
+   "year_only": true,
+   "30": {
+    "train": null,
+    "test": {
+     "months": 3,
+     "ic": -0.0873,
+     "t": -0.24,
+     "hit": 67,
+     "n": 8
+    },
+    "ptrain": null,
+    "ptest": {
+     "months": 3,
+     "ic": 0.0397,
+     "t": 0.14,
+     "hit": 67,
+     "n": 0
+    },
+    "q_test": [
+     -3.05,
+     -0.35,
+     6.03,
+     -0.51,
+     -1.89
+    ],
+    "mono": 0.1
+   },
+   "60": {
+    "train": null,
+    "test": {
+     "months": 2,
+     "ic": 0.0,
+     "t": null,
+     "hit": 50,
+     "n": 8
+    },
+    "ptrain": null,
+    "ptest": {
+     "months": 2,
+     "ic": -0.2143,
+     "t": null,
+     "hit": 50,
+     "n": 0
+    },
+    "q_test": [
+     6.0,
+     -3.09,
+     -10.66,
+     -0.79,
+     2.72
+    ],
+    "mono": -0.1
+   },
+   "90": {
+    "train": null,
+    "test": {
+     "months": 2,
+     "ic": 0.0238,
+     "t": null,
+     "hit": 50,
+     "n": 8
+    },
+    "ptrain": null,
+    "ptest": {
+     "months": 2,
+     "ic": -0.1429,
+     "t": null,
+     "hit": 50,
+     "n": 0
+    },
+    "q_test": [
+     4.29,
+     2.77,
+     -4.49,
+     -0.94,
+     2.9
+    ],
+    "mono": -0.3
+   },
+   "direction": 1,
+   "verdict": "未通过"
+  },
+  "flag_r3": {
+   "name": "R3 价格跑在收入前面 > 30pp（是 = 1）",
+   "group": "建仓规则 R3",
+   "prior": -1,
+   "year_only": false,
+   "30": {
+    "train": null,
+    "test": null,
+    "ptrain": null,
+    "ptest": null,
+    "q_test": null,
+    "mono": null
+   },
+   "60": {
+    "train": null,
+    "test": null,
+    "ptrain": null,
+    "ptest": null,
+    "q_test": null,
+    "mono": null
+   },
+   "90": {
+    "train": null,
+    "test": null,
+    "ptrain": null,
+    "ptest": null,
+    "q_test": null,
+    "mono": null
+   },
+   "direction": -1,
+   "verdict": "未通过",
+   "binary": {
+    "30": {
+     "test": {
+      "months": 5,
+      "diff": -2.88,
+      "t": -0.8,
+      "flagged_avg": 3,
+      "others_avg": 3.6
+     }
+    },
+    "60": {
+     "test": {
+      "months": 5,
+      "diff": -1.01,
+      "t": -0.1,
+      "flagged_avg": 3,
+      "others_avg": 3.6
+     }
+    },
+    "90": {
+     "test": {
+      "months": 3,
+      "diff": 17.07,
+      "t": null,
+      "flagged_avg": 3,
+      "others_avg": 3.3
+     }
+    },
+    "verdict": "未通过"
+   }
+  },
+  "vol_7v30": {
+   "name": "代币成交额 7 日均 vs 30 日均",
+   "group": "资金面",
+   "prior": 0,
+   "year_only": false,
+   "30": {
+    "train": null,
+    "test": {
+     "months": 3,
+     "ic": 0.1349,
+     "t": 1.12,
+     "hit": 67,
+     "n": 8
+    },
+    "ptrain": null,
+    "ptest": {
+     "months": 3,
+     "ic": 0.2302,
+     "t": 1.44,
+     "hit": 67,
+     "n": 0
+    },
+    "q_test": [
+     -0.89,
+     -0.35,
+     -5.1,
+     1.4,
+     0.68
+    ],
+    "mono": 0.6
+   },
+   "60": {
+    "train": null,
+    "test": {
+     "months": 2,
+     "ic": 0.0595,
+     "t": null,
+     "hit": 50,
+     "n": 8
+    },
+    "ptrain": null,
+    "ptest": {
+     "months": 2,
+     "ic": 0.1548,
+     "t": null,
+     "hit": 50,
+     "n": 0
+    },
+    "q_test": [
+     1.34,
+     0.7,
+     -12.21,
+     0.7,
+     0.55
+    ],
+    "mono": -0.62
+   },
+   "90": {
+    "train": null,
+    "test": {
+     "months": 2,
+     "ic": -0.0119,
+     "t": null,
+     "hit": 50,
+     "n": 8
+    },
+    "ptrain": null,
+    "ptest": {
+     "months": 2,
+     "ic": 0.0833,
+     "t": null,
+     "hit": 50,
+     "n": 0
+    },
+    "q_test": [
+     2.56,
+     -2.11,
+     -8.5,
+     11.17,
+     -1.45
+    ],
+    "mono": 0.1
+   },
+   "direction": -1,
+   "verdict": "证伪"
+  },
+  "turnover": {
+   "name": "30 日换手（成交额 ÷ 市值）",
+   "group": "资金面",
+   "prior": 0,
+   "year_only": true,
+   "30": {
+    "train": null,
+    "test": {
+     "months": 3,
+     "ic": -0.373,
+     "t": -1.81,
+     "hit": 0,
+     "n": 8
+    },
+    "ptrain": null,
+    "ptest": {
+     "months": 3,
+     "ic": -0.2698,
+     "t": -2.43,
+     "hit": 0,
+     "n": 0
+    },
+    "q_test": [
+     -1.25,
+     0.09,
+     10.52,
+     -1.75,
+     -4.23
+    ],
+    "mono": -0.6
+   },
+   "60": {
+    "train": null,
+    "test": {
+     "months": 2,
+     "ic": -0.1667,
+     "t": null,
+     "hit": 50,
+     "n": 8
+    },
+    "ptrain": null,
+    "ptest": {
+     "months": 2,
+     "ic": -0.2619,
+     "t": null,
+     "hit": 50,
+     "n": 0
+    },
+    "q_test": [
+     5.53,
+     -0.49,
+     0.75,
+     -6.49,
+     0.35
+    ],
+    "mono": -0.5
+   },
+   "90": {
+    "train": null,
+    "test": {
+     "months": 2,
+     "ic": 0.0119,
+     "t": null,
+     "hit": 50,
+     "n": 8
+    },
+    "ptrain": null,
+    "ptest": {
+     "months": 2,
+     "ic": 0.0238,
+     "t": null,
+     "hit": 50,
+     "n": 0
+    },
+    "q_test": [
+     3.69,
+     5.49,
+     -7.54,
+     0.59,
+     0.48
+    ],
+    "mono": -0.6
+   },
+   "direction": 0,
+   "verdict": "样本不足"
+  },
+  "vol_rank_chg": {
+   "name": "成交额排名 30 天变化（样本内）",
+   "group": "资金面",
+   "prior": 0,
+   "year_only": false,
+   "30": {
+    "train": null,
+    "test": null,
+    "ptrain": null,
+    "ptest": null,
+    "q_test": null,
+    "mono": null
+   },
+   "60": {
+    "train": null,
+    "test": null,
+    "ptrain": null,
+    "ptest": null,
+    "q_test": null,
+    "mono": null
+   },
+   "90": {
+    "train": null,
+    "test": null,
+    "ptrain": null,
+    "ptest": null,
+    "q_test": null,
+    "mono": null
+   },
+   "direction": 1,
+   "verdict": "样本不足"
+  },
+  "dist_ma200": {
+   "name": "距 MA200",
+   "group": "技术面",
+   "prior": 0,
+   "year_only": false,
+   "30": {
+    "train": null,
+    "test": {
+     "months": 3,
+     "ic": 0.2143,
+     "t": 1.03,
+     "hit": 67,
+     "n": 8
+    },
+    "ptrain": null,
+    "ptest": {
+     "months": 3,
+     "ic": 0.0556,
+     "t": 0.14,
+     "hit": 67,
+     "n": 0
+    },
+    "q_test": [
+     -1.09,
+     -6.01,
+     8.22,
+     2.84,
+     -1.66
+    ],
+    "mono": 0.1
+   },
+   "60": {
+    "train": null,
+    "test": {
+     "months": 2,
+     "ic": -0.0952,
+     "t": null,
+     "hit": 50,
+     "n": 8
+    },
+    "ptrain": null,
+    "ptest": {
+     "months": 2,
+     "ic": -0.1071,
+     "t": null,
+     "hit": 50,
+     "n": 0
+    },
+    "q_test": [
+     4.04,
+     -5.95,
+     7.78,
+     0.25,
+     -3.69
+    ],
+    "mono": -0.2
+   },
+   "90": {
+    "train": null,
+    "test": {
+     "months": 2,
+     "ic": -0.0595,
+     "t": null,
+     "hit": 0,
+     "n": 8
+    },
+    "ptrain": null,
+    "ptest": {
+     "months": 2,
+     "ic": -0.0119,
+     "t": null,
+     "hit": 50,
+     "n": 0
+    },
+    "q_test": [
+     7.54,
+     -3.25,
+     -2.75,
+     6.17,
+     -0.68
+    ],
+    "mono": -0.1
+   },
+   "direction": 1,
+   "verdict": "未通过"
+  },
+  "dd120": {
+   "name": "距 120 日高点",
+   "group": "技术面",
+   "prior": 0,
+   "year_only": false,
+   "30": {
+    "train": null,
+    "test": {
+     "months": 3,
+     "ic": 0.2937,
+     "t": 1.16,
+     "hit": 67,
+     "n": 8
+    },
+    "ptrain": null,
+    "ptest": {
+     "months": 3,
+     "ic": 0.2381,
+     "t": 0.59,
+     "hit": 67,
+     "n": 0
+    },
+    "q_test": [
+     -1.81,
+     -3.78,
+     4.28,
+     -0.74,
+     2.02
+    ],
+    "mono": 0.6
+   },
+   "60": {
+    "train": null,
+    "test": {
+     "months": 2,
+     "ic": 0.2738,
+     "t": null,
+     "hit": 100,
+     "n": 8
+    },
+    "ptrain": null,
+    "ptest": {
+     "months": 2,
+     "ic": 0.4167,
+     "t": null,
+     "hit": 100,
+     "n": 0
+    },
+    "q_test": [
+     -3.86,
+     -5.71,
+     9.0,
+     -2.56,
+     2.22
+    ],
+    "mono": 0.6
+   },
+   "90": {
+    "train": null,
+    "test": {
+     "months": 2,
+     "ic": 0.119,
+     "t": null,
+     "hit": 50,
+     "n": 8
+    },
+    "ptrain": null,
+    "ptest": {
+     "months": 2,
+     "ic": 0.0952,
+     "t": null,
+     "hit": 50,
+     "n": 0
+    },
+    "q_test": [
+     -2.88,
+     -2.95,
+     4.18,
+     -0.4,
+     7.33
+    ],
+    "mono": 0.8
+   },
+   "direction": 1,
+   "verdict": "未通过"
+  },
+  "pos30": {
+   "name": "30 日区间位置",
+   "group": "技术面",
+   "prior": 0,
+   "year_only": false,
+   "30": {
+    "train": null,
+    "test": {
+     "months": 2,
+     "ic": 0.3416,
+     "t": null,
+     "hit": 100,
+     "n": 8
+    },
+    "ptrain": null,
+    "ptest": {
+     "months": 2,
+     "ic": 0.381,
+     "t": null,
+     "hit": 100,
+     "n": 0
+    },
+    "q_test": [
+     -1.17,
+     -9.88,
+     1.86,
+     10.8,
+     -3.24
+    ],
+    "mono": 0.2
+   },
+   "60": {
+    "train": null,
+    "test": {
+     "months": 1,
+     "ic": 0.1464,
+     "t": null,
+     "hit": 100,
+     "n": 8
+    },
+    "ptrain": null,
+    "ptest": {
+     "months": 1,
+     "ic": 0.2857,
+     "t": null,
+     "hit": 100,
+     "n": 0
+    },
+    "q_test": [
+     -7.2,
+     -7.9,
+     2.26,
+     7.39,
+     -9.45
+    ],
+    "mono": -0.1
+   },
+   "90": {
+    "train": null,
+    "test": {
+     "months": 1,
+     "ic": 0.366,
+     "t": null,
+     "hit": 100,
+     "n": 8
+    },
+    "ptrain": null,
+    "ptest": {
+     "months": 1,
+     "ic": 0.4762,
+     "t": null,
+     "hit": 100,
+     "n": 0
+    },
+    "q_test": [
+     -9.12,
+     -5.38,
+     0.56,
+     4.78,
+     1.7
+    ],
+    "mono": 0.9
+   },
+   "direction": 1,
+   "verdict": "未通过"
+  }
+ },
+ "phase": {
+  "rev_7v30": {},
+  "rev_30v30": {},
+  "rev_90v90": {},
+  "holder_share": {},
+  "take_rate": {},
+  "rev_lead": {},
+  "act_30v30": {},
+  "val_p_hr": {},
+  "val_p_rev": {},
+  "flag_r3": {},
+  "vol_7v30": {},
+  "turnover": {},
+  "vol_rank_chg": {},
+  "dist_ma200": {},
+  "dd120": {},
+  "pos30": {}
+ }
+}
