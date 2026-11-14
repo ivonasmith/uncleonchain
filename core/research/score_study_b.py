@@ -31,7 +31,7 @@ STABLE = S.STABLE | {"USDE", "SUSDE", "USD0", "FRAX", "GHO", "CRVUSD", "LUSD", "
 
 
 def build():
-    protos = S.cached("protocols_all", lambda: [{k: p.get(k) for k in ("symbol", "gecko_id", "slug", "parentProtocol", "category")} for p in C.get(f"{C.LLAMA}/protocols")], 240)
+    protos = S.cached("protocols_all_v2", lambda: [{k: p.get(k) for k in ("symbol", "gecko_id", "slug", "parentProtocol", "category")} for p in C.get(f"{C.LLAMA}/protocols")], 240)
     ov = S.cached("ov_rev", lambda: C.get(f"{C.LLAMA}/overview/fees?excludeTotalDataChart=true&excludeTotalDataChartBreakdown=true&dataType=dailyRevenue")["protocols"], 240)
     allt = {x["slug"]: x.get("totalAllTime") or 0 for x in ov if x.get("slug")}
     par = {}

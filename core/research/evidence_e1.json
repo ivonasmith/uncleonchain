@@ -1,0 +1,3261 @@
+{
+ "source": "DefiLlama/dimension-adapters（本地克隆）",
+ "level": "E1 适配器写了什么，未上链核实",
+ "coins": {
+  "HYPE": {
+   "files_scanned": 6,
+   "records": [
+    {
+     "file": "fees/hyperliquid-hlp.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 38,
+       "text": "SupplySideRevenue: 'All fees share of HLP are distributed to vaults suppliers.',"
+      }
+     ]
+    },
+    {
+     "file": "dexs/hyperliquid-outcome/index.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 22,
+       "text": "HoldersRevenue: \"99% of outcome fees net of builder-code fees, used by the Assistance Fund to buy back HYPE.\","
+      },
+      {
+       "line": 35,
+       "text": "'Builder Code Distribution': 'Builder-code fees passed in full to the front-ends that routed the trades.',"
+      },
+      {
+       "line": 39,
+       "text": "[METRIC.TOKEN_BUY_BACK]: '99% of outcome fees net of builder-code fees, used to buy back HYPE.',"
+      },
+      {
+       "line": 59,
+       "text": "dailySupplySideRevenue.add(result.dailyOutcomeBuildersFees, 'Builder Code Distribution')"
+      }
+     ]
+    },
+    {
+     "file": "dexs/hyperliquid-perp/index.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 15,
+       "text": "HoldersRevenue: \"99% of fees go to Assistance Fund for buying HYPE tokens, excluding builders fees, plus Hyperliquid's 90% share of AQAv2 stablecoin reserve yield since 27 Aug 2026.\","
+      },
+      {
+       "line": 32,
+       "text": "'Builder Code Distribution': 'All extra fees added on top by builders are fully passed down to these platforms.',"
+      },
+      {
+       "line": 34,
+       "text": "'HIP-3 Deployer Distribution': 'Fees are distributed back to HIP-3 markets deployers.',"
+      },
+      {
+       "line": 35,
+       "text": "'Maker Rebates': 'Fees are rebated and distributed back to makers.',"
+      },
+      {
+       "line": 38,
+       "text": "[METRIC.TOKEN_BUY_BACK]: \"99% of perp trade fees (excluding spot fees and builders fees) for buy back HYPE tokens.\","
+      },
+      {
+       "line": 39,
+       "text": "'HYPE Burn From Priority Fees': 'All prioroty fees will be used to buy and burn HYPE.',"
+      },
+      {
+       "line": 89,
+       "text": "dailySupplySideRevenue.add(result.dailyPerpBuildersFees, 'Builder Code Distribution')"
+      },
+      {
+       "line": 90,
+       "text": "dailySupplySideRevenue.add(result.dailyPerpDeployersFees, 'HIP-3 Deployer Distribution')"
+      },
+      {
+       "line": 99,
+       "text": "// dailyHoldersRevenue.add(result.dailyPriorityFeesUsd, 'HYPE Burn From Priority Fees')"
+      },
+      {
+       "line": 100,
+       "text": "dailyHoldersRevenue.add(aqav2Interest, 'AQAv2 - USDC Yields')"
+      }
+     ]
+    },
+    {
+     "file": "dexs/hyperliquid-spot/index.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 15,
+       "text": "const SPOT_DEPLOYMENT_AUCTION_BURNS = \"Spot Deployment Auction Burns\";"
+      },
+      {
+       "line": 18,
+       "text": "Fees: \"Include spot trading fees (builder code fees included), unit protocol fees, and HYPE burned in successful HIP-1 token-deployment auctions, excluding perps fees.\","
+      },
+      {
+       "line": 19,
+       "text": "Revenue: \"97% of spot trading fees before 30 Aug 2025 and 99% thereafter, after builder code fees and maker rebates, go to Assistance Fund for buying HYPE tokens, excluding unit protocol fees; HYPE paid in successful HIP-1 token-deployment "
+      },
+      {
+       "line": 21,
+       "text": "HoldersRevenue: \"97% of spot trading fees before 30 Aug 2025 and 99% thereafter, after builder code fees and maker rebates, go to Assistance Fund for buying HYPE tokens, excluding unit protocol fees; HYPE paid in successful HIP-1 token-depl"
+      },
+      {
+       "line": 30,
+       "text": "[SPOT_DEPLOYMENT_AUCTION_BURNS]: 'HYPE paid and permanently burned in successful HIP-1 token-deployment auctions.',"
+      },
+      {
+       "line": 34,
+       "text": "[SPOT_DEPLOYMENT_AUCTION_BURNS]: 'HIP-1 token-deployment auction payments permanently burned rather than retained or distributed.',"
+      },
+      {
+       "line": 39,
+       "text": "'Builder Code Distribution': 'All builder code fees on spot trades are passed down to the platforms that routed them.',"
+      },
+      {
+       "line": 40,
+       "text": "'Maker Rebates': 'Spot fees rebated and distributed back to makers, all paid by Hyperliquid, including rebates paid in Unit assets.',"
+      },
+      {
+       "line": 44,
+       "text": "[SPOT_DEPLOYMENT_AUCTION_BURNS]: 'HYPE permanently removed from supply through successful HIP-1 token-deployment auctions.',"
+      },
+      {
+       "line": 113,
+       "text": "dailySupplySideRevenue.add(result.dailySpotBuildersFees, 'Builder Code Distribution')"
+      },
+      {
+       "line": 114,
+       "text": "dailySupplySideRevenue.add(result.dailyUnitBuildersFees, 'Builder Code Distribution')"
+      }
+     ]
+    },
+    {
+     "file": "helpers/hyperliquid-v2.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 195,
+       "text": "// to its deployer (deployerTradingFeeShare, the rest is burned), so this is a deployer's take on its own token."
+      },
+      {
+       "line": 368,
+       "text": "? { HoldersRevenue: { \"Hyperliquid Builder Code Fees\": \"Builder code fees distributed to the protocol's token holders.\" } }"
+      }
+     ]
+    },
+    {
+     "file": "helpers/hyperliquid.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 198,
+       "text": "// before 30 Aug, 97% of fees go to Assistance Fund for burning tokens, remaining 3% go to HLP Vault"
+      },
+      {
+       "line": 199,
+       "text": "// after 30 Aug, 99% of fees go to Assistance Fund for burning tokens, remaining 1% go to HLP Vault"
+      },
+      {
+       "line": 584,
+       "text": "// Negative deployGas is HYPE burned; positive is pre-HYPE-era proceeds collected in USDC-> Assistance Fund."
+      },
+      {
+       "line": 595,
+       "text": "if (hypeBurned) dailyBurns.addCGToken(\"hyperliquid\", hypeBurned);"
+      },
+      {
+       "line": 596,
+       "text": "if (usdcCollected) dailyBurns.addCGToken(\"usd-coin\", usdcCollected);"
+      },
+      {
+       "line": 920,
+       "text": "dailySupplySideRevenue.addCGToken('hyperliquid', excludeCommission, 'Staking Rewards To Stakers');"
+      },
+      {
+       "line": 937,
+       "text": "SupplySideRevenue: \"Staking rewards are distributed to stakers after commission cut.\","
+      }
+     ]
+    }
+   ],
+   "n_addr": 0
+  },
+  "PUMP": {
+   "files_scanned": 3,
+   "records": [
+    {
+     "file": "fees/pump-swap/index.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 99,
+       "text": "dailyHoldersRevenue: 0, // buybacks are tracked in pump fun launchpad"
+      }
+     ]
+    },
+    {
+     "file": "fees/pumpdotfun.ts",
+     "addresses": [
+      {
+       "line": 39,
+       "addr": [
+        "GesfTA3X2arioaHp8bbKdjG9vJtskViWACZoYvxp4twS"
+       ],
+       "ctx": "// fee wallet (GesfTA3X2arioaHp8bbKdjG9vJtskViWACZoYvxp4twS) using getSolanaReceived."
+      },
+      {
+       "line": 76,
+       "addr": [
+        "GesfTA3X2arioaHp8bbKdjG9vJtskViWACZoYvxp4twS"
+       ],
+       "ctx": "const MAYHEM_FEE_WALLET = 'GesfTA3X2arioaHp8bbKdjG9vJtskViWACZoYvxp4twS'"
+      },
+      {
+       "line": 78,
+       "addr": [
+        "39azUYFWPz3VHgKCf3VChUwbpURdCHRxjWVowf5jUJjg"
+       ],
+       "ctx": "const PUMP_FUN_MIGRATOR = '39azUYFWPz3VHgKCf3VChUwbpURdCHRxjWVowf5jUJjg'"
+      },
+      {
+       "line": 116,
+       "addr": [
+        "CebN5WGQ4jvEPvsVU4EoHEpgzq1VV7AbicfhtW4xC9iM"
+       ],
+       "ctx": "'CebN5WGQ4jvEPvsVU4EoHEpgzq1VV7AbicfhtW4xC9iM',"
+      },
+      {
+       "line": 117,
+       "addr": [
+        "62qc2CNXwrYqQScmEdiZFFAnJR262PxWEuNQtxfafNgV"
+       ],
+       "ctx": "'62qc2CNXwrYqQScmEdiZFFAnJR262PxWEuNQtxfafNgV',"
+      },
+      {
+       "line": 135,
+       "addr": [
+        "7GFUN3bWzJMKMRZ34JLsvcqdssDbXnp589SiE33KVwcC"
+       ],
+       "ctx": "'7GFUN3bWzJMKMRZ34JLsvcqdssDbXnp589SiE33KVwcC',"
+      },
+      {
+       "line": 210,
+       "addr": [
+        "3vkpy5YHqnqJTnA5doWTpcgKyZiYsaXYzYM9wm8s3WTi"
+       ],
+       "ctx": "'3vkpy5YHqnqJTnA5doWTpcgKyZiYsaXYzYM9wm8s3WTi', // 2025-07-15 to 2025-07-18"
+      },
+      {
+       "line": 211,
+       "addr": [
+        "88uq8JNL6ANwmow1og7VQD4hte73Jpw8qsUP77BtF6iE"
+       ],
+       "ctx": "'88uq8JNL6ANwmow1og7VQD4hte73Jpw8qsUP77BtF6iE', // 2025-07-20 to 2025-08-19"
+      },
+      {
+       "line": 212,
+       "addr": [
+        "3YNxfRAEqKrGNCmx5JUfCD9er5djZToqSomzR2Yi8rqx"
+       ],
+       "ctx": "'3YNxfRAEqKrGNCmx5JUfCD9er5djZToqSomzR2Yi8rqx', // 2025-08-20 to 2025-11-11"
+      },
+      {
+       "line": 213,
+       "addr": [
+        "99mRw3EzdJZWEUjgp1nrU4WeHsukUBjbh7gYE7pm4F3c"
+       ],
+       "ctx": "'99mRw3EzdJZWEUjgp1nrU4WeHsukUBjbh7gYE7pm4F3c', // 2025-11-11 to 2026-11-04, also burns"
+      },
+      {
+       "line": 214,
+       "addr": [
+        "9jHrTCwpDANHLNQz5cem6XLUBM8KiTWKe766Br6KVCXM"
+       ],
+       "ctx": "'9jHrTCwpDANHLNQz5cem6XLUBM8KiTWKe766Br6KVCXM', // 2026-03-09 to 2026-11-04, also burns"
+      },
+      {
+       "line": 216,
+       "addr": [
+        "pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ"
+       ],
+       "ctx": "// by the pump fee program (pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ, SweepBuyback) into the"
+      },
+      {
+       "line": 218,
+       "addr": [
+        "2ifjKjqtETDeHXKsrRxeKWUuwUtXxNS4HepT6eftj6Qz"
+       ],
+       "ctx": "'2ifjKjqtETDeHXKsrRxeKWUuwUtXxNS4HepT6eftj6Qz', // from 2026-11-04, pump.fun + PumpSwap"
+      },
+      {
+       "line": 219,
+       "addr": [
+        "78hoB7emUo7zF5kdNf9TFxzpLRKCy8Jgft5cu69Byuax"
+       ],
+       "ctx": "'78hoB7emUo7zF5kdNf9TFxzpLRKCy8Jgft5cu69Byuax', // from 2026-11-04, Trading Terminal"
+      },
+      {
+       "line": 222,
+       "addr": [
+        "G8CcfRffqZWHSAQJXLDfwbAkGE95SddUqVXnTrL4kqjm"
+       ],
+       "ctx": "const PUMP_BUYBACK_HOLDING_WALLET = 'G8CcfRffqZWHSAQJXLDfwbAkGE95SddUqVXnTrL4kqjm'"
+      }
+     ],
+     "notes": [
+      {
+       "line": 28,
+       "text": "//   * Buyback figure for HoldersRevenue: PUMP bought by the buyback wallets (on-chain)."
+      },
+      {
+       "line": 32,
+       "text": "//     subtract the buyback because it is funded by pump.fun + PumpSwap"
+      },
+      {
+       "line": 34,
+       "text": "//   * HoldersRevenue is the full buyback as-is. It won't sum exactly with ProtocolRevenue"
+      },
+      {
+       "line": 35,
+       "text": "//     to give Revenue, and that's intentional: child adapters don't report HoldersRevenue."
+      },
+      {
+       "line": 39,
+       "text": "// fee wallet (GesfTA3X2arioaHp8bbKdjG9vJtskViWACZoYvxp4twS) using getSolanaReceived."
+      },
+      {
+       "line": 55,
+       "text": "const BUYBACK_START_TS     = 1752451200  // 2025-07-14: PUMP buyback begins (100% of pump slice)"
+      },
+      {
+       "line": 56,
+       "text": "const BURN_POLICY_TS       = 1777334400  // 2026-04-28: buyback share drops to 50%"
+      },
+      {
+       "line": 67,
+       "text": "// Fraction of pump's slice the protocol keeps (vs sending to the PUMP buyback)."
+      },
+      {
+       "line": 68,
+       "text": "// Era-based on purpose; see header comment for why we don't subtract the buyback."
+      },
+      {
+       "line": 70,
+       "text": "if (timestamp < BUYBACK_START_TS) return 1     // pre-buyback: 100% protocol"
+      },
+      {
+       "line": 71,
+       "text": "if (timestamp < BURN_POLICY_TS)   return 0     // 2025-07-14+: 100% to buyback"
+      },
+      {
+       "line": 75,
+       "text": "// Mayhem-mode program fee wallet (receives both native SOL and WSOL)."
+      }
+     ]
+    }
+   ],
+   "n_addr": 14
+  },
+  "CAKE": {
+   "files_scanned": 9,
+   "records": [
+    {
+     "file": "fees/pancakeswap-lottery/index.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 34,
+       "text": "Fees: '20% of the lottery amount goes to CAKE buy-back and burn',"
+      },
+      {
+       "line": 35,
+       "text": "Revenue: '20% of the lottery amount goes to CAKE buy-back and burn',"
+      },
+      {
+       "line": 36,
+       "text": "HoldersRevenue: '20% of the lottery amount goes to CAKE buy-back and burn'"
+      }
+     ]
+    },
+    {
+     "file": "dexs/pancakeswap-infinity.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 12,
+       "text": "BUY_BACK_AND_BURN: 'Buy Back And Burn CAKE',"
+      },
+      {
+       "line": 30,
+       "text": "HoldersRevenue: '50% of revenue are used to buy back and burn CAKE',"
+      },
+      {
+       "line": 47,
+       "text": "[METRIC.BUY_BACK_AND_BURN]: '50% of revenue will be used to buy back and burn CAKE',"
+      },
+      {
+       "line": 151,
+       "text": "// 50% to protocol, 50% to burn CAKE"
+      }
+     ]
+    },
+    {
+     "file": "dexs/pancakeswap-prediction/index.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 14,
+       "text": "REWARDS_CALCULATED: \"event RewardsCalculated (uint256 indexed epoch, uint256 rewardBaseCalAmount, uint256 rewardAmount, uint256 treasuryAmount)\","
+      },
+      {
+       "line": 22,
+       "text": "BuyBackAndBurn: 'Buy Back And Burn CAKE',"
+      },
+      {
+       "line": 52,
+       "text": "// treasuryAmount is the settled fee, so rounds with no winners (whole pot to treasury) are covered too"
+      },
+      {
+       "line": 71,
+       "text": "Fees: \"3% of each round's total pot, counting both the winning and the losing stakes, taken when the round settles. When a round ends with nobody to pay out - the price finishes exactly where it started, or every bet was on the losing side "
+      },
+      {
+       "line": 73,
+       "text": "ProtocolRevenue: \"Zero. Everything the treasury collects is spent on buying back and burning CAKE, so none of it is retained.\","
+      },
+      {
+       "line": 74,
+       "text": "HoldersRevenue: \"All the revenue goes to CAKE buyback and burn\","
+      },
+      {
+       "line": 82,
+       "text": "[METRIC.PredictionRevenueToHolders]: \"All the fee is kept as revenue, it will be used to buy back and burn CAKE\","
+      },
+      {
+       "line": 85,
+       "text": "[METRIC.BuyBackAndBurn]: \"All the revenue goes to CAKE buyback and burn\","
+      }
+     ]
+    },
+    {
+     "file": "dexs/pancakeswap-stableswap.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 10,
+       "text": "BUY_BACK_AND_BURN: 'Buy Back And Burn CAKE',"
+      },
+      {
+       "line": 40,
+       "text": "dailyRevenue.add(adminFees.clone(0.2), METRIC.PROTOCOL_REVENUE) // 10% of swap fees → treasury"
+      },
+      {
+       "line": 41,
+       "text": "dailyRevenue.add(adminFees.clone(0.8), METRIC.HOLDERS_REVENUE) // 40% of swap fees → CAKE buyback"
+      },
+      {
+       "line": 65,
+       "text": "ProtocolRevenue: \"Treasury keeps 10% of swap fees (20% of the admin fee).\","
+      },
+      {
+       "line": 67,
+       "text": "HoldersRevenue: \"40% of swap fees (80% of the admin fee) funds CAKE buyback and burn.\","
+      },
+      {
+       "line": 74,
+       "text": "[METRIC.PROTOCOL_REVENUE]: 'Treasury keeps 10% of swap fees.',"
+      },
+      {
+       "line": 75,
+       "text": "[METRIC.HOLDERS_REVENUE]: '40% of swap fees funds CAKE buyback and burn.',"
+      },
+      {
+       "line": 78,
+       "text": "[METRIC.PROTOCOL_REVENUE]: 'Treasury keeps 10% of swap fees.',"
+      },
+      {
+       "line": 84,
+       "text": "[METRIC.BUY_BACK_AND_BURN]: '40% of swap fees funds CAKE buyback and burn.',"
+      }
+     ]
+    },
+    {
+     "file": "dexs/pancakeswap-v2.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 16,
+       "text": "BUY_BACK_AND_BURN: 'Buy Back And Burn CAKE',"
+      },
+      {
+       "line": 413,
+       "text": "ProtocolRevenue: \"Treasury receives 0.0225% of each swap since 16 June 2022, 0.03% before.\","
+      },
+      {
+       "line": 415,
+       "text": "HoldersRevenue: \"0.0575% of each swap is used to buy back and burn CAKE since 16 June 2022, 0.05% before.\","
+      },
+      {
+       "line": 425,
+       "text": "[METRIC.PROTOCOL_REVENUE]: 'Treasury receives 0.0225% of each swap since 16 June 2022, 0.03% before.',"
+      },
+      {
+       "line": 426,
+       "text": "[METRIC.HOLDERS_REVENUE]: '0.0575% of each swap is used to buy back and burn CAKE since 16 June 2022, 0.05% before.',"
+      },
+      {
+       "line": 429,
+       "text": "[METRIC.PROTOCOL_REVENUE]: 'Treasury receives 0.0225% of each swap since 16 June 2022, 0.03% before.',"
+      },
+      {
+       "line": 435,
+       "text": "[METRIC.BUY_BACK_AND_BURN]: '0.0575% of each swap is used to buy back and burn CAKE since 16 June 2022, 0.05% before.',"
+      }
+     ]
+    },
+    {
+     "file": "dexs/pancakeswap-v3.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 15,
+       "text": "BUY_BACK_AND_BURN: 'Buy Back And Burn CAKE',"
+      },
+      {
+       "line": 249,
+       "text": "dailyHoldersRevenue.add(token0, (fee0 * holdersScaled) / RATIO_SCALE);"
+      },
+      {
+       "line": 250,
+       "text": "dailyHoldersRevenue.add(token1, (fee1 * holdersScaled) / RATIO_SCALE);"
+      },
+      {
+       "line": 346,
+       "text": "dailyHoldersRevenue.addUSDValue(fee * holdersRevenueRatio);"
+      },
+      {
+       "line": 407,
+       "text": "Revenue: \"Pancakeswap collects amount of swap fees for Treasury and buy back CAKE.\","
+      },
+      {
+       "line": 408,
+       "text": "SupplySideRevenue: \"Fees distributed to LPs\","
+      },
+      {
+       "line": 409,
+       "text": "ProtocolRevenue: \"Swap fees collected by Pancakeswap - distribute to Treasury\","
+      },
+      {
+       "line": 410,
+       "text": "HoldersRevenue: \"Swap fees collected to buyback and burn CAKE: 15% fees in 0.01%, 0.05% tier pools, 23% fees in 0.25%, 1% tier pools\","
+      },
+      {
+       "line": 418,
+       "text": "[METRIC.PROTOCOL_REVENUE]: 'Swap fees collected by Pancakeswap - distribute to Treasury',"
+      },
+      {
+       "line": 419,
+       "text": "[METRIC.HOLDERS_REVENUE]: 'Swap fees collected to buyback and burn CAKE: 15% fees in 0.01%, 0.05% tier pools, 23% fees in 0.25%, 1% tier pools',"
+      },
+      {
+       "line": 422,
+       "text": "[METRIC.PROTOCOL_REVENUE]: 'Swap fees collected by Pancakeswap - distribute to Treasury',"
+      },
+      {
+       "line": 425,
+       "text": "[METRIC.LP_REVENUE]: 'Fees distributed to LPs',"
+      }
+     ]
+    }
+   ],
+   "n_addr": 0
+  },
+  "UNI": {
+   "files_scanned": 8,
+   "records": [
+    {
+     "file": "dexs/uniswap-v1.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 56,
+       "text": "SupplySideRevenue: 'All fees are distributed to LPs.',"
+      },
+      {
+       "line": 57,
+       "text": "HoldersRevenue: 'No revenue for UNI holders.',"
+      }
+     ]
+    },
+    {
+     "file": "dexs/uniswap-v2.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 220,
+       "text": "dailySupplySideRevenue: dailyFees, // Revenue share subtracted in Uniswap V3 adapter"
+      },
+      {
+       "line": 270,
+       "text": "dailySupplySideRevenue: dailyFees, // Revenue share subtracted in Uniswap V3 adapter"
+      },
+      {
+       "line": 295,
+       "text": "Revenue: 'From 28 Dec 2025, 17% (0% before) fees on Ethereum, From 8 Mar 2026, 17% (0% before) fees on Optimism, Arbitrum, Base, Zora, XLayer chains shared to buy back and burn UNI. (Tracked combined in Uniswap V3 adapter)',"
+      },
+      {
+       "line": 297,
+       "text": "SupplySideRevenue: '83% (100% before fee switch) of fees are distributed to liquidity providers.',"
+      },
+      {
+       "line": 298,
+       "text": "HoldersRevenue: 'From 28 Dec 2025, 17% (0% before) fees on Ethereum shared to buy back and burn UNI, From 8 Mar 2026, 17% (0% before) fees on Optimism, Arbitrum, Base, Zora, XLayer chains shared to buy back and burn UNI (Tracked combined in"
+      }
+     ]
+    },
+    {
+     "file": "dexs/uniswap-v3.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 22,
+       "text": "// fetchers just read config.blockchain. Buyback/holders-revenue is shared with"
+      },
+      {
+       "line": 356,
+       "text": "Revenue: 'From 28 Dec 2025, a portion of fees a collected to buy back and burn UNI on Ethereum, From 8 Mar 2026, on Optimism, Arbitrum, Base, WC, Zora, XLayer, From 2 Jun 2026, on Polygon, BSC, Celo, From 27 Jul 2026, on Robinhood, From 5 O"
+      },
+      {
+       "line": 358,
+       "text": "SupplySideRevenue: 'Fees distributed to LPs post protocol fee collection',"
+      },
+      {
+       "line": 359,
+       "text": "HoldersRevenue: 'From 28 Dec 2025, a portion of fees a collected to buy back and burn UNI on Ethereum, From 8 Mar 2026, on Optimism, Arbitrum, Base, WC, Zora, XLayer, From 2 Jun 2026, on Polygon, BSC, Celo, From 27 Jul 2026, on Robinhood, F"
+      },
+      {
+       "line": 368,
+       "text": "// supply side can be negative on days revenue (v2+v3 buyback) exceeds v3 fees"
+      }
+     ]
+    },
+    {
+     "file": "dexs/uniswap-v4.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 470,
+       "text": "dailyHoldersRevenue: 0, // tracked in uniswap-v3 adapter"
+      },
+      {
+       "line": 483,
+       "text": "Revenue: 'Fee switch enabled on 27 Jul 2026 (tracked in uniswap-v3 adapter), a part of fees collected to buy back and burn UNI.',"
+      },
+      {
+       "line": 485,
+       "text": "SupplySideRevenue: 'Part of fees distributed to LPs after protocol cut. (It was 100% of fees before fee switch(27 Jul 2026)).',"
+      },
+      {
+       "line": 486,
+       "text": "HoldersRevenue: 'Fee switch enabled on 27 Jul 2026 (tracked in uniswap-v3 adapter), a part of fees collected to buy back and burn UNI.',"
+      }
+     ]
+    },
+    {
+     "file": "helpers/uniswap.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 416,
+       "text": "if (v2Config.hasOwnProperty('holdersRevenueRatio')) response.dailyHoldersRevenue = dailyFees.clone(holdersRevenueRatio, 'Tokenholder fees')"
+      },
+      {
+       "line": 667,
+       "text": "holdersRevenue.add(_token, _feeAmount * pairHoldersRevenueRatio);"
+      }
+     ]
+    }
+   ],
+   "n_addr": 0
+  },
+  "AAVE": {
+   "files_scanned": 6,
+   "records": [
+    {
+     "file": "fees/aave-v3.ts",
+     "addresses": [
+      {
+       "line": 247,
+       "addr": [
+        "0x4da27a545c0c5b758a6ba100e3a049001de870f5"
+       ],
+       "ctx": "'0x4da27a545c0c5b758a6ba100e3a049001de870f5', // stkAAVE"
+      },
+      {
+       "line": 248,
+       "addr": [
+        "0xdef1fa4cefe67365ba046a7c630d6b885298e210"
+       ],
+       "ctx": "'0xdef1fa4cefe67365ba046a7c630d6b885298e210', // deployer"
+      },
+      {
+       "line": 251,
+       "addr": [
+        "0xA700b4eB416Be35b2911fd5Dee80678ff64fF6C9"
+       ],
+       "ctx": "'0xA700b4eB416Be35b2911fd5Dee80678ff64fF6C9', // aave_eth"
+      },
+      {
+       "line": 254,
+       "addr": [
+        "0x22740deBa78d5a0c24C58C740e3715ec29de1bFa"
+       ],
+       "ctx": "const AaveBuyBackTreasury = '0x22740deBa78d5a0c24C58C740e3715ec29de1bFa';"
+      },
+      {
+       "line": 259,
+       "addr": [
+        "0x4f007edfa6cdb8a4f3b96df10235867d97e87fdd"
+       ],
+       "ctx": "'0x4f007edfa6cdb8a4f3b96df10235867d97e87fdd29e54b2679c625aa637bc7c8', // 0.15 AAVE, 2026-06-16"
+      },
+      {
+       "line": 260,
+       "addr": [
+        "0xc8ec048914b138379c83b97d1d560eeba5d6f80c"
+       ],
+       "ctx": "'0xc8ec048914b138379c83b97d1d560eeba5d6f80cfdb33d4442c82996991115ff', // 1,405 AAVE, 2026-06-24"
+      },
+      {
+       "line": 261,
+       "addr": [
+        "0xdc38f874d16b7cbb75268b7d375f82ac17ff91ef"
+       ],
+       "ctx": "'0xdc38f874d16b7cbb75268b7d375f82ac17ff91ef606532ac72144d7d06827fd0', // 5,983 AAVE, 2026-06-24"
+      },
+      {
+       "line": 263,
+       "addr": [
+        "0x9008D19f58AAbD9eD0D60971565AA8510560ab41"
+       ],
+       "ctx": "const CowSettlement = '0x9008D19f58AAbD9eD0D60971565AA8510560ab41';"
+      },
+      {
+       "line": 264,
+       "addr": [
+        "0x6a000f20005980200259b80c5102003040001068"
+       ],
+       "ctx": "const VeloraAugustusV6 = '0x6a000f20005980200259b80c5102003040001068';"
+      },
+      {
+       "line": 269,
+       "addr": [
+        "0x149b41b1e4c00b5f9aa34b14fd9f84cfd2f014e5"
+       ],
+       "ctx": "const ChainlinkSVRDistributor = '0x149b41b1e4c00b5f9aa34b14fd9f84cfd2f014e5';"
+      },
+      {
+       "line": 282,
+       "addr": [
+        "0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c"
+       ],
+       "ctx": "treasuryCollector: '0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c',"
+      },
+      {
+       "line": 290,
+       "addr": [
+        "0xB2289E329D2F85F1eD31Adbb30eA345278F21bcf"
+       ],
+       "ctx": "treasuryCollector: '0xB2289E329D2F85F1eD31Adbb30eA345278F21bcf',"
+      },
+      {
+       "line": 297,
+       "addr": [
+        "0x053D55f9B5AF8694c503EB288a1B7E552f590710"
+       ],
+       "ctx": "treasuryCollector: '0x053D55f9B5AF8694c503EB288a1B7E552f590710',"
+      },
+      {
+       "line": 304,
+       "addr": [
+        "0xe8599F3cc5D38a9aD6F3684cd5CEa72f10Dbc383"
+       ],
+       "ctx": "treasuryCollector: '0xe8599F3cc5D38a9aD6F3684cd5CEa72f10Dbc383',"
+      },
+      {
+       "line": 311,
+       "addr": [
+        "0x5ba7fd868c40c16f7aDfAe6CF87121E13FC2F7a0"
+       ],
+       "ctx": "treasuryCollector: '0x5ba7fd868c40c16f7aDfAe6CF87121E13FC2F7a0',"
+      },
+      {
+       "line": 322,
+       "addr": [
+        "0xBA9424d650A4F5c80a0dA641254d1AcCE2A37057"
+       ],
+       "ctx": "treasuryCollector: '0xBA9424d650A4F5c80a0dA641254d1AcCE2A37057',"
+      },
+      {
+       "line": 329,
+       "addr": [
+        "0x25Ec457d1778b0E5316e7f38f3c22baF413F1A8C"
+       ],
+       "ctx": "treasuryCollector: '0x25Ec457d1778b0E5316e7f38f3c22baF413F1A8C',"
+      },
+      {
+       "line": 340,
+       "addr": [
+        "0x3e652E97ff339B73421f824F5b03d75b62F1Fb51"
+       ],
+       "ctx": "treasuryCollector: '0x3e652E97ff339B73421f824F5b03d75b62F1Fb51',"
+      },
+      {
+       "line": 359,
+       "addr": [
+        "0x1aB55bBdD5DF0782BBCf73553Af93BC6B29A286B"
+       ],
+       "ctx": "treasuryCollector: '0x1aB55bBdD5DF0782BBCf73553Af93BC6B29A286B',"
+      }
+     ],
+     "notes": [
+      {
+       "line": 200,
+       "text": "Revenue: 'Amount of fees go to Aave treasury.',"
+      },
+      {
+       "line": 201,
+       "text": "SupplySideRevenue: 'Amount of fees distributed to suppliers.',"
+      },
+      {
+       "line": 202,
+       "text": "ProtocolRevenue: 'Amount of fees go to Aave treasury.',"
+      },
+      {
+       "line": 203,
+       "text": "HoldersRevenue: 'Aave starts buy back AAVE tokens using Aave Treasury after 9th April 2025.',"
+      },
+      {
+       "line": 226,
+       "text": "[METRIC.BORROW_INTEREST]: 'Amount of interest distributed to lenders from all markets (excluding GHO).',"
+      },
+      {
+       "line": 228,
+       "text": "[METRIC.LIQUIDATION_FEES]: 'Fees from liquidation penalty and bonuses are distributed to lenders.',"
+      },
+      {
+       "line": 229,
+       "text": "[METRIC.FLASHLOAN_FEES]: 'Flashloan fees paid by flashloan borrowers and executors are distributed to lenders.',"
+      },
+      {
+       "line": 232,
+       "text": "[METRIC.BORROW_INTEREST]: 'Amount of interest distributed to lenders from all markets (excluding GHO) are collected by Aave treasury.',"
+      },
+      {
+       "line": 233,
+       "text": "'Borrow Interest GHO': 'All interest paid on GHO market are collected by Aave treasury.',"
+      },
+      {
+       "line": 234,
+       "text": "[METRIC.LIQUIDATION_FEES]: 'A portion of fees from liquidation penalty and bonuses are colected by Aave treasury.',"
+      },
+      {
+       "line": 235,
+       "text": "[METRIC.FLASHLOAN_FEES]: 'A portion of fees paid by flashloan borrowers and executors are collected by Aave treasury.',"
+      },
+      {
+       "line": 241,
+       "text": "[METRIC.TOKEN_BUY_BACK]: \"Aave starts buy back AAVE tokens using Aave Treasury after 9th April 2025. They bought daily basic, but there are days they didn't.\""
+      }
+     ]
+    },
+    {
+     "file": "fees/aave-v4.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 38,
+       "text": "getAsset: 'function getAsset(uint256) view returns (tuple(uint120 liquidity, uint120 realizedFees, uint8 decimals, uint120 addedShares, uint120 swept, int200 premiumOffsetRay, uint120 drawnShares, uint120 premiumShares, uint16 liquidityFee,"
+      },
+      {
+       "line": 41,
+       "text": "MintFeeShares: 'event MintFeeShares(uint256 indexed assetId, address indexed feeReceiver, uint256 shares, uint256 assets)',"
+      },
+      {
+       "line": 217,
+       "text": "SupplySideRevenue: 'Interest distributed to depositors after protocol fee.',"
+      },
+      {
+       "line": 219,
+       "text": "HoldersRevenue: 'No revenue shared to AAVE holders.',"
+      },
+      {
+       "line": 232,
+       "text": "[METRIC.BORROW_INTEREST]: 'Interest distributed to depositors after protocol fee.',"
+      }
+     ]
+    },
+    {
+     "file": "helpers/aave/index.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 170,
+       "text": "// The borrow index keeps growing on bad debt that will never be repaid and the treasury aTokens"
+      },
+      {
+       "line": 381,
+       "text": "Revenue: 'Amount of fees go to Aave treasury.',"
+      },
+      {
+       "line": 382,
+       "text": "SupplySideRevenue: 'Amount of fees distributed to suppliers.',"
+      },
+      {
+       "line": 383,
+       "text": "ProtocolRevenue: 'Amount of fees go to Aave treasury.',"
+      },
+      {
+       "line": 400,
+       "text": "'Borrow Interest': 'Amount of interest distributed to lenders from all markets (excluding GHO).',"
+      },
+      {
+       "line": 402,
+       "text": "'Liquidation Fees': 'Fees from liquidation penalty and bonuses are distributed to lenders.',"
+      },
+      {
+       "line": 403,
+       "text": "'Flashloan Fees': 'Flashloan fees paid by flashloan borrowers and executors are distributed to lenders.',"
+      },
+      {
+       "line": 406,
+       "text": "'Borrow Interest': 'Amount of interest distributed to lenders from all markets (excluding GHO) are collected by Aave treasury.',"
+      },
+      {
+       "line": 407,
+       "text": "'Borrow Interest GHO': 'All interest paid on GHO market are collected by Aave treasury.',"
+      },
+      {
+       "line": 408,
+       "text": "'Liquidation Fees': 'A portion of fees from liquidation penalty and bonuses are colected by Aave treasury.',"
+      },
+      {
+       "line": 409,
+       "text": "'Flashloan Fees': 'A portion of fees paid by flashloan borrowers and executors are collected by Aave treasury.',"
+      },
+      {
+       "line": 674,
+       "text": "Revenue: 'Amount of fees go to HypurrFi treasury.',"
+      }
+     ]
+    },
+    {
+     "file": "helpers/aave/abi.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 10,
+       "text": "getReserveDataV3: \"function getReserveData(address asset) view returns (uint256 unbacked, uint256 accruedToTreasuryScaled, uint256 totalAToken, uint256 totalStableDebt, uint256 totalVariableDebt, uint256 liquidityRate, uint256 variableBorro"
+      }
+     ]
+    }
+   ],
+   "n_addr": 19
+  },
+  "RAY": {
+   "files_scanned": 1,
+   "records": [
+    {
+     "file": "dexs/raydium/index.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 66,
+       "text": "// Protocol Revenue (Treasury)"
+      },
+      {
+       "line": 68,
+       "text": "const treasuryFees = (clmmFee + cpmmFee) * 0.04;"
+      },
+      {
+       "line": 70,
+       "text": "// Holders Revenue (Buybacks)"
+      },
+      {
+       "line": 72,
+       "text": "const buybackFees = totalFees * 0.12;"
+      },
+      {
+       "line": 74,
+       "text": "// Supply Side Revenue (LPs) = Total Fees - Treasury - Buybacks"
+      },
+      {
+       "line": 117,
+       "text": "dailyRevenue, // ProtocolRevenue + HoldersRevenue"
+      },
+      {
+       "line": 118,
+       "text": "dailyProtocolRevenue, // Treasury"
+      },
+      {
+       "line": 119,
+       "text": "dailyHoldersRevenue, // Buybacks"
+      },
+      {
+       "line": 131,
+       "text": "Revenue: \"Protocol's total revenue, derived from Treasury allocations and RAY buybacks.\","
+      },
+      {
+       "line": 134,
+       "text": "HoldersRevenue: \"Fees allocated to RAY token buybacks (12% across all pool types).\","
+      },
+      {
+       "line": 135,
+       "text": "ProtocolRevenue: \"Fees allocated to the Raydium Treasury (4% from CLMM/CPMM pools, 0% from AMM).\","
+      },
+      {
+       "line": 145,
+       "text": "[METRIC.PROTOCOL_FEES]: \"4% of CLMM/CPMM swap fees allocated to the Raydium Treasury.\","
+      }
+     ]
+    }
+   ],
+   "n_addr": 0
+  },
+  "JUP": {
+   "files_scanned": 22,
+   "records": [
+    {
+     "file": "fees/jupiter-dca.ts",
+     "addresses": [
+      {
+       "line": 7,
+       "addr": [
+        "CpoD6tWAsMDeyvVG2q2rD1JbDY6d4AujnvAn2NdrhZV2"
+       ],
+       "ctx": "const LEGACY_DCA_FEE_WALLET = 'CpoD6tWAsMDeyvVG2q2rD1JbDY6d4AujnvAn2NdrhZV2'"
+      },
+      {
+       "line": 21,
+       "addr": [
+        "gasBidSWW5zmwXs3gn8TG2ijzKkrwpyM7ucwjgDQst6"
+       ],
+       "ctx": "// swaps signed by the keeper gasBidSWW5zmwXs3gn8TG2ijzKkrwpyM7ucwjgDQst6. Limit order fees are on the Jupiter Limit listing."
+      }
+     ],
+     "notes": [
+      {
+       "line": 16,
+       "text": "dailyHoldersRevenue: 0, // JUP buybacks are counted on the Jupiter Aggregator listing"
+      },
+      {
+       "line": 43,
+       "text": "ProtocolRevenue: \"Half of DCA fees, kept by the treasury. The other half buys back JUP, counted on the Jupiter Aggregator listing.\","
+      },
+      {
+       "line": 44,
+       "text": "HoldersRevenue: \"No holders revenue on this listing: the JUP bought back with the other half of DCA fees is counted on the Jupiter Aggregator listing.\","
+      },
+      {
+       "line": 54,
+       "text": "[JUPITER_METRICS.JupDCAFees]: 'Half of DCA fees, kept by the treasury.',"
+      }
+     ]
+    },
+    {
+     "file": "fees/jupiter-developer-platform.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 21,
+       "text": "ProtocolRevenue: \"All of Developer Platform fees, kept by Jupiter. Not used for JUP buybacks.\","
+      }
+     ]
+    },
+    {
+     "file": "fees/jupiter-lend/index.ts",
+     "addresses": [
+      {
+       "line": 13,
+       "addr": [
+        "jupeiUmn818Jg1ekPURTpr4mFo29p46vygyykFJ3wZC"
+       ],
+       "ctx": "// Interest accrues in the liquidity program jupeiUmn818Jg1ekPURTpr4mFo29p46vygyykFJ3wZC and the lending program"
+      }
+     ],
+     "notes": [
+      {
+       "line": 10,
+       "text": "// borrower interest) and the same 50/50 Jupiter/Fluid revenue share, so we apply"
+      },
+      {
+       "line": 99,
+       "text": "ProtocolRevenue: \"All of Jupiter's share, kept by Jupiter. Not used for JUP buybacks.\","
+      },
+      {
+       "line": 100,
+       "text": "SupplySideRevenue: 'Amount of interest distributed to lenders and Fluid from all market.',"
+      },
+      {
+       "line": 112,
+       "text": "[JUPITER_METRICS.InterestToLenders]: 'Interest distributed to lenders from all markets.',"
+      },
+      {
+       "line": 113,
+       "text": "[JUPITER_METRICS.InterestToFluid]: 'Interest distributed to Fluid from all markets.',"
+      },
+      {
+       "line": 114,
+       "text": "[ETHENA_METRICS.InterestToLenders]: 'Interest distributed to lenders in the isolated Ethena (USDe) market.',"
+      },
+      {
+       "line": 115,
+       "text": "[ETHENA_METRICS.InterestToFluid]: 'Interest distributed to Fluid from the isolated Ethena (USDe) market.',"
+      }
+     ]
+    },
+    {
+     "file": "fees/jupiter-lend-dex/index.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 27,
+       "text": "ProtocolRevenue: \"All of Jupiter's share, kept by Jupiter. Not used for JUP buybacks.\","
+      }
+     ]
+    },
+    {
+     "file": "fees/jupiter-limit.ts",
+     "addresses": [
+      {
+       "line": 48,
+       "addr": [
+        "gasAx5Y917MYdmdnwiomwYDhmDKNGDJnN1MmEbxVdVw"
+       ],
+       "ctx": "// above, and fees on orders settled as swaps signed by gasAx5Y917MYdmdnwiomwYDhmDKNGDJnN1MmEbxVdVw."
+      }
+     ],
+     "notes": [
+      {
+       "line": 43,
+       "text": "dailyHoldersRevenue: 0, // JUP buybacks are counted on the Jupiter Aggregator listing"
+      },
+      {
+       "line": 60,
+       "text": "ProtocolRevenue: \"Half of limit order fees, kept by the treasury. The other half buys back JUP, counted on the Jupiter Aggregator listing.\","
+      },
+      {
+       "line": 61,
+       "text": "HoldersRevenue: \"No holders revenue on this listing: the JUP bought back with the other half of limit order fees is counted on the Jupiter Aggregator listing.\","
+      },
+      {
+       "line": 74,
+       "text": "[JUPITER_METRICS.LimitOrderV1Fees]: \"Half of limit order v1 fees, kept by the treasury.\","
+      },
+      {
+       "line": 75,
+       "text": "[JUPITER_METRICS.LimitOrderV2Fees]: \"Half of limit order v2 fees, kept by the treasury.\","
+      }
+     ]
+    },
+    {
+     "file": "fees/jupiter-native-staking.ts",
+     "addresses": [
+      {
+       "line": 5,
+       "addr": [
+        "CatzoSMUkTRidT5DwBxAC2pEtnwMBTpkCepHkFgZDiqb",
+        "E5Y8uSQ8SWHH7GynZqMGirckAybkWXH5QcxtZ6tLezbn"
+       ],
+       "ctx": "// Jupiter's stats API. Vote accounts CatzoSMUkTRidT5DwBxAC2pEtnwMBTpkCepHkFgZDiqb and E5Y8uSQ8SWHH7GynZqMGirckAybkWXH5QcxtZ6tLezbn;"
+      },
+      {
+       "line": 6,
+       "addr": [
+        "FuRJUnsrqrp9yqnvn8wpKSMv8LbgpJME6g8R73T2Cz1C"
+       ],
+       "ctx": "// priority fees land in FuRJUnsrqrp9yqnvn8wpKSMv8LbgpJME6g8R73T2Cz1C. Native stake only: JupSOL's stake is on the Jupiter"
+      }
+     ],
+     "notes": [
+      {
+       "line": 7,
+       "text": "// Staked SOL listing. Stakers' inflation rewards are not counted."
+      },
+      {
+       "line": 10,
+       "text": "native_staking: { fees: \"Native Staking Fees\", revenue: \"Native Staking Fees To Jupiter\", supplySide: \"Native Staking Fees To Stakers And Partners\" },"
+      },
+      {
+       "line": 21,
+       "text": "Fees: \"Fees earned by Jupiter's validators on native stake: inflation commission, priority fees and MEV passed to stakers. Stakers' inflation rewards are not counted.\","
+      },
+      {
+       "line": 23,
+       "text": "ProtocolRevenue: \"The commission and priority fees Jupiter keeps. Not used for JUP buybacks.\","
+      },
+      {
+       "line": 24,
+       "text": "SupplySideRevenue: \"MEV passed to stakers, and fees and commission paid to partners.\","
+      },
+      {
+       "line": 27,
+       "text": "Fees: { \"Native Staking Fees\": \"Inflation commission and priority fees on native stake, and MEV passed to stakers.\" },"
+      },
+      {
+       "line": 30,
+       "text": "SupplySideRevenue: { \"Native Staking Fees To Stakers And Partners\": \"MEV passed to stakers, and fees and commission paid to partners.\" },"
+      }
+     ]
+    },
+    {
+     "file": "fees/jupiter-offerbook/index.ts",
+     "addresses": [
+      {
+       "line": 9,
+       "addr": [
+        "Edt83Aw3RAELsorwJkt4DDkczrTpHsNeFGzty83TQzuy",
+        "offerbkFMvVfpQhL8ZQ5iromnjct5rz3r52B9ewu3ie"
+       ],
+       "ctx": "// Program offerbkFMvVfpQhL8ZQ5iromnjct5rz3r52B9ewu3ie; fee wallet Edt83Aw3RAELsorwJkt4DDkczrTpHsNeFGzty83TQzuy."
+      }
+     ],
+     "notes": [
+      {
+       "line": 9,
+       "text": "// Program offerbkFMvVfpQhL8ZQ5iromnjct5rz3r52B9ewu3ie; fee wallet Edt83Aw3RAELsorwJkt4DDkczrTpHsNeFGzty83TQzuy."
+      },
+      {
+       "line": 101,
+       "text": "ProtocolRevenue: \"All of Jupiter's revenue, kept by Jupiter. Not used for JUP buybacks.\","
+      }
+     ]
+    },
+    {
+     "file": "fees/jupiter-perpetual/index.ts",
+     "addresses": [
+      {
+       "line": 77,
+       "addr": [
+        "7JQeyNK55fkUPUmEotupBFpiBGpgEQYLe8Ht1VdSfxcP"
+       ],
+       "ctx": "// the program sends 25% of the pool's fees to Jupiter (7JQeyNK55fkUPUmEotupBFpiBGpgEQYLe8Ht1VdSfxcP), 75% stays with JLP"
+      }
+     ],
+     "notes": [
+      {
+       "line": 80,
+       "text": "// JUP buybacks are reported once, on the Jupiter Aggregator listing (fees/jupiter.ts), so no holders revenue here"
+      },
+      {
+       "line": 93,
+       "text": "Fees: \"Trading, swap, borrow, liquidation and JLP mint/burn fees paid by users, plus staking rewards on the pool's SOL and JLP Loans interest.\","
+      },
+      {
+       "line": 95,
+       "text": "ProtocolRevenue: \"Half of the 25% of fees sent to Jupiter, kept by the treasury. The other half buys back JUP, counted on the Jupiter Aggregator listing.\","
+      },
+      {
+       "line": 96,
+       "text": "HoldersRevenue: \"No holders revenue on this listing: the JUP bought back with the other half of the 25% of fees sent to Jupiter is counted on the Jupiter Aggregator listing.\","
+      },
+      {
+       "line": 103,
+       "text": "[JUPITER_METRICS.JupPerpsRemoveLiquidityFees]: \"Fees paid to burn JLP.\","
+      },
+      {
+       "line": 115,
+       "text": "[JUPITER_METRICS.JupPerpsRemoveLiquidityFees]: \"25% of JLP burn fees, sent to Jupiter.\","
+      },
+      {
+       "line": 126,
+       "text": "[JUPITER_METRICS.JupPerpsAddLiquidityFees]: \"Half of the 25% of JLP mint fees sent to Jupiter, kept by the treasury.\","
+      },
+      {
+       "line": 127,
+       "text": "[JUPITER_METRICS.JupPerpsRemoveLiquidityFees]: \"Half of the 25% of JLP burn fees sent to Jupiter, kept by the treasury.\","
+      },
+      {
+       "line": 128,
+       "text": "[JUPITER_METRICS.JupPerpsSwapFees]: \"Half of the 25% of swap fees sent to Jupiter, kept by the treasury.\","
+      },
+      {
+       "line": 129,
+       "text": "[JUPITER_METRICS.JupPerpsOpenPositionFees]: \"Half of the 25% of open position fees sent to Jupiter, kept by the treasury.\","
+      },
+      {
+       "line": 130,
+       "text": "[JUPITER_METRICS.JupPerpsClosePositionFees]: \"Half of the 25% of close position fees sent to Jupiter, kept by the treasury.\","
+      },
+      {
+       "line": 131,
+       "text": "[JUPITER_METRICS.JupPerpsLiquidationFees]: \"Half of the 25% of liquidation fees sent to Jupiter, kept by the treasury.\","
+      }
+     ]
+    },
+    {
+     "file": "fees/jupiter-rent-reclaim.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 22,
+       "text": "ProtocolRevenue: \"All of rent reclaim fees, kept by Jupiter. Not used for JUP buybacks.\","
+      }
+     ]
+    },
+    {
+     "file": "fees/jupiter-staked-sol/index.ts",
+     "addresses": [
+      {
+       "line": 19,
+       "addr": [
+        "CatzoSMUkTRidT5DwBxAC2pEtnwMBTpkCepHkFgZDiqb"
+       ],
+       "ctx": "// Jupiter validator identities (vote account CatzoSMUkTRidT5DwBxAC2pEtnwMBTpkCepHkFgZDiqb): once per epoch they send jupSOL's"
+      }
+     ],
+     "notes": [
+      {
+       "line": 96,
+       "text": "dailySupplySideRevenue.addCGToken(\"solana\", amount * STAKER_SHARE, JUPITER_METRICS.JupSOLStakingRewardsToStakers);"
+      },
+      {
+       "line": 129,
+       "text": "ProtocolRevenue: \"All of Jupiter's revenue, kept by Jupiter. Not used for JUP buybacks.\","
+      },
+      {
+       "line": 155,
+       "text": "[JUPITER_METRICS.JupSOLStakingRewardsToStakers]: \"95% of pool rewards, to jupSOL holders.\","
+      }
+     ]
+    },
+    {
+     "file": "fees/jupiter-vaults.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 54,
+       "text": "THEN e.fee_shares * e.instant_paid / cast(nullif(e.shares_burned - e.fee_shares, 0) AS double)"
+      }
+     ]
+    },
+    {
+     "file": "fees/jupiter-vrfd.ts",
+     "addresses": [
+      {
+       "line": 6,
+       "addr": [
+        "H9at42xAafMAYqWmL4sxX5EiUpECruvEsdsBc6uDJUtT"
+       ],
+       "ctx": "const VRFD_JUP_ACCOUNT = 'H9at42xAafMAYqWmL4sxX5EiUpECruvEsdsBc6uDJUtT'"
+      },
+      {
+       "line": 7,
+       "addr": [
+        "8gMBNeKwXaoNi9bhbVUWFt4Uc5aobL9PeYMXfYDMePE2"
+       ],
+       "ctx": "const JUP_BURN_MULTISIG = '8gMBNeKwXaoNi9bhbVUWFt4Uc5aobL9PeYMXfYDMePE2'"
+      },
+      {
+       "line": 8,
+       "addr": [
+        "verGhDwWuLnSi43vaJcNsLPXBQnqgmtbYFEmmhiv96q"
+       ],
+       "ctx": "const VRFD_SERVICE_WALLET = 'verGhDwWuLnSi43vaJcNsLPXBQnqgmtbYFEmmhiv96q'"
+      },
+      {
+       "line": 9,
+       "addr": [
+        "JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN"
+       ],
+       "ctx": "const JUP_MINT = 'JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN'"
+      }
+     ],
+     "notes": [
+      {
+       "line": 7,
+       "text": "const JUP_BURN_MULTISIG = '8gMBNeKwXaoNi9bhbVUWFt4Uc5aobL9PeYMXfYDMePE2'"
+      },
+      {
+       "line": 11,
+       "text": "const BURN_LABEL = \"Retail Verification Fees Burned\""
+      },
+      {
+       "line": 13,
+       "text": "// Jupiter's stats API for the total. Retail verifications are paid in JUP to the account above, owned by the JUP burn"
+      },
+      {
+       "line": 14,
+       "text": "// multisig, in transactions paid for by the VRFD service wallet; that JUP is burned in batches (the account held 323.5k JUP"
+      },
+      {
+       "line": 24,
+       "text": "WHERE to_address IN ('${JUP_BURN_MULTISIG}', '${VRFD_JUP_ACCOUNT}')"
+      },
+      {
+       "line": 59,
+       "text": "ProtocolRevenue: \"All of enterprise verification fees, kept by Jupiter. Not used for JUP buybacks.\","
+      },
+      {
+       "line": 60,
+       "text": "HoldersRevenue: \"Retail verification fees, paid in JUP to a burn account and burned in batches.\","
+      },
+      {
+       "line": 66,
+       "text": "HoldersRevenue: { [BURN_LABEL]: \"Retail verification fees, paid in JUP to a burn account and burned in batches.\" },"
+      }
+     ]
+    },
+    {
+     "file": "fees/jupiter.ts",
+     "addresses": [
+      {
+       "line": 13,
+       "addr": [
+        "3rA996DAZe5G67HWbC4jdyYPLeNptLXuybtLnx6dvkxn"
+       ],
+       "ctx": "// 3rA996DAZe5G67HWbC4jdyYPLeNptLXuybtLnx6dvkxn, platform fees already paid in JUP forwarded from the fee authorities"
+      },
+      {
+       "line": 17,
+       "addr": [
+        "6tZT9AUcQn4iHMH79YZEXSy55kDLQ4VbA3PMtfLVNsFX"
+       ],
+       "ctx": "const JUP_LITTERBOX_ADDRESS = '6tZT9AUcQn4iHMH79YZEXSy55kDLQ4VbA3PMtfLVNsFX'"
+      },
+      {
+       "line": 18,
+       "addr": [
+        "JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN"
+       ],
+       "ctx": "const JUP_MINT = 'JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN'"
+      }
+     ],
+     "notes": [
+      {
+       "line": 8,
+       "text": "// JUP buybacks. Since 2025-02-17 Jupiter spends 50% of its revenue across all products on JUP, which is held in the"
+      },
+      {
+       "line": 16,
+       "text": "// Outflows are ignored, so the 134.5M JUP moved out on 2025-11-24 to be burned is not counted twice."
+      },
+      {
+       "line": 20,
+       "text": "// Share of revenue kept by the treasury (protocol revenue) on the products that fund the Litterbox (Aggregator, JupiterZ,"
+      },
+      {
+       "line": 25,
+       "text": "// Saved Dune query running helpers/queries/jupiter-aggregator.sql: fees and Litterbox buybacks per day since 2025-02-17,"
+      },
+      {
+       "line": 58,
+       "text": "if (!row) throw new Error(`Litterbox buybacks: no Allium result for ${options.dateString}`)"
+      },
+      {
+       "line": 59,
+       "text": "if (!row.indexed_past_end) throw new Error(`Litterbox buybacks: Allium is not indexed through ${options.dateString} yet`)"
+      },
+      {
+       "line": 126,
+       "text": "JupSOLStakingRewardsToStakers: 'JupSOL Staking Rewards To Stakers',"
+      },
+      {
+       "line": 149,
+       "text": "// JUP buy back"
+      },
+      {
+       "line": 223,
+       "text": "HoldersRevenue: 'JUP bought back into the Jupiter Litterbox wallet since 2025-02-17, funded with 50% of Aggregator, JupiterZ, Limit, DCA and Perps revenue and reported once, on this listing.',"
+      },
+      {
+       "line": 224,
+       "text": "ProtocolRevenue: 'Half of platform fees, kept by the treasury. The other half buys back JUP, counted here as holders revenue.',"
+      },
+      {
+       "line": 235,
+       "text": "[JUPITER_METRICS.AggSwapFees]: \"Half of platform fees on swaps, kept by the treasury.\","
+      },
+      {
+       "line": 238,
+       "text": "[JUPITER_METRICS.TokenBuyBack]: \"JUP bought back into the Jupiter Litterbox wallet with 50% of Aggregator, JupiterZ, Limit, DCA and Perps revenue.\","
+      }
+     ]
+    },
+    {
+     "file": "fees/jupiterz.ts",
+     "addresses": [
+      {
+       "line": 6,
+       "addr": [
+        "RderEngine111111111111111111111111111111112"
+       ],
+       "ctx": "// Jupiter's stats API. JupiterZ RFQ fills settle through RderEngine111111111111111111111111111111112. Market makers pay a"
+      }
+     ],
+     "notes": [
+      {
+       "line": 10,
+       "text": "// JUP buybacks are counted on the Jupiter Aggregator listing, so holders revenue is 0 here"
+      },
+      {
+       "line": 22,
+       "text": "ProtocolRevenue: \"Half of JupiterZ fees, kept by the treasury. JUP buybacks are funded with 50% of onchain revenue and counted on the Jupiter Aggregator listing; JupiterZ market-maker fees are settled offchain.\","
+      },
+      {
+       "line": 23,
+       "text": "HoldersRevenue: \"No holders revenue on this listing: JUP buybacks, funded with 50% of onchain revenue, are counted once, on the Jupiter Aggregator listing. JupiterZ market-maker fees are settled offchain.\","
+      },
+      {
+       "line": 28,
+       "text": "ProtocolRevenue: { [JUPITER_METRICS.JupiterZFees]: \"Half of JupiterZ fees, kept by the treasury.\" },"
+      }
+     ]
+    },
+    {
+     "file": "dexs/jupiter-gacha/index.ts",
+     "addresses": [
+      {
+       "line": 9,
+       "addr": [
+        "GachaNgyXTU3zFogQ8Z5jR2BLXs8215X2AtEH18VxJq3"
+       ],
+       "ctx": "const GACHA_ADDRESS = \"GachaNgyXTU3zFogQ8Z5jR2BLXs8215X2AtEH18VxJq3\";"
+      },
+      {
+       "line": 14,
+       "addr": [
+        "62Q9eeDY3eM8A5CnprBGYMPShdBjAzdpBdr71QHsS8dS"
+       ],
+       "ctx": "// https://solscan.io/account/62Q9eeDY3eM8A5CnprBGYMPShdBjAzdpBdr71QHsS8dS"
+      },
+      {
+       "line": 15,
+       "addr": [
+        "62Q9eeDY3eM8A5CnprBGYMPShdBjAzdpBdr71QHsS8dS"
+       ],
+       "ctx": "const PHYGITALS_ADDRESS = \"62Q9eeDY3eM8A5CnprBGYMPShdBjAzdpBdr71QHsS8dS\";"
+      }
+     ],
+     "notes": [
+      {
+       "line": 12,
+       "text": "// and the buyback leg is not memo-tagged, so only the purchase side is attributable to"
+      },
+      {
+       "line": 123,
+       "text": "dailyFees.addUSDValue(-total, \"Pack Buyback Spends\");"
+      },
+      {
+       "line": 125,
+       "text": "// Volume only: the Phygitals buyback leg carries no jupiter- memo, so there is"
+      },
+      {
+       "line": 132,
+       "text": "// The partners keep the rest and pay the card buybacks."
+      },
+      {
+       "line": 151,
+       "text": "Revenue: \"Jupiter's share of gacha fees, negative on days when buybacks exceed sales.\","
+      },
+      {
+       "line": 152,
+       "text": "ProtocolRevenue: \"All of Jupiter's share, kept by Jupiter. Not used for JUP buybacks.\","
+      },
+      {
+       "line": 164,
+       "text": "\"Pack Buyback Spends\": \"USDC paid to users who sell pulled cards back within the buyback window.\","
+      },
+      {
+       "line": 178,
+       "text": "Revenue: { [REVENUE_LABEL]: \"Jupiter's share of gacha fees (pack sales minus buybacks).\" },"
+      },
+      {
+       "line": 182,
+       "text": "allowNegativeValue: true, // buyback payouts can exceed pack sales on a day"
+      }
+     ]
+    },
+    {
+     "file": "dexs/jupiter-prediction/index.ts",
+     "addresses": [
+      {
+       "line": 10,
+       "addr": [
+        "2DeGBCAiEJd1MgMuPGDKh7svBikZa9izbnTn5p7ESzPt"
+       ],
+       "ctx": "// Arcade runs on the Play program 2DeGBCAiEJd1MgMuPGDKh7svBikZa9izbnTn5p7ESzPt: it keeps 1% of winnings and sweeps it to"
+      },
+      {
+       "line": 12,
+       "addr": [
+        "ABMPgzzP8dLrzLVc8PZb2MTLadQCmTTsxNVsQHKrJx6r"
+       ],
+       "ctx": "const ARCADE_TREASURY = 'ABMPgzzP8dLrzLVc8PZb2MTLadQCmTTsxNVsQHKrJx6r';"
+      },
+      {
+       "line": 97,
+       "addr": [
+        "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+       ],
+       "ctx": "and token_mint_address = 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v'"
+      }
+     ],
+     "notes": [
+      {
+       "line": 11,
+       "text": "// the treasury USDC account in its PlayConfig, which only receives swept fees. First fees on 2026-05-25."
+      },
+      {
+       "line": 12,
+       "text": "const ARCADE_TREASURY = 'ABMPgzzP8dLrzLVc8PZb2MTLadQCmTTsxNVsQHKrJx6r';"
+      },
+      {
+       "line": 150,
+       "text": "ProtocolRevenue: \"All of Jupiter's share, kept by Jupiter. Not used for JUP buybacks.\","
+      },
+      {
+       "line": 157,
+       "text": "[ARCADE_FEES]: 'The 1% Arcade fee on winnings, swept to the Arcade treasury.',"
+      }
+     ]
+    },
+    {
+     "file": "dexs/jupiter-yolo.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 56,
+       "text": "ProtocolRevenue: 'All of profit fees, kept by Jupiter. Not used for JUP buybacks.',"
+      }
+     ]
+    }
+   ],
+   "n_addr": 22
+  },
+  "GMX": {
+   "files_scanned": 6,
+   "records": [
+    {
+     "file": "fees/gmx-sol.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 20,
+       "text": "// GT Buyback Season 2: the GT that referrers sold on day D sits in day D's exchange vault; the keeper confirms it at about 00:01 UTC on D+1"
+      },
+      {
+       "line": 26,
+       "text": "gtBuybacks(where: {gtExchangeVault_eq: \"${vault}\"}, orderBy: timestamp_ASC, limit: 1) {"
+      },
+      {
+       "line": 32,
+       "text": "if (!gtBuybacks.length) throw new Error(`gmx-sol: the GT buyback for ${options.dateString} (vault ${vault}) is not confirmed yet`)"
+      },
+      {
+       "line": 35,
+       "text": "gtGlobalHistories(where: {timestamp_lte: \"${gtBuybacks[0].timestamp}\"}, orderBy: timestamp_DESC, limit: 1) {"
+      },
+      {
+       "line": 40,
+       "text": "// buybackAmount is in GT base units and mintingCost is USD with 20 decimals per base unit, so their product / 1e20 is USD"
+      },
+      {
+       "line": 41,
+       "text": "return Number(gtBuybacks[0].buybackAmount) * Number(gtGlobalHistories[0].mintingCost) / 1e20"
+      },
+      {
+       "line": 47,
+       "text": "const feeStructureChangeDate = '2026-01-16' // 75% LPs / 25% treasury from this day"
+      },
+      {
+       "line": 48,
+       "text": "// GT buyback, confirmed by the GMX team: from 2025-03-16 to 2026-01-15 the treasury put 60% of its share into a daily GT bank (36% of fees)"
+      },
+      {
+       "line": 49,
+       "text": "// the two launch days were capped by GT deposits, so the team's actual buyback amounts are used; $192,192 bought back in total"
+      },
+      {
+       "line": 50,
+       "text": "const gtBuybackLaunchDays: Record<string, number> = { '2025-03-14': 11349.96, '2025-03-15': 23522.82 }"
+      },
+      {
+       "line": 53,
+       "text": "// GT Buyback Season 2 (GMLabs-002), live from 2026-09-28 00:00 UTC for the duration of the season: 99% of fees to the treasury for the GT buyback, 1% to LPs"
+      },
+      {
+       "line": 55,
+       "text": "// each day the treasury buys the GT that referrers sold, within their Season 2 quotas, at the GT minting cost and up to that 99%; the rest stays in the treasury"
+      }
+     ]
+    },
+    {
+     "file": "fees/gmx-v2/index.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 5,
+       "text": "//   swap fees        = tokenPrice * (feeReceiverAmount + feeAmountForPool)          (SwapFeesCollected)"
+      },
+      {
+       "line": 6,
+       "text": "//   price impact     = distributionAmount of the index token                        (PositionImpactPoolDistributed)"
+      },
+      {
+       "line": 38,
+       "text": "const POSITION_IMPACT_POOL_DISTRIBUTED = eventNameTopic('PositionImpactPoolDistributed')"
+      },
+      {
+       "line": 48,
+       "text": "// Revenue is the fee receiver's share read from each event (feeReceiverAmount): 37% of fees, with position fees"
+      },
+      {
+       "line": 49,
+       "text": "// counted after referral rebates. GMX splits it into 10% of fees for the treasury and 27% for GMX stakers:"
+      },
+      {
+       "line": 90,
+       "text": "// feeReceiverAmount is the receiver's share of the position fee after rebates, the borrowing fee and the liquidation fee"
+      },
+      {
+       "line": 91,
+       "text": "const liquidationToReceiver = uint(uints, 'liquidationFeeAmountForFeeReceiver')"
+      },
+      {
+       "line": 92,
+       "text": "marginRevenue += (uint(uints, 'feeReceiverAmount') - liquidationToReceiver) * price"
+      },
+      {
+       "line": 100,
+       "text": "swapFees += uint(uints, 'tokenPrice') * (uint(uints, 'feeReceiverAmount') + uint(uints, 'feeAmountForPool'))"
+      },
+      {
+       "line": 101,
+       "text": "swapRevenue += uint(uints, 'tokenPrice') * uint(uints, 'feeReceiverAmount')"
+      },
+      {
+       "line": 104,
+       "text": "// positive price impact distributed from the impact pool to LPs, denominated in the market's index token"
+      },
+      {
+       "line": 109,
+       "text": "const amount = uint(toRecord(eventData.uintItems.items), 'distributionAmount')"
+      }
+     ]
+    },
+    {
+     "file": "helpers/gmx.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 128,
+       "text": "[METRIC.PROTOCOL_FEES]: 'Portion of all fees retained by the protocol treasury',"
+      },
+      {
+       "line": 131,
+       "text": "[METRIC.PROTOCOL_FEES]: 'Portion of all fees retained by the protocol treasury',"
+      },
+      {
+       "line": 134,
+       "text": "[METRIC.LP_FEES]: 'Portion of all fees distributed to liquidity providers (GLP holders)',"
+      },
+      {
+       "line": 137,
+       "text": "'Token Holder Fees': 'Portion of all fees distributed to governance token holders',"
+      }
+     ]
+    }
+   ],
+   "n_addr": 0
+  },
+  "AERO": {
+   "files_scanned": 3,
+   "records": [
+    {
+     "file": "dexs/aerodrome/index.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 199,
+       "text": "addOneToken({ chain, balances: dailyHoldersRevenue, token0, token1, amount0: fee0 * stakedShare, amount1: fee1 * stakedShare })"
+      },
+      {
+       "line": 235,
+       "text": "...legacyRevenueExports(options, dailyHoldersRevenue, 'Staked-LP Fees And Unstaked-LP Rake', dailyBribesRevenue, 'External Bribes Revenue'),"
+      },
+      {
+       "line": 248,
+       "text": "Revenue: 'Swap fees earned by liquidity staked in gauges and bribes, paid to veAERO voters, plus the staked-liquidity fees locked in the gauges since their last fee distribution on 2026-10-15.',"
+      },
+      {
+       "line": 249,
+       "text": "HoldersRevenue: 'Swap fees earned by liquidity staked in gauges until the gauges last distributed fees on 2026-10-15, plus bribes until voting ended on 2026-10-22, all paid to veAERO voters.',"
+      },
+      {
+       "line": 250,
+       "text": "ProtocolRevenue: 'Swap fees earned by liquidity staked in gauges since their last fee distribution on 2026-10-15, locked in the gauges until the Aero Foundation reclaims them. Zero before.',"
+      },
+      {
+       "line": 260,
+       "text": "'Staked-LP Fees And Unstaked-LP Rake': 'Swap fees earned by liquidity staked in gauges, paid to veAERO voters until the last fee distribution on 2026-10-15.',"
+      },
+      {
+       "line": 262,
+       "text": "[LOCKED_GAUGE_FEES]: 'Swap fees earned by liquidity staked in gauges since their last fee distribution on 2026-10-15, locked in the gauges until the Aero Foundation reclaims them.',"
+      },
+      {
+       "line": 265,
+       "text": "'Staked-LP Fees And Unstaked-LP Rake': 'Swap fees earned by liquidity staked in gauges, paid to veAERO voters until the last fee distribution on 2026-10-15.',"
+      },
+      {
+       "line": 269,
+       "text": "[LOCKED_GAUGE_FEES]: 'Swap fees earned by liquidity staked in gauges since their last fee distribution on 2026-10-15, locked in the gauges until the Aero Foundation reclaims them.',"
+      }
+     ]
+    },
+    {
+     "file": "dexs/aerodrome/utils.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 10,
+       "text": "// passing swap fees to voters before that. Last fee distribution per chain (latest gauge"
+      },
+      {
+       "line": 12,
+       "text": "// 2026-10-15 00:07 UTC). Fees earned by staked liquidity after it were never distributed: they stay"
+      },
+      {
+       "line": 36,
+       "text": "// chain's last fee distribution and to protocol revenue (locked) after it; bribes stay with voters."
+      }
+     ]
+    },
+    {
+     "file": "dexs/aerodrome-slipstream/index.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 275,
+       "text": "if (holders0 > 0) dailyHoldersRevenue.add(token0, holders0, 'Staked-LP Fees And Unstaked-LP Rake')"
+      },
+      {
+       "line": 276,
+       "text": "if (holders1 > 0) dailyHoldersRevenue.add(token1, holders1, 'Staked-LP Fees And Unstaked-LP Rake')"
+      },
+      {
+       "line": 288,
+       "text": "...legacyRevenueExports(fetchOptions, dailyHoldersRevenue, 'Staked-LP Fees And Unstaked-LP Rake', dailyBribesRevenue, 'External Bribes Revenue'),"
+      },
+      {
+       "line": 300,
+       "text": "Revenue: 'Swap fees earned by liquidity staked in gauges plus the cut taken from unstaked liquidity, and bribes, paid to veAERO voters, plus those staked-liquidity fees locked in the gauges since their last fee distribution on 2026-10-15.',"
+      },
+      {
+       "line": 301,
+       "text": "HoldersRevenue: 'Swap fees earned by liquidity staked in gauges plus the cut taken from unstaked liquidity until the gauges last distributed fees on 2026-10-15, plus bribes until voting ended on 2026-10-22, all paid to veAERO voters.',"
+      },
+      {
+       "line": 302,
+       "text": "ProtocolRevenue: 'Swap fees of liquidity staked in gauges, plus the cut taken from unstaked liquidity, since the gauges last distributed fees on 2026-10-15, locked in the gauges until the Aero Foundation reclaims them. Zero before.',"
+      },
+      {
+       "line": 312,
+       "text": "'Staked-LP Fees And Unstaked-LP Rake': 'Swap fees earned by liquidity staked in gauges plus the cut taken from unstaked liquidity, paid to veAERO voters until the last fee distribution on 2026-10-15.',"
+      },
+      {
+       "line": 314,
+       "text": "[LOCKED_GAUGE_FEES]: 'The same fees since the gauges last distributed fees on 2026-10-15, locked in the gauges until the Aero Foundation reclaims them.',"
+      },
+      {
+       "line": 317,
+       "text": "'Staked-LP Fees And Unstaked-LP Rake': 'Swap fees earned by liquidity staked in gauges plus the cut taken from unstaked liquidity, paid to veAERO voters until the last fee distribution on 2026-10-15.',"
+      },
+      {
+       "line": 321,
+       "text": "[LOCKED_GAUGE_FEES]: 'Swap fees of liquidity staked in gauges plus the cut taken from unstaked liquidity, since the gauges last distributed fees on 2026-10-15, locked in the gauges until the Aero Foundation reclaims them.',"
+      }
+     ]
+    }
+   ],
+   "n_addr": 0
+  },
+  "CRV": {
+   "files_scanned": 6,
+   "records": [
+    {
+     "file": "fees/curve.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 12,
+       "text": "CurveDEXFeesTreasury: 'CurveDEX Admin Fees To Treasury',"
+      },
+      {
+       "line": 110,
+       "text": "ProtocolRevenue: \"10% of the protocol's share of pool fees, sent to the Curve DAO treasury.\","
+      },
+      {
+       "line": 111,
+       "text": "HoldersRevenue: \"90% of the protocol's share of pool fees, distributed to veCRV holders, plus all bribes.\","
+      },
+      {
+       "line": 120,
+       "text": "[LABELS.CurveDEXSwapRevenue]: 'Fees distributed to veCRV holders and protocol treasury',"
+      },
+      {
+       "line": 124,
+       "text": "[LABELS.CurveDEXFeesTreasury]: 'Fees allocated to the protocol treasury',"
+      },
+      {
+       "line": 127,
+       "text": "[LABELS.CurveDEXFeesHolders]: 'Fees distributed to veCRV governance token holders',"
+      },
+      {
+       "line": 131,
+       "text": "[LABELS.CurveDEXFeesLPs]: 'Fees distributed to liquidity providers',"
+      }
+     ]
+    },
+    {
+     "file": "dexs/curve/index.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 580,
+       "text": "// admin fees: 90% veCRV holders, 10% DAO treasury"
+      },
+      {
+       "line": 656,
+       "text": "ProtocolRevenue: \"10% of the protocol's share, sent to the Curve DAO treasury.\","
+      },
+      {
+       "line": 657,
+       "text": "HoldersRevenue: \"90% of the protocol's share, distributed to veCRV holders.\","
+      }
+     ]
+    }
+   ],
+   "n_addr": 0
+  },
+  "PENDLE": {
+   "files_scanned": 2,
+   "records": [
+    {
+     "file": "fees/pendle.ts",
+     "addresses": [
+      {
+       "line": 31,
+       "addr": [
+        "0x3942F7B55094250644cFfDa7160226Caa349A38E"
+       ],
+       "ctx": "const AIRDROP_DISTRIBUTOR = '0x3942F7B55094250644cFfDa7160226Caa349A38E'"
+      },
+      {
+       "line": 34,
+       "addr": [
+        "0x999999999991E178D52Cd95AFd4b00d066664144"
+       ],
+       "ctx": "const SPENDLE = '0x999999999991E178D52Cd95AFd4b00d066664144'"
+      },
+      {
+       "line": 66,
+       "addr": [
+        "0x8270400d528c34e1596ef367eedec99080a1b592"
+       ],
+       "ctx": "treasury: \"0x8270400d528c34e1596ef367eedec99080a1b592\","
+      },
+      {
+       "line": 68,
+       "addr": [
+        "0xe2796707590384430d887f15bdf97c660d95894a"
+       ],
+       "ctx": "'0xe2796707590384430d887f15bdf97c660d95894a',"
+      },
+      {
+       "line": 77,
+       "addr": [
+        "0xcbcb48e22622a3778b6f14c2f5d258ba026b05e6"
+       ],
+       "ctx": "treasury: \"0xcbcb48e22622a3778b6f14c2f5d258ba026b05e6\","
+      },
+      {
+       "line": 78,
+       "addr": [
+        "0x096FBee7b8DFb88993A94c6145211163D2616245"
+       ],
+       "ctx": "airdropFunders: [\"0x096FBee7b8DFb88993A94c6145211163D2616245\"],"
+      },
+      {
+       "line": 82,
+       "addr": [
+        "0xd77e9062c6df3f2d1cb5bf45855fa1e7712a059e"
+       ],
+       "ctx": "treasury: \"0xd77e9062c6df3f2d1cb5bf45855fa1e7712a059e\","
+      },
+      {
+       "line": 86,
+       "addr": [
+        "0xe972d450ec5b11b99d97760422e0e054afbc8042"
+       ],
+       "ctx": "treasury: \"0xe972d450ec5b11b99d97760422e0e054afbc8042\","
+      },
+      {
+       "line": 90,
+       "addr": [
+        "0x5c30d3578a4d07a340650a76b9ae5df20d5bdf55"
+       ],
+       "ctx": "treasury: \"0x5c30d3578a4d07a340650a76b9ae5df20d5bdf55\","
+      },
+      {
+       "line": 94,
+       "addr": [
+        "0xcbcb48e22622a3778b6f14c2f5d258ba026b05e6"
+       ],
+       "ctx": "treasury: \"0xcbcb48e22622a3778b6f14c2f5d258ba026b05e6\","
+      },
+      {
+       "line": 98,
+       "addr": [
+        "0xCbcb48e22622a3778b6F14C2f5d258Ba026b05e6"
+       ],
+       "ctx": "treasury: \"0xCbcb48e22622a3778b6F14C2f5d258Ba026b05e6\","
+      },
+      {
+       "line": 102,
+       "addr": [
+        "0xCbcb48e22622a3778b6F14C2f5d258Ba026b05e6"
+       ],
+       "ctx": "treasury: \"0xCbcb48e22622a3778b6F14C2f5d258Ba026b05e6\","
+      },
+      {
+       "line": 106,
+       "addr": [
+        "0xCbcb48e22622a3778b6F14C2f5d258Ba026b05e6"
+       ],
+       "ctx": "treasury: \"0xCbcb48e22622a3778b6F14C2f5d258Ba026b05e6\","
+      },
+      {
+       "line": 110,
+       "addr": [
+        "0xCbcb48e22622a3778b6F14C2f5d258Ba026b05e6"
+       ],
+       "ctx": "treasury: \"0xCbcb48e22622a3778b6F14C2f5d258Ba026b05e6\","
+      },
+      {
+       "line": 111,
+       "addr": [
+        "0xeea6F790F18563E91b18DF00B89d9f79b2E6761F"
+       ],
+       "ctx": "airdropFunders: [\"0xeea6F790F18563E91b18DF00B89d9f79b2E6761F\"],"
+      },
+      {
+       "line": 115,
+       "addr": [
+        "0xCbcb48e22622a3778b6F14C2f5d258Ba026b05e6"
+       ],
+       "ctx": "treasury: \"0xCbcb48e22622a3778b6F14C2f5d258Ba026b05e6\","
+      },
+      {
+       "line": 119,
+       "addr": [
+        "0xCbcb48e22622a3778b6F14C2f5d258Ba026b05e6"
+       ],
+       "ctx": "treasury: \"0xCbcb48e22622a3778b6F14C2f5d258Ba026b05e6\","
+      },
+      {
+       "line": 123,
+       "addr": [
+        "0xCbcb48e22622a3778b6F14C2f5d258Ba026b05e6"
+       ],
+       "ctx": "treasury: \"0xCbcb48e22622a3778b6F14C2f5d258Ba026b05e6\","
+      }
+     ],
+     "notes": [
+      {
+       "line": 31,
+       "text": "const AIRDROP_DISTRIBUTOR = '0x3942F7B55094250644cFfDa7160226Caa349A38E'"
+      },
+      {
+       "line": 66,
+       "text": "treasury: \"0x8270400d528c34e1596ef367eedec99080a1b592\","
+      },
+      {
+       "line": 77,
+       "text": "treasury: \"0xcbcb48e22622a3778b6f14c2f5d258ba026b05e6\","
+      },
+      {
+       "line": 82,
+       "text": "treasury: \"0xd77e9062c6df3f2d1cb5bf45855fa1e7712a059e\","
+      },
+      {
+       "line": 86,
+       "text": "treasury: \"0xe972d450ec5b11b99d97760422e0e054afbc8042\","
+      },
+      {
+       "line": 90,
+       "text": "treasury: \"0x5c30d3578a4d07a340650a76b9ae5df20d5bdf55\","
+      },
+      {
+       "line": 94,
+       "text": "treasury: \"0xcbcb48e22622a3778b6f14c2f5d258ba026b05e6\","
+      },
+      {
+       "line": 98,
+       "text": "treasury: \"0xCbcb48e22622a3778b6F14C2f5d258Ba026b05e6\","
+      },
+      {
+       "line": 102,
+       "text": "treasury: \"0xCbcb48e22622a3778b6F14C2f5d258Ba026b05e6\","
+      },
+      {
+       "line": 106,
+       "text": "treasury: \"0xCbcb48e22622a3778b6F14C2f5d258Ba026b05e6\","
+      },
+      {
+       "line": 110,
+       "text": "treasury: \"0xCbcb48e22622a3778b6F14C2f5d258Ba026b05e6\","
+      },
+      {
+       "line": 115,
+       "text": "treasury: \"0xCbcb48e22622a3778b6F14C2f5d258Ba026b05e6\","
+      }
+     ]
+    }
+   ],
+   "n_addr": 11
+  },
+  "SKY": {
+   "files_scanned": 1,
+   "records": [
+    {
+     "file": "fees/makerdao.ts",
+     "addresses": [
+      {
+       "line": 37,
+       "addr": [
+        "0x38e4254bd82ed5ee97cd1c4278faae748d998865"
+       ],
+       "ctx": "const staking_rewards_data = await fetchURL(`https://info-sky.blockanalitica.com/farms/0x38e4254bd82ed5ee97cd1c4278faae748d998865/historic/?days_ago=9999`)"
+      }
+     ],
+     "notes": [
+      {
+       "line": 4,
+       "text": "- https://info.sky.money/buyback"
+      },
+      {
+       "line": 7,
+       "text": "- https://makerburn.com/#/"
+      },
+      {
+       "line": 35,
+       "text": "const buyback_data = await fetchURL(`https://info-sky.blockanalitica.com/buyback/historic/?days_ago=9999&format=json`)"
+      },
+      {
+       "line": 61,
+       "text": "dailyHoldersRevenue.addCGToken('sky', Number(buybackDayData.sky_buyback_24h), METRICS.TokenBuyBack);"
+      },
+      {
+       "line": 65,
+       "text": "dailyHoldersRevenue.addCGToken('usds', Number(staking_reward_amount), METRICS.StakingRewards);"
+      },
+      {
+       "line": 91,
+       "text": "HoldersRevenue: \"SKY token buybacks + staking rewards for sky stakers\","
+      },
+      {
+       "line": 92,
+       "text": "ProtocolRevenue: \"Net protocol revenue after subtracting SKY token buybacks\","
+      },
+      {
+       "line": 110,
+       "text": "[METRICS.TokenBuyBack]: 'SKY tokens buy back from revenue',"
+      },
+      {
+       "line": 111,
+       "text": "[METRICS.StakingRewards]: 'USDS rewards paid to SKY stakers',"
+      }
+     ]
+    }
+   ],
+   "n_addr": 1
+  },
+  "ENA": {
+   "files_scanned": 1,
+   "records": [
+    {
+     "file": "fees/ethena.ts",
+     "addresses": [
+      {
+       "line": 13,
+       "addr": [
+        "0xe3490297a08d6fC8Da46Edb7B6142E4F461b62D3"
+       ],
+       "ctx": "'V2': '0xe3490297a08d6fC8Da46Edb7B6142E4F461b62D3'"
+      },
+      {
+       "line": 16,
+       "addr": [
+        "0x71E4f98e8f20C88112489de3DDEd4489802a3A87"
+       ],
+       "ctx": "const ETHENA_sUSDe_YIELD_DISTRIBUTIONS = '0x71E4f98e8f20C88112489de3DDEd4489802a3A87';"
+      },
+      {
+       "line": 17,
+       "addr": [
+        "0x2b5ab59163a6e93b4486f6055d33ca4a115dd4d5"
+       ],
+       "ctx": "const ETHENA_RESERVE_FUND = '0x2b5ab59163a6e93b4486f6055d33ca4a115dd4d5';"
+      },
+      {
+       "line": 18,
+       "addr": [
+        "0xf2fa332bD83149c66b09B45670bCe64746C6b439"
+       ],
+       "ctx": "const ETHENA_USDe_TO_sUSDe_STAKING_REWARD_DISTRIBUTIONS = '0xf2fa332bD83149c66b09B45670bCe64746C6b439';"
+      },
+      {
+       "line": 19,
+       "addr": [
+        "0xd0ec8cc7414f27ce85f8dece6b4a58225f273311"
+       ],
+       "ctx": "const ETHENA_EXTRA_REWARD_DISTRIBUTIONS = '0xd0ec8cc7414f27ce85f8dece6b4a58225f273311';"
+      },
+      {
+       "line": 20,
+       "addr": [
+        "0xf19c433c6b288e487b767595886321f89a3cbf17"
+       ],
+       "ctx": "const ETHENA_AAVE_LIQ_FEES_DISTRIBUTIONS = '0xf19c433c6b288e487b767595886321f89a3cbf17';"
+      },
+      {
+       "line": 111,
+       "addr": [
+        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f1"
+       ],
+       "ctx": "'0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef',"
+      },
+      {
+       "line": 128,
+       "addr": [
+        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f1"
+       ],
+       "ctx": "'0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef',"
+      },
+      {
+       "line": 143,
+       "addr": [
+        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f1"
+       ],
+       "ctx": "'0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef',"
+      },
+      {
+       "line": 157,
+       "addr": [
+        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f1"
+       ],
+       "ctx": "'0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef',"
+      }
+     ],
+     "notes": [
+      {
+       "line": 16,
+       "text": "const ETHENA_sUSDe_YIELD_DISTRIBUTIONS = '0x71E4f98e8f20C88112489de3DDEd4489802a3A87';"
+      },
+      {
+       "line": 18,
+       "text": "const ETHENA_USDe_TO_sUSDe_STAKING_REWARD_DISTRIBUTIONS = '0xf2fa332bD83149c66b09B45670bCe64746C6b439';"
+      },
+      {
+       "line": 19,
+       "text": "const ETHENA_EXTRA_REWARD_DISTRIBUTIONS = '0xd0ec8cc7414f27ce85f8dece6b4a58225f273311';"
+      },
+      {
+       "line": 20,
+       "text": "const ETHENA_AAVE_LIQ_FEES_DISTRIBUTIONS = '0xf19c433c6b288e487b767595886321f89a3cbf17';"
+      },
+      {
+       "line": 181,
+       "text": "Fees: \"Staking rewards + yield distribution + mint fees + extra fees\","
+      },
+      {
+       "line": 184,
+       "text": "SupplySideRevenue: \"Mint Fees and staking rewards distributed to suppliers\","
+      },
+      {
+       "line": 190,
+       "text": "[EXTRA_METRICS.SUSDE_STAKING_REWARDS]: 'Staking rewards distributed to sUSDe stakers.',"
+      },
+      {
+       "line": 191,
+       "text": "[EXTRA_METRICS.EXTRA_REWARDS]: 'Extra rewards distributed to sUSDe stakers.',"
+      },
+      {
+       "line": 192,
+       "text": "[EXTRA_METRICS.AAVE_LIQ_FEES]: 'Aave liquidation fees distributed to sUSDe stakers.',"
+      },
+      {
+       "line": 199,
+       "text": "[EXTRA_METRICS.SUSDE_STAKING_REWARDS]: 'Staking rewards distributed to sUSDe stakers.',"
+      },
+      {
+       "line": 200,
+       "text": "[EXTRA_METRICS.EXTRA_REWARDS]: 'Extra rewards distributed to sUSDe stakers.',"
+      },
+      {
+       "line": 201,
+       "text": "[EXTRA_METRICS.AAVE_LIQ_FEES]: 'Aave liquidation fees distributed to sUSDe stakers.',"
+      }
+     ]
+    }
+   ],
+   "n_addr": 7
+  },
+  "ETHFI": {
+   "files_scanned": 4,
+   "records": [
+    {
+     "file": "fees/ether-fi/index.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 212,
+       "text": "SupplySideRevenue: \"Portion of fees distributed to vault depositors.\","
+      }
+     ]
+    },
+    {
+     "file": "fees/ether-fi-stake/index.ts",
+     "addresses": [
+      {
+       "line": 76,
+       "addr": [
+        "0xd1208cC82765aA4dc696117D26f37388B6Dcb6D5",
+        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f1"
+       ],
+       "ctx": "topics: [\"0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef\", null, ethers.zeroPadValue(\"0xd1208cC82765aA4dc696117D26f37388B6Dcb6D5\", 32)],"
+      },
+      {
+       "line": 82,
+       "addr": [
+        "0x8fb66F38cF86A3d5e8768f8F1754A24A6c661Fb8"
+       ],
+       "ctx": "const fromFeeRecipient = log.from.toLowerCase() === \"0x8fb66F38cF86A3d5e8768f8F1754A24A6c661Fb8\".toLowerCase();"
+      },
+      {
+       "line": 125,
+       "addr": [
+        "0xb236e4a5dd02755313e3bf02dcd1c2b30afe6954"
+       ],
+       "ctx": "// on 2026-04-01 (0xb236e4a5dd02755313e3bf02dcd1c2b30afe6954d203177648821902e46bbe19), so holders revenue is 0 from 2026-04-02."
+      },
+      {
+       "line": 127,
+       "addr": [
+        "0xed61adff5103b4e50be49b28fca8ecbbea9d6851"
+       ],
+       "ctx": "// 0xed61adff5103b4e50be49b28fca8ecbbea9d685141d2d5a34d1d24232ac91891, passed 2026-09-03):"
+      },
+      {
+       "line": 128,
+       "addr": [
+        "0x43F4ca92F7F378bCdcF1508b866b5B6c47D6408C",
+        "0xa7b1d3a045fe9566513f3ecc858469640c88be29"
+       ],
+       "ctx": "// Safe 0x43F4ca92F7F378bCdcF1508b866b5B6c47D6408C and EthfiBuyback 0xa7b1d3a045fe9566513f3ecc858469640c88be29."
+      },
+      {
+       "line": 129,
+       "addr": [
+        "0x38F2fBb259F042DE3A601E0f7135f768DE08F5A2"
+       ],
+       "ctx": "// Their ETHFI is bridged to the CashbackDistributor 0x38F2fBb259F042DE3A601E0f7135f768DE08F5A2 on Optimism (the latest fills"
+      },
+      {
+       "line": 142,
+       "addr": [
+        "0x2f5301a3D59388c509C65f8698f521377D41Fd0F"
+       ],
+       "ctx": "and taker = 0x2f5301a3D59388c509C65f8698f521377D41Fd0F"
+      },
+      {
+       "line": 144,
+       "addr": [
+        "0xad07edc030fda4111845f4903663403bc7452bd5"
+       ],
+       "ctx": "-- 0xad07edc030fda4111845f4903663403bc7452bd51b26d47420cb232ccec5661e, and those are not buybacks"
+      }
+     ],
+     "notes": [
+      {
+       "line": 18,
+       "text": "stETH_STAKING_REWARDS: 'Restaker stETH Staking Rewards',"
+      },
+      {
+       "line": 78,
+       "text": "// Transfers from the dedicated fee recipient are 100% protocol;"
+      },
+      {
+       "line": 82,
+       "text": "const fromFeeRecipient = log.from.toLowerCase() === \"0x8fb66F38cF86A3d5e8768f8F1754A24A6c661Fb8\".toLowerCase();"
+      },
+      {
+       "line": 83,
+       "text": "return acc + (fromFeeRecipient ? value : (value * 4n) / 5n);"
+      },
+      {
+       "line": 123,
+       "text": "// Holders revenue = ETHFI bought by Safe 0x2f5301a3 (the withdrawal-fee recipient above), plus ten monthly off-chain purchases"
+      },
+      {
+       "line": 126,
+       "text": "// Do not add the buyers of the programmatic buyback (Snapshot etherfi-dao.eth"
+      },
+      {
+       "line": 128,
+       "text": "// Safe 0x43F4ca92F7F378bCdcF1508b866b5B6c47D6408C and EthfiBuyback 0xa7b1d3a045fe9566513f3ecc858469640c88be29."
+      },
+      {
+       "line": 129,
+       "text": "// Their ETHFI is bridged to the CashbackDistributor 0x38F2fBb259F042DE3A601E0f7135f768DE08F5A2 on Optimism (the latest fills"
+      },
+      {
+       "line": 177,
+       "text": "*   - Core ETH staking protocol fees (10% to protocol, 90% to stakers)"
+      },
+      {
+       "line": 178,
+       "text": "*   - Eigenlayer restaking rewards from L2 claims (~11% to protocol, rest to stakers)"
+      },
+      {
+       "line": 179,
+       "text": "*   - Restaking rewards from stETH holdings in restaker contracts (protocol only)"
+      },
+      {
+       "line": 180,
+       "text": "*   - Lido stETH rebasing rewards (2.5% to protocol, rest to stakers)"
+      }
+     ]
+    },
+    {
+     "file": "fees/etherfi-cash-cards/index.ts",
+     "addresses": [
+      {
+       "line": 54,
+       "addr": [
+        "0x380B2e96799405be6e3D965f4044099891881acB"
+       ],
+       "ctx": "targets: [\"0x380B2e96799405be6e3D965f4044099891881acB\"]"
+      },
+      {
+       "line": 61,
+       "addr": [
+        "0xed61adff5103b4e50be49b28fca8ecbbea9d6851"
+       ],
+       "ctx": "// 0xed61adff5103b4e50be49b28fca8ecbbea9d685141d2d5a34d1d24232ac91891, passed 2026-09-03, 1.14M For / 0 Against):"
+      },
+      {
+       "line": 63,
+       "addr": [
+        "0xf40bcc0845528873784f36e5c105e62a93ff7021"
+       ],
+       "ctx": "//   ETHFI with TWAP orders on CoW Swap. On-chain: USDC from 0xf40bcc0845528873784f36e5c105e62a93ff7021 to"
+      },
+      {
+       "line": 64,
+       "addr": [
+        "0x43f4ca92f7f378bcdcf1508b866b5b6c47d6408c"
+       ],
+       "ctx": "//   0x43f4ca92f7f378bcdcf1508b866b5b6c47d6408c, which sold 1.5M USDC for 2.2M ETHFI on CoW between 2026-09-08 and 2026-11-03,"
+      },
+      {
+       "line": 74,
+       "addr": [
+        "0x2f5301a3D59388c509C65f8698f521377D41Fd0F"
+       ],
+       "ctx": "// wallet 0x2f5301a3D59388c509C65f8698f521377D41Fd0F, which these purchases do not (different buyer Safe), so there is no overlap."
+      },
+      {
+       "line": 77,
+       "addr": [
+        "0xb11949c514c7d91ee38f198c24994d8976c8d981"
+       ],
+       "ctx": "// sample award: 0xb11949c514c7d91ee38f198c24994d8976c8d9810ebffa64cc5778bcf4a534cd (18.12 ETHFI to a card user's safe)"
+      }
+     ],
+     "notes": [
+      {
+       "line": 57,
+       "text": "// ETHFI cashback (since 2026-09-03), paid by ether.fi's CashbackDistributor from its own balance, which the treasury tops up."
+      },
+      {
+       "line": 59,
+       "text": "// Why this is a cost of the card business and not an incentive or a holders buyback:"
+      },
+      {
+       "line": 60,
+       "text": "// ether.fi DAO proposal \"Programmatic ETHFI Buybacks & Ecosystem Growth\" (Snapshot etherfi-dao.eth,"
+      },
+      {
+       "line": 65,
+       "text": "//   bridged it to Optimism (LayerZero OFT) and funded this distributor."
+      },
+      {
+       "line": 67,
+       "text": "//   funded from card revenue, staking revenue, and the fee funded buyback pool\". \"No new ETHFI is minted\", so it is not an"
+      },
+      {
+       "line": 69,
+       "text": "// - Up to 20M ETHFI of existing Foundation holdings may top up shortfalls. So far distributions (3.4M ETHFI to early Nov 2026)"
+      },
+      {
+       "line": 73,
+       "text": "// It is not holders revenue: it is spent on users, and fees/ether-fi-stake only counts buybacks that land in the Foundation"
+      },
+      {
+       "line": 76,
+       "text": "// https://github.com/etherfi-protocol/cash-v3/blob/ac89a4b94db4bd0c0b5dc0421137dd3afa1d7bc1/src/cashback-distributor/CashbackDistributor.sol#L196-L211"
+      },
+      {
+       "line": 131,
+       "text": "// The event has no product tag: the distributor also pays ether.fi's trade and borrow cashback. Over 2026-09-17..11-01,"
+      },
+      {
+       "line": 165,
+       "text": "SupplySideRevenue: \"Cashback paid to card users: stablecoin or ETH cashback through the Cash contract, and ETHFI cashback bought with card revenue and paid through the CashbackDistributor.\","
+      },
+      {
+       "line": 166,
+       "text": "HoldersRevenue: \"No revenue is distributed to ETHFI holders.\","
+      },
+      {
+       "line": 171,
+       "text": "[MetricLabels.CASHBACKS]: 'Cashback paid to card users through the Cash contract and ETHFI cashback through the CashbackDistributor',"
+      }
+     ]
+    },
+    {
+     "file": "fees/etherfi-cash-collateral-management/index.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 111,
+       "text": "HoldersRevenue: \"No revenue share to ETHFI holders\","
+      }
+     ]
+    }
+   ],
+   "n_addr": 14
+  },
+  "LDO": {
+   "files_scanned": 1,
+   "records": [
+    {
+     "file": "fees/lido.ts",
+     "addresses": [
+      {
+       "line": 12,
+       "addr": [
+        "0x442af784A788A5bd6F42A01Ebe9F287a871243fb"
+       ],
+       "ctx": "const LIDO_ORACLE_V1 = '0x442af784A788A5bd6F42A01Ebe9F287a871243fb'"
+      },
+      {
+       "line": 13,
+       "addr": [
+        "0xFdDf38947aFB03C621C71b06C9C70bce73f12999"
+       ],
+       "ctx": "const LIDO_STAKING_ROUTER = '0xFdDf38947aFB03C621C71b06C9C70bce73f12999';"
+      },
+      {
+       "line": 14,
+       "addr": [
+        "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+       ],
+       "ctx": "const LIDO_AGENT = '0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c'"
+      },
+      {
+       "line": 15,
+       "addr": [
+        "0xf6F0732c1e9971497342C295141566E6F1A31e96"
+       ],
+       "ctx": "const BUYBACKS_SAFE = '0xf6F0732c1e9971497342C295141566E6F1A31e96'"
+      },
+      {
+       "line": 21,
+       "addr": [
+        "0xe4de93fb77a13ed107ccbfde21e8a631bac24b87"
+       ],
+       "ctx": "// tx 0xe4de93fb77a13ed107ccbfde21e8a631bac24b87a976c72a5f47c607ea03c261), so its top-ups stay in Revenue"
+      },
+      {
+       "line": 22,
+       "addr": [
+        "0xe2A682A9722354D825d1BbDF372cC86B2ea82c8C"
+       ],
+       "ctx": "const REWARDS_SHARE_COMMITTEE_MULTISIG = '0xe2A682A9722354D825d1BbDF372cC86B2ea82c8C'"
+      },
+      {
+       "line": 25,
+       "addr": [
+        "0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5"
+       ],
+       "ctx": "// 0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5. Tiers from https://research.lido.fi/t/10876 (to 2026-07-31) and"
+      }
+     ],
+     "notes": [
+      {
+       "line": 15,
+       "text": "const BUYBACKS_SAFE = '0xf6F0732c1e9971497342C295141566E6F1A31e96'"
+      },
+      {
+       "line": 24,
+       "text": "// Agent sends (tier fee - 3.5%) / 3.5% of the operator's previous-month distribution from the NodeOperatorsRegistry"
+      },
+      {
+       "line": 51,
+       "text": "const ETH_DISTRIBUTED_EVENT = 'event ETHDistributed(uint256 indexed reportTimestamp, uint256 preCLBalance, uint256 postCLBalance, uint256 withdrawalsWithdrawn, uint256 executionLayerRewardsWithdrawn, uint256 postBufferedEther)'"
+      },
+      {
+       "line": 55,
+       "text": "const STAKING_ROUTER_FEE_DISTRIBUTION_ABI = 'function getStakingFeeAggregateDistributionE4Precision() view returns (uint16 modulesFee, uint16 treasuryFee)';"
+      },
+      {
+       "line": 68,
+       "text": "// V1 fee: 10% of rewards, split 5% node operators / 5% DAO (getFee, getFeeDistribution)"
+      },
+      {
+       "line": 86,
+       "text": "if (!distributed.length) throw new Error(`Lido: no oracle report found for ${options.dateString}`)"
+      },
+      {
+       "line": 97,
+       "text": "if (totalFeeBp === 0n) throw new Error(`Lido: StakingRouter returned a zero fee split for ${options.dateString}; refusing to guess the treasury/operator ratio`)"
+      },
+      {
+       "line": 158,
+       "text": "// fee split pro rata across CL/EL, then treasury vs node operators"
+      },
+      {
+       "line": 162,
+       "text": "const clTreasuryFee = clFee * treasuryFeeBp / totalFeeBp"
+      },
+      {
+       "line": 163,
+       "text": "const elTreasuryFee = elFee * treasuryFeeBp / totalFeeBp"
+      },
+      {
+       "line": 168,
+       "text": "dailySupplySideRevenue.addGasToken(clRewards - clFee, 'Staking rewards to ETH stakers')"
+      },
+      {
+       "line": 169,
+       "text": "dailySupplySideRevenue.addGasToken(elRewards - elFee, 'MEV rewards to ETH stakers')"
+      }
+     ]
+    }
+   ],
+   "n_addr": 7
+  },
+  "MORPHO": {
+   "files_scanned": 3,
+   "records": [
+    {
+     "file": "fees/morpho/index.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 207,
+       "text": "SupplySideRevenue: \"Total interests are distributed to suppliers/lenders + liquidation bonues to liquidators.\","
+      },
+      {
+       "line": 220,
+       "text": "[METRIC.BORROW_INTEREST]: 'All interests paid are distributedd to vaults suppliers, lenders.',"
+      }
+     ]
+    },
+    {
+     "file": "fees/morpho-midnight/index.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 60,
+       "text": "SupplySideRevenue: \"Interest distributed to lenders: total borrow interest minus the protocol settlement and continuous fees.\","
+      },
+      {
+       "line": 74,
+       "text": "[METRIC.BORROW_INTEREST]: \"Borrow interest net of protocol settlement and continuous fees, distributed to lenders.\","
+      }
+     ]
+    }
+   ],
+   "n_addr": 0
+  },
+  "RENDER": {
+   "files_scanned": 1,
+   "records": [
+    {
+     "file": "fees/render-network.ts",
+     "addresses": [
+      {
+       "line": 13,
+       "addr": [
+        "rndrizKT3MK1iimdxRdWabcF7Zg7AR5T4nud4EkHBof"
+       ],
+       "ctx": "const RENDER_MINT = \"rndrizKT3MK1iimdxRdWabcF7Zg7AR5T4nud4EkHBof\";"
+      },
+      {
+       "line": 14,
+       "addr": [
+        "rbrnm7nPhfhBxPSh8qhRFrhB5MLnJGMNoyNQPvSi7vq"
+       ],
+       "ctx": "const BURN_WALLET = \"rbrnm7nPhfhBxPSh8qhRFrhB5MLnJGMNoyNQPvSi7vq\";"
+      }
+     ],
+     "notes": [
+      {
+       "line": 5,
+       "text": "// Render Network — Burn-Mint Equilibrium (BME) fee tracking on Solana."
+      },
+      {
+       "line": 7,
+       "text": "//   - RNP-001 (Burn-Mint Equilibrium): https://github.com/rendernetwork/RNPs/blob/main/RNP-001.md"
+      },
+      {
+       "line": 8,
+       "text": "//   - Burn-Mint Equilibrium overview:  https://know.rendernetwork.com/basics/burn-mint-equilibrium"
+      },
+      {
+       "line": 14,
+       "text": "const BURN_WALLET = \"rbrnm7nPhfhBxPSh8qhRFrhB5MLnJGMNoyNQPvSi7vq\";"
+      },
+      {
+       "line": 19,
+       "text": "RenderBurn: \"Job Payments to $RENDER burn\","
+      },
+      {
+       "line": 38,
+       "text": "AND type IN ('burn', 'burnChecked')"
+      },
+      {
+       "line": 46,
+       "text": "const grossJobPayment = renderBurnt * (1 / (1 - SERVICE_FEE_RATE));"
+      },
+      {
+       "line": 62,
+       "text": "\"Gross user-paid spend on render jobs under the Burn-Mint Equilibrium model \" +"
+      },
+      {
+       "line": 64,
+       "text": "\"burned on the Solana SPL mint by the burn wallet. The on-chain burn represents the 95% \" +"
+      },
+      {
+       "line": 66,
+       "text": "\"the burn value by 0.95. The remaining 5% Network Operator service fee is \" +"
+      },
+      {
+       "line": 68,
+       "text": "\"not directly observed in the on-chain burn stream. Legacy Ethereum RNDR \" +"
+      },
+      {
+       "line": 70,
+       "text": "Revenue: \" Includes 5% service fees paid to OTOY (company that created RENDER) and 95% of the fees that is burnt\","
+      }
+     ]
+    }
+   ],
+   "n_addr": 2
+  },
+  "NEAR": {
+   "files_scanned": 4,
+   "records": [
+    {
+     "file": "fees/near/index.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 22,
+       "text": "// NEAR burns 70% of every gas fee and rebates the remaining 30% to the"
+      },
+      {
+       "line": 26,
+       "text": "dailyRevenue.addCGToken('near', totalFees * 0.7, 'Burned NEAR');"
+      },
+      {
+       "line": 27,
+       "text": "dailyHoldersRevenue.addCGToken('near', totalFees * 0.7, 'Burned NEAR');"
+      },
+      {
+       "line": 47,
+       "text": "Revenue: \"70% of every gas fee is permanently burned, reducing NEAR supply. The other 30% is paid to contract developers, so only 70% is protocol revenue.\","
+      },
+      {
+       "line": 48,
+       "text": "HoldersRevenue: \"Burned gas fees (70%) accrue to all NEAR holders through reduced circulating supply.\","
+      },
+      {
+       "line": 56,
+       "text": "'Burned NEAR': \"70% of gas fees, permanently burned.\","
+      },
+      {
+       "line": 59,
+       "text": "'Burned NEAR': \"70% of gas fees burned, benefiting holders through reduced supply (deflation).\","
+      }
+     ]
+    },
+    {
+     "file": "fees/near-intents/index.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 9,
+       "text": "*   (distribution) fee each frontend collects, summed across all integrators."
+      },
+      {
+       "line": 14,
+       "text": "*   \"Revenue by Stream\" total (~2.4M NEAR / ~$4.2M) and the on-chain buyback."
+      },
+      {
+       "line": 17,
+       "text": "*     - Other Revenue = the 1Click fund (1csfundsadmin) + buyback wallet, i.e."
+      },
+      {
+       "line": 18,
+       "text": "*       1Click/partner revenue shares, quote improvement, private agreements."
+      },
+      {
+       "line": 22,
+       "text": "*   Internal hops between these wallets (e.g. 1cs DAO → buybacks) are excluded;"
+      },
+      {
+       "line": 23,
+       "text": "*   they are treasury movements of already-captured revenue, not new inflows."
+      },
+      {
+       "line": 26,
+       "text": "*   fees kept by solvers and third-party distribution channels (e.g. SwapKit)."
+      },
+      {
+       "line": 31,
+       "text": "* ProtocolRevenue / HoldersRevenue: captured revenue is held in treasury before"
+      },
+      {
+       "line": 32,
+       "text": "*   BUYBACK_START and, since 2026-02-23, used to buy back $NEAR (not burned)."
+      },
+      {
+       "line": 35,
+       "text": "// Date NEAR began using captured Intents revenue to buy back $NEAR"
+      },
+      {
+       "line": 43,
+       "text": "('buybacks.multisignature.near')"
+      },
+      {
+       "line": 100,
+       "text": "dailySupplySideRevenue.addUSDValue(fees_usd - revenue_usd, 'Fees To Solvers & Distribution Channels');"
+      }
+     ]
+    }
+   ],
+   "n_addr": 0
+  },
+  "LINK": {
+   "files_scanned": 6,
+   "records": [
+    {
+     "file": "fees/chainlink/index.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 38,
+       "text": "[METRIC.TOKEN_BUY_BACK]: 'LINK token buybacks funded via revenue from various offchain and onchain sources'"
+      },
+      {
+       "line": 51,
+       "text": "HoldersRevenue: \"LINK token buybacks funded via revenue from various offchain and onchain sources\""
+      }
+     ]
+    }
+   ],
+   "n_addr": 0
+  },
+  "PYTH": {
+   "files_scanned": 4,
+   "records": [
+    {
+     "file": "fees/pyth-entropy/index.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 85,
+       "text": "Revenue: 'Protocol fees collected by Pyth DAO treasury per randomness request.',"
+      },
+      {
+       "line": 94,
+       "text": "'Randomness Service Fees To Pyth DAO': 'Protocol fees collected by Pyth DAO treasury per randomness request.',"
+      }
+     ]
+    },
+    {
+     "file": "fees/pyth-network/index.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 330,
+       "text": "dailyRevenue.addGasToken(BigInt(updateFee) * BigInt(updateCount), \"Oracle Service Fees To Pyth Treasury\");"
+      },
+      {
+       "line": 353,
+       "text": "dailyRevenue.addBalances(received, \"Oracle Service Fees To Pyth Treasury\");"
+      },
+      {
+       "line": 380,
+       "text": "dailyRevenue.addCGToken(\"sui\", res[0].total_fees / 1e9, \"Oracle Service Fees To Pyth Treasury\");"
+      },
+      {
+       "line": 408,
+       "text": "dailyRevenue.addCGToken(\"aptos\", res[0].total_fees / 1e8, \"Oracle Service Fees To Pyth Treasury\");"
+      },
+      {
+       "line": 435,
+       "text": "dailyRevenue.addCGToken(\"near\", res[0].total_fees / 1e24, \"Oracle Service Fees To Pyth Treasury\");"
+      },
+      {
+       "line": 461,
+       "text": "Revenue: \"All update fees accrue to the Pyth protocol treasury.\","
+      },
+      {
+       "line": 462,
+       "text": "ProtocolRevenue: \"All update fees accrue to the Pyth protocol treasury.\","
+      },
+      {
+       "line": 469,
+       "text": "\"Oracle Service Fees To Pyth Treasury\": \"All update fees accrue to the Pyth protocol treasury.\","
+      },
+      {
+       "line": 472,
+       "text": "\"Oracle Service Fees To Pyth Treasury\": \"All update fees accrue to the Pyth protocol treasury.\","
+      }
+     ]
+    },
+    {
+     "file": "fees/pyth-pro/index.ts",
+     "addresses": [
+      {
+       "line": 11,
+       "addr": [
+        "GAdn7TZhszf5KTfwNRx3A2nP6KCRFEWucZubgdEqbJA2"
+       ],
+       "ctx": "// (GAdn7TZhszf5KTfwNRx3A2nP6KCRFEWucZubgdEqbJA2), which buys PYTH for the DAO."
+      },
+      {
+       "line": 12,
+       "addr": [
+        "2ru31e9g8RF2mSSNgTQ11QMb166NE6LJccmBqGJM8xxy"
+       ],
+       "ctx": "const DOURO_LABS_WALLET = \"2ru31e9g8RF2mSSNgTQ11QMb166NE6LJccmBqGJM8xxy\";"
+      },
+      {
+       "line": 13,
+       "addr": [
+        "Gx4MBPb1vqZLJajZmsKLg8fGw9ErhoKsR8LeKcCKFyak"
+       ],
+       "ctx": "const PYTH_DAO_WALLET = \"Gx4MBPb1vqZLJajZmsKLg8fGw9ErhoKsR8LeKcCKFyak\";"
+      },
+      {
+       "line": 14,
+       "addr": [
+        "GAdn7TZhszf5KTfwNRx3A2nP6KCRFEWucZubgdEqbJA2"
+       ],
+       "ctx": "const PYTHIAN_COUNCIL_WALLET = \"GAdn7TZhszf5KTfwNRx3A2nP6KCRFEWucZubgdEqbJA2\";"
+      }
+     ],
+     "notes": [
+      {
+       "line": 6,
+       "text": "// Douro Labs is the official Pyth Pro data distributor"
+      },
+      {
+       "line": 8,
+       "text": "// PYTH payments go to the Pyth DAO treasury in both periods."
+      },
+      {
+       "line": 9,
+       "text": "// Before PIP-136, USDC payments also went to the Pyth DAO treasury."
+      },
+      {
+       "line": 16,
+       "text": "// PIP-136: USDC DAO share is delivered to the Pythian Council instead of the DAO treasury"
+      },
+      {
+       "line": 19,
+       "text": "// The September 2026 distribution (553,693 USDC) was sent to the DAO on 2026-10-05 instead of the"
+      },
+      {
+       "line": 42,
+       "text": "// Note: Douro distributes in month N+1 for revenue earned in month N,"
+      },
+      {
+       "line": 83,
+       "text": "Fees: \"Total Pyth Pro subscription revenue (100% gross), calculated from on-chain distributions.\","
+      },
+      {
+       "line": 85,
+       "text": "SupplySideRevenue: \"Douro Labs' 40% share as the official data distributor.\","
+      },
+      {
+       "line": 90,
+       "text": "\"Subscription Fees\": \"Total Pyth Pro subscription revenue (100% gross), calculated from on-chain distributions.\","
+      },
+      {
+       "line": 96,
+       "text": "\"Subscription Fees to Douro Labs\": \"Douro Labs' 40% share as the official data distributor.\","
+      }
+     ]
+    }
+   ],
+   "n_addr": 3
+  },
+  "ASTER": {
+   "files_scanned": 3,
+   "records": [
+    {
+     "file": "fees/aster-spot/index.ts",
+     "addresses": [
+      {
+       "line": 8,
+       "addr": [
+        "0x5E4969C41ca9F9831468B98328A370b7AbD5a397"
+       ],
+       "ctx": "const buybackWalletToBurn = '0x5E4969C41ca9F9831468B98328A370b7AbD5a397';"
+      },
+      {
+       "line": 9,
+       "addr": [
+        "0xa6F7444D2b92Aa9F94a2165c77aAF2B671e63994"
+       ],
+       "ctx": "const twapContract = '0xa6F7444D2b92Aa9F94a2165c77aAF2B671e63994';"
+      },
+      {
+       "line": 10,
+       "addr": [
+        "0x000ae314e2a2172a039b26378814c252734f556a"
+       ],
+       "ctx": "const asterToken = '0x000ae314e2a2172a039b26378814c252734f556a';"
+      },
+      {
+       "line": 13,
+       "addr": [
+        "0xa0edBaBcb48034e368de286b49F9603C7AfA1b60"
+       ],
+       "ctx": "const BUYBACK_WALLET = \"0xa0edBaBcb48034e368de286b49F9603C7AfA1b60\";"
+      },
+      {
+       "line": 79,
+       "addr": [
+        "0xa0edBaBcb48034e368de286b49F9603C7AfA1b60"
+       ],
+       "ctx": "\"99% of daily platform fees buy back ASTER via TWAP on Aster Spot (wallet 0xa0edBaBcb48034e368de286b49F9603C7AfA1b60) \" +"
+      }
+     ],
+     "notes": [
+      {
+       "line": 8,
+       "text": "const buybackWalletToBurn = '0x5E4969C41ca9F9831468B98328A370b7AbD5a397';"
+      },
+      {
+       "line": 13,
+       "text": "const BUYBACK_WALLET = \"0xa0edBaBcb48034e368de286b49F9603C7AfA1b60\";"
+      },
+      {
+       "line": 78,
+       "text": "\"Aster token strategic buybacks from platform fees. Used to be burnt before Feb 2nd, 2026; from Jun 17th, 2026, \" +"
+      },
+      {
+       "line": 79,
+       "text": "\"99% of daily platform fees buy back ASTER via TWAP on Aster Spot (wallet 0xa0edBaBcb48034e368de286b49F9603C7AfA1b60) \" +"
+      },
+      {
+       "line": 80,
+       "text": "\"and are distributed to veASTER stakers; an equal amount which is burned from reserve is not included as they are not sourced from revenue..\","
+      },
+      {
+       "line": 86,
+       "text": "\"Aster tokens purchased by the protocol treasury through TWAP for strategic buybacks, funded by accumulated platform fees. \" +"
+      },
+      {
+       "line": 87,
+       "text": "\"Pre-Feb 2nd 2026: burnt. From Jun 17th 2026: measured as ASTERUSDT BUY fills by the public buyback wallet on Aster Chain.\","
+      },
+      {
+       "line": 98,
+       "text": "deadFrom: '2026-02-03', //buybacks stopped"
+      }
+     ]
+    }
+   ],
+   "n_addr": 4
+  },
+  "BNB": {
+   "files_scanned": 1,
+   "records": [
+    {
+     "file": "fees/bsc.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 31,
+       "text": "Revenue: 'Amount of 10% BNB transaction fees that were burned',"
+      },
+      {
+       "line": 32,
+       "text": "HoldersRevenue: 'Amount of 10% BNB transaction fees that were burned',"
+      }
+     ]
+    }
+   ],
+   "n_addr": 0
+  },
+  "TRX": {
+   "files_scanned": 4,
+   "records": [
+    {
+     "file": "fees/tron.ts",
+     "addresses": [],
+     "notes": [
+      {
+       "line": 16,
+       "text": "dailyFees.addCGToken('tron', trxFeesToday.total_trx_burn, METRIC.TRANSACTION_GAS_FEES)"
+      },
+      {
+       "line": 30,
+       "text": "Revenue: 'Amount of TRX fees were burned.',"
+      },
+      {
+       "line": 31,
+       "text": "HoldersRevenue: 'Amount of TRX fees were burned.',"
+      }
+     ]
+    }
+   ],
+   "n_addr": 0
+  },
+  "VIRTUAL": {
+   "files_scanned": 2,
+   "records": [
+    {
+     "file": "fees/virtual-protocol.ts",
+     "addresses": [
+      {
+       "line": 12,
+       "addr": [
+        "0xb51c52d9e5e41937b0100840b6c3cba6f7a57a0c"
+       ],
+       "ctx": "const EVM_TREASURY = '0xb51c52d9e5e41937b0100840b6c3cba6f7a57a0c'"
+      },
+      {
+       "line": 15,
+       "addr": [
+        "0x0b3e328455c4059eeb9e3f84b5543f74e24e7e1b"
+       ],
+       "ctx": "VIRTUAL: '0x0b3e328455c4059eeb9e3f84b5543f74e24e7e1b',"
+      },
+      {
+       "line": 44,
+       "addr": [
+        "3iQL8BFS2vE7mww4ehAqQHAsbmRNCrPxizWAT2Zfyr9y"
+       ],
+       "ctx": "VIRTUAL: '3iQL8BFS2vE7mww4ehAqQHAsbmRNCrPxizWAT2Zfyr9y',"
+      },
+      {
+       "line": 45,
+       "addr": [
+        "JuprjznTrTSp2UFa3ZBUFgwdAmtZCq4MQCwysN55USD"
+       ],
+       "ctx": "JUPUSD: 'JuprjznTrTSp2UFa3ZBUFgwdAmtZCq4MQCwysN55USD',"
+      },
+      {
+       "line": 46,
+       "addr": [
+        "933jV351WDG23QTcHPqLFJxyYRrEPWRTR3qoPWi3jwEL"
+       ],
+       "ctx": "BONDING_COLLECTOR: '933jV351WDG23QTcHPqLFJxyYRrEPWRTR3qoPWi3jwEL',"
+      },
+      {
+       "line": 47,
+       "addr": [
+        "Bo2jk8vNANP3cEgsEWCszvzy9mPR8CPqQKenUkNbyBHm"
+       ],
+       "ctx": "TAX_DISTRIBUTOR: 'Bo2jk8vNANP3cEgsEWCszvzy9mPR8CPqQKenUkNbyBHm',"
+      },
+      {
+       "line": 48,
+       "addr": [
+        "9yEiY8zzVcV5ASmFub9X3Ti96AAwboYRVAKajwbpba5"
+       ],
+       "ctx": "TREASURY: '9yEiY8zzVcV5ASmFub9X3Ti96AAwboYRVAKajwbpba5',"
+      }
+     ],
+     "notes": [
+      {
+       "line": 10,
+       "text": "const treasuryShare = (amount: bigint) => amount * TREASURY_SHARE_PERCENT / 100n"
+      },
+      {
+       "line": 12,
+       "text": "const EVM_TREASURY = '0xb51c52d9e5e41937b0100840b6c3cba6f7a57a0c'"
+      },
+      {
+       "line": 47,
+       "text": "TAX_DISTRIBUTOR: 'Bo2jk8vNANP3cEgsEWCszvzy9mPR8CPqQKenUkNbyBHm',"
+      },
+      {
+       "line": 48,
+       "text": "TREASURY: '9yEiY8zzVcV5ASmFub9X3Ti96AAwboYRVAKajwbpba5',"
+      },
+      {
+       "line": 53,
+       "text": "treasury: 'Bonding Curve Tax And Launch Fees To Virtuals Treasury',"
+      },
+      {
+       "line": 57,
+       "text": "treasury: 'Agent Token Trading Tax To Virtuals Treasury',"
+      },
+      {
+       "line": 113,
+       "text": "// A tax manager's payouts: the transfers to the treasury are Virtuals' share, the rest went to the agent side"
+      },
+      {
+       "line": 180,
+       "text": "TO_VARCHAR(SUM(IFF(to_address = '${SOLANA.TREASURY}', raw_amount, 0))) AS to_treasury"
+      },
+      {
+       "line": 183,
+       "text": "OR (mint = '${SOLANA.JUPUSD}' AND from_address = '${SOLANA.TAX_DISTRIBUTOR}'))"
+      },
+      {
+       "line": 196,
+       "text": "Fees: 'Fees paid to Virtuals Protocol: the 1% trading tax on agent tokens, plus the bonding-curve tax and agent launch fees of the original launch model. The agent-token tax is measured where it is paid out (Base and Robinhood tax managers,"
+      },
+      {
+       "line": 197,
+       "text": "Revenue: 'The part kept by the Virtuals treasury: all bonding-curve tax and launch fees of the original launch model, and its share of the agent-token trading tax (about 20% from December 2024 to March 2025, 30% since April 2025).',"
+      },
+      {
+       "line": 198,
+       "text": "ProtocolRevenue: 'The part kept by the Virtuals treasury: all bonding-curve tax and launch fees of the original launch model, and its share of the agent-token trading tax (about 20% from December 2024 to March 2025, 30% since April 2025).',"
+      }
+     ]
+    }
+   ],
+   "n_addr": 7
+  }
+ }
+}
