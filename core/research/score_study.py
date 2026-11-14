@@ -135,10 +135,14 @@ def binance_px(sym):
 
 
 def llama_price(gid):
-    s = int(dt.datetime(2023, 1, 1, tzinfo=dt.timezone.utc).timestamp())
-    d = C.get(f"https://coins.llama.fi/chart/coingecko:{gid}?start={s}&span=1450&period=1d") or {}
-    ps = ((d.get("coins") or {}).get(f"coingecko:{gid}") or {}).get("prices") or []
-    return {dt.datetime.fromtimestamp(p["timestamp"], dt.timezone.utc).strftime("%Y-%m-%d"): p["price"] for p in ps}
+    """coins.llama.fi 一次最多 500 个点：2023-01 起按 500 天分段取。"""
+    out, s = {}, int(dt.datetime(2023, 1, 1, tzinfo=dt.timezone.utc).timestamp())
+    while s < time.time():
+        d = C.get(f"https://coins.llama.fi/chart/coingecko:{gid}?start={s}&span=500&period=1d") or {}
+        for p in ((d.get("coins") or {}).get(f"coingecko:{gid}") or {}).get("prices") or []:
+            out[dt.datetime.fromtimestamp(p["timestamp"], dt.timezone.utc).strftime("%Y-%m-%d")] = p["price"]
+        s += 500 * 86400
+    return out
 
 
 def mcaps365(gid):
