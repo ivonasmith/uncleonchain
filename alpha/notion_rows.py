@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""把 Alpha 雷达的数据转成 Notion「Alpha 雷达」入口下各数据库的行（给每周复盘会话用 Notion 工具写入）。
+"""把 Alpha 雷达的数据转成 Notion「Alpha 雷达」入口下各数据库的行（服务器同步 alpha/notion_sync.py 和会话手工同步共用这一份口径）。
 
 Notion 入口页：https://app.notion.com/p/418b72fc8cae8152b4c2f062d2ac389c（只放 Alpha 板块的东西，不和别的板块混）
 数据库（data_source）：
@@ -108,7 +108,19 @@ def weekly(tag):
              "发币": len(w["leads"]["token_launch"]), "事件流新增": w["feed"]["new"], **({"发现延迟中位(小时)": w["feed"]["delay_median_h"]} if w["feed"]["delay_median_h"] is not None else {}),
              "数据源异常": fails, "可投资": (w["board"]["counts"] or {}).get("invest"), "预警观察": (w["board"]["counts"] or {}).get("watch"),
              "A4进度": f"研究观察 {a['watch_n']} / 对照 {a['control_n']}；" + ("可以判" if a["judgeable"] else "样本不够，记录中") + (f"；距第 90 天 {a['days_to_d90']} 天" if a["days_to_d90"] is not None else ""),
-             **({"收入中位": round(w["threshold"]["p50"])} if w["threshold"]["p50"] else {})}]
+             **({"收入中位": round(w["threshold"]["p50"])} if w["threshold"]["p50"] else {}), **md_conclusion(tag)}]
+
+
+def md_conclusion(tag):
+    """复盘会话写在 data/alpha/weekly/<周>.md「本周结论 / 规则调整」一节的内容（占位行不算）。"""
+    try:
+        md = open(os.path.join(D, "weekly", f"{tag}.md"), encoding="utf-8").read()
+    except Exception:
+        return {}
+    sec = md.split("## 本周结论 / 规则调整", 1)[1].strip() if "## 本周结论 / 规则调整" in md else ""
+    if not sec or "复盘会话填写" in sec:
+        return {}
+    return {"结论": sec[:1900]}
 
 
 if __name__ == "__main__":

@@ -86,7 +86,10 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
   页面：/alpha/ 机会看板、/alpha/opp/#id 机会卡、/alpha/radar/ 雷达、/alpha/cases/ 案例库（同一卡片）、/alpha/framework/ 框架（`出网站.alpha_framework_html` 从 framework.json 生成）、/alpha/eval/ 评估器、/alpha/progress/；前端 `alpha/web/alpha.js` + `alpha.css`。/alpha/pool/ 跳 /alpha/。
   大叔 11-14 定的两点（Claude 定）：团队可识别度、代币经济作为「投资补充」单列（还没进 framework.json，待加）；需求独立性自动打 2 的门槛 = 30 天收入 ≥ 10 万美元，攒满 4 周周复盘数据再决定要不要调。
   Notion「Alpha 雷达」入口页 https://app.notion.com/p/418b72fc8cae8152b4c2f062d2ac389c（11-14 建，私有草稿，大叔可移动）：机会卡 / 线索台账 / 历史案例库 / 周复盘 / 数据源台账 / 规则版本 六个数据库 + 备份附件；行数据用 `alpha/notion_rows.py` 生成，数据源 ID 写在脚本头。
-  每周复盘定时任务 trig_01Us4KZPynk7ohXsPbGAoFLN（每周一新加坡 09:47，新会话）：跑 weekly.py → 同步 Notion → 写结论 → 推 main。注意：这个定时任务创建时带不上 Notion 连接器，要大叔在 claude.ai 定时任务页面勾上，否则 Notion 那步会跳过。
+  Notion 同步走服务器（11-14）：`alpha/notion_sync.py`（Notion REST API，repo secret `NOTION_TOKEN`，入口页要连接该集成）在 alpha-daily 里每天同步机会卡 + 线索，每周一出 weekly 并同步周复盘；没 token 跳过，失败不影响日更。
+  周复盘的「结论」由复盘会话写进 `data/alpha/weekly/<周>.md` 末节，同步时只在 Notion 为空才带入（不覆盖人写的）。hotcoin 仓库的 NOTION_TOKEN 跨仓库读不到，要大叔在本仓库再存一份。
+  每周复盘定时任务 trig_01Us4KZPynk7ohXsPbGAoFLN（每周一新加坡 09:47，新会话）：跑 weekly.py → 写结论 → 推 main（Notion 交给 Actions；会话有 Notion 工具也可以直接写）。
+  看板默认只展开补证完的卡（研究观察 / 优先研究），待核验 + 原始线索收进「补证队列」，显示进度。
   给 Fable 的检查清单 `alpha/review/fable_checklist.md`。
   数据管理：原始层（data/alpha 接口原样）→ 清洗层（线索台账、案例指标）→ 应用层（机会卡、周复盘）。每周复盘 `alpha/weekly.py` → `data/alpha/weekly/<周>.json/.md`；Notion 单独的「Alpha 雷达」入口页（大叔：每个板块各自一个入口，不和别的板块混放）。
   云端环境 uncleonchain 11-14 已放行 ethresear.ch、hub.snapshot.org、www.binance.com、api.bybit.com、api-manager.upbit.com；Bybit（CloudFront 按国家拦）、Upbit（Cloudflare 人机验证）实测不通，没接。Binance pageSize 超过 20 会 400。

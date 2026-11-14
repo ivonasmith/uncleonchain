@@ -398,7 +398,7 @@
   let BOARD = { f: 'invest' };
   function oppMini(o) {
     const iv = cardIntervals(o); const En = ENTRY(); const d = o.data || {};
-    const nU = Object.values(o.scores).filter(s => s.v === 'U').length;
+    const nU = Object.entries(o.scores).filter(([k, s]) => s.v === 'U' && k !== 'P' && k !== 'L').length;   // P / L 是个人执行项，不公开补
     return `<a class="card" href="${EN ? '/en' : ''}/alpha/opp/#${encodeURIComponent(o.id)}" style="display:block;text-decoration:none;color:inherit">
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><b style="font-size:15px">${esc(o.name)}</b><span class="st ${STC[o.status] || ''}" style="font-size:11.5px;padding:1px 8px">${esc(o.status)}</span></div>
       <div class="small muted">${esc(BIZ()[o.classes.business.v] || T('需求来源未判明', 'demand unknown'))} · ${o.kind === 'tokenless' ? T('无币协议', 'tokenless') : T('新上架', 'new listing')}${o.discovered ? ' · ' + T('发现 ', 'seen ') + esc(o.discovered) : ''}</div>
@@ -411,12 +411,20 @@
     const os = D.opps;
     const f = BOARD.f;
     const list = os.filter(o => o.bucket === f);
+    const DONE = ['研究观察', '优先研究'];
+    const done = list.filter(o => DONE.includes(o.status)), queue = list.filter(o => !DONE.includes(o.status));
+    const allQ = os.filter(o => o.bucket !== 'reject' && !DONE.includes(o.status)).length, allD = os.filter(o => DONE.includes(o.status)).length;
     const flow = FW.flow.map(x => `<a href="${EN ? '/en' : ''}/alpha/framework/#${x.k}"><b>${esc(x.name)}</b><span>${esc(x.out)}</span></a>`).join('');
     app.innerHTML = `<div class="flow">${flow}</div>
       <div class="btns">${[['invest', T('可投资机会', 'Investable'), T('资金可以参与', 'capital can participate')], ['watch', T('预警观察', 'Watchlist'), T('暂无资金入口，先盯着', 'no entry yet')], ['reject', T('已拒绝', 'Rejected'), T('保留原因', 'kept with reasons')]]
         .map(([k, l, d]) => `<button type="button" class="btn${f === k ? ' pri' : ''}" data-b="${k}">${l} · ${D.counts[k] || 0}<span class="small" style="opacity:.75;margin-left:6px">${d}</span></button>`).join('')}</div>
       <p class="small muted">${T('排序：先按状态（研究观察 → 待核验 → 原始线索），同一状态按收入 / TVL；不按分数排名。分数 = 系统规则自动打的 + 研究补证的，未知项记 U，所以给区间和覆盖率。', 'Ordered by state, then revenue / TVL; never by score. Scores = system rules + research; unknowns are U, hence ranges and coverage.')}</p>
-      ${list.length ? `<div class="cards" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))">${list.map(oppMini).join('')}</div>` : `<div class="note">${T('这一栏暂时没有。', 'Nothing here yet.')}</div>`}
+      <div class="kv small" style="margin:4px 0 10px"><span>${T('补证进度（全看板）', 'Research progress (whole board)')}</span><b>${T('已补证', 'done')} ${allD} · ${T('队列中', 'queued')} ${allQ}</b></div>
+      ${f === 'reject' ? (list.length ? `<div class="cards" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))">${list.map(oppMini).join('')}</div>` : `<div class="note">${T('这一栏暂时没有。', 'Nothing here yet.')}</div>`)
+        : (done.length ? `<div class="cards" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))">${done.map(oppMini).join('')}</div>` : `<div class="note">${T('这一栏还没有补证完的卡，都在下面的队列里。', 'No completed cards yet; see the queue below.')}</div>`)
+          + (queue.length ? `<details class="card" style="margin-top:14px"><summary><b>${T('补证队列', 'Research queue')} · ${queue.length}</b> <span class="small muted">${T('待核验 / 原始线索：关键事实还没查清，系统先按数据打了能打的分，研究补完后升到上面或拒绝', 'To verify / raw leads: system scores only; moved up or rejected after research')}</span></summary>
+            <div class="tw" style="margin-top:8px"><table><thead><tr><th class="l">${T('名称', 'Name')}</th><th class="l">${T('状态', 'State')}</th><th>${T('30 天收入 / TVL', '30d rev / TVL')}</th><th>${T('待补项', 'Pending')}</th><th class="l">${T('发现', 'Seen')}</th></tr></thead><tbody>
+            ${queue.map(o => `<tr onclick="location.href='${EN ? '/en' : ''}/alpha/opp/#${encodeURIComponent(o.id)}'"><td class="l"><b>${esc(o.name)}</b></td><td class="l">${esc(o.status)}</td><td>${usd(o.data.rev30 != null ? o.data.rev30 : o.data.tvl)}</td><td>${Object.entries(o.scores).filter(([k, x]) => x.v === 'U' && k !== 'P' && k !== 'L').length}</td><td class="l">${esc(o.discovered || '')}</td></tr>`).join('')}</tbody></table></div></details>` : '')}
       <p class="small muted" style="margin-top:14px">${T('数据日', 'Data day')} ${esc(D.asof || '')} · ${T('框架', 'Framework')} ${esc(D.framework)} · ${T('自动规则', 'Rules')} ${esc(D.rules)} · <a href="${EN ? '/en' : ''}/alpha/framework/#auto">${T('打分规则', 'Scoring rules')}</a></p>`;
     app.onclick = e => { const b = e.target.closest('button[data-b]'); if (b) { BOARD.f = b.dataset.b; renderBoard(D); } };
   }

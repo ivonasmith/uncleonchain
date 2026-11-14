@@ -35,6 +35,23 @@ jobs:
       - name: 跑 Alpha 雷达日更
         run: python3 alpha/alpha_daily.py
 
+      # 每周一：上一个完整 UTC 周的复盘数据（复盘会话已经出过就不重出，免得盖掉它写的结论）
+      - name: 周复盘数据（每周一）
+        run: |
+          if [ "$(date -u +%u)" = "1" ]; then
+            W=$(python3 -c "import datetime as d;t=d.date.today()-d.timedelta(days=7);y,w,_=t.isocalendar();print(f'{y}-W{w:02d}')")
+            [ -f "data/alpha/weekly/$W.json" ] || python3 alpha/weekly.py
+            echo "ALPHA_WEEK=$W" >> "$GITHUB_ENV"
+          fi
+
+      # Notion「Alpha 雷达」入口页：机会卡 + 线索每天同步，周复盘每周一；没有 NOTION_TOKEN 就跳过，失败不影响日更
+      - name: 同步 Notion
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+        run: |
+          python3 alpha/notion_sync.py opps leads
+          if [ -n "$ALPHA_WEEK" ]; then python3 alpha/notion_sync.py weekly --week "$ALPHA_WEEK"; fi
+
       - name: 重出网站（看板素材 → 网站）
         env:
           LP_DATA: ${{ github.workspace }}/data
