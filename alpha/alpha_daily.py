@@ -102,7 +102,7 @@ def main():
 
     # ① 无币协议收入榜
     tc = CFG["tokenless"]
-    groups = {}
+    groups, allrev = {}, {}
     if rev is not None:
         for x in rev:
             pid = x.get("defillamaId")
@@ -111,6 +111,7 @@ def main():
             if pp is None:
                 continue           # 协议列表里对不上身份的不收（不猜）
             tok = has_tok(pp) or bool(par and ptok.get(par))
+            allrev[par or pid] = allrev.get(par or pid, 0.0) + (x.get("total30d") or 0)   # 全部协议（含有币），给台账做结果追踪
             if tok or x.get("category") in tc["exclude_categories"] or x.get("name") in tc["exclude_names"]:
                 continue
             g = groups.setdefault(par or pid, {"key": par or pid, "children": [], "rev30": 0.0, "rev_prev30": 0.0, "cats": {}, "chains": {}})
@@ -175,6 +176,22 @@ def main():
             v["token_seen"] = today
             events.append({"type": "token", "key": k, "name": v["name"]})
 
+    # 候选池状态：外部补证结果（alpha/review/*_checks.json）并进台账；状态变化只追加到 status_history，不改旧记录
+    for fn in sorted(os.listdir(os.path.join(HERE, "review"))):
+        if not fn.endswith("_checks.json"):
+            continue
+        for c in load(os.path.join(HERE, "review", fn), []):
+            v = L.get(c.get("key"))
+            if not v or c.get("verdict") not in ("待核验", "研究观察", "拒绝", "优先研究"):
+                continue
+            day = (c.get("checked_utc") or today)[:10]
+            hs = v.setdefault("status_history", [])
+            if hs and hs[-1]["status"] == c["verdict"]:
+                continue
+            hs.append({"status": c["verdict"], "date": day, "src": f"alpha/review/{fn}"})
+            v["status"] = c["verdict"]
+            events.append({"type": "status", "key": c["key"], "name": v["name"], "status": c["verdict"]})
+
     first = {k: v["first_seen"] for k, v in L.items()}
     for r in rows:
         r["first_seen"] = first.get(r["key"])
@@ -184,11 +201,14 @@ def main():
            "tokenless": rows, "listings": lst, "events": events,
            "ledger": {"n": len(L), "tokenless_rev": sum(1 for v in L.values() if "tokenless_rev" in v["source"]),
                       "new_listing": sum(1 for v in L.values() if "new_listing" in v["source"]),
-                      "token_seen": sum(1 for v in L.values() if v.get("token_seen"))}}
+                      "token_seen": sum(1 for v in L.values() if v.get("token_seen")),
+                      "status": {st: sum(1 for v in L.values() if v.get("status") == st) for st in ("待核验", "研究观察", "优先研究", "拒绝")}}}
     if rev is None and prev:       # 收入源失败：榜单沿用上次
         out["tokenless"] = prev.get("tokenless", [])
     row = {"date": today, "asof": asof, "baseline": baseline, "n_tokenless": len(rows), "rev30_sum": round(sum(r["rev30"] for r in rows)),
-           "n_listings": len(lst), "n_leads": len(L), "events": {t: sum(1 for e in events if e["type"] == t) for t in ("new_rank", "new_listing", "token")}}
+           "n_listings": len(lst), "n_leads": len(L), "events": {t: sum(1 for e in events if e["type"] == t) for t in ("new_rank", "new_listing", "token", "status")},
+           # A4 结果追踪：台账里每个协议组今天的 30 天收入（含已发币、跌出门槛的；取不到 = 不记，不当 0）
+           "rev30": {k: round(allrev[k[2:]]) for k in L if k.startswith("g:") and k[2:] in allrev} if rev is not None else None}
     hist = [h for h in hist if h["date"] != today] + [row]
     dump(os.path.join(OUT, "alpha_latest.json"), out)
     dump(os.path.join(OUT, "alpha_leads.json"), leads)

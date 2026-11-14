@@ -3931,6 +3931,7 @@ def build_core():
 
 # ---------------------------------------------------------------- Alpha 雷达（alpha/：雷达读 data/alpha/alpha_latest.json；方法论 / 案例库 / 进度读 alpha/research/*.md）
 ALPHA_TABS = [("", "雷达", "Radar", "无币协议 · 新上架 · 台账", "Tokenless · new · ledger"),
+              ("pool/", "候选池", "Pool", "补证 · 未知项 · 反方", "Evidence · unknowns · counter"),
               ("cases/", "案例库", "Cases", "历史机制与冻结评分", "History & frozen scores"),
               ("method/", "方法论", "Method", "Alpha 标的筛选研究体系", "Screening framework"),
               ("progress/", "研究进度", "Progress", "阶段 · 口径 · 外部任务", "Stages · rules · tasks")]
@@ -3947,6 +3948,64 @@ def write_alpha_data():
     for fn in ("alpha_latest.json", "alpha_history.json", "alpha_leads.json"):
         if os.path.exists(os.path.join(src, fn)):
             shutil.copyfile(os.path.join(src, fn), os.path.join(out, fn))
+
+
+ALPHA_ST = {"研究观察": ("t-up", "Watching"), "待核验": ("t-warn", "To verify"), "优先研究": ("t-up", "Priority"), "拒绝": ("t-dn", "Rejected")}
+
+
+def alpha_checks():
+    """外部补证（alpha/review/*_checks.json）：key → 最新一条。"""
+    if "ALPHA_CHK" not in G:
+        out, rd = {}, os.path.join(ROOT, "alpha", "review")
+        for fn in sorted(os.listdir(rd)) if os.path.isdir(rd) else []:
+            if fn.endswith("_checks.json"):
+                for c in load(os.path.join(rd, fn), []) or []:
+                    out[c["key"]] = c
+        G["ALPHA_CHK"] = out
+    return G["ALPHA_CHK"]
+
+
+def alpha_status_chip(key):
+    c = alpha_checks().get(key)
+    if not c:
+        return '<span class="tnote" style="margin:0">—</span>'
+    cls, en = ALPHA_ST.get(c["verdict"], ("", c["verdict"]))
+    return f'<a class="chip {cls}" href="{U("/alpha/pool/")}#{esc(key)}">{T(c["verdict"], en)}</a>'
+
+
+def alpha_pool():
+    chk = alpha_checks()
+    if not chk:
+        return f'<div class="note">{T("候选池还没有补证记录。", "No reviewed candidates yet.")}</div>'
+    cur = {r["key"]: r for r in (G.get("ALPHA") or {}).get("tokenless") or []}
+    U_ = lambda v: T("未知", "unknown") if v in (None, "", "U") else esc(str(v))
+    def card(c):
+        r = cur.get(c["key"])
+        rv = f'{a_usd(r["rev30"])}' if r else T("已不在榜", "off the board")
+        src = c.get("token_stance_src")
+        stance = U_(c.get("token_stance")) + (f' · <a href="{esc(src)}" target="_blank" rel="noopener">{T("来源", "source")}</a>' if src and src != "U" else "")
+        miss = "".join(f"<li>{esc(m)}</li>" for m in c.get("missing") or [])
+        ev = " · ".join(f'<a href="{esc(e["url"])}" target="_blank" rel="noopener">{i}</a>' for i, e in enumerate(c.get("evidence") or [], 1) if str(e.get("url", "")).startswith("http"))
+        row = lambda k, v: f'<div style="margin-top:6px"><span class="tnote" style="margin:0">{k}</span> {v}</div>'
+        return (f'<div class="card" id="{esc(c["key"])}" style="padding:14px 18px;margin:0 0 12px;font-size:13.5px;line-height:1.7">'
+                f'<div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><b style="font-size:15px">{esc(c["name"])}</b>{alpha_status_chip(c["key"])}'
+                f'<span class="tnote" style="margin:0">{T("30 天收入", "30d revenue")} {rv}</span></div>'
+                + row(T("发币表态", "Token stance"), stance)
+                + row(T("收入归谁", "Who gets revenue"), U_(c.get("revenue_who")))
+                + row(T("刷量 / 补贴", "Wash / subsidy"), U_(c.get("wash_or_subsidy")))
+                + row(T("普通人的角色", "Role for users"), U_(c.get("user_role")))
+                + row(T("最强反方", "Strongest counter"), U_(c.get("counter")))
+                + row(T("为什么是这一档", "Why this status"), U_(c.get("verdict_reason")))
+                + (f'<details style="margin-top:6px"><summary class="tnote" style="margin:0;cursor:pointer">{T("还没查清的", "Still unknown")}（{len(c.get("missing") or [])}）</summary><ul style="margin:6px 0 0;padding-left:20px">{miss}</ul></details>' if miss else "")
+                + f'<div class="tnote">{T("核对", "Checked")} {esc((c.get("checked_utc") or "")[:10])} · {T("证据", "Evidence")} {ev}</div></div>')
+    order = ["研究观察", "待核验", "优先研究", "拒绝"]
+    secs = ""
+    for st in order:
+        xs = sorted((c for c in chk.values() if c["verdict"] == st), key=lambda c: -((cur.get(c["key"]) or {}).get("rev30") or 0))
+        if xs:
+            secs += f'<h2>{T(st, ALPHA_ST[st][1])} <span class="sub">{len(xs)}</span></h2>' + "".join(card(c) for c in xs)
+    return (f'<div class="note">{T("第一批：无币协议收入榜前 30 名，Codex 2026-11-14 补证。「研究观察」= 对象明确、有可证伪的假设、还没查到否决项；「待核验」= 关键事实缺失或互相冲突。两档都不是推荐，也不代表会空投；同一档内按当前 30 天收入排，不打分。", "First batch: the top 30 of the tokenless revenue board, reviewed by Codex on 2026-11-14. “Watching” = clear object, a falsifiable hypothesis, no veto found yet; “To verify” = key facts missing or conflicting. Neither is a recommendation or an airdrop signal; ordered by current 30d revenue, no scores.")}</div>'
+            + (ZH_ONLY if LANG["v"] == "en" else "") + secs)
 
 
 def a_usd(v):
@@ -3974,12 +4033,14 @@ def alpha_home_card():
     nr = sum(1 for e in ev if e["type"] == "new_rank")
     tk = sum(1 for e in ev if e["type"] == "token")
     base = d.get("baseline_day")
+    st = (d.get("ledger") or {}).get("status") or {}
     lead = " ".join(f'<span>{esc(r["name"])} <b>{a_usd(r["rev30"])}</b></span>' for r in (d.get("tokenless") or [])[:5])
     return (f'<h2>{T("Alpha 雷达", "Alpha radar")} <span class="sub">{T("没发币但有收入的协议 · 新协议", "Tokenless protocols with revenue · new protocols")}</span>'
             f' <a class="sub" href="{U("/alpha/")}">{T("进雷达 →", "Open →")}</a></h2>'
             f'<div class="card core-home"><div class="row"><span>{T("无币协议（30 天收入 ≥ 10 万美元）", "Tokenless (30d revenue ≥ $100K)")} <b>{len(d.get("tokenless") or [])}</b></span>'
             f'<span>{T("最近 14 天新上架", "Listed in last 14d")} <b>{len(d.get("listings") or [])}</b></span>'
-            f'<span>{T("今天首次进榜", "New today")} <b>{nr}</b> · {T("发币", "launched a token")} <b>{tk}</b></span></div>'
+            f'<span>{T("今天首次进榜", "New today")} <b>{nr}</b> · {T("发币", "launched a token")} <b>{tk}</b></span>'
+            f'<span><a href="{U("/alpha/pool/")}">{T("候选池", "Pool")}</a> {T("研究观察", "watching")} <b>{st.get("研究观察", 0)}</b> · {T("待核验", "to verify")} <b>{st.get("待核验", 0)}</b></span></div>'
             f'<div class="row" style="margin-top:6px">{T("收入前五：", "Top 5 by revenue: ")}{lead}</div>'
             f'<div class="row" style="margin-top:6px;font-size:12px;color:var(--muted)">{T("数据日", "Data day")} {esc(d.get("asof") or "")} · {T(f"台账从 {base} 起记，首日为基线", f"ledger since {base}; first day is the baseline")}</div></div>')
 
@@ -4010,7 +4071,8 @@ def build_alpha():
         trs = "".join(
             f'<tr><td class="rk">{i}</td><td class="wrap" style="min-width:180px;text-align:left"><a href="https://defillama.com/protocol/{esc(r["slug"] or "")}" target="_blank" rel="noopener">{esc(r["name"])}</a>'
             + (f'<div class="tnote" style="margin:2px 0 0;white-space:normal">{esc("、".join(r["children"][:3]))}{"…" if len(r["children"]) > 3 else ""}</div>' if len(r["children"]) > 1 else "")
-            + f'</td><td class="l">{esc(r["category"] or "")}</td><td class="l">{esc(" · ".join(r["chains"]))}</td><td>{a_usd(r["rev30"])}</td><td>{chg(r["chg30"])}</td><td>{esc(r.get("first_seen") or "")}</td></tr>'
+            + f'</td><td class="l">{esc(r["category"] or "")}</td><td class="l">{esc(" · ".join(r["chains"]))}</td><td>{a_usd(r["rev30"])}</td><td>{chg(r["chg30"])}</td><td>{esc(r.get("first_seen") or "")}</td>'
+            + f'<td class="l">{alpha_status_chip(r["key"])}</td></tr>'
             for i, r in enumerate(d.get("tokenless") or [], 1))
         lrs = "".join(
             f'<tr><td>{esc(r["listed"])}</td><td class="l"><a href="https://defillama.com/protocol/{esc(r["slug"] or "")}" target="_blank" rel="noopener">{esc(r["name"])}</a></td>'
@@ -4021,7 +4083,7 @@ def build_alpha():
         radar = (evh
                  + f'<h2>{T("没发币、有收入的协议", "Tokenless protocols with revenue")} <span class="sub">{T("近 30 天协议收入 ≥ 10 万美元，按母协议合并", "30d protocol revenue ≥ $100K, merged by parent")} · {len(d.get("tokenless") or [])}</span></h2>'
                  + f'<p class="tnote">{T("「没发币」= DefiLlama 上本协议和母协议都没登记代币，不等于确认不发币，也不等于会空投。已剔除稳定币发行方、交易所、CeDeFi、区块构建者和传统金融产品。环比 = 近 30 天 ÷ 前 30 天 − 1。", "“Tokenless” = no token registered on DefiLlama for the protocol or its parent; not a confirmation of no token, nor of an airdrop. Stablecoin issuers, CEXs, CeDeFi, block builders and TradFi products excluded. Change = last 30d ÷ prior 30d − 1.")}</p>'
-                 + f'<div class="tw scroll"><table><thead><tr><th>#</th><th style="text-align:left">{T("协议", "Protocol")}</th><th style="text-align:left">{T("类目", "Category")}</th><th style="text-align:left">{T("主要链", "Chains")}</th><th>{T("30 天收入", "30d revenue")}</th><th>{T("环比", "Change")}</th><th>{T("首次进榜", "First seen")}</th></tr></thead><tbody>{trs}</tbody></table></div>'
+                 + f'<div class="tw scroll"><table><thead><tr><th>#</th><th style="text-align:left">{T("协议", "Protocol")}</th><th style="text-align:left">{T("类目", "Category")}</th><th style="text-align:left">{T("主要链", "Chains")}</th><th>{T("30 天收入", "30d revenue")}</th><th>{T("环比", "Change")}</th><th>{T("首次进榜", "First seen")}</th><th style="text-align:left">{T("候选池", "Pool")}</th></tr></thead><tbody>{trs}</tbody></table></div>'
                  + f'<h2>{T("新上架协议", "Newly listed protocols")} <span class="sub">{T("DefiLlama 最近 14 天收录", "Added to DefiLlama in the last 14 days")} · {len(d.get("listings") or [])}</span></h2>'
                  + f'<p class="tnote">{T("收录日不是部署日，更不是能参与的日子；TVL 是存量，不是收入。", "Listing date is not deployment date or participation date; TVL is a stock, not revenue.")}</p>'
                  + f'<div class="tw scroll"><table><thead><tr><th>{T("收录日", "Listed")}</th><th style="text-align:left">{T("协议", "Protocol")}</th><th style="text-align:left">{T("类目", "Category")}</th><th style="text-align:left">{T("主要链", "Chains")}</th><th>TVL</th><th style="text-align:left">{T("代币", "Token")}</th></tr></thead><tbody>{lrs}</tbody></table></div>'
@@ -4032,6 +4094,7 @@ def build_alpha():
     else:
         radar = f'<div class="note">{T("雷达数据还没生成。", "Radar data not generated yet.")}</div>'
     emit("alpha/index.html", T(f"Alpha 雷达 · {BRAND}", f"Alpha Radar · {BRAND_EN}"), alpha_head("") + radar, active="alpha", desc=desc)
+    emit("alpha/pool/index.html", T(f"候选池 · Alpha 雷达 · {BRAND}", f"Pool · Alpha Radar · {BRAND_EN}"), alpha_head("pool/") + alpha_pool(), active="alpha", desc=desc)
     zh_only = ZH_ONLY if LANG["v"] == "en" else ""
     for p, fn, toc in (("cases/", "案例库.md", False), ("method/", "Alpha标的筛选研究体系.md", True), ("progress/", "研究进度.md", False)):
         src = open(os.path.join(ROOT, "alpha", "research", fn), encoding="utf-8").read()
@@ -5372,7 +5435,7 @@ def build_misc(logs, weeks, months):
     if os.path.exists(rd):
         os.remove(rd)
     write("robots.txt", f"User-agent: *\nAllow: /\nSitemap: https://{DOMAIN}/sitemap.xml\n")
-    urls = ["/", "/macro/", "/leg-tracker/", "/calendar/", "/launchpad/", "/ai-agent/", "/rotation/", "/alpha/", "/alpha/cases/", "/alpha/method/", "/alpha/progress/", "/rwa/", "/rwa/watch/", "/rwa/method/", "/rwa/progress/", "/reports/", "/journal/", "/methodology/", "/corrections/", "/about/",
+    urls = ["/", "/macro/", "/leg-tracker/", "/calendar/", "/launchpad/", "/ai-agent/", "/rotation/", "/alpha/", "/alpha/pool/", "/alpha/cases/", "/alpha/method/", "/alpha/progress/", "/reports/", "/journal/", "/methodology/", "/corrections/", "/about/",
             "/launchpad/report/", "/launchpad/report/archive/"]
     urls += [f"/macro/{x['key']}/" for x in R.INDICATORS + R.RETIRED] + ["/changelog/"]
     for p in PILLARS:

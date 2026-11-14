@@ -2,24 +2,19 @@
  {
   "version": "2026.11.14.7",
   "date": "2026-11-14",
-  "notify": true,
-  "title_zh": "新板块：RWA 现实资产",
-  "title_en": "New section: RWA (real-world assets)",
+  "notify": false,
+  "title_zh": "Alpha 雷达：候选池上线（第一批 30 个无币协议）",
+  "title_en": "Alpha Radar: candidate pool (first 30 tokenless protocols)",
   "items": [
    {
     "type": "new",
-    "zh": "RWA 看板一屏三块：发生什么（代币化国债、黄金、股票、信贷的规模和变化）、谁在收钱（RWA 协议近 30 天手续费 → 协议收入 → 持有人收入）、研究标的的状态。每天自动更新，来源 CoinGecko 和 DefiLlama。",
-    "en": "The RWA board answers three things on one screen: what is happening (size and change of tokenized treasuries, gold, stocks, credit), who earns (30-day fees → protocol revenue → holder revenue of RWA protocols) and the state of research items. Updated daily from CoinGecko and DefiLlama."
+    "zh": "新页签「候选池」：无币协议收入榜前 30 名逐条补证——发币表态、收入归谁、刷量 / 补贴迹象、普通人能以什么角色参与、最强反方、还没查清的事项和证据链接。研究观察 12 个、待核验 18 个；两档都不是推荐，也不代表会空投。雷达表加了候选池状态列。",
+    "en": "New “Pool” tab: the top 30 tokenless protocols reviewed one by one — token stance, who gets the revenue, wash / subsidy signs, the role open to users, the strongest counter-argument, open unknowns and evidence links. 12 watching, 18 to verify; neither is a recommendation or an airdrop signal. The radar table gains a pool-status column."
    },
    {
     "type": "new",
-    "zh": "身份分开记：资产币（基金份额、黄金）、平台币、传统机构产品分别标注；DefiLlama 没登记代币写「未登记 ≠ 无币」，登记的其实是资产币的（如 XAUt）改标「资产币」。数据平台自己的口径问题直接在页面提醒（例：CoinGecko「代币化私募信贷」几乎全是 Figure 一个 HELOC 记录）。",
-    "en": "Identities kept apart: asset tokens (fund shares, gold), platform tokens and TradFi products are labeled separately; “none listed ≠ no token”, and tokens that are really asset tokens (e.g. XAUt) are relabeled. Data-provider pitfalls are flagged on the page (e.g. CoinGecko’s “tokenized private credit” is almost entirely one Figure HELOC record)."
-   },
-   {
-    "type": "new",
-    "zh": "研究标的、方法框架、研究进度页一起上线。之前在本地跑的 RWA 研究库还在迁入，交接包点名的案例全部标「待重核」，首发不给结论；判断卡写触发 / 失效条件、谁能参与、成本和退出路径，不写买卖建议。",
-    "en": "Watchlist, framework and progress pages go live with it. The local RWA research library is still being migrated; the cases named in the handoff are all marked pending re-check, with no conclusions at launch. Judgment cards carry trigger / invalidation conditions, eligibility, cost and exit — no trade advice."
+    "zh": "研究进度页写入 A4 判定标准（之后不改）：研究观察组和对照组比 90 天后的收入保持率，两组都满 20 个才判。10-16 首批九个冻结评分的 30 天复查全部「待判」：原卡没冻结合约和发现价，算不出来，不补造；以后进研究观察的有币对象当天就冻结这些字段。",
+    "en": "The progress page now fixes the A4 test (no later changes): 90-day revenue retention, watching group vs control, judged only with 20+ in each. The 30-day review of the nine frozen 10-16 candidates is all “pending”: the original cards did not freeze contract or discovery price, so no result is fabricated; tokened candidates will have these frozen on entry from now on."
    }
   ]
  },

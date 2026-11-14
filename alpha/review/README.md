@@ -1,5 +1,7 @@
 # Alpha 雷达 · 外部任务包（2026-11-14）
 
+> **状态：T1 / T2 / T3 已于 2026-11-14 交回**（`sources_probe.json`、`d30_20261016.json`、`tokenless_checks.json`），已并入；候选池状态由 `alpha_daily.py` 读 `*_checks.json` 写进台账。新一轮补证照同一格式交 `<批次>_checks.json`。
+
 大叔 2026-11-14 定：Alpha 雷达和核心选币互补，只研究正规项目（无币协议、新协议、新产品、新机制、升级、上所），
 **不做部署后 0–6 小时 / 纯 MEME 打狗**。代码和网站由 Claude 写和推，Codex 负责查证和出数据。
 

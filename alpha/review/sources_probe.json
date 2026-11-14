@@ -1,0 +1,729 @@
+[
+  {
+    "source": "ethresear.ch",
+    "endpoint": "https://ethresear.ch/latest.json",
+    "auth": "none",
+    "rate_limit": "U",
+    "history_depth": "U；本次取得 latest 与单帖，未遍历归档深度。",
+    "time_fields": [
+      "created_at",
+      "last_posted_at",
+      "bumped_at",
+      "post_stream.posts[].created_at"
+    ],
+    "sample": {
+      "topic_id": 26246,
+      "created_at": "2026-11-13T00:47:41.552Z",
+      "last_posted_at": "2026-11-13T00:47:41.688Z",
+      "author": "Deamonminwar",
+      "tags": []
+    },
+    "blocked_in": "U",
+    "verdict": "可接",
+    "checked_utc": "2026-11-14T13:37:42.966335+00:00",
+    "notes": "列表按最后活动更新，不是纯新帖流；以 topic id 和 created_at 去重，首帖作者来自详情，空标签保留空数组。网页可读不代表浏览器跨域任意可用。",
+    "progress": "已完成单次公开探测；未完成跨日稳定性及多地域验收",
+    "stability_daily": "U",
+    "evidence": [
+      {
+        "fields": [
+          "endpoint",
+          "sample",
+          "auth",
+          "verdict",
+          "time_fields",
+          "history_depth"
+        ],
+        "url": "https://ethresear.ch/latest.json",
+        "checked_utc": "2026-11-14T13:37:42.966335+00:00",
+        "http_status": 200,
+        "response_sha256": "9e75aca98d4864b06d32a7e348de5d64a47ac6044dd7f6012f219f0a374b94f5",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      },
+      {
+        "fields": [
+          "sample",
+          "author",
+          "tags",
+          "time_fields"
+        ],
+        "url": "https://ethresear.ch/t/26246.json",
+        "checked_utc": "2026-11-14T13:42:39.464387+00:00",
+        "http_status": 200,
+        "response_sha256": "dd73e089cd1d934258cfef2d0727309605e928d11d9294016e16ae0c19f9af0d",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      }
+    ]
+  },
+  {
+    "source": "EIPs 新提案 PR",
+    "endpoint": "https://api.github.com/repos/ethereum/EIPs/pulls?state=all&sort=created&direction=desc&per_page=1",
+    "auth": "free_key",
+    "rate_limit": "未认证 60 次/小时；普通认证通常 5000 次/小时；本次剩余 0。",
+    "history_depth": "U；本次没有取得 PR 记录。",
+    "time_fields": [
+      "created_at",
+      "updated_at",
+      "closed_at",
+      "merged_at"
+    ],
+    "sample": {
+      "http_status": 403,
+      "message": "API rate limit exceeded",
+      "X-RateLimit-Limit": "60",
+      "X-RateLimit-Remaining": "0"
+    },
+    "blocked_in": "U",
+    "verdict": "需key",
+    "checked_utc": "2026-11-14T13:37:42.966432+00:00",
+    "notes": "ethereum/EIPs 无 key 请求被共享出口的 GitHub 未认证配额拦截；免费认证 REST 配额可用但未持 key 实测。所列时间字段来自接口契约，不是本次成功样本；PR state 不等于 EIP/ERC 的 Draft/Final 状态，须读取文件前言并留版本差异；单次 PR 列表不能还原全部历史状态。未发现地区封锁证据。",
+    "progress": "已完成单次公开探测；未完成跨日稳定性及多地域验收",
+    "stability_daily": "U",
+    "evidence": [
+      {
+        "fields": [
+          "endpoint",
+          "sample",
+          "auth",
+          "verdict",
+          "time_fields",
+          "history_depth"
+        ],
+        "url": "https://api.github.com/repos/ethereum/EIPs/pulls?state=all&sort=created&direction=desc&per_page=1",
+        "checked_utc": "2026-11-14T13:37:42.966432+00:00",
+        "http_status": 403,
+        "response_sha256": "b7b53d9ab20593b820f1efc0c15a5537e1fb721f8f4df96f2f6300e690e185ad",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      },
+      {
+        "fields": [
+          "auth",
+          "rate_limit"
+        ],
+        "url": "https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api",
+        "checked_utc": "2026-11-14T13:40:07.876033+00:00",
+        "http_status": 200,
+        "response_sha256": "8d2ac0006347fb9e6d5733219c46c9dca0615bfcc7f5597e413c82943060c754",
+        "note": "GitHub 官方 REST 配额说明；没有使用或交付任何 key。"
+      }
+    ]
+  },
+  {
+    "source": "ERCs 新提案 PR",
+    "endpoint": "https://api.github.com/repos/ethereum/ERCs/pulls?state=all&sort=created&direction=desc&per_page=1",
+    "auth": "free_key",
+    "rate_limit": "未认证 60 次/小时；普通认证通常 5000 次/小时；本次剩余 0。",
+    "history_depth": "U；本次没有取得 PR 记录。",
+    "time_fields": [
+      "created_at",
+      "updated_at",
+      "closed_at",
+      "merged_at"
+    ],
+    "sample": {
+      "http_status": 403,
+      "message": "API rate limit exceeded",
+      "X-RateLimit-Limit": "60",
+      "X-RateLimit-Remaining": "0"
+    },
+    "blocked_in": "U",
+    "verdict": "需key",
+    "checked_utc": "2026-11-14T13:37:42.966498+00:00",
+    "notes": "ethereum/ERCs 无 key 请求被共享出口的 GitHub 未认证配额拦截；免费认证 REST 配额可用但未持 key 实测。所列时间字段来自接口契约，不是本次成功样本；PR state 不等于 EIP/ERC 的 Draft/Final 状态，须读取文件前言并留版本差异；单次 PR 列表不能还原全部历史状态。未发现地区封锁证据。",
+    "progress": "已完成单次公开探测；未完成跨日稳定性及多地域验收",
+    "stability_daily": "U",
+    "evidence": [
+      {
+        "fields": [
+          "endpoint",
+          "sample",
+          "auth",
+          "verdict",
+          "time_fields",
+          "history_depth"
+        ],
+        "url": "https://api.github.com/repos/ethereum/ERCs/pulls?state=all&sort=created&direction=desc&per_page=1",
+        "checked_utc": "2026-11-14T13:37:42.966498+00:00",
+        "http_status": 403,
+        "response_sha256": "b7b53d9ab20593b820f1efc0c15a5537e1fb721f8f4df96f2f6300e690e185ad",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      },
+      {
+        "fields": [
+          "auth",
+          "rate_limit"
+        ],
+        "url": "https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api",
+        "checked_utc": "2026-11-14T13:40:07.876033+00:00",
+        "http_status": 200,
+        "response_sha256": "8d2ac0006347fb9e6d5733219c46c9dca0615bfcc7f5597e413c82943060c754",
+        "note": "GitHub 官方 REST 配额说明；没有使用或交付任何 key。"
+      }
+    ]
+  },
+  {
+    "source": "GitHub releases（抽样 Uniswap/v4-core）",
+    "endpoint": "https://api.github.com/repos/Uniswap/v4-core/releases?per_page=1",
+    "auth": "free_key",
+    "rate_limit": "未认证 REST 60 次/小时；普通认证通常 5000 次/小时；Atom 限额 U。",
+    "history_depth": "U；Atom 仅见一条，不能视为全量发布历史。",
+    "time_fields": [
+      "created_at",
+      "published_at",
+      "updated"
+    ],
+    "sample": {
+      "rest_status": 403,
+      "atom_status": 200,
+      "atom_entry": {
+        "tag": "v4.0.0",
+        "updated": "2025-01-23T19:00:03Z"
+      }
+    },
+    "blocked_in": "U",
+    "verdict": "需key",
+    "checked_utc": "2026-11-14T13:37:43.357015+00:00",
+    "notes": "REST 无 key 配额耗尽；releases.atom 无 key 可读，可作有限降级发现。Atom updated 不等于已验证的 published_at，不能用它冒充首次发布时点；指定组织/仓库清单尚未提供，本次只验此仓库。",
+    "progress": "已完成单次公开探测；未完成跨日稳定性及多地域验收",
+    "stability_daily": "U",
+    "evidence": [
+      {
+        "fields": [
+          "endpoint",
+          "sample",
+          "auth",
+          "verdict",
+          "time_fields",
+          "history_depth"
+        ],
+        "url": "https://api.github.com/repos/Uniswap/v4-core/releases?per_page=1",
+        "checked_utc": "2026-11-14T13:37:43.357015+00:00",
+        "http_status": 403,
+        "response_sha256": "b7b53d9ab20593b820f1efc0c15a5537e1fb721f8f4df96f2f6300e690e185ad",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      },
+      {
+        "fields": [
+          "sample",
+          "notes"
+        ],
+        "url": "https://github.com/Uniswap/v4-core/releases.atom",
+        "checked_utc": "2026-11-14T13:42:40.320995+00:00",
+        "http_status": 200,
+        "response_sha256": "9cf6045cc06ac80c8d20e8f796752f8a28b3a69e3b3301fc98167205f3b467c7",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      },
+      {
+        "fields": [
+          "auth",
+          "rate_limit"
+        ],
+        "url": "https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api",
+        "checked_utc": "2026-11-14T13:40:07.876033+00:00",
+        "http_status": 200,
+        "response_sha256": "8d2ac0006347fb9e6d5733219c46c9dca0615bfcc7f5597e413c82943060c754",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      }
+    ]
+  },
+  {
+    "source": "GitHub tags（抽样 Uniswap/v4-core）",
+    "endpoint": "https://api.github.com/repos/Uniswap/v4-core/tags?per_page=1",
+    "auth": "free_key",
+    "rate_limit": "未认证 REST 60 次/小时；普通认证通常 5000 次/小时。",
+    "history_depth": "U",
+    "time_fields": [],
+    "sample": {
+      "http_status": 403,
+      "message": "API rate limit exceeded"
+    },
+    "blocked_in": "U",
+    "verdict": "需key",
+    "checked_utc": "2026-11-14T13:37:43.573700+00:00",
+    "notes": "tags REST 无 key 配额耗尽；tag 列表不是版本发布时间表。轻量标签可能没有独立创建时间，commit 时间也不等于 tag 创建或发布时点；首见时间只能作为监测时间，不能回填历史发布时间。指定仓库范围待补。",
+    "progress": "已完成单次公开探测；未完成跨日稳定性及多地域验收",
+    "stability_daily": "U",
+    "evidence": [
+      {
+        "fields": [
+          "endpoint",
+          "sample",
+          "auth",
+          "verdict",
+          "time_fields",
+          "history_depth"
+        ],
+        "url": "https://api.github.com/repos/Uniswap/v4-core/tags?per_page=1",
+        "checked_utc": "2026-11-14T13:37:43.573700+00:00",
+        "http_status": 403,
+        "response_sha256": "b7b53d9ab20593b820f1efc0c15a5537e1fb721f8f4df96f2f6300e690e185ad",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      },
+      {
+        "fields": [
+          "auth",
+          "rate_limit"
+        ],
+        "url": "https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api",
+        "checked_utc": "2026-11-14T13:40:07.876033+00:00",
+        "http_status": 200,
+        "response_sha256": "8d2ac0006347fb9e6d5733219c46c9dca0615bfcc7f5597e413c82943060c754",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      }
+    ]
+  },
+  {
+    "source": "Snapshot Hub GraphQL",
+    "endpoint": "https://hub.snapshot.org/graphql",
+    "auth": "none",
+    "rate_limit": "公开 API 100 次/分钟；可申请 key 提升额度。",
+    "history_depth": "U；支持查询参数分页，本次仅取最新一条，没有全量历史完整性验收。",
+    "time_fields": [
+      "created",
+      "start",
+      "end"
+    ],
+    "sample": {
+      "id": "0xcbff9234ecc197229b3fefad95ecaf61c230928cfebd8d03bdb989480bd9456e",
+      "created": 1794657009,
+      "start": 1794657600,
+      "end": 1794830340,
+      "state": "active",
+      "space": {
+        "id": "ibs.eth"
+      }
+    },
+    "blocked_in": "U",
+    "verdict": "可接",
+    "checked_utc": "2026-11-14T13:37:43.941201+00:00",
+    "notes": "实测 POST 无 key 成功；这些是秒级 Unix 时间。end 是投票计划结束，不是执行时刻；Snapshot 链下提案不能直接提供已验证执行交易，执行 tx=U，需另映射 Governor/Safe 并查链上日志。",
+    "progress": "已完成单次公开探测；未完成跨日稳定性及多地域验收",
+    "stability_daily": "U",
+    "evidence": [
+      {
+        "fields": [
+          "endpoint",
+          "sample",
+          "auth",
+          "verdict",
+          "time_fields",
+          "history_depth"
+        ],
+        "url": "https://hub.snapshot.org/graphql",
+        "checked_utc": "2026-11-14T13:37:43.941201+00:00",
+        "http_status": 200,
+        "response_sha256": "f70799efb1e804ffd0cac84f50af05cc7b304ca51ea604f334acb0fcf94b15b3",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      },
+      {
+        "fields": [
+          "rate_limit"
+        ],
+        "url": "https://docs.snapshot.box/tools/api",
+        "checked_utc": "2026-11-14T13:40:08.284375+00:00",
+        "http_status": 200,
+        "response_sha256": "27c515a9cdc2870c1513c27e46406ddf9bc577a7fe0626ecaea1f9ae87ac5bdc",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      }
+    ]
+  },
+  {
+    "source": "Tally（治理，非 tally.so 表单）",
+    "endpoint": "https://api.tally.xyz/query",
+    "auth": "U",
+    "rate_limit": "U",
+    "history_depth": "U",
+    "time_fields": [],
+    "sample": {
+      "http_status": 401,
+      "errors": [
+        {
+          "message": "api key required",
+          "code": 16
+        }
+      ],
+      "data": null
+    },
+    "blocked_in": "U",
+    "verdict": "需key",
+    "checked_utc": "2026-11-14T13:37:44.043465+00:00",
+    "notes": "无 key GraphQL 明确 401。免费 key 是否仍可申请、当前费用/限额、提案及执行交易字段均 U；几个旧 docs.tally.xyz 文档地址返回 404。auth 的 U 是未知计费档位，不能据此写 paid 或 free_key。未使用其他同名产品的文档作证。",
+    "progress": "已完成单次公开探测；未完成跨日稳定性及多地域验收",
+    "stability_daily": "U",
+    "evidence": [
+      {
+        "fields": [
+          "endpoint",
+          "sample",
+          "auth",
+          "verdict",
+          "time_fields",
+          "history_depth"
+        ],
+        "url": "https://api.tally.xyz/query",
+        "checked_utc": "2026-11-14T13:37:44.043465+00:00",
+        "http_status": 401,
+        "response_sha256": "b6a389c6ea8b5a67737cb9dea5131f3184c52574ef7862388ec413d6b0220f2e",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      }
+    ]
+  },
+  {
+    "source": "Binance 上新公告",
+    "endpoint": "https://www.binance.com/bapi/composite/v1/public/cms/article/list/query?type=1&pageNo=1&pageSize=1&catalogId=48",
+    "auth": "none",
+    "rate_limit": "U",
+    "history_depth": "列表本次报告总数 2294；最早可回查日期 U。",
+    "time_fields": [
+      "releaseDate",
+      "detail.body 内计划开盘时间"
+    ],
+    "sample": {
+      "catalogId": 48,
+      "total": 2294,
+      "article": {
+        "id": 289917,
+        "code": "e7a88ff576b541608d0845f3b666ec66",
+        "releaseDate": 1794390318328
+      },
+      "detail_extract": {
+        "type": "perpetual",
+        "pairs": [
+          "NUUSDT",
+          "FRHCUSDT"
+        ],
+        "planned_open_utc": [
+          "2026-11-12T09:30:00Z",
+          "2026-11-12T09:45:00Z"
+        ]
+      }
+    },
+    "blocked_in": "U",
+    "verdict": "可接",
+    "checked_utc": "2026-11-14T13:37:44.569784+00:00",
+    "notes": "BAPI 属网站使用的公开端点，未确认稳定 API 契约；支持分页但未全量遍历。catalog 48 含 TradFi 永续等非新币事件，应按详情类型和标的过滤。计划开盘取自详情，不从公告时间推算。另测支持网页得到 202/challenge；不能据此断言某地区被封。",
+    "progress": "已完成单次公开探测；未完成跨日稳定性及多地域验收",
+    "stability_daily": "U",
+    "evidence": [
+      {
+        "fields": [
+          "endpoint",
+          "sample",
+          "auth",
+          "verdict",
+          "time_fields",
+          "history_depth"
+        ],
+        "url": "https://www.binance.com/bapi/composite/v1/public/cms/article/list/query?type=1&pageNo=1&pageSize=1&catalogId=48",
+        "checked_utc": "2026-11-14T13:37:44.569784+00:00",
+        "http_status": 200,
+        "response_sha256": "6f30203192b20f57fe4eb0311d365da17f24fe1e51be06a371aa00e46e7a7ae6",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      },
+      {
+        "fields": [
+          "sample.detail_extract"
+        ],
+        "url": "https://www.binance.com/bapi/composite/v1/public/cms/article/detail/query?articleCode=e7a88ff576b541608d0845f3b666ec66",
+        "checked_utc": "2026-11-14T13:42:39.465176+00:00",
+        "http_status": 200,
+        "response_sha256": "0285040faa221a085889f0ec96fb24bd92ab6d3295aae2fdcd8d650874ba3710",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      },
+      {
+        "fields": [
+          "notes"
+        ],
+        "url": "https://www.binance.com/en/support/announcement/new-cryptocurrency-listing?c=48&navId=48",
+        "checked_utc": "2026-11-14T13:40:09.136511+00:00",
+        "http_status": 202,
+        "response_sha256": "dabcde22541de2aad6c63cf9ee9de316398ff6a544529685949a273409322e36",
+        "note": "网页返回 202 challenge，不影响此 BAPI 样本 200 的事实。"
+      }
+    ]
+  },
+  {
+    "source": "OKX 上新公告",
+    "endpoint": "https://www.okx.com/api/v5/support/announcements?annType=announcements-new-listings",
+    "auth": "none",
+    "rate_limit": "U",
+    "history_depth": "U；本次响应仅证明取到旧公告。",
+    "time_fields": [
+      "pTime",
+      "businessPTime",
+      "正文计划开盘时间"
+    ],
+    "sample": {
+      "title": "OKX will launch ZAMA/USDⓈ for spot trading",
+      "pTime": "1769778024936",
+      "businessPTime": "1769778000000",
+      "detail_extract": {
+        "type": "spot",
+        "pair": "ZAMA/USDⓈ",
+        "planned_open_utc": "2026-02-02T14:00:00Z"
+      }
+    },
+    "blocked_in": "U",
+    "verdict": "不可接",
+    "checked_utc": "2026-11-14T13:37:44.590226+00:00",
+    "notes": "不可接仅指当前端点作为每日新事件源尚未通过验收：2026-11-14 请求首条仍为 2026-01-30 公告。HTTP 200 不能证明时效或覆盖完整。计划时间来自官方详情；pTime/businessPTime 均为毫秒时间戳，需区分发布与业务时间。其他官方列表可作为后续候选，未声称 OKX 全站不可接。",
+    "progress": "已完成单次公开探测；未完成跨日稳定性及多地域验收",
+    "stability_daily": "U",
+    "evidence": [
+      {
+        "fields": [
+          "endpoint",
+          "sample",
+          "auth",
+          "verdict",
+          "time_fields",
+          "history_depth"
+        ],
+        "url": "https://www.okx.com/api/v5/support/announcements?annType=announcements-new-listings",
+        "checked_utc": "2026-11-14T13:37:44.590226+00:00",
+        "http_status": 200,
+        "response_sha256": "250e3445497ff93c84e87ab7ca9b51acd5e667f6a4c59135e8690859a4a5d9c2",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      },
+      {
+        "fields": [
+          "sample.detail_extract",
+          "notes"
+        ],
+        "url": "https://www.okx.com/help/okx-will-launch-zama-usds-for-spot-trading",
+        "checked_utc": "2026-11-14T13:42:39.465023+00:00",
+        "http_status": 200,
+        "response_sha256": "18745d629822e7adc23562d080ba7a3f8b6fcb7f9b0c765788f049b5b4fef86d",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      },
+      {
+        "fields": [
+          "notes"
+        ],
+        "url": "https://www.okx.com/help/section/announcements-new-listings",
+        "checked_utc": "2026-11-14T13:40:09.198114+00:00",
+        "http_status": 200,
+        "response_sha256": "fbdefff922e9ac2a9dbb651cde3159cee040eb7b2164524045953aeba8fdc57a",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      }
+    ]
+  },
+  {
+    "source": "Bybit 上新公告",
+    "endpoint": "https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&page=1&limit=1",
+    "auth": "none",
+    "rate_limit": "U",
+    "history_depth": "列表本次报告总数 1839；最早日期 U。",
+    "time_fields": [
+      "publishTime",
+      "dateTimestamp",
+      "startDateTimestamp",
+      "endDateTimestamp"
+    ],
+    "sample": {
+      "retCode": 0,
+      "total": 1839,
+      "article": {
+        "title": "New listing: OROCHIUSDT Perpetual Contract in Innovation Zone, with up to 50x leverage",
+        "type": {
+          "key": "new_crypto",
+          "title": "New Listings"
+        },
+        "url": "https://announcements.bybit.com/en-US/article/new-listing-orochiusdt-perpetual-contract-in-innovation-zone-with-up-to-50x-leverage--art43ad358a137f/",
+        "dateTimestamp": 1794563581000,
+        "startDateTimestamp": 1794563581000,
+        "endDateTimestamp": 1794563581000,
+        "publishTime": 1794563663000
+      },
+      "detail_extract": {
+        "type": "perpetual",
+        "pair": "OROCHIUSDT",
+        "planned_open_utc": "U",
+        "status": "正文称已开放交易，未给精确计划开盘时刻"
+      }
+    },
+    "blocked_in": "U",
+    "verdict": "可接",
+    "checked_utc": "2026-11-14T13:37:44.709284+00:00",
+    "notes": "公开 V5 公告接口实测成功。new_crypto 中可含现货/合约；时间字段不能自动当开盘时点。样本正文只有交易已开放，精确开盘时间保留 U。",
+    "progress": "已完成单次公开探测；未完成跨日稳定性及多地域验收",
+    "stability_daily": "U",
+    "evidence": [
+      {
+        "fields": [
+          "endpoint",
+          "sample",
+          "auth",
+          "verdict",
+          "time_fields",
+          "history_depth"
+        ],
+        "url": "https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&page=1&limit=1",
+        "checked_utc": "2026-11-14T13:37:44.709284+00:00",
+        "http_status": 200,
+        "response_sha256": "b7feda8a434fb5ed737c5e8d540a1dd17ac4ccabb3d1f386bd5c4c8033247ce4",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      },
+      {
+        "fields": [
+          "endpoint",
+          "time_fields",
+          "auth"
+        ],
+        "url": "https://bybit-exchange.github.io/docs/v5/announcement",
+        "checked_utc": "2026-11-14T13:40:09.239588+00:00",
+        "http_status": 200,
+        "response_sha256": "b353b5d03b5299902613936f1ca4e859c5512226aa6ecae93d2a070ddad69b03",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      },
+      {
+        "fields": [
+          "sample.detail_extract"
+        ],
+        "url": "https://announcements.bybit.com/en-US/article/new-listing-orochiusdt-perpetual-contract-in-innovation-zone-with-up-to-50x-leverage--art43ad358a137f/",
+        "checked_utc": "2026-11-14T13:42:39.465121+00:00",
+        "http_status": 200,
+        "response_sha256": "4cfc378f53f37e2b85928be36f93b7df5cb967d0a77a6cb8d5bf3a234bef020a",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      }
+    ]
+  },
+  {
+    "source": "Upbit 上新公告",
+    "endpoint": "https://api-manager.upbit.com/api/v1/announcements?os=web&page=1&per_page=20&category=trade",
+    "auth": "none",
+    "rate_limit": "U",
+    "history_depth": "列表本次报告交易类总数 814；最早归档日期 U。",
+    "time_fields": [
+      "first_listed_at",
+      "listed_at",
+      "body 中计划交易支持时刻"
+    ],
+    "sample": {
+      "total_count": 814,
+      "notice": {
+        "id": 6771,
+        "uuid": "71709e8e-3977-4199-844a-797e31256b4e",
+        "first_listed_at": "2026-11-13T11:25:00+09:00",
+        "listed_at": "2026-11-13T11:25:00+09:00",
+        "title": "생텀(SANC) 신규 거래지원 안내 (KRW, BTC, USDT 마켓)"
+      },
+      "detail_extract": {
+        "type": "spot",
+        "asset": "SANC",
+        "quote_markets": [
+          "KRW",
+          "BTC",
+          "USDT"
+        ],
+        "planned_open_raw": "11월 13일 13시 예정",
+        "planned_open_utc": "2026-11-13T04:00:00Z",
+        "time_conversion": "2026 年及韩国公告时区 +09:00 取自同一公告上下文"
+      }
+    },
+    "blocked_in": "U",
+    "verdict": "可接",
+    "checked_utc": "2026-11-14T13:48:29.798672+00:00",
+    "notes": "非正式稳定性承诺的 api-manager 网站端点。trade 分类混有风险警告、终止交易及新增计价市场，不能每条都当上币。列表首条为 KAVA 警告；真正新增样本为 id6771。首次/更新发布时间分开保存；正文拟定时间可能延期，不能当实际首笔成交。",
+    "progress": "已完成单次公开探测；未完成跨日稳定性及多地域验收",
+    "stability_daily": "U",
+    "evidence": [
+      {
+        "fields": [
+          "endpoint",
+          "sample",
+          "auth",
+          "verdict",
+          "time_fields",
+          "history_depth"
+        ],
+        "url": "https://api-manager.upbit.com/api/v1/announcements?os=web&page=1&per_page=20&category=trade",
+        "checked_utc": "2026-11-14T13:48:29.798672+00:00",
+        "http_status": 200,
+        "response_sha256": "67821ca3b4ed8aa5d6b76c2d6bdcf903f58ac4bcba47cf9f039cf29eff525b0a",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      },
+      {
+        "fields": [
+          "sample",
+          "time_fields"
+        ],
+        "url": "https://api-manager.upbit.com/api/v1/announcements/6771",
+        "checked_utc": "2026-11-14T13:49:10.332529+00:00",
+        "http_status": 200,
+        "response_sha256": "3fec878836b8f488ca3a73075364d3fe6ef55c43a68d233c9c109a8e5c0acdab",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      },
+      {
+        "fields": [
+          "history_depth"
+        ],
+        "url": "https://api-manager.upbit.com/api/v1/announcements?os=web&page=2&per_page=1&category=trade",
+        "checked_utc": "2026-11-14T13:42:39.949248+00:00",
+        "http_status": 200,
+        "response_sha256": "a461d825828f6d91cc6af7531a91f0af1e74c45cbeae3a9317ec1f229b8b6256",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      }
+    ]
+  },
+  {
+    "source": "Coinbase 上新公告",
+    "endpoint": "https://www.coinbase.com/listings",
+    "auth": "none",
+    "rate_limit": "U",
+    "history_depth": "U",
+    "time_fields": [],
+    "sample": {
+      "http_status": 200,
+      "page_title": "Coinbase Listing",
+      "announcement_policy_date": "2026-10-14",
+      "official_channel": "https://x.com/CoinbaseAssets",
+      "listing_event": "U"
+    },
+    "blocked_in": "U",
+    "verdict": "不可接",
+    "checked_utc": "2026-11-14T13:37:45.019842+00:00",
+    "notes": "不可接指尚未验收到无需 key 且完整稳定的结构化上新公告源，不是该网站不能访问。官方 2026-10-14 公告将 @CoinbaseAssets 作为专门资产公告渠道，@CoinbaseMarkets 转发。listings 页面不是本次验证的新事件流，产品 API 的首见/上线状态也不能代替公告及预告开盘时间。X 获取权限/限额与历史补齐均 U；另一 blog 页面本出口 403，地区归因 U。",
+    "progress": "已完成单次公开探测；未完成跨日稳定性及多地域验收",
+    "stability_daily": "U",
+    "evidence": [
+      {
+        "fields": [
+          "endpoint",
+          "sample",
+          "auth",
+          "verdict",
+          "time_fields",
+          "history_depth"
+        ],
+        "url": "https://www.coinbase.com/listings",
+        "checked_utc": "2026-11-14T13:37:45.019842+00:00",
+        "http_status": 200,
+        "response_sha256": "4900c6fc641d842f0897a5bb72a369f2be7d99c370f316a34e25446752dfa8fe",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      },
+      {
+        "fields": [
+          "sample.announcement_policy_date",
+          "sample.official_channel",
+          "notes"
+        ],
+        "url": "https://www.coinbase.com/en-ca/blog/update-to-our-asset-listings-announcements",
+        "checked_utc": "2026-11-14T13:42:41.177911+00:00",
+        "http_status": 200,
+        "response_sha256": "d8f137022269ab147a4f8002c8a66061594f763c88308dd4b54c1da6cd8f3b8b",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      },
+      {
+        "fields": [
+          "notes"
+        ],
+        "url": "https://www.coinbase.com/blog/landing",
+        "checked_utc": "2026-11-14T13:40:09.462434+00:00",
+        "http_status": 403,
+        "response_sha256": "c6c3765ef57cec0ecfcfb093c7aeee3d317edcec38af388966cd0572008a89cb",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      }
+    ]
+  }
+]
