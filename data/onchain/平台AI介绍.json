@@ -1,0 +1,312 @@
+{
+ "flap-sh": {
+  "内容": {
+   "differentiation_en": "Compared to pure bonding-curve, emphasizes programmable taxes and vaults (dividends in any ERC-20, buybacks etc.) plus Pool Launch direct-to-pool option. Graduation typically after 80% supply sold. Per official docs.",
+   "differentiation_zh": "与纯联合曲线相比，强调可编程税收与金库（可分红任意ERC-20、回购等），并提供Pool Launch直接进池选项。毕业通常在80%供应售出后。据官网文档。",
+   "fee_split_en": "Bonding-curve protocol fee 1% (BSC, Robinhood, X Layer, Monad; 2.5% on Morph), stops after graduation. Tax tokens additional protocol rate up to 0.3%. Creation basically free (gas only). Tax set by creator and routed to vaults/holders. Per official protocol economics and guides.",
+   "fee_split_zh": "联合曲线协议费1%（BSC、Robinhood、X Layer、Monad；Morph为2.5%），毕业后停止。税收代币额外协议率最高0.3%。创建基本免费（仅gas）。税收由创作者设定并路由至金库/持有人。据官网protocol economics与相关指南。",
+   "one_liner_en": "Multi-chain EVM programmable launchpad supporting tax tokens that can route taxes as holder dividends.",
+   "one_liner_zh": "EVM多链可编程发射台，支持税收代币并可将税收转化为持有人分红。",
+   "risks_en": [
+    "Tax tokens can raise trading costs",
+    "Lower team transparency",
+    "Activity concentrated on BSC",
+    "No platform token for alignment"
+   ],
+   "risks_zh": [
+    "税收代币可能增加交易成本",
+    "团队透明度较低",
+    "多数活动集中在BSC",
+    "无平台币激励对齐"
+   ],
+   "selling_points_en": [
+    "Supports tax tokens with custom dividend vaults",
+    "Multi-chain (mainly BSC)",
+    "One-click creation without writing contracts",
+    "Graduates to major DEX like PancakeSwap",
+    "Has published audits"
+   ],
+   "selling_points_zh": [
+    "支持税收代币与自定义分红金库",
+    "多链运行（BSC为主）",
+    "无需编写合约一键创建",
+    "毕业后迁移至主流DEX如PancakeSwap",
+    "有公开审计报告"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "官方概览与协议",
+     "url": "https://docs.flap.sh/"
+    },
+    {
+     "kind": "official",
+     "note": "协议费用率",
+     "url": "https://docs.flap.sh/en/flap/v2/developers/protocol-economics"
+    },
+    {
+     "kind": "web",
+     "note": "DefiLlama数据",
+     "url": "https://defillama.com/protocol/flap-sh"
+    },
+    {
+     "kind": "web",
+     "note": "公司概况",
+     "url": "https://pitchbook.com/profiles/company/762495-49"
+    },
+    {
+     "kind": "web",
+     "note": "费用与机制汇总",
+     "url": "https://memefees.com/launchpads/flap-sh"
+    }
+   ],
+   "team_en": "Originated from ETHGlobal hackathon. PitchBook lists founded 2024, Lisbon Portugal, accelerator-backed (Unicorn Factory Lisboa). Full named team and funding details not mentioned. Per docs and PitchBook.",
+   "team_zh": "源自ETHGlobal黑客松。PitchBook显示2024年成立、葡萄牙里斯本、加速器支持（Unicorn Factory Lisboa）。完整实名团队与融资细节资料未提及。据文档与PitchBook。",
+   "token_en": "No platform token mentioned in available sources.",
+   "token_zh": "资料未提及平台币。",
+   "unknowns_en": [
+    "Full team members and equity",
+    "Detailed funding round amounts",
+    "Exact graduation parameters per chain"
+   ],
+   "unknowns_zh": [
+    "完整团队成员与股权",
+    "详细融资轮次金额",
+    "各链精确毕业参数"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "launchlab": {
+  "内容": {
+   "differentiation_en": "Solves traditional Raydium launch needing pre-seeded liquidity by using bonding curve. Supports multiple curve formulas (common quadratic), third parties can configure platform/creator fees, post-graduation LP allocated or burned per platform config. Per Raydium docs.",
+   "differentiation_zh": "解决传统Raydium发射需预存流动性的问题，用联合曲线替代。支持多种曲线公式（常见二次），第三方可配置平台/创作者费用，毕业后LP按平台配置分配或销毁。据Raydium文档。",
+   "fee_split_en": "Curve phase default ~1% (50% to pool seed, 50% protocol treasury), configurable platform fee, creator fee (up to ~0.5%), referral 0.1%. Creation ~0.1 SOL platform fee + rent. Post-graduation CPMM standard 0.25% (LP/protocol/fund split). Aug 2026 upgrade adjusted LP fee-key distribution. Per Raydium fee comparison and creator fees docs.",
+   "fee_split_zh": "曲线阶段默认约1%（50%进池种子、50%协议金库），可配置平台费、创作者费（最高约0.5%）、推荐费0.1%。创建约0.1 SOL平台费+租金。毕业后CPMM标准0.25%（LP/协议/基金分成）。2026年8月升级调整LP费用键分配。据Raydium费用对比与创作者费用文档。",
+   "one_liner_en": "Raydium's Solana bonding-curve launch protocol that graduates to Raydium CPMM without pre-seeded liquidity.",
+   "one_liner_zh": "Raydium的Solana联合曲线发射协议，毕业后进入Raydium CPMM，无需预存流动性。",
+   "risks_en": [
+    "Fees configured by platforms, third parties may set high fees",
+    "2026 upgrade changed creator LP share",
+    "No single fixed rate, must check per project",
+    "Depends on overall Raydium security"
+   ],
+   "risks_zh": [
+    "费用由平台配置，第三方可能设置高费",
+    "2026年升级改变了创作者LP份额",
+    "无统一固定费率，需逐项目检查",
+    "依赖Raydium整体安全"
+   ],
+   "selling_points_en": [
+    "Launch without pre-seeding both sides of liquidity",
+    "Graduates directly into Raydium main pools",
+    "Supports third-party platforms with custom fee splits",
+    "Liquidity locked or burned after graduation",
+    "Integrated with Raydium ecosystem"
+   ],
+   "selling_points_zh": [
+    "无需预存双边流动性即可发射",
+    "毕业后直接进入Raydium主流池",
+    "支持第三方平台自定义费用分成",
+    "流动性毕业后锁定或销毁",
+    "集成Raydium生态"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "LaunchLab概览",
+     "url": "https://docs.raydium.io/products/launchlab/overview"
+    },
+    {
+     "kind": "official",
+     "note": "费用对比",
+     "url": "https://docs.raydium.io/reference/fee-comparison"
+    },
+    {
+     "kind": "official",
+     "note": "创作者费用",
+     "url": "https://docs.raydium.io/products/launchlab/creator-fees"
+    },
+    {
+     "kind": "web",
+     "note": "相关协议数据参考",
+     "url": "https://defillama.com/protocol/raydium"
+    }
+   ],
+   "team_en": "Developed and operated by the Raydium team as one of Raydium's products. Raydium is an established Solana DEX. Specific independent funding for LaunchLab not mentioned.",
+   "team_zh": "由Raydium团队开发运营，作为Raydium产品之一。Raydium为成熟Solana DEX项目。具体LaunchLab独立融资资料未提及。",
+   "token_en": "No independent platform token; uses Raydium ecosystem (RAY etc.). No dedicated buyback mentioned.",
+   "token_zh": "无独立平台币；使用Raydium生态（RAY等）。资料未提及专门回购。",
+   "unknowns_en": [
+    "Specific fee distributions of third-party platforms",
+    "Exact default graduation threshold details",
+    "Independent team size"
+   ],
+   "unknowns_zh": [
+    "各第三方平台的具体费率分布",
+    "精确默认毕业阈值细节",
+    "独立团队规模"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "pons-v2": {
+  "内容": {
+   "differentiation_en": "Compared to standard bonding curve, allows quoting against tokenized stocks etc., graduates to Uniswap V4 with custom hook and permanently locked LP. V2 introduces curve phase (V1 was direct pool). Per multiple on-chain analyses and docs.",
+   "differentiation_zh": "与标准联合曲线相比，允许以代币化股票等资产报价，毕业进入自定义Hook的Uniswap V4池且LP永久锁定。V2引入曲线阶段（V1为直接池）。据多份链上分析与文档。",
+   "fee_split_en": "Creation fee ~0.0005 ETH. Curve/pool base fee ~1%, typically 70% creator / 30% protocol (protocol share mostly for PONS buyback/burn). Optional creator tax up to 10%. Opening anti-snipe tax (decays from high). Graduation threshold ~4.2 ETH for ETH quotes. Per multiple guides and on-chain data.",
+   "fee_split_zh": "创建费约0.0005 ETH。曲线/池基础费约1%，通常70%创作者/30%协议（协议部分多用于PONS回购销毁）。可选创作者税最高10%。有开盘反狙击税（从高衰减）。毕业阈值对ETH报价约4.2 ETH。据多份指南与链上数据。",
+   "one_liner_en": "Robinhood Chain bonding-curve launchpad supporting tokenized stock quotes, graduating to locked Uniswap V4 pool.",
+   "one_liner_zh": "Robinhood Chain上的联合曲线发射台，支持代币化股票报价，毕业后进入锁定Uniswap V4池。",
+   "risks_en": [
+    "Limited transparency from pseudonymous team",
+    "Early activity volatile, fees fell from peak",
+    "Tokenized stock quotes may carry regulatory risk",
+    "Anti-snipe tax may affect ordinary users"
+   ],
+   "risks_zh": [
+    "团队化名透明度有限",
+    "早期活动波动大，费用曾从高峰回落",
+    "代币化股票报价可能带来监管风险",
+    "反狙击税可能影响普通用户"
+   ],
+   "selling_points_en": [
+    "Supports ETH, stables and tokenized stocks as quote assets",
+    "Liquidity permanently locked after graduation",
+    "Creators receive high share of trade fees",
+    "Has anti-snipe tax mechanism",
+    "Platform token PONS with buyback and burn"
+   ],
+   "selling_points_zh": [
+    "支持ETH、稳定币及代币化股票作为报价资产",
+    "流动性毕业后永久锁定",
+    "创作者获得高比例交易费分成",
+    "有反狙击税机制",
+    "平台币PONS有回购销毁"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "官网发射台",
+     "url": "https://www.ponsfamily.com/launchpad"
+    },
+    {
+     "kind": "web",
+     "note": "费用与成本分析",
+     "url": "https://modus.builders/blog/what-a-pons-launch-costs"
+    },
+    {
+     "kind": "web",
+     "note": "V1/V2机制与费用",
+     "url": "https://memefees.com/reviews/pons"
+    },
+    {
+     "kind": "web",
+     "note": "团队与背景",
+     "url": "https://www.datawallet.com/crypto/pons-explained"
+    },
+    {
+     "kind": "web",
+     "note": "创始人相关报道",
+     "url": "https://kucoin.com/news/flash/vlad-tenev-follows-pons-founder-amid-launchpad-growth-on-robinhood-chain"
+    }
+   ],
+   "team_en": "Operated by Pons Labs, LLC. Core founder is pseudonymous Ozzy (@MEADGod), previously of RootsFi. Full named team not mentioned. Per reports.",
+   "team_zh": "由Pons Labs, LLC运营。核心创始人为化名Ozzy（@MEADGod），此前有RootsFi项目。完整实名团队资料未提及。据报道。",
+   "token_en": "Has platform token PONS. No presale team allocation; majority of protocol revenue used for buyback and burn. Per reports and related DefiLlama data.",
+   "token_zh": "有平台币PONS。无预售团队分配，协议收入大部分用于回购销毁。据报道与DefiLlama相关数据。",
+   "unknowns_en": [
+    "Full team identities and backers",
+    "Exact current rates (config-dependent)",
+    "Long-term buyback execution details"
+   ],
+   "unknowns_zh": [
+    "完整团队身份与融资方",
+    "精确当前费率（因配置可变）",
+    "长期回购执行细节"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "pump.fun": {
+  "内容": {
+   "differentiation_en": "Similar to typical bonding-curve platforms but graduates to its own PumpSwap (not external DEX), with market-cap-tiered fees, app platform fee, and creator fee sharing. Graduation around 85 SOL with LP burned. Per official docs and DefiLlama.",
+   "differentiation_zh": "与典型联合曲线平台类似，但自建PumpSwap作为毕业去向（而非依赖外部DEX），并引入市场资本分层的手续费、应用平台费以及创作者费用共享。毕业阈值约85 SOL，流动性迁移后LP销毁。据官网文档与DefiLlama。",
+   "fee_split_en": "Creation free. Bonding curve 1.25% total (creator 0.30%, protocol 0.95%, LP 0%) from May 13 2025. PumpSwap market-cap tiered (total 1.25% to 0.30%, creator up to 0.95%). Graduation 0.015 SOL. App platform fee 0.45% (0.40% with code) from Oct 17 2026. Protocol revenue partly buys/burns PUMP. Per official fees page and DefiLlama.",
+   "fee_split_zh": "创建免费。联合曲线交易总费1.25%（创作者0.30%、协议0.95%、LP 0%），自2025年5月13日起适用。PumpSwap按市值分层（总费从1.25%降至0.30%，创作者最高0.95%）。毕业费0.015 SOL。自2026年10月17日起应用内额外平台费0.45%（推荐码0.40%）。协议收入部分用于PUMP回购销毁。据官网fees页与DefiLlama。",
+   "one_liner_en": "Solana bonding-curve launchpad for free one-click memecoin creation that graduates to its own PumpSwap.",
+   "one_liner_zh": "Solana上免费一键创建模因币的联合曲线发射台，毕业后进入自有PumpSwap。",
+   "risks_en": [
+    "May 2024 private-key compromise incident ~$2M",
+    "Vast majority of tokens never graduate",
+    "App platform fee increases trading cost",
+    "Multi-chain expansion adds complexity"
+   ],
+   "risks_zh": [
+    "2024年5月曾发生约200万美元私钥泄露事件",
+    "绝大多数代币无法毕业",
+    "应用内额外平台费增加交易成本",
+    "多链扩展可能带来复杂性"
+   ],
+   "selling_points_en": [
+    "Free token creation with no pre-seeded liquidity",
+    "Fair launch with no team allocation",
+    "Creators earn ongoing share of trade fees",
+    "Graduates to own AMM PumpSwap",
+    "Supports multi-chain trading and in-app features"
+   ],
+   "selling_points_zh": [
+    "免费创建代币，无需预存流动性",
+    "公平发射无团队预分配",
+    "创作者从交易费中持续获得分成",
+    "毕业后进入自有AMM PumpSwap",
+    "支持多链交易与应用内功能"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "官方手续费表",
+     "url": "https://www.pump.fun/docs/fees"
+    },
+    {
+     "kind": "web",
+     "note": "DefiLlama费用与收入数据",
+     "url": "https://defillama.com/protocol/pump.fun"
+    },
+    {
+     "kind": "web",
+     "note": "团队与上线信息",
+     "url": "https://en.wikipedia.org/wiki/Pump.fun"
+    },
+    {
+     "kind": "web",
+     "note": "PUMP回购销毁说明",
+     "url": "https://pumpfyi.com/learn/pump-token/"
+    }
+   ],
+   "team_en": "Operated by Baton Corporation Ltd (UK-registered). Founders include Alon Cohen, Noah Tweedale, Dylan Kerler. Launched January 2024. Per official Terms, Wikipedia and reports.",
+   "team_zh": "由Baton Corporation Ltd（英国注册）运营。创始人包括Alon Cohen、Noah Tweedale、Dylan Kerler。2024年1月上线。据官网Terms、Wikipedia与相关报道。",
+   "token_en": "Has platform token PUMP. Sold July 2025 (~$1B total: $400M private + $600M ICO). Used for revenue share; protocol claims ~half of net revenue buys and burns on open market. Per DefiLlama and reports.",
+   "token_zh": "有平台币PUMP。2025年7月销售（总计约10亿美元：4亿私人+6亿ICO）。用途包括收益分享，协议宣称约一半净收入用于公开市场回购并销毁。据DefiLlama与相关报道。",
+   "unknowns_en": [
+    "Exact official fixed SOL graduation threshold",
+    "Long-term stability of app platform fee",
+    "Full team equity structure"
+   ],
+   "unknowns_zh": [
+    "精确毕业SOL阈值的官方固定数字",
+    "应用平台费的长期稳定性",
+    "完整团队股权结构"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ }
+}

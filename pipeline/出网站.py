@@ -3419,7 +3419,9 @@ def platform_profile_html(p):
     sfx = "zh" if LANG["v"] == "zh" else "en"
     if aic.get(f"one_liner_{sfx}") and not prof.get("叙事"):         # 没有人工一句话时，用 AI 的（中文站不再挂英文原文）
         txt = aic[f"one_liner_{sfx}"]
-        src = T(f"AI 根据 DefiLlama、官网与文档整理（{ai.get('日期')}），未人工核实", f"AI summary of DefiLlama, the site and docs ({ai.get('日期')}), not verified by us")
+        src = (T(f"Grok（网页版）整理（{ai.get('日期')}），未人工核实，来源见下方「AI 研究摘要」", f"Compiled by Grok (web) ({ai.get('日期')}), not verified by us; sources in the AI summary below")
+               if ai.get("方式") == "手动" else
+               T(f"AI 根据 DefiLlama、官网与文档整理（{ai.get('日期')}），未人工核实", f"AI summary of DefiLlama, the site and docs ({ai.get('日期')}), not verified by us"))
     tg = "".join(f'<span class="lpc-tag{" ai" if t == "AI Agent" else ""}">{esc(t)}</span>' for t in tags)
     one = (f'<p class="pp-one">{esc(txt)}</p><p class="lpc-src">{T("出处：", "Source: ")}{esc(src)}</p>' if txt else
            f'<p class="pp-one lpc-none">{T("DefiLlama 和官网都没给介绍。", "Neither DefiLlama nor the site gives a description.")}</p>')
@@ -3432,7 +3434,8 @@ def platform_profile_html(p):
         (T("母协议", "Parent"), esc(info.get("母协议") or na)),
         (T("审计", "Audits"), (" ".join(f'<a href="{esc(a)}" target="_blank" rel="noopener">{T("报告", "report")} {i + 1} ↗</a>' for i, a in enumerate(info.get("审计链接") or []))
                               or (T("DefiLlama 记 0 份", "0 on DefiLlama") if str(info.get("审计数")) in ("0", "None", "") else esc(str(info.get("审计数")))))),
-        (T("团队", "Team"), esc(team) if team else T("DefiLlama 不收录团队信息；看官网和 X 的自我介绍，本站还没核实", "DefiLlama has no team data; see the site and X — not verified by us")),
+        (T("团队", "Team"), esc(team) if team else (T("见下方「AI 研究摘要 · 团队与背景」", "See “AI research summary · Team & backing” below") if aic.get(f"team_{sfx}") else
+                                                   T("DefiLlama 不收录团队信息；看官网和 X 的自我介绍，本站还没核实", "DefiLlama has no team data; see the site and X — not verified by us"))),
     ]
     fund = info.get("融资") or []
     if fund:
