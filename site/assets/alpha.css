@@ -107,3 +107,66 @@
 .ax .states{display:flex;flex-wrap:wrap;gap:6px;align-items:stretch}
 .ax .states .card{flex:1 1 180px;padding:10px 12px}
 .ax .states .card.priv{opacity:.55}
+
+/* ===== 2026-11-15 改版：左列表 + 右详情（视觉跟宏观仪表盘 / 发射台矩阵一致：.glass.hero 大数字卡、站点走势图、ⓘ） */
+.ax-sub{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 0}
+.ax-sub a{font-size:12.5px;padding:6px 12px;border:1px solid var(--line2);border-radius:8px;color:var(--ink2);text-decoration:none}
+.ax-sub a.on{color:var(--on-lime);background:var(--lime);border-color:var(--lime)}
+.ax .ax-top{margin:4px 0 16px}
+.ax .hero .v .muted{font-weight:400}
+.ax .hero .meter{margin-top:10px}
+.ax-spark{display:block;margin-top:6px;overflow:visible}
+.ax-spark polyline{fill:none;stroke-width:1.6;stroke:currentColor}
+.ax-spark.t-up{color:var(--up)}.ax-spark.t-dn{color:var(--dn)}
+.md{display:grid;grid-template-columns:300px minmax(0,1fr);gap:16px;align-items:start}
+.md-list{position:sticky;top:110px;max-height:calc(100vh - 130px);overflow:auto;border:1px solid var(--line);border-radius:14px;background:var(--card);padding:8px}
+.md-filter{padding:4px 4px 8px;border-bottom:1px solid var(--line);margin-bottom:6px}
+.md-grp{display:flex;justify-content:space-between;font-size:10.5px;letter-spacing:.6px;color:var(--muted);text-transform:uppercase;padding:10px 8px 4px;font-family:var(--mono)}
+.md-row{display:flex;flex-direction:column;gap:3px;width:100%;text-align:left;font:inherit;color:inherit;background:transparent;border:1px solid transparent;border-left:3px solid transparent;border-radius:10px;padding:9px 10px;cursor:pointer}
+.md-row:hover{background:var(--hover)}
+.md-row.on{background:var(--lime-bg);border-color:var(--lime-bd);border-left-color:var(--lime)}
+.md-row .r1{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:13.5px}
+.md-row .r2{display:flex;align-items:center;justify-content:space-between;gap:8px;font:500 12px var(--mono);color:var(--ink2)}
+.md-row .r3{font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.md-row .r2 .ax-spark{margin:0}
+.md-row .dot{width:8px;height:8px;border-radius:50%;flex:none;background:var(--muted)}
+.md-row .dot.t-up{background:var(--up)}.md-row .dot.t-warn{background:var(--warn)}.md-row .dot.t-dn{background:var(--dn)}.md-row .dot.t-neutral{background:var(--line2)}
+.md-detail{min-width:0}
+.md-nav{display:none;gap:8px;align-items:center;margin-bottom:10px}
+.ax-head{padding:18px 20px;margin-bottom:12px;border-left:3px solid var(--lime)}
+.ax-title{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.ax-title h2{margin:0;font-size:22px}
+.ax-one{font-size:15px;color:var(--ink);margin:8px 0 10px;line-height:1.6}
+.ax-entry{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.ax-entry .ent{font-size:12.5px;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--lime-bg);border:1px solid var(--lime-bd);color:var(--ink)}
+.ax-entry .ent.none{background:transparent;border-color:var(--line2);color:var(--muted);font-weight:400}
+.ax-meta{margin-top:10px}
+.ax-kpis{margin-bottom:12px}
+.ax-kpis .hero{min-height:118px}
+.ax-chart{padding:12px 16px 6px;margin-top:12px}
+.ax-chart h3{margin:2px 0 6px}
+.ax-box{padding:14px 18px}
+.ax-box h3{margin:0 0 8px;display:flex;align-items:center;gap:8px}
+.ax-box p{margin:6px 0;font-size:13.5px;line-height:1.65}
+.ax-box.up{border-top:2px solid var(--up-bd)}.ax-box.dn{border-top:2px solid var(--dn-bd)}
+.ax-more{margin-top:12px;padding:12px 18px}
+.ax-more summary{cursor:pointer;font-weight:600}
+.ax-more h4{margin:16px 0 6px;font-size:13.5px}
+.ax .wrapc{white-space:normal}
+.ax tr.go{cursor:pointer}
+.ax-dl{display:grid;grid-template-columns:96px minmax(0,1fr);gap:4px 10px;font-size:12.5px;margin:6px 0}
+.ax-dl dt{color:var(--muted)}.ax-dl dd{margin:0}
+@media (max-width:900px){
+ .md{grid-template-columns:minmax(0,1fr)}
+ .md-list{position:static;max-height:none}
+ .md .md-detail{display:none}
+ .md.show .md-list{display:none}
+ .md.show .md-detail{display:block}
+ .md-nav{display:flex;padding:2px 0 4px}
+ .ax .ax-top,.ax .ax-kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ .ax .ax-top .hero,.ax .ax-kpis .hero{min-height:0;padding:12px 12px 10px}
+ .ax .hero .v{font-size:19px}
+ .ax .hero .s{font-size:11px}
+ .ax-kpis .ax-spark{width:100%}
+ .md.show ~ p,.ax-top:has(+ .md.show){display:none}
+}

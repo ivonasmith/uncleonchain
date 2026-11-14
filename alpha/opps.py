@@ -138,6 +138,7 @@ def build():
             "status": status, "status_src": f"alpha/review/{c['_file']}" if c else "auto",
             "bucket": "reject" if status == "拒绝" else ("watch" if entry == ["none"] else "invest"),
             "entry": entry, "entry_why": entry_why, "classes": cls, "scores": sc, "gates": gates,
+            "one_liner": (c or {}).get("one_liner"),
             "research": {x: (c or {}).get(x) for x in ("token_stance", "token_stance_src", "token_stance_date", "revenue_who", "revenue_method", "wash_or_subsidy",
                                                       "user_role", "counter", "verdict_reason", "missing", "checked_utc")} if c else None,
             "evidence": [{"url": e.get("url"), "fields": e.get("fields")} for e in (c or {}).get("evidence") or [] if str(e.get("url", "")).startswith("http")],
@@ -153,8 +154,11 @@ def build():
 
 
 def series(cards):
-    """监控：每张卡近 180 天协议收入（DefiLlama dailyRevenue，周合计）。母协议用 parent 名，单协议用 slug。"""
-    out, cut = {}, (dt.date.today() - dt.timedelta(days=180)).isoformat()
+    """监控：每张卡近 180 天逐日协议收入（DefiLlama dailyRevenue）。母协议用 parent 名，单协议用 slug。
+    写 data/alpha/rev/<id>.json（网站走势图格式 {d, s:{rev}}），返回 {id: [[日, 值], ...]}。"""
+    out, today = {}, dt.date.today().isoformat()
+    cut = (dt.date.today() - dt.timedelta(days=180)).isoformat()
+    os.makedirs(os.path.join(OUT, "rev"), exist_ok=True)
     for c in cards:
         k = c["key"]
         slug = k[len("g:parent#"):] if k.startswith("g:parent#") else c["data"].get("slug")
@@ -163,9 +167,10 @@ def series(cards):
         try:
             d = get(f"https://api.llama.fi/summary/fees/{slug}?dataType=dailyRevenue")
             pts = [(dt.datetime.fromtimestamp(t, dt.timezone.utc).date().isoformat(), v or 0) for t, v in d.get("totalDataChart") or []]
-            pts = [p for p in pts if cut <= p[0] < dt.date.today().isoformat()]
-            wk = [[pts[i][0], round(sum(v for _, v in pts[i:i + 7]))] for i in range(0, len(pts) - 6, 7)]
-            out[c["id"]] = wk
+            pts = [[a, round(b)] for a, b in pts if cut <= a < today]
+            if pts:
+                out[c["id"]] = pts
+                json.dump({"d": [a for a, _ in pts], "s": {"rev": [b for _, b in pts]}}, open(os.path.join(OUT, "rev", c["id"] + ".json"), "w"), separators=(",", ":"))
         except Exception as e:
             print("收入序列失败", slug, str(e)[:100])
         time.sleep(0.3)
@@ -173,12 +178,12 @@ def series(cards):
 
 
 QUEUE_PROMPT = """你在给「链上大叔研究台」Alpha 雷达补证（只研究正规项目，不写买卖建议）。对清单里每个协议，查官方网站 / 文档 / 公告、DefiLlama 方法论和可核对的链上信息，
-按下面格式交一个 JSON 数组（文件名 <日期>_checks.json）。每条事实带来源链接和核对日期；查不到写 "U"，不要估，不要编。
+按下面格式交一个 JSON 数组（文件名 <日期>_checks.json）。第一项 one_liner 用一句大白话说清它是什么（给没听过的人看）。每条事实带来源链接和核对日期；查不到写 "U"，不要估，不要编。
 结论 verdict 只能是：研究观察（对象明确、有可证伪假设、没查到否决项）/ 待核验（关键事实缺失或冲突，写清缺什么）/ 拒绝（身份错误、已确认风险、其实已有代币、不是对普通人开放的正规项目，写证据）。
 分数按 framework.json 附录一锚点给（M A F E G T 是 0–4，TM TE 是 0–3，不知道写 U，没有代币时 TE 写 NA），每个分数写 why 和 src。
 资金参与方式 entry 从 buy / stake / points / use / presale / mine / none 里选（none = 暂时没有资金入口），写 entry_why。"""
 
-QUEUE_SCHEMA = {"key": "清单里的 key（原样）", "name": "名称", "reviewer": "claude-auto 或 codex", "checked_utc": "核对时间 ISO",
+QUEUE_SCHEMA = {"key": "清单里的 key（原样）", "name": "名称", "one_liner": "一句话介绍：它是什么、给谁用、靠什么收钱（30 字内，大白话）", "reviewer": "claude-auto 或 codex", "checked_utc": "核对时间 ISO",
                 "token_stance": "官方确认不发币|有积分/空投计划|官方表态会发|没有表态|U", "token_stance_src": "链接", "token_stance_date": "日期或 U",
                 "revenue_who": "收入归谁", "revenue_method": "收入口径要点", "wash_or_subsidy": "刷量 / 补贴迹象或 U", "user_role": "普通人能以什么角色参与",
                 "entry": ["points"], "entry_why": "为什么是这种资金参与方式（带来源）",
@@ -201,12 +206,17 @@ def queue(cards):
 
 def main():
     res = build()
+    if "--no-series" not in sys.argv:
+        ser = series(res["opps"])
+        json.dump(ser, open(os.path.join(OUT, "opp_series.json"), "w", encoding="utf-8"), separators=(",", ":"))
+    else:
+        ser = load(os.path.join(OUT, "opp_series.json"), {}) or {}
+    for c in res["opps"]:   # 列表里的 30 天迷你走势
+        c["spark"] = [v for _, v in (ser.get(c["id"]) or [])[-30:]]
     q = queue(res["opps"])
     res["queue_n"] = q["n"]
     json.dump(res, open(os.path.join(OUT, "opps.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     json.dump(q, open(os.path.join(OUT, "research_queue.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
-    if "--no-series" not in sys.argv:
-        json.dump(series(res["opps"]), open(os.path.join(OUT, "opp_series.json"), "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
     print("机会卡", len(res["opps"]), res["counts"])
 
 

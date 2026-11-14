@@ -3934,11 +3934,9 @@ def build_core():
 
 # ---------------------------------------------------------------- Alpha 雷达（alpha/：雷达读 data/alpha/alpha_latest.json；方法论 / 案例库 / 进度读 alpha/research/*.md）
 ALPHA_TABS = [("", "机会看板", "Board", "可投资机会 · 预警观察", "Investable · watchlist"),
-              ("radar/", "雷达", "Radar", "无币协议 · 新上架 · 事件流", "Tokenless · new · feed"),
-              ("cases/", "案例库", "Cases", "同一框架看历史", "History, same framework"),
-              ("framework/", "框架", "Framework", "维度 · 流程 · 打分规则", "Dimensions · flow · rules"),
-              ("eval/", "评估器", "Evaluator", "手动给新项目打分", "Score a project by hand"),
-              ("progress/", "研究进度", "Progress", "阶段 · 外部任务", "Stages · tasks")]
+              ("radar/", "雷达", "Radar", "数据从哪来", "Where leads come from"),
+              ("cases/", "案例库", "Cases", "历史对照", "Historical reference")]
+ALPHA_FW = [("framework/", "框架", "Framework"), ("eval/", "评估器", "Evaluator"), ("progress/", "检验与进度", "Validation & progress"), ("method/", "方法论原文", "Original text")]
 
 
 def write_alpha_data():
@@ -3955,6 +3953,15 @@ def write_alpha_data():
             shutil.copyfile(os.path.join(src, fn), os.path.join(out, fn))
     for fn in ("framework.json", "cases.json"):   # 框架与案例定义在 alpha/（单一来源），网页按同一份读
         shutil.copyfile(os.path.join(ROOT, "alpha", fn), os.path.join(out, fn))
+    if os.path.isdir(os.path.join(src, "rev")):   # 机会卡逐日收入（走势图组件格式）
+        shutil.copytree(os.path.join(src, "rev"), os.path.join(out, "rev"), dirs_exist_ok=True)
+    cs = load(os.path.join(src, "case_series.json"), {}) or {}   # 案例：价格 ÷ P0（周线）、30 天手续费（周线）→ 走势图组件格式
+    os.makedirs(os.path.join(out, "case"), exist_ok=True)
+    for cid, v in cs.items():
+        for sym, pts in (v.get("tokens") or {}).items():
+            json.dump({"d": [a for a, _ in pts], "s": {"p": [b for _, b in pts]}}, open(os.path.join(out, "case", f"{cid}_{sym}.json"), "w"), separators=(",", ":"))
+        if v.get("fees30"):
+            json.dump({"d": [a for a, _ in v["fees30"]], "s": {"f": [b for _, b in v["fees30"]]}}, open(os.path.join(out, "case", f"{cid}_fees.json"), "w"), separators=(",", ":"))
 
 
 ALPHA_ST = {"研究观察": ("t-up", "Watching"), "待核验": ("t-warn", "To verify"), "优先研究": ("t-up", "Priority"), "拒绝": ("t-dn", "Rejected")}
@@ -4048,13 +4055,18 @@ def a_usd(v):
 
 
 def alpha_head(cur):
+    fw = cur in [p for p, _, _ in ALPHA_FW]
     tabs = "".join(f'<a role="tab" href="{U("/alpha/" + p)}" class="tab{" on" if p == cur else ""}"><span class="tn">{T(zh, en)}</span><span class="ts">{T(dz, de)}</span></a>'
                    for p, zh, en, dz, de in ALPHA_TABS)
-    name = next((T(zh, en) for p, zh, en, _, _ in ALPHA_TABS if p == cur), T("方法论原文", "Method (original)"))
-    cr = crumbs([(T("Alpha 雷达", "Alpha Radar"), "/alpha/" if cur else None)] + ([(name, None)] if cur else []))
+    tabs += f'<a role="tab" href="{U("/alpha/framework/")}" class="tab{" on" if fw else ""}" style="flex:0 0 auto;min-width:0"><span class="tn">{T("框架与方法", "Framework")}</span><span class="ts">{T("打分规则 · 工具", "Rules · tools")}</span></a>'
+    name = next((T(zh, en) for p, zh, en, _, _ in ALPHA_TABS if p == cur), None) or next((T(zh, en) for p, zh, en in ALPHA_FW if p == cur), "")
+    cr = crumbs([(T("Alpha 雷达", "Alpha Radar"), "/alpha/" if cur else None)] + ([(T("框架与方法", "Framework"), "/alpha/framework/")] if fw and cur != "framework/" else []) + ([(name, None)] if cur else []))
+    sub = ""
+    if fw:
+        sub = '<div class="ax-sub">' + "".join(f'<a href="{U("/alpha/" + p)}" class="{"on" if p == cur else ""}">{T(zh, en)}</a>' for p, zh, en in ALPHA_FW) + "</div>"
     return (f'{cr}<div class="ph"><div><div class="eyebrow">Alpha Radar</div><h1>{T("Alpha 雷达", "Alpha radar")}</h1>'
-            f'<p class="lede">{T("和核心选币互补：核心选币看币安上有连续读数的成熟代币；这里看新东西——新协议、新产品、新机制、没发币但有真实收入的协议。每挖到一个，就按同一套框架拆解打分（系统规则自动打 + 研究补证，未知记 U），资金能参与的进「可投资机会」，暂时不能的进「预警观察」。只研究正规项目，不做打狗盘；不按分数排名，不是买卖建议。", "Complements Core Picks: this tracks new things — new protocols, products, mechanisms and tokenless protocols with real revenue. Each is scored on one framework (system rules + research; unknowns stay U). Capital-accessible ones go to Investable, the rest to Watchlist. Established projects only; no score rankings; not trade advice.")}</p></div></div>'
-            f'<div class="tabwrap"><nav class="tabs" role="tablist">{tabs}</nav></div>')
+            f'<p class="lede">{T("新协议、新产品、新机制、没发币但有真实收入的协议：每挖到一个，按同一套框架拆解打分（系统按数据打能打的，研究补其余的，未知记 U）。资金能参与的进「可投资机会」，暂时不能的进「预警观察」。只研究正规项目，不按分数排名，不是买卖建议。", "New protocols, products and mechanisms, plus tokenless protocols with real revenue, each scored on one framework (system rules + research; unknowns stay U). Capital-accessible ones are Investable, the rest Watchlist. Established projects only; no rankings; not trade advice.")}</p></div></div>'
+            f'<div class="tabwrap"><nav class="tabs" role="tablist">{tabs}</nav></div>{sub}')
 
 
 def alpha_framework_html():
@@ -4209,17 +4221,17 @@ def build_alpha():
     js = f'<script src="{ASSET_URL["alpha.js"]}" defer></script>'
     zh_only = ZH_ONLY if LANG["v"] == "en" else ""
     app = lambda mode: f'{zh_only}<div class="ax" id="alpha-app" data-mode="{mode}" data-v="{ver}"><p class="muted">{T("加载中…", "Loading…")}</p></div><noscript><p class="muted">{T("这一页需要开启 JavaScript。", "This page needs JavaScript.")}</p></noscript>'
-    page_ = lambda rel, p, title, body: emit(rel, T(f"{title} · Alpha 雷达 · {BRAND}", f"{title} · Alpha Radar · {BRAND_EN}"), alpha_head(p) + body, active="alpha", desc=desc, extra_head=css, scripts=js)
+    page_ = lambda rel, p, title, body: emit(rel, T(f"{title} · Alpha 雷达 · {BRAND}", f"{title} · Alpha Radar · {BRAND_EN}"), alpha_head(p) + body, active="alpha", desc=desc, extra_head=css, scripts=js, chart=True)
     page_("alpha/index.html", "", T("机会看板", "Board"), app("board"))
-    emit("alpha/opp/index.html", T(f"机会卡 · Alpha 雷达 · {BRAND}", f"Opportunity · Alpha Radar · {BRAND_EN}"),
-         crumbs([(T("Alpha 雷达", "Alpha Radar"), "/alpha/"), (T("机会卡", "Opportunity"), None)]) + app("opp"), active="alpha", desc=desc, extra_head=css, scripts=js)
+    emit("alpha/opp/index.html", T(f"Alpha 雷达 · {BRAND}", f"Alpha Radar · {BRAND_EN}"),   # 旧的单张机会卡链接 → 看板同一张卡
+         f'<p><a href="{U("/alpha/")}">{T("机会卡已并入机会看板 →", "Cards now live on the board →")}</a></p><script>location.replace("{U("/alpha/")}"+location.hash)</script>', active="alpha")
     page_("alpha/radar/index.html", "radar/", T("雷达", "Radar"), radar)
     page_("alpha/cases/index.html", "cases/", T("案例库", "Cases"), app("cases"))
     page_("alpha/framework/index.html", "framework/", T("框架", "Framework"), alpha_framework_html())
     page_("alpha/eval/index.html", "eval/", T("评估器", "Evaluator"), app("eval"))
     emit("alpha/pool/index.html", T(f"Alpha 雷达 · {BRAND}", f"Alpha Radar · {BRAND_EN}"), f'<p><a href="{U("/alpha/")}">{T("候选池已并入机会看板 →", "The pool moved to the board →")}</a></p>',
          active="alpha", extra_head=f'<meta http-equiv="refresh" content="0; url={U("/alpha/")}">')
-    for p, fn, toc in (("method/", "Alpha标的筛选研究体系.md", True), ("progress/", "研究进度.md", False)):
+    for p, fn, toc in (("method/", "Alpha标的筛选研究体系.md", True), ("progress/", "研究进度.md", False)):   # 二级：框架与方法
         src = open(os.path.join(ROOT, "alpha", "research", fn), encoding="utf-8").read()
         nav = ""
         if toc:   # 目录：只列一级章节（## 开头），锚点和 core_md 的 h 编号一致
@@ -4231,7 +4243,7 @@ def build_alpha():
                     if len(m.group(1)) == 2:
                         items.append(f'<a href="#h{k}">{esc(m.group(2))}</a>')
             nav = '<details class="card" style="padding:10px 16px;margin:0 0 16px"><summary>' + T("目录", "Contents") + '</summary><div style="display:flex;flex-direction:column;gap:4px;margin-top:8px;font-size:13px">' + "".join(items) + "</div></details>"
-        name = next((T(zh, en) for q, zh, en, _, _ in ALPHA_TABS if q == p), T("方法论原文", "Method (original)"))
+        name = next(T(zh, en) for q, zh, en in ALPHA_FW if q == p)
         emit(f"alpha/{p}index.html", T(f"{name} · Alpha 雷达 · {BRAND}", f"{name} · Alpha Radar · {BRAND_EN}"),
              alpha_head(p) + zh_only + nav + f'<div class="article alpha-doc">{core_md(src)}</div>', active="alpha", desc=desc)
 
