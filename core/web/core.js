@@ -432,7 +432,8 @@ function research(){
 }
 function method(){
   const g=k=>`<li><b>${{g1:L('闸门 1 · 周期','Gate 1 · cycle'),g2:L('闸门 2 · BTC 底线','Gate 2 · BTC floor'),g3:L('闸门 3 · 流动性','Gate 3 · liquidity'),R1:L('R1 · 六问卡','R1 · six-question card'),R2:L('R2 · 解锁','R2 · unlocks'),R3:L('R3 · 价格不跑在收入前面','R3 · price vs revenue'),R4:L('R4 · 近期强势不加分','R4 · no points for strength'),R6:L('R6 · 渠道 B','R6 · channel B')}[k]}</b>：${WHY[k]}</li>`;
-  return `<div class="ccard"><h2>${L('口径与规则','Method & rules')}</h2>${EN?'<div class="note">Manual notes (narrative stage, unlocks, risks, findings) come from the research log and are in Chinese.</div>':''}
+  const rt=document.getElementById('core-rules');
+  return `${rt?`<div class="ccard find" id="rules">${rt.innerHTML}<div class="sm" style="margin-top:8px">${L('选币规则逐条和大叔确认过，改动会写进更新日志和更正记录；名单由规则每天产出、冻结记录，事后对账。','Selection rules agreed item by item; changes go to the changelog and corrections log.')}</div></div>`:''}<div class="ccard"><h2>${L('口径与规则','Method & rules')}</h2>${EN?'<div class="note">Manual notes (narrative stage, unlocks, risks, findings) come from the research log and are in Chinese.</div>':''}
   <h3 style="margin-top:12px">${L('三个维度的数据从哪来','Where the data comes from')}</h3><ul class="plain">
   <li><b>${L('基本面','Fundamentals')}</b>：${L('手续费 / 协议收入 / 持有人收入 / 供给侧收入、日活用户、国库：DefiLlama（UTC 整天）；业务量 = DEX 成交额或 TVL；流通量和 FDV：CoinGecko，按币安收盘折市值；核心开发者：GitHub 公开仓库提交记录（每周）。不同协议“收入”的定义可以相差数倍，先看口径再比较。','Fees / revenue / holder and supply-side revenue, active users, treasury: DefiLlama (UTC days); activity = DEX volume or TVL; supply and FDV: CoinGecko; developers: public GitHub commits (weekly).')}</li>
   <li><b>${L('资金面','Flows')}</b>：${L('成交额 = 币安这个币所有现货交易对 + U 本位 + 币本位合约，按币汇总成美元（见“成交额榜”的说明）；等权篮子 = 宏观页“山寨整体”同一个篮子。','Volume = all Binance spot pairs + USDⓈ-M + COIN-M futures per coin, in USD; the equal-weight basket is the Macro page’s “Altcoins overall” basket.')}</li>

@@ -3891,6 +3891,7 @@ def build_core():
                    "Fundamentals (fees, revenue, holder revenue, activity), flows (volume, spot + perp rank) and technicals (MAs, RSI, drawdown) for buyback / revenue protocols and narrative names. Updated daily; scores and rule checks are hypotheses for condition checks and risk alerts, not trade advice.")}</p>
 <div class="core" id="core" data-src="/data/core/core_latest.json?v={v}" data-series="/data/core/series/" data-hist="/data/core/core_history.json" data-rot="/data/core/rotation.json" data-bt="/data/core/score_backtest.json"></div>
 <template id="core-research">{core_md(open(os.path.join(ROOT, "core", "research", "评分研究立项.md"), encoding="utf-8").read())}</template>
+<template id="core-rules">{core_md(open(os.path.join(ROOT, "core", "research", "选币规则_v1.md"), encoding="utf-8").read())}</template>
 <noscript><p class="muted">{T("这一页需要开启 JavaScript。", "This page needs JavaScript.")}</p></noscript>"""
     emit("core/index.html", T(f"核心选币观测台 · {BRAND}", f"Core Picks Monitor · {BRAND_EN}"), body, active="core",
          extra_head=f'<link rel="stylesheet" href="{ASSET_URL["core.css"]}">', scripts=f'<script src="{ASSET_URL["core.js"]}" defer></script>',
