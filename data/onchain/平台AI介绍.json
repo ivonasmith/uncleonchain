@@ -1,4 +1,139 @@
 {
+ "anchorpad": {
+  "内容": {
+   "differentiation_en": "1% total fee, creator 0.4%. Supports AI agent launches, stock pairs. On Raydium LaunchLab. Per site.",
+   "differentiation_zh": "1%总费，创作者0.4%。支持AI代理发射、股票配对。基于Raydium LaunchLab。据官网。",
+   "fee_split_en": "1% per trade: creator 0.4%, rest platform. Creation basically free. Per site.",
+   "fee_split_zh": "每交易1%：创作者0.4%，其余平台。创建基本免费。据官网。",
+   "one_liner_en": "AI-assisted launchpad on LaunchLab; creator gets 0.4% of 1% fee; supports stock/crypto pairs.",
+   "one_liner_zh": "基于LaunchLab的AI辅助发射台，1%费中创作者获0.4%，支持股票/加密配对。",
+   "risks_en": [
+    "New platform",
+    "AI execution risks",
+    "Depends on LaunchLab",
+    "Unknown market share"
+   ],
+   "risks_zh": [
+    "新平台",
+    "AI执行风险",
+    "依赖LaunchLab",
+    "市场份额未知"
+   ],
+   "selling_points_en": [
+    "AI-assisted launches",
+    "Creator 0.4% fee",
+    "Any pairs",
+    "Anti-snipe options",
+    "Free basic launch"
+   ],
+   "selling_points_zh": [
+    "AI辅助发射",
+    "创作者0.4%费",
+    "任意配对",
+    "反狙击选项",
+    "免费基础发射"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "官网机制",
+     "url": "https://anchorpad.fun/"
+    }
+   ],
+   "team_en": "Not detailed publicly. Operates via anchorpad.fun.",
+   "team_zh": "资料未详细公开。通过anchorpad.fun运营。",
+   "token_en": "Has related ANCHOR. Buyback not detailed.",
+   "token_zh": "有相关ANCHOR。资料未详述回购。",
+   "unknowns_en": [
+    "Team background",
+    "Exact current activity and graduation",
+    "Long-term reliability"
+   ],
+   "unknowns_zh": [
+    "团队背景",
+    "精确当前活跃与毕业",
+    "长期可靠性"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "anoncoin": {
+  "内容": {
+   "differentiation_en": "Emphasizes anonymity and anti-short-term farming: creators get 0% on curve; fees start after graduation (420 SOL mcap). Post-grad fees tiered with some liquidity compounding. Per docs.",
+   "differentiation_zh": "强调匿名与反短期挖矿：曲线阶段创作者0%费，毕业（420 SOL市值）后才开始。后毕业费分层并部分复利流动性。据文档。",
+   "fee_split_en": "Curve: 2% (1.6% platform / 0.4% protocol / 0% creator). Post-grad 2%→0.5% tiers; creator and platform split remainder (~0.69% each starting), some compounding. Per docs.",
+   "fee_split_zh": "曲线：2%（平台1.6%/协议0.4%/创作者0%）。毕业后2%→0.5%分层，创作者与平台分剩余（约各0.69%起），部分复利。据文档。",
+   "one_liner_en": "Anonymous Solana memecoin launchpad on Meteora; no creator fees on curve, starts after graduation.",
+   "one_liner_zh": "Solana匿名模因币发射台，基于Meteora，曲线无创作者费，毕业后开始分配。",
+   "risks_en": [
+    "Very small market share",
+    "No creator incentive on curve",
+    "Anonymity may increase risks",
+    "Depends on Meteora"
+   ],
+   "risks_zh": [
+    "市场份额很小",
+    "曲线无创作者激励",
+    "匿名可能增加风险",
+    "依赖Meteora"
+   ],
+   "selling_points_en": [
+    "Anonymous creation",
+    "24-hour ticker protection",
+    "Creator fees after graduation",
+    "Supports community takeover",
+    "Built on Meteora"
+   ],
+   "selling_points_zh": [
+    "匿名创建",
+    "24小时ticker保护",
+    "毕业后创作者获费",
+    "支持社区接管",
+    "基于Meteora"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "费用文档",
+     "url": "https://docs.anoncoin.it/platform-mechanics/fees"
+    },
+    {
+     "kind": "official",
+     "note": "曲线机制",
+     "url": "https://docs.anoncoin.it/platform-mechanics/bonding-curve"
+    },
+    {
+     "kind": "web",
+     "note": "DefiLlama数据",
+     "url": "https://defillama.com/protocol/anoncoin"
+    },
+    {
+     "kind": "official",
+     "note": "概览",
+     "url": "https://docs.anoncoin.it/"
+    }
+   ],
+   "team_en": "Not detailed in materials. Operates via anoncoin.it, emphasizes anonymity.",
+   "team_zh": "资料未详细提及。通过anoncoin.it运营，强调匿名。",
+   "token_en": "Has platform token ANONCOIN. Buyback mechanics not detailed. Per DefiLlama.",
+   "token_zh": "有平台币ANONCOIN。资料未详述回购机制。据DefiLlama。",
+   "unknowns_en": [
+    "Team identity",
+    "Long-term fee execution details",
+    "Actual use of community takeover"
+   ],
+   "unknowns_zh": [
+    "团队身份",
+    "长期费用执行细节",
+    "社区接管实际使用"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
  "ascend-launchpad": {
   "内容": {
    "differentiation_en": "Based on Uniswap v4-style hook pools (not traditional bonding curve); creators set total fee 1%-10%, split by market-cap band into creator/protocol/coin-support. Protocol fees 90% for KNTQ and HYPE purchases. Per Ascend official docs.",
@@ -68,6 +203,76 @@
     "独立团队完整身份",
     "长期协议费购买执行细节",
     "精确毕业或迁移机制"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "axiom": {
+  "内容": {
+   "differentiation_en": "Trading terminal, not launchpad. Base 1% per trade, cashback Wood 0.95% to Champion 0.75%. Referral 10% off. Extra priority/bribe. Per docs and comparisons.",
+   "differentiation_zh": "交易终端，非发射台。基础1%每笔，返现从Wood 0.95%至Champion 0.75%。推荐10%折扣。额外priority/bribe。据文档与比较。",
+   "fee_split_en": "Platform 1% base, tiered cashback lowers net. Referral extra discount. Network fees user-set. No creator split. Per official docs.",
+   "fee_split_zh": "平台1%基础，阶梯返现降低净费。推荐码额外折扣。网络费用户自定。无创作者分成。据官方文档。",
+   "one_liner_en": "Solana-first trading terminal; 1% base platform fee with tiered cashback to 0.75%; supports perps; not a launchpad.",
+   "one_liner_zh": "Solana优先交易终端，1%基础平台费，阶梯返现至0.75%，支持perps；非发射台。",
+   "risks_en": [
+    "Extra terminal fees stack",
+    "High effective cost on small trades",
+    "Routing dependent",
+    "No launch function"
+   ],
+   "risks_zh": [
+    "额外终端费叠加",
+    "小单高有效成本",
+    "依赖路由",
+    "非发射功能"
+   ],
+   "selling_points_en": [
+    "Tiered SOL cashback",
+    "Referral discount",
+    "Multi-venue routing",
+    "Perps support",
+    "Transparent fees"
+   ],
+   "selling_points_zh": [
+    "阶梯SOL返现",
+    "推荐折扣",
+    "多场所路由",
+    "perps支持",
+    "透明费用"
+   ],
+   "sources": [
+    {
+     "kind": "web",
+     "note": "费率解释",
+     "url": "https://dexsheet.com/axiom/fees/"
+    },
+    {
+     "kind": "web",
+     "note": "Solana费用",
+     "url": "https://axiompro.app/guide/fees-rewards/solana-fees/"
+    },
+    {
+     "kind": "web",
+     "note": "基准比较",
+     "url": "https://trenchfees.com/pages/solana-memecoin-trading-fees-benchmark-2026"
+    }
+   ],
+   "team_en": "Related to Y Combinator Winter 2025. Not detailed.",
+   "team_zh": "Y Combinator Winter 2025相关。资料未详述。",
+   "token_en": "No independent platform token mentioned.",
+   "token_zh": "资料未提及独立平台币。",
+   "unknowns_en": [
+    "Exact tier volume thresholds",
+    "Full team background",
+    "Long-term rates"
+   ],
+   "unknowns_zh": [
+    "精确阶梯体积门槛",
+    "团队完整背景",
+    "长期费率"
    ]
   },
   "方式": "手动",
@@ -301,6 +506,71 @@
   "日期": "2026-11-14",
   "模型": "Grok（网页版，大叔手动问）"
  },
+ "boop.fun": {
+  "内容": {
+   "differentiation_en": "Own curve. ~1% trade fee splits 60% to BOOP stakers, 30% buybacks, 10% team. Graduates ~400 SOL to Raydium/Meteora. Staking gets graduated supply. Per descriptions and DefiLlama.",
+   "differentiation_zh": "自有曲线。约1%交易费分60% BOOP质押者、30%回购、10%团队。毕业约400 SOL至Raydium/Meteora。质押获毕业供应。据描述与DefiLlama。",
+   "fee_split_en": "~1% fee: 60% stakers, 30% buybacks, 10% team. Post-grad some fees to holders. Creation free. Per community and DefiLlama methodology.",
+   "fee_split_zh": "约1%费：60%质押者、30%回购、10%团队。毕业后部分费分持有人。创建免费。据社区与DefiLlama方法。",
+   "one_liner_en": "Solana launchpad; create 'cults' via web or X bot; 1% fee mainly to BOOP stakers and buybacks; ongoing creator-related rewards post-grad.",
+   "one_liner_zh": "Solana发射台，支持网页或X机器人创建“cult”，1%费主要分BOOP质押者与回购，毕业后持续创作者相关奖励。",
+   "risks_en": [
+    "Currently low activity",
+    "Depends on staking and buyback execution",
+    "Market share was high then declined",
+    "Social bot risks"
+   ],
+   "risks_zh": [
+    "当前活跃度低",
+    "依赖质押与回购执行",
+    "市场份额曾高后下降",
+    "社交机器人风险"
+   ],
+   "selling_points_en": [
+    "X bot one-click launch",
+    "Fees to stakers and buybacks",
+    "Ongoing rewards post-grad",
+    "Community-oriented",
+    "Free creation"
+   ],
+   "selling_points_zh": [
+    "X机器人一键发射",
+    "费分质押者与回购",
+    "毕业后持续奖励",
+    "社区导向",
+    "免费创建"
+   ],
+   "sources": [
+    {
+     "kind": "web",
+     "note": "DefiLlama数据",
+     "url": "https://defillama.com/protocol/boop.fun"
+    },
+    {
+     "kind": "web",
+     "note": "项目描述",
+     "url": "https://solanacompass.com/projects/boop"
+    }
+   ],
+   "team_en": "Related to Dingaling (former PancakeSwap founder). Per community descriptions.",
+   "team_zh": "由Dingaling（前PancakeSwap创始人）相关。据社区描述。",
+   "token_en": "Has platform token $BOOP. Fees mainly for staking rewards and buybacks. Per DefiLlama.",
+   "token_zh": "有平台币$BOOP。费主要用于质押奖励与回购。据DefiLlama。",
+   "unknowns_en": [
+    "Exact current fee confirmation",
+    "Long-term team operations",
+    "Exact graduation threshold"
+   ],
+   "unknowns_zh": [
+    "精确当前费率确认",
+    "长期团队运营",
+    "精确毕业阈值"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
  "bordrless-launchpad": {
   "内容": {
    "differentiation_en": "New token standard (BTS) allows in-trade hooks, not standard SPL. Curve graduates to Bordrless DEX. Fees configurable for creator/holders/protocol. Per docs and X.",
@@ -453,6 +723,71 @@
   "日期": "2026-11-14",
   "模型": "Grok（网页版，大叔手动问）"
  },
+ "circuit": {
+  "内容": {
+   "differentiation_en": "Layered on pump.fun. Creator fees fund per-coin rules (buybacks, rewards etc.); 50% of new coin creator fees buyback/burn $CIRCUIT. Rules server-side. Per comparison and docs.",
+   "differentiation_zh": "叠加在pump.fun上。创作者费用资助每币规则（回购、奖励等），50%新币创作者费用回购销毁$CIRCUIT。规则服务器端。据比较与文档。",
+   "fee_split_en": "Uses pump.fun fees. Extra: 50% of new coin creator fees buyback $CIRCUIT. Rules funded by fees. Creation 0.05 SOL. Per mentions.",
+   "fee_split_zh": "使用pump.fun费用。额外：50%新币创作者费回购$CIRCUIT。规则由费用资助。创建0.05 SOL。据提及。",
+   "one_liner_en": "Rule layer on pump.fun; creator fees fund programmable rules (buybacks, airdrops etc.); part buys back $CIRCUIT.",
+   "one_liner_zh": "基于pump.fun的规则层，创作者费用资助可编程规则（回购、空投等），部分回购$CIRCUIT。",
+   "risks_en": [
+    "Server-side rules dependency",
+    "Holds limited keys",
+    "Small market share",
+    "Depends on pump.fun"
+   ],
+   "risks_zh": [
+    "服务器端规则依赖",
+    "持有密钥",
+    "市场份额小",
+    "依赖pump.fun"
+   ],
+   "selling_points_en": [
+    "Programmable rules (Lego-like)",
+    "Fees fund automated actions",
+    "Built on pump.fun volume",
+    "Part platform token buyback",
+    "Flexible config"
+   ],
+   "selling_points_zh": [
+    "可编程规则（类Lego）",
+    "费用资助自动化动作",
+    "基于pump.fun流量",
+    "部分平台币回购",
+    "灵活配置"
+   ],
+   "sources": [
+    {
+     "kind": "web",
+     "note": "比较描述",
+     "url": "https://lfg.cooking/academy/best-solana-launchpads"
+    },
+    {
+     "kind": "official",
+     "note": "相关站点",
+     "url": "https://circuitonsol.xyz/"
+    }
+   ],
+   "team_en": "Not detailed. Operates via related sites.",
+   "team_zh": "资料未详细提及。通过相关站点运营。",
+   "token_en": "Has platform token $CIRCUIT. Part of fees used for buyback and burn. Per descriptions.",
+   "token_zh": "有平台币$CIRCUIT。部分费用用于回购销毁。据描述。",
+   "unknowns_en": [
+    "Team background",
+    "Long-term rule reliability",
+    "Exact fee execution details"
+   ],
+   "unknowns_zh": [
+    "团队背景",
+    "长期规则可靠性",
+    "精确费用执行细节"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
  "clanker": {
   "内容": {
    "differentiation_en": "Unlike pump.fun bonding curves, Clanker v5 puts 1B supply into Uniswap v4 pool with no LP fee but 1%-10% buy/sell tax, liquidity permanently locked. Per official docs.",
@@ -524,6 +859,136 @@
     "CLANKER精确回购规则",
     "长期治理",
     "所有链的统一审计"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "cook": {
+  "内容": {
+   "differentiation_en": "Default 3% platform fee (all to COOK, split by recipe to holders/buyback etc.). Raydium extra 0.25%. Graduates 85 SOL to locked CPMM. Per docs.",
+   "differentiation_zh": "默认3%平台费（全归COOK，按配方分给持有人/回购等）。Raydium另0.25%。毕业85 SOL至锁定CPMM。据文档。",
+   "fee_split_en": "Curve default 3% all platform, split by recipe (holders, buyback etc.). Raydium 0.25%. Creation free. Per docs.",
+   "fee_split_zh": "曲线默认3%全平台，按配方分（持有人、回购等）。Raydium 0.25%。创建免费。据文档。",
+   "one_liner_en": "On Raydium LaunchLab; default 3% fee all to platform split by recipe; supports anti-snipe and holder rewards; no platform token.",
+   "one_liner_zh": "基于Raydium LaunchLab，默认3%费全归平台按配方分，支持反狙击与持有人奖励，无平台币。",
+   "risks_en": [
+    "High default fee",
+    "Depends on recipe execution",
+    "Small market share",
+    "Depends on Raydium"
+   ],
+   "risks_zh": [
+    "高默认费",
+    "依赖配方执行",
+    "市场份额小",
+    "依赖Raydium"
+   ],
+   "selling_points_en": [
+    "Recipe custom fee routing",
+    "Anti-snipe protection",
+    "Holder rewards",
+    "Free launch",
+    "Locked LP at graduation"
+   ],
+   "selling_points_zh": [
+    "配方自定义费路由",
+    "反狙击保护",
+    "持有人奖励",
+    "免费发射",
+    "毕业锁定LP"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "费用与机制",
+     "url": "https://www.cooklaunchpad.fun/docs"
+    }
+   ],
+   "team_en": "Not detailed publicly. Operates via cooklaunchpad.fun.",
+   "team_zh": "资料未详细公开。通过cooklaunchpad.fun运营。",
+   "token_en": "No independent platform token mentioned.",
+   "token_zh": "资料未提及独立平台币。",
+   "unknowns_en": [
+    "Team background",
+    "Exact current recipe adoption",
+    "Long-term reliability"
+   ],
+   "unknowns_zh": [
+    "团队背景",
+    "精确当前配方采用",
+    "长期可靠性"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "ember": {
+  "内容": {
+   "differentiation_en": "Creator chooses 1-3% tax and modules. Meteora takes 20%, most of remainder to modules (e.g. 50% holders). Graduates to locked DAMM v2. Per site.",
+   "differentiation_zh": "创作者选税1-3%与模块。Meteora取20%，剩余大部分入模块（持有人50%等）。毕业至DAMM v2锁定。据官网。",
+   "fee_split_en": "Tax 1-3%. Meteora 20%. Modules e.g. holder rewards ~50% of tax etc. Platform keeps portion. Supports Sniper Shield etc. Per docs.",
+   "fee_split_zh": "税1-3%。Meteora 20%。模块如持有人奖励约50%税等。平台保留部分。支持Sniper Shield等。据文档。",
+   "one_liner_en": "On Meteora DBC; configurable modules route most tax to holders, burns, lotto or team; supports paired assets.",
+   "one_liner_zh": "基于Meteora DBC，可配置模块将大部分税路由至持有人、销毁、彩票或团队，支持配对资产。",
+   "risks_en": [
+    "Depends on Meteora and keeper",
+    "Complex module config",
+    "Small market share",
+    "Paired asset risks"
+   ],
+   "risks_zh": [
+    "依赖Meteora与keeper",
+    "模块配置复杂",
+    "市场份额小",
+    "配对资产风险"
+   ],
+   "selling_points_en": [
+    "Fee modules (holders/burns etc.)",
+    "Pairs with stocks etc.",
+    "On-chain payouts every 15 min",
+    "Anti-snipe options",
+    "Locked liquidity at graduation"
+   ],
+   "selling_points_zh": [
+    "费用模块（持有人/销毁等）",
+    "配对股票等",
+    "每15分钟链上支付",
+    "反狙击选项",
+    "毕业锁定流动性"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "官网",
+     "url": "https://embercurve.fun/"
+    },
+    {
+     "kind": "official",
+     "note": "工作原理",
+     "url": "https://embercurve.fun/how"
+    },
+    {
+     "kind": "x",
+     "note": "官方介绍",
+     "url": "https://x.com/embercurve/status/2097783112688095585"
+    }
+   ],
+   "team_en": "Not detailed publicly. Operates via embercurve.fun.",
+   "team_zh": "资料未详细公开。通过embercurve.fun运营。",
+   "token_en": "Has platform token $EMBER. Some modules/flywheel for buyback and burn. Per site.",
+   "token_zh": "有平台币$EMBER。部分模块/飞轮回购销毁。据官网。",
+   "unknowns_en": [
+    "Team background",
+    "Long-term module reliability",
+    "Exact current fee details"
+   ],
+   "unknowns_zh": [
+    "团队背景",
+    "长期模块可靠性",
+    "精确当前费率细节"
    ]
   },
   "方式": "手动",
@@ -610,6 +1075,146 @@
   "日期": "2026-11-14",
   "模型": "Grok（网页版，大叔手动问）"
  },
+ "float": {
+  "内容": {
+   "differentiation_en": "Creator chooses 1%-2.5% fee. Remainder splits 15% holders, 5% creator, 35% traders, 35% $FLOAT buyback, 10% treasury. Graduates to locked Raydium. Per docs.",
+   "differentiation_zh": "创作者选1%-2.5%费。剩余分15%持有人、5%创作者、35%交易者、35%$FLOAT回购、10%金库。毕业至锁定Raydium。据文档。",
+   "fee_split_en": "Raydium takes portion (0.25% on curve). Remainder: 15% holders, 5% creator, 35% traders USDC, 35% $FLOAT buyback/burn, 10% treasury. Per docs and GitHub.",
+   "fee_split_zh": "Raydium取部分（曲线0.25%）。剩余：15%持有人、5%创作者、35%交易者USDC、35%$FLOAT回购销毁、10%金库。据文档与GitHub。",
+   "one_liner_en": "On Raydium LaunchLab; fees split to holders, creator, trader airdrops, $FLOAT buyback and treasury; supports paired assets.",
+   "one_liner_zh": "基于Raydium LaunchLab，费分持有人、创作者、交易者空投、$FLOAT回购与金库，支持配对资产。",
+   "risks_en": [
+    "New platform small share",
+    "Depends on Raydium",
+    "Airdrop and buyback execution dependency",
+    "Ticker reuse fees"
+   ],
+   "risks_zh": [
+    "新平台份额小",
+    "依赖Raydium",
+    "空投与回购执行依赖",
+    "ticker复用费"
+   ],
+   "selling_points_en": [
+    "Five-way fee split",
+    "Trader USDC airdrops",
+    "Holder rewards",
+    "Buyback/burn $FLOAT",
+    "Pairs with stocks etc."
+   ],
+   "selling_points_zh": [
+    "五方费分",
+    "交易者USDC空投",
+    "持有人奖励",
+    "回购销毁$FLOAT",
+    "配对股票等资产"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "费用文档",
+     "url": "https://www.floatlaunch.xyz/docs"
+    },
+    {
+     "kind": "official",
+     "note": "协议参考",
+     "url": "https://github.com/floatdotxyz/float"
+    },
+    {
+     "kind": "x",
+     "note": "官方更新",
+     "url": "https://x.com/floatdotxyz/status/2120731792965554390"
+    }
+   ],
+   "team_en": "Not detailed publicly. Operates via floatlaunch.xyz.",
+   "team_zh": "资料未详细公开。通过floatlaunch.xyz运营。",
+   "token_en": "Has platform token $FLOAT. 35% of fees used for buyback and burn. Per docs.",
+   "token_zh": "有平台币$FLOAT。35%费用于回购销毁。据文档。",
+   "unknowns_en": [
+    "Team background",
+    "Long-term airdrop sustainability",
+    "Exact current allocation execution"
+   ],
+   "unknowns_zh": [
+    "团队背景",
+    "长期空投可持续性",
+    "精确当前分配执行"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "fomo": {
+  "内容": {
+   "differentiation_en": "Mainly trading app, not launchpad. Solana: <5 USDC $0.10, to 47.5 2%, 47.5-190 $0.95, >190 0.50%. Other chains 0.50%. Per help centre and MemeFees.",
+   "differentiation_zh": "主要是交易应用而非发射台。Solana：<5 USDC 0.10美元、<47.5 2%、47.5-190 0.95美元、>190 0.50%。其他链0.50%。据帮助中心与MemeFees。",
+   "fee_split_en": "Solana tiers: $0.10 / 2% / $0.95 / 0.50%. Referral 10% off to 0.45%. Platform takes; no creator split detailed. Per official and web.",
+   "fee_split_zh": "Solana分档：0.10美元 / 2% / 0.95美元 / 0.50%。推荐码10%折扣至0.45%。平台收取，无创作者分成详述。据官方与网页。",
+   "one_liner_en": "Multi-chain trading app (incl. Solana); not pure launchpad; Solana fees tiered by order size up to 2%, covers gas.",
+   "one_liner_zh": "多链交易应用（含Solana），非纯发射台；Solana按订单大小分档收费，最高2%，覆盖gas。",
+   "risks_en": [
+    "High effective rates on small orders",
+    "Not a launchpad",
+    "High trader loss reports",
+    "App dependent"
+   ],
+   "risks_zh": [
+    "小单有效费率高",
+    "非发射台",
+    "交易者亏损高比例报告",
+    "依赖应用"
+   ],
+   "selling_points_en": [
+    "Multi-chain support",
+    "Solana gas covered",
+    "Tiered small orders",
+    "Referral discount",
+    "Social trading"
+   ],
+   "selling_points_zh": [
+    "多链支持",
+    "Solana gas覆盖",
+    "小单分档",
+    "推荐折扣",
+    "社交交易"
+   ],
+   "sources": [
+    {
+     "kind": "web",
+     "note": "费率档",
+     "url": "https://fomofamily.discount/fees"
+    },
+    {
+     "kind": "web",
+     "note": "排名与统计",
+     "url": "https://memefees.com/launchpads"
+    },
+    {
+     "kind": "web",
+     "note": "交易者分析",
+     "url": "https://bitquery.io/investigations/fomo-app-traders-lose-money"
+    }
+   ],
+   "team_en": "Not detailed publicly. Operates via fomo.family.",
+   "team_zh": "资料未详细公开。通过fomo.family运营。",
+   "token_en": "No independent platform token mentioned.",
+   "token_zh": "资料未提及独立平台币。",
+   "unknowns_en": [
+    "Exact creator splits if any",
+    "Team background",
+    "Long-term fee stability"
+   ],
+   "unknowns_zh": [
+    "精确创作者分成（若有）",
+    "团队背景",
+    "长期费率稳定"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
  "graphite-protocol": {
   "内容": {
    "differentiation_en": "Not a pure launchpad itself but provides tech and partial ownership for LetsBONK.fun etc., with revenue flowing back to GP. Differs from pump.fun-style as infrastructure layer rather than direct UI. Per official site.",
@@ -685,6 +1290,429 @@
   "日期": "2026-11-14",
   "模型": "Grok（网页版，大叔手动问）"
  },
+ "greendildo": {
+  "内容": {
+   "differentiation_en": "Mandatory holder rewards: Token-2022 3% tax, 2% drips to holders ($10+), 1% platform (half buybacks $GREENDILDO). Graduates at 85 SOL to Raydium with LP burned. Per project docs.",
+   "differentiation_zh": "强制持有人奖励：Token-2022 3%税，2%滴给持有人（$10+），1%平台（一半回购$GREENDILDO）。毕业85 SOL至Raydium并销毁LP。据项目文档。",
+   "fee_split_en": "3% on every buy/sell/transfer: 2% to holders, 1% to platform (about half buyback/burn platform token). Creators extra 0.1%. 100% LP burned at graduation. Per site.",
+   "fee_split_zh": "每笔买卖转账3%：2%持有人、1%平台（约一半回购销毁平台币）。创作者额外0.1%。毕业时100% LP销毁。据官网。",
+   "one_liner_en": "Solana launchpad with 3% tax on every trade, 2% auto-paid to holders; built on Raydium LaunchLab.",
+   "one_liner_zh": "Solana发射台，每笔交易3%税，2%自动分给持有人，基于Raydium LaunchLab。",
+   "risks_en": [
+    "Very new platform with tiny market share",
+    "3% tax is high",
+    "Depends on Raydium",
+    "Holder rewards depend on execution"
+   ],
+   "risks_zh": [
+    "新平台市场份额极小",
+    "3%税较高",
+    "依赖Raydium",
+    "持有人奖励依赖执行"
+   ],
+   "selling_points_en": [
+    "Holders get 2% of every trade",
+    "Free creation",
+    "100% liquidity burned at graduation",
+    "Supports various reward assets",
+    "Creators get 0.1% lifetime"
+   ],
+   "selling_points_zh": [
+    "每笔交易持有人获2%",
+    "免费创建",
+    "毕业流动性100%销毁",
+    "支持多种奖励资产",
+    "创作者获0.1%终身"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "官网机制",
+     "url": "https://greendildo.fun/"
+    },
+    {
+     "kind": "official",
+     "note": "比较文章",
+     "url": "https://greendildo.fun/articles/pump-fun-alternatives"
+    },
+    {
+     "kind": "official",
+     "note": "毕业说明",
+     "url": "https://greendildo.fun/articles/what-is-a-bonding-curve"
+    }
+   ],
+   "team_en": "Not detailed in materials. Operates via greendildo.fun. Per project pages.",
+   "team_zh": "资料未详细提及。通过greendildo.fun运营。据项目页。",
+   "token_en": "Has platform token $GREENDILDO. Half of platform revenue used for buyback and burn. Per project descriptions.",
+   "token_zh": "有平台币$GREENDILDO。平台收入一半用于回购销毁。据项目说明。",
+   "unknowns_en": [
+    "Team background",
+    "Long-term reward allocation stability",
+    "Exact buyback execution"
+   ],
+   "unknowns_zh": [
+    "团队背景",
+    "长期奖励分配稳定性",
+    "精确回购执行"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "heaven": {
+  "内容": {
+   "differentiation_en": "No traditional curve; uses virtual liquidity AMM. Protocol fees vary by market cap and category (community/creator); creator fees 0.1%-1%. All protocol revenue to God Flywheel for $LIGHT buyback. Per docs.",
+   "differentiation_zh": "无传统曲线，用虚拟流动性AMM。协议费按市值与类别（社区/创作者）变化；创作者费0.1%-1%。全部协议收入入God Flywheel回购$LIGHT。据文档。",
+   "fee_split_en": "Creation free. MC <$100k: 1% protocol. Above: community 0.25% protocol + 0.1% creator; creator category 0.5% protocol + 1% creator. Blocked all to buyback. Per docs.",
+   "fee_split_zh": "创建免费。市值<$100k：1%协议。超后社区0.25%协议+0.1%创作者；创作者类0.5%协议+1%创作者。Blocked全部入回购。据文档。",
+   "one_liner_en": "Own-AMM launchpad with virtual liquidity for instant trading; fees adjust by market cap and category; all revenue buys back $LIGHT.",
+   "one_liner_zh": "自有AMM发射台，虚拟流动性即刻交易，按市值与类别调整协议/创作者费，全部收入回购$LIGHT。",
+   "risks_en": [
+    "Manual classification dependency",
+    "Market share was high then possibly declined",
+    "Virtual liquidity model",
+    "New platform risks"
+   ],
+   "risks_zh": [
+    "手动分类依赖",
+    "市场份额曾高后可能下降",
+    "虚拟流动性模型",
+    "新平台风险"
+   ],
+   "selling_points_en": [
+    "Virtual liquidity for instant trading",
+    "Creator fees by category",
+    "Anti-snipe protection",
+    "100% revenue buyback/burn",
+    "Own full stack"
+   ],
+   "selling_points_zh": [
+    "虚拟流动性即刻交易",
+    "按类别分配创作者费",
+    "反狙击保护",
+    "100%收入回购销毁",
+    "自有全栈"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "费用文档",
+     "url": "https://docs.heaven.xyz/fees"
+    },
+    {
+     "kind": "official",
+     "note": "权限费",
+     "url": "https://docs.heaven.xyz/permissioned"
+    },
+    {
+     "kind": "official",
+     "note": "盈利模式",
+     "url": "https://docs.heaven.xyz/profit"
+    }
+   ],
+   "team_en": "Not detailed publicly. Operates via heaven.xyz.",
+   "team_zh": "资料未详细公开。通过heaven.xyz运营。",
+   "token_en": "Has platform token $LIGHT. All protocol revenue used for buyback and burn. Per docs.",
+   "token_zh": "有平台币$LIGHT。全部协议收入回购销毁。据文档。",
+   "unknowns_en": [
+    "Team background and funding",
+    "Current activity",
+    "Long-term classification execution"
+   ],
+   "unknowns_zh": [
+    "团队背景与融资",
+    "当前活跃度",
+    "长期分类执行"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "hooked": {
+  "内容": {
+   "differentiation_en": "Token-2022 transfer hooks enforce rules. Curve 1% fee, mostly for $HOOKED buyback/burn (~85%), some to creator. Paired assets 3% etc. Per site.",
+   "differentiation_zh": "Token-2022转移钩子强制规则。曲线1%费，多数用于$HOOKED回购销毁（约85%），部分创作者。配对资产3%等。据官网。",
+   "fee_split_en": "Most SOL-priced coins: 1% fee, ~85% buyback/burn $HOOKED, 15% dev/creator. Paired 3% partly to holders. Meteora takes portion. Per docs.",
+   "fee_split_zh": "多数SOL定价币：1%费，约85%回购销毁$HOOKED，15%开发/创作者。配对3%部分持有人。Meteora取部分。据文档。",
+   "one_liner_en": "Solana transfer-hook launchpad on Meteora; rules embedded in tokens; 1% fee mostly for $HOOKED buyback/burn.",
+   "one_liner_zh": "Solana转移钩子发射台，基于Meteora，规则嵌入代币，1%费主要用于$HOOKED回购销毁。",
+   "risks_en": [
+    "Rules can cause trade failures",
+    "Small market share",
+    "Depends on Meteora",
+    "Hook compatibility issues"
+   ],
+   "risks_zh": [
+    "规则可能导致交易失败",
+    "市场份额小",
+    "依赖Meteora",
+    "钩子兼容性问题"
+   ],
+   "selling_points_en": [
+    "On-chain rules (anti-bundle, caps etc.)",
+    "Rules immutable",
+    "Flywheel buyback/burn",
+    "Supports paired assets",
+    "Graduation options"
+   ],
+   "selling_points_zh": [
+    "链上规则（反捆绑、限额等）",
+    "规则不可改",
+    "飞轮回购销毁",
+    "支持配对资产",
+    "毕业选项"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "官网",
+     "url": "https://www.hookedpad.com/"
+    },
+    {
+     "kind": "official",
+     "note": "文档",
+     "url": "https://www.hookedpad.com/docs"
+    },
+    {
+     "kind": "web",
+     "note": "比较提及",
+     "url": "https://lfg.cooking/academy/best-solana-launchpads"
+    }
+   ],
+   "team_en": "Not detailed publicly. Operates via hookedpad.com.",
+   "team_zh": "资料未详细公开。通过hookedpad.com运营。",
+   "token_en": "Has platform token $HOOKED. Fees mainly used for buyback and burn. Per site.",
+   "token_zh": "有平台币$HOOKED。费主要用于回购销毁。据官网。",
+   "unknowns_en": [
+    "Team background",
+    "Long-term hook adoption",
+    "Exact flywheel execution"
+   ],
+   "unknowns_zh": [
+    "团队背景",
+    "长期钩子采用",
+    "精确飞轮执行"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "jetforge": {
+  "内容": {
+   "differentiation_en": "Own curve program. 1% fee splits 40% creator, 40% platform, 20% buyback. Creator gets 5% of raised SOL at graduation. No ongoing creator fee post-grad. Per site and comparison articles.",
+   "differentiation_zh": "自有曲线程序。1%费分创作者40%、平台40%、回购20%。毕业时创作者获5%筹集SOL。毕业后无持续创作者费。据官网与比较文章。",
+   "fee_split_en": "Curve 1%: 40% creator vault, 40% platform, 20% per-token buyback/burn. Graduation at 85 SOL: 5% creator, 5% platform, 90% liquidity (LP burned). No platform creation fee. Per docs.",
+   "fee_split_zh": "曲线1%：40%创作者vault、40%平台、20%每币回购销毁。毕业85 SOL：5%创作者、5%平台、90%流动性（LP销毁）。创建无平台费。据文档。",
+   "one_liner_en": "Solana fair-launch pad with 1% curve fee (40% to creator), graduates at 85 SOL to Raydium with LP burned, plus per-token buyback/burn.",
+   "one_liner_zh": "Solana公平发射台，1%曲线费（创作者40%），毕业85 SOL至Raydium并销毁LP，含每币回购销毁。",
+   "risks_en": [
+    "Very small market share",
+    "No creator fees after graduation",
+    "New platform",
+    "Depends on Raydium"
+   ],
+   "risks_zh": [
+    "市场份额很小",
+    "毕业后无创作者费",
+    "新平台",
+    "依赖Raydium"
+   ],
+   "selling_points_en": [
+    "Creator gets 40% of curve fee + 5% SOL at graduation",
+    "20% of fees per-token buyback/burn",
+    "Graduates to Raydium with LP burned",
+    "No team allocations",
+    "Risk labels"
+   ],
+   "selling_points_zh": [
+    "创作者获40%曲线费+毕业5% SOL",
+    "每币20%费回购销毁",
+    "毕业至Raydium销毁LP",
+    "无团队分配",
+    "风险标签"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "官网机制",
+     "url": "https://jetforge.io/"
+    },
+    {
+     "kind": "official",
+     "note": "费用比较",
+     "url": "https://jetforge.io/blog/solana-launchpad-creator-fees-compared"
+    },
+    {
+     "kind": "official",
+     "note": "回购说明",
+     "url": "https://jetforge.io/blog/buyback-and-burn-explained"
+    }
+   ],
+   "team_en": "Not detailed publicly. Operates via jetforge.io. Per site.",
+   "team_zh": "资料未详细公开。通过jetforge.io运营。据官网。",
+   "token_en": "No independent platform token mentioned. Per-token buybacks exist.",
+   "token_zh": "资料未提及独立平台币。每币有独立回购。",
+   "unknowns_en": [
+    "Team background and funding",
+    "Long-term activity",
+    "Exact buyback execution frequency"
+   ],
+   "unknowns_zh": [
+    "团队背景与融资",
+    "长期活跃度",
+    "精确回购执行频率"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "jupiter-studio": {
+  "内容": {
+   "differentiation_en": "Emphasizes structured launches: fixed or custom params, decaying anti-sniper fee, creator vesting, permanently locked LP. Trading fee 1% or 2% split 50/50 with Jupiter, same before/after graduation. Per Jupiter docs.",
+   "differentiation_zh": "强调结构化发射：固定或自定义参数、反狙击费衰减、创作者归属、永久锁定LP。交易费1%或2%平分给创作者与Jupiter，毕业前后一致。据Jupiter文档。",
+   "fee_split_en": "Trading fee 1% (Meme) or 1%/2% (Custom), lifetime 50% to creator and 50% to Jupiter. Anti-sniper starts high and decays if enabled. No extra creation fee beyond network and rent. Per Jupiter docs.",
+   "fee_split_zh": "交易费1%（Meme）或1%/2%（Custom），全程50%给创作者、50%给Jupiter。反狙击开启时初始高费衰减。无额外创建费，仅网络与租金。据Jupiter文档。",
+   "one_liner_en": "Jupiter's Solana launchpad on Meteora DBC; creators receive 50% of trading fees, with permanently locked liquidity after graduation.",
+   "one_liner_zh": "Jupiter的Solana发射台，基于Meteora DBC，创作者获交易费50%，毕业流动性永久锁定。",
+   "risks_en": [
+    "Currently very small market share",
+    "Anti-sniper fee may affect early liquidity",
+    "Depends on Meteora",
+    "Higher complexity in custom mode"
+   ],
+   "risks_zh": [
+    "当前市场份额很小",
+    "反狙击费可能影响早期流动性",
+    "依赖Meteora",
+    "自定义模式复杂度较高"
+   ],
+   "selling_points_en": [
+    "Creators get 50% of trading fees (lifetime)",
+    "Graduated LP permanently locked",
+    "USDC-quoted Meme mode",
+    "Optional anti-sniper and creator vesting",
+    "Integrated with Jupiter ecosystem"
+   ],
+   "selling_points_zh": [
+    "创作者获50%交易费（全程）",
+    "毕业LP永久锁定",
+    "支持USDC报价的Meme模式",
+    "可选反狙击与创作者归属",
+    "与Jupiter生态集成"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "毕业与费用文档",
+     "url": "https://docs.jup.ag/user-docs/launch/studio/graduation-and-fees"
+    },
+    {
+     "kind": "official",
+     "note": "Studio概览",
+     "url": "https://docs.jup.ag/user-docs/launch/studio"
+    },
+    {
+     "kind": "web",
+     "note": "发射指南",
+     "url": "https://soltidy.com/blog/how-to-launch-a-token-on-jupiter-studio"
+    },
+    {
+     "kind": "web",
+     "note": "审查与费用",
+     "url": "https://dexsheet.com/jupiter-studio/"
+    }
+   ],
+   "team_en": "Operated by Jupiter team. Part of Jupiter product suite. Per official docs.",
+   "team_zh": "由Jupiter团队运营。作为Jupiter产品的一部分。据官方文档。",
+   "token_en": "No independent platform token; uses JUP or others. Protocol fees go to Jupiter. Per docs.",
+   "token_zh": "无独立平台币；使用JUP或其他。协议费归Jupiter。据文档。",
+   "unknowns_en": [
+    "Long-term actual creator fee claim rates",
+    "Precise graduation threshold details across modes"
+   ],
+   "unknowns_zh": [
+    "长期创作者费实际领取率",
+    "精确毕业阈值在不同模式下的细节"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "launch-coin-on-believe": {
+  "内容": {
+   "differentiation_en": "On Meteora DBC. Fees at least 0.25%, Meteora takes 20%. Some sources say post-grad 70/30 or 50/50 to creator. No official exact rates published. Per MemeFees and community.",
+   "differentiation_zh": "基于Meteora DBC。费至少0.25%，Meteora取20%。部分来源称毕业后70/30或50/50创作者。无官方公开精确费率。据MemeFees与社区。",
+   "fee_split_en": "Not precisely published. DBC min 0.25% base, Meteora 20%. Creators get portion post-grad. Creation ~free. Per MemeFees.",
+   "fee_split_zh": "资料未精确公开。DBC最低0.25%基费，Meteora 20%。毕业后创作者可获部分。创建约免费。据MemeFees。",
+   "one_liner_en": "Creator coin platform on Meteora DBC; supports social launches; creators get portion of fees post-grad; currently low activity.",
+   "one_liner_zh": "基于Meteora DBC的创作者币平台，支持社交发射，毕业后创作者获部分费，当前活跃度低。",
+   "risks_en": [
+    "Currently very low activity",
+    "Fees not published",
+    "Legal issues mentioned",
+    "Depends on Meteora"
+   ],
+   "risks_zh": [
+    "当前活跃度极低",
+    "费率未公开",
+    "曾有法律争议提及",
+    "依赖Meteora"
+   ],
+   "selling_points_en": [
+    "Social/X bot launches",
+    "High creator fee share",
+    "Graduates to Meteora",
+    "iOS support",
+    "Community tools"
+   ],
+   "selling_points_zh": [
+    "社交/X机器人发射",
+    "创作者高费份额",
+    "毕业至Meteora",
+    "iOS支持",
+    "社区工具"
+   ],
+   "sources": [
+    {
+     "kind": "web",
+     "note": "审查与费率",
+     "url": "https://memefees.com/reviews/believe"
+    },
+    {
+     "kind": "web",
+     "note": "统计",
+     "url": "https://memefees.com/launchpads/believe"
+    },
+    {
+     "kind": "web",
+     "note": "DefiLlama",
+     "url": "https://defillama.com/protocol/fees/launch-coin-on-believe"
+    }
+   ],
+   "team_en": "Not detailed publicly.",
+   "team_zh": "资料未详细公开。",
+   "token_en": "Has related $BELIEVE or LAUNCHCOIN. Usage not detailed.",
+   "token_zh": "有相关$BELIEVE或LAUNCHCOIN。资料未详述用途。",
+   "unknowns_en": [
+    "Exact current fees and splits",
+    "Team background",
+    "Exact graduation conditions"
+   ],
+   "unknowns_zh": [
+    "精确当前费率与分成",
+    "团队背景",
+    "毕业精确条件"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
  "launchlab": {
   "内容": {
    "differentiation_en": "Solves traditional Raydium launch needing pre-seeded liquidity by using bonding curve. Supports multiple curve formulas (common quadratic), third parties can configure platform/creator fees, post-graduation LP allocated or burned per platform config. Per Raydium docs.",
@@ -754,6 +1782,76 @@
     "各第三方平台的具体费率分布",
     "精确默认毕业阈值细节",
     "独立团队规模"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "lfg": {
+  "内容": {
+   "differentiation_en": "Layer rather than pure launchpad. Solana uses LaunchLab with up to 5% tax (Token-2022); LFG takes 10%, rest split by creator weights. Robinhood uses Pons up to 10%. Per docs.",
+   "differentiation_zh": "层而非纯发射台。Solana用LaunchLab，税最高5%（Token-2022），LFG取10%，剩余按创作者权重分。Robinhood用Pons最高10%。据文档。",
+   "fee_split_en": "Solana: total tax up to 5%; LFG takes 10% first, remaining 90% split by mode weights (holders, buyback, TopBlast, creator). Post-grad CPMM creator fee 1%. Per docs.",
+   "fee_split_zh": "Solana：总税最高5%，LFG先取10%，剩余90%按模式权重分（持有人、回购、TopBlast、创作者）。毕业后CPMM创作者费1%。据文档。",
+   "one_liner_en": "Multi-chain tokenomics layer on Raydium LaunchLab and Pons; supports holder rewards, buyback and TopBlast.",
+   "one_liner_zh": "多链代币经济学层，基于Raydium LaunchLab与Pons，支持持有人奖励、回购与TopBlast。",
+   "risks_en": [
+    "Small market share",
+    "Higher taxes affect trading",
+    "Depends on underlying engines",
+    "Token-2022 compatibility issues"
+   ],
+   "risks_zh": [
+    "市场份额小",
+    "税较高影响交易",
+    "依赖底层引擎",
+    "Token-2022兼容性问题"
+   ],
+   "selling_points_en": [
+    "Configurable tax modes (holders/buyback/TopBlast)",
+    "Multi-chain support",
+    "Graduates to major DEX",
+    "Creator can split fees",
+    "Token-2022 tax persists"
+   ],
+   "selling_points_zh": [
+    "可配置税模式（持有人/回购/TopBlast）",
+    "多链支持",
+    "毕业至主流DEX",
+    "创作者可分费",
+    "Token-2022税持续"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "Solana机制",
+     "url": "https://lfg.cooking/docs/protocol/solana-raydium-launchlab"
+    },
+    {
+     "kind": "official",
+     "note": "费用结构",
+     "url": "https://lfg.cooking/docs/tokenomics/fee-structure"
+    },
+    {
+     "kind": "official",
+     "note": "比较",
+     "url": "https://lfg.cooking/academy/best-solana-launchpads"
+    }
+   ],
+   "team_en": "Not detailed. Operates via lfg.cooking.",
+   "team_zh": "资料未详细提及。通过lfg.cooking运营。",
+   "token_en": "No independent platform token mentioned.",
+   "token_zh": "资料未提及独立平台币。",
+   "unknowns_en": [
+    "Team background",
+    "Long-term mode adoption",
+    "Exact current active configs"
+   ],
+   "unknowns_zh": [
+    "团队背景",
+    "长期模式采用",
+    "精确当前活跃配置"
    ]
   },
   "方式": "手动",
@@ -982,6 +2080,151 @@
   "日期": "2026-11-14",
   "模型": "Grok（网页版，大叔手动问）"
  },
+ "moon.it": {
+  "内容": {
+   "differentiation_en": "Offers flat curve (fixed price until creator-set threshold) and classic curve; integrates AI-powered Meme Money Markets from 9GAG; strong creator incentives and cross-chain support (including Abstract); community takeover (CTO) mechanism.",
+   "differentiation_zh": "提供平坦曲线（固定价格直至毕业阈值）与经典曲线；整合9GAG的AI驱动Meme Money Markets；强创作者激励与跨链支持（含Abstract）；社区接管（CTO）机制。",
+   "fee_split_en": "1% trade fee. Post-Meteora graduation: 80% of SOL LP fees to creator / 20% to platform (docs), 100% of token rewards to creator; Raydium: LP burned with 2 SOL creator bonus. Migration fees: ~3 SOL (Meteora), ~6 SOL (Raydium). Terms of Use state 90%/10% LP reward split, creating a discrepancy.",
+   "fee_split_zh": "交易手续费1%。Meteora毕业后：SOL LP手续费80%创作者 / 20%平台（文档），token侧奖励100%创作者；Raydium：LP销毁并给予创作者2 SOL奖励。迁移费用：Meteora约3 SOL，Raydium约6 SOL。Terms of Use中写明LP奖励90%/10%分配，存在差异。",
+   "one_liner_en": "Cross-chain (Solana & EVM) token launchpad with classic and flat bonding curves that migrates liquidity to Raydium or Meteora and allocates a high share of LP fees to creators.",
+   "one_liner_zh": "Solana与EVM跨链代币发射平台，支持经典/平坦绑定曲线，毕业后将流动性迁移至Raydium或Meteora，并向创作者分配高比例LP手续费。",
+   "risks_en": [
+    "Docs and Terms of Use disagree on LP fee split",
+    "Relatively low graduation rates",
+    "High meme token volatility and liquidity risk",
+    "Dependency on third-party DEX graduation"
+   ],
+   "risks_zh": [
+    "文档与Terms of Use对LP费用分配不一致",
+    "毕业率相对较低",
+    "meme代币高波动与流动性风险",
+    "依赖第三方DEX毕业"
+   ],
+   "selling_points_en": [
+    "Creators get 80% of SOL LP fees daily after Meteora graduation",
+    "Flat curve with anti-snipe",
+    "Free DexScreener Enhanced Token Info on graduation",
+    "Choice of Raydium (LP burned + 2 SOL bonus) or Meteora (LP permanently locked)",
+    "No platform token; audited by Ackee Blockchain"
+   ],
+   "selling_points_zh": [
+    "Meteora毕业后创作者每日自动获80% SOL LP手续费",
+    "平坦曲线支持反狙击",
+    "毕业代币免费获DexScreener Enhanced Token Info",
+    "可选Raydium（LP销毁+2 SOL奖励）或Meteora（LP永久锁定）",
+    "无平台代币；Ackee Blockchain审计"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "官方文档",
+     "url": "https://docs.moon.it/docs/welcome"
+    },
+    {
+     "kind": "official",
+     "note": "曲线说明",
+     "url": "https://docs.moon.it/docs/bonding-curves"
+    },
+    {
+     "kind": "official",
+     "note": "使用条款",
+     "url": "https://docs.moon.it/docs/terms-of-use"
+    }
+   ],
+   "team_en": "Collaboration between DEX Screener and Helio (a MoonPay company); related entities include Helio Fintech Ltd and Wen Moon Ser PTE. LTD; involvement of Stijn Paumen (Helio-related) and others.",
+   "team_zh": "DEX Screener与Helio（MoonPay旗下公司）合作；相关实体包括Helio Fintech Ltd与Wen Moon Ser PTE. LTD；Stijn Paumen（Helio相关）等参与。",
+   "token_en": "No platform token and no plans to release one, per documentation.",
+   "token_zh": "无平台代币，且文档明确表示无计划发行。",
+   "unknowns_en": [
+    "Exact currently applied fee allocation percentages",
+    "Full team and equity structure details",
+    "Specific parameters on EVM chains"
+   ],
+   "unknowns_zh": [
+    "当前实际应用的费用分配精确比例",
+    "完整团队与股权结构细节",
+    "EVM链上具体参数"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "moonshot-create": {
+  "内容": {
+   "differentiation_en": "Combines launch with retail trading app; supports custom quote assets and optional holder rewards (80% of fees) or creator reward modes. Per Moonshot Protocol docs.",
+   "differentiation_zh": "结合发射与零售交易应用，支持自定义报价资产，并可选持有人奖励（80%费用）或创作者奖励模式。据Moonshot Protocol文档。",
+   "fee_split_en": "Trading fee settable 1%-4%. Holder rewards mode ~80% to holders / 20% protocol; creator rewards 50/50. Additional tiered fees on app side. Per docs and support pages.",
+   "fee_split_zh": "交易费1%-4%可设。持有人奖励模式约80%给持有人、20%协议；创作者奖励模式50/50。另有应用侧分层费用。据文档与支持页。",
+   "one_liner_en": "Solana memecoin launchpad (also trading app) supporting various quotes, with holder or creator reward modes.",
+   "one_liner_zh": "Solana模因币发射台（兼交易应用），支持多种报价，有持有人或创作者奖励模式。",
+   "risks_en": [
+    "Higher fees on small trades in app",
+    "Very small market share",
+    "Mechanics vary by mode",
+    "Depends on external paired assets"
+   ],
+   "risks_zh": [
+    "交易应用小额费用较高",
+    "市场份额很小",
+    "机制随模式变化",
+    "依赖外部配对资产"
+   ],
+   "selling_points_en": [
+    "Supports tokenized stock quotes etc.",
+    "Optional holder or creator reward modes",
+    "Liquidity locking",
+    "Mobile-friendly trading app",
+    "Zero-capital launch options"
+   ],
+   "selling_points_zh": [
+    "支持代币化股票等报价",
+    "持有人或创作者奖励可选",
+    "流动性锁定",
+    "移动友好交易应用",
+    "零资本发射选项"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "Moonshot Protocol文档",
+     "url": "https://www.launchmoonshot.xyz/docs"
+    },
+    {
+     "kind": "official",
+     "note": "交易费用",
+     "url": "https://support.moonshot.com/trade/fees"
+    },
+    {
+     "kind": "web",
+     "note": "应用审查",
+     "url": "https://memefees.com/reviews/moonshot"
+    },
+    {
+     "kind": "web",
+     "note": "Create协议费用",
+     "url": "https://defillama.com/protocol/moonshot-create"
+    }
+   ],
+   "team_en": "Operated by entities such as Buy Moonshots, Inc. Funding not detailed. Per reviews.",
+   "team_zh": "由Buy Moonshots, Inc.等相关实体运营。资料未详细提及融资。据审查。",
+   "token_en": "No official platform token. Per FAQ.",
+   "token_zh": "无官方平台币。据FAQ。",
+   "unknowns_en": [
+    "Exact current active launch volume",
+    "Long-term reward allocation execution",
+    "Details of relationship with Jupiter"
+   ],
+   "unknowns_zh": [
+    "精确当前活跃发射量",
+    "长期奖励分配执行",
+    "与Jupiter关系细节"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
  "noxa-fun": {
   "内容": {
    "differentiation_en": "Unlike pump.fun bonding curves, NOXA Fun puts full supply into locked Uniswap V3 single-sided pool, trades from first block with no graduation migration. Per official docs.",
@@ -1116,6 +2359,71 @@
     "完整团队与实体",
     "精确当前费率与执行细节",
     "长期持有人分配稳定性"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "pad": {
+  "内容": {
+   "differentiation_en": "Meta-layer: fixed fee to create pad, then fee splits set by pad owner (creator at least 10%, pad 5% etc.). Built on underlying platform fees. Per docs.",
+   "differentiation_zh": "元层：创建pad收费固定，之后费分由pad主设（创作者至少10%，pad 5%等）。基于底层平台费。据文档。",
+   "fee_split_en": "Create pad 1 SOL, launch coin 0.1 SOL. Creator fees: pad fixed 5%, pad owner 1-20%, creator at least 10%. Underlying platform fees separate. Per docs.",
+   "fee_split_zh": "创建pad 1 SOL，发射币0.1 SOL。创作者费：pad固定5%，pad主1-20%，创作者至少10%。底层平台费另计。据文档。",
+   "one_liner_en": "Custom launchpad builder on pump.fun or LaunchLab; creator fees configurable to pad owner and creator.",
+   "one_liner_zh": "可自定义发射台构建器，基于pump.fun或LaunchLab，创作者费可配置分给pad主与创作者。",
+   "risks_en": [
+    "Depends on underlying platforms",
+    "Higher creation cost",
+    "Small market share",
+    "Config complexity"
+   ],
+   "risks_zh": [
+    "依赖底层平台",
+    "创建成本较高",
+    "市场份额小",
+    "配置复杂性"
+   ],
+   "selling_points_en": [
+    "Build own pad",
+    "Configurable fee splits",
+    "Supports multiple quote assets",
+    "Built on mature engines",
+    "Low ongoing cut"
+   ],
+   "selling_points_zh": [
+    "构建自有pad",
+    "费分可配置",
+    "支持多引用资产",
+    "基于成熟引擎",
+    "低持续分成"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "费用与机制",
+     "url": "https://www.pad.rip/docs"
+    },
+    {
+     "kind": "x",
+     "note": "官方说明",
+     "url": "https://x.com/paddotrip"
+    }
+   ],
+   "team_en": "Not detailed publicly. Operates via pad.rip.",
+   "team_zh": "资料未详细公开。通过pad.rip运营。",
+   "token_en": "No independent platform token mentioned.",
+   "token_zh": "资料未提及独立平台币。",
+   "unknowns_en": [
+    "Team background",
+    "Current active pad count",
+    "Long-term adoption"
+   ],
+   "unknowns_zh": [
+    "团队背景",
+    "当前活跃pad数量",
+    "长期采用"
    ]
   },
   "方式": "手动",
@@ -1424,6 +2732,141 @@
   "日期": "2026-11-14",
   "模型": "Grok（网页版，大叔手动问）"
  },
+ "revshare": {
+  "内容": {
+   "differentiation_en": "Creator sets tax (1-10%+), splits to self and holders. Supports DBC, direct LP, Raydium etc. Platform takes low share. Per site and comparisons.",
+   "differentiation_zh": "创作者设税（1-10%+），分给自己与持有人。支持DBC、直接LP、Raydium等。平台取低比例。据官网与比较。",
+   "fee_split_en": "Configurable tax, high creator share (claimed ~92%). Platform low take. Supports holder distribution. Per official X and site.",
+   "fee_split_zh": "可配置税，创作者高份额（据称约92%）。平台低取。支持持有人分发。据官方X与站点。",
+   "one_liner_en": "Multi-chain holders rewards launchpad; configurable tax 1-10%+ split to creator and holders; supports multiple launch types.",
+   "one_liner_zh": "多链持有人奖励发射台，可配置税1-10%+分创作者与持有人，支持多种发射类型。",
+   "risks_en": [
+    "High tax affects liquidity",
+    "Multi-chain complexity",
+    "Small market share",
+    "Config risks"
+   ],
+   "risks_zh": [
+    "高税影响流动性",
+    "多链复杂性",
+    "市场份额小",
+    "配置风险"
+   ],
+   "selling_points_en": [
+    "Configurable high tax and distribution",
+    "Holder rewards",
+    "Multi-chain support",
+    "Multiple launch options",
+    "Ongoing creator income"
+   ],
+   "selling_points_zh": [
+    "可配置高税与分发",
+    "持有人奖励",
+    "多链支持",
+    "多种发射选项",
+    "持续创作者收入"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "关于",
+     "url": "https://revshare.xyz/about-revshare"
+    },
+    {
+     "kind": "x",
+     "note": "费用比较",
+     "url": "https://x.com/revshare_app/status/2015197534621172193"
+    },
+    {
+     "kind": "web",
+     "note": "比较",
+     "url": "https://revshare.ltd/articles/revshare-vs-pump-fun-which-token-launch-platform-is-better-in-2026"
+    }
+   ],
+   "team_en": "Not detailed publicly. Operates via revshare.xyz.",
+   "team_zh": "资料未详细公开。通过revshare.xyz运营。",
+   "token_en": "Has related $REVS. Buyback not detailed.",
+   "token_zh": "有相关$REVS。资料未详述回购。",
+   "unknowns_en": [
+    "Exact current rates",
+    "Team background",
+    "Long-term adoption"
+   ],
+   "unknowns_zh": [
+    "精确当前费率",
+    "团队背景",
+    "长期采用"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "ride-launchpad": {
+  "内容": {
+   "differentiation_en": "Unique vault mechanism: part of funds enter vault at bonding; subsequent trade fees continue funding it. ~1.5% trade fee. Per site.",
+   "differentiation_zh": "独特vault机制：毕业时部分资金入vault，后续交易费持续注入。交易约1.5%费。据官网。",
+   "fee_split_en": "1.5% trade fee; Meteora and Ride take portions, remainder mostly to vault/creator/stakers. Bonding threshold ~$8k. Per site description.",
+   "fee_split_zh": "交易1.5%费，Meteora与Ride各取部分，剩余多归vault/创作者/stakers。毕业阈值约$8k。据官网说明。",
+   "one_liner_en": "Solana launchpad; coins get own vault after bonding; part of trading fees flow to vault for holders.",
+   "one_liner_zh": "Solana发射台，币毕业后获自有vault，交易费部分流入vault供持有人使用。",
+   "risks_en": [
+    "Very small new platform share",
+    "Depends on Meteora",
+    "Complex vault mechanism",
+    "Many coins may not bond"
+   ],
+   "risks_zh": [
+    "新平台份额极小",
+    "依赖Meteora",
+    "vault机制复杂",
+    "许多币可能不毕业"
+   ],
+   "selling_points_en": [
+    "Own vault after bonding",
+    "High creator fee share",
+    "High anti-snipe fees",
+    "Built on Meteora",
+    "Community capital support"
+   ],
+   "selling_points_zh": [
+    "毕业后自有vault",
+    "创作者高费份额",
+    "反狙击高费",
+    "基于Meteora",
+    "社区资本支持"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "官网说明",
+     "url": "https://www.ride.markets/launchpad"
+    },
+    {
+     "kind": "web",
+     "note": "DefiLlama数据",
+     "url": "https://defillama.com/protocol/ride-launchpad"
+    }
+   ],
+   "team_en": "Related to Ride Markets. Not detailed.",
+   "team_zh": "与Ride Markets相关。资料未详述。",
+   "token_en": "No independent platform token mentioned.",
+   "token_zh": "资料未提及独立平台币。",
+   "unknowns_en": [
+    "Full team background",
+    "Long-term vault execution",
+    "Exact fee tiers"
+   ],
+   "unknowns_zh": [
+    "团队完整背景",
+    "长期vault执行",
+    "精确费分层"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
  "rise.rich": {
   "内容": {
    "differentiation_en": "Unique floor mechanism: protocol is sole counterparty; liquidity reallocates to floor. No traditional graduation. 1.25% trade fee splits to protocol/floor/creator. Per docs.",
@@ -1568,6 +3011,216 @@
     "完整融资细节",
     "长期奖励执行稳定性",
     "多链扩展深度"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "smithii": {
+  "内容": {
+   "differentiation_en": "Tooling platform rather than independent bonding-curve launchpad. Presale 2.5% purchase fee; bundler flat SOL fee. Relies on underlying platforms like pump.fun. Per docs.",
+   "differentiation_zh": "工具平台而非独立bonding curve发射台。Presale 2.5%购买费；bundler固定SOL费。依赖底层平台如pump.fun。据文档。",
+   "fee_split_en": "Presale: create 0.1 SOL, purchase 2.5% (97.5% to creator). Bundler ~0.3 SOL/launch. Claim tool 5% (some exceptions). Per docs.",
+   "fee_split_zh": "Presale：创建0.1 SOL，购买2.5%（97.5%创作者）。Bundler约0.3 SOL/次。Claim工具5%（部分除外）。据文档。",
+   "one_liner_en": "Multi-tool Solana launch and management suite; includes presale, bundler and claim tools; not a single curve platform.",
+   "one_liner_zh": "多工具Solana发射与管理套件，含presale、bundler与claim工具，非单一曲线平台。",
+   "risks_en": [
+    "Extra tool fees",
+    "Depends on third-party platforms",
+    "Presales have no refunds",
+    "Limited market share"
+   ],
+   "risks_zh": [
+    "额外工具费",
+    "依赖第三方平台",
+    "presale无退款",
+    "市场份额有限"
+   ],
+   "selling_points_en": [
+    "One-stop tools (create, presale, bundler)",
+    "Supports multi-launchpad bundling",
+    "Claim creator fees tool",
+    "Multi-chain support",
+    "Transparent fees"
+   ],
+   "selling_points_zh": [
+    "一站式工具（创建、presale、bundler）",
+    "支持多发射台bundling",
+    "claim创作者费工具",
+    "多链支持",
+    "透明费用"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "费用概览",
+     "url": "https://docs.smithii.io/overview/fees-and-wallets"
+    },
+    {
+     "kind": "official",
+     "note": "Launchpad文档",
+     "url": "https://docs.smithii.io/products/tools/solana/token-tools/token-launchpad"
+    },
+    {
+     "kind": "web",
+     "note": "DefiLlama数据",
+     "url": "https://defillama.com/protocol/smithii"
+    }
+   ],
+   "team_en": "Not detailed publicly. Operates via smithii.io.",
+   "team_zh": "资料未详细公开。通过smithii.io运营。",
+   "token_en": "No platform token mentioned.",
+   "token_zh": "资料未提及平台币。",
+   "unknowns_en": [
+    "Team background",
+    "Long-term revenue model",
+    "Exact current pricing"
+   ],
+   "unknowns_zh": [
+    "团队背景",
+    "长期收入模型",
+    "精确当前定价"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "solfoundry": {
+  "内容": {
+   "differentiation_en": "No curve; directly creates Meteora/Raydium pool. Locks LP, revokes authorities, anti-snipe fee decay at creation. Platform charges flat 0.2-0.3 SOL only, no trade share. Per site.",
+   "differentiation_zh": "无曲线，直接创建Meteora/Raydium池。创建时锁LP、撤销权限、反狙击费衰减。平台仅收固定0.2-0.3 SOL，无交易分成。据官网。",
+   "fee_split_en": "Creation 0.2-0.3 SOL (first 100 free). No platform trade fees. Anti-snipe fees to locked LP. Network/rent separate. Per docs.",
+   "fee_split_zh": "创建0.2-0.3 SOL（首100免费）。无平台交易费。反狙击费入锁定LP。网络/租金另计。据文档。",
+   "one_liner_en": "Direct DEX launch tool; default anti-snipe, permanent LP lock, fair window; flat SOL fee with no ongoing trade fees.",
+   "one_liner_zh": "直接DEX发射工具，默认反狙击、永久锁LP、公平窗口，固定SOL费无持续交易费。",
+   "risks_en": [
+    "Direct pool needs own liquidity",
+    "No curve discovery",
+    "Very small market share",
+    "Depends on Meteora"
+   ],
+   "risks_zh": [
+    "直接池需自备流动性",
+    "无曲线发现",
+    "市场份额极小",
+    "依赖Meteora"
+   ],
+   "selling_points_en": [
+    "Default anti-snipe decaying fees",
+    "Permanent LP lock",
+    "Fair launch window",
+    "Flat one-time fee",
+    "Authority revocation"
+   ],
+   "selling_points_zh": [
+    "默认反狙击衰减费",
+    "永久锁LP",
+    "公平发射窗口",
+    "固定一次费",
+    "权限撤销"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "官网",
+     "url": "https://solfoundry.io/"
+    },
+    {
+     "kind": "official",
+     "note": "文档",
+     "url": "https://solfoundry.io/docs"
+    },
+    {
+     "kind": "official",
+     "note": "团队",
+     "url": "https://solfoundry.io/about"
+    }
+   ],
+   "team_en": "Small team: Damian (founder/engineer), Mason (marketing). Per about page.",
+   "team_zh": "小团队：Damian（创始人/工程师）、Mason（营销）。据关于页。",
+   "token_en": "No independent platform token mentioned.",
+   "token_zh": "资料未提及独立平台币。",
+   "unknowns_en": [
+    "Current active launch volume",
+    "Long-term operational sustainability",
+    "Exact anti-snipe config details"
+   ],
+   "unknowns_zh": [
+    "当前活跃发射量",
+    "长期运营可持续性",
+    "精确反狙击配置细节"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "squeeze": {
+  "内容": {
+   "differentiation_en": "Multi-chain (Base/Robinhood/Solana). EVM uses Doppler hooks with tiered or mcap-decaying fees; Solana uses LaunchLab platform fees. Per docs and DefiLlama.",
+   "differentiation_zh": "多链（Base/Robinhood/Solana）。EVM用Doppler钩子，费可分层或市值衰减；Solana用LaunchLab平台费。据文档与DefiLlama。",
+   "fee_split_en": "EVM: pool fee ~2.5%, protocol takes portion (~47.5% collected). Creator splits remainder and can route to flywheel. Solana: LaunchLab platform fees. Per docs.",
+   "fee_split_zh": "EVM：池费约2.5%，协议取部分（约47.5%收集）。创作者可分剩余并路由飞轮。Solana：LaunchLab平台费。据文档。",
+   "one_liner_en": "Multi-chain launchpad on Doppler and Raydium LaunchLab; supports configurable taxes and flywheel.",
+   "one_liner_zh": "多链发射台，基于Doppler与Raydium LaunchLab，支持可配置税与飞轮。",
+   "risks_en": [
+    "Small market share",
+    "Multi-chain complexity",
+    "Depends on underlying protocols",
+    "Variable fee structure"
+   ],
+   "risks_zh": [
+    "市场份额小",
+    "多链复杂性",
+    "依赖底层协议",
+    "费用结构可变"
+   ],
+   "selling_points_en": [
+    "Multi-chain support",
+    "Configurable fees and flywheel",
+    "Anti-snipe options",
+    "High creator share",
+    "Built on mature engines"
+   ],
+   "selling_points_zh": [
+    "多链支持",
+    "可配置费与飞轮",
+    "反狙击选项",
+    "创作者高份额",
+    "基于成熟引擎"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "费用与经济学",
+     "url": "https://www.squeez.fi/docs"
+    },
+    {
+     "kind": "web",
+     "note": "DefiLlama数据",
+     "url": "https://defillama.com/protocol/squeeze"
+    },
+    {
+     "kind": "web",
+     "note": "费用方法论",
+     "url": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/squeeze.ts"
+    }
+   ],
+   "team_en": "Not detailed. Operates via squeez.fi.",
+   "team_zh": "资料未详细提及。通过squeez.fi运营。",
+   "token_en": "No platform token mentioned.",
+   "token_zh": "资料未提及平台币。",
+   "unknowns_en": [
+    "Team background",
+    "Exact current active rates",
+    "Long-term adoption"
+   ],
+   "unknowns_zh": [
+    "团队背景",
+    "精确当前活跃费率",
+    "长期采用情况"
    ]
   },
   "方式": "手动",
@@ -1720,6 +3373,191 @@
     "完整团队与法律实体",
     "精确当前费率（配置可变）",
     "长期回购比例稳定性"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "t-minus": {
+  "内容": {
+   "differentiation_en": "Creator sets fee. Meteora takes 20%; on curve T-minus takes 10% of rest, creator 72%. Post-grad LP fees to holders (mostly creator). Per guide.",
+   "differentiation_zh": "创作者设费。Meteora取20%，曲线上T-minus取10%剩余，创作者72%。毕业后LP费归持有者（创作者多）。据指南。",
+   "fee_split_en": "Curve: Meteora 20%, rest T-minus 10%, creator 72%. Direct pool creation 0.1 SOL. Post-grad fees to LP. Per docs.",
+   "fee_split_zh": "曲线：Meteora 20%，剩余T-minus 10%、创作者72%。直接池创建0.1 SOL。毕业后费归LP。据文档。",
+   "one_liner_en": "Launch tool on Meteora; high creator fee share; curve or direct pool; post-grad fees to LP holders.",
+   "one_liner_zh": "基于Meteora的发射工具，创作者高份额费，曲线或直接池，毕业后费归LP持有者。",
+   "risks_en": [
+    "Small market share",
+    "Depends on Meteora",
+    "New tool",
+    "Need to manage LP yourself"
+   ],
+   "risks_zh": [
+    "市场份额小",
+    "依赖Meteora",
+    "新工具",
+    "需自行管理LP"
+   ],
+   "selling_points_en": [
+    "High creator fee share",
+    "Optional curve or direct pool",
+    "Graduation lock/attribution",
+    "Low creation cost",
+    "Transparent fee split"
+   ],
+   "selling_points_zh": [
+    "创作者高费份额",
+    "可选曲线或直接池",
+    "毕业锁定/归属",
+    "低创建成本",
+    "透明费分"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "费用指南",
+     "url": "https://tminus.si/guides/solana-token-launch-cost"
+    }
+   ],
+   "team_en": "Not detailed publicly. Operates via tminus.si.",
+   "team_zh": "资料未详细公开。通过tminus.si运营。",
+   "token_en": "No independent platform token mentioned.",
+   "token_zh": "资料未提及独立平台币。",
+   "unknowns_en": [
+    "Team background",
+    "Long-term adoption",
+    "Exact current usage"
+   ],
+   "unknowns_zh": [
+    "团队背景",
+    "长期采用",
+    "精确当前使用量"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "voltpad": {
+  "内容": {
+   "differentiation_en": "Creator chooses 1-3% tax and circuit. Meteora takes 20%; 80% of rest to circuit (holders etc.), 20% to platform (half buys back $VOLT). Graduates to locked DAMM v2. Per docs.",
+   "differentiation_zh": "创作者选1-3%税与电路。Meteora取20%，剩余80%入电路（持有人等），20%平台（半数回购$VOLT）。毕业至DAMM v2锁定。据文档。",
+   "fee_split_en": "Tax 1-3%. Meteora 20%. Rest 80% circuit, 20% VoltPad (50% buyback $VOLT). Post-grad pool fee 0.25% locked. Per docs.",
+   "fee_split_zh": "税1-3%。Meteora 20%。剩余80%电路、20%VoltPad（50%回购$VOLT）。毕业后池费0.25%锁定。据文档。",
+   "one_liner_en": "On Meteora; configurable fee circuits route tax to holders, burns or creator; supports paired assets; part buys back $VOLT.",
+   "one_liner_zh": "基于Meteora，可配置费电路将税路由至持有人、销毁或创作者，支持配对资产，部分回购$VOLT。",
+   "risks_en": [
+    "Depends on keeper and Meteora",
+    "New platform",
+    "Complex module config",
+    "Buyback depends on volume"
+   ],
+   "risks_zh": [
+    "依赖keeper与Meteora",
+    "新平台",
+    "模块配置复杂",
+    "回购依赖交易量"
+   ],
+   "selling_points_en": [
+    "Fee circuit modules",
+    "Pairs with stocks etc.",
+    "Payouts every 15 min",
+    "Locked LP at graduation",
+    "Platform token buyback"
+   ],
+   "selling_points_zh": [
+    "费电路模块",
+    "配对股票等",
+    "每15分钟支付",
+    "毕业锁定LP",
+    "平台币回购"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "工作原理与费用",
+     "url": "https://voltpad.fun/docs"
+    }
+   ],
+   "team_en": "Not detailed publicly. Operates via voltpad.fun.",
+   "team_zh": "资料未详细公开。通过voltpad.fun运营。",
+   "token_en": "Has platform token $VOLT. Part of platform share used for buyback and burn. Per docs.",
+   "token_zh": "有平台币$VOLT。平台份额部分回购销毁。据文档。",
+   "unknowns_en": [
+    "Team background",
+    "Current activity",
+    "Long-term circuit reliability"
+   ],
+   "unknowns_zh": [
+    "团队背景",
+    "当前活跃度",
+    "长期电路可靠性"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "whale-pad": {
+  "内容": {
+   "differentiation_en": "Total fee 1.25% (LaunchLab 0.25% + pad 1%). Pad fee: 35% buyback $WHALE, 20% creator, 15% holders etc. Supports raise mode. Per site.",
+   "differentiation_zh": "总费1.25%（LaunchLab 0.25% + pad 1%）。Pad费：35%回购$WHALE、20%创作者、15%持有人等。支持raise模式。据官网。",
+   "fee_split_en": "Trade 1.25%. Of pad 1%: 35% $WHALE buyback/burn, 20% dev, 15% holders, rest treasury etc. Graduates at 85 SOL. Per docs.",
+   "fee_split_zh": "交易1.25%。Pad 1%中：35% $WHALE回购销毁、20%开发、15%持有人、其余金库等。毕业85 SOL。据文档。",
+   "one_liner_en": "On Raydium LaunchLab; supports community co-raise; fees split to holders, $WHALE buyback and creator.",
+   "one_liner_zh": "基于Raydium LaunchLab，支持社区共同raise，费分持有人、$WHALE回购与创作者。",
+   "risks_en": [
+    "New platform",
+    "Some features not live",
+    "Depends on LaunchLab",
+    "Raise mode risks"
+   ],
+   "risks_zh": [
+    "新平台",
+    "部分功能未上线",
+    "依赖LaunchLab",
+    "raise模式风险"
+   ],
+   "selling_points_en": [
+    "Community co-first buy",
+    "Holders get SOL rewards",
+    "Buyback/burn $WHALE",
+    "Anti-snipe raise",
+    "Graduation lock"
+   ],
+   "selling_points_zh": [
+    "社区共同首买",
+    "持有人获SOL奖励",
+    "回购销毁$WHALE",
+    "反狙击raise",
+    "毕业锁定"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "官网",
+     "url": "https://thewhalepad.fun/"
+    },
+    {
+     "kind": "official",
+     "note": "文档",
+     "url": "https://thewhalepad.fun/docs"
+    }
+   ],
+   "team_en": "Not detailed publicly. Operates via thewhalepad.fun.",
+   "team_zh": "资料未详细公开。通过thewhalepad.fun运营。",
+   "token_en": "Has platform token $WHALE. 35% of fees used for buyback and burn. Per site.",
+   "token_zh": "有平台币$WHALE。35%费用于回购销毁。据官网。",
+   "unknowns_en": [
+    "Team background",
+    "Long-term execution reliability",
+    "Exact current activity"
+   ],
+   "unknowns_zh": [
+    "团队背景",
+    "长期执行可靠性",
+    "精确当前活跃"
    ]
   },
   "方式": "手动",

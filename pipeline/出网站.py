@@ -3038,6 +3038,27 @@ def directory_html():
             body = f'<p class="lpc-n">{esc(txt)}</p><p class="lpc-src">{T("出处：", "Source: ")}{esc(src)}</p>'
         else:
             body = f'<p class="lpc-n lpc-none">{T("还没查到介绍：官网资料每天自动抓，抓到后显示在这里。", "No description yet: the site is fetched daily and its blurb will show here.")}</p>'
+        ai_ = DIR.ai_for(e)
+        aic_ = (ai_ or {}).get("内容") or {}
+        if aic_:
+            sx = "zh" if lang == "zh" else "en"
+            li = lambda xs: "".join(f"<li>{esc(x)}</li>" for x in xs[:5])  # noqa: E731
+            parts = []
+            if aic_.get(f"selling_points_{sx}"):
+                parts.append(f'<b>{T("卖点", "Selling points")}</b><ul>{li(aic_[f"selling_points_{sx}"])}</ul>')
+            if aic_.get(f"fee_split_{sx}"):
+                parts.append(f'<b>{T("手续费怎么分", "Fee split")}</b><p>{esc(aic_[f"fee_split_{sx}"])}</p>')
+            if aic_.get(f"token_{sx}"):
+                parts.append(f'<b>{T("平台币", "Token")}</b><p>{esc(aic_[f"token_{sx}"])}</p>')
+            if aic_.get(f"risks_{sx}"):
+                parts.append(f'<b>{T("风险与疑点", "Risks")}</b><ul>{li(aic_[f"risks_{sx}"])}</ul>')
+            srcs_ = [x for x in aic_.get("sources") or [] if str(x.get("url", "")).startswith("http")][:4]
+            if srcs_:
+                parts.append(f'<b>{T("来源", "Sources")}</b><p>' + " · ".join(
+                    f'<a href="{esc(x["url"])}" target="_blank" rel="noopener nofollow">{esc((x.get("note") or DIR.domain(x["url"]))[:24])}</a>' for x in srcs_) + "</p>")
+            if parts:
+                body += (f'<details class="lpc-more"><summary>{T("卖点、分账、风险（Grok 整理，未核实）", "Selling points, fees, risks (Grok, unverified)")}</summary>'
+                         + "".join(parts) + "</details>")
         mets = []
         if e["24h成交额"]:
             mets.append(f'{T("24h 成交额", "24h volume")} <b>{f_usd(e["24h成交额"])}</b>')
@@ -3290,7 +3311,7 @@ def build_launchpad(sd, matrix):
         elif p["slug"] in PSLUGS:
             nm = f'<a href="{U("/launchpad/platforms/" + p["slug"] + "/")}">{esc(p["名称"])}</a>'
         else:
-            nm = f'<a href="https://defillama.com/protocol/{esc(p["slug"])}" target="_blank" rel="noopener" title="{esc(T("份额不到 0.1%，直接看 DefiLlama", "Under 0.1% share: opens DefiLlama"))}">{esc(p["名称"])} ↗</a>'
+            nm = f'<a href="https://defillama.com/protocol/{esc(p["slug"])}" target="_blank" rel="noopener" title="{esc(T("份额不到 0.1% 且还没有介绍，直接看 DefiLlama", "Under 0.1% share and no write-up yet: opens DefiLlama"))}">{esc(p["名称"])} ↗</a>'
         logo = f'<img src="{esc(p["logo"])}" alt="" loading="lazy" referrerpolicy="no-referrer">' if p.get("logo") else '<img alt="">'
         if p.get("沿用"):
             nm += carry_chip(p.get("数据日"))
@@ -3386,7 +3407,9 @@ def _pdir():
 def platform_page_slugs(matrix):
     try:
         DIR = _pdir()
-        return set(DIR.platform_slugs(matrix or {})) | set(DIR.platform_info())      # 只要进过 0.1% 就一直有二级页面
+        known = {p["slug"] for p in (matrix or {}).get("协议") or []}
+        return (set(DIR.platform_slugs(matrix or {})) | set(DIR.platform_info())          # 只要进过 0.1% 就一直有二级页面
+                | {k for k in DIR.ai_notes() if k in known})                               # 有 Grok 介绍的也有（大叔 11-14：既然有了就填上）
     except Exception as ex:
         print(f"  平台二级页面名单失败：{ex}")
         return set()
