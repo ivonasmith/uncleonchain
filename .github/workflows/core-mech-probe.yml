@@ -1,0 +1,30 @@
+# 机制拆解卡取数探测（只打印，不提交、不出网站）。只在推送到会话分支且 tools/core_mech 有改动时运行。
+name: 机制拆解卡探测
+
+on:
+  push:
+    branches: [claude/stoic-gates-xxol8a]
+    paths:
+      - "tools/core_mech/**"
+      - ".github/workflows/core-mech-probe.yml"
+  workflow_dispatch: {}
+
+concurrency:
+  group: core-mech-probe
+  cancel-in-progress: true
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: 探测
+        env:
+          TAOSTATS_KEY: ${{ secrets.TAOSTATS_KEY }}
+          COINALYZE_KEY: ${{ secrets.COINALYZE_KEY }}
+          ETHERSCAN_KEY: ${{ secrets.ETHERSCAN_KEY }}
+        run: python3 tools/core_mech/mech_probe.py
