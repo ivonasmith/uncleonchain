@@ -19,7 +19,7 @@ const TREND_EN={'多头排列（MA20、MA50 上方）':'Uptrend (above MA20 & MA
 const trend=t=>EN?(TREND_EN[t]||t):t;
 const TIER={T1:L('T1 已执行回购 / 销毁','T1 buyback / burn live'),T2:L('T2 有机制 / 口径待核','T2 mechanism, to verify'),T3:L('T3 计划 / 治理中','T3 planned / in governance'),W:L('观察（叙事 / 赛道）','Watch (narrative / sector)')};
 const src=root.dataset.src, sdir=root.dataset.series, hsrc=root.dataset.hist, HOME=root.dataset.home||'';
-let D,C,SYMS,MAN,GT,HIST=null;
+let D,C,SYMS,MAN,GT,HIST=null,VER='';
 
 
 /* ---------- 规则说明（大白话，11-14 大叔要求：读者看得懂、自己隔久了也记得住） ---------- */
@@ -28,23 +28,35 @@ const WHY={
       'Where BTC sits in the big cycle (L2 state machine on the Macro page). Passes only in the bear-bottom zone or late bear → early bull, which historically led to mostly positive years; no new ambush positions late in a bull or mid-bear.'),
  g2:L('BTC 收盘要在本轮最低收盘上方。跌破说明“底部已过”的判断失效，按方法论停止加仓。','BTC must close above this cycle’s lowest close. A break invalidates the “bottom is in” view; stop adding.'),
  g3:L('美联储净流动性（资产 − 财政部账户 − 逆回购）13 周跌超 2.72% 且美元同时走强才触发。触发后不是不能买，而是整体仓位打七折；扩张时也不因此加仓（只打折不加仓）。','Fed net liquidity (assets − TGA − RRP) down more than 2.72% over 13 weeks with a stronger dollar. When tripped, total risk is cut to 70%; expansion never adds.'),
- R1:L('《核心选币方法论》第 4 层：每个候选币在建仓前要写完一张“六问卡”（六个问题的原文待大叔补进来）。这里只记录写没写，没写就算条件未齐。','Method layer 4: each candidate needs a completed “six-question card” before entry (question list to be added). Only tracks whether it is written.'),
+ R1:L('《核心选币方法论》第 4 层「选币」（§5）：每个候选在建仓前要回答六个问题——① 一句话价值；② 商业竞争（要写反向逻辑）；③ 价值捕获；④ 筹码（解锁、集中持仓、回购）；⑤ 驱动类型与阶段（1a / 1b / 1c、T0 / T1 / T2）；⑥ 注意力与认知差。答案按“选币卡片”格式写（见单币页）。六问都有答案才算过。',
+      'Method layer 4 (§5): six questions before any entry — one-line value; competition (with the bear case); value capture; supply (unlocks, concentration, buybacks); driver type and stage (1a/1b/1c, T0/T1/T2); attention and perception gap. Written as a pick card (see the asset page).'),
  R2:L('未来 30 天的解锁 / 增发不能超过流通量的 5%。大额解锁 = 一次性新增卖压，常常在解锁前后压住价格。','Unlocks / emissions over the next 30 days must stay below 5% of float: a large unlock is a one-off wave of new supply.'),
  R3:L('过去 30 天价格涨幅减去协议收入环比，差距超过 30 个百分点就算“价格跑在收入前面”：涨的是预期不是业绩（HYPE 从 2026-03 起就是这样）。','If the 30-day price change exceeds the 30-day revenue change by more than 30 points, price is running ahead of the business (HYPE since March 2026).'),
  R4:L('回测过：点火前 30 / 60 天相对 BTC 最强的那批币，之后并没有跑赢等权篮子（17 个窗口、56 个币）。所以这里不因为“最近涨得好”加分，技术形态只展示。','Backtested: the coins strongest vs BTC 30/60 days before ignition did not beat the equal-weight basket (17 windows, 56 coins), so recent strength earns nothing here.'),
  R6:L('发射台类（渠道 B，如 PUMP）的价值来自平台手续费：平台收入 7 日均要高于 30 日均（在回升）才算过。','Launchpad tokens (channel B, e.g. PUMP) live on platform fees: the 7-day revenue average must be above the 30-day average.')
 };
 const MOD_WHY={
- R:L('收入在变多还是变少：最近 7 天日均对 30 天日均、最近 30 天对前 30 天，取更差的那个。≥ +10% 得 3 分，≥ −10% 得 2，≥ −30% 得 1，更差 0 分。','Is revenue growing: worse of 7-day vs 30-day average and last 30 vs prior 30 days. ≥+10% → 3, ≥−10% → 2, ≥−30% → 1, else 0.'),
- C:L('协议赚的钱有多少真正到了持币人手里（回购、销毁、分红）：持有人收入 ÷ 协议收入。≥ 50% 得 3，≥ 20% 得 2，> 0 得 1，0 得 0。','How much of revenue reaches holders (buyback / burn / dividends): holder revenue ÷ revenue. ≥50% → 3, ≥20% → 2, >0 → 1, 0 → 0.'),
- V:L('贵不贵：市值 ÷ 年化持有人收入（类似市盈率）。< 15 倍得 3，< 30 得 2，< 60 得 1，更贵或持有人收入为 0 得 0。','Valuation: market cap ÷ annualised holder revenue (a P/E). <15× → 3, <30× → 2, <60× → 1, else 0.'),
- D:L('价格和收入谁跑得快：收入 30 天环比 − 价格 30 天涨跌。收入领先 ≥ 20 个百分点得 3，在 ±20 之间得 2，价格领先 20–50 得 1，领先更多 0。','Price vs revenue: revenue 30-day change minus price 30-day change. ≥+20pp → 3, within ±20 → 2, −20 to −50 → 1, worse → 0.'),
+ R:L('收入在变多还是变少：最近 7 天日均对 30 天日均、最近 30 天对前 30 天，取更差的那个。（原型阈值，已停用：≥ +10% 3 分，≥ −10% 2，≥ −30% 1，更差 0。）','Is revenue growing: worse of 7-day vs 30-day average and last 30 vs prior 30 days. ≥+10% → 3, ≥−10% → 2, ≥−30% → 1, else 0.'),
+ C:L('协议赚的钱有多少真正到了持币人手里（回购、销毁、分红）：持有人收入 ÷ 协议收入。（原型阈值，已停用：≥ 50% 3，≥ 20% 2，> 0 1，0 0。）','How much of revenue reaches holders (buyback / burn / dividends): holder revenue ÷ revenue. ≥50% → 3, ≥20% → 2, >0 → 1, 0 → 0.'),
+ V:L('贵不贵：市值 ÷ 年化持有人收入（类似市盈率）。（原型阈值，已停用：< 15 倍 3，< 30 2，< 60 1，更贵 0。）','Valuation: market cap ÷ annualised holder revenue (a P/E). <15× → 3, <30× → 2, <60× → 1, else 0.'),
+ D:L('价格和收入谁跑得快：收入 30 天环比 − 价格 30 天涨跌。（原型阈值，已停用：收入领先 ≥ 20pp 3，±20 之间 2，价格领先 20–50 1，更多 0。）','Price vs revenue: revenue 30-day change minus price 30-day change. ≥+20pp → 3, within ±20 → 2, −20 to −50 → 1, worse → 0.'),
  B:L('业务量在变多还是变少（DEX 成交额或 TVL），阈值同 R。','Is activity (DEX volume or TVL) growing; same bands as R.'),
- S:L('未来 30 天解锁占流通量：< 0.5% 得 3，< 2% 得 2，< 5% 得 1，更多 0。只对人工登记过解锁的币打分。','30-day unlock as % of float: <0.5% → 3, <2% → 2, <5% → 1, else 0. Only where unlocks are logged.')
+ S:L('未来 30 天解锁占流通量：（原型阈值，已停用：< 0.5% 3，< 2% 2，< 5% 1，更多 0。）只有人工登记过解锁的币有读数。','30-day unlock as % of float: <0.5% → 3, <2% → 2, <5% → 1, else 0. Only where unlocks are logged.')
 };
 const BT_LAB={'已验证·方向':L('回测：方向有效','Backtest: works (direction)'),'已证伪':L('回测：已证伪','Backtest: falsified'),'未通过':L('回测：未通过','Backtest: not significant'),'样本不足':L('回测：样本不足','Backtest: too few samples')};
 const btTag=k=>{const b=BT&&BT.modules&&BT.modules[k];if(!b)return `<span class="tg">${L('未检验','untested')}</span>`;const v=b.verdict;return `<span class="tg ${v==='已验证·方向'?'pool':''}" style="${v==='已证伪'?'border-color:var(--dn-bd);color:var(--dn)':''}">${BT_LAB[v]||esc(v)}</span>`};
 let BT=null, ROT=null;
+/* 每条规则的证据等级（11-14 大叔：没验证的不能拿来判定）。HARD = 进判定；其余只作提示。 */
+const GRADE={g1:['已验证',L('L2 状态机历史回放：熊末→牛初之后一年中位 +152%、92% 为正；熊底区 +68%、91% 为正（《BTC周期层L2研究》§7）','L2 replay: late bear → early bull led to +152% median 1y, 92% positive')],
+ g2:['已验证',L('同一套 L2 状态机：收盘跌破本轮最低点就退回熊市','Same L2 state machine: a close below the cycle low means back to bear')],
+ g3:['已验证·方向',L('净流动性 × 美元方向在三个年代一致，2024 年 ETF 之后幅度减弱，规格要求 2026 年底复核','Direction consistent across three decades; weaker after the 2024 ETFs; review due end-2026')],
+ R1:['流程',L('建仓前要写完的检查单，本身不是预测，不需要回测','A pre-entry checklist, not a forecast')],
+ R2:['假设',L('“30 天解锁 ≥ 5% 流通量”这条线没有检验过','The 5% unlock line has never been tested')],
+ R3:['回测未通过',L('同一思路的 D 模块（收入环比 − 价格涨跌）回测 IC ≈ 0，分不出之后谁跑得好','The same idea (module D) showed no edge in the backtest')],
+ R4:['已验证',L('17 个 BTC 急拉窗口、56 个币：点火前相对 BTC 最强的那批之后没有跑赢篮子','17 rallies, 56 coins: strongest vs BTC before ignition did not beat the basket')],
+ R6:['假设',L('“平台收入 7 日均高于 30 日均”没有检验过','Never tested')]};
+const HARD=new Set(['g1','g2','g3','R1','R4']);
+const gradeTag=w=>{const g=GRADE[w];if(!g)return '';const ok=HARD.has(w);return `<span class="tg ${ok?'pool':''}" title="${esc(g[1])}" style="${g[0]==='回测未通过'?'border-color:var(--dn-bd);color:var(--dn)':''}">${esc(EN?({'已验证':'verified','已验证·方向':'verified · direction','流程':'process','假设':'hypothesis','回测未通过':'failed backtest'}[g[0]]):g[0])}${ok?'':L(' · 仅提示',' · info only')}</span>`};
 
 /* ---------- 规则判定（原型同一套，闸门 1 / 3 改读本站 L2 与 L1 数据） ---------- */
 function gates(){
@@ -60,21 +72,22 @@ function gates(){
 }
 function checks(c){
   const r=gates(); const fr=c.fees.revenue, pr=c.price, u=c.unlock;
-  r.push({w:'R1',id:'R1',t:L('六问卡写完（建仓前的六个问题）','Six-question card written'),k:'na',x:(MAN.sixq||{})[c.sym]||(c.track==='watch'?L('观察标的，未入候选','watch item, not a candidate'):L('未写','not written'))});
+  {const card=(MAN.cards||{})[c.sym]||{}, need=['one','moat','bear','capture','supply','driver','attention'], miss=need.filter(k=>!card[k]);
+   r.push({w:'R1',id:'R1',t:L('六问卡写完（建仓前的六个问题）','Six-question card written'),k:miss.length?'na':'good',x:c.track==='watch'?L('观察标的，未入候选','watch item, not a candidate'):miss.length?L(`还没有核对过的六问答案（研究笔记里能自动带入的部分见下方“选币卡片”）。${(MAN.sixq||{})[c.sym]?'原型备注：'+esc(MAN.sixq[c.sym]):''}`,`No reviewed answers yet.`):L('六问都已写完','all six answered')})}
   if(u&&nz(u.pct_circ))r.push({w:'R2',id:'R2',t:L('30 日内无 ≥5% 流通量解锁','No ≥5% float unlock within 30 days'),k:u.pct_circ<5?'good':'crit',x:`${L('约','≈')} ${u.pct_circ.toFixed(2)}%（${esc(u.note)}）`});
   else r.push({w:'R2',id:'R2',t:L('30 日内无 ≥5% 流通量解锁','No ≥5% float unlock within 30 days'),k:c.under5?'good':'na',x:c.under5?L('已查未见 ≥5%（具体值未取）','checked, none ≥5% (exact size not fetched)'):L('未核','not checked')});
   if(pr&&fr&&nz(fr.mom30)&&nz(pr.ret30)){const g=pr.ret30-fr.mom30;r.push({w:'R3',id:'R3',t:L('价格没有跑在收入前面','Price not running ahead of revenue'),k:g>30?'serious':'good',x:L(`价格 30 日 ${fmtP(pr.ret30)}；收入 30 日环比 ${fmtP(fr.mom30)}；差 ${fmtP(g)}pp（> 30pp 算跑在前面）`,`Price 30d ${fmtP(pr.ret30)}; revenue 30d ${fmtP(fr.mom30)}; gap ${fmtP(g)}pp (>30pp = ahead)`)})}
   else r.push({w:'R3',id:'R3',t:L('价格没有跑在收入前面','Price not running ahead of revenue'),k:'na',x:L('缺收入或价格','missing revenue or price')});
-  r.push({w:'R4',id:'R4',t:L('近期强势不加分','Recent strength earns no points'),k:'good',x:L('评分不含价格强弱；技术形态只展示（回测：点火前相对 BTC 最强的五分之一没有跑赢篮子）','Score excludes price strength; technicals shown only (backtest: the strongest fifth vs BTC before ignition did not beat the basket)')});
+  r.push({w:'R4',id:'R4',t:L('近期强势不加分','Recent strength earns no points'),k:'good',x:L('页面不因价格强弱给任何加分；技术形态只展示','No credit for price strength anywhere on this page; technicals shown only')});
   if(c.tag==='channelB'){const w=fr?fr.d7v30:null;r.push({w:'R6',id:'R6',t:L('渠道 B：平台收入 7 日均转正','Channel B: platform revenue 7d avg turning up'),k:nz(w)&&w>0?'good':'crit',x:L(`收入 7 日均对 30 日均 ${fmtP(w)}`,`Revenue 7d vs 30d ${fmtP(w)}`)})}
   return r;
 }
 function verdict(c){
-  const ck=checks(c); const hard=ck.filter(x=>x.k==='crit'||x.k==='serious'); const unk=ck.filter(x=>x.k==='na'&&/1|3/.test(x.id)&&x.id!=='R3');
+  const ck=checks(c).filter(x=>HARD.has(x.w)); const hard=ck.filter(x=>x.k==='crit'||x.k==='serious'); const unk=ck.filter(x=>x.k==='na');
   if(hard.length)return {k:'crit',t:L('有硬条件未过','Hard condition failing'),d:hard.map(x=>x.id).join('、')};
   if(c.track==='watch')return {k:'na',t:L('观察标的','Watch item'),d:L('不做建仓条件检查','no entry checklist')};
   if(unk.length)return {k:'warn',t:L('条件未齐','Conditions incomplete'),d:L('缺 ','missing ')+unk.map(x=>x.id).join('、')};
-  return {k:'good',t:L('条件齐备','Conditions met'),d:L('可进入建仓评估','ready for entry review')};
+  return {k:'good',t:L('条件齐备','Conditions met'),d:L('已验证的条件都过了','all verified conditions pass')};
 }
 
 /* ---------- 风险提示（自动规则 + 人工登记） ---------- */
@@ -89,7 +102,7 @@ function autoAlerts(){
     if(pr&&nz(pr.rsi14)&&pr.rsi14>=75)out.push({d:pr.date,s:k,k:'warn',t:L(`日线 RSI14 = ${pr.rsi14.toFixed(0)}（超买区）`,`Daily RSI14 = ${pr.rsi14.toFixed(0)} (overbought)`),src:L('币安日线','Binance daily'),lvl:L('自动','auto')});
     if(pr&&nz(pr.vol7v30)&&pr.vol7v30<=-40)out.push({d:pr.date,s:k,k:'warn',t:L(`代币成交额 7 日均比 30 日均低 ${Math.abs(pr.vol7v30).toFixed(0)}%（量能萎缩）`,`Token volume 7d avg ${Math.abs(pr.vol7v30).toFixed(0)}% below 30d (drying up)`),src:L('币安日线','Binance daily'),lvl:L('自动','auto')});
     if(a&&nz(a.d7v30)&&a.d7v30<=-20)out.push({d:a.last_day||T,s:k,k:'serious',t:L(`${a.label} 7 日均比 30 日均低 ${Math.abs(a.d7v30).toFixed(1)}%`,`${a.label==='TVL'?'TVL':'Volume'} 7d avg ${Math.abs(a.d7v30).toFixed(1)}% below 30d`),src:'DefiLlama',lvl:L('自动','auto')});
-    if(pr&&fr&&nz(fr.mom30)&&nz(pr.ret30)&&pr.ret30-fr.mom30>30)out.push({d:pr.date,s:k,k:'serious',t:L(`价格跑在收入前面（价格 30 日 ${fmtP(pr.ret30)} / 收入 30 日环比 ${fmtP(fr.mom30)}）`,`Price ahead of revenue (price 30d ${fmtP(pr.ret30)} / revenue 30d ${fmtP(fr.mom30)})`),src:L('规则 R3','Rule R3'),lvl:L('假设','hypothesis')});
+    if(pr&&fr&&nz(fr.mom30)&&nz(pr.ret30)&&pr.ret30-fr.mom30>30)out.push({d:pr.date,s:k,k:'serious',t:L(`价格跑在收入前面（价格 30 日 ${fmtP(pr.ret30)} / 收入 30 日环比 ${fmtP(fr.mom30)}）`,`Price ahead of revenue (price 30d ${fmtP(pr.ret30)} / revenue 30d ${fmtP(fr.mom30)})`),src:L('规则 R3','Rule R3'),lvl:L('假设 · 回测未通过，仅提示','hypothesis · failed backtest, info only')});
     if(u&&nz(u.cover)&&u.cover<1&&u.cover>0)out.push({d:T,s:k,k:'serious',t:L(`30 日持有人收入只覆盖${u.actual_usd!=null?'近月实际领取':'解锁价值'}的 ${(u.cover*100).toFixed(0)}%`,`30d holder revenue covers only ${(u.cover*100).toFixed(0)}% of the ${u.actual_usd!=null?'actual monthly claim':'unlock value'}`),src:L('解锁登记 × 收入','Unlock log × revenue'),lvl:L('假设','hypothesis')});
   });
   return out;
@@ -133,7 +146,6 @@ function home(){
   const rows=SYMS.map(k=>C[k]), pool=rows.filter(c=>c.track==='pool');
   const withR=pool.filter(c=>c.fees.revenue&&nz(c.fees.revenue.d7v30)), up=withR.filter(c=>c.fees.revenue.d7v30>0).length;
   const al=autoAlerts().filter(a=>a.k==='serious'||a.k==='crit').length;
-  const ranked=pool.filter(c=>c.sc.n>=4).sort((a,b)=>b.sc.total-a.sc.total);
   const amb=pool.filter(c=>c.tag==='ambush'||c.tag==='channelB');
   const gs=gates(); const gOK=gs.filter(x=>x.k==='good').length;
   let h=`<div class="cgrid g4">
@@ -141,16 +153,17 @@ function home(){
   <div class="ccard kpi"><div class="l">${L('收入 7 日均 > 30 日均','Revenue 7d > 30d avg')}</div><div class="v">${up} / ${withR.length}</div><div class="s">${L(`观测池 ${pool.length} 个协议`,`${pool.length} protocols in the pool`)}</div></div>
   <div class="ccard kpi"><div class="l">${L('需要关注的风险信号','Risk signals to watch')}</div><div class="v">${al}</div><div class="s"><a data-go="alerts">${L('看风险提示 →','See risk alerts →')}</a></div></div>
   <div class="ccard kpi"><div class="l">${L('观测池 对 全市场（30 日中位）','Pool vs market (30d median)')}</div><div class="v ${cls(D.market&&D.market.bench.r30.pool_med)}" style="font-size:20px">${D.market?fmtP(D.market.bench.r30.pool_med)+' / '+fmtP(D.market.bench.r30.ew_med):'—'}</div><div class="s">BTC ${fmtP(D.btc.r30)} · <a data-go="market">${L('全市场 →','Market →')}</a></div></div></div>`;
-  h+=`<div class="ccard"><h2>${L('埋伏仓候选 · 条件检查','Ambush candidates · condition check')}</h2><div class="sm" style="margin-bottom:6px">${L('只做规则判定，不是买卖建议。点标的看每条规则的数据。','Rule checks only, not trade advice. Click a row for the data behind each rule.')}</div><div class="scroll"><table><thead><tr><th>${L('标的','Asset')}</th><th>${L('评分','Score')}</th><th>${L('规则判定','Rule check')}</th><th>${L('收入 7v30','Rev 7v30')}</th><th>${L('距 120 日高','vs 120d high')}</th><th>${L('量能 7v30','Volume 7v30')}</th><th>${L('技术形态','Technicals')}</th><th>${L('近 30 日收入','Revenue 30d')}</th></tr></thead><tbody>`+
-  amb.map(c=>{const v=verdict(c),p=c.price,r=c.fees.revenue;return `<tr data-go="coin/${c.sym}"><td><b>${c.sym}</b> <span class="sm">${esc(c.name)}</span>${tagHTML(c)}</td><td>${scTxt(c)}</td><td>${stat(v.k,v.t)} <span class="sm">${esc(v.d)}</span></td><td class="${cls(r&&r.d7v30)}">${fmtP(r&&r.d7v30)}</td><td class="${cls(p&&p.dd120)}">${fmtP(p&&p.dd120)}</td><td class="${cls(p&&p.vol7v30)}">${fmtP(p&&p.vol7v30)}</td><td>${p?trend(p.trend):'—'}</td><td>${spark(c.spark_rev)}</td></tr>`}).join('')+`</tbody></table></div></div>`;
-  h+=`<div class="cgrid g2"><div class="ccard"><h2>${L('评分排行（已评 ≥ 4 个模块）','Score ranking (≥4 modules scored)')}</h2>`+ranked.slice(0,10).map((c,i)=>`<div class="mod" style="grid-template-columns:22px 64px 1fr 34px;cursor:pointer" data-go="coin/${c.sym}"><span class="sm">${i+1}</span><b style="text-align:left">${c.sym}</b><div class="bar"><b style="width:${c.sc.total}%"></b></div><span>${c.sc.total}</span></div>`).join('')+`<div class="sm" style="margin-top:6px">${L('评分只用于排序，不是预测；规则为【假设】，见“口径与规则”。','Score is for sorting only, not a forecast; rules are hypotheses (see Method).')}</div></div>
+  h+=`<div class="ccard"><h2>${L('埋伏仓候选 · 条件检查','Ambush candidates · condition check')}</h2><div class="sm" style="margin-bottom:6px">${L('只做规则判定，不是买卖建议。点标的看每条规则的数据。','Rule checks only, not trade advice. Click a row for the data behind each rule.')}</div><div class="scroll"><table><thead><tr><th>${L('标的','Asset')}</th><th>${L('规则判定（已验证条件）','Rule check (verified)')}</th><th>${L('未验证提示','Unverified flags')}</th><th>${L('收入 7v30','Rev 7v30')}</th><th>${L('距 120 日高','vs 120d high')}</th><th>${L('量能 7v30','Volume 7v30')}</th><th>${L('技术形态','Technicals')}</th><th>${L('近 30 日收入','Revenue 30d')}</th></tr></thead><tbody>`+
+  amb.map(c=>{const v=verdict(c),p=c.price,r=c.fees.revenue;return `<tr data-go="coin/${c.sym}"><td><b>${c.sym}</b> <span class="sm">${esc(c.name)}</span>${tagHTML(c)}</td><td>${stat(v.k,v.t)} <span class="sm">${esc(v.d)}</span></td><td class="sm">${checks(c).filter(x=>!HARD.has(x.w)&&(x.k==='crit'||x.k==='serious')).map(x=>x.id).join('、')||'—'}</td><td class="${cls(r&&r.d7v30)}">${fmtP(r&&r.d7v30)}</td><td class="${cls(p&&p.dd120)}">${fmtP(p&&p.dd120)}</td><td class="${cls(p&&p.vol7v30)}">${fmtP(p&&p.vol7v30)}</td><td>${p?trend(p.trend):'—'}</td><td>${spark(c.spark_rev)}</td></tr>`}).join('')+`</tbody></table></div></div>`;
+  const bt=BT&&BT.modules?['R','C','V','D','T'].filter(k=>BT.modules[k]&&BT.modules[k].verdict==='已验证·方向').length:null;
+  h+=`<div class="cgrid g2"><div class="ccard"><h2>${L('评分研究进行中（立项待确认）','Score research in progress')}</h2><div class="sm" style="color:var(--ink2);font-size:13px;line-height:1.7">${L(`原型里的 R / C / V / D 评分做了历史回测（${BT?BT.n_coins:'—'} 个有协议收入的代币，2023-03 起每月一次，判定标准事先写死）：通过 ${bt==null?'—':bt} / 5。没通过的东西不拿来打分、排名，页面只摆原始读数和回测结论。已立项一轮评分研究：先逐项检验基本面 / 资金面 / 技术面读数，再定怎么合成、怎么打分，判定标准事先写死，Codex / Gemini / Grok 分头复核，大叔拍板后上线。`,`The prototype’s R/C/V/D scores were backtested (${BT?BT.n_coins:'—'} revenue tokens, monthly since 2023-03, rules fixed in advance): ${bt==null?'—':bt}/5 passed. Nothing unverified is used to score or rank; only raw readings and backtest results are shown.`)}</div><div style="margin-top:8px"><a data-go="research">${L('看立项书和第一轮结果 →','Research plan and round one →')}</a></div></div>
   <div class="ccard"><h2>${L('最新监控消息','Latest alerts')}</h2>${ALL().slice(0,7).map(alertHTML).join('')}<div style="margin-top:6px"><a data-go="alerts">${L('全部 →','All →')}</a></div></div></div>`;
   const f=(MAN.findings||[])[0];
   if(f)h+=`<div class="ccard find"><h2>${L('重大发现 · 最新一批','Key findings · latest batch')} <span class="sm">${f.d}</span></h2><h3>${esc(f.title)}</h3><ul>${f.items.slice(0,5).map(x=>`<li>${esc(x)}</li>`).join('')}</ul><div style="margin-top:6px"><a data-go="findings">${L('全部记录 →','All findings →')}</a></div></div>`;
   return h;
 }
-let sortKey='score',sortDir=-1,fTier='all',fTag='all';
-const COLS=[['score',L('评分','Score'),c=>c.sc.total],['rev',L('收入 7v30','Rev 7v30'),c=>c.fees.revenue&&c.fees.revenue.d7v30],['mom',L('收入 30 日环比','Rev 30d'),c=>c.fees.revenue&&c.fees.revenue.mom30],
+let sortKey='vr',sortDir=1,fTier='all',fTag='all';
+const COLS=[['rev',L('收入 7v30','Rev 7v30'),c=>c.fees.revenue&&c.fees.revenue.d7v30],['mom',L('收入 30 日环比','Rev 30d'),c=>c.fees.revenue&&c.fees.revenue.mom30],
  ['phr',L('市值 / 年化持有人收入','Mcap / ann. holder rev'),c=>c.val&&c.val.p_hr],['hsh',L('持有人占比','Holder share'),c=>c.hshare],['r30',L('价格 30 日','Price 30d'),c=>c.price&&c.price.ret30],['dd',L('距 120 日高','vs 120d high'),c=>c.price&&c.price.dd120],['ma',L('距 MA200','vs MA200'),c=>c.price&&c.price.vsMA200],
  ['vol',L('量能 7v30','Volume 7v30'),c=>c.price&&c.price.vol7v30],['act',L('业务量 7v30','Activity 7v30'),c=>c.act&&c.act.d7v30],['vr',L('成交额排名','Volume rank'),c=>c.vrank&&c.vrank.cur]];
 function rank(){
@@ -159,7 +172,7 @@ function rank(){
   const pill=(g,v,t,cur)=>`<span class="pill ${cur===v?'on':''}" data-f="${g}:${v}">${t}</span>`;
   return `<div class="ccard"><div class="filters"><span class="sm">${L('分层','Tier')}</span>${pill('tier','all',L('全部','All'),fTier)}${['T1','T2','T3','W'].map(t=>pill('tier',t,TIER[t],fTier)).join('')}<span class="sm">${L('候选','Candidate')}</span>${pill('tag','all',L('全部','All'),fTag)}${pill('tag','ambush',L('埋伏仓候选','Ambush'),fTag)}${pill('tag','channelB',L('渠道B','Channel B'),fTag)}</div>
   <div class="scroll"><table><thead><tr><th>${L('标的','Asset')}</th>${COLS.map(c=>`<th data-s="${c[0]}" class="${sortKey===c[0]?'sorted':''}">${c[1]}${sortKey===c[0]?(sortDir<0?' ↓':' ↑'):''}</th>`).join('')}<th>${L('收入 30 日','Revenue 30d')}</th><th>${L('价格 90 日','Price 90d')}</th></tr></thead><tbody>`+
-  rows.map(c=>{const r=c.fees.revenue,p=c.price;return `<tr data-go="coin/${c.sym}"><td><b>${c.sym}</b>${tagHTML(c)}</td><td>${scTxt(c)}</td>
+  rows.map(c=>{const r=c.fees.revenue,p=c.price;return `<tr data-go="coin/${c.sym}"><td><b>${c.sym}</b>${tagHTML(c)}</td>
   <td class="${cls(r&&r.d7v30)}">${fmtP(r&&r.d7v30)}</td><td class="${cls(r&&r.mom30)}">${fmtP(r&&r.mom30)}</td><td>${fmtX(c.val&&c.val.p_hr)}</td><td>${nz(c.hshare)?c.hshare.toFixed(0)+'%':'—'}</td>
   <td class="${cls(p&&p.ret30)}">${fmtP(p&&p.ret30)}</td><td class="${cls(p&&p.dd120)}">${fmtP(p&&p.dd120)}</td><td class="${cls(p&&p.vsMA200)}">${fmtP(p&&p.vsMA200)}</td><td class="${cls(p&&p.vol7v30)}">${fmtP(p&&p.vol7v30)}</td><td class="${cls(c.act&&c.act.d7v30)}">${fmtP(c.act&&c.act.d7v30)}</td><td>${c.vrank&&c.vrank.cur?'#'+c.vrank.cur:'—'}</td>
   <td>${spark(c.spark_rev)}</td><td>${spark(c.spark_px,90,24,'var(--s2)')}</td></tr>`}).join('')+`</tbody></table></div>
@@ -169,18 +182,18 @@ let SER={};
 function coin(k){
   const c=C[k]; if(!c)return `<div class="ccard">${L('没有这个标的','Unknown asset')}</div>`;
   const p=c.price,fr=c.fees.revenue,fh=c.fees.holders,ff=c.fees.fees,v=c.val,vd=verdict(c),man=(MAN.fals||{})[k]||[],rk=(MAN.risks||[]).filter(x=>x.s===k);
-  let h=`<a class="back" data-go="rank">← ${L('排行榜','Ranking')}</a><div class="ccard"><div style="display:flex;flex-wrap:wrap;gap:8px 18px;align-items:baseline"><h2 style="font-size:19px;margin:0">${c.sym} <span class="sm">${esc(c.name)}</span></h2>${tagHTML(c)}<span>${stat(vd.k,vd.t)} <span class="sm">${esc(vd.d)}</span></span></div>
+  let h=`<a class="back" data-go="rank">← ${L('全部标的','All assets')}</a><div class="ccard"><div style="display:flex;flex-wrap:wrap;gap:8px 18px;align-items:baseline"><h2 style="font-size:19px;margin:0">${c.sym} <span class="sm">${esc(c.name)}</span></h2>${tagHTML(c)}<span>${stat(vd.k,vd.t)} <span class="sm">${esc(vd.d)}</span></span></div>
   <div class="sm" style="margin-top:4px">${esc(c.sector||'')}${c.pos?' · '+esc(c.pos):''}${c.note?' · '+L('回购 / 销毁口径：','Buyback / burn: ')+esc(c.note):''}</div></div>`;
   h+=`<div class="cgrid g4">
   <div class="ccard kpi"><div class="l">${L('收盘','Close')}（${p?p.date:'—'}）</div><div class="v">${p?fmtPx(p.last):'—'}</div><div class="s ${cls(p&&p.ret30)}">${L('30 日','30d')} ${fmtP(p&&p.ret30)}${p&&nz(p.ret30vsBTC)?`（${L('对 BTC','vs BTC')} ${fmtP(p.ret30vsBTC)}pp）`:''}</div></div>
-  <div class="ccard kpi"><div class="l">${L('综合评分（假设）','Score (hypothesis)')}</div><div class="v">${c.sc.total===null?'—':c.sc.total}</div><div class="s">${L(`已评 ${c.sc.n}/6 个模块`,`${c.sc.n}/6 modules scored`)}</div></div>
+  <div class="ccard kpi"><div class="l">${L('协议收入 7 日均 vs 30 日均','Revenue 7d vs 30d avg')}</div><div class="v ${cls(fr&&fr.d7v30)}">${fmtP(fr&&fr.d7v30)}</div><div class="s">${L('30 日环比','30d change')} ${fmtP(fr&&fr.mom30)} · DefiLlama</div></div>
   <div class="ccard kpi"><div class="l">${L('市值 / FDV','Mcap / FDV')}</div><div class="v" style="font-size:20px">${v?fmtU(v.mcap):'—'} <span class="sm">/ ${v?fmtU(v.fdv):'—'}</span></div><div class="s">${v?esc(v.src):''}</div></div>
   <div class="ccard kpi"><div class="l">${L('30 日协议收入 / 持有人收入','30d revenue / holder revenue')}</div><div class="v" style="font-size:20px">${fr?fmtU(fr.sum30):'—'} <span class="sm">/ ${fh?fmtU(fh.sum30):'—'}</span></div><div class="s">${L('抽成率','Take rate')} ${nz(c.take)?c.take.toFixed(0)+'%':'—'} · ${L('持有人占比','holder share')} ${nz(c.hshare)?c.hshare.toFixed(0)+'%':'—'}</div></div></div>`;
   if(c.stage||c.basis)h+=`<div class="ccard"><h2>${L('叙事阶段','Narrative stage')} <span class="sm">${L('人工核对','manual check')} ${esc(c.asof||'')}</span></h2><div class="stage">${esc(c.stage||'—')}</div><div class="sm" style="color:var(--ink2);font-size:13px;line-height:1.65">${esc(c.basis||'')}</div></div>`;
   h+=`<div class="cgrid g2"><div class="ccard"><h2>${L('价格与 MA200（技术面）','Price & MA200 (technicals)')}</h2><div id="ch1"></div></div><div class="ccard"><h2>${L('代币成交额（资金面，USDT / 日）','Token volume (flows, USDT / day)')}</h2><div id="ch2"></div></div>
   <div class="ccard"><h2>${L('手续费 / 协议收入 / 持有人收入（基本面，日）','Fees / revenue / holder revenue (fundamentals, daily)')}</h2><div id="ch3"></div></div>
   <div class="ccard"><h2>${c.act?(c.act.label==='TVL'?'TVL':L('业务量：日成交额','Activity: daily volume'))+L('（基本面）',' (fundamentals)'):L('业务量','Activity')}</h2>${c.act?'<div id="ch4"></div>':`<div class="empty">${L('该标的没有可用的业务量口径。','No activity series for this asset.')}</div>`}</div>
-  <div class="ccard"><h2>${L('评分与成交额排名走势','Score & volume-rank history')}</h2><div id="ch5"></div><div class="sm">${L('每天一点，从 2026-11-13 开始记录，不回填。','One point a day from 2026-11-13; never backfilled.')}</div></div>
+  <div class="ccard"><h2>${L('成交额排名走势（资金面）','Volume-rank history (flows)')}</h2><div id="ch5"></div><div class="sm">${L('每天一点，从 2026-11-13 开始记录，不回填。','One point a day from 2026-11-13; never backfilled.')}</div></div>
   <div class="ccard"><h2>${L('资金面 · 币安成交额排名','Flows · Binance volume rank')}</h2>${volCard(c)}</div>
   <div class="ccard"><h2>${L('日活用户（基本面）','Daily active users (fundamentals)')}</h2><div id="ch6"></div>${c.users?`<div class="sm">${L('7 日均 / 30 日均','7d / 30d avg')} ${fmtU(c.users.avg7,1)} / ${fmtU(c.users.avg30,1)}（${fmtP(c.users.d7v30)}）· ${L('30 日环比','30d change')} ${fmtP(c.users.mom30)} · DefiLlama</div>`:''}</div>
   <div class="ccard"><h2>${L('上一轮 BTC 拉升里的表现（拉盘复盘）','In the last BTC rally (replay)')}</h2><div id="rotc">${rotCard(c)}</div></div></div>
@@ -198,16 +211,42 @@ function coin(k){
   ${c.unlock&&nz(c.unlock.usd)&&c.unlock.usd>0?`<tr><td>${L('30 日解锁价值 vs 持有人收入','30d unlock value vs holder revenue')}</td><td>${fmtU(c.unlock.usd)} vs ${fmtU(fh?fh.sum30:0)}${nz(c.unlock.cover_paper)?'（'+L('覆盖','cover')+' '+(c.unlock.cover_paper*100).toFixed(0)+'%）':''}</td></tr>`:''}</tbody></table>
   ${c.sym==='NEAR'?`<div class="sm" style="margin-top:6px">${L('NEAR：收入口径仅为 Intents，对整个 NEAR 市值的倍数偏高，仅作参考。','NEAR: revenue is Intents only, so multiples vs the whole NEAR cap read high.')}</div>`:''}</div></div>`;
   h+=supplyCard(c);
-  h+=`<div class="cgrid g2"><div class="ccard"><h2>${L('基本面评分（假设）','Fundamental score (hypothesis)')}</h2>${c.sc.mods.map(m=>`<div class="mod"><span class="k">${m.k}</span><span>${esc(m.n)}<br>${btTag(m.k)}</span><span class="sm">${esc(m.why)}<details class="why"><summary>${L('怎么打分','How it scores')}</summary>${MOD_WHY[m.k]||''}</details></span><b>${m.s===null?'—':m.s}</b></div>`).join('')}
-  <div class="sm" style="margin-top:6px">${L('每项 0–3 分；综合分 = 已评模块得分 ÷（3 × 已评模块数）。未评模块不扣分，综合分只作排序用。','Each 0–3; total = points ÷ (3 × modules scored). Unscored modules are skipped; the total is for sorting only.')}</div></div>
-  <div class="ccard"><h2>${L('建仓条件检查','Entry condition check')}</h2>${checks(c).map(x=>`<div class="mod mod2"><b style="text-align:left">${x.id}</b><div>${stat(x.k,esc(x.t))}<div class="sm">${x.x}</div>${x.w&&WHY[x.w]?`<details class="why"><summary>${L('这条是什么','What is this')}</summary>${WHY[x.w]}</details>`:''}</div></div>`).join('')}
-  <div class="sm" style="margin-top:6px">${L('判定怎么来的：闸门 1 / 2、R2、R6 有一条不过，或闸门 3 触发、R3 亮橙，就是“有硬条件未过”；没有硬伤但有一条没写或没数据，是“条件未齐”；全部通过才是“条件齐备”——只代表可以进入人工建仓评估，不是买入信号。','How the verdict works: any failure on gates 1/2, R2, R6, or gate 3 / R3 flagged → “hard condition failing”; nothing failing but something unwritten or missing → “incomplete”; all pass → “conditions met”, which only means ready for manual review, not a buy signal.')}</div>
+  h+=`<div class="cgrid g2"><div class="ccard"><h2>${L('基本面读数（不打分）','Fundamental readings (not scored)')}</h2>${c.sc.mods.map(m=>`<div class="mod" style="grid-template-columns:22px 92px 1fr"><span class="k">${m.k}</span><span>${esc(m.n)}<br>${btTag(m.k)}</span><span class="sm">${esc(m.why)}<details class="why"><summary>${L('这个读数是什么','What this reading is')}</summary>${MOD_WHY[m.k]||''}</details></span></div>`).join('')}
+  <div class="sm" style="margin-top:6px">${L('原型给这些读数按 0–3 分打分再加总；第一轮回测里没有一项能区分之后谁跑得好，评分研究立项中，研究出结论前只摆读数，不打分、不排名。<a data-go=\"research\">看评分研究 →</a>','The prototype scored these 0–3 and summed them; none separated future winners in the backtest, so only the readings are shown.')}</div></div>
+  <div class="ccard"><h2>${L('选币卡片（六问）','Pick card (six questions)')}</h2>${sixCard(c)}</div></div>
+  <div class="cgrid g2"><div class="ccard"><h2>${L('建仓条件检查','Entry condition check')}</h2>${(()=>{const row=x=>`<div class="mod mod2"><b style="text-align:left">${x.id}</b><div>${stat(HARD.has(x.w)?x.k:(x.k==='good'?'good':'na'),esc(x.t))} ${gradeTag(x.w)}<div class="sm">${x.x}</div>${x.w&&WHY[x.w]?`<details class="why"><summary>${L('这条是什么、证据是什么','What it is and the evidence')}</summary>${WHY[x.w]}<br><b>${L('证据：','Evidence: ')}</b>${esc((GRADE[x.w]||[])[1]||'')}</details>`:''}</div></div>`;
+   const all=checks(c);return `<h3>${L('进判定（已验证或流程规则）','Counted (verified or process rules)')}</h3>`+all.filter(x=>HARD.has(x.w)).map(row).join('')+`<h3 style="margin-top:10px">${L('只作提示（没验证过，不进判定）','Info only (unverified, not counted)')}</h3>`+all.filter(x=>!HARD.has(x.w)).map(row).join('')})()}
+  <div class="sm" style="margin-top:6px">${L('判定只用上半部分：有一条不过就是“有硬条件未过”；没有不过但有一条没写或没数据，是“条件未齐”；都过了才是“条件齐备”——只代表可以进入人工建仓评估，不是买入信号。下半部分没验证过，只摆数据。','Only the upper block is counted: any failure → “hard condition failing”; something missing → “incomplete”; all pass → “conditions met” (ready for manual review, not a buy signal). The lower block is unverified and shown for information only.')}</div>
   <div class="sm" style="margin-top:6px">${L('失效规则（大叔方法论，不在此页判定）：90 天内无 T1 信号减半；较平均成本 −30% 清仓；BTC 收盘跌破本轮最低收盘停止加仓。埋伏仓不宜用窄止损（点火前回撤中位 −11.5%，最深 −23%）。','Exit rules (from the method, not judged here): halve if no T1 signal within 90 days; exit at −30% vs average cost; stop adding if BTC closes below the cycle low. Ambush positions should not use tight stops (pre-ignition pullback median −11.5%, worst −23%).')}</div></div></div>`;
   h+=`<div class="cgrid g2"><div class="ccard"><h2>${L('风险提示 · 证伪 / 降级条件','Risk · falsification / downgrade')}</h2>${man.length?man.map(f=>`<div class="mod mod1"><div>${stat(f.k,esc(f.t))}<div class="sm">${esc(f.x)}</div></div></div>`).join(''):''}${rk.map(f=>`<div class="mod mod1"><div>${stat('serious',esc(f.cat)+'：'+esc(f.t))}<div class="sm">${L('人工登记','manual log')} ${esc(f.asof)}</div></div></div>`).join('')}${!man.length&&!rk.length?`<div class="empty">${L('尚未登记。','Nothing logged yet.')}</div>`:''}</div>
   <div class="ccard"><h2>${c.sym} ${L('相关消息','alerts')}</h2>${ALL(true).filter(e=>e.s===k).map(alertHTML).join('')||`<div class="empty">${L('暂无。','None.')}</div>`}</div></div>`;
   setTimeout(()=>drawCoin(c),0);
-  if(!ROT)fetch(root.dataset.rot+'?v='+D.last_complete_day).then(r=>r.json()).then(x=>{ROT=x;const el=$('#rotc');if(el)el.innerHTML=rotCard(c)}).catch(()=>{});
+  if(!ROT)fetch(root.dataset.rot+'?v='+VER).then(r=>r.json()).then(x=>{ROT=x;const el=$('#rotc');if(el)el.innerHTML=rotCard(c)}).catch(()=>{});
   return h;
+}
+/* 选币卡片（《核心选币方法论》§5 末尾格式）：研究笔记里已有的自动带入，没有的写“未写”，不编 */
+function cardFields(c){
+  const today=D.last_complete_day, ev=(MAN.events||[]).filter(e=>e.s===c.sym&&e.d>today).sort((a,b)=>a.d.localeCompare(b.d));
+  const u=c.unlock, fl=(MAN.fals||{})[c.sym]||[], card=(MAN.cards||{})[c.sym]||{};
+  const f=(k,auto)=>card[k]?{v:card[k],ok:1}:auto?{v:auto,auto:1}:{v:''};
+  return [
+   ['one',L('一句话','One line'),'①',f('one',c.pos)],
+   ['moat',L('卡位与对手','Position & rivals'),'②',f('moat','')],
+   ['bear',L('反向逻辑','Bear case'),'②',f('bear','')],
+   ['capture',L('价值捕获','Value capture'),'③',f('capture',c.note?(c.note+(nz(c.hshare)?L(`（DefiLlama：30 日持有人收入占协议收入 ${c.hshare.toFixed(0)}%）`,` (DefiLlama holder share ${c.hshare.toFixed(0)}%)`):'')):'')],
+   ['supply',L('解锁与筹码日历','Unlocks & supply calendar'),'④',f('supply',[u?u.note:(c.under5?L('已查：30 日内无 ≥5% 解锁','checked: no ≥5% unlock in 30d'):''),...(MAN.risks||[]).filter(r=>r.s===c.sym&&r.cat==='资金 / 供给').map(r=>r.t)].filter(Boolean).join('；'))],
+   ['driver',L('驱动类型与阶段','Driver type & stage'),'⑤',f('driver',c.stage?L(`叙事阶段：${c.stage}（还没按 1a / 1b / 1c、T0 / T1 / T2 归类）`,`Narrative stage: ${c.stage} (not yet classed 1a/1b/1c, T0/T1/T2)`):'')],
+   ['catalyst',L('时间型催化剂','Dated catalysts'),'',f('catalyst',ev.map(e=>e.d+' '+e.t).join('；'))],
+   ['t1',L('T1 触发','T1 trigger'),'',f('t1','')],
+   ['fals',L('证伪条件','Falsification'),'',f('fals',fl.map(x=>x.t).join('；'))],
+   ['next',L('下一检查日','Next check'),'',f('next','')],
+   ['attention',L('注意力与认知差','Attention & perception gap'),'⑥',f('attention','')]];
+}
+function sixCard(c){
+  const fs=cardFields(c), q=[...new Set(fs.filter(x=>x[2]).map(x=>x[2]))], done=q.filter(n=>fs.filter(x=>x[2]===n).every(x=>x[3].ok)), auto=fs.filter(x=>x[3].auto).length;
+  const cell=v=>v.ok?esc(v.v):v.auto?`${esc(v.v)} <span class="tg" title="${L('从研究笔记自动带入，还没核对','pre-filled from notes, not reviewed')}">${L('自动带入','pre-filled')}</span>`:`<span class="sm" style="color:var(--warn)">${L('未写','not written')}</span>`;
+  return `<table class="rt"><tbody>${fs.map(x=>`<tr><td style="width:34%">${x[2]?`<span class="sm">${x[2]}</span> `:''}${x[1]}</td><td>${cell(x[3])}</td></tr>`).join('')}</tbody></table>
+  <div class="sm" style="margin-top:6px">${L(`六问核对过 ${done.length} / 6；另有 ${auto} 栏是从研究笔记自动带入的草稿（标“自动带入”），不算答完。带圈号的是六问对应的栏。核对后的答案写进 core/core_config.json 的 cards。`,`${done.length}/6 questions reviewed; ${auto} cells are drafts pre-filled from notes and do not count.`)}</div>`;
 }
 function treasCard(c){
   const t=c.treasury; if(!t)return `<div class="empty">${L('DefiLlama 没有这个协议的国库数据。','No treasury data on DefiLlama.')}</div>`;
@@ -244,11 +283,11 @@ function drawCoin(c){
     if($('#ch6')){if(s.users)lineChart($('#ch6'),s.users.dates,[{n:L('日活','DAU'),c:'var(--s1)',v:s.users.vals,w:1.3},{n:L('7 日均','7d avg'),c:'var(--s2)',v:sma(s.users.vals,7),w:2}],{h:190,zero:true,title:'users'});else $('#ch6').innerHTML=`<div class="empty">${L('DefiLlama 没有这个协议的日活数据。','No active-user data on DefiLlama.')}</div>`}
     if(s.act&&$('#ch4'))lineChart($('#ch4'),s.act.dates,[{n:s.act.label==='TVL'?'TVL':L('日成交额','Daily volume'),c:'var(--s1)',v:s.act.vals},{n:L('7 日均','7d avg'),c:'var(--s2)',v:sma(s.act.vals,7),w:1.8}],{h:210,title:'activity'});
   };
-  if(SER[c.sym])go(SER[c.sym]); else fetch(`${sdir}${c.sym}.json?v=${D.last_complete_day}`).then(r=>r.json()).then(s=>{SER[c.sym]=s;if(location.hash.slice(1)==='coin/'+c.sym)go(s)}).catch(()=>{});
+  if(SER[c.sym])go(SER[c.sym]); else fetch(`${sdir}${c.sym}.json?v=${VER}`).then(r=>r.json()).then(s=>{SER[c.sym]=s;if(location.hash.slice(1)==='coin/'+c.sym)go(s)}).catch(()=>{});
   const hd=()=>{const h=(HIST||[]).filter(x=>x.coins[c.sym]);const el=$('#ch5');if(!el)return;
-    if(h.length<2){el.innerHTML=`<div class="empty">${L(`记录中：已有 ${h.length} 天，满 2 天出图。`,`Recording: ${h.length} day(s) so far; chart appears from day 2.`)}${h.length?` ${L('今天','Today')}：${L('评分','score')} ${h[0].coins[c.sym].sc??'—'}，${L('成交额排名','volume rank')} #${h[0].coins[c.sym].vrank??'—'}`:''}</div>`;return}
-    lineChart(el,h.map(x=>x.date),[{n:L('评分','Score'),c:'var(--s1)',v:h.map(x=>x.coins[c.sym].sc),dot:true}],{h:170,lo:0,hi:100,yf:v=>v.toFixed(0),title:'score'})};
-  if(HIST)hd(); else fetch(hsrc+'?v='+D.last_complete_day).then(r=>r.json()).then(x=>{HIST=x;hd()}).catch(()=>{});
+    if(h.length<2){el.innerHTML=`<div class="empty">${L(`记录中：已有 ${h.length} 天，满 2 天出图。`,`Recording: ${h.length} day(s) so far; chart appears from day 2.`)}${h.length?` ${L('今天','Today')}：${L('合并成交额排名','volume rank')} #${h[0].coins[c.sym].vrank??'—'}`:''}</div>`;return}
+    lineChart(el,h.map(x=>x.date),[{n:L('合并成交额排名','Volume rank'),c:'var(--s1)',v:h.map(x=>x.coins[c.sym].vrank),dot:true}],{h:170,inv:true,yf:v=>'#'+v.toFixed(0),title:'rank'})};
+  if(HIST)hd(); else fetch(hsrc+'?v='+VER).then(r=>r.json()).then(x=>{HIST=x;hd()}).catch(()=>{});
 }
 function supplyCard(c){
   const s=c.supply,u=c.unlock,fh=c.fees.holders;
@@ -290,8 +329,8 @@ function market(){
   const ms=M.miss, np=R.filter(x=>x.pool).length;
   const bs=M.basket_src||{};
   const bnote=bs.src==='leg'?L(`等权篮子 = 宏观页「山寨整体」同一个篮子（${M.n_basket} 个币：币安成交额前 50 名进篮、跌出 75 名出篮，每月 1 日重排，不含 BTC / ETH / 稳定币 / 代币化股票）。<a href="/macro/">去宏观页看山寨整体涨跌腿 →</a>`,`Equal-weight basket = the same basket as “Altcoins overall” on the Macro page (${M.n_basket} coins: enter at Binance volume top 50, leave below 75, rebalanced monthly; ex BTC/ETH/stables/tokenized stocks). <a href="/en/macro/">Macro page →</a>`)
-    :L('宏观页山寨篮子读不到，今天临时用 USDT 现货成交额前 50 代替。','Macro basket unavailable today; fell back to the top 50 by USDT spot volume.');
-  return `<div class="note" style="background:var(--cool-bg);border-color:var(--cool-bd)">${bnote}</div><div class="cgrid g4">${kp(L(`等权篮子 7 日（中位，${M.n_basket} 个币）`,`EW basket 7d (median, ${M.n_basket} coins)`),'r7')}${kp(L('等权篮子 30 日（中位）','EW basket 30d (median)'),'r30')}${kp(L('等权篮子 90 日（中位）','EW basket 90d (median)'),'r90')}
+    :bs.src==='fallback'?L('今天日更读宏观页山寨篮子（data/leg/leg_latest.json）失败，临时用 USDT 现货成交额前 50 代替，失败原因见“口径与规则”底部。','The macro basket file failed to load in today’s run; fell back to the top 50 by USDT spot volume.'):'';
+  return `${bnote?`<div class="note" style="background:var(--cool-bg);border-color:var(--cool-bd)">${bnote}</div>`:''}<div class="cgrid g4">${kp(L(`等权篮子 7 日（中位，${M.n_basket} 个币）`,`EW basket 7d (median, ${M.n_basket} coins)`),'r7')}${kp(L('等权篮子 30 日（中位）','EW basket 30d (median)'),'r30')}${kp(L('等权篮子 90 日（中位）','EW basket 90d (median)'),'r90')}
   <div class="ccard kpi"><div class="l">${L('观测池 对 篮子里的池外（中位）','Pool vs non-pool in basket (median)')}</div><div class="v" style="font-size:15px;line-height:1.55">30${L('日','d')} ${fmtP(B.r30.pool_med)} / ${fmtP(B.r30.non_med)}<br>90${L('日','d')} ${fmtP(B.r90.pool_med)} / ${fmtP(B.r90.non_med)}</div><div class="s">${L(`篮子里有 ${B.r30.n_pool} 个池内币；池是事后选的，90 日差距含后视偏差`,`${B.r30.n_pool} pool coins in basket; the pool was picked after the fact`)}</div></div></div>
   <div class="ccard"><h3>${L('错过记录：篮子里近 30 日最强前 15（看相对强弱）','Missed list: top 15 in the basket by 30d return')}</h3><div class="chips" style="margin:6px 0 8px">${ms.top15_30d.map(chip).join('')}</div>
   <div class="sm">${L(`前 15 里在观测池的：${ms.in_pool.join('、')||'无'}。绿框 = 观测池。近 7 日最强前 10：`,`In the pool: ${ms.in_pool.join(', ')||'none'}. Green border = pool. Top 10 over 7d: `)}${ms.top10_7d.map(esc).join('、')}。${L('每天重算；连续几周看，才能回答“只盯有收入的币会不会漏涨幅”。','Recomputed daily; only weeks of data can tell whether the pool misses the movers.')}</div></div>
@@ -333,7 +372,7 @@ function volume(){
 let rF='all',rSort='r30',rDir=-1;
 const RCLS={lead:[L('龙头','Leader'),'var(--up)'],fade:[L('先行后掉队','Early, faded'),'var(--warn)'],follow:[L('后发跟涨','Late follower'),'var(--cool)'],lag:[L('落后','Laggard'),'var(--muted)']};
 function rotation(){
-  if(!ROT){fetch(root.dataset.rot+'?v='+D.last_complete_day).then(r=>r.json()).then(x=>{ROT=x;if(location.hash.startsWith('#rotation'))render()}).catch(()=>{});return `<div class="ccard empty">${L('加载中…','Loading…')}</div>`}
+  if(!ROT){fetch(root.dataset.rot+'?v='+VER).then(r=>r.json()).then(x=>{ROT=x;if(location.hash.startsWith('#rotation'))render()}).catch(()=>{});return `<div class="ccard empty">${L('加载中…','Loading…')}</div>`}
   const M=ROT.meta,R=ROT.coins.filter(x=>x.sym!=='BTC');
   const cnt=k=>R.filter(x=>x.cls===k).length; const pc=x=>fmtP(nz(x)?x*100:null,0);
   const med=a=>{a=a.filter(nz).sort((x,y)=>x-y);return a.length?a[Math.floor(a.length/2)]:null};
@@ -387,6 +426,10 @@ function btTable(){
   <details class="why"><summary>${L('IC、t 值怎么看；判定标准（跑之前定的）','How to read IC and t; pass/fail rules (set before running)')}</summary>${L(`<p>IC = 每个月把“模块分数”和“之后相对收益”分别排名，算两者的相关系数（−1 到 +1）。正数说明分数高的币之后确实跑得更好；0.05 以上在选币里就算有用，但要稳定。t 值 = 平均 IC ÷ 波动 × √月数，绝对值 ≥ 2 才算不是运气。</p><p>判定：30 天、60 天 IC 都 > 0 且 30 天 t ≥ 2 → 方向有效；30 天 IC < 0 且 t ≤ −1 → 已证伪；其余 → 未通过（方向对但不显著，或方向反但不显著）。60 / 90 天的月份互相重叠，t 值偏高，只作参考。</p><p>局限：只能拿到今天还活着的协议（幸存者偏差，结果偏乐观）；每月只有 20 来个币，统计力有限；DefiLlama 的收入口径会回改。</p>`,
   `<p>IC = rank correlation between the module score and the subsequent relative return each month (−1..+1); above ~0.05 is useful if stable. t = mean IC ÷ sd × √months; |t| ≥ 2 means unlikely to be luck.</p><p>Rules: IC > 0 at 30 and 60 days with t ≥ 2 at 30 days → works; IC < 0 with t ≤ −1 → falsified; otherwise not significant. Survivorship bias applies; ~20 coins per month.</p>`)}</details>`;
 }
+function research(){
+  const t=document.getElementById('core-research');
+  return `<div class="ccard find">${t?t.innerHTML:''}</div><div class="ccard"><h2>${L('第一轮回测结果（2026-11-14，立项的起点）','Round-one backtest (2026-11-14), the starting point')}</h2>${btTable()}</div>`;
+}
 function method(){
   const g=k=>`<li><b>${{g1:L('闸门 1 · 周期','Gate 1 · cycle'),g2:L('闸门 2 · BTC 底线','Gate 2 · BTC floor'),g3:L('闸门 3 · 流动性','Gate 3 · liquidity'),R1:L('R1 · 六问卡','R1 · six-question card'),R2:L('R2 · 解锁','R2 · unlocks'),R3:L('R3 · 价格不跑在收入前面','R3 · price vs revenue'),R4:L('R4 · 近期强势不加分','R4 · no points for strength'),R6:L('R6 · 渠道 B','R6 · channel B')}[k]}</b>：${WHY[k]}</li>`;
   return `<div class="ccard"><h2>${L('口径与规则','Method & rules')}</h2>${EN?'<div class="note">Manual notes (narrative stage, unlocks, risks, findings) come from the research log and are in Chinese.</div>':''}
@@ -395,17 +438,18 @@ function method(){
   <li><b>${L('资金面','Flows')}</b>：${L('成交额 = 币安这个币所有现货交易对 + U 本位 + 币本位合约，按币汇总成美元（见“成交额榜”的说明）；等权篮子 = 宏观页“山寨整体”同一个篮子。','Volume = all Binance spot pairs + USDⓈ-M + COIN-M futures per coin, in USD; the equal-weight basket is the Macro page’s “Altcoins overall” basket.')}</li>
   <li><b>${L('技术面','Technicals')}</b>：${L('币安现货已收盘日线：MA20 / 50 / 200、RSI14（Wilder）、距 120 日高点、30 日区间位置。只展示，不计分。','Closed Binance spot daily candles: MA20/50/200, RSI14, drawdown from 120-day high, 30-day range position. Shown, not scored.')}</li>
   <li><b>${L('人工登记','Manual')}</b>：${L(`叙事阶段、回购口径、解锁、事件、证伪条件、风险记录、重大发现来自研究笔记（最近核对 ${MAN.asof}）；未登记的标“未核”，不当作“没有”。`,`Narrative stage, unlocks, events, risks and findings from the research log (last checked ${MAN.asof}); not logged ≠ none.`)}</li></ul>
-  <h3>${L('评分模块：每项怎么打分','Score modules')}</h3><ul class="plain">${['R','C','V','D','B','S'].map(k=>`<li><b>${k}</b> ${btTag(k)}：${MOD_WHY[k]}</li>`).join('')}<li>${L('综合分 = 已评模块得分 ÷（3 × 已评模块数），只用来排序。','Total = points ÷ (3 × modules scored); sorting only.')}</li></ul>
+  <h3>${L('评分：研究立项中（2026-11-14 起）','Scoring: under research (since 2026-11-14)')}</h3><div class="note">${L('原型的 R / C / V / D / B / S 评分是拍出来的阈值，没有检验过。回测（下表）一项都没通过，所以研究期间页面不打分、不按分数排名，只摆每个读数和它的回测结论；怎么评分由“评分研究”这一轮研究来定（立项书见“评分研究”页签）。分数仍在后台每天记录，用作样本外检验。','The prototype’s 0–3 thresholds were never tested; none passed the backtest below, so the page no longer scores or ranks. Scores are still logged daily for out-of-sample testing, not shown.')}</div><ul class="plain">${['R','C','V','D','B','S'].map(k=>`<li><b>${k}</b> ${btTag(k)}：${MOD_WHY[k]}</li>`).join('')}</ul>
   <h3>${L('评分回测：这些模块到底有没有用','Score backtest: do the modules work?')}</h3>${btTable()}
-  <h3 style="margin-top:14px">${L('建仓条件检查：每条是什么','Entry checklist: what each line means')}</h3><ul class="plain">${['g1','g2','g3','R1','R2','R3','R4','R6'].map(g).join('')}
+  <h3 style="margin-top:14px">${L('建仓条件检查：每条是什么、证据是什么','Entry checklist: what each line means and its evidence')}</h3><ul class="plain">${['g1','g2','g3','R1','R4','R2','R3','R6'].map(k=>g(k).replace('</li>',` ${gradeTag(k)}<br><span class="sm">${L('证据：','Evidence: ')}${esc(GRADE[k][1])}</span></li>`)).join('')}
+  <li>${L('只有“已验证”和“流程”规则进判定；“假设”“回测未通过”的规则只摆数据，不影响“条件齐备 / 未齐 / 有硬条件未过”。','Only verified and process rules count; hypotheses are shown for information only.')}</li>
   <li>${L('“条件齐备”只表示可以进入人工建仓评估，不是买入信号；风险提示同理，不是卖出指令。','“Conditions met” means ready for manual review, not a buy signal; risk alerts are not sell orders.')}</li></ul>
   <h3>${L('待补维度进度','Pending dimensions')}</h3><ul class="plain">
   <li>${L('已接入（11-14）：供给侧收入、日活用户、国库（总额 / 自家代币占比）、核心开发者（GitHub，近 30 天提交过代码的人数，从下一次 Actions 日更开始有数）。','Added (11-14): supply-side revenue, active users, treasury, core developers (GitHub, from the next Actions run).')}</li>
   <li>${L('还接不了：代币激励 / 收益（收入 − 激励）——协议激励排放只有付费源（DefiLlama emissions、Token Terminal）；解锁日历同理，目前人工登记。','Not yet: token incentives / earnings — only paid sources (DefiLlama emissions, Token Terminal); unlock calendars stay manual.')}</li></ul>
   ${D.errors&&D.errors.length?`<h3>${L('本次取数问题','Fetch issues this run')}</h3><ul class="plain">${D.errors.slice(0,20).map(e=>`<li>${esc(e)}</li>`).join('')}</ul>`:''}</div>`;
 }
-const VIEWS={home,rank,market,volume,rotation,alerts,findings,method};
-const TABS=[['home',L('总观测台','Overview')],['rank',L('排行榜','Ranking')],['volume',L('成交额榜','Volume board')],['market',L('全市场','Market')],['rotation',L('拉盘复盘','Rally replay')],['alerts',L('风险提示','Risk alerts')],['findings',L('重大发现','Findings')],['method',L('口径与规则','Method')]];
+const VIEWS={home,rank,market,volume,rotation,alerts,findings,research,method};
+const TABS=[['home',L('总观测台','Overview')],['rank',L('全部标的','All assets')],['volume',L('成交额榜','Volume board')],['market',L('全市场','Market')],['rotation',L('拉盘复盘','Rally replay')],['alerts',L('风险提示','Risk alerts')],['findings',L('重大发现','Findings')],['research',L('评分研究','Score research')],['method',L('口径与规则','Method')]];
 function render(){
   const h=(location.hash||'#home').slice(1); const [p,arg]=h.split('/');
   root.querySelectorAll('.ctabs a').forEach(a=>a.classList.toggle('on',a.dataset.p===(p==='coin'?'rank':p)));
@@ -425,8 +469,8 @@ root.addEventListener('click',e=>{
   const s=e.target.closest('th[data-s]');if(s){const k=s.dataset.s;if(sortKey===k)sortDir*=-1;else{sortKey=k;sortDir=k==='vr'?1:-1}render()}
 });
 fetch(src).then(r=>r.json()).then(d=>{
-  D=d;C=d.coins;SYMS=Object.keys(C);MAN=d.manual||{};GT=d.gates||{};
-  fetch(root.dataset.bt+'?v='+d.last_complete_day).then(r=>r.ok?r.json():null).then(x=>{BT=x;if(x)render()}).catch(()=>{});
+  D=d;C=d.coins;SYMS=Object.keys(C);MAN=d.manual||{};GT=d.gates||{};VER=String(d.generated||d.last_complete_day).replace(/\D/g,'');
+  fetch(root.dataset.bt+'?v='+VER).then(r=>r.ok?r.json():null).then(x=>{BT=x;if(x)render()}).catch(()=>{});
   const stale=(Date.now()-Date.parse(d.last_complete_day+'T00:00:00Z'))/864e5>3.5;
   root.innerHTML=`<div class="sm">${L('数据日','Data day')} ${d.last_complete_day}（UTC）· ${L('生成于','built')} ${esc(d.generated)}${stale?` · <b style="color:var(--warn)">${L('停更：数据超过 3 天没更新','Stale: no update for 3+ days')}</b>`:''}</div>
   <nav class="ctabs">${TABS.map(t=>`<a href="#${t[0]}" data-p="${t[0]}">${t[1]}</a>`).join('')}</nav><div id="cview"></div>`;

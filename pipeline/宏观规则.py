@@ -1962,3 +1962,10 @@ RULE_CHANGES.append(
      "原因EN": "Feedback: a coin's volume is more than USDT spot plus USDT perps, and the benchmark should be the Macro page's altcoin basket. The first version counted only USDT spot and USDT perps.",
      "内容": "成交额 = 币安全部现货交易对（计价币按当天收盘折美元，没有 USDT 对的法币用 BTC 交叉汇率）+ U 本位（USDT、USDC 保证金，永续 + 交割）+ 币本位合约（标的币数 × 收盘），按币汇总。常客 / 新进榜 / 掉榜规则不变，改成贴在每个币后面的标签。等权篮子改读 leg/leg_data.py 的山寨篮子成员（成交额前 50 进、75 出、每月重排）。",
      "EN": "Volume = all Binance spot pairs (converted at the day's close; fiat without a USDT pair via the BTC cross) + USDⓈ-M (USDT and USDC margined, perpetual + delivery) + COIN-M (base volume × close), summed per coin. Regular / entrant / dropped rules unchanged, now shown as tags. The equal-weight basket now reads the Macro page's altcoin basket members."})
+
+RULE_CHANGES.append(
+    {"日期": "2026-11-14", "锚": "2026-11-14-corescore", "范围": "核心选币 · 评分与建仓条件", "EN范围": "Core picks · scoring and entry checks",
+     "原因": "原型的 0–3 分阈值没有检验过。回测（core/score_backtest.py，38 个代币、2023-03 起每月、标准事先写死）R / C / V / D 和合计分全部未通过；大叔要求没验证的不能拿来打分。",
+     "原因EN": "The prototype's 0–3 thresholds were never tested; in the backtest none of R/C/V/D or the total passed.",
+     "内容": "立项一轮评分研究（core/research/评分研究立项.md，观测台「评分研究」页签）；研究出结论前页面不打分、不按分数排名，只摆读数与回测结论（分数仍在后台记录，留作样本外检验）。建仓条件判定只用已验证规则（闸门 1/2/3、R4）和流程规则（R1 六问卡）；R2、R3、R6 降为提示。",
+     "EN": "Scores and score rankings removed from the page (still logged for out-of-sample tests). The entry verdict counts only verified rules (gates 1/2/3, R4) and the process rule R1; R2, R3 and R6 are info only."})

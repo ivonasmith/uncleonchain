@@ -58,7 +58,10 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
   页面 /core/（`出网站.build_core`，hash 路由 #home / #rank / #coin/UNI / #volume / #market / #alerts / #findings / #method），由 `core/web/core.js` + `core.css` 渲染；首页卡片 `core_home_card`。
   来源：DefiLlama（手续费 / 收入 / 持有人收入 / DEX 成交额 / TVL）、币安现货日线（data-api）、U 本位永续 = data.binance.vision 公开归档（fapi 在美国 451；缓存 `core/cache/` 走 actions/cache，首次回填约 5 分钟）、CoinGecko 供给（云端环境已放行 api.coingecko.com）。
   人工登记全在 `core/core_config.json`（12 个观测池 T1–T3 + 18 个观察标的 W、叙事阶段、解锁、事件、证伪条件、风险记录、重大发现），Notion 有新核对就改这里。
-  评分 R/C/V/D/B/S 和建仓条件检查照原型，全部标【假设】；页面只说「条件齐备 / 条件未齐 / 有硬条件未过」和风险提示，**不写买入 / 卖出**。
+  **评分研究立项（11-14 大叔定：没验证的不能用，但要立项研究、公开进度，不能静默撤掉）**：立项书 `core/research/评分研究立项.md`（页签 #research 原样渲染，`出网站.core_md`），阶段 M0–M5、判定标准写死在里面；研究出结论前页面不打分、不按分数排名，只摆读数 + 检验结论，分数只在后台记（`core_history.json`）。
+  六问卡 = 《核心选币方法论》第 4 层 §5：一句话价值 / 商业竞争（反向逻辑）/ 价值捕获 / 筹码 / 驱动类型与阶段（1a/1b/1c、T0/T1/T2）/ 注意力与认知差；卡片十栏。核对过的答案写 `core_config.json` 的 `cards`，自动带入的只算草稿。
+  建仓条件判定只用已验证 / 流程规则（`core.js` 的 `GRADE` / `HARD`：闸门 1/2/3、R1、R4）；R2 / R3 / R6 只作提示。页面只说「条件齐备 / 条件未齐 / 有硬条件未过」和风险提示，**不写买入 / 卖出**。
+  数据请求的缓存版本号用 `generated`（不是数据日，同日重跑会被 CDN 缓存一小时，11-14 出过「篮子读不到」误报）。
   大叔 11-14 定：美股和黄金直接去掉——现货剔除 B 结尾且 2026-06-11 起上市的代币化股票 / ETF，合约只算币安现货有交易对的币（归档没有标的类型，SNDK、XAU 这类分不出来）。
   11-14 第二轮（大叔反馈）：成交额 = 币安全口径（`core/binance_vol.py`：全部现货交易对按当天收盘折美元，无 USDT 对的法币走 BTC 交叉；U 本位 USDT/USDC 保证金永续 + 交割；币本位 × 收盘），
   缓存 `core/cache/spot_pairs.json`、`fut_all.json`；榜单一张表，标签 regular / entrant / exit / new。等权篮子 = `leg_latest.json` 的 `alt_leg.basket.members`（和宏观页同一个）。

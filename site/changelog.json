@@ -2,7 +2,7 @@
  {
   "version": "2026.11.14.2",
   "date": "2026-11-14",
-  "notify": false,
+  "notify": true,
   "title_zh": "核心选币：成交额全口径、评分回测、拉盘复盘",
   "title_en": "Core picks: full Binance volume, score backtest, rally replay",
   "items": [
@@ -13,9 +13,10 @@
     "corrections_anchor": "2026-11-14-corevol"
    },
    {
-    "type": "new",
-    "zh": "评分模块做了历史回测（38 个有协议收入的代币，2023-03 起每月一次，判定标准事先写死）：R / C / V / D 和合计分都没达到“方向有效”，R（收入趋势）和 V（估值）方向对但不显著，C、D 看不出区分能力。结果放在口径页，每个模块旁边标回测结论，每周一重跑。",
-    "en": "Score modules backtested (38 revenue tokens, monthly since 2023-03, rules fixed in advance): none passed; R and V point the right way but are not significant, C and D show no edge. Results are on the Method tab and rerun weekly."
+    "type": "data",
+    "zh": "评分研究立项：原型的 R / C / V / D 评分阈值是拍定的，第一轮回测（38 个有协议收入的代币，2023-03 起每月一次，判定标准事先写死）一项都没通过。已立项一轮评分研究（观测台「评分研究」页签放立项书：要检验哪些读数、数据、事先写死的判定标准、分工、阶段），研究出结论前不打分、不按分数排名，只摆读数和检验结论。建仓条件检查按证据等级拆开：已验证的和流程规则进判定，没验证过的只作提示。单币页新增「选币卡片」（《核心选币方法论》六问 + 卡片格式）。",
+    "en": "Score research opened: the prototype’s R/C/V/D thresholds were never tested and none passed the first backtest. A research plan (what to test, data, pre-set pass rules, roles, stages) is on the new “Score research” tab; until it concludes the page shows readings and test results, with no scores or score rankings. The entry checklist now counts only verified and process rules. Asset pages gain a six-question pick card.",
+    "corrections_anchor": "2026-11-14-corescore"
    },
    {
     "type": "new",

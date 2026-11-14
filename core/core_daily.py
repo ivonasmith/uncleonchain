@@ -690,7 +690,7 @@ def main():
                   "n_universe": len(rows), "stock_excluded": len(stock)}
     res = {"generated": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M UTC"), "last_complete_day": last_day,
            "btc": {"last": bp["last"], "date": bp["date"], "ma200": bp["ma200"], "r7": bp["r7"], "r30": bp["ret30"], "r90": bp["r90"]},
-           "coins": coins, "market": market, "manual": {k: CFG.get(k) for k in ("asof", "btc_floor", "events", "fals", "sixq", "risks", "findings")},
+           "coins": coins, "market": market, "manual": {k: CFG.get(k) for k in ("asof", "btc_floor", "events", "fals", "sixq", "risks", "findings", "cards")},
            "errors": ERR}
     json.dump(clean(res), open(os.path.join(OUT, "core_latest.json"), "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
     for s, x in series_out.items():

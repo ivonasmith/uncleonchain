@@ -3808,30 +3808,80 @@ def core_home_card():
     pool = [c for c in cs.values() if c.get("track") == "pool"]
     wr = [c for c in pool if ((c.get("fees") or {}).get("revenue") or {}).get("d7v30") is not None]
     up = sum(1 for c in wr if c["fees"]["revenue"]["d7v30"] > 0)
-    top = sorted((c for c in pool if (c.get("sc") or {}).get("n", 0) >= 4), key=lambda c: -c["sc"]["total"])[:5]
     m = d.get("market") or {}
     b30 = (m.get("bench") or {}).get("r30") or {}
     vb = m.get("vol") or {}
     fp = lambda x: "—" if x is None else f"{x:+.1f}%"
-    tops = " ".join(f'<a href="{U("/core/")}#coin/{esc(c["sym"])}">{esc(c["sym"])} <b>{c["sc"]["total"]}</b></a>' for c in top)
+    lead = sorted((c for c in wr if c["fees"]["revenue"]["d7v30"] > 0), key=lambda c: -c["fees"]["revenue"]["d7v30"])
+    tops = " ".join(f'<a href="{U("/core/")}#coin/{esc(c["sym"])}">{esc(c["sym"])} <b>{c["fees"]["revenue"]["d7v30"]:+.0f}%</b></a>' for c in lead) or T("无", "none")
     ent = "、".join(x["sym"] for x in vb.get("entrants") or []) or T("无", "none")
     return (f'<h2>{T("核心选币观测", "Core picks monitor")} <span class="sub">{T("基本面 · 资金面 · 技术面，只做条件检查", "Fundamentals · flows · technicals; condition checks only")}</span>'
             f' <a class="sub" href="{U("/core/")}">{T("进观测台 →", "Open →")}</a></h2>'
             f'<div class="card core-home"><div class="row"><span>{T("观测池收入 7 日均 > 30 日均", "Pool revenue 7d > 30d")} <b>{up} / {len(wr)}</b></span>'
             f'<span>{T("观测池 30 日中位", "Pool 30d median")} <b>{fp(b30.get("pool_med"))}</b> · {T("全市场篮子", "market basket")} <b>{fp(b30.get("ew_med"))}</b></span>'
             f'<span>{T("成交额新进榜", "Volume entrants")} <b>{esc(ent)}</b></span></div>'
-            f'<div class="row" style="margin-top:6px">{T("评分前 5（假设）：", "Top-5 score (hypothesis): ")}{tops}</div>'
-            f'<div class="row" style="margin-top:6px;font-size:12px;color:var(--muted)">{T("数据日", "Data day")} {esc(d.get("last_complete_day") or "")} · {T("评分只用于排序，不是买卖建议", "Score is for sorting only, not advice")}</div></div>')
+            f'<div class="row" style="margin-top:6px">{T("收入 7 日均在上升的：", "Revenue 7d avg rising: ")}{tops}</div>'
+            f'<div class="row" style="margin-top:6px;font-size:12px;color:var(--muted)">{T("数据日", "Data day")} {esc(d.get("last_complete_day") or "")} · {T("只摆读数，不打分（评分回测没通过）", "Readings only, no score (the score failed its backtest)")}</div></div>')
+
+
+def core_md(src):
+    """评分研究立项书（core/research/评分研究立项.md）→ HTML：标题、段落、- / 1. 列表（缩进 = 子项）、表格、**粗体**、`代码`。"""
+    out, lst, tbl, para = [], [], [], []
+
+    def flush():
+        if para:
+            out.append(f"<p>{md_inline(' '.join(para))}</p>"); para.clear()
+        if lst:
+            # lst: [(缩进, 是否编号, 文本)]；缩进 ≥ 2 的挂到上一个顶层项下面
+            top = []
+            for ind, num, txt in lst:
+                if ind >= 2 and top:
+                    top[-1][2].append(txt)
+                else:
+                    top.append((num, txt, []))
+            tag = "ol" if top[0][0] else "ul"
+            h = "".join(f"<li>{md_inline(t)}" + (f'<ul class="plain">' + "".join(f"<li>{md_inline(x)}</li>" for x in sub) + "</ul>" if sub else "") + "</li>" for _, t, sub in top)
+            out.append(f'<{tag} class="plain">{h}</{tag}>'); lst.clear()
+        if tbl:
+            rows = [[c.strip() for c in r.strip().strip("|").split("|")] for r in tbl if not re.match(r"^\|?\s*-{3}", r.strip())]
+            out.append('<div class="scroll"><table class="rt"><thead><tr>' + "".join(f"<th>{md_inline(c)}</th>" for c in rows[0]) + "</tr></thead><tbody>"
+                       + "".join("<tr>" + "".join(f"<td>{md_inline(c)}</td>" for c in r) + "</tr>" for r in rows[1:]) + "</tbody></table></div>")
+            tbl.clear()
+    for ln in src.split("\n"):
+        t = ln.strip()
+        if not t:
+            flush(); continue
+        if t.startswith("|"):
+            if para or lst:
+                flush()
+            tbl.append(t); continue
+        m = re.match(r"^(#{1,3})\s+(.*)", t)
+        if m:
+            flush(); out.append(f"<h{len(m.group(1)) + 1}>{md_inline(m.group(2))}</h{len(m.group(1)) + 1}>"); continue
+        m = re.match(r"^(\s*)(?:-|(\d+)\.)\s+(.*)", ln)
+        if m:
+            if para or tbl:
+                fl = lst[:]; lst.clear(); flush(); lst.extend(fl)
+            lst.append((len(m.group(1)), bool(m.group(2)), m.group(3))); continue
+        if lst and ln.startswith("  "):
+            ind, tag, txt = lst[-1]; lst[-1] = (ind, tag, txt + " " + t); continue
+        if lst or tbl:
+            flush()
+        para.append(t)
+    flush()
+    return "\n".join(out)
 
 
 def build_core():
     cr = crumbs([(T("核心选币", "Core Picks"), None)])
-    v = esc((G.get("CORE") or {}).get("last_complete_day") or "")
+    # 缓存版本号用生成时间（同一数据日重跑也会换新地址）；11-14 用数据日当版本号，CDN 把旧 JSON 又缓存了一小时，篮子来源字段读不到
+    v = re.sub(r"[^0-9]", "", (G.get("CORE") or {}).get("generated") or "")
     body = f"""{cr}
 <div class="ph"><div><div class="eyebrow">Core Picks Monitor</div><h1>{T("核心选币观测台", "Core picks monitor")}</h1></div></div>
 <p class="lede">{T("回购 / 收入型协议和叙事标的的基本面（手续费、收入、持有人收入、业务量）、资金面（成交额、现货 + 永续排名）、技术面（均线、RSI、回撤）。每天自动更新；评分和规则判定全部是【假设】，只做条件检查和风险提示，不是买卖建议。",
                    "Fundamentals (fees, revenue, holder revenue, activity), flows (volume, spot + perp rank) and technicals (MAs, RSI, drawdown) for buyback / revenue protocols and narrative names. Updated daily; scores and rule checks are hypotheses for condition checks and risk alerts, not trade advice.")}</p>
 <div class="core" id="core" data-src="/data/core/core_latest.json?v={v}" data-series="/data/core/series/" data-hist="/data/core/core_history.json" data-rot="/data/core/rotation.json" data-bt="/data/core/score_backtest.json"></div>
+<template id="core-research">{core_md(open(os.path.join(ROOT, "core", "research", "评分研究立项.md"), encoding="utf-8").read())}</template>
 <noscript><p class="muted">{T("这一页需要开启 JavaScript。", "This page needs JavaScript.")}</p></noscript>"""
     emit("core/index.html", T(f"核心选币观测台 · {BRAND}", f"Core Picks Monitor · {BRAND_EN}"), body, active="core",
          extra_head=f'<link rel="stylesheet" href="{ASSET_URL["core.css"]}">', scripts=f'<script src="{ASSET_URL["core.js"]}" defer></script>',
