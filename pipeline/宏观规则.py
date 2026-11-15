@@ -26,7 +26,7 @@ import math
 import 综合研判 as 综合
 
 LAYERS = {
-    1: {"名称": "宏观流动性", "EN": "Macro Liquidity", "问": "风险预算该松还是紧", "问EN": "How much risk budget",
+    1: {"名称": "宏观流动性", "EN": "Macro Liquidity", "问": "宏观在推还是在拖", "问EN": "Is macro pushing or dragging",
         "频率": "周到月", "频率EN": "weeks to months"},
     2: {"名称": "周期定位", "EN": "Cycle Position", "问": "在周期哪一段", "问EN": "Where in the cycle",
         "频率": "日更 · 周期级别", "频率EN": "daily update · cycle scale"},
@@ -970,6 +970,9 @@ BANNED = [
 
 # 规则变更留痕（更正记录页原样展示；已写入的历史日志不改）
 RULE_CHANGES = [
+    {"日期": "2026-11-15", "锚": "2026-11-15-expr", "原因": "网站只给数据和过程记录：一句话里的「风险预算照常 / 打七折 / 不追高 / 不开新空」是研究框架里作者自用的交易规则，放在结论句里读起来像给读者的指令。按 docs/表达规范.md，结论只说现在是什么状态、过去类似情况怎么样（带分母）。判定规则（方向、L1 档位、L4 信号）一条没改。", "原因EN": "The site gives data and process only. Phrases like 'risk budget at 70%', 'no chasing' or 'no new shorts' are the author's own trading rules from the research framework and read like instructions in the summary line. Per the expression guideline, the line now states the current condition and what happened in similar cases (with counts). No verdict rule (direction, L1 regime, L4 signal) changed.", "范围": "综合研判", "EN范围": "Overall read",
+     "内容": "综合研判一句话去掉动作段，L1 分段去掉风险预算句，L4 信号改成「资金费率转负，空头拥挤」并写出历史次数（31 次、之后 30 天上涨 74%）。2026-11-15 及以前的日志保持原样。",
+     "EN": "The overall line drops the action clause; L1 paragraphs drop the risk-budget sentence; the L4 signal now reads 'funding has turned negative — shorts are crowded' with its track record (31 episodes, higher 30 days later 74% of the time). Logs up to 2026-11-15 stay unchanged."},
     {"日期": "2026-10-02", "原因": "用 16 年数据逐条检验后发现，“印了多少钱”几乎不领先 BTC：14 个领先关系做样本外检验只过 1 个，M2 与 BTC 的涨跌幅相关只有 0.08。真正左右周到月节奏的，是市场的乐观度和信用的松紧。所以 L1 改以乐观度为第一指标，用实际利率和信用条件定档，流动性只保留“打折”这一项权力。", "原因EN": "Testing 16 years of data rule by rule showed that 'how much money was printed' barely leads BTC: only 1 of 14 lead relations survived out-of-sample, and M2's return correlation with BTC is just 0.08. What drives the weeks-to-months pace is market optimism and credit conditions. So L1 now puts optimism first, sets the regime with real yields and credit, and keeps liquidity only as a discount.", "范围": "L1 宏观流动性", "EN范围": "L1 Macro Liquidity",
      "内容": "按《L1 宏观层数据维度规格》重做：新增纳指 13 周、VIX、乐观度综合 z、BAA / NFCI / 高收益利差 13 周、实际利率四态与情境格、"
              "净流动性 13 周闸门、稳定币「剔除支付机构」「交易子弹」「生息/合成」、ETF 4 周、CME 升水、BTC−纳指 52 周相关、美股代币化快照；"

@@ -625,7 +625,7 @@ def guide_templates():
     cur = CHANGELOG[0]["version"]
     t = sched_text()
     welcome = T(f"""<h2 id="ucg-t">欢迎来到链上大叔研究台</h2><p>这里每天自动更新一套 BTC 自上而下的四层框架数据：</p>
-<ul><li><b>L1 宏观流动性</b>：风险预算该松还是紧</li><li><b>L2 周期定位</b>：处在四年周期的哪一段</li><li><b>L3 筹码结构</b>：哪些价位真的有人在守、接下来波动会不会放大</li><li><b>L4 情绪衍生品</b>：短期会不会过热超调</li></ul>
+<ul><li><b>L1 宏观流动性</b>：宏观在推还是在拖</li><li><b>L2 周期定位</b>：处在四年周期的哪一段</li><li><b>L3 筹码结构</b>：哪些价位真的有人在守、接下来波动会不会放大</li><li><b>L4 情绪衍生品</b>：短期会不会过热超调</li></ul>
 <p>每层给一个结论，最后汇总成「综合研判」。</p>
 <p><b>怎么看</b>：先看顶部的综合研判 → 切换 L1~L4 看每层结论和依据 → 点任意指标卡，看它的全部历史、区间规则和历史上落在每个区间的比例。</p>
 <p>数据每天 {esc(t)} 自动更新，解读日志写入即冻结、公开可查。每个指标都标了<a href="{U('/methodology/')}#legend">证据等级</a>；拿不到真实数据的标「待接入」，不用近似值顶替。</p>
@@ -2220,7 +2220,7 @@ def build_macro(L, S, logs):
 <p class="lede">{T("综合研判把四层合成一句话：周期定方向，宏观管节奏，筹码和情绪用来确认和提醒。下面按层切换，每张指标卡都能点开看全部历史、区间规则和「正常波动范围」。拿不到真实数据的标「待接入」，不拿近似值冒充。",
                    "The overall read rolls four layers into one line: the cycle sets direction, macro sets pace, flows and sentiment confirm and caution. Switch layers below; every card opens its full history, zone rules and normal range. Anything without real data is marked pending.")}</p></div></div>
 {leg_macro_card()}
-<div class="hzrow"><span class="hz">{T("长期 · 周期", "Long term · cycle")}</span>{T("按月看：处在四年周期的哪一段、风险预算该松还是紧", "In months: where we are in the four-year cycle, and how loose or tight the risk budget should be")}</div>
+<div class="hzrow"><span class="hz">{T("长期 · 周期", "Long term · cycle")}</span>{T("按月看：处在四年周期的哪一段、宏观在推还是在拖", "In months: where we are in the four-year cycle, and whether macro is pushing or dragging")}</div>
 {comp_block(comp, prev_comp, tlog, full=True)}
 {leg_short_context()}
 {cal_next_line(G.get("CAL"))}
@@ -5976,20 +5976,17 @@ def comp_rules_html():
     rows1 = "".join(f"<tr><td class='l'>{esc(T(k, TIER_EN.get(k, k)))}</td><td class='l wrap'>{esc(T(v.get('一句话') or '（不进一句话）', v.get('一句话EN') or '(not in the line)'))}</td><td class='l wrap'>{esc(T(v['分段'], v['分段EN']))}</td></tr>"
                     for k, v in C["L1"].items() if not k.startswith("_"))
     tiers = ("顺风", "中性", "中性偏谨慎", "逆风")
-    rows3 = "".join(f"<tr><td class='l'>{esc(T(d, DIR_EN.get(d, d)))}</td>" + "".join(f"<td class='l wrap'>{esc(T(*C['动作'][d][t]))}</td>" for t in tiers) + "</tr>" for d in ("偏多", "防顶", "待确认", "偏空"))
     trig = "".join(f"<li>{esc(T(r['条件'], r.get('条件EN', r['条件'])))} → {esc(T(r['中文'], r['英文']))}</li>" for r in C["逆风原因"])
-    p1 = T("综合研判按研究里定下的分工四层合成：<b>L2 给方向的底色</b>；<b>L1 管节奏和风险预算</b>，不管方向；<b>L3 只描述价格离筹码压力区多远、波动会不会放大</b>，不给方向；<b>L4 只描述短期温度</b>，不改变动作（L4 还没完成研究）。",
-           "The overall read combines four layers along the study's division of labour: <b>L2 sets the direction</b>; <b>L1 sets pace and risk budget</b>, not direction; <b>L3 only describes how far price is from the supply pressure zone and whether moves may get bigger</b>, never direction; <b>L4 only describes short-term temperature</b> and never changes the action (its research is not finished).")
-    p2 = T("一句话 =「{方向句}；{但}{节奏句}，{动作}。{筹码提示}{短期提示}」：方向偏多而 L1 是中性偏谨慎 / 逆风，或方向偏空 / 防顶而 L1 是顺风时加「但」；动作只来自 L1 的风险预算规则和 L2 研究写定的交接原则「方向上不急于看空，节奏上不追高、按 L1 的风险预算分批」；价格在 +1σ 压力区里或大波动预警亮时追加筹码提示（2026-10-11 起；之前是「筹码和周期方向背离」提示）；L4 不是中性时追加短期温度。一句话超过 60 字先去掉短期提示，再去掉筹码提示（四段里仍然完整显示）。",
-           "One line = '{direction}; {but} {pace} — {action}. {supply note} {short term}': 'but' is added when the direction leans up while L1 is cautious/headwind, or leans down / top-risk while L1 is a tailwind; actions come only from L1's risk-budget rules and the L2 hand-over principle ('no rush to turn bearish on direction; no chasing on pace, scale in per L1's budget'); a supply note is added when price is inside the +1σ pressure zone or the large-move warning is on (since 2026-10-11; before that it was a 'flows diverge from the cycle' note); L4 adds its temperature when not neutral. Lines over 60 characters drop the short-term note first, then the supply note (both stay in the paragraphs).")
-    p3 = T("「节奏上不追高」只出现在「方向偏多 + L1 偏紧」的组合里（L2 研究 §4 交接原则）；「可它改变不了熊市的深度」出自宏观总文档：熊市跌多深按周期成熟度排序、和利率冲击无关。短句全文见 config/composite.json。",
-           "“No chasing” only appears when the direction leans up and L1 is tight (L2 study §4 hand-over principle); “it won't change how deep a bear market goes” comes from the macro study: bear depth ranks with cycle maturity, not rate shocks. Full phrases are in config/composite.json.")
-    th = "".join(f"<th class='l'>{esc(T(t, TIER_EN.get(t, t)))}</th>" for t in tiers)
+    p1 = T("综合研判按研究里定下的分工四层合成：<b>L2 给方向的底色</b>；<b>L1 说宏观在推还是在拖</b>，不管方向；<b>L3 只描述价格离筹码压力区多远、波动会不会放大</b>，不给方向；<b>L4 只描述短期温度</b>（只有「资金费率转负」一条通过检验）。",
+           "The overall read combines four layers along the study's division of labour: <b>L2 sets the direction</b>; <b>L1 says whether macro is pushing or dragging</b>, not direction; <b>L3 only describes how far price is from the supply pressure zone and whether moves may get bigger</b>, never direction; <b>L4 only describes short-term temperature</b> (only the negative-funding signal has passed testing).")
+    p2 = T("一句话 =「{方向句}；{但}{节奏句}。{筹码提示}{短期提示}」：方向偏多而 L1 是中性偏谨慎 / 逆风，或方向偏空 / 防顶而 L1 是顺风时加「但」；价格在 +1σ 压力区里或大波动预警亮时追加筹码提示（2026-10-11 起）；L4 不是中性时追加短期温度。一句话超过 60 字先去掉短期提示，再去掉筹码提示（四段里仍然完整显示）。2026-11-15 起按《表达规范》只说状态和历史，不再拼「风险预算照常 / 打七折 / 不追高」这类动作。",
+           "One line = '{direction}; {but} {pace}. {supply note} {short term}': 'but' is added when the direction leans up while L1 is cautious/headwind, or leans down / top-risk while L1 is a tailwind; a supply note is added when price is inside the +1σ pressure zone or the large-move warning is on (since 2026-10-11); L4 adds its temperature when not neutral. Over 60 characters, the short-term note goes first, then the supply note (all four paragraphs still show in full). Since 2026-11-15 the line only states conditions and history; it no longer appends actions such as 'risk budget at 70%' or 'no chasing'.")
+    p3 = T("研究框架（宏观总文档、L2 研究 §4）里另有一套按方向 × L1 档位调风险预算的规则，那是作者自用的交易规则，不是给读者的建议，不进一句话。短句全文见 config/composite.json。",
+           "The research framework (macro study, L2 study §4) also has rules that size the risk budget by direction × L1 regime. Those are the author's own trading rules, not advice to readers, and are not part of the line. Full phrases are in config/composite.json.")
     return (f'<div class="card mcard"><p>{p1}</p><p>{p2}</p>'
             f'<h4>{T("表 1 · L2 方向", "Table 1 · L2 direction")}</h4><div class="tw"><table><thead><tr><th class="l">{T("L2 状态", "L2 state")}</th><th class="l">{T("方向", "Direction")}</th><th class="l">{T("一句话用", "Line phrase")}</th></tr></thead><tbody>{rows2}</tbody></table></div>'
             f'<h4>{T("表 2 · L1 节奏", "Table 2 · L1 pace")}</h4><div class="tw"><table><thead><tr><th class="l">{T("档位", "Regime")}</th><th class="l">{T("一句话用", "Line phrase")}</th><th class="l">{T("分段用", "Paragraph")}</th></tr></thead><tbody>{rows1}</tbody></table></div>'
             f'<p class="tnote">{T("逆风的触发原因（多个同时成立只取最前面一条）：", "Headwind triggers (first match wins):")}</p><ul class="tnote">{trig}</ul>'
-            f'<h4>{T("表 3 · 动作（方向 × L1 档位）", "Table 3 · Action (direction × L1 regime)")}</h4><div class="tw"><table><thead><tr><th class="l">{T("方向", "Direction")}</th>{th}</tr></thead><tbody>{rows3}</tbody></table></div>'
             f'<p class="tnote">{p3}</p></div>')
 
 
