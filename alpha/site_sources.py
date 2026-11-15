@@ -37,7 +37,7 @@ def launchpad(root, cfg):
         age = (day - dt.date.fromisoformat(f)).days if f and f != "基线" else None
         new = age is not None and age <= cfg["new_days"]
         base = {"board": "launchpad", "slug": p["slug"], "name": p["名称"], "chains": (p.get("链") or [])[:3], "logo": p.get("logo"),
-                "category": "Launchpad", "fees7": round(d7), "fees_prev7": round(p7), "fees30": round(p.get("30日") or 0), "parent": p.get("母协议"), "asof": J["日期"]}
+                "category": "Launchpad", "since": f if age is not None else None, "fees7": round(d7), "fees_prev7": round(p7), "fees30": round(p.get("30日") or 0), "parent": p.get("母协议"), "asof": J["日期"]}
         if new:
             for c in (p.get("链") or [])[:1]:
                 chains.setdefault(c, []).append((p["名称"], d7))
@@ -67,7 +67,7 @@ def aiagent(root, cfg):
         if (young or newly) and d7 >= cfg["min_fee7"]:
             seen.add(p["slug"])
             out.append({"board": "aiagent", "slug": p["slug"], "name": p["name"], "chains": (p.get("chains") or [])[:3], "category": "AI Agents · " + str(p.get("layer")),
-                        "rule": "ai_new", "fees7": round(d7), "fees30": round(p.get("f30") or 0), "asof": J["asof"],
+                        "rule": "ai_new", "since": fd, "fees7": round(d7), "fees30": round(p.get("f30") or 0), "asof": J["asof"],
                         "why": f"AI Agent 板块：手续费从 {fd} 才开始，近 7 天 {d7:,.0f} 美元" + (f"；板块备注：{p['note_zh']}" if p.get("note_zh") else "")})
     for e in J.get("events") or []:
         if e.get("type") == "spike" and e.get("slug") not in seen:

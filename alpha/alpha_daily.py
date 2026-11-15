@@ -248,7 +248,7 @@ def main():
                 if nm:
                     idx[str(nm).lower()] = r
         for x in site_sources.collect(ROOT, CFG.get("site_sources")):
-            tag = {"board": x["board"], "rule": x["rule"], "why": x["why"]}
+            tag = {"board": x["board"], "rule": x["rule"], "why": x["why"], "since": x.get("since")}
             hit = idx.get(str(x.get("slug") or "").lower()) or idx.get(x["name"].lower())
             if hit:
                 hit.setdefault("boards", []).append(tag)
@@ -319,7 +319,7 @@ def main():
             events.append({"type": "token", "key": k, "name": v["name"]})
 
     # 候选池状态：外部补证结果（alpha/review/*_checks.json）并进台账；状态变化只追加到 status_history，不改旧记录
-    for fn in sorted(os.listdir(os.path.join(HERE, "review"))):
+    for fn in sorted(os.listdir(os.path.join(HERE, "review")), key=lambda f: (not f.startswith("grok_"), f)):
         if not fn.endswith("_checks.json"):
             continue
         for c in load(os.path.join(HERE, "review", fn), []):

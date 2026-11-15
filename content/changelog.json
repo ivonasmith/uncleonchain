@@ -1,5 +1,24 @@
 [
  {
+  "version": "2026.11.15.4",
+  "date": "2026-11-15",
+  "notify": false,
+  "title_zh": "Alpha 雷达：每张卡标上线天数、币上线天数和看盘入口",
+  "title_en": "Alpha Radar: project age, token age and chart links on every card",
+  "items": [
+   {
+    "type": "improve",
+    "zh": "每张机会卡写明项目上线约多少天（取能查到的最早一天：DefiLlama 收录、协议收入首日、本站板块首次记录或官方上线日，并注明以哪个为准）；有币的写币上线约多少天（价格数据起点）和代币代码，母协议的币会注明；附 CoinGecko、DexScreener、DefiLlama 看盘入口。列表每行也显示两个天数。",
+    "en": "Every card now shows roughly how long the project has been live (earliest of DefiLlama listing, first revenue day, first seen by our boards, or an official launch date, with the basis noted) and, for tokens, how long it has traded plus CoinGecko, DexScreener and DefiLlama links."
+   },
+   {
+    "type": "improve",
+    "zh": "机会看板首屏的读数写进页面源码（搜索引擎和关掉脚本也能看到全部机会、读数、上线天数和资金参与方式）。",
+    "en": "The board's key readings are now in the page HTML, visible without JavaScript."
+   }
+  ]
+ },
+ {
   "version": "2026.11.15.3",
   "date": "2026-11-15",
   "notify": false,

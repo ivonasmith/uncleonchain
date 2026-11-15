@@ -4075,7 +4075,7 @@ def alpha_checks():
     """外部补证（alpha/review/*_checks.json）：key → 最新一条。"""
     if "ALPHA_CHK" not in G:
         out, rd = {}, os.path.join(ROOT, "alpha", "review")
-        for fn in sorted(os.listdir(rd)) if os.path.isdir(rd) else []:
+        for fn in sorted(os.listdir(rd), key=lambda f: (not f.startswith("grok_"), f)) if os.path.isdir(rd) else []:
             if fn.endswith("_checks.json"):
                 for c in load(os.path.join(rd, fn), []) or []:
                     out[c["key"]] = c
@@ -4175,6 +4175,28 @@ def alpha_feed_html(d):
             f'<p class="tnote">{T("只摆原始事件，不判断。ethresear.ch 只收新开的帖（旧帖被顶上来不算）；Snapshot 只收关注数 ≥ 1000 的空间、标题含收费 / 回购 / 激励 / 升级等词的提案，投票结束不等于执行；Binance 只收上币、Launchpool、空投和新永续，剔除 TradFi 永续和代币化股票，公告时间不等于开盘时间。发现延迟 = 本站首次抓到的时间 − 原始发布时间（11-14 首次接入的为基线，不算延迟）。Bybit、Upbit 在美国机房被拦，暂未接入。", "Raw events, no judgement. ethresear.ch: newly opened topics only; Snapshot: spaces with ≥ 1,000 followers and titles about fees / buybacks / incentives / upgrades — a vote ending is not execution; Binance: listings, Launchpool, airdrops and new perps, excluding TradFi perps and tokenized stocks — announcement time is not trading start. Discovery delay = first fetched here − original publish time (the 11-14 first fetch is the baseline). Bybit and Upbit block US data centres and are not connected yet.")}</p>'
             + (f'<div class="tw scroll"><table><thead><tr><th style="text-align:left">{T("来源", "Source")}</th><th>{T("发布", "Published")}</th><th style="text-align:left">{T("标题", "Title")}</th><th style="text-align:left">{T("备注", "Notes")}</th><th>{T("发现延迟", "Delay")}</th></tr></thead><tbody>{rows}</tbody></table></div>' if fs else f'<div class="note">{T("最近 14 天没有符合条件的事件。", "No matching events in the last 14 days.")}</div>')
             + f'<p class="tnote">{T("来源状态", "Source status")}：{health}</p>')
+
+
+def alpha_board_static():
+    """机会看板的静态兜底（SEO 规范 S3）：出网站时把全部机会卡的关键读数写进 HTML，alpha.js 加载后整块换成交互看板。只摆读数，不加判断。"""
+    O = G.get("OPPS") or {}
+    cs = [c for c in O.get("opps") or [] if c.get("bucket") != "reject"]
+    if not cs:
+        return f'<p class="muted">{T("加载中…", "Loading…")}</p>'
+    EN_ = {o["k"]: o["name"] for o in (load(os.path.join(ROOT, "alpha", "framework.json")) or {}).get("entry", {}).get("opts", [])}
+    rows = ""
+    for c in cs:
+        d = c["data"]
+        val = a_usd(d["rev30"]) + T(" · 30 天收入", " · 30d revenue") if d.get("rev30") is not None else (a_usd(d["fees7"]) + T(" · 7 天手续费", " · 7d fees") if d.get("fees7") is not None else "—")
+        age = T(f'约 {d["age"]["days"]} 天', f'~{d["age"]["days"]}d') if d.get("age") else "—"
+        t = d.get("tok") or {}
+        tok = (esc(t.get("sym") or "") + (T(f' · {t["days"]} 天', f' · {t["days"]}d') if t.get("days") is not None else "")) if t else T("无币", "none")
+        ent = "、".join(EN_.get(e, e) for e in c.get("entry") or [] if e != "none") or T("暂无", "none yet")
+        rows += (f'<tr><td class="l"><a href="{U("/alpha/")}#{esc(c["id"])}">{esc(c["name"])}</a></td><td class="l">{esc(c.get("status") or "")}</td><td>{val}</td>'
+                 f'<td>{age}</td><td>{tok}</td><td class="l">{esc(ent)}</td></tr>')
+    return (f'<p class="muted small">{T("数据日", "Data day")} {esc(O.get("asof") or "")} · {T("可投资机会", "Investable")} {(O.get("counts") or {}).get("invest", 0)} · {T("预警观察", "Watchlist")} {(O.get("counts") or {}).get("watch", 0)}</p>'
+            f'<div class="tw"><table><thead><tr><th class="l">{T("机会", "Opportunity")}</th><th class="l">{T("状态", "Status")}</th><th>{T("读数", "Reading")}</th>'
+            f'<th>{T("项目上线", "Project age")}</th><th>{T("代币", "Token")}</th><th class="l">{T("资金参与方式", "How capital takes part")}</th></tr></thead><tbody>{rows}</tbody></table></div>')
 
 
 def a_usd(v):
@@ -4350,7 +4372,7 @@ def build_alpha():
     css = f'<link rel="stylesheet" href="{ASSET_URL["alpha.css"]}">'
     js = f'<script src="{ASSET_URL["alpha.js"]}" defer></script>'
     zh_only = ZH_ONLY if LANG["v"] == "en" else ""
-    app = lambda mode: f'{zh_only}<div class="ax" id="alpha-app" data-mode="{mode}" data-v="{ver}"><p class="muted">{T("加载中…", "Loading…")}</p></div><noscript><p class="muted">{T("这一页需要开启 JavaScript。", "This page needs JavaScript.")}</p></noscript>'
+    app = lambda mode: f'{zh_only}<div class="ax" id="alpha-app" data-mode="{mode}" data-v="{ver}">{alpha_board_static() if mode == "board" else "<p class=muted>" + T("加载中…", "Loading…") + "</p>"}</div><noscript><p class="muted">{T("这一页需要开启 JavaScript。", "This page needs JavaScript.")}</p></noscript>'
     page_ = lambda rel, p, title, body: emit(rel, T(f"{title} · Alpha 雷达 · {BRAND}", f"{title} · Alpha Radar · {BRAND_EN}"), alpha_head(p) + body, active="alpha", desc=desc, extra_head=css, scripts=js, chart=True)
     page_("alpha/index.html", "", T("机会看板", "Board"), app("board"))
     emit("alpha/opp/index.html", T(f"Alpha 雷达 · {BRAND}", f"Alpha Radar · {BRAND_EN}"),   # 旧的单张机会卡链接 → 看板同一张卡

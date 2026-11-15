@@ -335,6 +335,16 @@
   }
   const SRCN = { site_launchpad: ['发射台矩阵', 'Launchpad matrix'], site_aiagent: ['AI Agent 板块', 'AI Agent board'], manual: ['手动线索', 'Manual lead'], llama_surge: ['收入新起量', 'Revenue ramp'], llama_tokenless: ['无币收入榜', 'Tokenless list'], llama_listing: ['新上架', 'New listing'] };
   const srcChips = d => (d.sources || []).map(x => `<span class="srcchip${x.startsWith('site_') || x === 'manual' ? ' own' : ''}">${esc(SRCN[x] ? T(SRCN[x][0], SRCN[x][1]) : x)}</span>`).join('');
+  const ageTxt = d => d.age ? T(`上线约 ${d.age.days} 天`, `~${d.age.days} days live`) : '';
+  const tokTxt = t => t && t.days != null ? T(`币 ${t.days} 天`, `token ${t.days}d`) : t ? T('有币', 'token') : '';
+  function tokBlock(o) {
+    const d = o.data, t = d.tok, a = d.age;
+    const ageLine = a ? `<span><b>${T('项目上线', 'Project live')}</b> ${T(`约 ${a.days} 天`, `~${a.days} days`)}<span class="muted">（${T('从', 'since')} ${esc(a.since)} · ${T('以', 'by ')}${esc(a.basis)}${T('为准', '')}）</span>${tip(T('真实上线日很难统一核对，这里取能查到的最早一天：DefiLlama 收录日、协议收入数据第一天、本站板块第一次记到的日子、手动登记的官方上线日。', 'Earliest available date: DefiLlama listing, first revenue day, first seen by our boards, or an officially stated launch date.'))}</span>` : `<span class="muted">${T('上线日期：还没查到', 'Launch date: unknown')}</span>`;
+    if (!t) return `<div class="ax-tok">${ageLine}<span class="muted">${T('还没有代币（DefiLlama 没登记）', 'No token registered on DefiLlama')}</span></div>`;
+    const tl = t.days != null ? `<span><b>${esc(t.sym || t.gecko || T('代币', 'Token'))}</b>${t.parent ? `<span class="muted">（${T('母协议', 'parent')} ${esc(t.parent_name)} ${T('的币', 'token')}）</span>` : ''} ${T(`币上线约 ${t.days} 天`, `~${t.days} days trading`)}<span class="muted">（${T('价格数据从', 'price data from')} ${esc(t.first)} ${T('起', '')}）</span>${tip(T('价格数据起点来自 CoinGecko / DefiLlama，不一定是真正开盘日；空投、预售的人拿到得更早。', 'First price data point, not necessarily the true first trade.'))}</span>`
+      : `<span><b>${esc(t.sym || T('代币', 'Token'))}</b>${t.parent ? `<span class="muted">（${T('母协议', 'parent')} ${esc(t.parent_name)} ${T('的币', 'token')}）</span>` : ''} <span class="muted">${T('币上线日期还没查到', 'token age unknown')}</span></span>`;
+    return `<div class="ax-tok">${ageLine}${tl}<span class="ax-links">${(t.links || []).map(l => `<a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.name)} ↗</a>`).join('')}</span></div>`;
+  }
   const AXES = () => FW.scores.mech.items.concat(FW.scores.part.items.filter(i => !i.private));
   const known = v => v !== 'U' && v !== 'NA' && v != null && v !== '';
   function radar(card) {
@@ -400,6 +410,7 @@
       return `<button type="button" class="md-row${o.id === SELID ? ' on' : ''}" data-id="${esc(o.id)}">
         <span class="r1"><span class="nm">${logo(d.logo, o.name, 20)}<b>${esc(o.name)}</b></span><i class="dot t-${STC[o.status] || 'neutral'}" title="${esc(o.status)}"></i></span>
         <span class="r2"><span>${d.rev30 != null ? usd(v) : d.fees7 != null ? T('7 天费 ', '7d fees ') + usd(d.fees7) : (v ? 'TVL ' + usd(v) : '—')} ${pct(d.chg30)}</span>${sparkSvg(o.spark, (d.chg30 || 0) >= 0 ? 'up' : 'dn', 64, 18)}</span>
+        <span class="r4">${d.age ? `<em class="agetag">${ageTxt(d)}</em>` : ''}${d.tok ? `<em class="agetag tok">${tokTxt(d.tok)}</em>` : ''}</span>
         <span class="r3">${(d.sources || []).some(x => x.startsWith('site_') || x === 'manual') ? `<em class="mtag own" title="${T('本站板块或手动线索筛到', 'site board or manual lead')}">★</em>` : ''}<em class="mtag${known((o.scores.M || {}).v) ? ' k' : ''}">M${known((o.scores.M || {}).v) ? o.scores.M.v : '?'}</em>${o.entry.filter(e => e !== 'none').map(e => esc(ENTRY()[e])).join(' · ') || `<span class="muted">${T('暂无资金入口', 'No entry yet')}</span>`}</span></button>`; };
     return `<div class="fg md-filter">${[['invest', T('可投资', 'Investable')], ['watch', T('预警观察', 'Watchlist')], ['all', T('全部', 'All')], ['reject', T('已拒绝', 'Rejected')]]
         .map(([k, l]) => `<button type="button" class="pill${BF === k ? ' on' : ''}" data-bf="${k}">${l}<small>${k === 'all' ? os.filter(o => o.bucket !== 'reject').length : os.filter(o => o.bucket === k).length}</small></button>`).join('')}</div>
@@ -419,8 +430,9 @@
     h += `<div class="glass ax-head"><div class="ax-title">${logo(d.logo, o.name, 34)}<h2>${esc(o.name)}</h2>${chip(o.status, STC[o.status])}${o.fresh ? chip(T('新发现', 'New'), 'up') : ''}<span class="ax-links">${links(d.url, d.twitter, d.slug)}</span></div>
       <p class="ax-one">${esc(oneLiner(o))}</p>
       <div class="ax-entry">${o.entry.map(e => `<span class="ent${e === 'none' ? ' none' : ''}">${esc(En[e] || e)}</span>`).join('')}<span class="muted small">${esc(o.entry_why || '')}</span></div>
+      ${tokBlock(o)}
       <div class="ax-src small"><span class="muted">${T('来源', 'Source')}${(d.sources || []).length > 1 ? T('（多个来源都筛到）', ' (several agree)') : ''}：</span>${srcChips(d)}</div>
-      <div class="ax-meta small muted">${T('发现', 'Seen')} ${esc(o.discovered || '—')} · ${o.reviewer === 'grok-auto' ? T('补证：Grok 自动（未人工核对）', 'Research: Grok (auto, unreviewed)') : o.reviewer === 'claude-auto' ? T('补证：Claude 自动', 'Research: Claude (auto)') : o.reviewer ? T('补证：Codex', 'Research: Codex') : T('还没补证：只有系统按数据打的分', 'Not researched yet: system scores only')}${R.checked_utc ? ' · ' + esc(R.checked_utc.slice(0, 10)) : ''}</div></div>`;
+      <div class="ax-meta small muted">${T('发现', 'Seen')} ${esc(o.discovered || '—')} · ${o.reviewer === 'grok-auto' ? T('补证：Grok 自动（未人工核对）', 'Research: Grok (auto, unreviewed)') : o.reviewer === 'claude-auto' ? T('补证：Claude 自动', 'Research: Claude (auto)') : o.reviewer === 'codex' ? T('补证：Codex（已核对）', 'Research: Codex (checked)') : o.reviewer ? T('补证：Codex', 'Research: Codex') : T('还没补证：只有系统按数据打的分', 'Not researched yet: system scores only')}${R.checked_utc ? ' · ' + esc(R.checked_utc.slice(0, 10)) : ''}</div></div>`;
     h += `<div class="grid g4 ax-kpis">
       <div class="glass hero"><div class="k">${d.rev30 != null ? T('30 天协议收入', '30d protocol revenue') : d.fees7 != null ? T('近 7 天手续费', '7d fees') : o.kind === 'manual' || o.kind === 'site' ? T('协议读数', 'Protocol data') : 'TVL'}<span>${d.rev30 != null ? T('环比', 'vs prior') : ''}</span></div><div class="v">${usd(d.rev30 != null ? d.rev30 : d.fees7 != null ? d.fees7 : d.tvl)}</div><div class="s">${d.rev30 != null ? (d.chg30 == null ? T('前 30 天没有收入', 'no prior revenue') : pct(d.chg30) + T(' 比前 30 天', ' vs prior 30d')) : (d.fees7 != null ? T('来自本站板块数据（手续费，不是协议收入）', 'from a site board (fees, not revenue)') : o.kind === 'site' ? T('板块标了异常，见下面「为什么在看」', 'flagged by a board, see below') : o.kind === 'manual' ? T('数据源还没收录，等补证', 'not covered by data sources yet') : T('新上架，还没有收入读数', 'new listing, no revenue yet'))}</div>${sparkSvg(o.spark, (d.chg30 || 0) >= 0 ? 'up' : 'dn', 200, 30)}</div>
       ${mTile(o)}

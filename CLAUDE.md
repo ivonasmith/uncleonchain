@@ -115,6 +115,8 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
   战绩 `opps.py` 每天算到 `data/alpha/sources_stats.json`，雷达页最上面 `出网站.alpha_sources_html`。站内板块 `alpha/site_sources.py`（发射台矩阵 lp_new / lp_accel / lp_chain、AI Agent ai_new / ai_spike，参数 `alpha_config.site_sources`；key `x:<板块>:<slug>`，卡片 id `x-…`）；
   和已有行同一协议时不另开卡，行上记 `boards`，台账记 `board_seen`，基线日就在榜的也出卡。RWA、聪明钱板块上线后在 site_sources.py 各加一个函数并把 sources.json 的状态改 on。
   关键人名单任务包 `alpha/review/sources_task.md`（S1 Grok 查 X 原帖 → S2 Codex 核对 → 交 `alpha/review/sources_people.json`；入选 = 2 个以上案例有已核实的早期实质帖），并入后每人在 sources.json 单列一行。
+  上线天数与看盘（大叔 11-15 定）：`alpha/tokens.py`（opps.py 调用）写卡片 `data.age`（最早的 DefiLlama 收录 / 协议收入首日 `data/alpha/rev_first.json` / 板块 since / 手动 launched，注明 basis）和 `data.tok`（gecko / sym / address，本协议 + 母协议 lite/protocols2 + 同组合并；首个价格日缓存 `data/alpha/token_meta.json`，CoinGecko 优先、llama 兜底每周重试；links = CoinGecko / DexScreener 按地址搜索 / DefiLlama）。看板静态兜底 `出网站.alpha_board_static`。
+  补证合并顺序：`grok_*` 先读，Codex / 人工的盖过它（opps / alpha_daily / 出网站三处同一规则）；Grok 跳过 Codex 30 天内核过的。Codex 协作说明在根目录 `AGENTS.md`，需要配合的事记 `docs/协作记录.md`。
   数据管理：原始层（data/alpha 接口原样）→ 清洗层（线索台账、案例指标）→ 应用层（机会卡、周复盘）。每周复盘 `alpha/weekly.py` → `data/alpha/weekly/<周>.json/.md`；Notion 单独的「Alpha 雷达」入口页（大叔：每个板块各自一个入口，不和别的板块混放）。
   云端环境 uncleonchain 11-14 已放行 ethresear.ch、hub.snapshot.org、www.binance.com、api.bybit.com、api-manager.upbit.com；Bybit（CloudFront 按国家拦）、Upbit（Cloudflare 人机验证）实测不通，没接。Binance pageSize 超过 20 会 400。
 - 发射台活动温度（`pipeline/周期观察.py` 数据与热潮识别、`周期仪表盘.py` 展示）：每日更新。序列 = 研究快照 `content/cycle/snapshot.json`（截至 2026-10-17，sha256 在 manifest）+ 之后接 `发射台矩阵.json`「历史」的类目合计；热潮规则重算快照区间 27 轮逐字段对上（对不上会打 ⚠️）。

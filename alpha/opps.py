@@ -68,10 +68,10 @@ def build():
     hist = load(os.path.join(OUT, "alpha_history.json"), []) or []
     checks = {}
     rd = os.path.join(HERE, "review")
-    for fn in sorted(os.listdir(rd)):
+    for fn in sorted(os.listdir(rd), key=lambda f: (not f.startswith("grok_"), f)):
         if fn.endswith("_checks.json"):
             for c in load(os.path.join(rd, fn), []) or []:
-                checks[c["key"]] = dict(c, _file=fn)   # 后交的批次覆盖先交的
+                checks[c["key"]] = dict(c, _file=fn)   # 后交的批次覆盖先交的；Grok 自动补证先读，人工 / Codex 的结论盖过它（11-15）
     rows = {r["key"]: r for r in latest.get("tokenless", []) + latest.get("surge", []) + latest.get("manual", []) + latest.get("site", [])}
     manual = {"m:" + m["id"]: m for m in (load(os.path.join(HERE, "manual_leads.json"), {}) or {}).get("leads", [])}
     lst = {r["key"]: r for r in latest.get("listings", [])}
@@ -192,6 +192,9 @@ def build():
             "counts": {b: sum(1 for x in cards if x["bucket"] == b) for b in ("invest", "watch", "reject")}, "opps": cards}
 
 
+FIRST_REV = {}
+
+
 def series(cards):
     """监控：每张卡近 180 天逐日协议收入（DefiLlama dailyRevenue）。母协议用 parent 名，单协议用 slug。
     写 data/alpha/rev/<id>.json（网站走势图格式 {d, s:{rev}}），返回 {id: [[日, 值], ...]}。"""
@@ -207,6 +210,9 @@ def series(cards):
         try:
             d = get(f"https://api.llama.fi/summary/fees/{slug}?dataType=dailyRevenue")
             pts = [(dt.datetime.fromtimestamp(t, dt.timezone.utc).date().isoformat(), v or 0) for t, v in d.get("totalDataChart") or []]
+            nz = next((a for a, b in pts if b), None)
+            if nz:
+                FIRST_REV[c["id"]] = nz
             pts = [[a, round(b)] for a, b in pts if cut <= a < today]
             if pts:
                 out[c["id"]] = pts
@@ -252,8 +258,17 @@ def main():
     if "--no-series" not in sys.argv:
         ser = series(res["opps"])
         json.dump(ser, open(os.path.join(OUT, "opp_series.json"), "w", encoding="utf-8"), separators=(",", ":"))
+        old = load(os.path.join(OUT, "rev_first.json"), {}) or {}
+        old.update(FIRST_REV)
+        json.dump(old, open(os.path.join(OUT, "rev_first.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=0, sort_keys=True)
     else:
         ser = load(os.path.join(OUT, "opp_series.json"), {}) or {}
+    try:   # 项目上线天数、币上线天数、看盘入口（alpha/tokens.py；失败不影响出卡）
+        import tokens
+        manual = {"m:" + m["id"]: m for m in (load(os.path.join(HERE, "manual_leads.json"), {}) or {}).get("leads", [])}
+        tokens.enrich(res["opps"], manual, load(os.path.join(OUT, "rev_first.json"), {}) or {})
+    except Exception as e:
+        print("代币信息失败：", str(e)[:160])
     for c in res["opps"]:   # 列表里的 30 天迷你走势
         c["spark"] = [v for _, v in (ser.get(c["id"]) or [])[-30:]]
     q = queue(res["opps"])

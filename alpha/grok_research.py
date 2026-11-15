@@ -173,6 +173,8 @@ def main():
             for c in load(os.path.join(rd, fn), []) or []:
                 if (c.get("checked_utc") or "") >= cut:
                     recent.add(c.get("key"))
+                if not fn.startswith("grok_") and (c.get("checked_utc") or "") >= (now - dt.timedelta(days=30)).isoformat():
+                    recent.add(c.get("key"))   # Codex / 人工 30 天内核对过的不重复补
     todo = [i for i in q.get("items", []) if i["key"] not in recent][:n_max]
     path = os.path.join(rd, f"grok_{today}_checks.json")
     done = load(path, []) or []
