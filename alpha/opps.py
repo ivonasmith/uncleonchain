@@ -66,12 +66,8 @@ def build():
     latest = load(os.path.join(OUT, "alpha_latest.json"), {})
     leads = (load(os.path.join(OUT, "alpha_leads.json"), {}) or {}).get("leads", {})
     hist = load(os.path.join(OUT, "alpha_history.json"), []) or []
-    checks = {}
-    rd = os.path.join(HERE, "review")
-    for fn in sorted(os.listdir(rd), key=lambda f: (not f.startswith("grok_"), f)):
-        if fn.endswith("_checks.json"):
-            for c in load(os.path.join(rd, fn), []) or []:
-                checks[c["key"]] = dict(c, _file=fn)   # 后交的批次覆盖先交的；Grok 自动补证先读，人工 / Codex 的结论盖过它（11-15）
+    import checks_util
+    checks = checks_util.merged()   # 合并规则（空壳不盖已有补证、patches）见 alpha/checks_util.py
     rows = {r["key"]: r for r in latest.get("tokenless", []) + latest.get("surge", []) + latest.get("manual", []) + latest.get("site", [])}
     manual = {"m:" + m["id"]: m for m in (load(os.path.join(HERE, "manual_leads.json"), {}) or {}).get("leads", [])}
     lst = {r["key"]: r for r in latest.get("listings", [])}

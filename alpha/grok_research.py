@@ -172,7 +172,7 @@ def main():
     cut = (now - dt.timedelta(days=7)).isoformat()
     rd = os.path.join(HERE, "review")
     for fn in os.listdir(rd):
-        if fn.endswith("_checks.json"):
+        if "_checks" in fn and fn.endswith(".json"):
             for c in load(os.path.join(rd, fn), []) or []:
                 if (c.get("checked_utc") or "") >= cut:
                     recent.add(c.get("key"))

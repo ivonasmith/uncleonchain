@@ -111,15 +111,20 @@ def board_alpha():
     q = load(os.path.join(DATA, "alpha", "research_queue.json"), {}) or {}
     leads = (load(os.path.join(DATA, "alpha", "alpha_leads.json"), {}) or {}).get("leads", {})
     rd = os.path.join(ROOT, "alpha", "review")
-    files = sorted(glob.glob(os.path.join(rd, "*_checks.json")))
+    files = sorted(glob.glob(os.path.join(rd, "*_checks.json")) + glob.glob(os.path.join(rd, "*_checks_[0-9]*.json")))
     by_key, codex_keys = {}, set()
+    sys.path.insert(0, os.path.join(ROOT, "alpha"))
+    import checks_util
+    stubs = 0
     for p in files:
         I += check_alpha_file(p, leads)
-        for c in load(p, []) or []:
-            if isinstance(c, dict) and c.get("key"):
-                by_key[c["key"]] = (os.path.basename(p), c)
-                if not os.path.basename(p).startswith("grok_"):
-                    codex_keys.add(c["key"])
+        stubs += sum(1 for c in load(p, []) or [] if isinstance(c, dict) and checks_util.is_stub(c)) if os.path.basename(p).startswith("codex_") else 0
+    for k, c in checks_util.merged().items():
+        by_key[k] = (c["_file"], c)
+        if not c["_file"].startswith("grok_"):
+            codex_keys.add(k)
+    if stubs:
+        I.append(issue("alpha", "alpha/review/codex_*_checks.json", f"{stubs} 条是空模板（分数全 U、最多 1 条证据、一句话是模板句）：没有并入、不算补证完成，这些 key 仍在待补证队列里。查不到就不要交，交就要有一手证据"))
     items = [{"key": i["key"], "name": i["name"], "status": i.get("status"), "fresh": i.get("fresh"), "kind": i.get("kind")} for i in q.get("items", [])]
     # 逐条待办（Codex 11-15 建议：每条有 key / 类型 / 缺什么 / 状态 / 上次核对，「文件里有记录」不等于「查证完成」）
     for n, i in enumerate(q.get("items", [])):

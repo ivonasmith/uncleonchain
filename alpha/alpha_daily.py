@@ -319,20 +319,18 @@ def main():
             events.append({"type": "token", "key": k, "name": v["name"]})
 
     # 候选池状态：外部补证结果（alpha/review/*_checks.json）并进台账；状态变化只追加到 status_history，不改旧记录
-    for fn in sorted(os.listdir(os.path.join(HERE, "review")), key=lambda f: (not f.startswith("grok_"), f)):
-        if not fn.endswith("_checks.json"):
+    import checks_util
+    for ckey, c in checks_util.merged().items():
+        v = L.get(ckey)
+        if not v or c.get("verdict") not in ("待核验", "研究观察", "拒绝", "优先研究"):
             continue
-        for c in load(os.path.join(HERE, "review", fn), []):
-            v = L.get(c.get("key"))
-            if not v or c.get("verdict") not in ("待核验", "研究观察", "拒绝", "优先研究"):
-                continue
-            day = (c.get("checked_utc") or today)[:10]
-            hs = v.setdefault("status_history", [])
-            if hs and hs[-1]["status"] == c["verdict"]:
-                continue
-            hs.append({"status": c["verdict"], "date": day, "src": f"alpha/review/{fn}"})
-            v["status"] = c["verdict"]
-            events.append({"type": "status", "key": c["key"], "name": v["name"], "status": c["verdict"]})
+        day = (c.get("checked_utc") or today)[:10]
+        hs = v.setdefault("status_history", [])
+        if hs and hs[-1]["status"] == c["verdict"]:
+            continue
+        hs.append({"status": c["verdict"], "date": day, "src": f"alpha/review/{c['_file']}"})
+        v["status"] = c["verdict"]
+        events.append({"type": "status", "key": ckey, "name": v["name"], "status": c["verdict"]})
 
     # ③ 事件流
     fc = CFG["feeds"]

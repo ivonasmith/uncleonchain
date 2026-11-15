@@ -4113,11 +4113,9 @@ ALPHA_ST = {"研究观察": ("t-up", "Watching"), "待核验": ("t-warn", "To ve
 def alpha_checks():
     """外部补证（alpha/review/*_checks.json）：key → 最新一条。"""
     if "ALPHA_CHK" not in G:
-        out, rd = {}, os.path.join(ROOT, "alpha", "review")
-        for fn in sorted(os.listdir(rd), key=lambda f: (not f.startswith("grok_"), f)) if os.path.isdir(rd) else []:
-            if fn.endswith("_checks.json"):
-                for c in load(os.path.join(rd, fn), []) or []:
-                    out[c["key"]] = c
+        sys.path.insert(0, os.path.join(ROOT, "alpha"))
+        import checks_util
+        out = checks_util.merged()
         G["ALPHA_CHK"] = out
     return G["ALPHA_CHK"]
 
