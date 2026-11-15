@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-15T06:03:48+00:00",
+ "generated": "2026-11-15T11:26:36+00:00",
  "asof": "2026-11-14",
  "stale": false,
  "baseline_day": "2026-11-14",
@@ -1561,6 +1561,25 @@
    "first_seen": "2026-11-14"
   },
   {
+   "key": "g:9102",
+   "name": "Closer",
+   "slug": "closer",
+   "url": "https://closer.market",
+   "logo": "https://icons.llamao.fi/icons/protocols/closer",
+   "twitter": "closer_xyz",
+   "children": [
+    "Closer"
+   ],
+   "category": "Prediction Market",
+   "chains": [
+    "Solana"
+   ],
+   "rev30": 190777,
+   "rev_prev30": 2686,
+   "chg30": 7002.6,
+   "first_seen": "2026-11-14"
+  },
+  {
    "key": "g:6516",
    "name": "WisdomTree",
    "slug": "wisdomtree",
@@ -1600,25 +1619,6 @@
    "rev30": 185013,
    "rev_prev30": 206841,
    "chg30": -10.6,
-   "first_seen": "2026-11-14"
-  },
-  {
-   "key": "g:9102",
-   "name": "Closer",
-   "slug": "closer",
-   "url": "https://closer.market",
-   "logo": "https://icons.llamao.fi/icons/protocols/closer",
-   "twitter": "closer_xyz",
-   "children": [
-    "Closer"
-   ],
-   "category": "Prediction Market",
-   "chains": [
-    "Solana"
-   ],
-   "rev30": 182378,
-   "rev_prev30": 2686,
-   "chg30": 6689.9,
    "first_seen": "2026-11-14"
   },
   {
@@ -1942,28 +1942,6 @@
    "first_seen": "2026-11-14"
   },
   {
-   "key": "g:parent#native",
-   "name": "Native",
-   "slug": "native-core-clob",
-   "url": "https://native.org/",
-   "logo": "https://icons.llamao.fi/icons/protocols/native-core-clob",
-   "twitter": "native_fi",
-   "children": [
-    "Native Core CLOB",
-    "Native Credit Pool"
-   ],
-   "category": "Dexs",
-   "chains": [
-    "Native Core",
-    "Base",
-    "BSC"
-   ],
-   "rev30": 126654,
-   "rev_prev30": 745731,
-   "chg30": -83.0,
-   "first_seen": "2026-11-14"
-  },
-  {
    "key": "g:parent#rainbow",
    "name": "Rainbow",
    "slug": "rainbow-perps",
@@ -1983,9 +1961,31 @@
     "Polygon",
     "Base"
    ],
-   "rev30": 124920,
+   "rev30": 127053,
    "rev_prev30": 209786,
-   "chg30": -40.5,
+   "chg30": -39.4,
+   "first_seen": "2026-11-14"
+  },
+  {
+   "key": "g:parent#native",
+   "name": "Native",
+   "slug": "native-core-clob",
+   "url": "https://native.org/",
+   "logo": "https://icons.llamao.fi/icons/protocols/native-core-clob",
+   "twitter": "native_fi",
+   "children": [
+    "Native Core CLOB",
+    "Native Credit Pool"
+   ],
+   "category": "Dexs",
+   "chains": [
+    "Native Core",
+    "Base",
+    "BSC"
+   ],
+   "rev30": 126654,
+   "rev_prev30": 745731,
+   "chg30": -83.0,
    "first_seen": "2026-11-14"
   },
   {
@@ -2648,7 +2648,7 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 1745148,
+   "tvl": 1869816,
    "listed": "2026-11-14",
    "token": true,
    "parent": "parent#nest"
@@ -2664,7 +2664,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 561658,
+   "tvl": 561722,
    "listed": "2026-11-14",
    "token": false,
    "parent": "parent#drakewell"
@@ -2680,7 +2680,7 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 41211,
+   "tvl": 41894,
    "listed": "2026-11-14",
    "token": true,
    "parent": "parent#kleos"
@@ -2868,7 +2868,7 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 7105,
+   "tvl": 7284,
    "listed": "2026-11-13",
    "token": false,
    "parent": null
@@ -2884,7 +2884,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 1535,
+   "tvl": 1548,
    "listed": "2026-11-13",
    "token": false,
    "parent": null
@@ -2956,7 +2956,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 6704947,
+   "tvl": 6710729,
    "listed": "2026-11-12",
    "token": false,
    "parent": null
@@ -2974,7 +2974,7 @@
     "Base",
     "Berachain"
    ],
-   "tvl": 191204,
+   "tvl": 199471,
    "listed": "2026-11-12",
    "token": false,
    "parent": null
@@ -2990,7 +2990,7 @@
    "chains": [
     "Sui"
    ],
-   "tvl": 66947,
+   "tvl": 67132,
    "listed": "2026-11-12",
    "token": false,
    "parent": null
@@ -3006,7 +3006,7 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 62210,
+   "tvl": 65315,
    "listed": "2026-11-12",
    "token": false,
    "parent": "parent#boxa"
@@ -3022,7 +3022,7 @@
    "chains": [
     "Binance"
    ],
-   "tvl": 47756,
+   "tvl": 49141,
    "listed": "2026-11-12",
    "token": false,
    "parent": null
@@ -3038,7 +3038,7 @@
    "chains": [
     "Sonic"
    ],
-   "tvl": 3040,
+   "tvl": 3049,
    "listed": "2026-11-12",
    "token": true,
    "parent": null
@@ -3173,7 +3173,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 3462942,
+   "tvl": 3462959,
    "listed": "2026-11-11",
    "token": false,
    "parent": null
@@ -3189,7 +3189,7 @@
    "chains": [
     "Solana"
    ],
-   "tvl": 1707844,
+   "tvl": 1799525,
    "listed": "2026-11-11",
    "token": true,
    "parent": "parent#jupiter"
@@ -3205,7 +3205,7 @@
    "chains": [
     "Strato"
    ],
-   "tvl": 595770,
+   "tvl": 599564,
    "listed": "2026-11-11",
    "token": false,
    "parent": "parent#strato"
@@ -3221,7 +3221,7 @@
    "chains": [
     "Sui"
    ],
-   "tvl": 13199,
+   "tvl": 13213,
    "listed": "2026-11-11",
    "token": false,
    "parent": null
@@ -3238,7 +3238,7 @@
     "Base",
     "Robinhood Chain"
    ],
-   "tvl": 6629,
+   "tvl": 6707,
    "listed": "2026-11-11",
    "token": false,
    "parent": null
@@ -3254,7 +3254,7 @@
    "chains": [
     "Base"
    ],
-   "tvl": 1256,
+   "tvl": 1264,
    "listed": "2026-11-11",
    "token": true,
    "parent": null
@@ -3270,7 +3270,7 @@
    "chains": [
     "Hedera"
    ],
-   "tvl": 882,
+   "tvl": 883,
    "listed": "2026-11-11",
    "token": true,
    "parent": null
@@ -3292,22 +3292,6 @@
    "parent": "parent#hedgehood"
   },
   {
-   "key": "p:9394",
-   "name": "Helios DEX",
-   "slug": "helios-dex",
-   "category": "Dexs",
-   "url": "",
-   "logo": "https://icons.llamao.fi/icons/protocols/helios-dex",
-   "twitter": "heliosliq",
-   "chains": [
-    "Elysium Kinetiq"
-   ],
-   "tvl": 56,
-   "listed": "2026-11-11",
-   "token": true,
-   "parent": null
-  },
-  {
    "key": "p:9397",
    "name": "HedgeHood StockLend",
    "slug": "hedgehood-stocklend",
@@ -3322,6 +3306,22 @@
    "listed": "2026-11-11",
    "token": true,
    "parent": "parent#hedgehood"
+  },
+  {
+   "key": "p:9394",
+   "name": "Helios DEX",
+   "slug": "helios-dex",
+   "category": "Dexs",
+   "url": "",
+   "logo": "https://icons.llamao.fi/icons/protocols/helios-dex",
+   "twitter": "heliosliq",
+   "chains": [
+    "Elysium Kinetiq"
+   ],
+   "tvl": 48,
+   "listed": "2026-11-11",
+   "token": true,
+   "parent": null
   },
   {
    "key": "p:9400",
@@ -3494,7 +3494,7 @@
    "chains": [
     "Soneium"
    ],
-   "tvl": 624456,
+   "tvl": 625470,
    "listed": "2026-11-10",
    "token": false,
    "parent": null
@@ -3510,7 +3510,7 @@
    "chains": [
     "Hyperliquid L1"
    ],
-   "tvl": 140541,
+   "tvl": 136421,
    "listed": "2026-11-10",
    "token": false,
    "parent": null
@@ -3526,7 +3526,7 @@
    "chains": [
     "Arc"
    ],
-   "tvl": 14919,
+   "tvl": 14994,
    "listed": "2026-11-10",
    "token": false,
    "parent": null
@@ -3542,7 +3542,7 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 13939,
+   "tvl": 14296,
    "listed": "2026-11-10",
    "token": false,
    "parent": "parent#kalos"
@@ -3558,7 +3558,7 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 2005,
+   "tvl": 2058,
    "listed": "2026-11-10",
    "token": false,
    "parent": "parent#kalos"
@@ -3676,7 +3676,7 @@
    "chains": [
     "Hyperliquid L1"
    ],
-   "tvl": 49054831,
+   "tvl": 50305304,
    "listed": "2026-11-09",
    "token": true,
    "parent": "parent#kinetiq"
@@ -3692,7 +3692,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 8770,
+   "tvl": 8846,
    "listed": "2026-11-09",
    "token": true,
    "parent": null
@@ -3708,7 +3708,7 @@
    "chains": [
     "Solana"
    ],
-   "tvl": 6315,
+   "tvl": 6313,
    "listed": "2026-11-09",
    "token": true,
    "parent": null
@@ -3724,7 +3724,7 @@
    "chains": [
     "Binance"
    ],
-   "tvl": 853,
+   "tvl": 678,
    "listed": "2026-11-09",
    "token": false,
    "parent": null
@@ -3870,7 +3870,7 @@
     "Arbitrum",
     "Base"
    ],
-   "tvl": 117329,
+   "tvl": 117784,
    "listed": "2026-11-08",
    "token": false,
    "parent": "parent#bitty"
@@ -3886,7 +3886,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 8334703,
+   "tvl": 8335611,
    "listed": "2026-11-07",
    "token": true,
    "parent": "parent#vesper"
@@ -3902,7 +3902,7 @@
    "chains": [
     "Anubis"
    ],
-   "tvl": 307810,
+   "tvl": 307834,
    "listed": "2026-11-07",
    "token": false,
    "parent": "parent#rocketswap-anubis"
@@ -4110,7 +4110,7 @@
    "chains": [
     "Hyperliquid L1"
    ],
-   "tvl": 19449,
+   "tvl": 19476,
    "listed": "2026-11-05",
    "token": false,
    "parent": null
@@ -4126,7 +4126,7 @@
    "chains": [
     "Robinhood Chain"
    ],
-   "tvl": 14622,
+   "tvl": 14462,
    "listed": "2026-11-05",
    "token": true,
    "parent": "parent#glazecorp"
@@ -4142,7 +4142,7 @@
    "chains": [
     "Base"
    ],
-   "tvl": 3580,
+   "tvl": 3512,
    "listed": "2026-11-05",
    "token": false,
    "parent": null
@@ -4160,7 +4160,7 @@
     "Ethereum",
     "Binance"
    ],
-   "tvl": 138,
+   "tvl": 139,
    "listed": "2026-11-05",
    "token": false,
    "parent": null
@@ -4222,7 +4222,7 @@
     "Avalanche",
     "Arbitrum"
    ],
-   "tvl": 1744810,
+   "tvl": 1750181,
    "listed": "2026-11-04",
    "token": true,
    "parent": "parent#dexalot"
@@ -4240,7 +4240,7 @@
     "Base",
     "Arbitrum"
    ],
-   "tvl": 867890,
+   "tvl": 858940,
    "listed": "2026-11-04",
    "token": false,
    "parent": "parent#privacy-pools"
@@ -4256,7 +4256,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 801361,
+   "tvl": 810831,
    "listed": "2026-11-04",
    "token": false,
    "parent": null
@@ -4289,7 +4289,7 @@
     "Base",
     "Arbitrum"
    ],
-   "tvl": 18644,
+   "tvl": 18623,
    "listed": "2026-11-04",
    "token": false,
    "parent": null
@@ -4307,25 +4307,7 @@
     "Base",
     "Ethereum"
    ],
-   "tvl": 1392,
-   "listed": "2026-11-04",
-   "token": false,
-   "parent": null
-  },
-  {
-   "key": "p:9331",
-   "name": "yld.cx",
-   "slug": "yld.cx",
-   "category": "Yield",
-   "url": "",
-   "logo": "https://icons.llamao.fi/icons/protocols/yld.cx",
-   "twitter": "yld_cx",
-   "chains": [
-    "Base",
-    "Ethereum",
-    "Robinhood Chain"
-   ],
-   "tvl": 291,
+   "tvl": 1351,
    "listed": "2026-11-04",
    "token": false,
    "parent": null
@@ -4347,6 +4329,24 @@
    "parent": "parent#hedgehood"
   },
   {
+   "key": "p:9331",
+   "name": "yld.cx",
+   "slug": "yld.cx",
+   "category": "Yield",
+   "url": "",
+   "logo": "https://icons.llamao.fi/icons/protocols/yld.cx",
+   "twitter": "yld_cx",
+   "chains": [
+    "Base",
+    "Ethereum",
+    "Robinhood Chain"
+   ],
+   "tvl": 288,
+   "listed": "2026-11-04",
+   "token": false,
+   "parent": null
+  },
+  {
    "key": "p:9330",
    "name": "ALPHA Launchpad",
    "slug": "alpha-launchpad",
@@ -4359,7 +4359,7 @@
     "Solana",
     "Arc"
    ],
-   "tvl": 168,
+   "tvl": 169,
    "listed": "2026-11-04",
    "token": true,
    "parent": null
@@ -4481,7 +4481,7 @@
    "chains": [
     "SASEUL"
    ],
-   "tvl": 18143,
+   "tvl": 17978,
    "listed": "2026-11-03",
    "token": false,
    "parent": null
@@ -4497,7 +4497,7 @@
    "chains": [
     "Sui"
    ],
-   "tvl": 4128,
+   "tvl": 4108,
    "listed": "2026-11-03",
    "token": false,
    "parent": null
@@ -4602,7 +4602,7 @@
    "chains": [
     "Arbitrum"
    ],
-   "tvl": 148603,
+   "tvl": 153505,
    "listed": "2026-11-02",
    "token": true,
    "parent": "parent#camelot"
@@ -4618,7 +4618,7 @@
    "chains": [
     "Solana"
    ],
-   "tvl": 94880,
+   "tvl": 94037,
    "listed": "2026-11-02",
    "token": false,
    "parent": "parent#exceed-finance"
@@ -4634,7 +4634,7 @@
    "chains": [
     "Supra"
    ],
-   "tvl": 15716,
+   "tvl": 15503,
    "listed": "2026-11-02",
    "token": false,
    "parent": null
@@ -4650,7 +4650,7 @@
    "chains": [
     "Solana"
    ],
-   "tvl": 539,
+   "tvl": 556,
    "listed": "2026-11-02",
    "token": false,
    "parent": "parent#exceed-finance"

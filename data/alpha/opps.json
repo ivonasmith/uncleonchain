@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-15T07:07:23+00:00",
+ "generated": "2026-11-15T11:27:32+00:00",
  "asof": "2026-11-14",
  "framework": "v1",
  "rules": "v2（2026-11-15）",
@@ -2327,6 +2327,266 @@
    ]
   },
   {
+   "fresh": true,
+   "reviewer": "grok-auto",
+   "id": "m-pons",
+   "key": "m:pons",
+   "name": "Pons",
+   "kind": "manual",
+   "why_here": null,
+   "manual": {
+    "what": "Robinhood Chain 上的发币平台，2026-07 上线、08 月出 V2；协议费用于回购销毁 PONS（媒体口径，未核对合约）。收入高峰在 9 月，系统 11-14 才开始记录，所以没赶上。",
+    "by": "大叔",
+    "sources": [
+     "https://www.theblock.co/news/ecosystems/2026-09-08-pons-propels-robinhood-chain-fees-record-6-million-daily-fees-doubles-413852",
+     "https://decrypt.co/377349/pons-robinhood-chain-meme-coin-token-factory"
+    ]
+   },
+   "discovered": "2026-11-15",
+   "baseline": false,
+   "status": "研究观察",
+   "status_src": "alpha/review/grok_2026-11-15_checks.json",
+   "bucket": "invest",
+   "entry": [
+    "use"
+   ],
+   "entry_why": "参与方式为支付 gas + ETH 在 https://www.ponsfamily.com/launchpad/create 发币，或直接买卖已发 token，无 points 计划证据。",
+   "classes": {
+    "business": {
+     "v": "trading",
+     "src": "auto",
+     "why": "DefiLlama 类目「Launchpad」→ 映射表"
+    },
+    "right": {
+     "v": "governance",
+     "src": "auto",
+     "why": "已有代币，权利待补证"
+    },
+    "opportunity": {
+     "v": "rerate",
+     "src": "auto",
+     "why": "已有代币 → 产品与资产重估"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": 3,
+     "src": "research",
+     "why": "V2 新增 bonding curve 定价 + 毕业进永久锁 Uniswap v4 自定义 hook，支持 pair tokenized stocks/ETFs 等新资产，区别于 V1 即时池。（来源 https://docs.ponsfamily.com/v2）"
+    },
+    "A": {
+     "v": 3,
+     "src": "research",
+     "why": "官网两步操作：上传图文选 pair 签名即可发币，Robinhood Chain gas 低，普通人钱包即可完成。（来源 https://ponsfamily.com/launchpad/create）"
+    },
+    "F": {
+     "v": 3,
+     "src": "research",
+     "why": "非 custodial，任何地址可发币，creator 获70-90% 费，无明显预留或 VC 分配记录。（来源 https://docs.ponsfamily.com/llms.txt）"
+    },
+    "E": {
+     "v": 2,
+     "src": "research",
+     "why": "V2 hook 和 factory 被外部 token 使用（>100万 launches），但独立团队付费使用或复用未在一手证据中明确核实。（来源 https://ponsfamily.com/analytics）"
+    },
+    "V": {
+     "v": 3,
+     "src": "research",
+     "why": "持有 PONS 间接获协议收入 80% 用于买回烧，analytics 和 Dune 链上可核对 buyback/burn 流向。（来源 https://ponsfamily.com/analytics）"
+    },
+    "G": {
+     "v": 1,
+     "src": "research",
+     "why": "9月高峰后 10-11 月 fees/revenue 显著下降（从月 1.2 亿+ 降至百万级），无清晰 D30 非单一簇增长证据。（来源 https://defillama.com/protocol/pons-v2）"
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": 1,
+     "src": "research",
+     "why": "主要由 launch/trade 参与者支付费用，外部客户（如 stock token 真实使用）有报道但账单未在一手合约中完全核对分离。（来源 https://defillama.com/protocol/pons）"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": 2,
+     "src": "research",
+     "why": "当前仍开放 launch（每天 5k+），但高峰已过，gas waiver 等早期优势已结束，规则稳定可核。（来源 https://ponsfamily.com/analytics）"
+    },
+    "TM": {
+     "v": 1,
+     "src": "research",
+     "why": "Pons Labs, LLC 运营，pseudonymous Ozzy (@MEADGod) 领导，有公开合约交付和产品迭代记录，无不良记录证据。（来源 https://candydrops.xyz/en/projects/pons）"
+    },
+    "TE": {
+     "v": 2,
+     "src": "research",
+     "why": "固定 10 亿 supply，已烧 330M（33%），剩余流通约 67%，买回烧持续进行，日历透明但未来 90 天新增可售未明确披露。（来源 https://ponsfamily.com/analytics）"
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "通过",
+     "src": "research",
+     "why": "身份经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "one_liner": "Robinhood Chain 上非托管 meme 币 launchpad，用 bonding curve 发币，毕业进锁仓 Uniswap v4 池，协议费部分买回烧 PONS。",
+   "research": {
+    "token_stance": "有代币，已在运行并有买回烧机制",
+    "token_stance_src": "https://ponsfamily.com/analytics",
+    "token_stance_date": "2026-07",
+    "revenue_who": "协议收入部分（当前约30%费率中的80%）用于买回烧 PONS，其余覆盖团队/基础设施，84% 费给创作者。",
+    "revenue_method": "0.0005 ETH 发币费 + 1% 交易费（V2 curve 和毕业后 Uniswap v4 hook 扫费），DefiLlama 统计 launch/curve/swept 费。",
+    "wash_or_subsidy": "U",
+    "user_role": "普通人可作为 creator 发币，或 trader 在 curve/池买卖。",
+    "counter": "高峰期已过，月收入从 2300 万降至 40 万，竞争加剧。",
+    "verdict_reason": "对象明确为 Robinhood Chain launchpad V2 机制，M/A/F/V/TM 有明确一手合约/官网/Dune/DefiLlama 证据，无否决项。",
+    "missing": [
+     "官方团队实名身份和历史交付细节",
+     "积分或空投的任何官方表态",
+     "未来 90 天精确解锁/买回日历",
+     "外部付费客户与补贴分离的链上可验证据"
+    ],
+    "checked_utc": "2026-11-15T11:27:08+00:00"
+   },
+   "evidence": [
+    {
+     "url": "https://docs.ponsfamily.com/llms.txt",
+     "fields": [
+      "M",
+      "F",
+      "A",
+      "user_role"
+     ]
+    },
+    {
+     "url": "https://docs.ponsfamily.com/v2",
+     "fields": [
+      "M",
+      "revenue_method",
+      "V"
+     ]
+    },
+    {
+     "url": "https://ponsfamily.com/analytics",
+     "fields": [
+      "revenue_who",
+      "TE",
+      "token_stance",
+      "T",
+      "G",
+      "D"
+     ]
+    },
+    {
+     "url": "https://defillama.com/protocol/pons-v2",
+     "fields": [
+      "revenue_method",
+      "G",
+      "D",
+      "T"
+     ]
+    },
+    {
+     "url": "https://x.com/ponsdotfamily",
+     "fields": [
+      "official_x",
+      "token_stance"
+     ]
+    },
+    {
+     "url": "https://defillama.com/protocol/pons",
+     "fields": [
+      "revenue_who",
+      "G"
+     ]
+    }
+   ],
+   "data": {
+    "category": "Launchpad",
+    "chains": [
+     "Robinhood Chain"
+    ],
+    "rev30": 1265294,
+    "chg30": -81.0,
+    "rev_all": 36936406,
+    "llama": "parent#pons",
+    "fees7": null,
+    "fees30": null,
+    "sources": [
+     "manual"
+    ],
+    "boards": null,
+    "tvl": null,
+    "listed": null,
+    "slug": "pons-v2",
+    "url": "https://www.ponsfamily.com",
+    "logo": "https://icons.llamao.fi/icons/protocols/pons-v2",
+    "twitter": "ponsdotfamily",
+    "children": [
+     "Pons V2",
+     "Pons V1"
+    ],
+    "token": true,
+    "token_seen": null,
+    "rev_hist": []
+   },
+   "spark": [
+    76545,
+    61119,
+    36402,
+    67954,
+    78682,
+    73847,
+    61935,
+    54717,
+    36894,
+    34541,
+    48847,
+    51332,
+    62670,
+    60097,
+    36534,
+    27292,
+    26870,
+    32295,
+    31027,
+    43201,
+    45899,
+    33148,
+    27370,
+    24970,
+    29239,
+    24082,
+    25305,
+    17726,
+    18467,
+    16287
+   ]
+  },
+  {
    "fresh": false,
    "reviewer": "codex",
    "id": "nado",
@@ -3068,6 +3328,268 @@
     20039,
     20109,
     20090
+   ]
+  },
+  {
+   "fresh": true,
+   "reviewer": "grok-auto",
+   "id": "9388",
+   "key": "s:9388",
+   "name": "Montra",
+   "kind": "surge",
+   "why_here": "young+accel",
+   "manual": null,
+   "discovered": "2026-11-15",
+   "baseline": false,
+   "status": "研究观察",
+   "status_src": "alpha/review/grok_2026-11-15_checks.json",
+   "bucket": "invest",
+   "entry": [
+    "points",
+    "use"
+   ],
+   "entry_why": "通过交易、发币、持仓、内容贡献赚积分（https://montramarkets.xyz/ 和 https://montramarkets.xyz/docs）；同时直接用HYPE在Uniswap v4池交易/提供LP（https://montramarkets.xyz/docs/launching）",
+   "classes": {
+    "business": {
+     "v": "trading",
+     "src": "auto",
+     "why": "DefiLlama 类目「Launchpad」→ 映射表"
+    },
+    "right": {
+     "v": "governance",
+     "src": "auto",
+     "why": "已有代币，权利待补证"
+    },
+    "opportunity": {
+     "v": "rerate",
+     "src": "auto",
+     "why": "已有代币 → 产品与资产重估"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": 3,
+     "src": "research",
+     "why": "一键创建token+pool+100%锁流动性+从第一块交易，无bonding curve、无迁移；协议费直接支持MONTRA回购烧；已上线可运行（不同于仅参数改动）（来源 https://montramarkets.xyz/docs/launching）"
+    },
+    "A": {
+     "v": 3,
+     "src": "research",
+     "why": "桥接HYPE到Elysium、加RPC、发币/交易全在钱包完成；文档有明确步骤，gas成本可控但未实测具体预算（来源 https://montramarkets.xyz/docs/elysium）"
+    },
+    "F": {
+     "v": 3,
+     "src": "research",
+     "why": "任何人都可一键launch，100%供应进池无预挖、无税、无owner；积分计划分5组（用户/交易者/LP/创建者/内容），25% MONTRA用于空投并锁仓（来源 https://montramarkets.xyz/docs/launching 和 https://defillama.com/protocol/montra）"
+    },
+    "E": {
+     "v": 1,
+     "src": "research",
+     "why": "当前主要是Montra自己的launchpad和Uniswap v4集成，Partner和Listings仍“coming soon”；未找到3个以上独立团队付费使用证据（来源 https://montramarkets.xyz/docs）"
+    },
+    "V": {
+     "v": 2,
+     "src": "research",
+     "why": "文档明确协议费0.4%先国库后70%买MONTRA烧；MONTRA无owner、无铸造、供应只减；但未核对多期实际资金流净收益（来源 https://montramarkets.xyz/docs/protocol 和 https://montramarkets.xyz/docs/montra）"
+    },
+    "G": {
+     "v": "U",
+     "src": "research",
+     "why": "上线不足一周（Elysium主网11月左右），无足够D7/D30留存数据可核（来源 https://defillama.com/protocol/montra）"
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": 1,
+     "src": "research",
+     "why": "当前收入主要来自launch和交易费（参与者交易驱动），未核查到独立外部客户持续付款与补贴分离的证据（来源 https://defillama.com/protocol/montra）"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": 3,
+     "src": "research",
+     "why": "Elysium新链+Montra刚上线，最近批次launch仍有早期流动性优势和积分倍率（第一周2x），竞争未完全翻倍（来源 https://montramarkets.xyz/ 和 https://x.com/MontraXYZ/status/2121001477195878796）"
+    },
+    "TM": {
+     "v": 2,
+     "src": "research",
+     "why": "官方X @MontraXYZ、文档、合约registry公开；有交付（Uniswap v4集成、RPC、已产生372k收入）；团队未实名但有链上记录和产品上线（来源 https://montramarkets.xyz/docs/contracts 和 https://defillama.com/protocol/montra）"
+    },
+    "TE": {
+     "v": 2,
+     "src": "research",
+     "why": "MONTRA已上线流通约97%，FDV 3.78m，解锁/排放日历在文档中公开（买回烧+空投25%锁仓），可预算但未给精确90天净新增（来源 https://defillama.com/token/MONTRA 和 https://montramarkets.xyz/docs/protocol）"
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "通过",
+     "src": "research",
+     "why": "身份经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "one_liner": "Elysium上的Uniswap v4 launchpad，一键发币+锁流动性+交易，协议费0.4%用于国库和MONTRA回购燃烧。",
+   "research": {
+    "token_stance": "有积分/空投计划",
+    "token_stance_src": "https://montramarkets.xyz/docs/montra",
+    "token_stance_date": "2026-11",
+    "revenue_who": "协议国库和MONTRA回购燃烧",
+    "revenue_method": "每笔交易0.4%协议费，先全进国库，后70%买MONTRA烧掉、30%国库",
+    "wash_or_subsidy": "U",
+    "user_role": "普通人可一键发币、交易、提供流动性、参与积分计划",
+    "counter": "上线仅一周，Partner/Listings仍coming soon，积分兑换规则未完全公布，增长留存待多期验证。",
+    "verdict_reason": "对象明确（Elysium Uniswap v4 launchpad+MONTRA回购），M/V/T有可证伪一手文档和链上数据支持，无明确否决项。",
+    "missing": [
+     "积分具体兑换规则和最终空投分配细节",
+     "多期D30增长留存与非单一资金簇证据",
+     "外部独立客户付款与补贴分离的链上验证",
+     "Montra Partner和Listings实际上线后的使用案例"
+    ],
+    "checked_utc": "2026-11-15T11:27:08+00:00"
+   },
+   "evidence": [
+    {
+     "url": "https://montramarkets.xyz/docs",
+     "fields": [
+      "M",
+      "A",
+      "F",
+      "V",
+      "E"
+     ]
+    },
+    {
+     "url": "https://montramarkets.xyz/docs/launching",
+     "fields": [
+      "M",
+      "F",
+      "A"
+     ]
+    },
+    {
+     "url": "https://montramarkets.xyz/docs/protocol",
+     "fields": [
+      "V",
+      "revenue_method",
+      "TE"
+     ]
+    },
+    {
+     "url": "https://montramarkets.xyz/docs/montra",
+     "fields": [
+      "token_stance",
+      "V"
+     ]
+    },
+    {
+     "url": "https://montramarkets.xyz/docs/elysium",
+     "fields": [
+      "A",
+      "user_role"
+     ]
+    },
+    {
+     "url": "https://defillama.com/protocol/montra",
+     "fields": [
+      "revenue_who",
+      "TM",
+      "G",
+      "D",
+      "T",
+      "TE"
+     ]
+    },
+    {
+     "url": "https://defillama.com/token/MONTRA",
+     "fields": [
+      "TE",
+      "token_stance"
+     ]
+    },
+    {
+     "url": "https://x.com/MontraXYZ",
+     "fields": [
+      "official_x",
+      "TM",
+      "T"
+     ]
+    },
+    {
+     "url": "https://montramarkets.xyz/docs/contracts",
+     "fields": [
+      "TM",
+      "F"
+     ]
+    }
+   ],
+   "data": {
+    "category": "Launchpad",
+    "chains": [
+     "Elysium"
+    ],
+    "rev30": 372370,
+    "chg30": null,
+    "rev_all": 372370,
+    "llama": null,
+    "fees7": null,
+    "fees30": null,
+    "sources": [
+     "llama_surge",
+     "site_launchpad"
+    ],
+    "boards": [
+     {
+      "board": "launchpad",
+      "rule": "lp_new",
+      "why": "进发射台矩阵 4 天，近 7 天手续费 1,209,417 美元"
+     }
+    ],
+    "tvl": null,
+    "listed": null,
+    "slug": "montra",
+    "url": "https://montramarkets.xyz",
+    "logo": "https://icons.llamao.fi/icons/protocols/montra",
+    "twitter": "MontraXYZ",
+    "children": [
+     "Montra"
+    ],
+    "token": true,
+    "token_seen": null,
+    "rev_hist": []
+   },
+   "spark": [
+    17262,
+    29231,
+    30987,
+    26471,
+    76043,
+    102661,
+    50775,
+    22296,
+    12203,
+    4441
    ]
   },
   {
@@ -7684,7 +8206,7 @@
      "llama_listing"
     ],
     "boards": null,
-    "tvl": 49054831,
+    "tvl": 50305304,
     "listed": "2026-11-09",
     "slug": "kinetiq-elysium-bridge",
     "url": "https://elysium.kinetiq.xyz",
@@ -8169,7 +8691,7 @@
      "llama_listing"
     ],
     "boards": null,
-    "tvl": 8334703,
+    "tvl": 8335611,
     "listed": "2026-11-07",
     "slug": "vesper-v2",
     "url": "https://vesper.finance",
@@ -8319,7 +8841,7 @@
      "llama_listing"
     ],
     "boards": null,
-    "tvl": 6704947,
+    "tvl": 6710729,
     "listed": "2026-11-12",
     "slug": "swan-dao",
     "url": "https://www.swanusd.com",
@@ -8515,210 +9037,6 @@
     4620,
     37694,
     18595
-   ]
-  },
-  {
-   "fresh": true,
-   "reviewer": null,
-   "id": "m-pons",
-   "key": "m:pons",
-   "name": "Pons",
-   "kind": "manual",
-   "why_here": null,
-   "manual": {
-    "what": "Robinhood Chain 上的发币平台，2026-07 上线、08 月出 V2；协议费用于回购销毁 PONS（媒体口径，未核对合约）。收入高峰在 9 月，系统 11-14 才开始记录，所以没赶上。",
-    "by": "大叔",
-    "sources": [
-     "https://www.theblock.co/news/ecosystems/2026-09-08-pons-propels-robinhood-chain-fees-record-6-million-daily-fees-doubles-413852",
-     "https://decrypt.co/377349/pons-robinhood-chain-meme-coin-token-factory"
-    ]
-   },
-   "discovered": "2026-11-15",
-   "baseline": false,
-   "status": "原始线索",
-   "status_src": "auto",
-   "bucket": "invest",
-   "entry": [
-    "buy"
-   ],
-   "entry_why": "已有代币，可二级买入",
-   "classes": {
-    "business": {
-     "v": "trading",
-     "src": "auto",
-     "why": "DefiLlama 类目「Launchpad」→ 映射表"
-    },
-    "right": {
-     "v": "governance",
-     "src": "auto",
-     "why": "已有代币，权利待补证"
-    },
-    "opportunity": {
-     "v": "rerate",
-     "src": "auto",
-     "why": "已有代币 → 产品与资产重估"
-    },
-    "attribute": {
-     "v": "product",
-     "src": "auto",
-     "why": "协议级对象，默认产品型"
-    }
-   },
-   "scores": {
-    "M": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "A": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "F": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "E": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "V": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "G": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "P": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "D": {
-     "v": "U",
-     "src": "auto",
-     "why": "事实：近 30 天协议收入 1,265,294 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
-    },
-    "L": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "T": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "TM": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "TE": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    }
-   },
-   "gates": {
-    "safety": {
-     "v": "待核验",
-     "src": "auto",
-     "why": "没有完成控制权审计一律待核验"
-    },
-    "data": {
-     "v": "待核验",
-     "src": "auto",
-     "why": "身份未经研究核对"
-    },
-    "exec": {
-     "v": "U",
-     "src": null,
-     "why": "个人执行，不公开"
-    }
-   },
-   "one_liner": "Robinhood Chain 上的发币平台，2026-07 上线、08 月出 V2；协议费用于回购销毁 PONS（媒体口径，未核对合约）。收入高峰在 9 月，系统 11-14 才开始记录，所以没赶上。",
-   "research": null,
-   "evidence": [
-    {
-     "url": "https://www.theblock.co/news/ecosystems/2026-09-08-pons-propels-robinhood-chain-fees-record-6-million-daily-fees-doubles-413852",
-     "fields": [
-      "手动线索出处"
-     ]
-    },
-    {
-     "url": "https://decrypt.co/377349/pons-robinhood-chain-meme-coin-token-factory",
-     "fields": [
-      "手动线索出处"
-     ]
-    }
-   ],
-   "data": {
-    "category": "Launchpad",
-    "chains": [
-     "Robinhood Chain"
-    ],
-    "rev30": 1265294,
-    "chg30": -81.0,
-    "rev_all": 36936406,
-    "llama": "parent#pons",
-    "fees7": null,
-    "fees30": null,
-    "sources": [
-     "manual"
-    ],
-    "boards": null,
-    "tvl": null,
-    "listed": null,
-    "slug": "pons-v2",
-    "url": "https://www.ponsfamily.com",
-    "logo": "https://icons.llamao.fi/icons/protocols/pons-v2",
-    "twitter": "ponsdotfamily",
-    "children": [
-     "Pons V2",
-     "Pons V1"
-    ],
-    "token": true,
-    "token_seen": null,
-    "rev_hist": []
-   },
-   "spark": [
-    76545,
-    61119,
-    36402,
-    67954,
-    78682,
-    73847,
-    61935,
-    54717,
-    36894,
-    34541,
-    48847,
-    51332,
-    62670,
-    60097,
-    36534,
-    27292,
-    26870,
-    32295,
-    31027,
-    43201,
-    45899,
-    33148,
-    27370,
-    24970,
-    29239,
-    24082,
-    25305,
-    17726,
-    18467,
-    16287
    ]
   },
   {
@@ -9270,176 +9588,6 @@
     13099,
     17041,
     9729
-   ]
-  },
-  {
-   "fresh": true,
-   "reviewer": null,
-   "id": "9388",
-   "key": "s:9388",
-   "name": "Montra",
-   "kind": "surge",
-   "why_here": "young+accel",
-   "manual": null,
-   "discovered": "2026-11-15",
-   "baseline": false,
-   "status": "原始线索",
-   "status_src": "auto",
-   "bucket": "invest",
-   "entry": [
-    "buy"
-   ],
-   "entry_why": "已有代币，可二级买入",
-   "classes": {
-    "business": {
-     "v": "trading",
-     "src": "auto",
-     "why": "DefiLlama 类目「Launchpad」→ 映射表"
-    },
-    "right": {
-     "v": "governance",
-     "src": "auto",
-     "why": "已有代币，权利待补证"
-    },
-    "opportunity": {
-     "v": "rerate",
-     "src": "auto",
-     "why": "已有代币 → 产品与资产重估"
-    },
-    "attribute": {
-     "v": "product",
-     "src": "auto",
-     "why": "协议级对象，默认产品型"
-    }
-   },
-   "scores": {
-    "M": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "A": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "F": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "E": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "V": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "G": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "P": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "D": {
-     "v": "U",
-     "src": "auto",
-     "why": "事实：近 30 天协议收入 372,370 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
-    },
-    "L": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "T": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "TM": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "TE": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    }
-   },
-   "gates": {
-    "safety": {
-     "v": "待核验",
-     "src": "auto",
-     "why": "没有完成控制权审计一律待核验"
-    },
-    "data": {
-     "v": "待核验",
-     "src": "auto",
-     "why": "身份未经研究核对"
-    },
-    "exec": {
-     "v": "U",
-     "src": null,
-     "why": "个人执行，不公开"
-    }
-   },
-   "one_liner": null,
-   "research": null,
-   "evidence": [],
-   "data": {
-    "category": "Launchpad",
-    "chains": [
-     "Elysium"
-    ],
-    "rev30": 372370,
-    "chg30": null,
-    "rev_all": 372370,
-    "llama": null,
-    "fees7": null,
-    "fees30": null,
-    "sources": [
-     "llama_surge",
-     "site_launchpad"
-    ],
-    "boards": [
-     {
-      "board": "launchpad",
-      "rule": "lp_new",
-      "why": "进发射台矩阵 4 天，近 7 天手续费 1,209,417 美元"
-     }
-    ],
-    "tvl": null,
-    "listed": null,
-    "slug": "montra",
-    "url": "https://montramarkets.xyz",
-    "logo": "https://icons.llamao.fi/icons/protocols/montra",
-    "twitter": "MontraXYZ",
-    "children": [
-     "Montra"
-    ],
-    "token": true,
-    "token_seen": null,
-    "rev_hist": []
-   },
-   "spark": [
-    17262,
-    29231,
-    30987,
-    26471,
-    76043,
-    102661,
-    50775,
-    22296,
-    12203,
-    4441
    ]
   },
   {
@@ -11899,5 +12047,5 @@
    "spark": []
   }
  ],
- "queue_n": 43
+ "queue_n": 41
 }

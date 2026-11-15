@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-15T07:07:23+00:00",
+ "generated": "2026-11-15T11:27:32+00:00",
  "note": "Alpha 雷达来源台账（大叔 2026-11-15 定：维护一份自己的来源，以关键人 / 关键信息和本站板块为主，数据榜单兜底）。每个来源记为什么收；战绩（带来几张卡、几张进了研究观察、几张被拒）由 opps.py 每天算到 data/alpha/sources_stats.json。连续三个月没有有效发现的降级为 paused，不删。",
  "sources": [
   {
@@ -14,9 +14,9 @@
    "stats": {
     "cards": 5,
     "fresh": 5,
-    "watching": 0,
+    "watching": 1,
     "rejected": 0,
-    "pending": 5,
+    "pending": 4,
     "names": [
      {
       "id": "9388",
@@ -116,9 +116,9 @@
    "stats": {
     "cards": 2,
     "fresh": 2,
-    "watching": 0,
+    "watching": 1,
     "rejected": 0,
-    "pending": 2,
+    "pending": 1,
     "names": [
      {
       "id": "m-pons",
@@ -161,10 +161,14 @@
    "stats": {
     "cards": 15,
     "fresh": 15,
-    "watching": 0,
+    "watching": 1,
     "rejected": 0,
-    "pending": 15,
+    "pending": 14,
     "names": [
+     {
+      "id": "9388",
+      "name": "Montra"
+     },
      {
       "id": "9065",
       "name": "Papertrade"
@@ -184,10 +188,6 @@
      {
       "id": "8481",
       "name": "Fables"
-     },
-     {
-      "id": "9388",
-      "name": "Montra"
      }
     ]
    }

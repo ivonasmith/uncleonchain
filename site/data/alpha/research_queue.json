@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-15T07:07:23+00:00",
- "n": 43,
+ "generated": "2026-11-15T11:27:32+00:00",
+ "n": 41,
  "prompt": "你在给「链上大叔研究台」Alpha 雷达补证（只研究正规项目，不写买卖建议）。对清单里每个协议，查官方网站 / 文档 / 公告、DefiLlama 方法论和可核对的链上信息，\n按下面格式交一个 JSON 数组（文件名 <日期>_checks.json）。第一项 one_liner 用一句大白话说清它是什么（给没听过的人看）。每条事实带来源链接和核对日期；查不到写 \"U\"，不要估，不要编。\n结论 verdict 只能是：研究观察（对象明确、有可证伪假设、没查到否决项）/ 待核验（关键事实缺失或冲突，写清缺什么）/ 拒绝（身份错误、已确认风险、不是对普通人开放的正规项目，写证据）。\n「已有代币」本身不是拒绝理由：清单里 kind = tokenless 的如果查到其实已经有代币，写进 token_stance 和 missing、verdict 给待核验；kind = surge / site / manual 的本来就可能有代币，照常研究它的新玩法。\n只靠搜索摘要、打不开官网和文档的，verdict 最多给待核验，不给拒绝（拒绝必须有一手证据）。\n分数按 framework.json 附录一锚点给（M A F E G T D 是 0–4；TM 是 -1–3，有已证实不良记录给 -1；TE 是 0–3；不知道写 U，没有代币时 TE 写 NA）。M（新参与机制：这个玩法新在哪）优先查，每个分数写 why 和 src。\n资金参与方式 entry 从 buy / stake / points / use / presale / mine / none 里选（none = 暂时没有资金入口），写 entry_why。",
  "schema": {
   "key": "清单里的 key（原样）",
   "name": "名称",
   "one_liner": "一句话介绍：它是什么、给谁用、靠什么收钱（30 字内，大白话）",
-  "reviewer": "claude-auto 或 codex",
+  "reviewer": "grok-auto / claude-auto / codex",
   "checked_utc": "核对时间 ISO",
   "token_stance": "官方确认不发币|有积分/空投计划|官方表态会发|没有表态|U",
   "token_stance_src": "链接",
@@ -48,73 +48,6 @@
  },
  "items": [
   {
-   "key": "m:pons",
-   "name": "Pons",
-   "status": "原始线索",
-   "kind": "manual",
-   "fresh": true,
-   "bucket": "invest",
-   "discovered": "2026-11-15",
-   "category": "Launchpad",
-   "chains": [
-    "Robinhood Chain"
-   ],
-   "rev30": 1265294,
-   "tvl": null,
-   "defillama": "https://defillama.com/protocol/pons-v2",
-   "manual": {
-    "what": "Robinhood Chain 上的发币平台，2026-07 上线、08 月出 V2；协议费用于回购销毁 PONS（媒体口径，未核对合约）。收入高峰在 9 月，系统 11-14 才开始记录，所以没赶上。",
-    "by": "大叔",
-    "sources": [
-     "https://www.theblock.co/news/ecosystems/2026-09-08-pons-propels-robinhood-chain-fees-record-6-million-daily-fees-doubles-413852",
-     "https://decrypt.co/377349/pons-robinhood-chain-meme-coin-token-factory"
-    ]
-   },
-   "pending": [
-    "M",
-    "A",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM",
-    "TE"
-   ],
-   "missing_before": []
-  },
-  {
-   "key": "s:9388",
-   "name": "Montra",
-   "status": "原始线索",
-   "kind": "surge",
-   "fresh": true,
-   "bucket": "invest",
-   "discovered": "2026-11-15",
-   "category": "Launchpad",
-   "chains": [
-    "Elysium"
-   ],
-   "rev30": 372370,
-   "tvl": null,
-   "defillama": "https://defillama.com/protocol/montra",
-   "manual": null,
-   "pending": [
-    "M",
-    "A",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM",
-    "TE"
-   ],
-   "missing_before": []
-  },
-  {
    "key": "s:9427",
    "name": "Volta",
    "status": "原始线索",
@@ -129,6 +62,8 @@
    "rev30": 170172,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/volta",
+   "url": null,
+   "twitter": "VoltaFamily",
    "manual": null,
    "pending": [
     "M",
@@ -159,6 +94,8 @@
    "rev30": null,
    "tvl": null,
    "defillama": null,
+   "url": null,
+   "twitter": null,
    "manual": {
     "what": "BNB Chain 上的「设计证明」挖矿：用户用虚拟晶体管搭数字电路，按设计效率在链上验证后拿 BEM 奖励；总量 2,100 万、约四年减半（交易所博客口径，未核对合约）。",
     "by": "大叔（推特看到有人挖矿赚钱）",
@@ -194,6 +131,8 @@
    "rev30": null,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/bankr",
+   "url": "https://bankr.bot",
+   "twitter": "bankrbot",
    "manual": null,
    "pending": [
     "M",
@@ -224,6 +163,8 @@
    "rev30": 234440,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/ascend-launchpad",
+   "url": null,
+   "twitter": "AscendLaunch",
    "manual": null,
    "pending": [
     "M",
@@ -253,6 +194,8 @@
    "rev30": null,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/boxa-v1",
+   "url": null,
+   "twitter": "Boxa_Elysium",
    "manual": null,
    "pending": [
     "M",
@@ -282,6 +225,8 @@
    "rev30": null,
    "tvl": null,
    "defillama": null,
+   "url": null,
+   "twitter": null,
    "manual": null,
    "pending": [
     "M",
@@ -312,6 +257,8 @@
    "rev30": 1608735,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/central-city",
+   "url": null,
+   "twitter": "centralcityai",
    "manual": null,
    "pending": [
     "M",
@@ -345,6 +292,8 @@
    "rev30": 25350155,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/papertrade",
+   "url": "https://papertrade.xyz",
+   "twitter": "papertrade_xyz",
    "manual": null,
    "pending": [
     "M",
@@ -376,6 +325,8 @@
    "rev30": 1404757,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/paperstrategy-pstr",
+   "url": "https://paperstrategy.xyz",
+   "twitter": "paperstrategy_",
    "manual": null,
    "pending": [
     "M",
@@ -408,6 +359,8 @@
    "rev30": 1076757,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/nullmask",
+   "url": "https://nullmask.io",
+   "twitter": "NullMaskio",
    "manual": null,
    "pending": [
     "M",
@@ -438,6 +391,8 @@
    "rev30": 775576,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/render-network-bme",
+   "url": "https://rendernetwork.com",
+   "twitter": "rendernetwork",
    "manual": null,
    "pending": [
     "M",
@@ -468,6 +423,8 @@
    "rev30": 525716,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/fables",
+   "url": "https://www.fables.fi",
+   "twitter": "fablesfi",
    "manual": null,
    "pending": [
     "M",
@@ -500,6 +457,8 @@
    "rev30": 356069,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/peapods-finance",
+   "url": "https://peapods.finance",
+   "twitter": "PeapodsFinance",
    "manual": null,
    "pending": [
     "M",
@@ -530,6 +489,8 @@
    "rev30": 275632,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/justlend-v1",
+   "url": "https://justlend.org",
+   "twitter": "DeFi_JUST",
    "manual": null,
    "pending": [
     "M",
@@ -560,6 +521,8 @@
    "rev30": 211924,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/thorwallet",
+   "url": "https://www.thorwallet.org",
+   "twitter": "thorwallet",
    "manual": null,
    "pending": [
     "M",
@@ -590,6 +553,8 @@
    "rev30": 175053,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/liquity-v1",
+   "url": "https://www.liquity.org",
+   "twitter": "LiquityProtocol",
    "manual": null,
    "pending": [
     "M",
@@ -620,6 +585,8 @@
    "rev30": 147539,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/yield-basis",
+   "url": "https://yieldbasis.com",
+   "twitter": "yieldbasis",
    "manual": null,
    "pending": [
     "M",
@@ -651,6 +618,8 @@
    "rev30": 119661,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/sapling",
+   "url": "https://sapling.cash",
+   "twitter": "saplingdotcash",
    "manual": null,
    "pending": [
     "M",
@@ -681,6 +650,8 @@
    "rev30": 118675,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/veil",
+   "url": "https://veilit.xyz",
+   "twitter": "veilzk",
    "manual": null,
    "pending": [
     "M",
@@ -711,6 +682,8 @@
    "rev30": 109271,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/stockereum",
+   "url": null,
+   "twitter": "Stockereum",
    "manual": null,
    "pending": [
     "M",
@@ -741,6 +714,8 @@
    "rev30": 609531,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/catapult-trade",
+   "url": "https://catapult.trade",
+   "twitter": "letsCatapult",
    "manual": null,
    "pending": [
     "M",
@@ -771,8 +746,10 @@
     "Hyperliquid L1"
    ],
    "rev30": null,
-   "tvl": 49054831,
+   "tvl": 50305304,
    "defillama": "https://defillama.com/protocol/kinetiq-elysium-bridge",
+   "url": "https://elysium.kinetiq.xyz",
+   "twitter": "Enter_Elysium",
    "manual": null,
    "pending": [
     "M",
@@ -805,6 +782,8 @@
    "rev30": null,
    "tvl": 38646172,
    "defillama": "https://defillama.com/protocol/pendle-loop",
+   "url": "https://app.pendle.finance",
+   "twitter": "pendle_fi",
    "manual": null,
    "pending": [
     "M",
@@ -833,8 +812,10 @@
     "Ethereum"
    ],
    "rev30": null,
-   "tvl": 8334703,
+   "tvl": 8335611,
    "defillama": "https://defillama.com/protocol/vesper-v2",
+   "url": "https://vesper.finance",
+   "twitter": "VesperFi",
    "manual": null,
    "pending": [
     "M",
@@ -863,8 +844,10 @@
     "Ethereum"
    ],
    "rev30": null,
-   "tvl": 6704947,
+   "tvl": 6710729,
    "defillama": "https://defillama.com/protocol/swan-dao",
+   "url": "https://www.swanusd.com",
+   "twitter": "MonolithMarket",
    "manual": null,
    "pending": [
     "M",
@@ -896,6 +879,8 @@
    "rev30": 8972040,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/fomo-wallet",
+   "url": "https://fomo.family",
+   "twitter": "fomo",
    "manual": null,
    "pending": [
     "M",
@@ -931,6 +916,8 @@
    "rev30": 5533401,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/gmgn",
+   "url": "https://gmgn.ai",
+   "twitter": "gmgnai",
    "manual": null,
    "pending": [
     "M",
@@ -966,6 +953,8 @@
    "rev30": 4247922,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/flap-sh",
+   "url": null,
+   "twitter": "flapdotsh",
    "manual": null,
    "pending": [
     "M",
@@ -999,6 +988,8 @@
    "rev30": 3344611,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/trade[xyz]",
+   "url": "https://app.trade.xyz",
+   "twitter": "tradexyz",
    "manual": null,
    "pending": [
     "M",
@@ -1032,6 +1023,8 @@
    "rev30": 3146443,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/azverse-perps",
+   "url": null,
+   "twitter": "AZverse_Global",
    "manual": null,
    "pending": [
     "M",
@@ -1066,6 +1059,8 @@
    "rev30": 2243559,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/the-standard-reserve",
+   "url": "https://www.standardreserve.xyz",
+   "twitter": "standard_rsv",
    "manual": null,
    "pending": [
     "M",
@@ -1100,6 +1095,8 @@
    "rev30": 1633847,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/txflow-perps",
+   "url": "https://app.txflow.com",
+   "twitter": "TxFlow_L1",
    "manual": null,
    "pending": [
     "M",
@@ -1134,6 +1131,8 @@
    "rev30": 1462807,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/antarctic",
+   "url": "https://www.antarctic.exchange",
+   "twitter": "Antarctic_EX",
    "manual": null,
    "pending": [
     "M",
@@ -1167,6 +1166,8 @@
    "rev30": 1327301,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/xox-perps",
+   "url": "https://www.xox.exchange",
+   "twitter": "xox_DEX",
    "manual": null,
    "pending": [
     "M",
@@ -1200,6 +1201,8 @@
    "rev30": 1203549,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/tronsave",
+   "url": "https://tronsave.io",
+   "twitter": "tronsave_io",
    "manual": null,
    "pending": [
     "M",
@@ -1236,6 +1239,8 @@
    "rev30": 1121560,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/veda",
+   "url": "https://veda.tech",
+   "twitter": "veda_labs",
    "manual": null,
    "pending": [
     "M",
@@ -1270,6 +1275,8 @@
    "rev30": 900490,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/hyperdash-perps",
+   "url": "https://hyperdash.com",
+   "twitter": "hypurrdash",
    "manual": null,
    "pending": [
     "M",
@@ -1305,6 +1312,8 @@
    "rev30": 820734,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/rabby-perps",
+   "url": "https://rabby.io",
+   "twitter": "Rabby_io",
    "manual": null,
    "pending": [
     "M",
@@ -1341,6 +1350,8 @@
    "rev30": 719297,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/okx-swap",
+   "url": "https://www.okx.com",
+   "twitter": "okx",
    "manual": null,
    "pending": [
     "M",
@@ -1377,6 +1388,8 @@
    "rev30": 696287,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/relay",
+   "url": "https://docs.relay.link",
+   "twitter": "RelayProtocol",
    "manual": null,
    "pending": [
     "M",
@@ -1413,6 +1426,8 @@
    "rev30": 647158,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/loan-meme",
+   "url": null,
+   "twitter": "loanmeme",
    "manual": null,
    "pending": [
     "M",
