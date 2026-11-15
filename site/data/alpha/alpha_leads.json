@@ -388,7 +388,7 @@
    "key": "g:9146",
    "name": "Central City",
    "slug": "central-city",
-   "source": "tokenless_rev",
+   "source": "tokenless_rev+site:aiagent",
    "first_seen": "2026-11-14",
    "baseline": true,
    "first": {
@@ -406,7 +406,8 @@
      "date": "2026-11-14",
      "src": "alpha/review/tokenless_checks.json"
     }
-   ]
+   ],
+   "board_seen": "2026-11-15"
   },
   "g:7016": {
    "key": "g:7016",
@@ -1268,7 +1269,7 @@
    "key": "g:9381",
    "name": "Ascend Launchpad",
    "slug": "ascend-launchpad",
-   "source": "tokenless_rev",
+   "source": "tokenless_rev+site:launchpad",
    "first_seen": "2026-11-14",
    "baseline": true,
    "first": {
@@ -1279,7 +1280,8 @@
    "tokenless_at_first": true,
    "status": "原始线索",
    "token_seen": null,
-   "last_seen": "2026-11-15"
+   "last_seen": "2026-11-15",
+   "board_seen": "2026-11-15"
   },
   "g:parent#coindcx": {
    "key": "g:parent#coindcx",
@@ -4724,7 +4726,7 @@
    "key": "s:9388",
    "name": "Montra",
    "slug": "montra",
-   "source": "rev_surge",
+   "source": "rev_surge+site:launchpad",
    "first_seen": "2026-11-15",
    "baseline": false,
    "first": {
@@ -4736,7 +4738,8 @@
    "tokenless_at_first": false,
    "status": "原始线索",
    "token_seen": null,
-   "last_seen": "2026-11-15"
+   "last_seen": "2026-11-15",
+   "board_seen": "2026-11-15"
   },
   "s:4063": {
    "key": "s:4063",
@@ -4814,7 +4817,7 @@
    "key": "s:9427",
    "name": "Volta",
    "slug": "volta",
-   "source": "rev_surge",
+   "source": "rev_surge+site:launchpad",
    "first_seen": "2026-11-15",
    "baseline": false,
    "first": {
@@ -4826,7 +4829,8 @@
    "tokenless_at_first": false,
    "status": "原始线索",
    "token_seen": null,
-   "last_seen": "2026-11-15"
+   "last_seen": "2026-11-15",
+   "board_seen": "2026-11-15"
   },
   "s:6771": {
    "key": "s:6771",
@@ -4926,6 +4930,57 @@
    "first": {
     "rev30": 1265294,
     "category": "Launchpad"
+   },
+   "tokenless_at_first": false,
+   "status": "原始线索",
+   "token_seen": null,
+   "last_seen": "2026-11-15"
+  },
+  "x:launchpad:boxa-v1": {
+   "key": "x:launchpad:boxa-v1",
+   "name": "Boxa V1",
+   "slug": "boxa-v1",
+   "source": "site:launchpad",
+   "first_seen": "2026-11-15",
+   "baseline": false,
+   "first": {
+    "rule": "lp_new",
+    "fees7": 140989,
+    "category": "Launchpad"
+   },
+   "tokenless_at_first": true,
+   "status": "原始线索",
+   "token_seen": null,
+   "last_seen": "2026-11-15"
+  },
+  "x:launchpad:chain-elysium": {
+   "key": "x:launchpad:chain-elysium",
+   "name": "Elysium 生态（新发射台聚集）",
+   "slug": null,
+   "source": "site:launchpad",
+   "first_seen": "2026-11-15",
+   "baseline": false,
+   "first": {
+    "rule": "lp_chain",
+    "fees7": 2160872,
+    "category": "新链生态"
+   },
+   "tokenless_at_first": true,
+   "status": "原始线索",
+   "token_seen": null,
+   "last_seen": "2026-11-15"
+  },
+  "x:aiagent:bankr": {
+   "key": "x:aiagent:bankr",
+   "name": "Bankr",
+   "slug": "bankr",
+   "source": "site:aiagent",
+   "first_seen": "2026-11-15",
+   "baseline": false,
+   "first": {
+    "rule": "ai_spike",
+    "fees7": null,
+    "category": "AI Agents · launch"
    },
    "tokenless_at_first": false,
    "status": "原始线索",

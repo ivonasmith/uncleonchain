@@ -238,6 +238,31 @@ def main():
                 r[k2] = m[k2]
         manual.append(r)
 
+    # ①d 站内板块（发射台矩阵、AI Agent；规则在 alpha/site_sources.py）。和上面已有的行是同一个协议时，不另开卡，只在那一行记「哪个板块也筛到了」
+    site = []
+    try:
+        import site_sources
+        idx = {}
+        for r in rows + surge + manual:
+            for nm in [r.get("slug"), r.get("name")] + (r.get("children") or []):
+                if nm:
+                    idx[str(nm).lower()] = r
+        for x in site_sources.collect(ROOT, CFG.get("site_sources")):
+            tag = {"board": x["board"], "rule": x["rule"], "why": x["why"]}
+            hit = idx.get(str(x.get("slug") or "").lower()) or idx.get(x["name"].lower())
+            if hit:
+                hit.setdefault("boards", []).append(tag)
+                continue
+            x.update(key=f"x:{x['board']}:{x.get('slug') or x.get('id')}", boards=[tag], token=False, rev30=None, chg30=None, children=None)
+            meta = next((p for p in protos if p.get("slug") == x.get("slug")), None) if x.get("slug") else None
+            if meta:
+                x.update(url=meta.get("url"), twitter=meta.get("twitter"), logo=x.get("logo") or meta.get("logo"), token=has_tok(meta) or bool(meta.get("parentProtocol") and ptok.get(meta["parentProtocol"])))
+            site.append(x)
+        src["site_sources"] = {"ok": True, "n": len(site)}
+    except Exception as e:
+        print("站内板块来源失败：", e)
+        src["site_sources"] = {"ok": False, "err": str(e)[:200]}
+
     # ② 新上架协议
     days = CFG["listings"]["days"]
     cut = now.timestamp() - days * 86400
@@ -260,7 +285,7 @@ def main():
                     "baseline": baseline, "first": metric, "tokenless_at_first": not r.get("token", False),
                     "status": "原始线索", "token_seen": None, "last_seen": today}
             if not baseline:
-                events.append({"type": {"tokenless_rev": "new_rank", "rev_surge": "new_surge", "manual": "manual"}.get(source, "new_listing"), "key": k, "name": r["name"], **metric})
+                events.append({"type": {"tokenless_rev": "new_rank", "rev_surge": "new_surge", "manual": "manual", "new_listing": "new_listing"}.get(source, "site"), "key": k, "name": r["name"], **metric})
         else:
             L[k]["last_seen"] = today
             if source not in L[k]["source"].split("+"):
@@ -271,6 +296,14 @@ def main():
         reg(r, "new_listing", {"tvl": r["tvl"], "category": r["category"], "listed": r["listed"]})
     for r in surge:
         reg(r, "rev_surge", {"rev30": r["rev30"], "chg30": r["chg30"], "category": r["category"], "why": r["why"]})
+    for r in rows + surge + manual:          # 已有的行被板块筛到：台账记首次筛到的日子（只写一次）
+        if r.get("boards") and r["key"] in L and not L[r["key"]].get("board_seen"):
+            L[r["key"]]["board_seen"] = today
+            for t in r["boards"]:
+                if "site:" + t["board"] not in L[r["key"]]["source"].split("+"):
+                    L[r["key"]]["source"] += "+site:" + t["board"]
+    for r in site:
+        reg(r, "site:" + r["board"], {"rule": r["rule"], "fees7": r.get("fees7"), "category": r.get("category")})
     for r in manual:
         reg(r, "manual", {"rev30": r.get("rev30"), "category": r.get("category")})
         if r.get("added") and r["added"] < L[r["key"]]["first_seen"]:
@@ -331,7 +364,7 @@ def main():
     out = {"generated": now.isoformat(timespec="seconds"), "asof": asof, "stale": rev is None,
            "baseline_day": min((v["first_seen"] for v in L.values() if v.get("baseline")), default=today),
            "sources": src, "params": {"min_rev30_usd": tc["min_rev30_usd"], "listing_days": days},
-           "tokenless": rows, "surge": surge, "manual": manual, "listings": lst, "events": events, "feed": feed_recent,
+           "tokenless": rows, "surge": surge, "manual": manual, "site": site, "listings": lst, "events": events, "feed": feed_recent,
            "ledger": {"n": len(L), "tokenless_rev": sum(1 for v in L.values() if "tokenless_rev" in v["source"]),
                       "new_listing": sum(1 for v in L.values() if "new_listing" in v["source"]),
                       "token_seen": sum(1 for v in L.values() if v.get("token_seen")),

@@ -48,6 +48,16 @@ CFG = load(os.path.join(HERE, "alpha_config.json"))
 CAT2BIZ = {c: k for k, cs in FW["category_map"].items() if not k.startswith("_") for c in cs}
 
 
+def SRC_OF(k, L, li):
+    """这张卡是哪些来源发现的（来源台账 alpha/sources.json 的 id）。"""
+    out = []
+    for x in (L.get("source") or "").split("+"):
+        out.append({"tokenless_rev": "llama_tokenless", "rev_surge": "llama_surge", "new_listing": "llama_listing", "manual": "manual"}.get(x, x.replace("site:", "site_")) if x else None)
+    if not out or out == [None]:
+        out = ["llama_listing" if li else "llama_tokenless"]
+    return [x for x in dict.fromkeys(out) if x]
+
+
 def S(v="U", src=None, why=""):
     return {"v": v, "src": src, "why": why}
 
@@ -62,7 +72,7 @@ def build():
         if fn.endswith("_checks.json"):
             for c in load(os.path.join(rd, fn), []) or []:
                 checks[c["key"]] = dict(c, _file=fn)   # 后交的批次覆盖先交的
-    rows = {r["key"]: r for r in latest.get("tokenless", []) + latest.get("surge", []) + latest.get("manual", [])}
+    rows = {r["key"]: r for r in latest.get("tokenless", []) + latest.get("surge", []) + latest.get("manual", []) + latest.get("site", [])}
     manual = {"m:" + m["id"]: m for m in (load(os.path.join(HERE, "manual_leads.json"), {}) or {}).get("leads", [])}
     lst = {r["key"]: r for r in latest.get("listings", [])}
     base = latest.get("baseline_day")
@@ -71,7 +81,8 @@ def build():
 
     keys = list(checks)
     keys += [k for k in manual if k not in checks]                       # 手动线索：登记当天就上看板
-    keys += [k for k, v in leads.items() if k not in checks and k[:2] in ("g:", "s:") and not v.get("baseline") and k in rows]
+    keys += [k for k, v in leads.items() if k not in checks and k[:2] in ("g:", "s:", "x:") and not v.get("baseline") and k in rows]
+    keys += [k for k, r in rows.items() if k not in checks and r.get("boards")]      # 站内板块也筛到的：即使是基线日就在榜上的也出卡
     keys += [k for k, r in lst.items() if k not in checks and (r.get("tvl") or 0) >= min_tvl]
     cards = []
     for k in dict.fromkeys(keys):
@@ -83,7 +94,7 @@ def build():
         cat = r.get("category") or li.get("category") or (L.get("first") or {}).get("category")
         has_token = bool(li.get("token")) or bool(L.get("token_seen")) or bool(r.get("token"))
         mn = manual.get(k) or {}
-        kind = {"g": "tokenless", "s": "surge", "m": "manual"}.get(k[0], "listing")
+        kind = {"g": "tokenless", "s": "surge", "m": "manual", "x": "site"}.get(k[0], "listing")
         # ---- 分类（自动 → 研究覆盖）
         biz = CAT2BIZ.get(cat)
         cls = {"business": S(biz or "U", "auto", f"DefiLlama 类目「{cat}」→ 映射表" if biz else f"类目「{cat}」不在映射表"),
@@ -148,10 +159,12 @@ def build():
         # 历史 rev30（台账每天记的）
         rev_hist = [[h["date"], (h.get("rev30") or {}).get(k)] for h in hist if (h.get("rev30") or {}).get(k) is not None]
         disc = mn.get("added") or L.get("first_seen")
-        fresh = bool(disc and not L.get("baseline") and (dt.date.today() - dt.date.fromisoformat(disc)).days <= 3)
+        if L.get("baseline") and r.get("boards"):
+            disc = (r["boards"][0].get("since") or dt.date.today().isoformat()) if not L.get("board_seen") else L["board_seen"]
+        fresh = bool(disc and (not L.get("baseline") or r.get("boards")) and (dt.date.today() - dt.date.fromisoformat(disc)).days <= 3)
         cards.append({
             "fresh": fresh, "reviewer": (c or {}).get("reviewer") or ("codex" if c else None),
-            "id": ("m-" if k[0] == "m" else "") + k.split(":", 1)[1].replace("parent#", ""), "key": k, "name": name,
+            "id": ("m-" if k[0] == "m" else "x-" if k[0] == "x" else "") + k.split(":", 1)[1].replace("parent#", "").replace(":", "-"), "key": k, "name": name,
             "kind": kind, "why_here": r.get("why"), "manual": {x: mn.get(x) for x in ("what", "by", "sources")} if mn else None,
             "discovered": disc, "baseline": bool(L.get("baseline")),
             "status": status, "status_src": f"alpha/review/{c['_file']}" if c else "auto",
@@ -162,11 +175,16 @@ def build():
                                                       "user_role", "counter", "verdict_reason", "missing", "checked_utc")} if c else None,
             "evidence": [{"url": e.get("url"), "fields": e.get("fields")} for e in (c or {}).get("evidence") or [] if str(e.get("url", "")).startswith("http")]
                         or [{"url": u, "fields": ["手动线索出处"]} for u in mn.get("sources") or []],
-            "data": {"category": cat, "chains": r.get("chains") or li.get("chains"), "rev30": rev30, "chg30": r.get("chg30"), "rev_all": r.get("rev_all"), "llama": mn.get("llama"),
+            "data": {"category": cat, "chains": r.get("chains") or li.get("chains"), "rev30": rev30, "chg30": r.get("chg30"), "rev_all": r.get("rev_all"), "llama": mn.get("llama"), "fees7": r.get("fees7"), "fees30": r.get("fees30"),
+                     "sources": SRC_OF(k, L, li) , "boards": r.get("boards"),
                      "tvl": li.get("tvl"), "listed": li.get("listed"), "slug": r.get("slug") or li.get("slug") or L.get("slug"),
                      "url": home(r.get("url") or li.get("url")), "logo": r.get("logo") or li.get("logo"), "twitter": r.get("twitter") or li.get("twitter"),
                      "children": r.get("children"), "token": has_token, "token_seen": L.get("token_seen"), "rev_hist": rev_hist},
         })
+    for c in cards:
+        for b in c["data"].get("boards") or []:
+            if "site_" + b["board"] not in c["data"]["sources"]:
+                c["data"]["sources"].append("site_" + b["board"])
     order = {"研究观察": 0, "优先研究": 0, "待核验": 1, "原始线索": 2, "拒绝": 3}
     cards.sort(key=lambda x: (order.get(x["status"], 9), -(x["data"]["rev30"] or x["data"]["tvl"] or 0)))
     return {"generated": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"), "asof": latest.get("asof"),
@@ -184,7 +202,7 @@ def series(cards):
         k = c["key"]
         g = c["data"].get("llama") or k[2:]
         slug = g[len("parent#"):] if g.startswith("parent#") else c["data"].get("slug")
-        if not slug or c["kind"] == "listing":
+        if not slug or c["kind"] in ("listing", "site"):
             continue
         try:
             d = get(f"https://api.llama.fi/summary/fees/{slug}?dataType=dailyRevenue")
@@ -239,6 +257,20 @@ def main():
     res["queue_n"] = q["n"]
     json.dump(res, open(os.path.join(OUT, "opps.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     json.dump(q, open(os.path.join(OUT, "research_queue.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    SJ = load(os.path.join(HERE, "sources.json"), {}) or {}
+    st = {}
+    for c in res["opps"]:
+        for sid in c["data"]["sources"]:
+            a = st.setdefault(sid, {"cards": 0, "fresh": 0, "watching": 0, "rejected": 0, "pending": 0, "names": []})
+            a["cards"] += 1
+            a["fresh"] += bool(c["fresh"])
+            a["watching"] += c["status"] in ("研究观察", "优先研究")
+            a["rejected"] += c["status"] == "拒绝"
+            a["pending"] += c["status"] in ("原始线索", "待核验")
+            if c["fresh"] and len(a["names"]) < 6:
+                a["names"].append({"id": c["id"], "name": c["name"]})
+    json.dump({"generated": res["generated"], "note": SJ.get("_说明"), "sources": [dict(s, stats=st.get(s["id"], {"cards": 0, "fresh": 0, "watching": 0, "rejected": 0, "pending": 0, "names": []})) for s in SJ.get("sources", [])]},
+              open(os.path.join(OUT, "sources_stats.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     print("机会卡", len(res["opps"]), res["counts"])
 
 

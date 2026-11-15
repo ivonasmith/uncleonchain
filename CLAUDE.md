@@ -103,6 +103,10 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
   自动规则 v2：D 不再自动打分（只记事实）；母协议有币的新上架未研究前进预警观察；相似度不用自动分（`alpha.js` `analogs`），没有研究分时只列同类目案例、给范围不给中位数。
   投资补充：TM 团队 -1–3（-1 = 有已证实不良记录，`penalty`）；TE 更名「解锁与抛压」（只看流通比例和解锁，不评分配设计）。卡片顶部 `mTile`（创新级别 M）+ `radar`（八维雷达图）。大叔：炒新不炒旧，M 最重要，补证优先查 M。
   案例指标：日期标签按「最近 0 点的前一天」（= 当日收盘），主口径 `mult_p7_365`；估值两种口径都含未解锁份额，流通口径待补（要在 cases.json 手工登记峰值日流通量）。
+  **来源体系（大叔 11-15 定：不天天扫合约，找关键人和关键信息；本站板块的数据自己用；Alpha 自己维护一份来源）**：来源台账 `alpha/sources.json`（type = site / manual / people / data / feed，状态 on / planned / building / paused），
+  战绩 `opps.py` 每天算到 `data/alpha/sources_stats.json`，雷达页最上面 `出网站.alpha_sources_html`。站内板块 `alpha/site_sources.py`（发射台矩阵 lp_new / lp_accel / lp_chain、AI Agent ai_new / ai_spike，参数 `alpha_config.site_sources`；key `x:<板块>:<slug>`，卡片 id `x-…`）；
+  和已有行同一协议时不另开卡，行上记 `boards`，台账记 `board_seen`，基线日就在榜的也出卡。RWA、聪明钱板块上线后在 site_sources.py 各加一个函数并把 sources.json 的状态改 on。
+  关键人名单任务包 `alpha/review/sources_task.md`（S1 Grok 查 X 原帖 → S2 Codex 核对 → 交 `alpha/review/sources_people.json`；入选 = 2 个以上案例有已核实的早期实质帖），并入后每人在 sources.json 单列一行。
   数据管理：原始层（data/alpha 接口原样）→ 清洗层（线索台账、案例指标）→ 应用层（机会卡、周复盘）。每周复盘 `alpha/weekly.py` → `data/alpha/weekly/<周>.json/.md`；Notion 单独的「Alpha 雷达」入口页（大叔：每个板块各自一个入口，不和别的板块混放）。
   云端环境 uncleonchain 11-14 已放行 ethresear.ch、hub.snapshot.org、www.binance.com、api.bybit.com、api-manager.upbit.com；Bybit（CloudFront 按国家拦）、Upbit（Cloudflare 人机验证）实测不通，没接。Binance pageSize 超过 20 会 400。
 - 发射台活动温度（`pipeline/周期观察.py` 数据与热潮识别、`周期仪表盘.py` 展示）：每日更新。序列 = 研究快照 `content/cycle/snapshot.json`（截至 2026-10-17，sha256 在 manifest）+ 之后接 `发射台矩阵.json`「历史」的类目合计；热潮规则重算快照区间 27 轮逐字段对上（对不上会打 ⚠️）。

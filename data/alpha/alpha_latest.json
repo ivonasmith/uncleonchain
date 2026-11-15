@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-15T03:27:19+00:00",
+ "generated": "2026-11-15T03:59:20+00:00",
  "asof": "2026-11-14",
  "stale": false,
  "baseline_day": "2026-11-14",
@@ -11,6 +11,10 @@
   "defillama_revenue": {
    "ok": true,
    "n": 2867
+  },
+  "site_sources": {
+   "ok": true,
+   "n": 3
   },
   "ethresearch": {
    "ok": true,
@@ -377,6 +381,13 @@
    "rev30": 1608735,
    "rev_prev30": 2,
    "chg30": 96911663.9,
+   "boards": [
+    {
+     "board": "aiagent",
+     "rule": "ai_new",
+     "why": "AI Agent 板块：手续费从 2026-10-15 才开始，近 7 天 873,228 美元；板块备注：2026-10 才收录，30 天手续费很快冲到第一，真实需求还是自付刷量待 Codex 核"
+    }
+   ],
    "first_seen": "2026-11-14"
   },
   {
@@ -412,9 +423,9 @@
    "chains": [
     "Off Chain"
    ],
-   "rev30": 1229202,
+   "rev30": 1327301,
    "rev_prev30": 805925,
-   "chg30": 52.5,
+   "chg30": 64.7,
    "first_seen": "2026-11-14"
   },
   {
@@ -536,9 +547,9 @@
     "Ethereum",
     "Solana"
    ],
-   "rev30": 730640,
+   "rev30": 729301,
    "rev_prev30": 732522,
-   "chg30": -0.3,
+   "chg30": -0.4,
    "first_seen": "2026-11-14"
   },
   {
@@ -721,7 +732,7 @@
     "Ethereum",
     "Corn"
    ],
-   "rev30": 551556,
+   "rev30": 551579,
    "rev_prev30": 442586,
    "chg30": 24.6,
    "first_seen": "2026-11-14"
@@ -801,7 +812,7 @@
    "chains": [
     "Aptos"
    ],
-   "rev30": 473787,
+   "rev30": 473918,
    "rev_prev30": 601326,
    "chg30": -21.2,
    "first_seen": "2026-11-14"
@@ -944,7 +955,7 @@
     "Gnosis",
     "Avalanche"
    ],
-   "rev30": 338264,
+   "rev30": 338387,
    "rev_prev30": 307869,
    "chg30": 9.9,
    "first_seen": "2026-11-14"
@@ -1202,7 +1213,7 @@
     "Avalanche",
     "Base"
    ],
-   "rev30": 239541,
+   "rev30": 239547,
    "rev_prev30": 235128,
    "chg30": 1.9,
    "first_seen": "2026-11-14"
@@ -1305,6 +1316,13 @@
    "rev30": 234440,
    "rev_prev30": 0,
    "chg30": null,
+   "boards": [
+    {
+     "board": "launchpad",
+     "rule": "lp_new",
+     "why": "进发射台矩阵 4 天，近 7 天手续费 510,726 美元"
+    }
+   ],
    "first_seen": "2026-11-14"
   },
   {
@@ -1360,9 +1378,9 @@
    "chains": [
     "Canton"
    ],
-   "rev30": 221802,
+   "rev30": 221708,
    "rev_prev30": 250099,
-   "chg30": -11.3,
+   "chg30": -11.4,
    "first_seen": "2026-11-14"
   },
   {
@@ -1400,9 +1418,9 @@
     "Ethereum",
     "BSC"
    ],
-   "rev30": 216040,
+   "rev30": 216133,
    "rev_prev30": 201091,
-   "chg30": 7.4,
+   "chg30": 7.5,
    "first_seen": "2026-11-14"
   },
   {
@@ -2283,7 +2301,14 @@
    "rev_all": 372370,
    "chg30": null,
    "token": true,
-   "why": "young+accel"
+   "why": "young+accel",
+   "boards": [
+    {
+     "board": "launchpad",
+     "rule": "lp_new",
+     "why": "进发射台矩阵 4 天，近 7 天手续费 1,209,417 美元"
+    }
+   ]
   },
   {
    "key": "s:4063",
@@ -2391,7 +2416,14 @@
    "rev_all": 170172,
    "chg30": null,
    "token": true,
-   "why": "young+accel"
+   "why": "young+accel",
+   "boards": [
+    {
+     "board": "launchpad",
+     "rule": "lp_new",
+     "why": "进发射台矩阵 1 天，近 7 天手续费 225,891 美元"
+    }
+   ]
   },
   {
    "key": "s:6771",
@@ -2517,6 +2549,93 @@
    "added": "2026-11-15"
   }
  ],
+ "site": [
+  {
+   "board": "launchpad",
+   "slug": "boxa-v1",
+   "name": "Boxa V1",
+   "chains": [
+    "Elysium"
+   ],
+   "logo": "https://icons.llamao.fi/icons/protocols/boxa-v1",
+   "category": "Launchpad",
+   "fees7": 140989,
+   "fees_prev7": 54667,
+   "fees30": 237261,
+   "parent": "parent#boxa",
+   "asof": "2026-11-14",
+   "rule": "lp_new",
+   "why": "进发射台矩阵 2 天，近 7 天手续费 140,989 美元",
+   "key": "x:launchpad:boxa-v1",
+   "boards": [
+    {
+     "board": "launchpad",
+     "rule": "lp_new",
+     "why": "进发射台矩阵 2 天，近 7 天手续费 140,989 美元"
+    }
+   ],
+   "token": false,
+   "rev30": null,
+   "chg30": null,
+   "children": null,
+   "url": "",
+   "twitter": "Boxa_Elysium"
+  },
+  {
+   "board": "launchpad",
+   "slug": null,
+   "id": "chain-elysium",
+   "name": "Elysium 生态（新发射台聚集）",
+   "chains": [
+    "Elysium"
+   ],
+   "category": "新链生态",
+   "rule": "lp_chain",
+   "fees7": 2160872,
+   "fees30": null,
+   "asof": "2026-11-14",
+   "why": "30 天内 Elysium 上新进矩阵的发射台有 11 个：Montra、Ascend Launchpad、Volta、Boxa V1、ElysPump V2、Kleos Launchpad；合计近 7 天手续费 2,160,872 美元",
+   "key": "x:launchpad:chain-elysium",
+   "boards": [
+    {
+     "board": "launchpad",
+     "rule": "lp_chain",
+     "why": "30 天内 Elysium 上新进矩阵的发射台有 11 个：Montra、Ascend Launchpad、Volta、Boxa V1、ElysPump V2、Kleos Launchpad；合计近 7 天手续费 2,160,872 美元"
+    }
+   ],
+   "token": false,
+   "rev30": null,
+   "chg30": null,
+   "children": null
+  },
+  {
+   "board": "aiagent",
+   "slug": "bankr",
+   "name": "Bankr",
+   "chains": null,
+   "category": "AI Agents · launch",
+   "rule": "ai_spike",
+   "fees7": null,
+   "fees30": null,
+   "asof": "2026-11-13",
+   "why": "AI Agent 板块标了异常：单日手续费占近 30 天的 52%",
+   "key": "x:aiagent:bankr",
+   "boards": [
+    {
+     "board": "aiagent",
+     "rule": "ai_spike",
+     "why": "AI Agent 板块标了异常：单日手续费占近 30 天的 52%"
+    }
+   ],
+   "token": true,
+   "rev30": null,
+   "chg30": null,
+   "children": null,
+   "url": "https://bankr.bot/terminal",
+   "twitter": "bankrbot",
+   "logo": "https://icons.llamao.fi/icons/protocols/bankr"
+  }
+ ],
  "listings": [
   {
    "key": "p:9438",
@@ -2545,7 +2664,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 561664,
+   "tvl": 561662,
    "listed": "2026-11-14",
    "token": false,
    "parent": "parent#drakewell"
@@ -2577,7 +2696,7 @@
    "chains": [
     "Robinhood Chain"
    ],
-   "tvl": 4862,
+   "tvl": 4867,
    "listed": "2026-11-14",
    "token": false,
    "parent": null
@@ -2749,7 +2868,7 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 6692,
+   "tvl": 7202,
    "listed": "2026-11-13",
    "token": false,
    "parent": null
@@ -2765,7 +2884,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 1529,
+   "tvl": 1545,
    "listed": "2026-11-13",
    "token": false,
    "parent": null
@@ -2837,7 +2956,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 6648383,
+   "tvl": 6695645,
    "listed": "2026-11-12",
    "token": false,
    "parent": null
@@ -2855,7 +2974,7 @@
     "Base",
     "Berachain"
    ],
-   "tvl": 197879,
+   "tvl": 194346,
    "listed": "2026-11-12",
    "token": false,
    "parent": null
@@ -2903,7 +3022,7 @@
    "chains": [
     "Binance"
    ],
-   "tvl": 47529,
+   "tvl": 47523,
    "listed": "2026-11-12",
    "token": false,
    "parent": null
@@ -3054,7 +3173,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 3430161,
+   "tvl": 3462942,
    "listed": "2026-11-11",
    "token": false,
    "parent": null
@@ -3070,7 +3189,7 @@
    "chains": [
     "Solana"
    ],
-   "tvl": 1707445,
+   "tvl": 1707828,
    "listed": "2026-11-11",
    "token": true,
    "parent": "parent#jupiter"
@@ -3102,7 +3221,7 @@
    "chains": [
     "Sui"
    ],
-   "tvl": 13020,
+   "tvl": 13291,
    "listed": "2026-11-11",
    "token": false,
    "parent": null
@@ -3375,7 +3494,7 @@
    "chains": [
     "Soneium"
    ],
-   "tvl": 624791,
+   "tvl": 624657,
    "listed": "2026-11-10",
    "token": false,
    "parent": null
@@ -3391,7 +3510,7 @@
    "chains": [
     "Hyperliquid L1"
    ],
-   "tvl": 145370,
+   "tvl": 140677,
    "listed": "2026-11-10",
    "token": false,
    "parent": null
@@ -3407,7 +3526,7 @@
    "chains": [
     "Arc"
    ],
-   "tvl": 14533,
+   "tvl": 14788,
    "listed": "2026-11-10",
    "token": false,
    "parent": null
@@ -3423,7 +3542,7 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 13454,
+   "tvl": 14038,
    "listed": "2026-11-10",
    "token": false,
    "parent": "parent#kalos"
@@ -3439,7 +3558,7 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 1906,
+   "tvl": 2002,
    "listed": "2026-11-10",
    "token": false,
    "parent": "parent#kalos"
@@ -3557,7 +3676,7 @@
    "chains": [
     "Hyperliquid L1"
    ],
-   "tvl": 48951389,
+   "tvl": 49233919,
    "listed": "2026-11-09",
    "token": true,
    "parent": "parent#kinetiq"
@@ -3573,7 +3692,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 8372,
+   "tvl": 8830,
    "listed": "2026-11-09",
    "token": true,
    "parent": null
@@ -3589,7 +3708,7 @@
    "chains": [
     "Solana"
    ],
-   "tvl": 6321,
+   "tvl": 6315,
    "listed": "2026-11-09",
    "token": true,
    "parent": null
@@ -3605,7 +3724,7 @@
    "chains": [
     "Binance"
    ],
-   "tvl": 1181,
+   "tvl": 1053,
    "listed": "2026-11-09",
    "token": false,
    "parent": null
@@ -3751,7 +3870,7 @@
     "Arbitrum",
     "Base"
    ],
-   "tvl": 114812,
+   "tvl": 117318,
    "listed": "2026-11-08",
    "token": false,
    "parent": "parent#bitty"
@@ -3767,7 +3886,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 8328174,
+   "tvl": 8334001,
    "listed": "2026-11-07",
    "token": true,
    "parent": "parent#vesper"
@@ -3783,7 +3902,7 @@
    "chains": [
     "Anubis"
    ],
-   "tvl": 307626,
+   "tvl": 307808,
    "listed": "2026-11-07",
    "token": false,
    "parent": "parent#rocketswap-anubis"
@@ -3799,7 +3918,7 @@
    "chains": [
     "Hemi"
    ],
-   "tvl": 534,
+   "tvl": 535,
    "listed": "2026-11-07",
    "token": false,
    "parent": null
@@ -3991,7 +4110,7 @@
    "chains": [
     "Hyperliquid L1"
    ],
-   "tvl": 19454,
+   "tvl": 19462,
    "listed": "2026-11-05",
    "token": false,
    "parent": null
@@ -4007,7 +4126,7 @@
    "chains": [
     "Robinhood Chain"
    ],
-   "tvl": 14598,
+   "tvl": 14549,
    "listed": "2026-11-05",
    "token": true,
    "parent": "parent#glazecorp"
@@ -4023,7 +4142,7 @@
    "chains": [
     "Base"
    ],
-   "tvl": 3407,
+   "tvl": 3601,
    "listed": "2026-11-05",
    "token": false,
    "parent": null
@@ -4037,11 +4156,11 @@
    "logo": "https://icons.llamao.fi/icons/protocols/ignite-dex",
    "twitter": "LITHOFoundation",
    "chains": [
-    "Solana",
     "Ethereum",
+    "Solana",
     "Binance"
    ],
-   "tvl": 134,
+   "tvl": 113,
    "listed": "2026-11-05",
    "token": false,
    "parent": null
@@ -4103,7 +4222,7 @@
     "Avalanche",
     "Arbitrum"
    ],
-   "tvl": 1693233,
+   "tvl": 1740627,
    "listed": "2026-11-04",
    "token": true,
    "parent": "parent#dexalot"
@@ -4121,7 +4240,7 @@
     "Base",
     "Arbitrum"
    ],
-   "tvl": 845798,
+   "tvl": 864623,
    "listed": "2026-11-04",
    "token": false,
    "parent": "parent#privacy-pools"
@@ -4137,7 +4256,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 801385,
+   "tvl": 801373,
    "listed": "2026-11-04",
    "token": false,
    "parent": null
@@ -4170,7 +4289,7 @@
     "Base",
     "Arbitrum"
    ],
-   "tvl": 18629,
+   "tvl": 18644,
    "listed": "2026-11-04",
    "token": false,
    "parent": null
@@ -4240,7 +4359,7 @@
     "Solana",
     "Arc"
    ],
-   "tvl": 160,
+   "tvl": 169,
    "listed": "2026-11-04",
    "token": true,
    "parent": null
@@ -4362,7 +4481,7 @@
    "chains": [
     "SASEUL"
    ],
-   "tvl": 18171,
+   "tvl": 18143,
    "listed": "2026-11-03",
    "token": false,
    "parent": null
@@ -5120,7 +5239,7 @@
   }
  ],
  "ledger": {
-  "n": 277,
+  "n": 280,
   "tokenless_rev": 105,
   "new_listing": 155,
   "token_seen": 0,

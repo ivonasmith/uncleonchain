@@ -3948,7 +3948,7 @@ def write_alpha_data():
     G["OPPS"] = load(os.path.join(src, "opps.json"))
     out = os.path.join(SITE, "data", "alpha")
     os.makedirs(out, exist_ok=True)
-    for fn in ("alpha_latest.json", "alpha_history.json", "alpha_leads.json", "opps.json", "opp_series.json", "research_queue.json", "case_metrics.json", "case_series.json"):
+    for fn in ("alpha_latest.json", "alpha_history.json", "alpha_leads.json", "opps.json", "opp_series.json", "research_queue.json", "case_metrics.json", "case_series.json", "sources_stats.json"):
         if os.path.exists(os.path.join(src, fn)):
             shutil.copyfile(os.path.join(src, fn), os.path.join(out, fn))
     for fn in ("framework.json", "cases.json"):   # 框架与案例定义在 alpha/（单一来源），网页按同一份读
@@ -4023,6 +4023,32 @@ def alpha_pool():
 
 
 ALPHA_FEED_SRC = {"ethresearch": ("研究论坛", "Research forum", "ethresear.ch"), "snapshot": ("治理提案", "Governance", "Snapshot"), "binance": ("上所公告", "Listing", "Binance")}
+
+
+def alpha_sources_html():
+    """来源台账 + 战绩（data/alpha/sources_stats.json，opps.py 每天算）。放雷达页最上面：先看线索从哪来、哪个来源靠谱。"""
+    J = load_json(os.path.join(DATA, "alpha", "sources_stats.json"), None) if "load_json" in globals() else None
+    if J is None:
+        try:
+            J = json.load(open(os.path.join(DATA, "alpha", "sources_stats.json"), encoding="utf-8"))
+        except Exception:
+            return ""
+    TY = {"site": T("本站板块", "Site board"), "manual": T("手动", "Manual"), "people": T("关键人", "Key people"), "data": T("数据兜底", "Data backstop"), "feed": T("事件流", "Feed")}
+    ST = {"on": (T("在用", "on"), "up"), "planned": (T("待接入", "planned"), "neutral"), "building": (T("在建", "building"), "warn"), "paused": (T("已降级", "paused"), "dn")}
+    rows = ""
+    for x in J.get("sources", []):
+        st, n = x["stats"], x["stats"]["cards"]
+        lab, tone = ST.get(x["status"], (x["status"], "neutral"))
+        nm = T(x["name"], x.get("name_en") or x["name"])
+        nm = f'<a href="{U(x["href"])}">{esc(nm)}</a>' if x.get("href") else esc(nm)
+        names = " · ".join(f'<a href="{U("/alpha/")}#{esc(c["id"])}">{esc(c["name"])}</a>' for c in st.get("names") or [])
+        rows += (f'<tr><td class="l"><b>{nm}</b><div class="small muted">{esc(T(x["what"], x["what"]))}</div></td><td class="l">{esc(TY.get(x["type"], x["type"]))}</td>'
+                 f'<td class="l"><span class="chip t-{tone}"><i></i>{esc(lab)}</span></td><td>{n if x["status"] == "on" else "—"}</td><td>{st["fresh"] or "—"}</td>'
+                 f'<td>{st["watching"] or "—"}</td><td>{st["rejected"] or "—"}</td><td class="l small">{names or "—"}</td></tr>')
+    return (f'<h2>{T("线索从哪来", "Where leads come from")} <span class="sub">{T("来源台账：关键人和本站板块为主，数据榜单兜底；每个来源记战绩", "Source ledger: key people and site boards first, data lists as backstop")}</span></h2>'
+            f'<div class="tw scroll"><table><thead><tr><th style="text-align:left">{T("来源", "Source")}</th><th style="text-align:left">{T("类型", "Type")}</th><th style="text-align:left">{T("状态", "Status")}</th>'
+            f'<th>{T("在看板的卡", "Cards")}</th><th>{T("3 天内新发现", "New, 3d")}</th><th>{T("进了研究观察", "Under research")}</th><th>{T("被拒", "Rejected")}</th><th style="text-align:left">{T("最近带来的", "Recent")}</th></tr></thead><tbody>{rows}</tbody></table></div>'
+            f'<p class="tnote">{T("战绩才开始记（11-15 起），要攒几周才有意义。连续三个月没有有效发现的来源降级，不删。关键人名单在建：从历史案例倒推当时谁最早公开讲过。", "Track records start 2026-11-15 and need weeks to mean anything. Sources with no useful finds for three months are paused, not deleted.")}</p>')
 
 
 def alpha_feed_html(d):
@@ -4202,7 +4228,7 @@ def build_alpha():
             for r in d.get("listings") or [])
         lg = d.get("ledger") or {}
         src_ok = all(v.get("ok") for v in (d.get("sources") or {}).values())
-        radar = (evh
+        radar = (alpha_sources_html() + evh
                  + f'<h2>{T("没发币、有收入的协议", "Tokenless protocols with revenue")} <span class="sub">{T("近 30 天协议收入 ≥ 10 万美元，按母协议合并", "30d protocol revenue ≥ $100K, merged by parent")} · {len(d.get("tokenless") or [])}</span></h2>'
                  + f'<p class="tnote">{T("「没发币」= DefiLlama 上本协议和母协议都没登记代币，不等于确认不发币，也不等于会空投。已剔除稳定币发行方、交易所、CeDeFi、区块构建者和传统金融产品。环比 = 近 30 天 ÷ 前 30 天 − 1。", "“Tokenless” = no token registered on DefiLlama for the protocol or its parent; not a confirmation of no token, nor of an airdrop. Stablecoin issuers, CEXs, CeDeFi, block builders and TradFi products excluded. Change = last 30d ÷ prior 30d − 1.")}</p>'
                  + f'<div class="tw scroll"><table><thead><tr><th>#</th><th style="text-align:left">{T("协议", "Protocol")}</th><th style="text-align:left">{T("类目", "Category")}</th><th style="text-align:left">{T("主要链", "Chains")}</th><th>{T("30 天收入", "30d revenue")}</th><th>{T("环比", "Change")}</th><th>{T("首次进榜", "First seen")}</th><th style="text-align:left">{T("机会卡", "Card")}</th></tr></thead><tbody>{trs}</tbody></table></div>'

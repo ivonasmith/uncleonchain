@@ -199,3 +199,9 @@
 .mtag{font-style:normal;font-size:10.5px;padding:1px 5px;border:1px solid var(--line2);border-radius:4px;margin-right:6px;color:var(--muted)}
 .mtag.k{color:var(--ink);border-color:var(--cool)}
 @media (max-width:760px){.ax-radar{grid-template-columns:1fr}.ax-radar svg{max-width:300px;margin:0 auto;display:block}}
+
+/* 来源标签（11-15） */
+.ax-src{margin:8px 0 2px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.srcchip{font-size:11.5px;padding:2px 8px;border:1px solid var(--line2);border-radius:999px;color:var(--ink2)}
+.srcchip.own{border-color:var(--lime-ink);color:var(--lime-ink)}
+.mtag.own{color:var(--lime-ink);border-color:var(--lime-ink)}

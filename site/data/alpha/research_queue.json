@@ -1,6 +1,6 @@
 {
- "generated": "2026-11-15T03:27:50+00:00",
- "n": 39,
+ "generated": "2026-11-15T06:02:05+00:00",
+ "n": 43,
  "prompt": "你在给「链上大叔研究台」Alpha 雷达补证（只研究正规项目，不写买卖建议）。对清单里每个协议，查官方网站 / 文档 / 公告、DefiLlama 方法论和可核对的链上信息，\n按下面格式交一个 JSON 数组（文件名 <日期>_checks.json）。第一项 one_liner 用一句大白话说清它是什么（给没听过的人看）。每条事实带来源链接和核对日期；查不到写 \"U\"，不要估，不要编。\n结论 verdict 只能是：研究观察（对象明确、有可证伪假设、没查到否决项）/ 待核验（关键事实缺失或冲突，写清缺什么）/ 拒绝（身份错误、已确认风险、其实已有代币、不是对普通人开放的正规项目，写证据）。\n分数按 framework.json 附录一锚点给（M A F E G T D 是 0–4；TM 是 -1–3，有已证实不良记录给 -1；TE 是 0–3；不知道写 U，没有代币时 TE 写 NA）。M（新参与机制：这个玩法新在哪）优先查，每个分数写 why 和 src。\n资金参与方式 entry 从 buy / stake / points / use / presale / mine / none 里选（none = 暂时没有资金入口），写 entry_why。",
  "schema": {
   "key": "清单里的 key（原样）",
@@ -578,6 +578,155 @@
    "missing_before": []
   },
   {
+   "key": "x:aiagent:bankr",
+   "name": "Bankr",
+   "status": "原始线索",
+   "kind": "site",
+   "fresh": true,
+   "bucket": "invest",
+   "discovered": "2026-11-15",
+   "category": "AI Agents · launch",
+   "chains": null,
+   "rev30": null,
+   "tvl": null,
+   "defillama": "https://defillama.com/protocol/bankr",
+   "manual": null,
+   "pending": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "TE"
+   ],
+   "missing_before": []
+  },
+  {
+   "key": "g:9381",
+   "name": "Ascend Launchpad",
+   "status": "原始线索",
+   "kind": "tokenless",
+   "fresh": true,
+   "bucket": "watch",
+   "discovered": "2026-11-15",
+   "category": "Launchpad",
+   "chains": [
+    "Elysium"
+   ],
+   "rev30": 234440,
+   "tvl": null,
+   "defillama": "https://defillama.com/protocol/ascend-launchpad",
+   "manual": null,
+   "pending": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM"
+   ],
+   "missing_before": []
+  },
+  {
+   "key": "x:launchpad:boxa-v1",
+   "name": "Boxa V1",
+   "status": "原始线索",
+   "kind": "site",
+   "fresh": true,
+   "bucket": "watch",
+   "discovered": "2026-11-15",
+   "category": "Launchpad",
+   "chains": [
+    "Elysium"
+   ],
+   "rev30": null,
+   "tvl": null,
+   "defillama": "https://defillama.com/protocol/boxa-v1",
+   "manual": null,
+   "pending": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM"
+   ],
+   "missing_before": []
+  },
+  {
+   "key": "x:launchpad:chain-elysium",
+   "name": "Elysium 生态（新发射台聚集）",
+   "status": "原始线索",
+   "kind": "site",
+   "fresh": true,
+   "bucket": "watch",
+   "discovered": "2026-11-15",
+   "category": "新链生态",
+   "chains": [
+    "Elysium"
+   ],
+   "rev30": null,
+   "tvl": null,
+   "defillama": null,
+   "manual": null,
+   "pending": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM"
+   ],
+   "missing_before": []
+  },
+  {
+   "key": "g:9146",
+   "name": "Central City",
+   "status": "待核验",
+   "kind": "tokenless",
+   "fresh": true,
+   "bucket": "watch",
+   "discovered": "2026-11-15",
+   "category": "AI Agents",
+   "chains": [
+    "Base",
+    "Arc"
+   ],
+   "rev30": 1608735,
+   "tvl": null,
+   "defillama": "https://defillama.com/protocol/central-city",
+   "manual": null,
+   "pending": [
+    "M",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM"
+   ],
+   "missing_before": [
+    "独立关联地址/自成交及去补贴留存审计未完成。",
+    "未独立重放全部费用与支付，适配器方法可能更新。",
+    "当前官方自身 token/积分/空投立场及适用日期 U。",
+    "官方原始表态日期 U，不用页面读取日期代替。"
+   ]
+  },
+  {
    "key": "g:8144",
    "name": "Catapult Trade",
    "status": "待核验",
@@ -622,7 +771,7 @@
     "Hyperliquid L1"
    ],
    "rev30": null,
-   "tvl": 48951389,
+   "tvl": 49233919,
    "defillama": "https://defillama.com/protocol/kinetiq-elysium-bridge",
    "manual": null,
    "pending": [
@@ -684,7 +833,7 @@
     "Ethereum"
    ],
    "rev30": null,
-   "tvl": 8328174,
+   "tvl": 8334001,
    "defillama": "https://defillama.com/protocol/vesper-v2",
    "manual": null,
    "pending": [
@@ -714,7 +863,7 @@
     "Ethereum"
    ],
    "rev30": null,
-   "tvl": 6648383,
+   "tvl": 6695645,
    "defillama": "https://defillama.com/protocol/swan-dao",
    "manual": null,
    "pending": [
@@ -971,40 +1120,6 @@
    ]
   },
   {
-   "key": "g:9146",
-   "name": "Central City",
-   "status": "待核验",
-   "kind": "tokenless",
-   "fresh": false,
-   "bucket": "watch",
-   "discovered": "2026-11-14",
-   "category": "AI Agents",
-   "chains": [
-    "Base",
-    "Arc"
-   ],
-   "rev30": 1608735,
-   "tvl": null,
-   "defillama": "https://defillama.com/protocol/central-city",
-   "manual": null,
-   "pending": [
-    "M",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM"
-   ],
-   "missing_before": [
-    "独立关联地址/自成交及去补贴留存审计未完成。",
-    "未独立重放全部费用与支付，适配器方法可能更新。",
-    "当前官方自身 token/积分/空投立场及适用日期 U。",
-    "官方原始表态日期 U，不用页面读取日期代替。"
-   ]
-  },
-  {
    "key": "g:7016",
    "name": "Antarctic",
    "status": "待核验",
@@ -1049,7 +1164,7 @@
    "chains": [
     "Off Chain"
    ],
-   "rev30": 1229202,
+   "rev30": 1327301,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/xox-perps",
    "manual": null,
