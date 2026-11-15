@@ -127,6 +127,7 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
   卡片头部（大叔 11-15 定：常规信息最小展示，数字下划线、悬停解释）：`factLine`（上线 / 币天数 / 市值 / 24h 量 / 涨跌，用站点 `.term` 悬停）、参与方式依据和来源 / 补证都进悬停；K 线链接 `klineLink` 放在官网 / X 那排，顺序 币安 → CMC（`alpha/cmc_slugs.json`，Codex 核对后登记，不猜）→ DexScreener → CoinGecko。
   **11-15 卡片改版（Codex 审阅 + 大叔点头）**：每张卡回答 量从哪来 / 量是不是真的 / 激励后还剩多少。`alpha/money.py`（opps 调用）写 `data.money`（DefiLlama summary dexs→derivatives 成交、fees / revenue / holders、take、share7、上线 < 30 天 short_history）和 `data.lpq`（发射台板块 `data/onchain/平台质量.json`）；
   前端 `moneyBlock` / `flowTile` / `qualityBox` / `eventsBlock`，研究字段 `flow`（airdrop / newchain / subsidy / organic）、`events`、`capture`、`next_review`（补证格式已加）。分栏 invest 显示名「有参与入口」（不代表研究过）；历史对照默认收起；雷达页搜索 / 只看出卡 / 折叠，台账 `by_source` 写口径。
+  协议独立页（11-16，SEO 规范实体路径）：`出网站.alpha_entity_pages` 给有 money 或 research 的卡出 `/alpha/<slug>/`（`alpha_entity_slug`：DefiLlama slug 优先，否则卡片 id；kind=dataset，读数全写进 HTML）；看板静态兜底的链接指向它，交互卡链接排有「单页」。
   **补证主力 = Codex（大叔 11-15 定，Grok 贵）**：`alpha_config.grok.enabled = false`，Codex 每天按 research_queue 交 `alpha/review/codex_<日期>_checks.json`（AGENTS.md 第 4 节任务 1）。
   补证合并顺序：`grok_*` 先读，Codex / 人工的盖过它（opps / alpha_daily / 出网站三处同一规则）；Grok 跳过 Codex 30 天内核过的。Codex 协作说明在根目录 `AGENTS.md`，需要配合的事记 `docs/协作记录.md`。
   数据管理：原始层（data/alpha 接口原样）→ 清洗层（线索台账、案例指标）→ 应用层（机会卡、周复盘）。每周复盘 `alpha/weekly.py` → `data/alpha/weekly/<周>.json/.md`；Notion 单独的「Alpha 雷达」入口页（大叔：每个板块各自一个入口，不和别的板块混放）。

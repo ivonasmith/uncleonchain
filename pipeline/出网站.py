@@ -4215,6 +4215,85 @@ def alpha_feed_html(d):
             + f'<p class="tnote">{T("来源状态", "Source status")}：{health}</p>')
 
 
+ALPHA_RESERVED = {"radar", "cases", "framework", "eval", "progress", "method", "pool", "opp"}
+
+
+def alpha_entity_slug(c):
+    """机会卡的独立页面路径 /alpha/<slug>/（SEO 规范：实体要有真实路径）。只有有实质读数的才出页（成交 / 收入读数或研究补证），薄页不出。"""
+    d = c["data"]
+    if c.get("bucket") == "reject" or not (d.get("money") or c.get("research")):
+        return None
+    sl = re.sub(r"[^a-z0-9.-]+", "-", str(d.get("slug") or c["id"]).lower()).strip("-")
+    return None if not sl or sl in ALPHA_RESERVED else sl
+
+
+def alpha_entity_pages(css):
+    """每张有实质读数的机会卡出一个静态页：读数全部写进 HTML（不靠 JS），交互版链回看板。只摆状态和读数，不写动作（docs/表达规范.md）。"""
+    O = G.get("OPPS") or {}
+    FWj = load(os.path.join(ROOT, "alpha", "framework.json")) or {}
+    EN_ = {o["k"]: o["name"] for o in FWj.get("entry", {}).get("opts", [])}
+    FLOW = [("airdrop", T("积分 / 空投", "Points / airdrop")), ("newchain", T("新链首发", "New-chain launch")), ("subsidy", T("返佣 / 补贴", "Rebates / subsidy")), ("organic", T("自然需求", "Organic demand"))]
+    seen, n = set(), 0
+    for c in O.get("opps") or []:
+        sl = alpha_entity_slug(c)
+        if not sl or sl in seen:
+            continue
+        seen.add(sl)
+        d, R, m, t = c["data"], c.get("research") or {}, c["data"].get("money") or {}, c["data"].get("tok") or {}
+        asof = (O.get("asof") or "")
+        u = lambda v: a_usd(v) if v is not None else "—"
+        rows = []
+        if (m.get("vol") or {}).get("total30d") is not None:
+            v = m["vol"]
+            rows.append((T("成交 24 小时 / 7 天 / 30 天", "Volume 24h / 7d / 30d"), f'{u(v.get("total24h"))} · {u(v.get("total7d"))} · {u(v.get("total30d"))}'))
+        if m.get("share7") is not None:
+            rows.append((T("近 7 天占 30 天", "7d share of 30d"), f'{round(m["share7"] * 100)}%'))
+        if m:
+            rows.append((T("30 天费用 / 协议收入 / 持币人收入", "30d fees / revenue / holder revenue"), f'{u((m.get("fees") or {}).get("total30d"))} · {u((m.get("rev") or {}).get("total30d"))} · {u((m.get("hold") or {}).get("total30d"))}'))
+        if m.get("take") is not None:
+            rows.append((T("协议抽成（30 天收入 ÷ 成交）", "Take rate (30d revenue ÷ volume)"), f'{m["take"] * 100:.2f}%'))
+        if d.get("age"):
+            rows.append((T("项目上线", "Project age"), T(f'约 {d["age"]["days"]} 天（从 {d["age"]["since"]}，以{d["age"]["basis"]}为准）', f'~{d["age"]["days"]} days (since {d["age"]["since"]})')))
+        if t:
+            sn = t.get("snap") or {}
+            rows.append((T("代币", "Token"), esc(t.get("sym") or "") + (T(f' · 上线约 {t["days"]} 天', f' · ~{t["days"]}d') if t.get("days") is not None else "")
+                         + (T(f' · 市值 {u(sn.get("mcap"))}（DexScreener 日更快照）', f' · mcap {u(sn.get("mcap"))}') if sn.get("mcap") is not None else "")))
+        ent = "、".join(EN_.get(e, e) for e in c.get("entry") or [])
+        rows.append((T("资金参与方式", "How capital takes part"), esc(ent) + (f' <span class="muted">（{esc(c.get("entry_why") or "")}）</span>' if c.get("entry_why") else "")))
+        tb = "".join(f'<tr><td class="l" style="white-space:nowrap">{k}</td><td class="l" style="white-space:normal">{v}</td></tr>' for k, v in rows)
+        fl = R.get("flow") or {}
+        flh = ("<h2>" + T("量从哪来", "Where volume comes from") + '</h2><div class="tw"><table><tbody>' + "".join(
+            f'<tr><td class="l">{nm}</td><td class="l"><b>{esc((fl.get(k) or {}).get("v") or T("待验证", "unverified"))}</b></td><td class="l">{esc((fl.get(k) or {}).get("why") or "")}</td></tr>' for k, nm in FLOW) + "</tbody></table></div>") if fl else ""
+        q = d.get("lpq") or {}
+        sv = q.get("存活") or {}
+        qh = ("<h2>" + T("发射台质量", "Launchpad quality") + '</h2><div class="tw"><table><tbody>'
+              + f'<tr><td class="l">{T("7 天发币", "7d launches")}</td><td class="l">{(q.get("发币") or {}).get("7d") if (q.get("发币") or {}).get("7d") is not None else T("待接入", "n/a")}</td></tr>'
+              + (f'<tr><td class="l">{T("7 天后仍有交易", "Still trading after 7d")}</td><td class="l">{sv.get("7天后仍有交易")} / {sv.get("样本")} {T("个样本", "sampled")}</td></tr>' if sv.get("样本") else "")
+              + "</tbody></table></div>") if q else ""
+        evs = [e for e in (R.get("events") or []) if isinstance(e, dict) and e.get("date")]
+        evh = ("<h2>" + T("关键事件", "Key events") + "</h2><ul>" + "".join(f'<li>{esc(e["date"])} · {esc(e.get("what") or "")}</li>' for e in evs) + "</ul>") if evs else ""
+        txt = lambda k, lab: f"<p><b>{lab}</b>：{esc(R[k])}</p>" if R.get(k) and R[k] != "U" else ""
+        evd = [e for e in c.get("evidence") or [] if e.get("url")]
+        body = (f'<p class="lede keep">{esc(c.get("one_liner") or (str(d.get("category") or "") + " · " + " · ".join(d.get("chains") or [])))}</p>'
+                f'<p><span class="chip t-neutral"><i></i>{esc(c.get("status") or "")}</span> <span class="muted small">{T("数据日", "Data day")} {esc(asof)} · {T("补证", "Research")}：{esc(c.get("reviewer") or T("还没补证", "none yet"))}</span></p>'
+                f'<div class="tw"><table><tbody>{tb}</tbody></table></div>'
+                + flh + qh + evh
+                + ("<h2>" + T("研究记录", "Research notes") + "</h2>" + txt("verdict_reason", T("核心判断", "Core read")) + txt("capture", T("参与者实际能拿到", "What participants get"))
+                   + txt("wash_or_subsidy", T("刷量 / 补贴迹象", "Wash / subsidy")) + txt("counter", T("最大的风险", "Biggest risk")) if R else "")
+                + ("<h2>" + T("证据", "Evidence") + "</h2><ul>" + "".join(f'<li><a href="{esc(e["url"])}" target="_blank" rel="noopener nofollow">{esc(e["url"][:90])}</a></li>' for e in evd[:10]) + "</ul>" if evd else "")
+                + f'<p><a class="pill" href="{U("/alpha/")}#{esc(c["id"])}">{T("打开交互机会卡（评分雷达、走势图、完整拆解）→", "Open the interactive card →")}</a></p>'
+                + f'<p class="tnote">{T("只摆读数和研究过程，不是买卖建议。成交和收入是协议的读数，不等于代币有价值。来源 DefiLlama、DexScreener 和各条证据链接。", "Readings and research notes only, not advice. Sources: DefiLlama, DexScreener and the evidence links.")}</p>')
+        r30 = (m.get("rev") or {}).get("total30d")
+        head = T(f'{c["name"]} 协议读数（30 天协议收入 {u(r30)}，截至 {asof[5:]}）', f'{c["name"]} readings (30d revenue {u(r30)}, as of {asof[5:]})') if r30 is not None else T(f'{c["name"]} 机会卡', f'{c["name"]} card')
+        zh_only = ZH_ONLY if LANG["v"] == "en" else ""
+        emit(f"alpha/{sl}/index.html", f'{head} · {T("Alpha 雷达", "Alpha Radar")} · {T(BRAND, BRAND_EN)}',
+             crumbs([(T("Alpha 雷达", "Alpha Radar"), U("/alpha/")), (c["name"], None)]) + zh_only + f'<h1>{esc(c["name"])}</h1>' + body,
+             active="alpha", desc=T(f'{c["name"]}：成交、费用、协议收入、上线天数、资金参与方式和研究补证记录，每天更新。', f'{c["name"]}: volume, fees, protocol revenue, age, entry routes and research notes, updated daily.'),
+             extra_head=css, kind="dataset")
+        n += 1
+    return n
+
+
 def alpha_board_static():
     """机会看板的静态兜底（SEO 规范 S3）：出网站时把全部机会卡的关键读数写进 HTML，alpha.js 加载后整块换成交互看板。只摆读数，不加判断。"""
     O = G.get("OPPS") or {}
@@ -4230,7 +4309,7 @@ def alpha_board_static():
         t = d.get("tok") or {}
         tok = (esc(t.get("sym") or "") + (T(f' · {t["days"]} 天', f' · {t["days"]}d') if t.get("days") is not None else "")) if t else T("无币", "none")
         ent = "、".join(EN_.get(e, e) for e in c.get("entry") or [] if e != "none") or T("暂无", "none yet")
-        rows += (f'<tr><td class="l"><a href="{U("/alpha/")}#{esc(c["id"])}">{esc(c["name"])}</a></td><td class="l">{esc(c.get("status") or "")}</td><td>{val}</td>'
+        rows += (f'<tr><td class="l"><a href="{U("/alpha/" + alpha_entity_slug(c) + "/") if alpha_entity_slug(c) else U("/alpha/") + "#" + esc(c["id"])}">{esc(c["name"])}</a></td><td class="l">{esc(c.get("status") or "")}</td><td>{val}</td>'
                  f'<td>{age}</td><td>{tok}</td><td class="l">{esc(ent)}</td></tr>')
     return (f'<p class="muted small">{T("数据日", "Data day")} {esc(O.get("asof") or "")} · {T("有参与入口", "Has entry")} {(O.get("counts") or {}).get("invest", 0)} · {T("预警观察", "Watchlist")} {(O.get("counts") or {}).get("watch", 0)}</p>'
             f'<div class="tw"><table><thead><tr><th class="l">{T("机会", "Opportunity")}</th><th class="l">{T("状态", "Status")}</th><th>{T("读数", "Reading")}</th>'
@@ -4431,6 +4510,10 @@ def build_alpha():
     app = lambda mode: f'{zh_only}<div class="ax" id="alpha-app" data-mode="{mode}" data-v="{ver}">{alpha_board_static() if mode == "board" else "<p class=muted>" + T("加载中…", "Loading…") + "</p>"}</div><noscript><p class="muted">{T("这一页需要开启 JavaScript。", "This page needs JavaScript.")}</p></noscript>'
     page_ = lambda rel, p, title, body: emit(rel, T(f"{title} · Alpha 雷达 · {BRAND}", f"{title} · Alpha Radar · {BRAND_EN}"), alpha_head(p) + body, active="alpha", desc=desc, extra_head=css, scripts=js, chart=True)
     page_("alpha/index.html", "", T("机会看板", "Board"), app("board"))
+    try:
+        print(f"  Alpha 协议独立页：{alpha_entity_pages(css)} 个")
+    except Exception as ex:
+        print("  ⚠️ Alpha 协议独立页失败：", str(ex)[:200])
     emit("alpha/opp/index.html", T(f"Alpha 雷达 · {BRAND}", f"Alpha Radar · {BRAND_EN}"),   # 旧的单张机会卡链接 → 看板同一张卡
          f'<p><a href="{U("/alpha/")}">{T("机会卡已并入机会看板 →", "Cards now live on the board →")}</a></p><script>location.replace("{U("/alpha/")}"+location.hash)</script>', active="alpha")
     page_("alpha/radar/index.html", "radar/", T("雷达", "Radar"), radar)

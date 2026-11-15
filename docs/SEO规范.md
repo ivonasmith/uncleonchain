@@ -16,7 +16,7 @@
 |---|---|---|---|
 | S1 | sitemap 是手写清单，漏了 `/core/`、`/rwa/` 及其子页、`/launchpad/cycle/` 等新板块；没有 `lastmod` | 新板块搜索引擎不知道 | ✅ 11-15：`page()` 登记自动生成，带 lastmod（正文指纹变了才更新日期，状态 `site/seo_lastmod.json`） |
 | S2 | 普通页面没有 `rel=canonical`，hreflang 没有 `x-default` | 可能被当重复页 | ✅ 11-15：每页 canonical + x-default；英文 noindex 的页，中文页自动去掉指向它的 hreflang |
-| S3 | 首屏关键内容靠 JS 取数：首页 / 宏观页「涨跌腿」卡片源码里只有「读取中…」，/core/、/alpha/ 由 JS 渲染 | 爬虫看到空壳 | 涨跌腿卡 ✅ 11-15（`出网站.leg_static`）；/core/、/alpha/ 交各自板块窗口 |
+| S3 | 首屏关键内容靠 JS 取数：首页 / 宏观页「涨跌腿」卡片源码里只有「读取中…」，/core/、/alpha/ 由 JS 渲染 | 爬虫看到空壳 | 涨跌腿卡 ✅ 11-15（`出网站.leg_static`）；/alpha/ ✅ 11-16（看板静态兜底 `alpha_board_static` + 协议独立页 `/alpha/<slug>/`）；/core/ 交核心选币窗口 |
 | S4 | /core/ 用 hash 路由（`#coin/UNI`），单币没有独立 URL | 单币页无法被收录 | 待做：交核心选币窗口出 `/core/<币>/` 静态页（传 `kind="dataset"`），hash 路由可保留做页内切换 |
 | S5 | 没有 JSON-LD 结构化数据 | 拿不到富结果 | ✅ 11-15：首页 WebSite、日志 / 复盘 / 报告 / 文章 Article、指标详情 Dataset、其余 WebPage（按路径自动推） |
 | S6 | 首页 / 宏观页 description 用当天结论句（含「不追高、风险预算打七折」） | 搜索摘要像操作建议，且天天变 | ✅ 11-15：首页 / 宏观 / 日志 / 周月复盘改成描述页面内容 |
