@@ -3719,8 +3719,9 @@ def build_platform_pages(matrix, deep_slugs):
 {platform_quality_html(slug)}
 {platform_profile_html(p)}"""
         emit(f'launchpad/platforms/{slug}/index.html', f'{p["名称"]} · {T("发射台", "Launchpad")} · {T(BRAND, BRAND_EN)}', body,
-             active="launchpad", chart=True, desc=T(f'{p["名称"]}：近 7 日手续费 {f_usd(p.get("7日"))}，产品介绍、收费分账、融资与官网入口。',
-                                                   f'{p["名称"]}: 7-day fees {f_usd(p.get("7日"))}; product, fee split, raises and official links.'))
+             active="launchpad", chart=True, updated=p.get("数据日"),
+             desc=T(f'{p["名称"]}：近 7 日手续费 {f_usd(p.get("7日"))}（截至 {p.get("数据日") or ""}），每日手续费走势、发币数与 7 天存活、产品介绍、收费分账、融资与官网入口。',
+                    f'{p["名称"]}: 7-day fees {f_usd(p.get("7日"))} (as of {p.get("数据日") or ""}); daily fees, tokens launched and 7-day survival, product, fee split, raises and official links.'))
 
 
 def _deep_profile(x, matrix):
