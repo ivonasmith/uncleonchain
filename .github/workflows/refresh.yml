@@ -260,9 +260,32 @@ jobs:
         uses: actions/upload-artifact@v4
         with: { name: out-launchpad, path: out-launchpad.tgz, retention-days: 3 }
 
+  lpquality:   # 发射台「量的质量」存活查询（GeckoTerminal 逐币查池子，限速狠）：单独一台机器、额度是满的，限时 20 分钟；读仓库里前几天留的存活样本
+    needs: guard
+    if: needs.guard.outputs.run == 'yes'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+      - uses: actions/setup-python@v5
+        with: { python-version: "${{ env.PY }}" }
+      - name: 平台质量（存活）
+        continue-on-error: true
+        timeout-minutes: 22
+        env:
+          LP_DATA: ${{ github.workspace }}/data
+          SURV_TIME: "1200"
+        run: python3 pipeline/平台质量.py
+      - if: always()
+        run: tar czf out-lpq.tgz data/onchain/平台质量.json data/onchain/平台质量_history.json   # 解包排在 out-launchpad 后面，覆盖它那份
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with: { name: out-lpq, path: out-lpq.tgz, retention-days: 3 }
+
   # ---------------- 汇总：解包 → 宏观 → 解读日志 → 状态 → 出网站 → 推送 ----------------
   publish:
-    needs: [guard, btc, legcore, side, alpha, launchpad]
+    needs: [guard, btc, legcore, side, alpha, launchpad, lpquality]
     if: always() && needs.guard.outputs.run == 'yes'
     runs-on: ubuntu-latest
     timeout-minutes: 45
@@ -292,6 +315,7 @@ jobs:
         run: |
           cd pipeline
           python3 出看板.py || echo "⚠️ 出看板失败"
+          SURV_TIME=0 python3 平台质量.py || echo "⚠️ 平台质量失败"   # 用本次链上数据重算发币数，存活沿用 lpquality 查到的
           python3 拉宏观.py || echo "⚠️ 拉宏观有失败"
           python3 写日志.py || echo "⚠️ 写日志有失败"
           cd ..

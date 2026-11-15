@@ -30,7 +30,9 @@ GT_NET = {"bsc": "bsc", "base": "base", "ethereum": "eth", "arbitrum": "arbitrum
 SURV_DAYS = 7          # 发出后几天查
 SURV_MAX = 20          # 每个平台每批查几个币（GeckoTerminal 逐个币查池子：批量接口不带曲线阶段的池子）
 MCAP_LINE = 100_000
-SURV_TIME = int(os.environ.get("SURV_TIME") or 8 * 60)    # 存活查询每次最多跑 8 分钟（日更这一步限 15 分钟），没查完的明天接着查
+# 存活查询每次最多跑几秒：日更里（前面「拉新台线索」已把 GeckoTerminal 额度用掉）只给 2 分钟；
+# 总调度 refresh.yml 另有一个 lpquality job 用新机器跑 20 分钟；publish 里用 0 只重算发币数。没查完的下次接着查
+SURV_TIME = int(os.environ.get("SURV_TIME", "120"))
 UA = {"User-Agent": "Mozilla/5.0 (launchpad-daily)", "Accept": "application/json"}
 
 
