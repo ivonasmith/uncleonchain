@@ -1,5 +1,19 @@
 [
  {
+  "version": "2026.11.15.7",
+  "date": "2026-11-15",
+  "notify": false,
+  "title_zh": "发射台平台页：量的质量",
+  "title_en": "Launchpad pages: quality of volume",
+  "items": [
+   {
+    "type": "new",
+    "zh": "发射台二级页面加「量的质量」：近 7 日发币数、发币人（下限）、某天发的币 7 天后还有几个在交易 / 几个市值过 10 万美元（逐个币查 GeckoTerminal 的全部池子，含曲线池）；交易者和刷量还没接，显示「待接入」。同一份数据（data/onchain/平台质量.json）给 Alpha 雷达的机会卡读。存活样本 11-15 起每个工厂每天多留 30 个币，之前的批次用每天 3 个样本拼 7 天，页面标明。",
+    "en": "Launchpad platform pages gain a ‘quality of volume’ block: tokens launched (7d), creators (floor), how many tokens from a given day still trade 7 days later and how many top $100k (GeckoTerminal, all pools incl. bonding curves). Traders / wash trading pending. The same file feeds Alpha Radar."
+   }
+  ]
+ },
+ {
   "version": "2026.11.15.6",
   "date": "2026-11-15",
   "notify": false,

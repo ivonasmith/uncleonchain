@@ -2715,7 +2715,7 @@ def oc_chain_list():
     out = []
     d = os.path.join(DATA, "onchain")
     for f in sorted(os.listdir(d)) if os.path.isdir(d) else []:
-        if not f.endswith(".json") or f in ("solana.json", "线索.json", "ai_agent.json", "档案.json", "llama_meta.json", "平台资料.json"):
+        if not f.endswith(".json") or f in ("solana.json", "线索.json", "ai_agent.json", "档案.json", "llama_meta.json", "平台资料.json", "平台AI介绍.json", "平台质量.json", "平台质量_history.json"):
             continue
         db = load(os.path.join(d, f)) or {}
         days = db.get("逐日") or {}
@@ -3517,6 +3517,35 @@ def platform_page_slugs(matrix):
         return set()
 
 
+def platform_quality_html(slug):
+    """量的质量（data/onchain/平台质量.json，发射台板块 → Alpha 接口 2026-11-15）：发币、发币人、存活、交易者；拿不到写「待接入」。"""
+    q = ((load(os.path.join(DATA, "onchain", "平台质量.json")) or {}).get("平台") or {}).get(slug)
+    na = f'<span class="muted">{T("待接入", "pending")}</span>'
+    tpl = lambda k, v, s="": f'<div class="glass hero"><div class="k">{k}</div><div class="v" style="font-size:19px">{v}</div><div class="s">{s}</div></div>'  # noqa: E731
+    head = f'<h3>{T("量的质量", "Quality of volume")}</h3>'
+    if not q:
+        return head + f'<p class="tnote">{T("本站链上扫描还没对上这个平台的发币合约（Solana 平台、或工厂合约还没认出来），这一块暂时没有。", "Our on-chain scan has not matched this platform’s token factory yet (Solana platforms, or factory not identified), so nothing here yet.")}</p>'
+    fb, fr, sv = q.get("发币") or {}, q.get("发币人") or {}, q.get("存活") or {}
+    est = T("（估算）", " (est.)") if fb.get("估算") else ""
+    n = lambda v: f"{v:,}" if isinstance(v, (int, float)) else na  # noqa: E731
+    if sv.get("7天后仍有交易") is not None:
+        s_v = f'{sv["7天后仍有交易"]} / {sv["样本"]}'
+        s_s = T(f'批次 {sv["批次"]}；市值过 10 万美元 {sv["市值过10万美元"]} 个', f'batch {sv["批次"]}; {sv["市值过10万美元"]} above $100k mcap')
+    else:
+        s_v, s_s = na, T("攒样本中：某天发的币 7 天后才查", "collecting: checked 7 days after launch")
+    k = (tpl(T("近 7 日发币", "Tokens launched (7d)"), n(fb.get("7d")) + est, T(f'最近一天 {n(fb.get("1d"))} · {esc(q.get("数据日") or "")}', f'last day {n(fb.get("1d"))} · {esc(q.get("数据日") or "")}'))
+         + tpl(T("发币人（下限）", "Creators (floor)"), n(fr.get("7d")), T("7 天里单日最多的一天", "busiest day in 7d"))
+         + tpl(T("7 天后还在交易", "Still trading after 7d"), s_v, s_s)
+         + tpl(T("交易者 / 刷量", "Traders / wash"), na, T("要逐笔扫交易，还没接", "needs per-trade scan")))
+    ev = q.get("事件") or []
+    evh = ""
+    if ev:
+        evh = '<ul class="pm">' + "".join(f'<li><b>{esc(e.get("日期") or "")}</b> {esc(e.get("事") or "")} <a href="{esc(e.get("出处") or "")}" target="_blank" rel="noopener">{T("出处", "source")}</a></li>' for e in ev) + "</ul>"
+    note = T(f'口径：发币 = {esc(fb.get("口径") or "")}；存活 = {esc(sv.get("口径") or "")}。数据同时供 Alpha 雷达读取。',
+             f'Method: launches = factory mints of round-supply tokens on our own node scan (floor{", sampled and scaled" if fb.get("估算") else ""}); survival = sampled tokens checked on GeckoTerminal 7–8 days later (floor). Also read by Alpha Radar.')
+    return head + f'<div class="grid g4">{k}</div>{evh}<p class="tnote">{note}</p>'
+
+
 def platform_links_html(p, info):
     url = info.get("官网") or None
     x = info.get("X") or info.get("官网X")
@@ -3685,6 +3714,7 @@ def build_platform_pages(matrix, deep_slugs):
 {platform_links_html(p, info)}
 <div class="grid g5">{k}</div>
 {chart}{cb}
+{platform_quality_html(slug)}
 {platform_profile_html(p)}"""
         emit(f'launchpad/platforms/{slug}/index.html', f'{p["名称"]} · {T("发射台", "Launchpad")} · {T(BRAND, BRAND_EN)}', body,
              active="launchpad", chart=True, desc=T(f'{p["名称"]}：近 7 日手续费 {f_usd(p.get("7日"))}，产品介绍、收费分账、融资与官网入口。',
@@ -3744,7 +3774,7 @@ def build_launchpad_platforms(sd, matrix=None):
 {_deep_links(x, matrix)}
 <div class="grid g5">{k}</div>
 <div class="card" style="padding:14px 18px;margin-top:14px"><h3 style="margin-top:0">{T("手续费 / 协议收入", "Fees / revenue")}</h3>{chart}</div>
-{vb}{_deep_profile(x, matrix)}"""
+{vb}{platform_quality_html(x["slug"])}{_deep_profile(x, matrix)}"""
         emit(f'launchpad/platforms/{x["slug"]}/index.html', f'{x["名称"]} · {T("发射台", "Launchpad")} · {T(BRAND, BRAND_EN)}', body,
              active="launchpad", chart=True)
     for z in (sd.get("Arc") or {}).get("发射台", []):

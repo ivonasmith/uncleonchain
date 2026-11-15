@@ -440,7 +440,7 @@ def enrich(clues, end, sol):
     """给候选补身份：链上工厂近 7 天新币 ≥ 30 的、Solana 前端成交额前列的。每个候选只查一次（结果缓存 14 天）。"""
     ids = clues.setdefault("身份", {})
     todo = []
-    chains = sorted(f[:-5] for f in os.listdir(OUT) if f.endswith(".json") and f not in ("solana.json", "线索.json", "ai_agent.json", "档案.json", "llama_meta.json", "平台资料.json"))
+    chains = sorted(f[:-5] for f in os.listdir(OUT) if f.endswith(".json") and f not in ("solana.json", "线索.json", "ai_agent.json", "档案.json", "llama_meta.json", "平台资料.json", "平台AI介绍.json", "平台质量.json", "平台质量_history.json"))
     for chain in chains:
         p = os.path.join(OUT, f"{chain}.json")
         if not os.path.exists(p):

@@ -54,6 +54,7 @@ def main():
     step("拉链上新台.py", timeout=45 * 60)   # 链上自动发现新发射台（Robinhood / BSC / Base / Arc）；挂了只缺这一块
     step("拉新台线索.py", timeout=30 * 60)   # Solana 前端拆分 + GeckoTerminal 目录 + DEX Screener 自称 + 候选补身份
     step("发射台名录.py", timeout=15 * 60)   # 名录：DefiLlama 介绍 + 抓官网简介 / X / logo（data/onchain/档案.json、logo/）
+    step("平台质量.py", timeout=15 * 60)     # 量的质量：发币 / 发币人 / 7 天存活（GeckoTerminal）→ data/onchain/平台质量.json，Alpha 雷达也读
     step("写平台介绍.py", timeout=20 * 60)   # 平台二级页面的 AI 研究摘要（Grok；没配 XAI_API_KEY 就跳过）
     if not step("出看板.py"):
         sys.exit(4)

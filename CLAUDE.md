@@ -126,6 +126,9 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
   仪表盘 `周期仪表盘.hero` 放在矩阵页最上面（先看温度再看细节），周期页 /launchpad/cycle/ 看这一轮、各阶段时长、历史；全站统一叫「发射台活动温度」，颜色用 `--cyc-*` 变量，文案要大白话。「钱在哪」= `出网站.money_where`。
 - 发射台长周期（2026-10-29）：`周期观察.long_view` / `coverage`。全部历史 2021-09-18 起只作背景，比高低只用可比段（`COMPARABLE_FROM` = 2024-03-01，pump.fun 开始报数；之前只有 1–6 家融资型平台报数）；
   长周期读数只作描述（距最高、常态下沿 Q05 的倍数、可比段最低），不合成分数、不贴季节。近期温度仍是 730 天 Q05–Q95（≥365 天）。覆盖 < 95% 时第一屏提示。
+- 发射台「量的质量」（2026-11-15，发射台板块 → Alpha 接口，约定见大叔给的《接口约定：发射台板块 → Alpha 雷达》）：`pipeline/平台质量.py`（日更，名录之后）→ `data/onchain/平台质量.json`（按 DefiLlama slug：发币 / 发币人 / 存活 / 交易者 / 事件，拿不到 null）
+  + `平台质量_history.json`（存活批次查过不再查，只追加）。工厂 → slug 用 `发射台名录.collect()` 的合并结果；存活 = `拉链上新台.py` 每工厂每天留的 30 个 `存活样本`（11-15 起，之前用 3 个样本拼 7 天），
+  7 天后逐个币查 GeckoTerminal `/tokens/{a}/pools`（批量接口和 DexScreener 都看不到 Four.meme 曲线池）。事件人工登记 `config/launchpad_events.json`（必须带官方出处）。平台页 `出网站.platform_quality_html`；交易者 / 刷量待接入。
 - `aiagent/`：AI Agent 赛道监控（2026-11-14 大叔定为重点赛道：全面监控发展情况和机会，现有东西保留）。/ai-agent/ 四个页签（`出网站.build_ai_agent`，`aia_head`）：
   赛道总览 `aia_overview`（读 `data/aiagent/`）/ 币安 Agent ID /ai-agent/agent-id/（`agent_id_body`，就是原来的 /ai-agent/ 内容）/ 发射台功能卡 /ai-agent/launchpads/（Codex v2 的 18 张卡 + 功能矩阵，
   `aiagent/research/launchpad_cards_v2.json` 写入即冻结；BNB 门禁平台卡片附本站链上读数 `aia_card_live`）/ 研究进度 /ai-agent/research/（`aiagent/research/研究进度.md`，缺口 G1–G10）。首页卡片 `aia_home_card`。

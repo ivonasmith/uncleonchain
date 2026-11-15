@@ -30,6 +30,9 @@ BACKFILL_PER_RUN = 1      # 每次日更顺带补几天旧的
 BASELINE_DAYS = 3         # 数据最早几天里就出现的工厂记「基线」（早就存在，不算新）
 KEEP_DAYS = 120
 SAMPLES = 3               # 每个工厂每天留几个样本币
+SURV_N = 30               # 存活样本：当天发币 ≥ SURV_MIN 的工厂多留 30 个币地址，7 天后查还在不在交易（平台质量.py）
+SURV_MIN = 20
+SURV_KEEP = 10            # 存活样本只留最近 10 天
 PER_GROUP = 3             # 每个「铸给谁」分组抽几笔交易认工厂
 TX_CAP = 4000             # 每条链每天最多查几笔交易
 UA = {"Content-Type": "application/json", "User-Agent": "Mozilla/5.0 (launchpad-daily)"}
@@ -247,22 +250,24 @@ def scan_day(n, ch, d):
         if to in toks:                   # 交易调用的就是这个币自己（公开铸币 / 刷量类代币），不是发币工厂
             selfmint += len(toks)
             continue
-        f = fac.setdefault(to, {"币": 0, "人": set(), "样本": []})
+        f = fac.setdefault(to, {"币": 0, "人": set(), "样本": [], "存活": []})
         f["币"] += len(toks)
         f["人"].update((s.get("from") or "").lower() for s in seen if (s.get("to") or "").lower() == to)
         for t in toks:
             if len(f["样本"]) < SAMPLES:
                 f["样本"].append(t)
+        f["存活"] += toks[:max(0, SURV_N - len(f["存活"]))]
     # 只发了 1 个币的合约（多是个人用的路由 / 一次性合约）只记个数，不落明细，控制文件大小；候选门槛是 7 天 ≥ 30 个币，不影响发现
     keep = {a: v for a, v in fac.items() if v["币"] >= 2}
+    surv = {a: v["存活"] for a, v in keep.items() if v["币"] >= SURV_MIN}
     if k > 1:                                    # 抽样：数量按比例放大成全天估算；只发了 1 个币的不放大
         for v in keep.values():
             v["币"] *= k
         return {"块": [b0, b1], "抽样": k, "铸币事件": len(logs) * k, "新币": len(new) * k, "直接部署": direct * k, "未识别": unknown * k,
-                "查交易": len(hs), "单币合约": len(fac) - len(keep), "代币自铸": selfmint,
+                "查交易": len(hs), "单币合约": len(fac) - len(keep), "代币自铸": selfmint, "_存活": surv,
                 "工厂": {a: [v["币"], len(v["人"]), v["样本"]] for a, v in sorted(keep.items(), key=lambda kv: -kv[1]["币"])}}
     return {"块": [b0, b1], "铸币事件": len(logs), "新币": len(new), "直接部署": direct, "未识别": unknown,
-            "查交易": len(hs), "单币合约": len(fac) - len(keep), "代币自铸": selfmint,
+            "查交易": len(hs), "单币合约": len(fac) - len(keep), "代币自铸": selfmint, "_存活": surv,
             "工厂": {a: [v["币"], len(v["人"]), v["样本"]] for a, v in sorted(keep.items(), key=lambda kv: -kv[1]["币"])}}
 
 
@@ -299,6 +304,7 @@ def run_chain(key, ch):
         if r is None:
             break
         r["节点"] = used
+        db.setdefault("存活样本", {})[d] = r.pop("_存活", {})
         days[d] = r
         err = None
         print(f"  {ch['名称']} {d}（{used}）：铸币事件 {r['铸币事件']:,}，新币 {r['新币']:,}，工厂 {len(r['工厂'])}，"
@@ -306,6 +312,8 @@ def run_chain(key, ch):
     for d in [d for d in days if d < shift(end, -KEEP_DAYS)]:
         del days[d]
     db["逐日"] = dict(sorted(days.items()))
+    sv = db.get("存活样本") or {}
+    db["存活样本"] = {d: sv[d] for d in sorted(sv) if d >= shift(end, -(SURV_KEEP - 1))}
     # 首次出现：所有已扫日子里最早出现的那天；落在数据最早 BASELINE_DAYS 天内的记「基线」
     ds = sorted(days)
     first = {}
