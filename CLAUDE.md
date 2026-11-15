@@ -99,6 +99,8 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
   周复盘的「结论」由复盘会话写进 `data/alpha/weekly/<周>.md` 末节，同步时只在 Notion 为空才带入（不覆盖人写的）。本仓库 NOTION_TOKEN 11-14 已配好，首跑实测：机会卡更新 34、线索更新 33（按键找到已有行就更新，不重复新建）。
   每周复盘定时任务 trig_01Us4KZPynk7ohXsPbGAoFLN（每周一新加坡 09:47，新会话）：跑 weekly.py → 写结论 → 推 main（Notion 交给 Actions；会话有 Notion 工具也可以直接写）。
   看板（大叔 11-14 定：没补证的也要马上能看到，不能藏）：最上面「新发现」（3 天内新进、不分状态）→ 已补证 → 待补证，全部展开；卡上标补证来源（Claude 自动 / Codex）。
+  **每日自动补证 11-15 起改用 Grok API**：`alpha/grok_research.py` 在 alpha-daily 里跑（alpha_daily → 补证 → opps 并入），key = repo secret `XAI_API_KEY`，预算 `alpha_config.grok`（每天 daily_usd、每月 monthly_usd = 5，大叔定超过 5 美元要告诉他：到线就停、工作流最后一步标红），花费账本 `data/alpha/research_cost.json`，结果 `alpha/review/grok_<日期>_checks.json`（reviewer = grok-auto），机器检查拒绝要一手证据、分数要来源。手动试跑 `alpha-research-try.yml`（只打印）。
+  原定时会话（下一行）挂不上仓库、推不上去（11-15 实测 403），已停用：
   每日自动补证 trig_01T8oc3EhUfm7KVqLxWzcdhM（每天新加坡 13:47，Sonnet，新会话）：按 `data/alpha/research_queue.json`（opps.py 每天生成，排序 新发现 → 可投资 → 收入高，含给 Codex 的提示词和交付格式）取前 8 个，
   交 `alpha/review/auto_<日期>_checks.json`（reviewer = claude-auto），推 main 触发 alpha-daily 重算。研究文件可直接带 `scores`（M A F E G T TM TE，每个带 why / src）和 `entry`，opps.py 优先采用。
   想加快就把 research_queue.json 交给 Codex，交回 `<日期>_checks.json` 放 alpha/review/ 即可（同一格式）。

@@ -2,6 +2,20 @@
  {
   "version": "2026.11.15.3",
   "date": "2026-11-15",
+  "notify": false,
+  "title_zh": "Alpha 雷达：每日自动补证改用 Grok API",
+  "title_en": "Alpha Radar: daily research now runs on the Grok API",
+  "items": [
+   {
+    "type": "improve",
+    "zh": "每日自动补证改在 GitHub 上用 Grok API 跑（能查网页和 X），排在日更里，按实际花费记账，每月有上限。补证结果标「Grok 自动（未人工核对）」；机器会检查：结论只能三种，拒绝必须有一手证据，分数必须有来源。原来的定时会话推不上仓库，停用。",
+    "en": "Daily auto-research now runs on GitHub with the Grok API (web + X search), inside the daily job, with spend tracked and capped monthly. Results are labelled “Grok auto, unreviewed”; rejections need first-hand evidence and every score needs a source."
+   }
+  ]
+ },
+ {
+  "version": "2026.11.15.3",
+  "date": "2026-11-15",
   "notify": true,
   "title_zh": "核心选币改名「龙头选币」：排行榜 + 默认观测前 10",
   "title_en": "Core picks is now Leader Picks: leaderboard + default top-10 watch",

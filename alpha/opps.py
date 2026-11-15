@@ -225,7 +225,7 @@ QUEUE_PROMPT = """你在给「链上大叔研究台」Alpha 雷达补证（只�
 分数按 framework.json 附录一锚点给（M A F E G T D 是 0–4；TM 是 -1–3，有已证实不良记录给 -1；TE 是 0–3；不知道写 U，没有代币时 TE 写 NA）。M（新参与机制：这个玩法新在哪）优先查，每个分数写 why 和 src。
 资金参与方式 entry 从 buy / stake / points / use / presale / mine / none 里选（none = 暂时没有资金入口），写 entry_why。"""
 
-QUEUE_SCHEMA = {"key": "清单里的 key（原样）", "name": "名称", "one_liner": "一句话介绍：它是什么、给谁用、靠什么收钱（30 字内，大白话）", "reviewer": "claude-auto 或 codex", "checked_utc": "核对时间 ISO",
+QUEUE_SCHEMA = {"key": "清单里的 key（原样）", "name": "名称", "one_liner": "一句话介绍：它是什么、给谁用、靠什么收钱（30 字内，大白话）", "reviewer": "grok-auto / claude-auto / codex", "checked_utc": "核对时间 ISO",
                 "token_stance": "官方确认不发币|有积分/空投计划|官方表态会发|没有表态|U", "token_stance_src": "链接", "token_stance_date": "日期或 U",
                 "revenue_who": "收入归谁", "revenue_method": "收入口径要点", "wash_or_subsidy": "刷量 / 补贴迹象或 U", "user_role": "普通人能以什么角色参与",
                 "entry": ["points"], "entry_why": "为什么是这种资金参与方式（带来源）",
@@ -241,7 +241,7 @@ def queue(cards):
     q.sort(key=lambda c: (not own(c), not c["fresh"], c["bucket"] != "invest", c["status"] != "原始线索", -(c["data"]["rev30"] or c["data"]["tvl"] or 0)))
     items = [{"key": c["key"], "name": c["name"], "status": c["status"], "kind": c["kind"], "fresh": c["fresh"], "bucket": c["bucket"],
               "discovered": c["discovered"], "category": c["data"]["category"], "chains": c["data"]["chains"], "rev30": c["data"]["rev30"], "tvl": c["data"]["tvl"],
-              "defillama": f"https://defillama.com/protocol/{c['data']['slug']}" if c["data"].get("slug") else None, "manual": c.get("manual"),
+              "defillama": f"https://defillama.com/protocol/{c['data']['slug']}" if c["data"].get("slug") else None, "url": c["data"].get("url"), "twitter": c["data"].get("twitter"), "manual": c.get("manual"),
               "pending": [k for k, v in c["scores"].items() if v["v"] == "U" and k not in ("P", "L")],
               "missing_before": (c.get("research") or {}).get("missing") or []} for c in q]
     return {"generated": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"), "n": len(items), "prompt": QUEUE_PROMPT, "schema": QUEUE_SCHEMA, "items": items}
