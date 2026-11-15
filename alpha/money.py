@@ -56,8 +56,10 @@ def enrich(cards):
         k, d = c["key"], c["data"]
         g = d.get("llama") or (k[2:] if k[:2] in ("g:", "s:") else None)
         slug = g[len("parent#"):] if g and g.startswith("parent#") else (d.get("slug") or g)
-        if d.get("slug") in LPQ or slug in LPQ:   # 发射台板块的平台质量（docs/接口_发射台给Alpha.md）
-            d["lpq"] = LPQ.get(d.get("slug")) or LPQ.get(slug)
+        # 发射台板块的平台质量（docs/接口_发射台给Alpha.md）；母协议卡（如 Pons）按子协议 slug 前缀找（pons-v2）
+        lq = LPQ.get(d.get("slug") or "") or (LPQ.get(slug) if slug else None) or next((v for k2, v in LPQ.items() if slug and k2.startswith(slug + "-")), None)
+        if lq:
+            d["lpq"] = lq
         if not slug or ":" in slug:
             continue
         if slug not in cache:

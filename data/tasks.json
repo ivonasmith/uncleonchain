@@ -1,10 +1,10 @@
 {
- "generated": "2026-11-15T15:42:49+00:00",
+ "generated": "2026-11-15T16:11:57+00:00",
  "boards": [
   {
    "board": "alpha",
    "name": "Alpha 雷达",
-   "tasks": 6,
+   "tasks": 8,
    "issues": 0
   },
   {
@@ -368,6 +368,139 @@
    "note": null
   },
   {
+   "board": "alpha",
+   "id": "alpha:flow",
+   "title": "补「量从哪来」和关键事件（32 张已补证的卡还没有 flow / events，先做 Montra、Pons 当样板）",
+   "who": "codex",
+   "pri": 1,
+   "deliver": "alpha/review/codex_2026-11-15_checks.json（同 key 交新一条，带 flow / events / capture / next_review）",
+   "ref": "data/alpha/research_queue.json 的 schema",
+   "items": [
+    {
+     "key": "m:pons",
+     "name": "Pons"
+    },
+    {
+     "key": "s:9388",
+     "name": "Montra"
+    },
+    {
+     "key": "g:parent#polymarket",
+     "name": "Polymarket"
+    },
+    {
+     "key": "g:parent#fomo",
+     "name": "Fomo"
+    },
+    {
+     "key": "g:parent#axiom",
+     "name": "Axiom"
+    },
+    {
+     "key": "g:parent#phantom",
+     "name": "Phantom"
+    },
+    {
+     "key": "g:5408",
+     "name": "GMGN"
+    },
+    {
+     "key": "g:4983",
+     "name": "Flap sh"
+    },
+    {
+     "key": "g:parent#metamask",
+     "name": "Metamask"
+    },
+    {
+     "key": "g:parent#pacifica",
+     "name": "Pacifica Perps"
+    },
+    {
+     "key": "g:7010",
+     "name": "trade[XYZ]"
+    },
+    {
+     "key": "g:parent#azverse",
+     "name": "Azverse"
+    },
+    {
+     "key": "g:4990",
+     "name": "DEX Screener"
+    },
+    {
+     "key": "g:9296",
+     "name": "The Standard Reserve"
+    },
+    {
+     "key": "g:6764",
+     "name": "Courtyard"
+    },
+    {
+     "key": "g:5129",
+     "name": "Predict Fun"
+    },
+    {
+     "key": "g:parent#arcus",
+     "name": "Arcus Perps"
+    },
+    {
+     "key": "g:parent#txflow",
+     "name": "TxFlow Perps"
+    },
+    {
+     "key": "g:9146",
+     "name": "Central City"
+    },
+    {
+     "key": "g:7016",
+     "name": "Antarctic"
+    },
+    {
+     "key": "g:8415",
+     "name": "XOX Perps"
+    },
+    {
+     "key": "g:5864",
+     "name": "TRONSAVE"
+    },
+    {
+     "key": "g:5825",
+     "name": "Veda"
+    },
+    {
+     "key": "g:parent#hyperdash",
+     "name": "Hyperdash"
+    },
+    {
+     "key": "g:parent#nado",
+     "name": "Nado"
+    },
+    {
+     "key": "g:parent#rabby",
+     "name": "Rabby"
+    },
+    {
+     "key": "g:parent#sentora",
+     "name": "Sentora Curator"
+    },
+    {
+     "key": "g:8916",
+     "name": "Relay"
+    },
+    {
+     "key": "g:parent#okx-dex",
+     "name": "OKX Swap"
+    },
+    {
+     "key": "g:8866",
+     "name": "Loan Meme"
+    }
+   ],
+   "n": 30,
+   "note": null
+  },
+  {
    "board": "aiagent",
    "id": "aiagent:pkg:A1-服务层真实性",
    "title": "A1 服务层真实性",
@@ -652,6 +785,22 @@
    "ref": "alpha/cases.json",
    "items": null,
    "n": null,
+   "note": null
+  },
+  {
+   "board": "alpha",
+   "id": "alpha:en",
+   "title": "英文稿（3 篇研究文档；英文站现在只有导航是英文）",
+   "who": "codex",
+   "pri": 3,
+   "deliver": "alpha/research/<同名>.en.md（Claude 接进网站）",
+   "ref": null,
+   "items": [
+    "Alpha标的筛选研究体系.md",
+    "研究进度.md",
+    "案例库.md"
+   ],
+   "n": 3,
    "note": null
   },
   {

@@ -354,6 +354,51 @@
     return out.length ? `<div class="ax-facts small">${out.join('<i class="sep">·</i>')}</div>` : '';
   }
   const klineLink = t => t && t.chart ? `<a class="kl" href="${esc(EN && t.chart.url_en ? t.chart.url_en : t.chart.url)}" target="_blank" rel="noopener" title="${esc(t.chart.search ? T('按代码搜索，注意同名币', 'symbol search; beware look-alikes') : T('看价格走势、市值、成交量', 'price chart, market cap, volume'))}">${T('K 线', 'Chart')} · ${esc(EN ? t.chart.name_en || t.chart.name : t.chart.name)} ↗</a>` : '';
+  // ---- 11-15 卡片改版（Codex 审阅 + 大叔点头）：成交与变现 / 量从哪来 / 量的质量 / 关键事件 / 核心判断 ----
+  const FLOWN = [['airdrop', T('积分 / 空投', 'Points / airdrop')], ['newchain', T('新链首发', 'New-chain launch')], ['subsidy', T('返佣 / 补贴', 'Rebates / subsidy')], ['organic', T('自然需求', 'Organic demand')]];
+  const FLOWC = { '高': 'warn', '中': 'neutral', '低': 'up', '待验证': 'neutral' };
+  function moneyBlock(o) {
+    const m = o.data.money; if (!m) return '';
+    const v = m.vol || {}, f = m.fees || {}, r = m.rev || {}, hd = m.hold || {};
+    const cell = (k, val, def) => `<div><span class="k">${hv(k, k, def)}</span><b>${val}</b></div>`;
+    const short = m.short_history != null ? ` <span class="chip t-warn"><i></i>${T(`实际历史只有 ${m.short_history} 天`, `only ${m.short_history} days of history`)}</span>` : '';
+    return `<div class="card ax-money"><h3>${T('成交与变现', 'Volume & monetisation')}${short} <span class="muted small">${hv(T('口径', 'Basis'), T('口径', 'Basis'), T('DefiLlama：成交 = DEX / 永续成交额；费用 = 用户付的全部费用（含给 LP、创作者的）；协议收入 = 协议自己留下的；持币人收入 = 分给代币持有人的（回购销毁、分红）。上线不满 30 天时，「30 天」数字其实只有那么多天。', 'DefiLlama definitions.'))}</span></h3>
+      <div class="ax-mgrid">
+        ${v.total30d != null ? cell(T('成交 24h · 7d · 30d', 'Volume 24h · 7d · 30d'), `${usd(v.total24h)} · ${usd(v.total7d)} · ${usd(v.total30d)}`, T('DEX / 永续的成交额。', 'Trading volume.')) : ''}
+        ${m.share7 != null ? cell(T('近 7 天占 30 天', '7d share of 30d'), `${Math.round(m.share7 * 100)}%`, T('越接近 100% 说明量越集中在最近一周（刚上线、激励窗口或突然放大）；平稳时大约 23%。', 'Near 100% = concentrated in the last week; steady ≈ 23%.')) : ''}
+        ${cell(T('30 天 费用 · 协议收入 · 持币人', '30d fees · revenue · holders'), `${usd(f.total30d)} · ${usd(r.total30d)} · ${usd(hd.total30d)}`, T('用户付的全部费用 → 协议留下的 → 分给持币人的。差额是给 LP、创作者、返佣的。', 'Fees → protocol revenue → holder revenue.'))}
+        ${m.take != null ? cell(T('协议抽成', 'Take rate'), `${(m.take * 100).toFixed(2)}%`, T('30 天协议收入 ÷ 30 天成交额：每 100 美元成交，协议实际拿到多少。', '30d revenue ÷ 30d volume.')) : ''}
+      </div></div>`;
+  }
+  function flowTile(o) {
+    const fl = (o.research || {}).flow;
+    const parts = fl ? FLOWN.filter(([k]) => fl[k]).map(([k, n]) => `${n} <b class="t-${FLOWC[fl[k].v] || 'neutral'}">${esc(fl[k].v || '?')}</b>`) : [];
+    return `<div class="glass hero"><div class="k">${T('量从哪来', 'Volume source')}${tip(T('积分 / 空投、新链首发、返佣 / 补贴、自然需求，各标 高 / 中 / 低 / 待验证。激励带来的量在激励结束后通常会掉。', 'Points, new-chain, subsidy, organic.'))}</div>
+      <div class="v" style="font-size:13.5px;line-height:1.7">${parts.length ? parts.join('<br>') : `<span class="muted">${T('待补证', 'Pending')}</span>`}</div></div>`;
+  }
+  function qualityBox(o) {
+    const fl = (o.research || {}).flow, q = o.data.lpq, R = o.research || {};
+    const rows = fl ? FLOWN.map(([k, n]) => { const x = fl[k] || {}; return `<tr><td class="l">${n}</td><td><b class="t-${FLOWC[x.v] || 'neutral'}">${esc(x.v || T('待验证', 'unverified'))}</b></td><td class="l small">${esc(x.why || '')}${x.src && String(x.src).startsWith('http') ? ` <a href="${esc(x.src)}" target="_blank" rel="noopener">↗</a>` : ''}</td></tr>`; }).join('') : '';
+    const na = `<span class="muted">${T('待接入', 'n/a')}</span>`;
+    const sv = (q && q.存活) || {};
+    const qq = q ? `<div class="tw"><table><tbody>
+        <tr><td class="l">${hv(T('7 天发币', '7d launches'), T('发币数', 'Launches'), (q.发币 || {}).口径 || '')}</td><td>${(q.发币 || {})['7d'] != null ? Number(q.发币['7d']).toLocaleString() : na}</td></tr>
+        <tr><td class="l">${hv(T('7 天后仍有交易', 'Still trading after 7d'), T('存活', 'Survival'), (sv.口径 || '') + (sv.批次 ? T(` 批次 ${sv.批次}。`, '') : ''))}</td><td>${sv.样本 ? `${sv['7天后仍有交易']} / ${sv.样本} ${T('个样本', 'sampled')}` : na}</td></tr>
+        <tr><td class="l">${T('市值过 10 万美元', 'Mcap > $100K')}</td><td>${sv.样本 ? `${sv['市值过10万美元']} / ${sv.样本}` : na}</td></tr>
+        <tr><td class="l">${T('7 天交易者', '7d traders')}</td><td>${(q.交易者 || {})['7d'] != null ? Number(q.交易者['7d']).toLocaleString() : na}</td></tr></tbody></table></div>
+        <p class="small muted">${T('发射台板块提供（链上 + GeckoTerminal 样本），数据日', 'From the launchpad board, data day')} ${esc(q.数据日 || '')}</p>` : '';
+    if (!rows && !qq && !(R.wash_or_subsidy && R.wash_or_subsidy !== 'U')) return '';
+    return `<div class="card ax-box" style="margin-top:12px"><h3>${T('量从哪来 · 量的质量', 'Volume source & quality')}</h3>
+      ${rows ? `<div class="tw"><table><tbody>${rows}</tbody></table></div>` : `<p class="small muted">${T('流量来源还没补证（积分 / 空投、新链首发、返佣 / 补贴、自然需求）。', 'Volume sources not researched yet.')}</p>`}
+      ${R.wash_or_subsidy && R.wash_or_subsidy !== 'U' ? `<p class="small"><span class="muted">${T('刷量 / 补贴迹象：', 'Wash / subsidy: ')}</span>${esc(R.wash_or_subsidy)}</p>` : ''}
+      ${qq ? `<h4>${T('发射台质量', 'Launchpad quality')}</h4>${qq}` : ''}</div>`;
+  }
+  function eventsBlock(o) {
+    const lp = ((o.data.lpq || {}).事件 || []).map(e => ({ date: e.日期, what: e.事, src: e.出处 }));
+    const ev = [].concat((o.research || {}).events || [], lp).filter(e => e && e.date && e.what).sort((a, b) => a.date < b.date ? -1 : 1);
+    if (!ev.length) return '';
+    return `<div class="ax-events small"><span class="muted">${T('关键事件', 'Key events')}</span>${ev.map(e => `<span class="ev"><b>${esc(String(e.date).slice(5))}</b> ${e.src && String(e.src).startsWith('http') ? `<a href="${esc(e.src)}" target="_blank" rel="noopener">${esc(e.what)}</a>` : esc(e.what)}</span>`).join('')}</div>`;
+  }
   const AXES = () => FW.scores.mech.items.concat(FW.scores.part.items.filter(i => !i.private));
   const known = v => v !== 'U' && v !== 'NA' && v != null && v !== '';
   function radar(card) {
@@ -414,14 +459,14 @@
     const os = OPPS.opps;
     const pool = BF === 'all' ? os.filter(o => o.bucket !== 'reject') : os.filter(o => o.bucket === BF);
     const fresh = pool.filter(o => o.fresh), rest = pool.filter(o => !o.fresh);
-    const groups = [[T('新发现 · 3 天内', 'New · last 3 days'), fresh], [T('已补证', 'Researched'), rest.filter(o => DONE.includes(o.status))], [T('待补证', 'Pending research'), rest.filter(o => !DONE.includes(o.status))]];
+    const groups = [[T('新发现 · 3 天内', 'New · last 3 days'), fresh], [T('研究观察', 'Under research'), rest.filter(o => DONE.includes(o.status))], [T('待核验 / 未补证', 'Checking / raw'), rest.filter(o => !DONE.includes(o.status))]];
     const row = o => { const d = o.data; const v = d.rev30 != null ? d.rev30 : d.tvl;
       return `<button type="button" class="md-row${o.id === SELID ? ' on' : ''}" data-id="${esc(o.id)}">
         <span class="r1"><span class="nm">${logo(d.logo, o.name, 20)}<b>${esc(o.name)}</b></span><i class="dot t-${STC[o.status] || 'neutral'}" title="${esc(o.status)}"></i></span>
         <span class="r2"><span>${d.rev30 != null ? usd(v) : d.fees7 != null ? T('7 天费 ', '7d fees ') + usd(d.fees7) : (v ? 'TVL ' + usd(v) : '—')} ${pct(d.chg30)}</span>${sparkSvg(o.spark, (d.chg30 || 0) >= 0 ? 'up' : 'dn', 64, 18)}</span>
         <span class="r4">${d.tok && d.tok.snap && d.tok.snap.mcap != null ? `<em class="agetag tok">${esc(d.tok.sym || '')} ${T('市值', 'MC')} ${usd(d.tok.snap.mcap)}</em>` : ''}</span>
         <span class="r3">${(d.sources || []).some(x => x.startsWith('site_') || x === 'manual') ? `<em class="mtag own" title="${T('本站板块或手动线索筛到', 'site board or manual lead')}">★</em>` : ''}<em class="mtag${known((o.scores.M || {}).v) ? ' k' : ''}">M${known((o.scores.M || {}).v) ? o.scores.M.v : '?'}</em>${o.entry.filter(e => e !== 'none').map(e => esc(ENTRY()[e])).join(' · ') || `<span class="muted">${T('暂无资金入口', 'No entry yet')}</span>`}</span></button>`; };
-    return `<div class="fg md-filter">${[['invest', T('可投资', 'Investable')], ['watch', T('预警观察', 'Watchlist')], ['all', T('全部', 'All')], ['reject', T('已拒绝', 'Rejected')]]
+    return `<div class="fg md-filter">${[['invest', T('有参与入口', 'Has entry')], ['watch', T('预警观察', 'Watchlist')], ['all', T('全部', 'All')], ['reject', T('已拒绝', 'Rejected')]]
         .map(([k, l]) => `<button type="button" class="pill${BF === k ? ' on' : ''}" data-bf="${k}">${l}<small>${k === 'all' ? os.filter(o => o.bucket !== 'reject').length : os.filter(o => o.bucket === k).length}</small></button>`).join('')}</div>
       ${groups.filter(g => g[1].length).map(([t, xs]) => `<div class="md-grp">${t}<span>${xs.length}</span></div>${xs.map(row).join('')}`).join('') || `<p class="muted small" style="padding:12px">${T('这一栏暂时没有。', 'Nothing here yet.')}</p>`}`;
   }
@@ -445,17 +490,20 @@
         return `<span class="ax-who small">${hv(`${own ? '★ ' : ''}${T('发现', 'Seen')} ${esc((o.discovered || '').slice(5) || '—')}`, T('来源', 'Source'), T(`${srcs || '—'}${(d.sources || []).length > 1 ? '（多个来源都筛到）' : ''}，${o.discovered || '—'} 进看板。`, `${srcs}; added ${o.discovered || '—'}.`))}<i class="sep">·</i>${rv ? hv(rv.split('（')[0], T('补证', 'Research'), rv + (R.checked_utc ? T(`，核对于 ${R.checked_utc.slice(0, 10)}`, `, checked ${R.checked_utc.slice(0, 10)}`) : '')) : `<span class="muted">${T('未补证', 'Not researched')}</span>`}</span>`;
       })()}</div>
       ${factLine(o)}</div>`;
+    h += moneyBlock(o);
     h += `<div class="grid g4 ax-kpis">
       <div class="glass hero"><div class="k">${d.rev30 != null ? T('30 天协议收入', '30d protocol revenue') : d.fees7 != null ? T('近 7 天手续费', '7d fees') : o.kind === 'manual' || o.kind === 'site' ? T('协议读数', 'Protocol data') : 'TVL'}<span>${d.rev30 != null ? T('环比', 'vs prior') : ''}</span></div><div class="v">${usd(d.rev30 != null ? d.rev30 : d.fees7 != null ? d.fees7 : d.tvl)}</div><div class="s">${d.rev30 != null ? (d.chg30 == null ? T('前 30 天没有收入', 'no prior revenue') : pct(d.chg30) + T(' 比前 30 天', ' vs prior 30d')) : (d.fees7 != null ? T('来自本站板块数据（手续费，不是协议收入）', 'from a site board (fees, not revenue)') : o.kind === 'site' ? T('板块标了异常，见下面「为什么在看」', 'flagged by a board, see below') : o.kind === 'manual' ? T('数据源还没收录，等补证', 'not covered by data sources yet') : T('新上架，还没有收入读数', 'new listing, no revenue yet'))}</div>${sparkSvg(o.spark, (d.chg30 || 0) >= 0 ? 'up' : 'dn', 200, 30)}</div>
       ${mTile(o)}
       <div class="glass hero"><div class="k">${T('查清了多少', 'Coverage')}${tip(T('八个评分维度里已经有分数的个数。机制与扩张（M A F E V）、当前参与优势（G D T）的区间见下面的雷达图和「完整拆解」。', 'How many of the eight score dimensions are known.'))}</div><div class="v">${nk}<span class="muted" style="font-size:15px"> / ${ax.length}</span></div><div class="s">${T('机制', 'mech')} ${iv.mech.lo}–${iv.mech.hi} · ${T('参与', 'part')} ${iv.part.lo}–${iv.part.hi}</div>${meter({ lo: Math.round(100 * nk / ax.length), hi: Math.round(100 * nk / ax.length) })}</div>
-      <div class="glass hero"><div class="k">${amode === 'cat' ? T('同类目历史案例', 'Same-class cases') : T('相近历史案例', 'Closest cases')}${tip(ANALOG_TIP)}</div><div class="v" style="font-size:19px">${w.length ? rngOf(w.map(x => x.o.tok.val_peak), usd) : '—'}</div><div class="s">${!w.length ? T('这个类目还没有历史案例', 'no cases in this class yet') : amode === 'cat' ? T(`估值峰值范围 · ${w.length} 个同类目案例 · 玩法还没查，只按类目列`, `peak valuation range · ${w.length} same-class cases · play not researched`) : T(`估值峰值范围 · ${w.length} 个案例 · ${hasM ? '已按创新级别比' : '还没比创新级别 M'}`, `peak valuation range · ${w.length} cases · ${hasM ? 'M compared' : 'M not compared'}`)}</div></div></div>
+      ${flowTile(o)}</div>
     <div class="card ax-box" style="margin-top:12px"><h3>${T('评分雷达', 'Score radar')}${tip(T('机制与扩张：M 新参与机制、A 有效可达性、F 分配公平、E 独立扩散、V 价值归属。当前参与优势：G 有效增长、D 需求独立性、T 当前窗口。每项的打分依据在「完整拆解」。', 'Mechanism: M A F E V. Participation: G D T. Reasons in the full teardown.'))}</h3>${radar(o)}</div>`;
     h += d.rev30 != null ? `<div class="card ax-chart"><h3>${T('协议收入 · 近 180 天', 'Protocol revenue · last 180 days')}</h3><div data-chart="${esc(JSON.stringify({ v2: true, src: `/data/alpha/rev/${o.id}.json`, fmt: 'usd', series: [{ k: 'rev', n: T('每日协议收入', 'Daily revenue'), c: 's1', area: true }], note: T('DefiLlama dailyRevenue（协议留存的收入，不是持有人所得）。', 'DefiLlama dailyRevenue (protocol-retained, not holder income).') }))}"></div></div>` : '';
+    h += eventsBlock(o);
     h += `<div class="grid g2" style="margin-top:12px">
-      <div class="card ax-box up"><h3>${T('为什么在看', 'Why it is here')}</h3>${R.verdict_reason ? `<p>${esc(R.verdict_reason)}</p>` : `<p class="muted">${T('系统按数据收进来：', 'Added by data rule: ')}${o.kind === 'tokenless' ? T('没发币、近 30 天协议收入达到门槛。', 'tokenless with revenue above threshold.') : o.kind === 'surge' ? T('已有代币，近 30 天收入过门槛，而且收入史很短或突然放大。', 'has a token; revenue above threshold and young or accelerating.') : o.kind === 'manual' ? T('手动登记的线索（推特 / 社群里看到的），等研究补证。', 'manually added lead, pending research.') : o.kind === 'site' ? T('本站板块的数据筛出来的，等研究补证。', 'flagged by a site board, pending research.') : T('新上架、TVL 达到门槛。', 'new listing with TVL above threshold.')}</p>`}${(d.boards || []).map(b => `<p><span class="muted">${esc(SRCN['site_' + b.board] ? T(SRCN['site_' + b.board][0], SRCN['site_' + b.board][1]) : b.board)}：</span>${esc(b.why)}</p>`).join('')}${R.user_role && R.user_role !== 'U' ? `<p><span class="muted">${T('普通人怎么参与：', 'How to take part: ')}</span>${esc(R.user_role)}</p>` : ''}</div>
+      <div class="card ax-box up"><h3>${T('核心判断', 'Core read')}</h3>${R.capture && R.capture !== 'U' ? `<p><span class="muted">${T('参与者 / 代币实际能拿到：', 'What holders / users get: ')}</span>${esc(R.capture)}</p>` : ''}${R.next_review ? `<p class="small"><span class="muted">${T('下次复核：', 'Next review: ')}</span>${esc(R.next_review)}</p>` : ''}${R.verdict_reason ? `<p>${esc(R.verdict_reason)}</p>` : `<p class="muted">${T('系统按数据收进来：', 'Added by data rule: ')}${o.kind === 'tokenless' ? T('没发币、近 30 天协议收入达到门槛。', 'tokenless with revenue above threshold.') : o.kind === 'surge' ? T('已有代币，近 30 天收入过门槛，而且收入史很短或突然放大。', 'has a token; revenue above threshold and young or accelerating.') : o.kind === 'manual' ? T('手动登记的线索（推特 / 社群里看到的），等研究补证。', 'manually added lead, pending research.') : o.kind === 'site' ? T('本站板块的数据筛出来的，等研究补证。', 'flagged by a site board, pending research.') : T('新上架、TVL 达到门槛。', 'new listing with TVL above threshold.')}</p>`}${(d.boards || []).map(b => `<p><span class="muted">${esc(SRCN['site_' + b.board] ? T(SRCN['site_' + b.board][0], SRCN['site_' + b.board][1]) : b.board)}：</span>${esc(b.why)}</p>`).join('')}${R.user_role && R.user_role !== 'U' ? `<p><span class="muted">${T('普通人怎么参与：', 'How to take part: ')}</span>${esc(R.user_role)}</p>` : ''}</div>
       <div class="card ax-box dn"><h3>${T('最大的风险', 'Biggest risk')}</h3>${R.counter && R.counter !== 'U' ? `<p>${esc(R.counter)}</p>` : `<p class="muted">${T('还没研究出最强反方。', 'No counter-argument researched yet.')}</p>`}${gatesOpen.length ? `<p class="small muted">${T('门槛未过：', 'Gates open: ')}${esc(gatesOpen.join('；'))}</p>` : ''}${R.wash_or_subsidy && R.wash_or_subsidy !== 'U' ? `<p class="small muted">${T('刷量 / 补贴：', 'Wash / subsidy: ')}${esc(R.wash_or_subsidy)}</p>` : ''}</div></div>`;
-    if (sims.length) h += `<div class="card ax-box" style="margin-top:12px"><h3>${amode === 'cat' ? T('同类目的历史案例（玩法还没查，不算相似度）', 'Same-class historical cases (play not researched)') : T('最像它的历史案例', 'Closest historical cases')}${tip(ANALOG_TIP)}</h3>${analogTable(sims)}</div>`;
+    h += qualityBox(o);
+    if (sims.length) h += `<details class="card ax-more"><summary>${T('历史对照', 'Historical analogs')} <span class="muted small">${w.length ? T(`估值峰值 ${rngOf(w.map(x => x.o.tok.val_peak), usd)} · ${w.length} 个案例`, `peak val ${rngOf(w.map(x => x.o.tok.val_peak), usd)}`) : ''} · ${T('容易被当成目标价，默认收起', 'collapsed to avoid anchoring')}</span></summary><h3>${amode === 'cat' ? T('同类目的历史案例（玩法还没查，不算相似度）', 'Same-class historical cases (play not researched)') : T('最像它的历史案例', 'Closest historical cases')}${tip(ANALOG_TIP)}</h3>${analogTable(sims)}</details>`;
     const vr = valuationRows(o);
     h += `<details class="card ax-more"><summary>${T('完整拆解', 'Full teardown')} <span class="muted small">${T('逐项评分 · 研究字段 · 估值口径 · 证据', 'scores · research · valuation · evidence')}</span></summary>
       <h4>${T('分类', 'Classes')}</h4>${classRows(o)}
@@ -470,7 +518,7 @@
       <h4>${T('持续监控', 'Monitoring')}</h4>${monitorPlanes(o)}
       <h4>${T('基础数据', 'Data')}</h4><dl class="ax-dl"><dt>${T('类型', 'Kind')}</dt><dd>${KIND[o.kind] || esc(o.kind)}${o.why_here ? ` · ${o.why_here.split('+').map(x => x === 'young' ? T('收入史很短', 'young revenue') : T('收入突然放大', 'accelerating')).join(' + ')}` : ''}${o.manual && o.manual.by ? ` · ${esc(o.manual.by)}` : ''}</dd>${d.rev_all ? `<dt>${T('历史总收入', 'All-time revenue')}</dt><dd>${usd(d.rev_all)}</dd>` : ''}<dt>DefiLlama ${T('类目', 'category')}</dt><dd>${esc(d.category || '—')}</dd><dt>${T('链', 'Chains')}</dt><dd>${esc((d.chains || []).join(' · ') || '—')}</dd>${(d.children || []).length > 1 ? `<dt>${T('子产品', 'Products')}</dt><dd>${esc(d.children.join('、'))}</dd>` : ''}${d.listed ? `<dt>${T('收录日', 'Listed')}</dt><dd>${esc(d.listed)}</dd>` : ''}${d.tvl ? `<dt>TVL</dt><dd>${usd(d.tvl)}</dd>` : ''}${d.token_seen ? `<dt>${T('发币日', 'Token since')}</dt><dd>${esc(d.token_seen)}</dd>` : ''}<dt>${T('状态来源', 'State from')}</dt><dd>${esc(o.status_src)}</dd></dl>
       <h4>${T('估值该用什么', 'Valuation to use')}</h4>${vr.map(r => `<p class="small"><b>${esc(r.name)}</b> · ${T('用', 'use')}：${esc(r.use)}<br><span class="t-dn">${T('别', 'avoid')}</span>：${esc(r.avoid)}</p>`).join('') || '<p class="small muted">—</p>'}
-      ${(o.evidence || []).length ? `<h4>${T('证据', 'Evidence')}</h4><p class="small">${o.evidence.map((e, i) => `<a href="${esc(e.url)}" target="_blank" rel="noopener">${i + 1}</a>`).join(' · ')}</p>` : ''}
+      ${(o.evidence || []).length ? `<h4>${T('证据', 'Evidence')}</h4><p class="small">${o.evidence.map((e, i) => `<a href="${esc(e.url)}" target="_blank" rel="noopener">${i + 1}. ${esc((e.url || '').replace(/^https?:\/\/(www\.)?/, '').split('/')[0])}</a>${(e.fields || []).length ? ` <span class="muted">（${esc(e.fields.join('、'))}）</span>` : ''}`).join('<br>')}</p>` : ''}
       <p class="small muted">${T('框架和打分规则见「框架与方法」。', 'Rules: see Framework.')}</p></details>`;
     return h;
   }
@@ -481,11 +529,16 @@
     const list = () => BF === 'all' ? act : os.filter(o => o.bucket === BF);
     if (!SELID || !os.some(o => o.id === SELID)) SELID = (list()[0] || {}).id;
     const ord = () => { const l = list(); const g = [l.filter(o => o.fresh), l.filter(o => !o.fresh && DONE.includes(o.status)), l.filter(o => !o.fresh && !DONE.includes(o.status))]; return [].concat(...g); };
-    app.innerHTML = `<div class="grid g4 ax-top">
-        <div class="glass hero"><div class="k">${T('可投资机会', 'Investable')}</div><div class="v t-up">${OPPS.counts.invest || 0}</div><div class="s">${T('资金现在就能参与', 'capital can take part now')}</div></div>
-        <div class="glass hero"><div class="k">${T('预警观察', 'Watchlist')}</div><div class="v">${OPPS.counts.watch || 0}</div><div class="s">${T('新东西，暂时没有资金入口', 'no capital entry yet')}</div></div>
-        <div class="glass hero"><div class="k">${T('新发现 · 3 天内', 'New · 3 days')}</div><div class="v">${freshN}</div><div class="s">${T('不等补证，先放出来', 'shown before research')}</div></div>
-        <div class="glass hero"><div class="k">${T('补证进度', 'Research progress')}${tip(T('每天自动补证一批，顺序：新发现 → 可投资 → 收入高。待补证清单可以下载交给 Codex。', 'Daily research works through the queue; downloadable for Codex.'))}</div><div class="v">${doneN}<span class="muted" style="font-size:15px"> / ${act.length}</span></div><div class="s"><a href="/data/alpha/research_queue.json" download>${T('下载待补证清单', 'Download queue')}</a></div></div></div>
+    app.innerHTML = `<details class="card ax-guide"${(() => { try { return localStorage.getItem('alpha-guide-closed') ? '' : ' open'; } catch (e) { return ' open'; } })()}><summary>${T('怎么读这个看板', 'How to read this board')}</summary>
+        <ol class="small"><li>${T('这里是还没成熟的新东西：新协议、新玩法、没发币但有收入的、刚起量的。<b>有参与入口 ≠ 可以参与</b>，只说明有资金参与的方式。', 'New, unproven things. <b>Has entry ≠ go</b>.')}</li>
+        <li>${T('先看状态：', 'Read the status first: ')}<span class="axflow"><b>${T('原始线索', 'Raw lead')}</b> → <b>${T('待核验', 'Checking')}</b> → <b>${T('研究观察', 'Under research')}</b> → <span class="muted">${T('执行评估（个人执行，不公开）', 'execution (private)')}</span>；${T('任何一步都可能', 'any step can end in')} <b>${T('拒绝', 'Rejected')}</b></span></li>
+        <li>${T('再看三件事：<b>量从哪来</b>（积分空投、新链首发、补贴还是自然需求）、<b>量是不是真的</b>、<b>激励结束后还剩多少</b>。成交和收入只是读数，不等于代币有价值。', 'Then: where volume comes from, whether it is real, what is left after incentives.')}</li>
+        <li>${T('带下划线的数字，鼠标放上去看口径；历史对照默认收起，它不是目标价。', 'Underlined numbers have definitions on hover; analogs are collapsed — not targets.')}</li></ol></details>
+      <div class="grid g4 ax-top">
+        <div class="glass hero"><div class="k">${T('有参与入口', 'Has entry')}${tip(T('有资金参与的方式（买币、质押、交易赚积分等）。只说明「能参与」，不代表研究过、更不代表可以执行：研究状态看每张卡的标签（原始线索 → 待核验 → 研究观察）。', 'Capital can take part. Not a research verdict.'))}</div><div class="v t-up">${OPPS.counts.invest || 0}</div><div class="s">${T('有资金参与方式（不等于研究过）', 'capital can take part — not a verdict')}</div></div>
+        <div class="glass hero"><div class="k">${T('预警观察', 'Watchlist')}${tip(T('新东西，但暂时没有资金参与的入口（没币、没积分、没开放）。和「有参与入口」加起来 = 看板上全部机会（不含已拒绝）。', 'No capital entry yet. Together with Has entry = all cards (excluding rejected).'))}</div><div class="v">${OPPS.counts.watch || 0}</div><div class="s">${T('新东西，暂时没有资金入口', 'no capital entry yet')}</div></div>
+        <div class="glass hero"><div class="k">${T('新发现 · 3 天内', 'New · 3 days')}${tip(T('3 天内新进看板的全部机会，不分栏、不分状态。左边列表里的「新发现」只数当前筛选那一栏的，所以可能比这里少。', 'All cards added in the last 3 days, any column. The list shows only the selected column.'))}</div><div class="v">${freshN}</div><div class="s">${T('不等补证，先放出来', 'shown before research')}</div></div>
+        <div class="glass hero"><div class="k">${T('补证状态', 'Research status')}${tip(T('研究观察 = 补证完、对象明确、没查到否决项；待核验 = 补过但关键事实还缺（写进文件不等于查证完成）；原始线索 = 还没补。分母 = 看板上全部机会（不含已拒绝）。每天按队列补：手动线索 / 本站板块 ★ → 新发现 → 有参与入口 → 收入高。', 'Under research / needs checking / raw lead. Denominator = all cards excluding rejected.'))}</div><div class="v">${doneN}<span class="muted" style="font-size:15px"> / ${act.length}</span></div><div class="s">${T(`研究观察 ${doneN} · 待核验 ${act.filter(o => o.status === '待核验').length} · 未补证 ${act.filter(o => o.status === '原始线索').length}`, `${doneN} researched · ${act.filter(o => o.status === '待核验').length} checking · ${act.filter(o => o.status === '原始线索').length} raw`)} · <a href="/data/alpha/research_queue.json" download>${T('下载待补证清单', 'Download queue')}</a></div></div></div>
       <div class="md"><aside class="md-list">${boardList()}</aside><section class="md-detail" id="ax-detail">${boardDetail(os.find(o => o.id === SELID))}</section></div>
       <p class="small muted" style="margin-top:12px">${T('数据日', 'Data day')} ${esc(OPPS.asof || '')} · ${T('框架', 'Framework')} ${esc(OPPS.framework)} · ${T('自动规则', 'Rules')} ${esc(OPPS.rules || '')} · <a href="${EN ? '/en' : ''}/alpha/framework/#auto">${T('打分规则', 'Scoring rules')}</a> · ${T('不按分数排名，不是买卖建议', 'no rankings, not trade advice')}</p>
       <details class="card ax-more"><summary>${T('待补证清单（每天自动生成）', 'Research queue (generated daily)')} <span class="muted small">${OPPS.queue_n == null ? '' : OPPS.queue_n + T(' 个', ' items')}</span></summary>
@@ -501,6 +554,7 @@
       if (window.ucBootCharts) window.ucBootCharts(det);
       if (push !== false) history.replaceState(null, '', '#' + encodeURIComponent(id));
     };
+    const gd = app.querySelector('.ax-guide'); if (gd) gd.addEventListener('toggle', () => { try { gd.open ? localStorage.removeItem('alpha-guide-closed') : localStorage.setItem('alpha-guide-closed', '1'); } catch (e) {} });
     if (window.ucBootCharts) window.ucBootCharts(app);
     app.onclick = e => {
       const f = e.target.closest('[data-bf]');
