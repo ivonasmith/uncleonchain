@@ -30,22 +30,37 @@ Codex 发现代码有错：写进 `*/review/` 的复核文件（`文件:行号 �
 - 人工登记文件（Codex 可以直接改，改完在提交信息里写出处）：`alpha/manual_leads.json`（新线索）、`alpha/sources.json`（来源台账）、
   `core/core_config.json`（观测池登记）、`aiagent/aiagent_registry.json`（生命周期事件）、`cal/reg_events.json`（立法表决）。
 
-## 4. 现在可以接的任务
+## 4. 每天做什么（全站一套，大叔 11-15 定：一边一个定时任务）
 
-按优先级。做完在对应 README 里把状态改成「已交回」，结果文件放在写明的位置。
+**不要再看零散的任务包找活干**。全站待办和检查每天由总调度自动生成（新加坡 08:05、16:30 两档，Alpha 补证推上去后也会马上重算）：
 
-1. **Alpha · 每日补证（主力，大叔 11-15 定：补证和查信息尽量交 Codex，Grok API 贵、已默认关）**：每天读 `data/alpha/research_queue.json`（日更 UTC 04:43 后更新；prompt、schema、items 已排好序：
-   手动线索 / 本站板块 ★ → 新发现 → 可投资 → 收入高），从前往后补，能补多少补多少，交 `alpha/review/codex_<UTC 日期>_checks.json`（JSON 数组，reviewer = codex）。
-   **M（新参与机制：这个玩法新在哪）优先查**。同一天多批就追加进同一个文件。推上 main 后下一次日更自动并入网站（想马上看到就手动触发 alpha-daily）。
-2. **Alpha · 复核已有的自动补证**：`alpha/review/grok_*_checks.json`（便宜模型，结论偏乐观，例如 Pons 没发现文档写的回购是锁 5 年不销毁、和官网说法冲突）。
-   逐条打开 evidence 核对，结论交进当天的 `codex_<日期>_checks.json`（同 key 会盖过 Grok 的）。
-3. **Alpha · 关键人名单**：`alpha/review/sources_task.md`（S2：核对 Grok 列的 X 原帖 → `alpha/review/sources_people.json`；S1 Grok 的原始回答大叔会放进 `alpha/review/`）。
-3b. **Alpha · CMC 页面地址**：`alpha/cmc_slugs.json` 登记 `{CoinGecko id: CMC slug}`（K 线入口顺序 币安 → CMC → DexScreener，CMC 没登记就跳过）。
-   范围 = `data/alpha/opps.json` 里 `data.tok.gecko` 不为空、且 `data.tok.chart.name` 不是「币安」的币。逐个打开 coinmarketcap.com/currencies/<slug>/ 核对名称、代码、合约地址都对上再登记；对不上或 CMC 没收录的不登记。
-4. **Alpha · T4 / T5**：`alpha/review/README.md`（待核验的补缺口、Bybit / Upbit 替代源）。
-5. **AI Agent · A1–A6**：`aiagent/review/README.md`。
-6. **核心选币 · 评分复核与 M3**：`core/review/README.md`、`core/review/M3_分工.md`。
-7. **Alpha · 复核结果里还没处理的**：`alpha/review/fable_findings_20261115.md`（估值改流通口径要在 `alpha/cases.json` 手工登记峰值日流通量，每条带来源）。
+| 文件 | 是什么 |
+|---|---|
+| `data/check_report.json` | 已交文件的机器检查结果：`who = codex` 的是你交的东西有问题（格式、分数超范围、缺来源、拒绝没证据……），**先改这些** |
+| `data/tasks.json` | 全站待办，已按优先级排好（P1 今天、P2 本周、P3 有空）。每条写了 谁做（`who`）、交到哪（`deliver`）、参考哪（`ref`）、具体清单（`items`） |
+| `data/tasks.md` | 上面两份的人读版 |
+
+### Codex 定时任务的提示词（复制到 Codex 的定时任务里，建议每天新加坡 10:00 和 18:00 各一次）
+
+```
+你在 GitHub 仓库 ivonasmith/uncleonchain 协作（链上大叔研究台）。
+1. git pull origin main。先读根目录 AGENTS.md（分工、提交方式、数据规矩），再读 data/check_report.json 和 data/tasks.json。
+2. 先修 check_report.json 里 who = codex 的问题：改你之前交的文件；已交的 *_checks.json 不回改，交新批次覆盖同一个 key。
+3. 再按 tasks.json 从上往下做 who = codex 的条目，交到每条写的 deliver 位置，格式看 ref。P1 每次都要推进，P2 / P3 有余力再做。
+   Alpha 补证：按 data/alpha/research_queue.json 的 prompt 和 schema，M（新参与机制）优先查；可以加 events（关键事件，日期 + 官方出处）、
+   flow（流量来源：积分空投 / 新链首发 / 补贴 / 自然需求，各写 高 / 中 / 低 / 待验证 + 证据）、next_review（下次复核日）。
+4. 规矩：每条事实带链接和核对日期（UTC），查不到写 "U"，不估不编；拒绝要一手证据；不写买卖 / 仓位 / 止损；不提交 site/ 和 data/ 下的生成文件；仓库公开，不放 key。
+5. 只改 AGENTS.md 第 1 节 Codex 那一行的文件时直接推 main（推之前 git pull --rebase origin main，冲突以远端为准）；要改代码就开 codex/<主题> 分支发 PR。
+6. 最后在 docs/协作记录.md 末尾追加一行：日期 · Codex · 做了哪些 / 没做完的 / 查不到的。
+```
+
+### 谁做什么
+- `who = codex`：你。
+- `who = claude`：要改代码、接新数据源的，攒着由 Claude 每周处理；你发现需要 Claude 配合的，在 `docs/协作记录.md` 写一行。
+- `who = 大叔`：要大叔拍板或核对的（比如六问卡、聪明钱立项书），不要替他定。
+
+### 新板块接入
+在 `pipeline/任务清单.py` 的 `BOARDS` 里加一个函数，返回（待办，问题）。任务包 README 里写成 `## 标题 → \`交付文件\`` 的条目会自动进待办，交付文件出现就算做完。
 
 ## 5. 交接
 

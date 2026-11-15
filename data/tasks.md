@@ -1,0 +1,37 @@
+# 全站待办与检查（2026-11-15 15:41 UTC 自动生成，别手改）
+
+| 板块 | 待办 | 问题 |
+|---|---|---|
+| Alpha 雷达 | 6 | 0 |
+| 发射台 | 2 | 0 |
+| AI Agent | 7 | 0 |
+| RWA | 0 | 0 |
+| 龙头选币 | 2 | 0 |
+| 事件日历 | 0 | 0 |
+| 聪明钱 | 1 | 0 |
+| 全站数据状态 | 0 | 0 |
+
+## 待办
+
+- **P1 · Codex · alpha** 机会卡补证（队列 41 个，从上往下补，M 新参与机制优先查） → `alpha/review/codex_2026-11-15_checks.json（JSON 数组，reviewer = codex）`（参考 `data/alpha/research_queue.json（prompt / schema / items）`）
+- **P1 · Codex · alpha** 复核 Grok 自动补证（2 个，便宜模型结论偏乐观） → `alpha/review/codex_2026-11-15_checks.json`（参考 `alpha/review/grok_*_checks.json`）
+- **P2 · Codex · aiagent** A1 服务层真实性 → `aiagent/review/a1_commerce_checks.json`（参考 `aiagent/review/README.md`）
+- **P2 · Codex · aiagent** A2 x402 与 ERC-8004 的链上数据源 → `aiagent/review/a2_rails_sources.json`（参考 `aiagent/review/README.md`）
+- **P2 · Codex · aiagent** A3 Virtuals ACP 逐日服务收入 → `aiagent/review/a3_acp_revenue.json`（参考 `aiagent/review/README.md`）
+- **P2 · Codex · aiagent** A4 非 BNB 发射台的使用量 → `aiagent/review/a4_launch_usage.json`（参考 `aiagent/review/README.md`）
+- **P2 · Codex · aiagent** A5 时间线与 C 级证据升级 → `aiagent/review/a5_timeline.json`（参考 `aiagent/review/README.md`）
+- **P2 · Codex · aiagent** A6 框架与开发者清单 → `aiagent/review/a6_frameworks.json`（参考 `aiagent/review/README.md`）
+- **P2 · Codex · alpha** 关键人名单核对（S2） → `alpha/review/sources_people.json`（参考 `alpha/review/sources_task.md`）
+- **P2 · Codex · launchpad** 关键事件登记（近 7 天手续费前 25 的平台里 25 家还没有） → `config/launchpad_events.json（每条 日期 / 事 / 出处，必须官方出处）`（参考 `docs/接口_发射台给Alpha.md`）
+- **P3 · Codex · aiagent** 监控地图待核事项（6 条） → `aiagent/aiagent_registry.json`
+- **P3 · Codex · alpha** CMC 页面地址核对登记（12 个币） → `alpha/cmc_slugs.json`（参考 `AGENTS.md 第 4 节 3b`）
+- **P3 · Codex · alpha** 历史案例峰值日流通量登记（21 个，估值改流通口径用） → `alpha/cases.json 每个 tokens[] 加 circ_peak {数量, 日期, 出处}`（参考 `alpha/review/fable_findings_20261115.md 第 12 条`）
+- **P3 · Codex · alpha** 补失败样本 / 同期对照组（现在 3 个，目标 ≥ 10） → `alpha/review/cases_control_<日期>.json（格式同 alpha/cases.json 的 cases[]，带 why_control 和出处）`（参考 `alpha/cases.json`）
+- **P3 · Codex · core** 六问卡草稿（30 个币没有核对过的卡；Codex 出草稿，大叔核对后才进 cards） → `core/review/cards_draft_<日期>.json（键同 core_config.json 的 _cards_说明，每栏带出处）`（参考 `core/core_config.json _cards_说明`）
+- **P3 · 大叔 · core** 核对六问卡草稿（只有大叔核对过的才算，R1 要七栏齐）（参考 `core/review/cards_draft_*.json`）
+- **P3 · Claude · launchpad** 平台质量待接入字段：交易者、发币人（参考 `docs/接口_发射台给Alpha.md 字段优先级 4`）
+- **P3 · 大叔 · smartmoney** 聪明钱：等立项书定稿（主体 / 证据等级 / 入选规则写死后才开 S1）（参考 `smartmoney/research/立项书.md`）
+
+## 检查出的问题
+
+- 没有

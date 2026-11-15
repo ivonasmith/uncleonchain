@@ -164,6 +164,9 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
 - 时间口径（2026-11-06 定）：后端统计一律 UTC+0，数据按 UTC 完整日（UTC 0 点收盘）对齐，价格用收盘价（L2 / L3 只取 < 今天的日子）；
   前端显示按语言区域换算：中文站新加坡时间（UTC+8，`SG_TZ`），英文站美东时间。钟点用 `出网站.TT`，收盘 `TCLOSE`，UTC 日截止 `TDAY`，日历列表 `TLOC`。别写裸「UTC hh:mm」或「北京时间」。
 - 交易所 + ETF 持币：`拉宏观.fetch_etf_hold`（TFTC data.json，`totalNetAssetsUsd / btcCloseUsd`）→ `etf_btc`；注册表 `etf_hold` / `exetf_sum` 在 L3「交易所与现货 ETF 持币」组，只作描述。
+- **全站协作闭环（大叔 11-15 定：一边一个定时任务）**：`pipeline/任务清单.py`（总调度 publish、alpha-daily 里跑）→ `data/tasks.json`（全站待办：各板块 `BOARDS` 函数出，标 who = codex / claude / 大叔、deliver、ref、items、P1–P3）、
+  `data/check_report.json`（已交补证 / 登记文件的机器检查）、`data/tasks.md`（人读版）。Codex 定时任务（提示词在 `AGENTS.md` 第 4 节）每天先修检查问题、再做 who=codex 的待办、推 main；
+  who=claude 的由 Claude 每周会话处理。新板块接入 = 在 BOARDS 加函数；任务包 README 里 `## 标题 → \`交付文件\`` 自动进待办、文件出现即完成。
 - **所有 workflow 共用 concurrency 组 `daily-pipeline`**：排队中的会被新排进来的取消，手动触发一次只排一个。
   提交步骤在 `pull --rebase -X theirs` 之后会比对：运行期间 main 上 pipeline / leg / config / content / assets 有改动，就用最新代码重出一次网站再推（2026-11-10 出过旧代码出的页面盖掉新版的事）。本地出网站会删掉 `site/data/launchpad/*`，提交前 `git checkout -- site/data/launchpad`。别用 git stash（出过丢改动的事）。
 - **指标注册表**（M12）= `宏观规则.REGISTRY`：每条带 层 / 组 / 序 / 状态（live · pending · retired；自录的满 90 天前自动「记录中」）/ cuts（tone 即 bias：up 顺风 · neutral · dn 逆风 · warn 留意）/

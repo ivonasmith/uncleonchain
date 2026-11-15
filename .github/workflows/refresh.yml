@@ -322,6 +322,7 @@ jobs:
           OUT='{"btc":"${{ needs.btc.result }}","legcore":"${{ needs.legcore.result }}","side":"${{ needs.side.result }}","alpha":"${{ needs.alpha.result }}","launchpad":"${{ needs.launchpad.result }}"}'
           python3 pipeline/数据状态.py --write "${{ needs.guard.outputs.slot }}" --outcomes "$OUT" \
             --run-url "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" --started "${{ needs.guard.outputs.started }}"
+          python3 pipeline/任务清单.py || echo "⚠️ 全站待办 / 检查失败"   # data/tasks.json、check_report.json、tasks.md：Codex 定时任务每天读
           python3 pipeline/出网站.py
       - name: 提交并推送（冲突重试 4 次）
         run: |

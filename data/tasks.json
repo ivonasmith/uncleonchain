@@ -1,0 +1,738 @@
+{
+ "generated": "2026-11-15T15:41:22+00:00",
+ "boards": [
+  {
+   "board": "alpha",
+   "name": "Alpha 雷达",
+   "tasks": 6,
+   "issues": 0
+  },
+  {
+   "board": "launchpad",
+   "name": "发射台",
+   "tasks": 2,
+   "issues": 0
+  },
+  {
+   "board": "aiagent",
+   "name": "AI Agent",
+   "tasks": 7,
+   "issues": 0
+  },
+  {
+   "board": "rwa",
+   "name": "RWA",
+   "tasks": 0,
+   "issues": 0
+  },
+  {
+   "board": "core",
+   "name": "龙头选币",
+   "tasks": 2,
+   "issues": 0
+  },
+  {
+   "board": "cal",
+   "name": "事件日历",
+   "tasks": 0,
+   "issues": 0
+  },
+  {
+   "board": "smartmoney",
+   "name": "聪明钱",
+   "tasks": 1,
+   "issues": 0
+  },
+  {
+   "board": "site",
+   "name": "全站数据状态",
+   "tasks": 0,
+   "issues": 0
+  }
+ ],
+ "tasks": [
+  {
+   "board": "alpha",
+   "id": "alpha:research",
+   "title": "机会卡补证（队列 41 个，从上往下补，M 新参与机制优先查）",
+   "who": "codex",
+   "pri": 1,
+   "deliver": "alpha/review/codex_2026-11-15_checks.json（JSON 数组，reviewer = codex）",
+   "ref": "data/alpha/research_queue.json（prompt / schema / items）",
+   "items": [
+    {
+     "key": "s:9427",
+     "name": "Volta",
+     "status": "原始线索",
+     "fresh": true,
+     "kind": "surge"
+    },
+    {
+     "key": "m:bem-tapeout",
+     "name": "TapeOut / BEM",
+     "status": "原始线索",
+     "fresh": true,
+     "kind": "manual"
+    },
+    {
+     "key": "x:aiagent:bankr",
+     "name": "Bankr",
+     "status": "原始线索",
+     "fresh": true,
+     "kind": "site"
+    },
+    {
+     "key": "g:9381",
+     "name": "Ascend Launchpad",
+     "status": "原始线索",
+     "fresh": true,
+     "kind": "tokenless"
+    },
+    {
+     "key": "x:launchpad:boxa-v1",
+     "name": "Boxa V1",
+     "status": "原始线索",
+     "fresh": true,
+     "kind": "site"
+    },
+    {
+     "key": "x:launchpad:chain-elysium",
+     "name": "Elysium 生态（新发射台聚集）",
+     "status": "原始线索",
+     "fresh": true,
+     "kind": "site"
+    },
+    {
+     "key": "g:9146",
+     "name": "Central City",
+     "status": "待核验",
+     "fresh": true,
+     "kind": "tokenless"
+    },
+    {
+     "key": "s:9065",
+     "name": "Papertrade",
+     "status": "原始线索",
+     "fresh": true,
+     "kind": "surge"
+    },
+    {
+     "key": "s:parent#paperstrategy",
+     "name": "Paperstrategy",
+     "status": "原始线索",
+     "fresh": true,
+     "kind": "surge"
+    },
+    {
+     "key": "s:8884",
+     "name": "Nullmask",
+     "status": "原始线索",
+     "fresh": true,
+     "kind": "surge"
+    },
+    {
+     "key": "s:7966",
+     "name": "Render Network BME",
+     "status": "原始线索",
+     "fresh": true,
+     "kind": "surge"
+    },
+    {
+     "key": "s:8481",
+     "name": "Fables",
+     "status": "原始线索",
+     "fresh": true,
+     "kind": "surge"
+    },
+    {
+     "key": "s:4063",
+     "name": "Peapods Finance",
+     "status": "原始线索",
+     "fresh": true,
+     "kind": "surge"
+    },
+    {
+     "key": "s:parent#justlend",
+     "name": "JustLend V1",
+     "status": "原始线索",
+     "fresh": true,
+     "kind": "surge"
+    },
+    {
+     "key": "s:7655",
+     "name": "THORWallet",
+     "status": "原始线索",
+     "fresh": true,
+     "kind": "surge"
+    },
+    {
+     "key": "s:parent#liquity",
+     "name": "Liquity",
+     "status": "原始线索",
+     "fresh": true,
+     "kind": "surge"
+    },
+    {
+     "key": "s:6771",
+     "name": "Yield Basis",
+     "status": "原始线索",
+     "fresh": true,
+     "kind": "surge"
+    },
+    {
+     "key": "s:9169",
+     "name": "Sapling",
+     "status": "原始线索",
+     "fresh": true,
+     "kind": "surge"
+    },
+    {
+     "key": "s:9182",
+     "name": "Veil",
+     "status": "原始线索",
+     "fresh": true,
+     "kind": "surge"
+    },
+    {
+     "key": "s:9187",
+     "name": "Stockereum",
+     "status": "原始线索",
+     "fresh": true,
+     "kind": "surge"
+    },
+    {
+     "key": "g:8144",
+     "name": "Catapult Trade",
+     "status": "待核验",
+     "fresh": false,
+     "kind": "tokenless"
+    },
+    {
+     "key": "p:9380",
+     "name": "Kinetiq Elysium Bridge",
+     "status": "原始线索",
+     "fresh": false,
+     "kind": "listing"
+    },
+    {
+     "key": "p:9393",
+     "name": "Pendle Loop",
+     "status": "原始线索",
+     "fresh": false,
+     "kind": "listing"
+    },
+    {
+     "key": "p:9353",
+     "name": "Vesper V2",
+     "status": "原始线索",
+     "fresh": false,
+     "kind": "listing"
+    },
+    {
+     "key": "p:9415",
+     "name": "Swan DAO",
+     "status": "原始线索",
+     "fresh": false,
+     "kind": "listing"
+    },
+    {
+     "key": "g:parent#fomo",
+     "name": "Fomo",
+     "status": "待核验",
+     "fresh": false,
+     "kind": "tokenless"
+    },
+    {
+     "key": "g:5408",
+     "name": "GMGN",
+     "status": "待核验",
+     "fresh": false,
+     "kind": "tokenless"
+    },
+    {
+     "key": "g:4983",
+     "name": "Flap sh",
+     "status": "待核验",
+     "fresh": false,
+     "kind": "tokenless"
+    },
+    {
+     "key": "g:7010",
+     "name": "trade[XYZ]",
+     "status": "待核验",
+     "fresh": false,
+     "kind": "tokenless"
+    },
+    {
+     "key": "g:parent#azverse",
+     "name": "Azverse",
+     "status": "待核验",
+     "fresh": false,
+     "kind": "tokenless"
+    },
+    {
+     "key": "g:9296",
+     "name": "The Standard Reserve",
+     "status": "待核验",
+     "fresh": false,
+     "kind": "tokenless"
+    },
+    {
+     "key": "g:parent#txflow",
+     "name": "TxFlow Perps",
+     "status": "待核验",
+     "fresh": false,
+     "kind": "tokenless"
+    },
+    {
+     "key": "g:7016",
+     "name": "Antarctic",
+     "status": "待核验",
+     "fresh": false,
+     "kind": "tokenless"
+    },
+    {
+     "key": "g:8415",
+     "name": "XOX Perps",
+     "status": "待核验",
+     "fresh": false,
+     "kind": "tokenless"
+    },
+    {
+     "key": "g:5864",
+     "name": "TRONSAVE",
+     "status": "待核验",
+     "fresh": false,
+     "kind": "tokenless"
+    },
+    {
+     "key": "g:5825",
+     "name": "Veda",
+     "status": "待核验",
+     "fresh": false,
+     "kind": "tokenless"
+    },
+    {
+     "key": "g:parent#hyperdash",
+     "name": "Hyperdash",
+     "status": "待核验",
+     "fresh": false,
+     "kind": "tokenless"
+    },
+    {
+     "key": "g:parent#rabby",
+     "name": "Rabby",
+     "status": "待核验",
+     "fresh": false,
+     "kind": "tokenless"
+    },
+    {
+     "key": "g:parent#okx-dex",
+     "name": "OKX Swap",
+     "status": "待核验",
+     "fresh": false,
+     "kind": "tokenless"
+    },
+    {
+     "key": "g:8916",
+     "name": "Relay",
+     "status": "待核验",
+     "fresh": false,
+     "kind": "tokenless"
+    }
+   ],
+   "n": 40,
+   "note": "排序：手动线索 / 本站板块 ★ → 新发现 → 有参与入口 → 收入高。同一天多批追加进同一个文件。"
+  },
+  {
+   "board": "alpha",
+   "id": "alpha:review-grok",
+   "title": "复核 Grok 自动补证（2 个，便宜模型结论偏乐观）",
+   "who": "codex",
+   "pri": 1,
+   "deliver": "alpha/review/codex_2026-11-15_checks.json",
+   "ref": "alpha/review/grok_*_checks.json",
+   "items": [
+    {
+     "key": "m:pons",
+     "name": "Pons",
+     "verdict": "研究观察"
+    },
+    {
+     "key": "s:9388",
+     "name": "Montra",
+     "verdict": "研究观察"
+    }
+   ],
+   "n": 2,
+   "note": null
+  },
+  {
+   "board": "aiagent",
+   "id": "aiagent:pkg:A1-服务层真实性",
+   "title": "A1 服务层真实性",
+   "who": "codex",
+   "pri": 2,
+   "deliver": "aiagent/review/a1_commerce_checks.json",
+   "ref": "aiagent/review/README.md",
+   "items": null,
+   "n": null,
+   "note": null
+  },
+  {
+   "board": "aiagent",
+   "id": "aiagent:pkg:A2-x402-与-ERC-8004-的链上数据源",
+   "title": "A2 x402 与 ERC-8004 的链上数据源",
+   "who": "codex",
+   "pri": 2,
+   "deliver": "aiagent/review/a2_rails_sources.json",
+   "ref": "aiagent/review/README.md",
+   "items": null,
+   "n": null,
+   "note": null
+  },
+  {
+   "board": "aiagent",
+   "id": "aiagent:pkg:A3-Virtuals-ACP-逐日服务收入",
+   "title": "A3 Virtuals ACP 逐日服务收入",
+   "who": "codex",
+   "pri": 2,
+   "deliver": "aiagent/review/a3_acp_revenue.json",
+   "ref": "aiagent/review/README.md",
+   "items": null,
+   "n": null,
+   "note": null
+  },
+  {
+   "board": "aiagent",
+   "id": "aiagent:pkg:A4-非-BNB-发射台的使用量",
+   "title": "A4 非 BNB 发射台的使用量",
+   "who": "codex",
+   "pri": 2,
+   "deliver": "aiagent/review/a4_launch_usage.json",
+   "ref": "aiagent/review/README.md",
+   "items": null,
+   "n": null,
+   "note": null
+  },
+  {
+   "board": "aiagent",
+   "id": "aiagent:pkg:A5-时间线与-C-级证据升级",
+   "title": "A5 时间线与 C 级证据升级",
+   "who": "codex",
+   "pri": 2,
+   "deliver": "aiagent/review/a5_timeline.json",
+   "ref": "aiagent/review/README.md",
+   "items": null,
+   "n": null,
+   "note": null
+  },
+  {
+   "board": "aiagent",
+   "id": "aiagent:pkg:A6-框架与开发者清单",
+   "title": "A6 框架与开发者清单",
+   "who": "codex",
+   "pri": 2,
+   "deliver": "aiagent/review/a6_frameworks.json",
+   "ref": "aiagent/review/README.md",
+   "items": null,
+   "n": null,
+   "note": null
+  },
+  {
+   "board": "alpha",
+   "id": "alpha:people",
+   "title": "关键人名单核对（S2）",
+   "who": "codex",
+   "pri": 2,
+   "deliver": "alpha/review/sources_people.json",
+   "ref": "alpha/review/sources_task.md",
+   "items": null,
+   "n": null,
+   "note": null
+  },
+  {
+   "board": "launchpad",
+   "id": "launchpad:events",
+   "title": "关键事件登记（近 7 天手续费前 25 的平台里 25 家还没有）",
+   "who": "codex",
+   "pri": 2,
+   "deliver": "config/launchpad_events.json（每条 日期 / 事 / 出处，必须官方出处）",
+   "ref": "docs/接口_发射台给Alpha.md",
+   "items": [
+    {
+     "slug": "pump.fun",
+     "name": "pump.fun"
+    },
+    {
+     "slug": "flap-sh",
+     "name": "Flap sh"
+    },
+    {
+     "slug": "montra",
+     "name": "Montra"
+    },
+    {
+     "slug": "launchlab",
+     "name": "LaunchLab"
+    },
+    {
+     "slug": "pons-v2",
+     "name": "Pons V2"
+    },
+    {
+     "slug": "bonk.fun-launchpad",
+     "name": "BONK.fun Launchpad"
+    },
+    {
+     "slug": "ascend-launchpad",
+     "name": "Ascend Launchpad"
+    },
+    {
+     "slug": "stonkfun",
+     "name": "StonkFun"
+    },
+    {
+     "slug": "graphite-protocol",
+     "name": "Graphite Protocol"
+    },
+    {
+     "slug": "volta",
+     "name": "Volta"
+    },
+    {
+     "slug": "meteora-dynamic-bonding-curve",
+     "name": "Meteora Dynamic Bonding Curve"
+    },
+    {
+     "slug": "binance-alpha",
+     "name": "Binance Alpha"
+    },
+    {
+     "slug": "boxa-v1",
+     "name": "Boxa V1"
+    },
+    {
+     "slug": "clanker",
+     "name": "clanker"
+    },
+    {
+     "slug": "bags",
+     "name": "Bags"
+    },
+    {
+     "slug": "otc",
+     "name": "OTC"
+    },
+    {
+     "slug": "pons-v1",
+     "name": "Pons V1"
+    },
+    {
+     "slug": "four.meme",
+     "name": "four.meme"
+    },
+    {
+     "slug": "noxa-fun",
+     "name": "NOXA Fun"
+    },
+    {
+     "slug": "stockereum",
+     "name": "Stockereum"
+    },
+    {
+     "slug": "elyspump-v2",
+     "name": "ElysPump V2"
+    },
+    {
+     "slug": "metaplex",
+     "name": "Metaplex"
+    },
+    {
+     "slug": "rise.rich",
+     "name": "Rise.rich"
+    },
+    {
+     "slug": "pools",
+     "name": "Pools"
+    },
+    {
+     "slug": "genius.fun",
+     "name": "Genius.fun"
+    }
+   ],
+   "n": 25,
+   "note": null
+  },
+  {
+   "board": "aiagent",
+   "id": "aiagent:open-items",
+   "title": "监控地图待核事项（6 条）",
+   "who": "codex",
+   "pri": 3,
+   "deliver": "aiagent/aiagent_registry.json",
+   "ref": null,
+   "items": [
+    "Clanker v5 发布日期、Neynar 接手 Farcaster / Clanker 的公告日期",
+    "Olas Pearl Mini 停服日期；Giza 旧版资金迁移日期",
+    "Flap ID Agent Curve、Four.meme OpenFour 官方上线公告日期",
+    "Bankr 社交 / 对话 / API 默认链改为 Robinhood Chain 的日期",
+    "elizaOS（ai16z）代币支持收尾、auto.fun 停运时间；DataHaven、Yupp 关停公告",
+    "Binance AI Pro beta（2026-10-13）原文"
+   ],
+   "n": 6,
+   "note": null
+  },
+  {
+   "board": "alpha",
+   "id": "alpha:cmc",
+   "title": "CMC 页面地址核对登记（12 个币）",
+   "who": "codex",
+   "pri": 3,
+   "deliver": "alpha/cmc_slugs.json",
+   "ref": "AGENTS.md 第 4 节 3b",
+   "items": [
+    "bankercoin-2",
+    "bem-2",
+    "fables",
+    "kinetiq",
+    "nullmask",
+    "peapods-finance",
+    "pons",
+    "sapling",
+    "stockereum-fun",
+    "thor-wallet",
+    "veil-2",
+    "vesper-finance"
+   ],
+   "n": 12,
+   "note": null
+  },
+  {
+   "board": "alpha",
+   "id": "alpha:cases-circ",
+   "title": "历史案例峰值日流通量登记（21 个，估值改流通口径用）",
+   "who": "codex",
+   "pri": 3,
+   "deliver": "alpha/cases.json 每个 tokens[] 加 circ_peak {数量, 日期, 出处}",
+   "ref": "alpha/review/fable_findings_20261115.md 第 12 条",
+   "items": [
+    "btc",
+    "eth",
+    "axie",
+    "helium",
+    "comp",
+    "yfi",
+    "uni",
+    "ohm",
+    "ens",
+    "stepn",
+    "spacemesh",
+    "ordinals",
+    "blur",
+    "arb",
+    "friend",
+    "jto",
+    "pump",
+    "hype",
+    "sushi",
+    "looks",
+    "blast"
+   ],
+   "n": 21,
+   "note": null
+  },
+  {
+   "board": "alpha",
+   "id": "alpha:cases-control",
+   "title": "补失败样本 / 同期对照组（现在 3 个，目标 ≥ 10）",
+   "who": "codex",
+   "pri": 3,
+   "deliver": "alpha/review/cases_control_<日期>.json（格式同 alpha/cases.json 的 cases[]，带 why_control 和出处）",
+   "ref": "alpha/cases.json",
+   "items": null,
+   "n": null,
+   "note": null
+  },
+  {
+   "board": "core",
+   "id": "core:cards-draft",
+   "title": "六问卡草稿（30 个币没有核对过的卡；Codex 出草稿，大叔核对后才进 cards）",
+   "who": "codex",
+   "pri": 3,
+   "deliver": "core/review/cards_draft_<日期>.json（键同 core_config.json 的 _cards_说明，每栏带出处）",
+   "ref": "core/core_config.json _cards_说明",
+   "items": [
+    "UNI",
+    "HYPE",
+    "CAKE",
+    "AAVE",
+    "PUMP",
+    "SKY",
+    "RAY",
+    "JUP",
+    "ETHFI",
+    "MORPHO",
+    "ENA",
+    "NEAR",
+    "PENDLE",
+    "LDO",
+    "AERO",
+    "ONDO",
+    "GMX",
+    "ZEC",
+    "ARB",
+    "OP",
+    "SOL",
+    "AVAX",
+    "SUI",
+    "BNB",
+    "LINK",
+    "TAO",
+    "RENDER",
+    "DOGE",
+    "BCH",
+    "XRP"
+   ],
+   "n": 30,
+   "note": null
+  },
+  {
+   "board": "core",
+   "id": "core:cards-confirm",
+   "title": "核对六问卡草稿（只有大叔核对过的才算，R1 要七栏齐）",
+   "who": "大叔",
+   "pri": 3,
+   "deliver": null,
+   "ref": "core/review/cards_draft_*.json",
+   "items": null,
+   "n": null,
+   "note": null
+  },
+  {
+   "board": "launchpad",
+   "id": "launchpad:quality-fields",
+   "title": "平台质量待接入字段：交易者、发币人",
+   "who": "claude",
+   "pri": 3,
+   "deliver": null,
+   "ref": "docs/接口_发射台给Alpha.md 字段优先级 4",
+   "items": null,
+   "n": null,
+   "note": null
+  },
+  {
+   "board": "smartmoney",
+   "id": "smartmoney:s0",
+   "title": "聪明钱：等立项书定稿（主体 / 证据等级 / 入选规则写死后才开 S1）",
+   "who": "大叔",
+   "pri": 3,
+   "deliver": null,
+   "ref": "smartmoney/research/立项书.md",
+   "items": null,
+   "n": null,
+   "note": "立项阶段（S0），立项书定稿前不采集、不出页面"
+  }
+ ],
+ "how": "Codex 每天：先改 check_report.json 里 who=codex 的问题，再按 tasks 从上往下做 who=codex 的；交付文件推 main。who=claude 的攒给 Claude 每周处理，who=大叔 的等大叔。"
+}
