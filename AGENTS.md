@@ -40,6 +40,11 @@ Codex 发现代码有错：写进 `*/review/` 的复核文件（`文件:行号 �
 | `data/tasks.json` | 全站待办，已按优先级排好（P1 今天、P2 本周、P3 有空）。每条写了 谁做（`who`）、交到哪（`deliver`）、参考哪（`ref`）、具体清单（`items`） |
 | `data/tasks.md` | 上面两份的人读版 |
 
+推送补证 / 登记文件后，工作流「补证检查」几分钟内重算这两份（只改这三个文件，不出网站、不触发日更）；Alpha 的结果同时由 alpha-daily 并进网站，其它板块等下一档总调度。
+`check_report.json` 的 `summary` 把补证分成 已查证 / 已处理但证据不足 / 缺来源 / 字段格式错误 / 已过期需重核——**写进文件不等于查证完成**，「证据不足」的下一轮继续补。
+`tasks.json` 的 `queue` 是逐条待办（key、priority、task_type、missing、status、last_checked_utc），做的时候按它走。
+**先把 Alpha 跑稳一周**（每天都能交、检查报告没有 error），再按 发射台 / AI Agent → 龙头选币 / RWA / 日历 的顺序加量。
+
 ### Codex 定时任务的提示词（复制到 Codex 的定时任务里，建议每天新加坡 10:00 和 18:00 各一次）
 
 ```

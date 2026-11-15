@@ -39,6 +39,9 @@ def days_since(s):
         return None
 
 
+QUEUE, SUMMARY = [], {}
+
+
 def task(board, tid, title, who="codex", pri=2, deliver=None, ref=None, items=None, note=None):
     """pri：1 = 今天做，2 = 本周，3 = 有空再做。"""
     return {"board": board, "id": f"{board}:{tid}", "title": title, "who": who, "pri": pri, "deliver": deliver, "ref": ref,
@@ -118,6 +121,30 @@ def board_alpha():
                 if not os.path.basename(p).startswith("grok_"):
                     codex_keys.add(c["key"])
     items = [{"key": i["key"], "name": i["name"], "status": i.get("status"), "fresh": i.get("fresh"), "kind": i.get("kind")} for i in q.get("items", [])]
+    # 逐条待办（Codex 11-15 建议：每条有 key / 类型 / 缺什么 / 状态 / 上次核对，「文件里有记录」不等于「查证完成」）
+    for n, i in enumerate(q.get("items", [])):
+        prev = by_key.get(i["key"])
+        miss = list(i.get("pending") or []) + (i.get("missing_before") or [])[:4]
+        QUEUE.append({"key": "alpha:" + i["key"], "board": "alpha", "priority": 1 if n < 10 else 2, "task_type": "research" if not prev else "evidence",
+                      "name": i["name"], "missing": miss, "source_refs": ["data/alpha/research_queue.json"],
+                      "status": "open" if not prev else "partial", "last_checked_utc": (prev[1].get("checked_utc") if prev else None),
+                      "deliver": f"alpha/review/codex_{TODAY.isoformat()}_checks.json"})
+    cls = {"已查证": 0, "已处理但证据不足": 0, "缺来源": 0, "字段格式错误": 0, "已过期需重核": 0}
+    first_hand = re.compile(r"defillama\.com|explorer|scan\.|blockscout|github\.com|docs\.|gitbook|/docs|x\.com/", re.I)
+    for k, (fn, c) in by_key.items():
+        ev = [e.get("url", "") for e in c.get("evidence") or [] if isinstance(e, dict)]
+        bad = c.get("verdict") not in VERDICTS
+        if bad:
+            cls["字段格式错误"] += 1
+        elif not any(u.startswith("http") for u in ev):
+            cls["缺来源"] += 1
+        elif (days_since(c.get("checked_utc")) or 0) > 30:
+            cls["已过期需重核"] += 1
+        elif c.get("verdict") in ("研究观察", "拒绝", "优先研究") and any(first_hand.search(u) for u in ev):
+            cls["已查证"] += 1
+        else:
+            cls["已处理但证据不足"] += 1
+    SUMMARY["alpha"] = dict(cls, 已交条目=len(by_key), 其中Grok未经Codex复核=sum(1 for k, (fn, c) in by_key.items() if fn.startswith("grok_") and k not in codex_keys))
     if items:
         T.append(task("alpha", "research", f"机会卡补证（队列 {len(items)} 个，从上往下补，M 新参与机制优先查）", "codex", 1,
                       deliver=f"alpha/review/codex_{TODAY.isoformat()}_checks.json（JSON 数组，reviewer = codex）",
@@ -264,16 +291,18 @@ def main():
         boards.append({"board": k, "name": name, "tasks": len(t), "issues": len(i)})
     tasks.sort(key=lambda x: (x["pri"], x["who"] != "codex", x["board"]))
     gen = NOW.isoformat(timespec="seconds")
-    json.dump({"generated": gen, "boards": boards, "tasks": tasks,
+    json.dump({"generated": gen, "boards": boards, "tasks": tasks, "queue": QUEUE,
                "how": "Codex 每天：先改 check_report.json 里 who=codex 的问题，再按 tasks 从上往下做 who=codex 的；交付文件推 main。who=claude 的攒给 Claude 每周处理，who=大叔 的等大叔。"},
               open(os.path.join(DATA, "tasks.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
-    json.dump({"generated": gen, "issues": issues, "n": len(issues), "errors": sum(1 for x in issues if x["level"] == "error")},
+    json.dump({"generated": gen, "summary": SUMMARY, "issues": issues, "n": len(issues), "errors": sum(1 for x in issues if x["level"] == "error")},
               open(os.path.join(DATA, "check_report.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     W = {"codex": "Codex", "claude": "Claude", "大叔": "大叔"}
     md = [f"# 全站待办与检查（{gen[:16].replace('T', ' ')} UTC 自动生成，别手改）", "",
           "| 板块 | 待办 | 问题 |", "|---|---|---|"] + [f"| {b['name']} | {b['tasks']} | {b['issues']} |" for b in boards] + ["", "## 待办", ""]
     for t in tasks:
         md.append(f"- **P{t['pri']} · {W.get(t['who'], t['who'])} · {t['board']}** {t['title']}" + (f" → `{t['deliver']}`" if t.get("deliver") else "") + (f"（参考 `{t['ref']}`）" if t.get("ref") else ""))
+    for b, sm in SUMMARY.items():
+        md += ["", f"## {b} 补证状态（已覆盖 ≠ 已查证）", "", "| " + " | ".join(sm) + " |", "|" + "---|" * len(sm), "| " + " | ".join(str(v) for v in sm.values()) + " |"]
     md += ["", "## 检查出的问题", ""] + ([f"- [{x['level']}] {W.get(x['who'], x['who'])} · `{x['file']}`{' · ' + str(x['key']) if x.get('key') else ''}：{x['msg']}" for x in issues] or ["- 没有"])
     open(os.path.join(DATA, "tasks.md"), "w", encoding="utf-8").write("\n".join(md) + "\n")
     print(f"全站待办 {len(tasks)} 条（Codex {sum(1 for t in tasks if t['who'] == 'codex')} / Claude {sum(1 for t in tasks if t['who'] == 'claude')} / 大叔 {sum(1 for t in tasks if t['who'] == '大叔')}），检查问题 {len(issues)} 条")

@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-15T15:41:22+00:00",
+ "generated": "2026-11-15T15:42:49+00:00",
  "boards": [
   {
    "board": "alpha",
@@ -732,6 +732,1064 @@
    "items": null,
    "n": null,
    "note": "立项阶段（S0），立项书定稿前不采集、不出页面"
+  }
+ ],
+ "queue": [
+  {
+   "key": "alpha:s:9427",
+   "board": "alpha",
+   "priority": 1,
+   "task_type": "research",
+   "name": "Volta",
+   "missing": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "TE"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "open",
+   "last_checked_utc": null,
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
+  },
+  {
+   "key": "alpha:m:bem-tapeout",
+   "board": "alpha",
+   "priority": 1,
+   "task_type": "research",
+   "name": "TapeOut / BEM",
+   "missing": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "TE"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "open",
+   "last_checked_utc": null,
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
+  },
+  {
+   "key": "alpha:x:aiagent:bankr",
+   "board": "alpha",
+   "priority": 1,
+   "task_type": "research",
+   "name": "Bankr",
+   "missing": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "TE"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "open",
+   "last_checked_utc": null,
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
+  },
+  {
+   "key": "alpha:g:9381",
+   "board": "alpha",
+   "priority": 1,
+   "task_type": "research",
+   "name": "Ascend Launchpad",
+   "missing": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "open",
+   "last_checked_utc": null,
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
+  },
+  {
+   "key": "alpha:x:launchpad:boxa-v1",
+   "board": "alpha",
+   "priority": 1,
+   "task_type": "research",
+   "name": "Boxa V1",
+   "missing": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "open",
+   "last_checked_utc": null,
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
+  },
+  {
+   "key": "alpha:x:launchpad:chain-elysium",
+   "board": "alpha",
+   "priority": 1,
+   "task_type": "research",
+   "name": "Elysium 生态（新发射台聚集）",
+   "missing": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "open",
+   "last_checked_utc": null,
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
+  },
+  {
+   "key": "alpha:g:9146",
+   "board": "alpha",
+   "priority": 1,
+   "task_type": "evidence",
+   "name": "Central City",
+   "missing": [
+    "M",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "独立关联地址/自成交及去补贴留存审计未完成。",
+    "未独立重放全部费用与支付，适配器方法可能更新。",
+    "当前官方自身 token/积分/空投立场及适用日期 U。",
+    "官方原始表态日期 U，不用页面读取日期代替。"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "partial",
+   "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
+  },
+  {
+   "key": "alpha:s:9065",
+   "board": "alpha",
+   "priority": 1,
+   "task_type": "research",
+   "name": "Papertrade",
+   "missing": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "TE"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "open",
+   "last_checked_utc": null,
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
+  },
+  {
+   "key": "alpha:s:parent#paperstrategy",
+   "board": "alpha",
+   "priority": 1,
+   "task_type": "research",
+   "name": "Paperstrategy",
+   "missing": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "TE"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "open",
+   "last_checked_utc": null,
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
+  },
+  {
+   "key": "alpha:s:8884",
+   "board": "alpha",
+   "priority": 1,
+   "task_type": "research",
+   "name": "Nullmask",
+   "missing": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "TE"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "open",
+   "last_checked_utc": null,
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
+  },
+  {
+   "key": "alpha:s:7966",
+   "board": "alpha",
+   "priority": 2,
+   "task_type": "research",
+   "name": "Render Network BME",
+   "missing": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "TE"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "open",
+   "last_checked_utc": null,
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
+  },
+  {
+   "key": "alpha:s:8481",
+   "board": "alpha",
+   "priority": 2,
+   "task_type": "research",
+   "name": "Fables",
+   "missing": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "TE"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "open",
+   "last_checked_utc": null,
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
+  },
+  {
+   "key": "alpha:s:4063",
+   "board": "alpha",
+   "priority": 2,
+   "task_type": "research",
+   "name": "Peapods Finance",
+   "missing": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "TE"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "open",
+   "last_checked_utc": null,
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
+  },
+  {
+   "key": "alpha:s:parent#justlend",
+   "board": "alpha",
+   "priority": 2,
+   "task_type": "research",
+   "name": "JustLend V1",
+   "missing": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "TE"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "open",
+   "last_checked_utc": null,
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
+  },
+  {
+   "key": "alpha:s:7655",
+   "board": "alpha",
+   "priority": 2,
+   "task_type": "research",
+   "name": "THORWallet",
+   "missing": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "TE"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "open",
+   "last_checked_utc": null,
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
+  },
+  {
+   "key": "alpha:s:parent#liquity",
+   "board": "alpha",
+   "priority": 2,
+   "task_type": "research",
+   "name": "Liquity",
+   "missing": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "TE"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "open",
+   "last_checked_utc": null,
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
+  },
+  {
+   "key": "alpha:s:6771",
+   "board": "alpha",
+   "priority": 2,
+   "task_type": "research",
+   "name": "Yield Basis",
+   "missing": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "TE"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "open",
+   "last_checked_utc": null,
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
+  },
+  {
+   "key": "alpha:s:9169",
+   "board": "alpha",
+   "priority": 2,
+   "task_type": "research",
+   "name": "Sapling",
+   "missing": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "TE"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "open",
+   "last_checked_utc": null,
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
+  },
+  {
+   "key": "alpha:s:9182",
+   "board": "alpha",
+   "priority": 2,
+   "task_type": "research",
+   "name": "Veil",
+   "missing": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "TE"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "open",
+   "last_checked_utc": null,
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
+  },
+  {
+   "key": "alpha:s:9187",
+   "board": "alpha",
+   "priority": 2,
+   "task_type": "research",
+   "name": "Stockereum",
+   "missing": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "TE"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "open",
+   "last_checked_utc": null,
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
+  },
+  {
+   "key": "alpha:g:8144",
+   "board": "alpha",
+   "priority": 2,
+   "task_type": "evidence",
+   "name": "Catapult Trade",
+   "missing": [
+    "M",
+    "F",
+    "E",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "独立关联地址/自成交及去补贴留存审计未完成。",
+    "未独立重放全部费用与支付，适配器方法可能更新。",
+    "官方计划不等于代币已发行或用户已获得权益；当前链上代币状态/分配需另核。",
+    "官方有积分转 PULT/TGE 计划；已发可转让币、机制独立性和是否符合正规项目范围需继续核验。"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "partial",
+   "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
+  },
+  {
+   "key": "alpha:p:9380",
+   "board": "alpha",
+   "priority": 2,
+   "task_type": "research",
+   "name": "Kinetiq Elysium Bridge",
+   "missing": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "TE"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "open",
+   "last_checked_utc": null,
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
+  },
+  {
+   "key": "alpha:p:9393",
+   "board": "alpha",
+   "priority": 2,
+   "task_type": "research",
+   "name": "Pendle Loop",
+   "missing": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "TE"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "open",
+   "last_checked_utc": null,
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
+  },
+  {
+   "key": "alpha:p:9353",
+   "board": "alpha",
+   "priority": 2,
+   "task_type": "research",
+   "name": "Vesper V2",
+   "missing": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "TE"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "open",
+   "last_checked_utc": null,
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
+  },
+  {
+   "key": "alpha:p:9415",
+   "board": "alpha",
+   "priority": 2,
+   "task_type": "research",
+   "name": "Swan DAO",
+   "missing": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "open",
+   "last_checked_utc": null,
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
+  },
+  {
+   "key": "alpha:g:parent#fomo",
+   "board": "alpha",
+   "priority": 2,
+   "task_type": "evidence",
+   "name": "Fomo",
+   "missing": [
+    "M",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "独立关联地址/自成交及去补贴留存审计未完成。",
+    "未独立重放全部费用与支付，适配器方法可能更新。",
+    "当前官方自身 token/积分/空投立场及适用日期 U。",
+    "官方原始表态日期 U，不用页面读取日期代替。"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "partial",
+   "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
+  },
+  {
+   "key": "alpha:g:5408",
+   "board": "alpha",
+   "priority": 2,
+   "task_type": "evidence",
+   "name": "GMGN",
+   "missing": [
+    "M",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "独立关联地址/自成交及去补贴留存审计未完成。",
+    "未独立重放全部费用与支付，适配器方法可能更新。",
+    "当前官方自身 token/积分/空投立场及适用日期 U。",
+    "官方原始表态日期 U，不用页面读取日期代替。"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "partial",
+   "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
+  },
+  {
+   "key": "alpha:g:4983",
+   "board": "alpha",
+   "priority": 2,
+   "task_type": "evidence",
+   "name": "Flap sh",
+   "missing": [
+    "M",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "独立关联地址/自成交及去补贴留存审计未完成。",
+    "未独立重放全部费用与支付，适配器方法可能更新。",
+    "当前官方自身 token/积分/空投立场及适用日期 U。",
+    "官方原始表态日期 U，不用页面读取日期代替。"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "partial",
+   "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
+  },
+  {
+   "key": "alpha:g:7010",
+   "board": "alpha",
+   "priority": 2,
+   "task_type": "evidence",
+   "name": "trade[XYZ]",
+   "missing": [
+    "M",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "独立关联地址/自成交及去补贴留存审计未完成。",
+    "未独立重放全部费用与支付，适配器方法可能更新。",
+    "当前官方自身 token/积分/空投立场及适用日期 U。",
+    "官方原始表态日期 U，不用页面读取日期代替。"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "partial",
+   "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
+  },
+  {
+   "key": "alpha:g:parent#azverse",
+   "board": "alpha",
+   "priority": 2,
+   "task_type": "evidence",
+   "name": "Azverse",
+   "missing": [
+    "M",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "独立关联地址/自成交及去补贴留存审计未完成。",
+    "未独立重放全部费用与支付，适配器方法可能更新。",
+    "当前官方自身 token/积分/空投立场及适用日期 U。",
+    "官方原始表态日期 U，不用页面读取日期代替。"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "partial",
+   "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
+  },
+  {
+   "key": "alpha:g:9296",
+   "board": "alpha",
+   "priority": 2,
+   "task_type": "evidence",
+   "name": "The Standard Reserve",
+   "missing": [
+    "M",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "独立关联地址/自成交及去补贴留存审计未完成。",
+    "未独立重放全部费用与支付，适配器方法可能更新。",
+    "当前官方自身 token/积分/空投立场及适用日期 U。",
+    "官方原始表态日期 U，不用页面读取日期代替。"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "partial",
+   "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
+  },
+  {
+   "key": "alpha:g:parent#txflow",
+   "board": "alpha",
+   "priority": 2,
+   "task_type": "evidence",
+   "name": "TxFlow Perps",
+   "missing": [
+    "M",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "独立关联地址/自成交及去补贴留存审计未完成。",
+    "未独立重放全部费用与支付，适配器方法可能更新。",
+    "当前官方自身 token/积分/空投立场及适用日期 U。",
+    "官方原始表态日期 U，不用页面读取日期代替。"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "partial",
+   "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
+  },
+  {
+   "key": "alpha:g:7016",
+   "board": "alpha",
+   "priority": 2,
+   "task_type": "evidence",
+   "name": "Antarctic",
+   "missing": [
+    "M",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "独立关联地址/自成交及去补贴留存审计未完成。",
+    "未独立重放全部费用与支付，适配器方法可能更新。",
+    "官方计划不等于代币已发行或用户已获得权益；当前链上代币状态/分配需另核。",
+    "官方原始表态日期 U，不用页面读取日期代替。"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "partial",
+   "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
+  },
+  {
+   "key": "alpha:g:8415",
+   "board": "alpha",
+   "priority": 2,
+   "task_type": "evidence",
+   "name": "XOX Perps",
+   "missing": [
+    "M",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "独立关联地址/自成交及去补贴留存审计未完成。",
+    "未独立重放全部费用与支付，适配器方法可能更新。",
+    "官方计划不等于代币已发行或用户已获得权益；当前链上代币状态/分配需另核。",
+    "官方原始表态日期 U，不用页面读取日期代替。"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "partial",
+   "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
+  },
+  {
+   "key": "alpha:g:5864",
+   "board": "alpha",
+   "priority": 2,
+   "task_type": "evidence",
+   "name": "TRONSAVE",
+   "missing": [
+    "M",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "独立关联地址/自成交及去补贴留存审计未完成。",
+    "未独立重放全部费用与支付，适配器方法可能更新。",
+    "当前官方自身 token/积分/空投立场及适用日期 U。",
+    "官方原始表态日期 U，不用页面读取日期代替。"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "partial",
+   "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
+  },
+  {
+   "key": "alpha:g:5825",
+   "board": "alpha",
+   "priority": 2,
+   "task_type": "evidence",
+   "name": "Veda",
+   "missing": [
+    "M",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "独立关联地址/自成交及去补贴留存审计未完成。",
+    "未独立重放全部费用与支付，适配器方法可能更新。",
+    "当前官方自身 token/积分/空投立场及适用日期 U。",
+    "官方原始表态日期 U，不用页面读取日期代替。"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "partial",
+   "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
+  },
+  {
+   "key": "alpha:g:parent#hyperdash",
+   "board": "alpha",
+   "priority": 2,
+   "task_type": "evidence",
+   "name": "Hyperdash",
+   "missing": [
+    "M",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "独立关联地址/自成交及去补贴留存审计未完成。",
+    "未独立重放全部费用与支付，适配器方法可能更新。",
+    "当前官方自身 token/积分/空投立场及适用日期 U。",
+    "官方原始表态日期 U，不用页面读取日期代替。"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "partial",
+   "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
+  },
+  {
+   "key": "alpha:g:parent#rabby",
+   "board": "alpha",
+   "priority": 2,
+   "task_type": "evidence",
+   "name": "Rabby",
+   "missing": [
+    "M",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "独立关联地址/自成交及去补贴留存审计未完成。",
+    "未独立重放全部费用与支付，适配器方法可能更新。",
+    "当前官方自身 token/积分/空投立场及适用日期 U。",
+    "官方原始表态日期 U，不用页面读取日期代替。"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "partial",
+   "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
+  },
+  {
+   "key": "alpha:g:parent#okx-dex",
+   "board": "alpha",
+   "priority": 2,
+   "task_type": "evidence",
+   "name": "OKX Swap",
+   "missing": [
+    "M",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "独立关联地址/自成交及去补贴留存审计未完成。",
+    "未独立重放全部费用与支付，适配器方法可能更新。",
+    "当前官方自身 token/积分/空投立场及适用日期 U。",
+    "官方原始表态日期 U，不用页面读取日期代替。"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "partial",
+   "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
+  },
+  {
+   "key": "alpha:g:8916",
+   "board": "alpha",
+   "priority": 2,
+   "task_type": "evidence",
+   "name": "Relay",
+   "missing": [
+    "M",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "独立关联地址/自成交及去补贴留存审计未完成。",
+    "未独立重放全部费用与支付，适配器方法可能更新。",
+    "当前官方自身 token/积分/空投立场及适用日期 U。",
+    "官方原始表态日期 U，不用页面读取日期代替。"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "partial",
+   "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
+  },
+  {
+   "key": "alpha:g:8866",
+   "board": "alpha",
+   "priority": 2,
+   "task_type": "evidence",
+   "name": "Loan Meme",
+   "missing": [
+    "M",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "独立关联地址/自成交及去补贴留存审计未完成。",
+    "未独立重放全部费用与支付，适配器方法可能更新。",
+    "官方计划不等于代币已发行或用户已获得权益；当前链上代币状态/分配需另核。",
+    "官方原始表态日期 U，不用页面读取日期代替。"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "partial",
+   "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
+   "deliver": "alpha/review/codex_2026-11-15_checks.json"
   }
  ],
  "how": "Codex 每天：先改 check_report.json 里 who=codex 的问题，再按 tasks 从上往下做 who=codex 的；交付文件推 main。who=claude 的攒给 Claude 每周处理，who=大叔 的等大叔。"
