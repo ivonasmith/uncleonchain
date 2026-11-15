@@ -40,6 +40,8 @@ Codex 发现代码有错：写进 `*/review/` 的复核文件（`文件:行号 �
 2. **Alpha · 复核已有的自动补证**：`alpha/review/grok_*_checks.json`（便宜模型，结论偏乐观，例如 Pons 没发现文档写的回购是锁 5 年不销毁、和官网说法冲突）。
    逐条打开 evidence 核对，结论交进当天的 `codex_<日期>_checks.json`（同 key 会盖过 Grok 的）。
 3. **Alpha · 关键人名单**：`alpha/review/sources_task.md`（S2：核对 Grok 列的 X 原帖 → `alpha/review/sources_people.json`；S1 Grok 的原始回答大叔会放进 `alpha/review/`）。
+3b. **Alpha · CMC 页面地址**：`alpha/cmc_slugs.json` 登记 `{CoinGecko id: CMC slug}`（K 线入口顺序 币安 → CMC → DexScreener，CMC 没登记就跳过）。
+   范围 = `data/alpha/opps.json` 里 `data.tok.gecko` 不为空、且 `data.tok.chart.name` 不是「币安」的币。逐个打开 coinmarketcap.com/currencies/<slug>/ 核对名称、代码、合约地址都对上再登记；对不上或 CMC 没收录的不登记。
 4. **Alpha · T4 / T5**：`alpha/review/README.md`（待核验的补缺口、Bybit / Upbit 替代源）。
 5. **AI Agent · A1–A6**：`aiagent/review/README.md`。
 6. **核心选币 · 评分复核与 M3**：`core/review/README.md`、`core/review/M3_分工.md`。

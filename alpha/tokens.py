@@ -93,8 +93,8 @@ def first_day(gecko, meta):
 
 def market(t, meta):
     """看 K 线的入口 + 市值 / 成交额快照（大叔 11-15 定：按交易的思路，先把人引到第三方看价格走势、市值、成交量）。
-    优先级：币安现货（CoinGecko 行情表里确认这个币在币安有 USDT 对，防同名不同币，如 Nullmask 的 MASK ≠ 币安的 MASK）
-           → DexScreener 流动性最大的交易对（按合约地址查，直接打开 K 线）→ CoinGecko 币页。
+    优先级（大叔 11-15 定）：币安现货（CoinGecko 行情表里确认这个币在币安有 USDT 对，防同名不同币，如 Nullmask 的 MASK ≠ 币安的 MASK）
+           → CMC（只用 alpha/cmc_slugs.json 里核对过的 slug）→ DexScreener 流动性最大的交易对（按合约地址查，直接打开 K 线）→ CoinGecko 币页。
     快照来自 DexScreener（日更时的读数，不是实时）。"""
     out = {"chart": None, "snap": None}
     g = t.get("gecko")
@@ -110,7 +110,12 @@ def market(t, meta):
             except Exception:
                 pass
         if m.get("binance"):
-            out["chart"] = {"name": "币安 K 线", "name_en": "Binance chart", "url": f"https://www.binance.com/zh-CN/trade/{m['binance']}?type=spot", "url_en": f"https://www.binance.com/en/trade/{m['binance']}?type=spot"}
+            out["chart"] = {"name": "币安", "name_en": "Binance", "url": f"https://www.binance.com/zh-CN/trade/{m['binance']}?type=spot", "url_en": f"https://www.binance.com/en/trade/{m['binance']}?type=spot"}
+    # 第二顺位 CMC（大叔 11-15 定顺序：币安 → CMC → DexScreener）。CMC 的页面要 slug，没有可靠的免费查法（data-api 不许用），
+    # 所以只用核对过的登记表 alpha/cmc_slugs.json（{gecko_id: slug}，Codex 核对后补），没登记的跳过，不猜。
+    cmc = (_load(os.path.join(HERE, "cmc_slugs.json"), {}) or {}).get(g or "")
+    if cmc and not cmc.startswith("_") and not out["chart"]:
+        out["chart"] = {"name": "CMC", "name_en": "CMC", "url": f"https://coinmarketcap.com/currencies/{cmc}/"}
     if t.get("address"):
         try:
             d = _get(f"https://api.dexscreener.com/latest/dex/tokens/{t['address']}", 30)
@@ -119,7 +124,7 @@ def market(t, meta):
             if ps:
                 p = ps[0]
                 if not out["chart"]:
-                    out["chart"] = {"name": "DexScreener K 线", "name_en": "DexScreener chart", "url": p.get("url")}
+                    out["chart"] = {"name": "DexScreener", "name_en": "DexScreener", "url": p.get("url")}
                 out["snap"] = {"mcap": p.get("marketCap"), "fdv": p.get("fdv"), "vol24": sum(((x.get("volume") or {}).get("h24") or 0) for x in ps),
                                "liq": (p.get("liquidity") or {}).get("usd"), "chg24": (p.get("priceChange") or {}).get("h24"), "pairs": len(ps),
                                "dex": p.get("dexId"), "chain": p.get("chainId"), "at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="minutes"), "src": "DexScreener"}
@@ -127,9 +132,9 @@ def market(t, meta):
         except Exception:
             pass
     if not out["chart"] and g:
-        out["chart"] = {"name": "CoinGecko 走势", "name_en": "CoinGecko chart", "url": f"https://www.coingecko.com/en/coins/{g}"}
+        out["chart"] = {"name": "CoinGecko", "name_en": "CoinGecko", "url": f"https://www.coingecko.com/en/coins/{g}"}
     if not out["chart"] and t.get("sym"):   # 只有代码：按代码搜（可能有同名币，页面上写明）
-        out["chart"] = {"name": "DexScreener 搜索", "name_en": "DexScreener search", "url": f"https://dexscreener.com/search?q={t['sym']}", "search": True}
+        out["chart"] = {"name": "DexScreener 按代码搜", "name_en": "DexScreener search", "url": f"https://dexscreener.com/search?q={t['sym']}", "search": True}
     return out
 
 

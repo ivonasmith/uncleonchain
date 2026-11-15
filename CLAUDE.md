@@ -117,6 +117,7 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
   关键人名单任务包 `alpha/review/sources_task.md`（S1 Grok 查 X 原帖 → S2 Codex 核对 → 交 `alpha/review/sources_people.json`；入选 = 2 个以上案例有已核实的早期实质帖），并入后每人在 sources.json 单列一行。
   上线天数与看盘（大叔 11-15 定）：`alpha/tokens.py`（opps.py 调用）写卡片 `data.age`（最早的 DefiLlama 收录 / 协议收入首日 `data/alpha/rev_first.json` / 板块 since / 手动 launched，注明 basis）和 `data.tok`（gecko / sym / address，本协议 + 母协议 lite/protocols2 + 同组合并；首个价格日缓存 `data/alpha/token_meta.json`，CoinGecko 优先、llama 兜底每周重试；links = CoinGecko / DexScreener 按地址搜索 / DefiLlama）。看板静态兜底 `出网站.alpha_board_static`。
   看 K 线（大叔 11-15 定：按交易思路先引到第三方看走势 / 市值 / 成交量）：`tokens.market` 写 `tok.chart`（币安现货——CoinGecko tickers 核对是同一个币，每周查一次缓存在 token_meta——优先，其次 DexScreener 流动性最大的对，再 CoinGecko，只有代码就 DexScreener 搜索）和 `tok.snap`（DexScreener 市值 / FDV / 24h DEX 成交 / 24h 涨跌，日更快照）。
+  卡片头部（大叔 11-15 定：常规信息最小展示，数字下划线、悬停解释）：`factLine`（上线 / 币天数 / 市值 / 24h 量 / 涨跌，用站点 `.term` 悬停）、参与方式依据和来源 / 补证都进悬停；K 线链接 `klineLink` 放在官网 / X 那排，顺序 币安 → CMC（`alpha/cmc_slugs.json`，Codex 核对后登记，不猜）→ DexScreener → CoinGecko。
   **补证主力 = Codex（大叔 11-15 定，Grok 贵）**：`alpha_config.grok.enabled = false`，Codex 每天按 research_queue 交 `alpha/review/codex_<日期>_checks.json`（AGENTS.md 第 4 节任务 1）。
   补证合并顺序：`grok_*` 先读，Codex / 人工的盖过它（opps / alpha_daily / 出网站三处同一规则）；Grok 跳过 Codex 30 天内核过的。Codex 协作说明在根目录 `AGENTS.md`，需要配合的事记 `docs/协作记录.md`。
   数据管理：原始层（data/alpha 接口原样）→ 清洗层（线索台账、案例指标）→ 应用层（机会卡、周复盘）。每周复盘 `alpha/weekly.py` → `data/alpha/weekly/<周>.json/.md`；Notion 单独的「Alpha 雷达」入口页（大叔：每个板块各自一个入口，不和别的板块混放）。

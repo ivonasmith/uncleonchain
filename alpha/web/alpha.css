@@ -218,3 +218,11 @@
 .ax-kline{display:inline-block;padding:5px 12px;border-radius:8px;border:1px solid var(--lime-ink);color:var(--lime-ink);text-decoration:none;font-weight:600;font-size:13px}
 .ax-kline:hover{background:var(--lime-ink);color:var(--bg)}
 .ax-snap{display:inline-flex;flex-wrap:wrap;gap:4px 14px;align-items:center;font-size:12.5px}
+
+/* 精简事实行 + K 线链接（11-15 第二版） */
+.ax-facts{display:flex;flex-wrap:wrap;gap:2px 0;align-items:center;margin:8px 0 2px;color:var(--ink2)}
+.ax-facts .sep{font-style:normal;color:var(--muted);margin:0 8px}
+.ax-links a.kl{color:var(--lime-ink);border-bottom-color:var(--lime-ink)}
+.ax-entry .ent.term{cursor:help;text-decoration:none}
+.ax-who{margin-left:auto;color:var(--ink2)}.ax-who .sep{font-style:normal;color:var(--muted);margin:0 6px}
+@media (max-width:760px){.ax-who{margin-left:0;width:100%}}

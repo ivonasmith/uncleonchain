@@ -1,0 +1,3 @@
+{
+ "_说明": "CoinMarketCap 页面 slug 登记表（{CoinGecko id: CMC slug}）。CMC 的 data-api 不许用（安全审查），页面 slug 没有可靠的免费查法，所以靠 Codex 逐个打开 CMC 页面核对（名称、代码、合约地址都对上）后登记；没登记的币 K 线入口跳过 CMC，用 DexScreener。"
+}
