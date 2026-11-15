@@ -4075,7 +4075,7 @@ def build_core():
 
 
 # ---------------------------------------------------------------- Alpha 雷达（alpha/：雷达读 data/alpha/alpha_latest.json；方法论 / 案例库 / 进度读 alpha/research/*.md）
-ALPHA_TABS = [("", "机会看板", "Board", "可投资机会 · 预警观察", "Investable · watchlist"),
+ALPHA_TABS = [("", "机会看板", "Board", "有参与入口 · 预警观察", "Has entry · watchlist"),
               ("radar/", "雷达", "Radar", "数据从哪来", "Where leads come from"),
               ("cases/", "案例库", "Cases", "历史对照", "Historical reference")]
 ALPHA_FW = [("framework/", "框架", "Framework"), ("eval/", "评估器", "Evaluator"), ("progress/", "检验与进度", "Validation & progress"), ("method/", "方法论原文", "Original text")]
@@ -4232,7 +4232,7 @@ def alpha_board_static():
         ent = "、".join(EN_.get(e, e) for e in c.get("entry") or [] if e != "none") or T("暂无", "none yet")
         rows += (f'<tr><td class="l"><a href="{U("/alpha/")}#{esc(c["id"])}">{esc(c["name"])}</a></td><td class="l">{esc(c.get("status") or "")}</td><td>{val}</td>'
                  f'<td>{age}</td><td>{tok}</td><td class="l">{esc(ent)}</td></tr>')
-    return (f'<p class="muted small">{T("数据日", "Data day")} {esc(O.get("asof") or "")} · {T("可投资机会", "Investable")} {(O.get("counts") or {}).get("invest", 0)} · {T("预警观察", "Watchlist")} {(O.get("counts") or {}).get("watch", 0)}</p>'
+    return (f'<p class="muted small">{T("数据日", "Data day")} {esc(O.get("asof") or "")} · {T("有参与入口", "Has entry")} {(O.get("counts") or {}).get("invest", 0)} · {T("预警观察", "Watchlist")} {(O.get("counts") or {}).get("watch", 0)}</p>'
             f'<div class="tw"><table><thead><tr><th class="l">{T("机会", "Opportunity")}</th><th class="l">{T("状态", "Status")}</th><th>{T("读数", "Reading")}</th>'
             f'<th>{T("项目上线", "Project age")}</th><th>{T("代币", "Token")}</th><th class="l">{T("资金参与方式", "How capital takes part")}</th></tr></thead><tbody>{rows}</tbody></table></div>')
 
@@ -4255,7 +4255,7 @@ def alpha_head(cur):
     if fw:
         sub = '<div class="ax-sub">' + "".join(f'<a href="{U("/alpha/" + p)}" class="{"on" if p == cur else ""}">{T(zh, en)}</a>' for p, zh, en in ALPHA_FW) + "</div>"
     return (f'{cr}<div class="ph"><div><div class="eyebrow">Alpha Radar</div><h1>{T("Alpha 雷达", "Alpha radar")}</h1>'
-            f'<p class="lede">{T("新协议、新产品、新机制、没发币但有真实收入的协议：每挖到一个，按同一套框架拆解打分（系统按数据打能打的，研究补其余的，未知记 U）。资金能参与的进「可投资机会」，暂时不能的进「预警观察」。只研究正规项目，不按分数排名，不是买卖建议。", "New protocols, products and mechanisms, plus tokenless protocols with real revenue, each scored on one framework (system rules + research; unknowns stay U). Capital-accessible ones are Investable, the rest Watchlist. Established projects only; no rankings; not trade advice.")}</p></div></div>'
+            f'<p class="lede">{T("新协议、新产品、新机制、没发币但有真实收入的协议：每挖到一个，按同一套框架拆解打分（系统按数据打能打的，研究补其余的，未知记 U）。有资金参与方式的进「有参与入口」（只说明能参与，不代表研究过），暂时没有的进「预警观察」。只研究正规项目，不按分数排名，不是买卖建议。", "New protocols, products and mechanisms, plus tokenless protocols with real revenue, each scored on one framework (system rules + research; unknowns stay U). Capital-accessible ones are Investable, the rest Watchlist. Established projects only; no rankings; not trade advice.")}</p></div></div>'
             f'<div class="tabwrap"><nav class="tabs" role="tablist">{tabs}</nav></div>{sub}')
 
 
@@ -4380,29 +4380,47 @@ def build_alpha():
         if d.get("stale"):
             evh = f'<div class="note">{T("今天数据源没取到，下表沿用上次结果。", "Source failed today; tables carry the last result.")}</div>' + evh
         chg = lambda v: '<span class="muted">' + T("新", "new") + "</span>" if v is None else f'<span style="color:var(--{"up" if v >= 0 else "dn"})">{v:+.0f}%</span>'
+        carded = {c["key"]: c["id"] for c in (G.get("OPPS") or {}).get("opps") or []}
+        rowattr = lambda r: f' data-q="{esc((r["name"] + " " + (r.get("category") or "") + " " + " ".join(r.get("chains") or [])).lower())}"' + (f' data-card="{esc(carded[r["key"]])}"' if r["key"] in carded else "")
+        cardlink = lambda r: f' <a class="tag" href="{U("/alpha/")}#{esc(carded[r["key"]])}">{T("机会卡", "card")}</a>' if r["key"] in carded else ""
         trs = "".join(
-            f'<tr><td class="rk">{i}</td><td class="wrap" style="min-width:180px;text-align:left"><a href="https://defillama.com/protocol/{esc(r["slug"] or "")}" target="_blank" rel="noopener">{esc(r["name"])}</a>'
+            f'<tr{rowattr(r)}><td class="rk">{i}</td><td class="wrap" style="min-width:180px;text-align:left"><a href="https://defillama.com/protocol/{esc(r["slug"] or "")}" target="_blank" rel="noopener">{esc(r["name"])}</a>{cardlink(r)}'
             + (f'<div class="tnote" style="margin:2px 0 0;white-space:normal">{esc("、".join(r["children"][:3]))}{"…" if len(r["children"]) > 3 else ""}</div>' if len(r["children"]) > 1 else "")
             + f'</td><td class="l">{esc(r["category"] or "")}</td><td class="l">{esc(" · ".join(r["chains"]))}</td><td>{a_usd(r["rev30"])}</td><td>{chg(r["chg30"])}</td><td>{esc(r.get("first_seen") or "")}</td>'
             + f'<td class="l">{alpha_status_chip(r["key"])}</td></tr>'
             for i, r in enumerate(d.get("tokenless") or [], 1))
         lrs = "".join(
-            f'<tr><td>{esc(r["listed"])}</td><td class="l"><a href="https://defillama.com/protocol/{esc(r["slug"] or "")}" target="_blank" rel="noopener">{esc(r["name"])}</a></td>'
+            f'<tr{rowattr(r)}><td>{esc(r["listed"])}</td><td class="l"><a href="https://defillama.com/protocol/{esc(r["slug"] or "")}" target="_blank" rel="noopener">{esc(r["name"])}</a>{cardlink(r)}</td>'
             f'<td class="l">{esc(r["category"] or "")}</td><td class="l">{esc(" · ".join(r["chains"]))}</td><td>{a_usd(r["tvl"]) if r["tvl"] else "—"}</td><td class="l">{T("有", "yes") if r["token"] else T("无", "no")}</td></tr>'
             for r in d.get("listings") or [])
         lg = d.get("ledger") or {}
         src_ok = all(v.get("ok") for v in (d.get("sources") or {}).values())
-        radar = (alpha_sources_html() + evh
-                 + f'<h2>{T("没发币、有收入的协议", "Tokenless protocols with revenue")} <span class="sub">{T("近 30 天协议收入 ≥ 10 万美元，按母协议合并", "30d protocol revenue ≥ $100K, merged by parent")} · {len(d.get("tokenless") or [])}</span></h2>'
+        def ledger_note(lg):
+            nm = {"tokenless_rev": T("无币收入榜", "tokenless list"), "new_listing": T("新上架", "new listing"), "rev_surge": T("收入新起量", "revenue ramp"),
+                  "manual": T("手动线索", "manual"), "site:launchpad": T("发射台矩阵", "launchpad board"), "site:aiagent": T("AI Agent", "AI Agent")}
+            bs = " · ".join(f"{nm.get(k, k)} {v}" for k, v in (lg.get("by_source") or {}).items())
+            multi = lg.get("multi", 0)
+            return ('<p class="tnote">' + T(f"口径：累计登记 = 各来源第一次筛到的协议，只追加不删；同一个协议被几个来源筛到只记一条（{multi} 条有多个来源）。上面两张表是今天的快照（今天在榜、最近 14 天收录），所以加起来不等于累计。",
+                                            f"Cumulative ledger, one row per protocol even when several sources flag it ({multi} do); the tables above are snapshots, so they do not add up to the total.")
+                    + (" " + T("按来源：", "By source: ") + bs if bs else "") + "</p>")
+        tool = (f'<div class="ax-rtool"><input type="search" id="rq" placeholder="{T("搜协议名 / 类目 / 链", "Search name / category / chain")}">'
+                f'<label><input type="checkbox" id="rc"> {T("只看已出机会卡的", "Only those with a card")}</label><span class="muted small" id="rn"></span></div>'
+                '<script>(function(){var q=document.getElementById("rq"),c=document.getElementById("rc"),n=document.getElementById("rn");'
+                'function f(){var t=(q.value||"").trim().toLowerCase(),k=0,a=0;document.querySelectorAll("tr[data-q]").forEach(function(r){var ok=(!t||r.dataset.q.indexOf(t)>=0)&&(!c.checked||r.dataset.card);r.style.display=ok?"":"none";a++;if(ok)k++});'
+                'if(t||c.checked){document.querySelectorAll("details.ax-rsec").forEach(function(d){d.open=true})}n.textContent=(t||c.checked)?(k+" / "+a):""}'
+                'q.addEventListener("input",f);c.addEventListener("change",f)})();</script>')
+        radar = (alpha_sources_html() + evh + tool
+                 + f'<details class="ax-rsec" open><summary><h2 style="display:inline">{T("没发币、有收入的协议", "Tokenless protocols with revenue")} <span class="sub">{T("近 30 天协议收入 ≥ 10 万美元，按母协议合并", "30d protocol revenue ≥ $100K, merged by parent")} · {len(d.get("tokenless") or [])}</span></h2></summary>'
                  + f'<p class="tnote">{T("「没发币」= DefiLlama 上本协议和母协议都没登记代币，不等于确认不发币，也不等于会空投。已剔除稳定币发行方、交易所、CeDeFi、区块构建者和传统金融产品。环比 = 近 30 天 ÷ 前 30 天 − 1。", "“Tokenless” = no token registered on DefiLlama for the protocol or its parent; not a confirmation of no token, nor of an airdrop. Stablecoin issuers, CEXs, CeDeFi, block builders and TradFi products excluded. Change = last 30d ÷ prior 30d − 1.")}</p>'
                  + f'<div class="tw scroll"><table><thead><tr><th>#</th><th style="text-align:left">{T("协议", "Protocol")}</th><th style="text-align:left">{T("类目", "Category")}</th><th style="text-align:left">{T("主要链", "Chains")}</th><th>{T("30 天收入", "30d revenue")}</th><th>{T("环比", "Change")}</th><th>{T("首次进榜", "First seen")}</th><th style="text-align:left">{T("机会卡", "Card")}</th></tr></thead><tbody>{trs}</tbody></table></div>'
-                 + f'<h2>{T("新上架协议", "Newly listed protocols")} <span class="sub">{T("DefiLlama 最近 14 天收录", "Added to DefiLlama in the last 14 days")} · {len(d.get("listings") or [])}</span></h2>'
+                 + f'</details><details class="ax-rsec"><summary><h2 style="display:inline">{T("新上架协议", "Newly listed protocols")} <span class="sub">{T("DefiLlama 最近 14 天收录", "Added to DefiLlama in the last 14 days")} · {len(d.get("listings") or [])}</span></h2></summary>'
                  + f'<p class="tnote">{T("收录日不是部署日，更不是能参与的日子；TVL 是存量，不是收入。", "Listing date is not deployment date or participation date; TVL is a stock, not revenue.")}</p>'
                  + f'<div class="tw scroll"><table><thead><tr><th>{T("收录日", "Listed")}</th><th style="text-align:left">{T("协议", "Protocol")}</th><th style="text-align:left">{T("类目", "Category")}</th><th style="text-align:left">{T("主要链", "Chains")}</th><th>TVL</th><th style="text-align:left">{T("代币", "Token")}</th></tr></thead><tbody>{lrs}</tbody></table></div>'
-                 + alpha_feed_html(d)
+                 + '</details><details class="ax-rsec"><summary><h2 style="display:inline">' + T("事件流", "Event feed") + '</h2></summary>' + alpha_feed_html(d) + '</details>'
                  + f'<h2>{T("线索台账", "Lead ledger")} <span class="sub">{T("保留全部分母：只追加，不删除", "All denominators kept: append-only")}</span></h2>'
                  + f'<div class="card" style="padding:12px 16px;font-size:13px">{T("累计登记", "Logged")} <b>{lg.get("n", 0)}</b> · {T("来自无币收入榜", "from revenue board")} <b>{lg.get("tokenless_rev", 0)}</b> · {T("来自新上架", "from new listings")} <b>{lg.get("new_listing", 0)}</b> · {T("之后发币", "later launched a token")} <b>{lg.get("token_seen", 0)}</b>'
                  + f' · <a href="/data/alpha/alpha_leads.json">{T("下载台账 JSON", "Ledger JSON")}</a></div>'
+                 + ledger_note(lg)
                  + f'<p class="tnote">{T("数据日", "Data day")} {esc(d.get("asof") or "")} · {T("生成于", "Generated")} {TT(d.get("generated"))} · {T("来源 DefiLlama（协议列表、协议收入）", "Source: DefiLlama (protocols, revenue)")}{"" if src_ok else " · " + T("有数据源失败", "a source failed")}</p>')
     else:
         radar = f'<div class="note">{T("雷达数据还没生成。", "Radar data not generated yet.")}</div>'

@@ -41,7 +41,7 @@ def opps():
     for o in d.get("opps", []):
         sc = o["scores"]
         r = o.get("research") or {}
-        p = {"名称": o["name"], "卡片ID": o["id"], "分栏": {"invest": "可投资机会", "watch": "预警观察", "reject": "已拒绝"}[o["bucket"]],
+        p = {"名称": o["name"], "卡片ID": o["id"], "分栏": {"invest": "有参与入口", "watch": "预警观察", "reject": "已拒绝"}[o["bucket"]],
              "状态": o["status"], "类型": "无币协议" if o["kind"] == "tokenless" else "新上架协议",
              "资金参与方式": [ent[e] for e in o["entry"]], "需求来源": biz.get(o["classes"]["business"]["v"], "尚未判明"),
              "机制区间": iv([sc[k]["v"] for k in "MAFEV"]), "参与优势区间": iv([sc[k]["v"] for k in "GDT"]),

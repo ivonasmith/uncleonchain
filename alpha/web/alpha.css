@@ -226,3 +226,19 @@
 .ax-entry .ent.term{cursor:help;text-decoration:none}
 .ax-who{margin-left:auto;color:var(--ink2)}.ax-who .sep{font-style:normal;color:var(--muted);margin:0 6px}
 @media (max-width:760px){.ax-who{margin-left:0;width:100%}}
+
+/* 成交与变现 / 关键事件（11-15 卡片改版） */
+.ax-money{margin-top:12px}.ax-money h3{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ax-mgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px 18px}
+.ax-mgrid>div{display:flex;flex-direction:column;gap:2px}.ax-mgrid .k{font-size:12px;color:var(--muted)}.ax-mgrid b{font-size:15px;font-family:var(--mono,ui-monospace,monospace)}
+.ax-events{display:flex;flex-wrap:wrap;gap:6px 14px;margin:8px 0 0;padding:8px 12px;border:1px dashed var(--line2);border-radius:10px}
+.ax-events .ev b{color:var(--ink2);font-weight:600;margin-right:4px}
+.ax-guide{margin-bottom:12px}.ax-guide summary{cursor:pointer;font-weight:600}.ax-guide ol{margin:8px 0 0;padding-left:20px;line-height:1.8}
+.axflow b{padding:0 4px;border-radius:4px;background:var(--line);font-weight:600}
+
+/* 雷达页：搜索 / 筛选 / 折叠 / 固定表头（11-15） */
+.ax-rtool{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;margin:14px 0 6px}
+.ax-rtool input[type=search]{flex:1 1 240px;max-width:360px;padding:7px 12px;border-radius:8px;border:1px solid var(--line2);background:var(--card);color:var(--ink)}
+.ax-rsec>summary{cursor:pointer;list-style:none;margin:18px 0 6px}.ax-rsec>summary::-webkit-details-marker{display:none}
+.ax-rsec>summary h2::before{content:"▸ ";color:var(--muted)}.ax-rsec[open]>summary h2::before{content:"▾ "}
+.tw.scroll{max-height:560px;overflow:auto}.tw.scroll thead th{position:sticky;top:0;background:var(--card);z-index:1}

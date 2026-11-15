@@ -172,7 +172,7 @@ def build():
             "entry": entry, "entry_why": entry_why, "classes": cls, "scores": sc, "gates": gates,
             "one_liner": (c or {}).get("one_liner") or mn.get("what"),
             "research": {x: (c or {}).get(x) for x in ("token_stance", "token_stance_src", "token_stance_date", "revenue_who", "revenue_method", "wash_or_subsidy",
-                                                      "user_role", "counter", "verdict_reason", "missing", "checked_utc")} if c else None,
+                                                      "user_role", "counter", "verdict_reason", "missing", "checked_utc", "events", "flow", "next_review", "capture", "quality")} if c else None,
             "evidence": [{"url": e.get("url"), "fields": e.get("fields")} for e in (c or {}).get("evidence") or [] if str(e.get("url", "")).startswith("http")]
                         or [{"url": u, "fields": ["手动线索出处"]} for u in mn.get("sources") or []],
             "data": {"category": cat, "chains": r.get("chains") or li.get("chains"), "rev30": rev30, "chg30": r.get("chg30"), "rev_all": r.get("rev_all"), "llama": mn.get("llama"), "fees7": r.get("fees7"), "fees30": r.get("fees30"),
@@ -229,13 +229,20 @@ QUEUE_PROMPT = """你在给「链上大叔研究台」Alpha 雷达补证（只�
 「已有代币」本身不是拒绝理由：清单里 kind = tokenless 的如果查到其实已经有代币，写进 token_stance 和 missing、verdict 给待核验；kind = surge / site / manual 的本来就可能有代币，照常研究它的新玩法。
 只靠搜索摘要、打不开官网和文档的，verdict 最多给待核验，不给拒绝（拒绝必须有一手证据）。
 分数按 framework.json 附录一锚点给（M A F E G T D 是 0–4；TM 是 -1–3，有已证实不良记录给 -1；TE 是 0–3；不知道写 U，没有代币时 TE 写 NA）。M（新参与机制：这个玩法新在哪）优先查，每个分数写 why 和 src。
-资金参与方式 entry 从 buy / stake / points / use / presale / mine / none 里选（none = 暂时没有资金入口），写 entry_why。"""
+资金参与方式 entry 从 buy / stake / points / use / presale / mine / none 里选（none = 暂时没有资金入口），写 entry_why。
+每张卡要回答三件事：量从哪来（flow 四个标签各给 高 / 中 / 低 / 待验证 + 证据）、量是不是真的（刷量 / 补贴迹象）、激励结束后还剩多少（capture、next_review）。
+关键事件（积分开放 / 结束、主网上线、发币、费率改动）写进 events，每条要日期和官方出处。"""
 
 QUEUE_SCHEMA = {"key": "清单里的 key（原样）", "name": "名称", "one_liner": "一句话介绍：它是什么、给谁用、靠什么收钱（30 字内，大白话）", "reviewer": "grok-auto / claude-auto / codex", "checked_utc": "核对时间 ISO",
                 "token_stance": "官方确认不发币|有积分/空投计划|官方表态会发|没有表态|U", "token_stance_src": "链接", "token_stance_date": "日期或 U",
                 "revenue_who": "收入归谁", "revenue_method": "收入口径要点", "wash_or_subsidy": "刷量 / 补贴迹象或 U", "user_role": "普通人能以什么角色参与",
                 "entry": ["points"], "entry_why": "为什么是这种资金参与方式（带来源）",
                 "scores": {"M": {"v": "0-4|U", "why": "依据", "src": "链接"}, "TM": {"v": "0-3|U", "why": "", "src": ""}},
+                "capture": "代币 / 参与者实际能拿到什么（回购、分红、积分兑换规则；没有就写没有），带链接",
+                "events": [{"date": "YYYY-MM-DD", "what": "积分开放 / 结束、主网上线、发币、费率改动等", "src": "官方链接"}],
+                "flow": {"airdrop": {"v": "高|中|低|待验证", "why": "积分 / 空投带来的量", "src": "链接"}, "newchain": {"v": "…", "why": "新链首发", "src": ""},
+                         "subsidy": {"v": "…", "why": "返佣 / 补贴", "src": ""}, "organic": {"v": "…", "why": "去掉激励后的自然需求", "src": ""}},
+                "next_review": "YYYY-MM-DD（比如积分结束后 7 天 / 30 天）",
                 "counter": "最强反方一句话", "verdict": "研究观察|待核验|拒绝", "verdict_reason": "为什么", "missing": ["还没查清的事项"],
                 "evidence": [{"url": "链接", "fields": ["支持了哪些字段"]}]}
 
@@ -269,6 +276,11 @@ def main():
         tokens.enrich(res["opps"], manual, load(os.path.join(OUT, "rev_first.json"), {}) or {})
     except Exception as e:
         print("代币信息失败：", str(e)[:160])
+    try:   # 成交与变现（alpha/money.py；在 tokens 之后，要用上线天数）
+        import money
+        money.enrich(res["opps"])
+    except Exception as e:
+        print("成交与变现失败：", str(e)[:160])
     for c in res["opps"]:   # 列表里的 30 天迷你走势
         c["spark"] = [v for _, v in (ser.get(c["id"]) or [])[-30:]]
     q = queue(res["opps"])

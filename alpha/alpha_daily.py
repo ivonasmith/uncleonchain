@@ -367,6 +367,8 @@ def main():
            "tokenless": rows, "surge": surge, "manual": manual, "site": site, "listings": lst, "events": events, "feed": feed_recent,
            "ledger": {"n": len(L), "tokenless_rev": sum(1 for v in L.values() if "tokenless_rev" in v["source"]),
                       "new_listing": sum(1 for v in L.values() if "new_listing" in v["source"]),
+                      "by_source": {src: sum(1 for v in L.values() if src in v["source"].split("+")) for src in sorted({x for v in L.values() for x in v["source"].split("+")})},
+                      "multi": sum(1 for v in L.values() if "+" in v["source"]),
                       "token_seen": sum(1 for v in L.values() if v.get("token_seen")),
                       "status": {st: sum(1 for v in L.values() if v.get("status") == st) for st in ("待核验", "研究观察", "优先研究", "拒绝")}}}
     if rev is None and prev:       # 收入源失败：榜单沿用上次

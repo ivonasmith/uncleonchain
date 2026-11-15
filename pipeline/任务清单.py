@@ -187,6 +187,13 @@ def board_alpha():
     a = cost.get("alert") or {}
     if a.get("at", "")[:7] == TODAY.strftime("%Y-%m"):
         I.append(issue("alpha", "data/alpha/research_cost.json", a.get("msg", "补证花费到上限"), who="大叔", level="error"))
+    flowless = [{"key": k, "name": c.get("name")} for k, (fn, c) in by_key.items() if not c.get("flow") and c.get("verdict") in ("研究观察", "待核验")]
+    if flowless:
+        T.append(task("alpha", "flow", f"补「量从哪来」和关键事件（{len(flowless)} 张已补证的卡还没有 flow / events，先做 Montra、Pons 当样板）", "codex", 1,
+                      deliver=f"alpha/review/codex_{TODAY.isoformat()}_checks.json（同 key 交新一条，带 flow / events / capture / next_review）", ref="data/alpha/research_queue.json 的 schema", items=flowless[:30]))
+    en = [os.path.basename(x) for x in glob.glob(os.path.join(ROOT, "alpha", "research", "*.md")) if not x.endswith(".en.md") and not os.path.exists(x[:-3] + ".en.md")]
+    if en:
+        T.append(task("alpha", "en", f"英文稿（{len(en)} 篇研究文档；英文站现在只有导航是英文）", "codex", 3, deliver="alpha/research/<同名>.en.md（Claude 接进网站）", items=en))
     T += readme_tasks("alpha", os.path.join(rd, "README.md"))
     return T, I
 

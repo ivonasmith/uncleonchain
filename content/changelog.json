@@ -1,5 +1,34 @@
 [
  {
+  "version": "2026.11.15.8",
+  "date": "2026-11-15",
+  "notify": true,
+  "title_zh": "Alpha 雷达改版：每张卡回答「量从哪来、量是不是真的、激励后还剩多少」",
+  "title_en": "Alpha Radar: every card now asks where volume comes from, whether it is real, and what is left after incentives",
+  "items": [
+   {
+    "type": "improve",
+    "zh": "「可投资机会」改名「有参与入口」：只说明有资金参与的方式，不代表研究过、更不代表可以执行。看板顶部加「怎么读」和状态流转（原始线索 → 待核验 → 研究观察，任何一步都可能拒绝），各个计数都写清分母和口径。",
+    "en": "“Investable” renamed “Has entry”: it only means capital can take part. Added a how-to-read note, the status flow, and definitions for every count."
+   },
+   {
+    "type": "new",
+    "zh": "每张卡新增「成交与变现」：成交 24 小时 / 7 天 / 30 天、近 7 天占 30 天的比例、30 天费用 / 协议收入 / 持币人收入、协议抽成；上线不满 30 天的标「实际历史只有 N 天」。例：Montra 近 7 天占 30 天 79%，协议抽成 0.40%，实际历史 10 天。",
+    "en": "New “Volume & monetisation” block: 24h/7d/30d volume, 7d share, fees vs revenue vs holder revenue, take rate, and a short-history flag."
+   },
+   {
+    "type": "new",
+    "zh": "新增「量从哪来 · 量的质量」：积分空投 / 新链首发 / 补贴 / 自然需求各标 高 / 中 / 低 / 待验证（研究补证给）；发射台类平台接发射台板块的发币数、7 天存活、交易者。关键事件（积分开放 / 结束、主网上线、发币）列在走势图下面。「为什么在看」改为「核心判断」，加参与者实际能拿到什么、下次复核日。",
+    "en": "New volume-source & quality section, launchpad quality from the launchpad board, key-event timeline, and a core-read box with what participants actually get and the next review date."
+   },
+   {
+    "type": "improve",
+    "zh": "历史对照（估值峰值区间）默认收起，避免被当成目标价；证据列表写明每条链接支持哪些结论。雷达页加搜索、「只看已出机会卡的」、表格折叠和固定表头，线索台账写清和两张表的数为什么对不上。",
+    "en": "Historical analogs collapsed by default; evidence lists show which claims each link supports. Radar page gets search, a card-only filter, collapsible tables and sticky headers."
+   }
+  ]
+ },
+ {
   "version": "2026.11.15.7",
   "date": "2026-11-15",
   "notify": false,
