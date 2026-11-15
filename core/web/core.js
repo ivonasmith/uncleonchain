@@ -142,23 +142,50 @@ const sma=(a,n)=>a.map((_,i)=>i<n-1?null:a.slice(i-n+1,i+1).reduce((p,q)=>p+(q||
 /* ---------- 页面 ---------- */
 const scTxt=c=>c.sc.total===null?'—':`${c.sc.total} <span class="sm">(${c.sc.n}/6)</span>`;
 const tagHTML=c=>`${c.track==='pool'?`<span class="tg pool">${c.tier}</span>`:`<span class="tg">${L('观察','Watch')}</span>`}${c.tag==='ambush'?`<span class="tg">${L('埋伏候选','Ambush')}</span>`:''}${c.tag==='channelB'?`<span class="tg">${L('渠道B','Channel B')}</span>`:''}`;
+const FACT=[['liq',L('流动性前 50','Liquidity top 50'),L('近 90 天币安全口径成交额排名的中位数 ≤ 50','90-day median Binance full-scope volume rank ≤ 50')],
+ ['rev',L('月收入 ≥ 100 万美元','Revenue ≥ $1M / 30d'),L('DefiLlama 近 30 天协议收入 ≥ 100 万美元','DefiLlama protocol revenue over the last 30 days ≥ $1M')],
+ ['grow',L('收入在涨','Revenue growing'),L('近 30 天协议收入 > 再往前 30 天（且至少 10 万美元，避免小基数）','Last 30 days > the 30 days before (and ≥ $100k to avoid tiny bases)')],
+ ['hold',L('持有人分到 ≥ 30%','Holders get ≥ 30%'),L('近 30 天持有人收入（回购 / 分红 / 销毁）÷ 协议收入 ≥ 30%','Holder revenue (buybacks / dividends / burns) ÷ protocol revenue ≥ 30% over 30 days')],
+ ['cap',L('回购 / 分红已执行','Value capture live'),L('人工核对：回购、分红或销毁已经在执行（不是只承诺）','Manually checked: buybacks, dividends or burns are actually running, not just promised')]];
+const factTip=it=>FACT.map(f=>`${it.cond&&it.cond[f[0]]?'✓':'·'} ${f[1]}`).join('\n');
+const dots=it=>`<span class="fdots" data-tip="${esc(factTip(it))}">${FACT.map(f=>`<i class="${it.cond&&it.cond[f[0]]?'on':''}"></i>`).join('')}<b>${it.fact}</b></span>`;
+const CL_SHORT={'共识储备型':L('共识','Reserve'),'主流公链型':L('公链','L1/L2'),'现金流有用型':L('现金流','Cash flow'),'博弈控盘型':L('博弈','Game'),'注意力情绪型':'Meme'};
+const goOf=s=>MECH&&MECH.coins&&MECH.coins[s]?`mech/${s}`:C[s]?`coin/${s}`:'';
+let hF='top',uSort='fact_rank',uDir=1;
+const USORT={fact_rank:x=>x.fact_rank,med:x=>x.med,qv30:x=>x.qv30,rev30:x=>x.rev30,grow:x=>x.rev_prev30>0?(x.rev30/x.rev_prev30-1)*100:null,fut:x=>x.fut_share};
 function home(){
-  const rows=SYMS.map(k=>C[k]), pool=rows.filter(c=>c.track==='pool');
-  const withR=pool.filter(c=>c.fees.revenue&&nz(c.fees.revenue.d7v30)), up=withR.filter(c=>c.fees.revenue.d7v30>0).length;
+  const gs=gates(), gOK=gs.filter(x=>x.k==='good').length;
   const al=autoAlerts().filter(a=>a.k==='serious'||a.k==='crit').length;
-  const amb=pool.filter(c=>c.tag==='ambush'||c.tag==='channelB');
-  const gs=gates(); const gOK=gs.filter(x=>x.k==='good').length;
-  let h=`<div class="cgrid g4">
-  <div class="ccard kpi"><div class="l">${L('三道闸门（周期 / BTC 底线 / 流动性）','Three gates (cycle / BTC floor / liquidity)')}</div><div class="v">${gOK} / 3</div><div class="s">${gs.map(x=>stat(x.k,x.id)).join(' ')}</div></div>
-  <div class="ccard kpi"><div class="l">${L('收入 7 日均 > 30 日均','Revenue 7d > 30d avg')}</div><div class="v">${up} / ${withR.length}</div><div class="s">${L(`观测池 ${pool.length} 个协议`,`${pool.length} protocols in the pool`)}</div></div>
-  <div class="ccard kpi"><div class="l">${L('需要关注的风险信号','Risk signals to watch')}</div><div class="v">${al}</div><div class="s"><a data-go="alerts">${L('看风险提示 →','See risk alerts →')}</a></div></div>
-  <div class="ccard kpi"><div class="l">${L('观测池 对 全市场（30 日中位）','Pool vs market (30d median)')}</div><div class="v ${cls(D.market&&D.market.bench.r30.pool_med)}" style="font-size:20px">${D.market?fmtP(D.market.bench.r30.pool_med)+' / '+fmtP(D.market.bench.r30.ew_med):'—'}</div><div class="s">BTC ${fmtP(D.btc.r30)} · <a data-go="market">${L('全市场 →','Market →')}</a></div></div></div>`;
-  h+=univSummary();
-  const bt=BT&&BT.modules?['R','C','V','D','T'].filter(k=>BT.modules[k]&&BT.modules[k].verdict==='已验证·方向').length:null;
-  h+=`<div class="cgrid g2"><div class="ccard"><h2>${L('评分研究进行中','Score research in progress')}</h2><div class="sm" style="color:var(--ink2);font-size:13px;line-height:1.7">${L(`原型里的 R / C / V / D 评分做了历史回测（${BT?BT.n_coins:'—'} 个有协议收入的代币，2023-03 起每月一次，判定标准事先写死）：通过 ${bt==null?'—':bt} / 5。没通过的东西不拿来打分、排名，页面只摆原始读数和回测结论。已立项一轮评分研究：先逐项检验基本面 / 资金面 / 技术面读数，再定怎么合成、怎么打分，判定标准事先写死，Codex / Gemini / Grok 分头复核，大叔拍板后上线。`,`The prototype’s R/C/V/D scores were backtested (${BT?BT.n_coins:'—'} revenue tokens, monthly since 2023-03, rules fixed in advance): ${bt==null?'—':bt}/5 passed. Nothing unverified is used to score or rank; only raw readings and backtest results are shown.`)}</div><div style="margin-top:8px"><a data-go="research">${L('看立项书和第一轮结果 →','Research plan and round one →')}</a></div></div>
-  <div class="ccard"><h2>${L('最新监控消息','Latest alerts')}</h2>${ALL().slice(0,7).map(alertHTML).join('')}<div style="margin-top:6px"><a data-go="alerts">${L('全部 →','All →')}</a></div></div></div>`;
-  const f=(MAN.findings||[])[0];
-  if(f)h+=`<div class="ccard find"><h2>${L('重大发现 · 最新一批','Key findings · latest batch')} <span class="sm">${f.d}</span></h2><h3>${esc(f.title)}</h3><ul>${f.items.slice(0,5).map(x=>`<li>${esc(x)}</li>`).join('')}</ul><div style="margin-top:6px"><a data-go="findings">${L('全部记录 →','All findings →')}</a></div></div>`;
+  if(!UNIV)return `<div class="ccard empty">${L('名单加载中…','Loading…')}</div>`;
+  const by=Object.fromEntries(UNIV.items.map(x=>[x.sym,x])), inn=UNIV.items.filter(x=>x.in);
+  const top=(UNIV.default||[]).map(s=>by[s]).filter(Boolean), extra=new Set(UNIV.default_extra||[]);
+  const tile=(it,k)=>{const g=goOf(it.sym);return `<div class="ttile" ${g?`data-go="${g}"`:''}><div class="tn">${k+1}</div><div class="ts">${esc(it.sym)}${extra.has(it.sym)?`<span class="tg pool">${L('满分加入','Full marks')}</span>`:''}</div><div class="tc"><span class="tg">${CL_SHORT[it.class]||''}</span>${it.sub&&it.sub!=='Meme'?`<span class="tg">${esc(it.sub)}</span>`:''}</div>${dots(it)}</div>`};
+  let h=`<div class="ccard hero"><div>
+   <div class="hl">${L('默认观测 · 事实条件分前 10','Default watch · top 10 by fact score')} <span class="ii" data-tip="${esc(L('从选币名单里，按 5 条可以核实的事实打分（满足一条 1 分），取前 10；同分按流动性。满分但不在前 10 的也会加进来。\n这是“条件齐备度”，不是涨跌预测——评分研究 M2 / M3 / M3b 没有一个预测读数通过检验。','From the coin list, 5 verifiable facts give 1 point each; top 10 kept, ties broken by liquidity. Full-mark names outside the top 10 are added.\nThis measures how complete the conditions are, not a forecast: no predictive reading passed rounds M2 / M3 / M3b.'))}">i</span></div>
+   <div class="tgrid">${top.map(tile).join('')}</div>
+   <div class="sm" style="margin-top:8px">${FACT.map(f=>`<span class="fleg" data-tip="${esc(f[2])}">${f[1]}</span>`).join(' · ')}</div></div>
+   <div class="hside">
+    <div class="hk"><div class="l">${L('三道闸门','Three gates')} <span class="ii" data-tip="${esc(L('周期（L2 状态）、BTC 底线、净流动性。三道都过才说“环境允许”，只针对整个市场，不针对单个币。','Cycle (L2 state), BTC floor, net liquidity. All three must pass for the environment to allow entries; market-wide, not per coin.'))}">i</span></div><div class="v">${gOK} / 3</div><div class="s">${gs.map(x=>stat(x.k,x.id)).join(' ')}</div></div>
+    <div class="hk"><div class="l">${L('名单','Coin list')}</div><div class="v">${UNIV.count}</div><div class="s">${CL_ORDER.map(c=>`${CL_SHORT[c]} ${UNIV.by_class[c]||0}`).join(' · ')}</div></div>
+    <div class="hk"><div class="l">${L('需要关注的风险信号','Risk signals')}</div><div class="v">${al}</div><div class="s"><a data-go="alerts">${L('看风险提示 →','See alerts →')}</a></div></div>
+    <div class="hk"><div class="l">${L('观测池 对 全市场（30 日中位）','Pool vs market (30d median)')}</div><div class="v ${cls(D.market&&D.market.bench.r30.pool_med)}" style="font-size:18px">${D.market?fmtP(D.market.bench.r30.pool_med)+' / '+fmtP(D.market.bench.r30.ew_med):'—'}</div></div>
+   </div></div>`;
+  const pill=(v,t,n)=>`<span class="pill ${hF===v?'on':''}" data-hf="${v}">${t}${n!=null?` <b>${n}</b>`:''}</span>`;
+  h+=`<div class="ccard"><div class="filters">${pill('top',L('默认前 10','Default 10'))}${pill('all',L('全部名单','Whole list'),inn.length)}${CL_ORDER.map(c=>pill(c,L(c,CL_EN[c]),UNIV.by_class[c]||0)).join('')}${pill('pool',L('原观测池明细','Pool details'),SYMS.length)}</div>`;
+  if(hF==='pool')return h+`<div class="sm" style="margin:6px 0">${L('原观测池 12 个协议 + 18 个观察标的的基本面、资金面、技术面读数。','Fundamentals, flows and technicals of the original 12 pool protocols + 18 watch names.')}</div></div>`+rank();
+  let rows=hF==='top'?top:hF==='all'?inn:inn.filter(x=>x.class===hF);
+  const f=USORT[uSort]; rows=[...rows].sort((a,b)=>{const x=f(a),y=f(b);if(!nz(x))return 1;if(!nz(y))return -1;return (x-y)*uDir});
+  const th=(k,t,tip)=>`<th ${k?`data-us="${k}" class="${uSort===k?'sorted':''}"`:''} ${tip?`data-tip="${esc(tip)}"`:''}>${t}${uSort===k?(uDir<0?' ↓':' ↑'):''}</th>`;
+  h+=`<div class="scroll"><table><thead><tr>${th('fact_rank','#',L('事实条件分排名','Fact-score rank'))}<th style="text-align:left">${L('标的','Asset')}</th><th style="text-align:left">${L('类别','Class')}</th>${th('','条件分',L('5 条事实满足几条；悬停圆点看明细','How many of 5 facts hold; hover the dots'))}${th('med',L('流动性排名','Liquidity rank'),L('近 90 天币安全口径成交额排名的中位数，越小越好','90-day median Binance volume rank; smaller is better'))}${th('qv30',L('30 日成交额','30d volume'))}${th('fut',L('合约占比','Futures share'),L('近 30 天成交额里永续 + 交割合约的占比；越高越像是合约在带价格','Share of perps + futures in 30-day volume'))}${th('rev30',L('30 日收入','Revenue 30d'),L('DefiLlama 协议收入','DefiLlama protocol revenue'))}${th('grow',L('收入环比','Rev vs prior'),L('近 30 天比再往前 30 天','Last 30d vs prior 30d'))}<th style="text-align:left">${L('价值回流','Value capture')}</th></tr></thead><tbody>`+
+  rows.map(it=>{const g=goOf(it.sym),gr=USORT.grow(it);return `<tr ${g?`data-go="${g}"`:''}><td class="sm">${it.fact_rank||''}</td><td style="text-align:left"><b>${esc(it.sym)}</b>${(it.tags||[]).map(t=>`<span class="tg">${esc(t)}</span>`).join('')}${g.startsWith('mech')?`<span class="tg pool">${L('机制卡','Mechanism')}</span>`:''}</td>
+  <td style="text-align:left"><span class="tg">${CL_SHORT[it.class]||''}</span>${it.sub&&it.sub!=='Meme'?`<span class="tg">${esc(it.sub)}</span>`:''}</td><td>${dots(it)}</td><td>${nz(it.med)?it.med:'—'}</td><td>${nz(it.qv30)?'$'+fmtU(it.qv30,1):'—'}</td><td>${nz(it.fut_share)?it.fut_share.toFixed(0)+'%':'—'}</td>
+  <td>${it.rev30>0?'$'+fmtU(it.rev30,1):'—'}</td><td class="${cls(gr)}">${fmtP(gr,0)}</td><td style="text-align:left">${it.capture?stat(capCls(it.capture),esc(it.capture)):'<span class="sm">—</span>'}</td></tr>`}).join('')+`</tbody></table></div>
+  <div class="sm" style="margin-top:8px">${L(`名单按《选币规则 v1》每天生成并冻结一份（数据日 ${esc(UNIV.data_day)}），事后和走势对账，错了改规则。点表头排序，点行看详情；有「机制卡」的点进去是机制拆解。只做观测，不是买卖建议。`,`Generated and frozen daily by rules v1 (data day ${esc(UNIV.data_day)}). Click headers to sort, rows for details. Observation only, not trade advice.`)}</div></div>`;
+  const out=UNIV.items.filter(x=>!x.in&&x.class);
+  h+=`<details class="ccard"><summary>${L(`落选的 ${out.length} 个（已归类，但排在本类前 3 之后）`,`${out.length} not picked (below the top 3 of their class)`)}</summary><div class="scroll" style="margin-top:8px"><table><tbody>${out.map(x=>`<tr><td style="text-align:left"><b>${esc(x.sym)}</b></td><td class="sm" style="text-align:left">${esc(x.class)}${x.sub?' · '+esc(x.sub):''}</td><td>${nz(x.med)?x.med:'—'}</td><td class="sm" style="text-align:left">${esc(x.miss||'')}</td></tr>`).join('')}</tbody></table></div></details>`;
+  h+=`<div class="cgrid g2"><div class="ccard"><h2>${L('最新监控消息','Latest alerts')}</h2>${ALL().slice(0,5).map(alertHTML).join('')}<div style="margin-top:6px"><a data-go="alerts">${L('全部 →','All →')}</a></div></div>`;
+  const fd=(MAN.findings||[])[0];
+  h+=`<div class="ccard find"><h2>${L('重大发现 · 最新','Key findings · latest')} <span class="sm">${fd?esc(fd.d):''}</span></h2>${fd?`<h3>${esc(fd.title)}</h3><ul>${fd.items.slice(0,4).map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}<div style="margin-top:6px"><a data-go="docs/findings">${L('全部记录 →','All →')}</a></div></div></div>`;
   return h;
 }
 let sortKey='vr',sortDir=1,fTier='all',fTag='all';
@@ -427,7 +454,10 @@ function btTable(){
 }
 function research(){
   const t=document.getElementById('core-research');
-  return `<div class="ccard find">${t?t.innerHTML:''}</div><div class="ccard"><h2>${L('第一轮回测结果（2026-11-14，立项的起点）','Round-one backtest (2026-11-14), the starting point')}</h2>${btTable()}</div>`;
+  const tp=id=>{const x=document.getElementById(id);return x?x.innerHTML:''};
+  return `<div class="ccard"><h2>${L('结论（2026-11-14）','Conclusion (2026-11-14)')}</h2><div style="color:var(--ink2);font-size:13px;line-height:1.8">${L('M2（38 个币）、M3（样本外 + Coin Metrics 子集）、M3b（不限交易所，219 个代币）三轮检验，10 个读数和 R3 规则<b>没有一个通过</b>：收入增速、持有人收入占比、抽成率、技术面都分不出之后谁涨得好。所以页面不用预测分；默认观测改用「事实条件分」（条件齐备度，不是预测）。研究继续按立项书做，样本外数据攒够再检验。','Three rounds (M2: 38 coins; M3: out-of-sample + Coin Metrics subset; M3b: 219 tokens, any exchange): none of the 10 readings or rule R3 passed. So no predictive score; the default watch uses a fact score (condition completeness, not a forecast). Research continues per the charter.')}</div></div>
+  <details class="ccard find"><summary>${L('M3b 结果（扩大样本）','M3b results (wider sample)')}</summary>${tp('core-res-m3b')}</details><details class="ccard find"><summary>${L('M3 结果（样本外）','M3 results (out of sample)')}</summary>${tp('core-res-m3')}</details><details class="ccard find"><summary>${L('M1–M2 结果','M1–M2 results')}</summary>${tp('core-res-m1m2')}</details>
+  <details class="ccard find"><summary>${L('立项书','Research charter')}</summary>${t?t.innerHTML:''}</details>`+`<div class="ccard"><h2>${L('第一轮回测结果（2026-11-14，立项的起点）','Round-one backtest (2026-11-14), the starting point')}</h2>${btTable()}</div>`;
 }
 function method(){
   const g=k=>`<li><b>${{g1:L('闸门 1 · 周期','Gate 1 · cycle'),g2:L('闸门 2 · BTC 底线','Gate 2 · BTC floor'),g3:L('闸门 3 · 流动性','Gate 3 · liquidity'),R1:L('R1 · 六问卡','R1 · six-question card'),R2:L('R2 · 解锁','R2 · unlocks'),R3:L('R3 · 价格不跑在收入前面','R3 · price vs revenue'),R4:L('R4 · 近期强势不加分','R4 · no points for strength'),R6:L('R6 · 渠道 B','R6 · channel B')}[k]}</b>：${WHY[k]}</li>`;
@@ -485,22 +515,82 @@ function listView(){
 function mechView(sym){
   const m=MECH&&MECH.coins&&MECH.coins[sym];
   if(!MECH)return `<div class="ccard empty">${L('加载中…','Loading…')}</div>`;
-  if(!m)return `<div class="ccard empty">${L(`${esc(sym)} 还没有机制拆解卡。`,`No mechanism card for ${esc(sym)} yet.`)} <a data-go="list">${L('回名单','Back to list')}</a></div>`;
-  return `<div class="ccard"><div class="sm"><a data-go="list">${L('选币名单','Coin list')}</a> › ${esc(sym)}</div><h2 style="margin-top:6px">${esc(sym)} · ${L('机制拆解卡','Mechanism card')}</h2><div style="color:var(--ink2);font-size:13px;line-height:1.7">${esc(m.summary)}</div>
+  if(!m)return `<div class="ccard empty">${L(`${esc(sym)} 还没有机制拆解卡。`,`No mechanism card for ${esc(sym)} yet.`)} <a data-go="home">${L('回排行榜','Back')}</a></div>`;
+  return `<div class="ccard"><div class="sm"><a data-go="home">${L('排行榜','Leaderboard')}</a> › ${esc(sym)}</div><h2 style="margin-top:6px">${esc(sym)} · ${L('机制拆解卡','Mechanism card')}</h2><div style="color:var(--ink2);font-size:13px;line-height:1.7">${esc(m.summary)}</div>
   <div class="sm" style="margin-top:6px">${L('数据日','As of')} ${esc(m.asof)}${m.stale?` <b style="color:var(--warn)">${L('（这次没取到，沿用上次）','(stale: last good fetch)')}</b>`:''} · ${L('来源','Sources')}：${esc(m.source)}</div></div>`+
   `<div class="cgrid g2">${m.sections.map(sec=>`<div class="ccard"><h3>${esc(sec.title)}</h3><table style="table-layout:fixed;width:100%"><tbody>${sec.rows.map(r=>`<tr><td style="text-align:left;white-space:normal;width:42%">${esc(r[0])}</td><td style="text-align:right;white-space:normal;word-break:break-word"><b>${esc(r[1])}</b></td></tr><tr><td colspan="2" class="sm" style="text-align:left;border-top:0;padding-top:0;white-space:normal">${esc(r[2]||'')}</td></tr>`).join('')}</tbody></table></div>`).join('')}</div>`+
   `<div class="ccard"><h3>${L('要看穿的地方','What to see through')}</h3>${m.flags.map(f=>`<div class="alert"><div>${stat('warn','')}</div><div style="color:var(--ink2)">${esc(f)}</div></div>`).join('')}<div class="sm" style="margin-top:6px">${L('只摆机制和数据，不是买卖建议。拿不到的写「未取到 / 未查到」，不估算。','Mechanism and data only, not trade advice. Missing data is marked, never estimated.')}</div></div>`;
 }
-const VIEWS={home,list:listView,rank,market,volume,rotation,alerts,findings,research,method};
-const TABS=[['home',L('总观测台','Overview')],['list',L('选币名单','Coin list')],['rank',L('全部标的','All assets')],['volume',L('成交额榜','Volume board')],['market',L('全市场','Market')],['rotation',L('拉盘复盘','Rally replay')],['alerts',L('风险提示','Risk alerts')],['findings',L('重大发现','Findings')],['research',L('评分研究','Score research')],['method',L('口径与规则','Method')]];
+
+let dF='rules';
+function docs(sub){
+  if(sub)dF=sub;
+  const pill=(v,t)=>`<span class="pill ${dF===v?'on':''}" data-go="docs/${v}">${t}</span>`;
+  const head=`<div class="ccard"><div class="filters">${pill('rules',L('选币规则与口径','Rules & definitions'))}${pill('research',L('评分研究','Score research'))}${pill('findings',L('重大发现','Key findings'))}</div><div class="sm">${L('规则怎么定、为什么不用预测分、发现了什么，都在这里；改动会写进更新日志和更正记录。','How the rules are set, why there is no predictive score, and what we found. Changes go to the changelog and corrections.')}</div></div>`;
+  return head+(dF==='research'?research():dF==='findings'?findings():method());
+}
+
+/* ---------- 悬停说明（大叔 11-15：任何标签都要有 hover） ---------- */
+const TIP={
+ 'T1':L('原观测池第一档：收入和回购最确定的协议','Pool tier 1: the most certain revenue and buybacks'),'T2':L('原观测池第二档','Pool tier 2'),'T3':L('原观测池第三档：有收入但回流不确定','Pool tier 3: revenue, uncertain capture'),
+ '观察':L('观察标的：叙事 / 赛道代表，多数没有协议收入','Watch name: narrative / sector proxy, mostly no protocol revenue'),'埋伏候选':L('原型里的埋伏候选（来自大叔的研究笔记，不是规则选出）','Ambush candidate from the prototype notes, not rule-picked'),
+ '渠道B':L('原型里的渠道 B 候选（研究笔记）','Channel-B candidate from the prototype notes'),'观测池':L('原观测池 12 个协议之一','One of the 12 original pool protocols'),'观测':L('在龙头选币的观测范围里','In the leader-picks scope'),
+ 'ETF':L('有美国现货 ETF 获批','Has an approved US spot ETF'),'ETF 申请中':L('美国现货 ETF 在申请中，还没批','US spot ETF filed, not approved'),'流动性不足':L('90 日成交额排名中位 > 100，按原观测池例外保留','90-day median rank > 100; kept as an original-pool exception'),
+ '子类待复核':L('有收入但 DefiLlama 类别没映射到子类，暂归卖水人，等人工复核','Revenue but unmapped category; parked under toll-takers pending review'),
+ '机制卡':L('有机制拆解卡：能卖的有多少、排放 vs 收入、是不是合约在带价格','Has a mechanism card: sellable float, emissions vs revenue, futures-driven or not'),
+ '满分加入':L('5 条事实全满足，但不在前 10，按规则加进默认观测','All 5 facts hold but outside the top 10; added by rule'),
+ '交易所平台币':L('交易所发行的平台币，价值来自交易所业务','Exchange token; value from the exchange business'),'公链':L('本身是一条公链的原生币','Native token of a chain'),
+ '预言机':L('给链上提供价格等外部数据的服务','Provides external data such as prices on-chain'),'合成美元':L('用对冲仓位合成的美元稳定币','A dollar stablecoin built from hedged positions'),
+ '加密卡':L('收入主要来自加密借记卡','Revenue mainly from crypto debit cards'),'聚合器':L('把多个交易场所的流动性聚合到一起','Aggregates liquidity across venues'),
+ '空投激励':L('代币大量用于用户发放 / 空投','Large token share goes to user grants / airdrops'),'解锁抛压':L('未来有大量团队 / 投资人代币解锁','Large team / investor unlocks ahead'),
+ 'AI 叙事':L('价格主要跟 AI 叙事走','Price mainly follows the AI narrative'),'挖矿排放':L('新币持续通过挖矿 / 质押排放出来','New tokens keep coming from mining / staking emissions'),
+ 'AI':L('AI 相关','AI-related'),'AI Agent':L('AI Agent 发行 / 交易平台','AI agent launch / trading platform'),'RWA':L('现实资产上链（美债、股票等）','Real-world assets on-chain'),
+ '企业互操作':L('面向企业 / 银行的跨链互操作','Enterprise / bank interoperability'),'再质押':L('把已质押的资产再质押换收益','Restaking staked assets for extra yield'),
+ '发射台收入':L('收入来自代币发射平台','Revenue from a token launchpad'),'数据可用性':L('给 Rollup 提供数据可用性层','Data-availability layer for rollups'),
+ '游戏':L('链游 / 元宇宙','Gaming / metaverse'),'稳定币 USD1':L('关联稳定币 USD1','Linked to the USD1 stablecoin'),'跨链':L('跨链消息 / 桥','Cross-chain messaging / bridge'),'隐私计算':L('隐私计算 / 加密计算','Privacy / encrypted compute'),
+ '共识储备型':L('有美国现货 ETF、协议收入相对市值很小：价格靠机构共识和资金流，全列','US spot ETF and little revenue: priced on consensus and flows; all listed'),
+ '主流公链型':L('没有 ETF 的主流公链原生币，取流动性前 3','Major chain tokens without an ETF; top 3 by liquidity'),
+ '现金流有用型':L('协议有可核实的收入，按子类各取流动性前 3','Protocols with verifiable revenue; top 3 per sub-class'),
+ '博弈控盘型':L('价格靠叙事、反身性或筹码控制，没有回流持币人的收入','Priced on narrative, reflexivity or float control; no revenue to holders'),
+ '注意力情绪型':L('Meme：只看注意力和流动性','Memes: attention and liquidity only'),
+ '共识':L('共识储备型：有美国现货 ETF、收入相对市值很小','Consensus reserve: US spot ETF, little revenue'),'现金流':L('现金流有用型：协议有可核实的收入','Cash-flow utility: verifiable protocol revenue'),
+ '博弈':L('博弈控盘型：靠叙事 / 反身性 / 控盘，没有回流持币人的收入','Game / controlled float: narrative, reflexivity or float control'),'Meme':L('注意力情绪型：Meme','Attention / meme'),
+ '交易所和DEX':L('子类：交易所、DEX 的手续费收入','Sub-class: exchange / DEX fee revenue'),'借贷与抵押':L('子类：借贷、抵押、质押、收益','Sub-class: lending, collateral, staking, yield'),
+ '衍生品':L('子类：永续 / 期权交易','Sub-class: perps / options'),'发射台':L('子类：代币发射平台','Sub-class: token launchpad'),'现实摩擦解决':L('子类：支付、稳定币、卡这类解决现实问题的','Sub-class: payments, stablecoins, cards'),
+ 'AI新兴需求':L('子类：AI 带来的新需求（算力、Agent）','Sub-class: new demand from AI (compute, agents)'),'卖水人过路费':L('子类：给别人提供基础服务收过路费（预言机、跨链、意图）','Sub-class: toll-takers (oracles, bridges, intents)'),
+ '叙事':L('子类：价格主要靠叙事','Sub-class: narrative-driven'),'反身性':L('子类：价格涨 → 激励更值钱 → 更多人参与，循环放大；反过来也一样','Sub-class: reflexive loop between price and incentives'),'控盘':L('子类：筹码高度集中','Sub-class: concentrated float'),
+ '已执行·回购销毁':L('用收入买回代币并销毁，已在执行','Revenue buys back and burns tokens; live'),'已执行·直接销毁':L('收入 / 手续费直接销毁代币，已在执行','Fees burn tokens directly; live'),
+ '已执行·回购持有':L('用收入买回代币后由协议持有（没有销毁）','Revenue buys tokens that the protocol holds (not burned)'),'已执行·回购分给质押者':L('买回的代币分给质押者','Bought-back tokens go to stakers'),
+ '已执行·分红':L('收入直接分给质押 / 锁仓的持币人','Revenue paid to staked / locked holders'),'已执行·储备':L('收入买成代币放进储备','Revenue buys tokens into a reserve'),
+ '承诺未执行':L('说过要回购 / 开费用开关，但还没执行','Buybacks / fee switch promised, not live'),'暂停中':L('回购曾执行过，现在暂停','Buybacks ran before, now paused'),
+ 'DefiLlama 有记录·未核':L('DefiLlama 记了持有人收入，我们还没人工核对','DefiLlama records holder revenue; not yet checked by us'),'无 / 未核':L('没查到持有人能分到的东西，或还没核对','No holder capture found, or not yet checked'),
+ '闸门1':L('周期闸门：L2 状态在熊底区或熊末→牛初才算过','Cycle gate: passes only in L2 bear-bottom or late-bear → early-bull'),'闸门2':L('BTC 底线：收盘没跌破本轮最低点','BTC floor: no close below the cycle low'),'闸门3':L('流动性闸门：L1 净流动性 × 美元方向','Liquidity gate: L1 net liquidity × dollar direction')};
+const tipKey=t=>t.replace(/\s+\d+$/,'').replace(/^[✓!✕?]\s*/,'').trim();
+function tipify(el){
+  el.querySelectorAll('[title]').forEach(x=>{if(!x.dataset.tip)x.dataset.tip=x.getAttribute('title');x.removeAttribute('title')});
+  el.querySelectorAll('.tg,.st,.pill,.chip').forEach(x=>{if(x.dataset.tip||x.closest('[data-tip]')!==x&&x.closest('[data-tip]'))return;const k=tipKey(x.textContent);if(TIP[k])x.dataset.tip=TIP[k]});
+}
+let TB=null;
+document.addEventListener('mouseover',e=>{const t=e.target.closest&&e.target.closest('#core [data-tip]');if(!TB){TB=document.createElement('div');TB.className='core-tipbox';document.body.appendChild(TB)}
+  if(!t){TB.style.display='none';return}
+  TB.textContent=t.dataset.tip;TB.style.display='block';const r=t.getBoundingClientRect(),w=Math.min(320,window.innerWidth-24);TB.style.maxWidth=w+'px';
+  const x=Math.max(12,Math.min(r.left,window.innerWidth-TB.offsetWidth-12)),y=r.bottom+6+TB.offsetHeight>window.innerHeight?r.top-TB.offsetHeight-6:r.bottom+6;
+  TB.style.left=x+'px';TB.style.top=(y+window.scrollY)+'px'});
+const VIEWS={home,docs:()=>docs(),list:listView,rank,market,volume,rotation,alerts,findings,research,method};
+const TABS=[['home',L('排行榜','Leaderboard')],['volume',L('成交额榜','Volume board')],['market',L('全市场','Market')],['rotation',L('拉盘复盘','Rally replay')],['alerts',L('风险提示','Risk alerts')],['docs',L('研究与规则','Research & rules')]];
 function render(){
   const h=(location.hash||'#home').slice(1); const [p,arg]=h.split('/');
-  root.querySelectorAll('.ctabs a').forEach(a=>a.classList.toggle('on',a.dataset.p===(p==='coin'?'rank':p==='mech'?'list':p)));
-  $('#cview').innerHTML=p==='coin'?coin(decodeURIComponent(arg||'')):p==='mech'?mechView(decodeURIComponent(arg||'')):(VIEWS[p]||home)();
+  root.querySelectorAll('.ctabs a').forEach(a=>a.classList.toggle('on',a.dataset.p===(['coin','mech','rank','list'].includes(p)?'home':['method','research','findings'].includes(p)?'docs':p)));
+  if(p==='rank')hF='pool'; if(p==='list')hF='all';
+  const OLD={method:'rules',research:'research',findings:'findings'};
+  const V=$('#cview');V.innerHTML=p==='coin'?coin(decodeURIComponent(arg||'')):p==='mech'?mechView(decodeURIComponent(arg||'')):p==='docs'?docs(arg):OLD[p]?docs(OLD[p]):(VIEWS[p]||home)();;
+  tipify(V)
 }
 root.addEventListener('click',e=>{
   const g=e.target.closest('[data-go]');if(g){location.hash='#'+g.dataset.go;window.scrollTo(0,root.offsetTop-10);return}
   const n=e.target.closest('.ctabs a');if(n){e.preventDefault();location.hash='#'+n.dataset.p;return}
+  const hf=e.target.closest('[data-hf]');if(hf){hF=hf.dataset.hf;render();return}
+  const us=e.target.closest('th[data-us]');if(us){const k=us.dataset.us;if(uSort===k)uDir*=-1;else{uSort=k;uDir=['fact_rank','med','fut'].includes(k)?1:-1}render();return}
   const mf=e.target.closest('[data-mf]');if(mf){mF=mf.dataset.mf;render();return}
   const vf=e.target.closest('[data-vf]');if(vf){vF=vf.dataset.vf;vN=100;render();return}
   const vm=e.target.closest('[data-vmore]');if(vm){vN+=100;render();return}

@@ -190,7 +190,7 @@ ICON = {
 }
 NAV_MAIN = [("home", "/", "终端总览", "Overview"), ("macro", "/macro/", "宏观仪表盘", "Macro"),
             ("calendar", "/calendar/", "事件日历", "Calendar"), ("launchpad", "/launchpad/", "发射台矩阵", "Launchpads"), ("aiagent", "/ai-agent/", "AI Agent", "AI Agent"), ("rotation", "/rotation/", "板块轮动", "Rotation"),
-            ("core", "/core/", "核心选币", "Core Picks"), ("narrative", "/narrative/", "叙事埋伏", "Narratives"), ("reports", "/reports/", "分析报告", "Reports"),
+            ("core", "/core/", "龙头选币", "Leader Picks"), ("narrative", "/narrative/", "叙事埋伏", "Narratives"), ("reports", "/reports/", "分析报告", "Reports"),
             ("journal", "/journal/", "解读日志", "Journal")]
 NAV_MORE = [("methodology", "/methodology/", "口径与规则", "Methodology"), ("corrections", "/corrections/", "更正记录", "Corrections"),
             ("about", "/about/", "关于", "About")]
@@ -3802,7 +3802,7 @@ def write_core_data():
     d = dict(d, gates=core_gates())
     with open(os.path.join(out, "core_latest.json"), "w", encoding="utf-8") as fh:
         json.dump(d, fh, ensure_ascii=False, separators=(",", ":"))
-    for fn in ("core_history.json", "rotation.json", "score_backtest.json", "universe.json", "mech.json"):
+    for fn in ("core_history.json", "rotation.json", "score_backtest.json", "universe.json", "mech.json", "buyback.json"):
         if os.path.exists(os.path.join(src, fn)):
             shutil.copyfile(os.path.join(src, fn), os.path.join(out, fn))
     for fn in os.listdir(os.path.join(src, "series")) if os.path.isdir(os.path.join(src, "series")) else []:
@@ -3824,13 +3824,19 @@ def core_home_card():
     lead = sorted((c for c in wr if c["fees"]["revenue"]["d7v30"] > 0), key=lambda c: -c["fees"]["revenue"]["d7v30"])
     tops = " ".join(f'<a href="{U("/core/")}#coin/{esc(c["sym"])}">{esc(c["sym"])} <b>{c["fees"]["revenue"]["d7v30"]:+.0f}%</b></a>' for c in lead) or T("无", "none")
     ent = "、".join(x["sym"] for x in vb.get("entrants") or []) or T("无", "none")
-    return (f'<h2>{T("核心选币观测", "Core picks monitor")} <span class="sub">{T("基本面 · 资金面 · 技术面，只做条件检查", "Fundamentals · flows · technicals; condition checks only")}</span>'
+    try:
+        un = json.load(open(os.path.join(DATA, "core", "universe.json"), encoding="utf-8"))
+        fs = {i["sym"]: i.get("fact") for i in un["items"]}
+        dflt = " ".join(f'<a href="{U("/core/")}#coin/{esc(x)}">{esc(x)} <b>{fs.get(x)}/5</b></a>' for x in un.get("default") or []) or T("无", "none")
+    except Exception:  # noqa
+        dflt = T("名单还没生成", "not generated yet")
+    return (f'<h2>{T("龙头选币", "Leader picks")} <span class="sub">{T("按规则选出各类龙头，事实条件分前 10 默认观测", "Leaders by class; top 10 by fact score as the default watch")}</span>'
             f' <a class="sub" href="{U("/core/")}">{T("进观测台 →", "Open →")}</a></h2>'
             f'<div class="card core-home"><div class="row"><span>{T("观测池收入 7 日均 > 30 日均", "Pool revenue 7d > 30d")} <b>{up} / {len(wr)}</b></span>'
             f'<span>{T("观测池 30 日中位", "Pool 30d median")} <b>{fp(b30.get("pool_med"))}</b> · {T("全市场篮子", "market basket")} <b>{fp(b30.get("ew_med"))}</b></span>'
             f'<span>{T("成交额新进榜", "Volume entrants")} <b>{esc(ent)}</b></span></div>'
-            f'<div class="row" style="margin-top:6px">{T("收入 7 日均在上升的：", "Revenue 7d avg rising: ")}{tops}</div>'
-            f'<div class="row" style="margin-top:6px;font-size:12px;color:var(--muted)">{T("数据日", "Data day")} {esc(d.get("last_complete_day") or "")} · {T("只摆读数，不打分（评分回测没通过）", "Readings only, no score (the score failed its backtest)")}</div></div>')
+            f'<div class="row" style="margin-top:6px">{T("默认观测（事实条件分前 10）：", "Default watch (top 10 by fact score): ")}{dflt}</div>'
+            f'<div class="row" style="margin-top:6px;font-size:12px;color:var(--muted)">{T("数据日", "Data day")} {esc(d.get("last_complete_day") or "")} · {T("条件分 = 5 条事实满足几条，不是涨跌预测", "Fact score = how many of 5 facts hold; not a forecast")}</div></div>')
 
 
 def core_md(src):
@@ -3882,18 +3888,20 @@ def core_md(src):
 
 
 def build_core():
-    cr = crumbs([(T("核心选币", "Core Picks"), None)])
+    cr = crumbs([(T("龙头选币", "Leader Picks"), None)])
     # 缓存版本号用生成时间（同一数据日重跑也会换新地址）；11-14 用数据日当版本号，CDN 把旧 JSON 又缓存了一小时，篮子来源字段读不到
     v = re.sub(r"[^0-9]", "", (G.get("CORE") or {}).get("generated") or "")
     body = f"""{cr}
-<div class="ph"><div><div class="eyebrow">Core Picks Monitor</div><h1>{T("核心选币观测台", "Core picks monitor")}</h1></div></div>
-<p class="lede">{T("回购 / 收入型协议和叙事标的的基本面（手续费、收入、持有人收入、业务量）、资金面（成交额、现货 + 永续排名）、技术面（均线、RSI、回撤）。每天自动更新；评分和规则判定全部是【假设】，只做条件检查和风险提示，不是买卖建议。",
-                   "Fundamentals (fees, revenue, holder revenue, activity), flows (volume, spot + perp rank) and technicals (MAs, RSI, drawdown) for buyback / revenue protocols and narrative names. Updated daily; scores and rule checks are hypotheses for condition checks and risk alerts, not trade advice.")}</p>
-<div class="core" id="core" data-src="/data/core/core_latest.json?v={v}" data-series="/data/core/series/" data-hist="/data/core/core_history.json" data-rot="/data/core/rotation.json" data-bt="/data/core/score_backtest.json" data-univ="/data/core/universe.json" data-mech="/data/core/mech.json"></div>
+<div class="ph"><div><div class="eyebrow">Leader Picks</div><h1>{T("龙头选币", "Leader picks")}</h1></div></div>
+<p class="lede">{T("按《选币规则 v1》每天从币安成交额前 100 里把币分成五类（共识储备 / 主流公链 / 现金流有用 / 博弈控盘 / 注意力情绪），每类取流动性龙头；再按 5 条可核实的事实打「条件分」，前 10 作为默认观测。条件分是条件齐备度，不是涨跌预测；只做数据和过程记录，不是买卖建议。", "Each day, the top-100 Binance names are sorted into five classes by what really drives price, and the liquidity leaders of each are kept; five verifiable facts give a condition score and the top 10 are the default watch. The score measures how complete the conditions are, not a forecast; data and process only, not trade advice.")}</p>
+<div class="core" id="core" data-src="/data/core/core_latest.json?v={v}" data-series="/data/core/series/" data-hist="/data/core/core_history.json" data-rot="/data/core/rotation.json" data-bt="/data/core/score_backtest.json" data-univ="/data/core/universe.json" data-mech="/data/core/mech.json" data-bb="/data/core/buyback.json"></div>
 <template id="core-research">{core_md(open(os.path.join(ROOT, "core", "research", "评分研究立项.md"), encoding="utf-8").read())}</template>
+<template id="core-res-m1m2">{core_md(open(os.path.join(ROOT, "core", "research", "评分研究_M1M2结果.md"), encoding="utf-8").read())}</template>
+<template id="core-res-m3">{core_md(open(os.path.join(ROOT, "core", "research", "评分研究_M3结果.md"), encoding="utf-8").read())}</template>
+<template id="core-res-m3b">{core_md(open(os.path.join(ROOT, "core", "research", "评分研究_M3b结果.md"), encoding="utf-8").read())}</template>
 <template id="core-rules">{core_md(open(os.path.join(ROOT, "core", "research", "选币规则_v1.md"), encoding="utf-8").read())}</template>
 <noscript><p class="muted">{T("这一页需要开启 JavaScript。", "This page needs JavaScript.")}</p></noscript>"""
-    emit("core/index.html", T(f"核心选币观测台 · {BRAND}", f"Core Picks Monitor · {BRAND_EN}"), body, active="core",
+    emit("core/index.html", T(f"龙头选币 · {BRAND}", f"Leader Picks · {BRAND_EN}"), body, active="core",
          extra_head=f'<link rel="stylesheet" href="{ASSET_URL["core.css"]}">', scripts=f'<script src="{ASSET_URL["core.js"]}" defer></script>',
          desc=T("核心标的的基本面、资金面、技术面每日观测：协议收入趋势、估值、解锁、成交额榜、均线与回撤，加建仓条件检查和风险提示。",
                 "Daily fundamentals, flows and technicals for core assets: revenue trend, valuation, unlocks, volume board, MAs and drawdowns, with an entry checklist and risk alerts."))

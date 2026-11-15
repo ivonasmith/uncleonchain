@@ -36,6 +36,7 @@ def llama_by_symbol():
     rev = C.get(f"{C.LLAMA}/overview/fees?excludeTotalDataChart=true&excludeTotalDataChartBreakdown=true&dataType=dailyRevenue")["protocols"]
     hold = C.get(f"{C.LLAMA}/overview/fees?excludeTotalDataChart=true&excludeTotalDataChartBreakdown=true&dataType=dailyHoldersRevenue")["protocols"]
     r30 = {x["slug"]: x.get("total30d") or 0 for x in rev if x.get("slug")}
+    r60 = {x["slug"]: x.get("total60dto30d") or 0 for x in rev if x.get("slug")}
     h30 = {x["slug"]: x.get("total30d") or 0 for x in hold if x.get("slug")}
     h1y = {x["slug"]: x.get("total1y") or 0 for x in hold if x.get("slug")}
     out = {}
@@ -43,9 +44,10 @@ def llama_by_symbol():
         s = (p.get("symbol") or "").upper()
         if not s or s == "-":
             continue
-        o = out.setdefault(s, {"rev30": 0, "hold30": 0, "hold1y": 0, "cats": {}, "names": []})
+        o = out.setdefault(s, {"rev30": 0, "rev_prev30": 0, "hold30": 0, "hold1y": 0, "cats": {}, "names": []})
         sl = p["slug"]
         o["rev30"] += r30.get(sl, 0)
+        o["rev_prev30"] += r60.get(sl, 0)
         o["hold30"] += h30.get(sl, 0)
         o["hold1y"] += h1y.get(sl, 0)
         c = p.get("category")
@@ -66,7 +68,7 @@ def main():
     for s, c in (latest.get("coins") or {}).items():
         if c.get("price"):
             px.setdefault(s, c["price"]["last"])
-    ll = cached("llama", llama_by_symbol)
+    ll = cached("llama2", llama_by_symbol)
     chains = cached("chains", lambda: sorted({(c.get("tokenSymbol") or "").upper() for c in C.get(f"{C.LLAMA}/v2/chains") if c.get("tokenSymbol")}))
     meme = cached("meme", lambda: sorted({x["symbol"].upper() for x in C.get(f"{C.CG}/coins/markets?vs_currency=usd&category=meme-token&per_page=250") or []}))
     etf, eu, manual = set(CFG["etf"]["yes"]), CFG["etf_but_useful"], CFG["manual"]
@@ -84,7 +86,7 @@ def main():
         L = ll.get(s) or {}
         rev30 = L.get("rev30") or 0
         it = {"sym": s, "med": r.get("med"), "cur": r.get("cur"), "qv30": r.get("qv30"), "fut_share": r.get("fut_share_30d"),
-              "vtags": r.get("tags") or [], "rev30": rev30, "hold30": L.get("hold30") or 0, "hold1y": L.get("hold1y") or 0,
+              "vtags": r.get("tags") or [], "rev30": rev30, "rev_prev30": L.get("rev_prev30") or 0, "hold30": L.get("hold30") or 0, "hold1y": L.get("hold1y") or 0,
               "llama_cat": L.get("cat"), "llama_names": L.get("names"), "tags": [], "liquid": r.get("med") is not None and r["med"] <= LMAX}
         if s in manual:
             m = manual[s]
@@ -124,6 +126,15 @@ def main():
                 it["unlock_note"] = ul[1]
                 it["scissors"] = (it["buyback_12m"] or 0) - it["unlock_12m"]
         items.append(it)
+    # 事实条件分（大叔 11-15 定）：5 条可核实的事实，满足一条 1 分。是「条件齐备度」，不是涨跌预测（评分研究 M2–M3b 无一通过）。
+    for it in items:
+        rv, pv, h = it["rev30"], it["rev_prev30"], it["hold30"]
+        it["cond"] = {"liq": it["med"] is not None and it["med"] <= CFG["fact"]["liq_med_max"],
+                      "rev": rv >= CFG["fact"]["rev30_min"],
+                      "grow": rv >= CFG["fact"]["rev30_min"] / 10 and pv > 0 and rv > pv,
+                      "hold": rv > 0 and h / rv >= CFG["fact"]["hold_share_min"],
+                      "cap": str(it.get("capture") or "").startswith("已执行")}
+        it["fact"] = sum(it["cond"].values())
     # 选人
     key = lambda x: (x["med"] if x["med"] is not None else 999, x["cur"] or 999)
     picked = set()
@@ -148,16 +159,21 @@ def main():
         if it["class"] is None:
             it["miss"] = it["why"]
         it["in"] = it["sym"] in picked
+    ranked = sorted([i for i in items if i["sym"] in picked], key=lambda x: (-x["fact"], key(x)))
+    top = [i["sym"] for i in ranked[:CFG["fact"]["top_n"]]]
+    extra = [i["sym"] for i in ranked[CFG["fact"]["top_n"]:] if i["fact"] == len(i["cond"])]   # 满分但没进前 10 的也加上
+    for i, it in enumerate(ranked):
+        it["fact_rank"] = i + 1
     items.sort(key=lambda x: (not x["in"], CLASSES.index(x["class"]) if x["class"] in CLASSES else 9, x.get("sub") or "", key(x)))
     day = (vol.get("last_day") or latest.get("last_complete_day"))
     res = {"generated": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M UTC"), "data_day": day, "rules": "core/research/选币规则_v1.md",
-           "liquidity_med_max": LMAX, "count": len(picked), "by_class": {c: sum(1 for i in items if i["in"] and i["class"] == c) for c in CLASSES},
+           "liquidity_med_max": LMAX, "count": len(picked), "fact_rules": CFG["fact"], "default": top + extra, "default_extra": extra, "by_class": {c: sum(1 for i in items if i["in"] and i["class"] == c) for c in CLASSES},
            "items": items}
     json.dump(C.clean(res), open(os.path.join(OUT, "universe.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     hp = os.path.join(OUT, "universe_history.json")
     hist = json.load(open(hp, encoding="utf-8")) if os.path.exists(hp) else []
     if not any(h["date"] == day for h in hist):        # 写入即冻结，同日不覆盖
-        hist.append({"date": day, "members": [[i["sym"], i["class"], i.get("sub")] for i in items if i["in"]]})
+        hist.append({"date": day, "members": [[i["sym"], i["class"], i.get("sub"), i["fact"]] for i in items if i["in"]], "default": top + extra})
         json.dump(hist, open(hp, "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
     C.log(f"名单 {len(picked)} 个：" + "；".join(f"{c} {res['by_class'][c]}" for c in CLASSES))
 
