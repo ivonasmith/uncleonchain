@@ -129,6 +129,8 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
   云端环境 uncleonchain 11-14 已放行 ethresear.ch、hub.snapshot.org、www.binance.com、api.bybit.com、api-manager.upbit.com；Bybit（CloudFront 按国家拦）、Upbit（Cloudflare 人机验证）实测不通，没接。Binance pageSize 超过 20 会 400。
 - 左侧菜单（大叔 11-15 定，`出网站.NAV_MAIN`）：终端总览 / 事件日历 / 聪明钱 / 宏观仪表盘 / 发射台矩阵 / AI Agent / RWA / 龙头选币 / Alpha 雷达 / 分析报告 / 解读日志。
   聪明钱 /smart-money/ 先放原板块轮动（`build_rotation` 输出到这里，/rotation/ 留 meta refresh 跳转页，轮动文章面包屑指向聪明钱）；聪明钱自己的数据源上线后加在同一页。
+- `smartmoney/`：聪明钱板块（2026-11-15 立项，**大叔定先立项做框架、暂不开发网站**）。立项书 `smartmoney/research/立项书.md`（S0 待大叔确认）：定位 = 可核验地址组的链上行为追踪，不是钱包榜；
+  不叫任何地址「聪明」（H1 样本外检验通过前不出「信号」、不排序），个人钱包只收本人公开认领的，第三方标签只作线索（E3 只进候选）。S0 定稿前不写采集代码、不出本板块页面（/smart-money/ 目前放原板块轮动，见上条），`alpha/sources.json` 的 `site_smartmoney` 保持 planned。
 - 发射台活动温度（`pipeline/周期观察.py` 数据与热潮识别、`周期仪表盘.py` 展示）：每日更新。序列 = 研究快照 `content/cycle/snapshot.json`（截至 2026-10-17，sha256 在 manifest）+ 之后接 `发射台矩阵.json`「历史」的类目合计；热潮规则重算快照区间 27 轮逐字段对上（对不上会打 ⚠️）。
   仪表盘 `周期仪表盘.hero` 放在矩阵页最上面（先看温度再看细节），周期页 /launchpad/cycle/ 看这一轮、各阶段时长、历史；全站统一叫「发射台活动温度」，颜色用 `--cyc-*` 变量，文案要大白话。「钱在哪」= `出网站.money_where`。
 - 发射台长周期（2026-10-29）：`周期观察.long_view` / `coverage`。全部历史 2021-09-18 起只作背景，比高低只用可比段（`COMPARABLE_FROM` = 2024-03-01，pump.fun 开始报数；之前只有 1–6 家融资型平台报数）；
