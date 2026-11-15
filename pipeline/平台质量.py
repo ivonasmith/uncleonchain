@@ -59,6 +59,7 @@ def gt_pools(net, addr):
             if e.code == 404:
                 return []
             if e.code == 429 and i < 3:
+                print(f"    GeckoTerminal 429，等 {30 * (i + 1)} 秒", flush=True)
                 time.sleep(30 * (i + 1))
                 continue
             raise
@@ -171,6 +172,7 @@ def main():
                             if boot:
                                 res["说明"] = "早期批次：每个工厂每天只留了 3 个样本币，这里把 7 天的样本拼成一批，币龄 7～14 天"
                             mine[b] = res                  # 同一批次不再重查
+                            print(f"  {slug} 存活 {label}：{live}/{len(sample)} 还在交易，{big} 个市值过 10 万（GeckoTerminal 累计 {calls} 次）", flush=True)
                             surv.update(res)
                         except Exception as ex:
                             print(f"  {slug} 存活查询失败：{str(ex)[:120]}")
