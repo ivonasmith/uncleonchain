@@ -1704,6 +1704,84 @@
   "日期": "2026-11-15",
   "模型": "Grok（网页版，大叔手动问）"
  },
+ "frontier": {
+  "内容": {
+   "differentiation_en": "Emphasizes modularity and programmable markets. Creators customize the full launch lifecycle (curve or direct-to-pool, dynamic fees, sniper tax). Docs state liquidity is locked forever and rules are immutable. More flexible than fixed-fee launchpads.",
+   "differentiation_zh": "强调模块化与可编程市场，创建者可自定义整个发射生命周期（曲线或直接进池、动态费、狙击税等），而非固定产品。文档明确流动性永久锁定且规则不可改。与其他固定费率发射台相比更灵活。",
+   "fee_split_en": "On curve: 1.5% per trade, split evenly between creator and protocol (official docs). In pool: 75% to creator and community. Liquidity locked forever. Docs state protocol keeps the smallest share.",
+   "fee_split_zh": "曲线阶段每笔交易 1.5%，创建者与协议平分（官方文档）。毕业后池内费用 75% 给创建者与社区，其余给协议。流动性永久锁定。文档称协议保留最小份额。",
+   "one_liner_en": "Modular programmable launch infrastructure on Robinhood Chain supporting curve or direct-to-pool launches.",
+   "one_liner_zh": "Robinhood Chain 上的模块化可编程发射基础设施，支持曲线或直接进池。",
+   "risks_en": [
+    "Official docs state no token, but X announced planned FRONT",
+    "Anonymous team (contracts owned by multisig)",
+    "No published audit",
+    "Relatively new with fluctuating activity",
+    "Fee structure depends on creator configuration"
+   ],
+   "risks_zh": [
+    "官方文档称无代币，但 X 宣布计划发行 FRONT",
+    "团队匿名（合约由多签持有）",
+    "无已发布审计",
+    "相对较新，活跃度波动大",
+    "费率结构依赖创建者配置"
+   ],
+   "selling_points_en": [
+    "Creators configure curve, fees, distribution, sniper tax and other modules",
+    "Choose bonding curve graduating to Uniswap v4 or direct-to-pool",
+    "Liquidity permanently locked; rules frozen at creation",
+    "75% of pool fees go to creator and community",
+    "Modules stack; designed for developer extensibility"
+   ],
+   "selling_points_zh": [
+    "创建者可配置曲线参数、费率、费用分配、狙击税等模块",
+    "可选择 bonding curve 毕业到 Uniswap v4 或直接进池",
+    "流动性永久锁定，规则在创建时冻结",
+    "池内费用 75% 给创建者与社区",
+    "模块可叠加，支持开发者扩展"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "官方文档：模块化、费率、无代币、锁定流动性",
+     "url": "https://docs.frontier.fun/"
+    },
+    {
+     "kind": "official",
+     "note": "官网",
+     "url": "https://frontier.fun/"
+    },
+    {
+     "kind": "web",
+     "note": "DefiLlama：费用与收入方法、Robinhood Chain",
+     "url": "https://defillama.com/protocol/frontier"
+    },
+    {
+     "kind": "x",
+     "note": "官方 X 宣布 FRONT 代币与回购计划",
+     "url": "https://x.com/FrontierLaunch/status/2103148395166642214"
+    },
+    {
+     "kind": "web",
+     "note": "第三方总结：匿名团队、无代币（当时）",
+     "url": "https://hoodscan.co/project/frontier"
+    }
+   ],
+   "team_en": "Anonymous team; protocol contracts owned by a multisig. X references background from Camelot/Cypher teams.",
+   "team_zh": "匿名团队，协议合约由多签持有。X 称来自 Camelot/Cypher 团队背景。",
+   "token_en": "Official docs explicitly state “Frontier has no token”. Official X account (@FrontierLaunch) announced planned FRONT token with buybacks and a Community Bootstrap Event.",
+   "token_zh": "官方文档明确“Frontier has no token”。X 官方账号（@FrontierLaunch）宣布计划发行 FRONT，费用将用于回购，并有社区 Bootstrap 活动。",
+   "unknowns_en": [
+    "Whether FRONT is currently live, exact buyback mechanism, and audit status not confirmed in docs."
+   ],
+   "unknowns_zh": [
+    "FRONT 代币当前是否已上线、具体回购机制与审计状态未在文档中确认。"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-15",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
  "genius.fun": {
   "内容": {
    "differentiation_en": "Per official site and docs, Genius.fun is operated by Genius Foundation as a permissionless launchpad on BNB Chain. Tokens start on a bonding curve and graduate at 15 BNB into a permanently locked PancakeSwap Infinity pool. Supports pairing with tokenized stocks (bStocks etc.), aiming to unwrap accumulated equity into an ownerless Cayman foundation for real-world governance. Per web reports, there are $GENIUS-related mechanisms.",
@@ -2298,6 +2376,84 @@
   },
   "方式": "手动",
   "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "kleos-launchpad": {
+  "内容": {
+   "differentiation_en": "Has public founder (@Chain0xs) and emphasizes clan culture. Supports direct-to-pool launches and multiple pair assets including stocks. More identity-transparent than fully anonymous Elysium launchpads. Includes Road to Core mechanisms.",
+   "differentiation_zh": "有公开创始人（@Chain0xs），强调 clan 文化与社区。支持直接进池与多种配对资产，包括股票。与完全匿名的其他 Elysium 发射台相比身份更透明。有 Road to Core 等机制。",
+   "fee_split_en": "Creator sets 1-10% buy/sell tax (DefiLlama). Community on-chain analysis reported platform keeps ~20% of the tax, remainder to creator etc. DefiLlama kleos-launchpad page shows protocol revenue as a portion of fees. Reports of $KLEOS buybacks and burns.",
+   "fee_split_zh": "创建者设定 1-10% 买卖税（DefiLlama）。社区链上分析报告平台保留约 20% 的税，其余给创建者等。DefiLlama kleos-launchpad 页面显示平台收入约为费用的一部分。有回购销毁 $KLEOS 的报道。",
+   "one_liner_en": "Memecoin launchpad on Elysium; tokens launch straight into locked pools with configurable tax and $KLEOS token.",
+   "one_liner_zh": "Elysium 上的 memecoin 发射台，代币直接进锁定池，带可配置税与 KLEOS 代币。",
+   "risks_en": [
+    "Early third-party launchpad, not Kinetiq official",
+    "Tax and fee structure depends on creator settings",
+    "Community reports platform takes ~20% of tax",
+    "No public formal audit",
+    "Domain previously flagged by security lists"
+   ],
+   "risks_zh": [
+    "早期为第三方发射台，非 Kinetiq 官方",
+    "税与费用结构依赖创建者设置",
+    "社区报告平台收取约 20% 税",
+    "无正式审计公开",
+    "域名曾被安全列表标记"
+   ],
+   "selling_points_en": [
+    "Tokens launch straight into DEX pools with locked liquidity",
+    "Creator sets 1-10% buy/sell tax",
+    "Supports pairing with HYPE, KLEOS, KNTQ, tokenized stocks",
+    "Has $KLEOS token with buybacks and burns",
+    "Public founder account @Chain0xs"
+   ],
+   "selling_points_zh": [
+    "代币直接进入 DEX 池，流动性锁定",
+    "创建者可设 1-10% 买卖税",
+    "支持与 HYPE、KLEOS、KNTQ、代币化股票等配对",
+    "有 $KLEOS 代币与回购销毁",
+    "有公开创始人账号 @Chain0xs"
+   ],
+   "sources": [
+    {
+     "kind": "web",
+     "note": "DefiLlama：1-10% 税、平台收入、Elysium",
+     "url": "https://defillama.com/protocol/kleos-launchpad"
+    },
+    {
+     "kind": "official",
+     "note": "官网",
+     "url": "https://www.thekleos.pro/"
+    },
+    {
+     "kind": "x",
+     "note": "官方 X：功能更新、回购",
+     "url": "https://x.com/TheKleos_"
+    },
+    {
+     "kind": "x",
+     "note": "创始人账号",
+     "url": "https://x.com/Chain0xs"
+    },
+    {
+     "kind": "x",
+     "note": "社区链上分析：约 20% 平台抽成",
+     "url": "https://x.com/PunksOnElysium/status/2117284069117776305"
+    }
+   ],
+   "team_en": "Founder is @Chain0xs (0xArcum), self-described as On Chain trader since 2020 and Founder of @TheKleos_. No VCs, self-described as grassroots.",
+   "team_zh": "创始人为 @Chain0xs（0xArcum），自称 On Chain trader since 2020，Founder of @TheKleos_。无 VC，自称草根。",
+   "token_en": "Has platform token $KLEOS. Official X reported team buybacks and burns exceeding 10% of supply.",
+   "token_zh": "有平台代币 $KLEOS。官方 X 报告团队回购并销毁超过 10% 供应。",
+   "unknowns_en": [
+    "Exact official fee-split documentation, full audit, and funding details not found."
+   ],
+   "unknowns_zh": [
+    "精确的官方费用拆分文档、完整审计与融资细节未找到。"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-15",
   "模型": "Grok（网页版，大叔手动问）"
  },
  "launch-coin-on-believe": {
@@ -3328,6 +3484,84 @@
   "日期": "2026-11-14",
   "模型": "Grok（网页版，大叔手动问）"
  },
+ "pools": {
+  "内容": {
+   "differentiation_en": "Directly operated by Uniswap Labs. One of the few Robinhood Chain launchpads using official Uniswap v4 with permanently locked liquidity and zero launch fee. Offers Crowd Launch anti-bundle mechanism. Lower fees than Pons with most fees returning to liquidity.",
+   "differentiation_zh": "由 Uniswap Labs 直接运营，是 Robinhood Chain 上少数使用官方 Uniswap v4 且流动性永久锁定、无发射费的平台。提供 Crowd Launch 防捆绑机制。与 Pons 等相比费率更低且大部分费用回流流动性。",
+   "fee_split_en": "No launch fee. 0.25% LP fee on trades (confirmed by DefiLlama and Uniswap official docs) that autocompounds into locked liquidity. Optional 0.05% creator fee (portion of the 0.25%). DefiLlama records protocol revenue as zero. Crowd Launch refunds all bids if under $10k FDV.",
+   "fee_split_zh": "无发射费。交易 0.25% LP 费（DefiLlama 与 Uniswap 官方文档确认），自动复投进锁定流动性。创建者可选开启 0.05%（占 0.25% 的部分）费用。DefiLlama 记录协议收入为 0。Crowd Launch 未达 1 万美元 FDV 则全额退款。",
+   "one_liner_en": "Uniswap Labs' token launchpad on Robinhood Chain with no launch fee and permanently locked liquidity.",
+   "one_liner_zh": "Uniswap Labs 在 Robinhood Chain 上的代币发射台，无发射费、流动性永久锁定。",
+   "risks_en": [
+    "No published audit of launch contracts",
+    "Instant Launch has no mandatory sniper protection",
+    "Intended only for memecoins that can go to zero",
+    "Uniswap Labs does not review tokens",
+    "Lower relative volume and activity versus other launchpads"
+   ],
+   "risks_zh": [
+    "无已发布的发射合约审计",
+    "Instant Launch 无强制狙击保护",
+    "仅面向 memecoin，价格可归零",
+    "Uniswap Labs 不审核代币",
+    "相对其他发射台交易量与活跃度较低"
+   ],
+   "selling_points_en": [
+    "No launch fee, only network gas",
+    "0.25% LP fee autocompounds into permanently locked liquidity",
+    "Instant Launch (immediate curve) and Crowd Launch (4-hour TWAP auction, full refund if under $10k FDV)",
+    "Fixed 1 billion supply ending in a Uniswap v4 pool",
+    "Operated by Uniswap Labs with Uniswap distribution"
+   ],
+   "selling_points_zh": [
+    "无发射费，仅网络 gas",
+    "0.25% LP 费自动复投进永久锁定流动性",
+    "支持 Instant Launch（即时曲线）与 Crowd Launch（4 小时 TWAP 竞拍，未达 1 万美元 FDV 全额退款）",
+    "固定 10 亿供应量，最终进入 Uniswap v4 池",
+    "由 Uniswap Labs 运营，接入 Uniswap 分发渠道"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "官方支持文档：发射模式、0.25% 费、锁定流动性、可选创建者费",
+     "url": "https://support.uniswap.org/hc/en-us/articles/47943121516685-Launching-and-trading-tokens-on-pools-xyz"
+    },
+    {
+     "kind": "official",
+     "note": "官网，由 Uniswap 构建",
+     "url": "https://pools.xyz/"
+    },
+    {
+     "kind": "web",
+     "note": "DefiLlama：收入为 0，无代币，0.25% 费用定义",
+     "url": "https://defillama.com/protocol/pools"
+    },
+    {
+     "kind": "x",
+     "note": "Uniswap 官方宣布 @TradePools 与功能",
+     "url": "https://x.com/Uniswap/status/2085373188003827956"
+    },
+    {
+     "kind": "web",
+     "note": "第三方总结：费率与模式与官方一致",
+     "url": "https://memecentral.fun/guides/what-is-pools-trade"
+    }
+   ],
+   "team_en": "Built and operated by Uniswap Labs.",
+   "team_zh": "由 Uniswap Labs 构建和运营。",
+   "token_en": "No platform token. DefiLlama explicitly states “There is no pools.trade token”.",
+   "token_zh": "无平台代币。DefiLlama 明确写“There is no pools.trade token”。",
+   "unknowns_en": [
+    "Specific audit status and security review details not published on official channels."
+   ],
+   "unknowns_zh": [
+    "具体审计状态与安全审查细节未在官方渠道公开。"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-15",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
  "pump.fun": {
   "内容": {
    "differentiation_en": "Similar to typical bonding-curve platforms but graduates to its own PumpSwap (not external DEX), with market-cap-tiered fees, app platform fee, and creator fee sharing. Graduation around 85 SOL with LP burned. Per official docs and DefiLlama.",
@@ -4337,6 +4571,79 @@
     "长期 LP 锁与治理细节",
     "精确团队与融资",
     "Occupy 与其他扩展的完整采用数据"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-15",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "volta": {
+  "内容": {
+   "differentiation_en": "Explicitly the first on Elysium to use official Uniswap (not a fork). Highly configurable fee distribution (creator chooses buyback and holder reward shares). Most protocol fees flow to VOLTA buyback and burn. Supports stock quote assets.",
+   "differentiation_zh": "明确强调是 Elysium 上第一个使用官方 Uniswap（非分叉）的发射台。费用分配高度可配置（创建者可选择回购与持有者奖励比例），且协议费用大部分回流 VOLTA 回购销毁。支持股票等报价资产。",
+   "fee_split_en": "No launch fee. Swap fee 1-5% fixed by creator. 70% follows creator-set split at launch (to creator, buyback/burn, or holder rewards); 30% to protocol. 80% of the protocol's 30% buys and burns VOLTA (official docs). DefiLlama confirms similar split.",
+   "fee_split_zh": "无发射费。交换费 1-5% 由创建者固定。70% 按创建者在发射时设定的比例分配给创建者、回购销毁或持有者奖励；30% 给协议。协议的 30% 中 80% 用于回购销毁 VOLTA（官方文档）。DefiLlama 确认类似拆分。",
+   "one_liner_en": "First launchpad on Elysium using official Uniswap v4, with configurable fees and VOLTA buybacks.",
+   "one_liner_zh": "Elysium 上首个使用官方 Uniswap v4 的代币发射台，带可配置费用与 VOLTA 回购。",
+   "risks_en": [
+    "Contracts not yet verified on-chain (per docs)",
+    "New chain activity; liquidity and security depend on new deployments",
+    "Fees and splits set by creators, can be high",
+    "Team and founder information not public",
+    "Depends on Elysium bridge and HYPE gas"
+   ],
+   "risks_zh": [
+    "合约暂未在链上验证（文档说明）",
+    "新链上活动，流动性与安全依赖新部署",
+    "费率与分配由创建者设定，可能较高",
+    "团队与创始人信息未公开",
+    "依赖 Elysium 桥接与 HYPE gas"
+   ],
+   "selling_points_en": [
+    "Uses official Uniswap v4 PoolManager and UniversalRouter",
+    "No launch fee, fixed 1B supply all into pool, opens at ~40 HYPE market cap",
+    "Creator sets 1-5% swap fee; 70% follows creator-chosen split (creator/buyback/holders)",
+    "80% of protocol's 30% fee used to buyback and burn VOLTA",
+    "Supports anti-snipe, scheduled opening, multiple quote assets"
+   ],
+   "selling_points_zh": [
+    "使用官方 Uniswap v4 PoolManager 与 UniversalRouter",
+    "无发射费，固定 10 亿供应量全部进池，起始约 40 HYPE 市值",
+    "创建者设定 1-5% 交换费，70% 按创建者配置分配（创建者/回购/持有者）",
+    "协议 30% 费用中 80% 用于回购销毁 VOLTA",
+    "支持抗狙击、定时开放、多种报价资产"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "官方文档：Uniswap v4、费率拆分、VOLTA 回购、合约",
+     "url": "https://voltfamily.xyz/docs/"
+    },
+    {
+     "kind": "official",
+     "note": "官网",
+     "url": "https://volta.family/"
+    },
+    {
+     "kind": "web",
+     "note": "DefiLlama：费用方法、收入与持有者收入",
+     "url": "https://defillama.com/protocol/volta"
+    },
+    {
+     "kind": "x",
+     "note": "官方 X：80% 费用回购销毁 VOLTA、空投等",
+     "url": "https://x.com/VoltaFamily"
+    }
+   ],
+   "team_en": "No specific team or founder names found.",
+   "team_zh": "未查到具体团队或创始人姓名。",
+   "token_en": "Has platform token $VOLTA. Majority of protocol fees used for buyback and burn. Contract address given in docs.",
+   "token_zh": "有平台代币 $VOLTA。协议费用大部分用于回购销毁。合约地址在文档中给出。",
+   "unknowns_en": [
+    "Team identity, funding, and formal audit reports not published."
+   ],
+   "unknowns_zh": [
+    "团队身份、融资、正式审计报告均未公开。"
    ]
   },
   "方式": "手动",
