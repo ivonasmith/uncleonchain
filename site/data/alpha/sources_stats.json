@@ -1,0 +1,259 @@
+{
+ "generated": "2026-11-15T06:03:50+00:00",
+ "note": "Alpha 雷达来源台账（大叔 2026-11-15 定：维护一份自己的来源，以关键人 / 关键信息和本站板块为主，数据榜单兜底）。每个来源记为什么收；战绩（带来几张卡、几张进了研究观察、几张被拒）由 opps.py 每天算到 data/alpha/sources_stats.json。连续三个月没有有效发现的降级为 paused，不删。",
+ "sources": [
+  {
+   "id": "site_launchpad",
+   "type": "site",
+   "name": "发射台矩阵",
+   "name_en": "Launchpad matrix",
+   "status": "on",
+   "since": "2026-11-15",
+   "what": "本站板块：新平台进矩阵后起量、老平台手续费突然放大、同一条链上新平台扎堆",
+   "href": "/launchpad/",
+   "stats": {
+    "cards": 5,
+    "fresh": 5,
+    "watching": 0,
+    "rejected": 0,
+    "pending": 5,
+    "names": [
+     {
+      "id": "9388",
+      "name": "Montra"
+     },
+     {
+      "id": "9381",
+      "name": "Ascend Launchpad"
+     },
+     {
+      "id": "9427",
+      "name": "Volta"
+     },
+     {
+      "id": "x-launchpad-boxa-v1",
+      "name": "Boxa V1"
+     },
+     {
+      "id": "x-launchpad-chain-elysium",
+      "name": "Elysium 生态（新发射台聚集）"
+     }
+    ]
+   }
+  },
+  {
+   "id": "site_aiagent",
+   "type": "site",
+   "name": "AI Agent 赛道",
+   "name_en": "AI Agent board",
+   "status": "on",
+   "since": "2026-11-15",
+   "what": "本站板块：新协议手续费起量、单日异常",
+   "href": "/ai-agent/",
+   "stats": {
+    "cards": 2,
+    "fresh": 2,
+    "watching": 0,
+    "rejected": 0,
+    "pending": 2,
+    "names": [
+     {
+      "id": "9146",
+      "name": "Central City"
+     },
+     {
+      "id": "x-aiagent-bankr",
+      "name": "Bankr"
+     }
+    ]
+   }
+  },
+  {
+   "id": "site_rwa",
+   "type": "site",
+   "name": "RWA 板块",
+   "name_en": "RWA board",
+   "status": "planned",
+   "since": null,
+   "what": "板块做完后接入",
+   "href": "/rwa/",
+   "stats": {
+    "cards": 0,
+    "fresh": 0,
+    "watching": 0,
+    "rejected": 0,
+    "pending": 0,
+    "names": []
+   }
+  },
+  {
+   "id": "site_smartmoney",
+   "type": "site",
+   "name": "聪明钱板块",
+   "name_en": "Smart money board",
+   "status": "planned",
+   "since": null,
+   "what": "板块上线后接入：已登记钱包和新合约的交互",
+   "href": null,
+   "stats": {
+    "cards": 0,
+    "fresh": 0,
+    "watching": 0,
+    "rejected": 0,
+    "pending": 0,
+    "names": []
+   }
+  },
+  {
+   "id": "manual",
+   "type": "manual",
+   "name": "手动线索",
+   "name_en": "Manual leads",
+   "status": "on",
+   "since": "2026-11-15",
+   "what": "大叔 / Codex 在推特、社群里看到的新玩法，登记在 alpha/manual_leads.json",
+   "href": null,
+   "stats": {
+    "cards": 2,
+    "fresh": 2,
+    "watching": 0,
+    "rejected": 0,
+    "pending": 2,
+    "names": [
+     {
+      "id": "m-pons",
+      "name": "Pons"
+     },
+     {
+      "id": "m-bem-tapeout",
+      "name": "TapeOut / BEM"
+     }
+    ]
+   }
+  },
+  {
+   "id": "people",
+   "type": "people",
+   "name": "关键人名单",
+   "name_en": "Key people",
+   "status": "building",
+   "since": null,
+   "what": "历史案例里谁最早公开讲过、后来又多次讲对：名单在建（任务包 alpha/review/sources_task.md），建好后每人单列一行记战绩",
+   "href": null,
+   "stats": {
+    "cards": 0,
+    "fresh": 0,
+    "watching": 0,
+    "rejected": 0,
+    "pending": 0,
+    "names": []
+   }
+  },
+  {
+   "id": "llama_surge",
+   "type": "data",
+   "name": "有币协议 · 收入新起量",
+   "name_en": "Revenue ramp (with token)",
+   "status": "on",
+   "since": "2026-11-15",
+   "what": "兜底：DefiLlama 协议收入，30 天过 10 万美元且收入史很短或突然放大",
+   "href": null,
+   "stats": {
+    "cards": 15,
+    "fresh": 15,
+    "watching": 0,
+    "rejected": 0,
+    "pending": 15,
+    "names": [
+     {
+      "id": "9065",
+      "name": "Papertrade"
+     },
+     {
+      "id": "paperstrategy",
+      "name": "Paperstrategy"
+     },
+     {
+      "id": "8884",
+      "name": "Nullmask"
+     },
+     {
+      "id": "7966",
+      "name": "Render Network BME"
+     },
+     {
+      "id": "8481",
+      "name": "Fables"
+     },
+     {
+      "id": "9388",
+      "name": "Montra"
+     }
+    ]
+   }
+  },
+  {
+   "id": "llama_tokenless",
+   "type": "data",
+   "name": "无币协议收入榜",
+   "name_en": "Tokenless revenue list",
+   "status": "on",
+   "since": "2026-11-14",
+   "what": "兜底：没登记代币、30 天协议收入过 10 万美元",
+   "href": null,
+   "stats": {
+    "cards": 31,
+    "fresh": 2,
+    "watching": 12,
+    "rejected": 0,
+    "pending": 19,
+    "names": [
+     {
+      "id": "9146",
+      "name": "Central City"
+     },
+     {
+      "id": "9381",
+      "name": "Ascend Launchpad"
+     }
+    ]
+   }
+  },
+  {
+   "id": "llama_listing",
+   "type": "data",
+   "name": "新上架协议",
+   "name_en": "New listings",
+   "status": "on",
+   "since": "2026-11-14",
+   "what": "兜底：DefiLlama 近 14 天收录且 TVL ≥ 500 万美元",
+   "href": null,
+   "stats": {
+    "cards": 4,
+    "fresh": 0,
+    "watching": 0,
+    "rejected": 0,
+    "pending": 4,
+    "names": []
+   }
+  },
+  {
+   "id": "feed",
+   "type": "feed",
+   "name": "事件流（ethresear.ch / Snapshot / 币安公告）",
+   "name_en": "Event feeds",
+   "status": "on",
+   "since": "2026-11-14",
+   "what": "只进雷达页事件流，暂不生成机会卡",
+   "href": "/alpha/radar/",
+   "stats": {
+    "cards": 0,
+    "fresh": 0,
+    "watching": 0,
+    "rejected": 0,
+    "pending": 0,
+    "names": []
+   }
+  }
+ ]
+}

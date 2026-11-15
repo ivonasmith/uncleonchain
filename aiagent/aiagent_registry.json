@@ -1,0 +1,42 @@
+{
+ "_说明": "AI Agent 赛道的人工登记：监控地图（每一层看什么、接没接）+ 生命周期事件（上线 / 停新 / 转型 / 下线）。事件只收有日期和出处的；grade：A 官方原文或可复算链上，B 第三方数据平台，C 媒体 / 社区 / 项目自述。日期不确定的写进 open_items 交给 Codex 核，不进时间线。",
+ "checked_utc": "2026-11-14",
+ "monitor_map": [
+  {"layer": "identity", "zh": "身份 · 币安 Agent ID 注册表", "en": "Identity · Binance Agent ID registry", "status": "live", "src": "本站链上采集（tools/agent-id-cloud，每天）", "src_en": "Own on-chain collector (daily)", "href": "#agent-id"},
+  {"layer": "identity", "zh": "身份 · ERC-8004 注册表（Base / Ethereum / Arc 等）", "en": "Identity · ERC-8004 registries", "status": "pending", "src": "待 Codex 核实各链注册表合约地址与事件签名", "src_en": "Registry addresses / event signatures to be verified by Codex"},
+  {"layer": "launch", "zh": "发行 · BNB Agent ID 门禁发射台（Gang / Flap / Four.meme / AgentPad）", "en": "Launch · BNB Agent ID-gated pads", "status": "live", "src": "本站链上采集：交易地址、成交额、发币、毕业", "src_en": "Own on-chain collector", "href": "#agent-id"},
+  {"layer": "launch", "zh": "发行 · Base / Solana / X Layer / Robinhood Chain 发射台手续费", "en": "Launch · launchpad fees on other chains", "status": "live", "src": "DefiLlama 逐日手续费", "src_en": "DefiLlama daily fees", "href": "#fees"},
+  {"layer": "launch", "zh": "发行 · 发射台功能卡（18 个版本 / 模式）", "en": "Launch · launchpad feature cards (18)", "status": "live", "src": "Codex v2 研究（2026-11-12），版本卡写入即冻结", "src_en": "Codex v2 research (frozen)", "href": "/ai-agent/launchpads/"},
+  {"layer": "launch", "zh": "发行 · 非 BNB 发射台的发币数 / 毕业数 / 独立买家", "en": "Launch · launches / graduations / unique buyers off BNB", "status": "pending", "src": "需要 Base / Solana 工厂事件，免费节点历史日志受限", "src_en": "Needs factory events on Base / Solana"},
+  {"layer": "commerce", "zh": "服务 · Agent 雇佣 / x402 / 推理市场手续费", "en": "Commerce · hiring / x402 / inference fees", "status": "live", "src": "DefiLlama 逐日手续费（AI Agents 类目）", "src_en": "DefiLlama daily fees", "href": "#fees"},
+  {"layer": "commerce", "zh": "服务 · Virtuals ACP 全市场逐日服务收入", "en": "Commerce · Virtuals ACP daily service revenue", "status": "pending", "src": "Codex v2 复核 0/90 天可得；需要 ACP 合约事件 + 退款口径", "src_en": "0/90 days available; needs ACP contract events"},
+  {"layer": "commerce", "zh": "服务 · x402 全网支付笔数与金额（Base / Solana）", "en": "Commerce · x402 payments network-wide", "status": "pending", "src": "需要 facilitator 地址清单；x402scan 等站点云端未放行", "src_en": "Needs facilitator address list"},
+  {"layer": "commerce", "zh": "服务 · Olas Mech 请求数", "en": "Commerce · Olas Mech requests", "status": "pending", "src": "链上 Mech 市场合约，待核地址", "src_en": "Mech marketplace contracts, addresses to verify"},
+  {"layer": "defai", "zh": "资管 · 交易与收益 Agent 手续费", "en": "DeFAI · trading & yield agent fees", "status": "live", "src": "DefiLlama 逐日手续费", "src_en": "DefiLlama daily fees", "href": "#fees"},
+  {"layer": "defai", "zh": "资管 · 管理规模（TVL / AUM）", "en": "DeFAI · AUM / TVL", "status": "pending", "src": "DefiLlama TVL 可接，下一轮", "src_en": "DefiLlama TVL, next round"},
+  {"layer": "infra", "zh": "框架 · elizaOS / Virtuals GAME / Coinbase AgentKit / Solana Agent Kit 开发活跃度", "en": "Infra · framework developer activity", "status": "pending", "src": "GitHub API（Actions 的 GITHUB_TOKEN 可跑，沙盒 403）", "src_en": "GitHub API via Actions"},
+  {"layer": "market", "zh": "市场 · AI Agent 代币市值（CoinGecko 分类）", "en": "Market · AI Agent token market cap (CoinGecko)", "status": "live", "src": "CoinGecko 分类快照，2026-11-14 起每天自录（不回填）", "src_en": "CoinGecko category snapshot, self-recorded from 2026-11-14", "href": "#market"},
+  {"layer": "market", "zh": "市场 · 钱包与交易所的 Agent 入口（Binance AI Pro / OKX Agent Trade Kit / Coinbase Agentic Wallet）", "en": "Market · exchange / wallet agent products", "status": "pending", "src": "只有产品公告，没有公开使用量；按事件记", "src_en": "Announcements only; tracked as events"}
+ ],
+ "events": [
+  {"date": "2024-11-27", "who": "AgentFun.AI", "kind": "launch", "zh": "Cronos 上的 Agent 发射台上线（创建 Agent + 发行池 + 毕业）", "en": "Agent launchpad goes live on Cronos", "grade": "A", "src": "项目新闻稿（Codex v2 K16 / PL12）"},
+  {"date": "2026-02", "who": "MoonFun", "kind": "pivot", "zh": "Moonn.Fun 从跨链 meme 发行工具转型 MoonFun.ai，称部署代币时生成孪生 Agent", "en": "Moonn.Fun pivots to MoonFun.ai (twin agent per token)", "grade": "C", "src": "HackQuest 项目自述（Codex v2 K08）"},
+  {"date": "2026-03-13", "who": "Pump.fun", "kind": "launch", "zh": "Tokenized Agent 发行选项上线（代币关联 Agent 付款）", "en": "Tokenized Agent launch option goes live", "grade": "C", "src": "媒体报道（Codex v2 K13 / PL26）"},
+  {"date": "2026-06-30", "who": "Pump.fun", "kind": "stop", "zh": "前端停止新建 Tokenized Agent，存量币继续运行（约三个半月）", "en": "Front end stops new Tokenized Agents; existing tokens keep trading", "grade": "C", "src": "媒体报道（Codex v2 K13 / PL26）"},
+  {"date": "2026-10-19", "who": "Binance Agent ID", "kind": "launch", "zh": "Agent ID 注册表第一条注册；10-20 单日新增 31,454 个", "en": "First Agent ID registration; 31,454 on Oct 20", "grade": "A", "src": "本站链上采集"},
+  {"date": "2026-10-22", "who": "AgentPad", "kind": "launch", "zh": "首批 Agent ID 门禁币；10-23 达到 423 个交易地址后 10-24 起每天 0～5 个", "en": "First gated tokens; 423 traders on Oct 23, then 0–5 daily from Oct 24", "grade": "A", "src": "本站链上采集"},
+  {"date": "2026-10-23", "who": "Gang", "kind": "launch", "zh": "首批 Agent ID 门禁币上线，之后成为 BNB Agent 发行的主场", "en": "First gated tokens; becomes the main BNB agent venue", "grade": "A", "src": "本站链上采集"},
+  {"date": "2026-10-25", "who": "Flap", "kind": "launch", "zh": "首个 Binance Agent ID 门禁币；10-29 单日 801 个新币为峰值，11 月起每天个位数到几十个", "en": "First Agent ID-gated token; peak 801 launches on Oct 29", "grade": "A", "src": "本站链上采集"},
+  {"date": "2026-10-27", "who": "BNB Agent 发射台", "kind": "peak", "zh": "四家合计单日成交 966.6 BNB、交易地址 2,294，都是有记录以来最高（新币最多是 10-29 的 987 个）", "en": "Four pads combined: 966.6 BNB volume and 2,294 traders, both record highs (most launches: 987 on Oct 29)", "grade": "A", "src": "本站链上采集"},
+  {"date": "2026-10", "who": "Top Hat", "kind": "stop", "zh": "第三方报告产品入口跳转无关站点、旧文档消失；正式停服公告未见", "en": "Entry reportedly redirects elsewhere; no formal shutdown notice", "grade": "C", "src": "第三方资料（Codex v2 K18 / PL27）"},
+  {"date": "2026-11-10", "who": "Gang", "kind": "stop", "zh": "官方 CLI（提交 5139c1a）已停用 V2 创建入口，V2 存量币仍可卖出", "en": "Official CLI no longer creates V2 tokens; existing V2 tokens still sell", "grade": "A", "src": "gangfun 官方仓库（Codex v2 K03）"}
+ ],
+ "open_items": [
+  "Clanker v5 发布日期、Neynar 接手 Farcaster / Clanker 的公告日期",
+  "Olas Pearl Mini 停服日期；Giza 旧版资金迁移日期",
+  "Flap ID Agent Curve、Four.meme OpenFour 官方上线公告日期",
+  "Bankr 社交 / 对话 / API 默认链改为 Robinhood Chain 的日期",
+  "elizaOS（ai16z）代币支持收尾、auto.fun 停运时间；DataHaven、Yupp 关停公告",
+  "Binance AI Pro beta（2026-10-13）原文"
+ ]
+}

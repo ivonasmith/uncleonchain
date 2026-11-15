@@ -1,0 +1,2766 @@
+[
+  {
+    "key": "g:parent#polymarket",
+    "name": "Polymarket",
+    "token_stance": "没有表态",
+    "token_stance_src": "https://help.polymarket.com/en/articles/13364250-does-polymarket-have-a-token",
+    "token_stance_date": "2026-06-24",
+    "revenue_who": "Polymarket 协议地址/运营方；不是全体交易者共同分红。",
+    "revenue_method": "International：交易费用扣 maker/taker 返还、邀请、流动性及持有奖励后才计协议收入；Combos：组合合约 taker 费用计协议收入。",
+    "wash_or_subsidy": "官方有流动性奖励；适配器扣除了多种返还/奖励。是否关联自成交、净外部付款占比 U。",
+    "user_role": "预测市场用户或提供报价流动性的交易者；抵押品 pUSD 不是治理代币。",
+    "counter": "交易费增长可能来自激励和事件周期，真实产品收入也不自动给予用户未来代币权利。",
+    "verdict": "研究观察",
+    "verdict_reason": "公开费用方法、使用场景及当前未公告空投/TGE 的官方 FAQ 可核；只作产品研究，保留需求独立性缺口。",
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+    "token_stance_note": "官方 FAQ 说尚未公告 airdrop/TGE；不是承诺永不发币；pUSD 是抵押品。",
+    "has_live_governance_token": "U",
+    "defillama_reference": "https://defillama.com/protocol/polymarket-international",
+    "methodology_source": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/polymarket.ts",
+    "input_rank": 1,
+    "input_rev30": 18692959,
+    "input_data_date": "2026-11-14",
+    "input_children": [
+      "Polymarket International",
+      "Polymarket Combos"
+    ],
+    "input_reference": "attachment://Alpha雷达_Codex任务包/附件/T3_无币协议前30.json",
+    "progress": "已取得收入方法，已完成本轮可得公开补证；缺口逐项保留 U。",
+    "missing": [
+      "独立关联地址/自成交及去补贴留存审计未完成。",
+      "未独立重放全部费用与支付，适配器方法可能更新。",
+      "官方计划不等于代币已发行或用户已获得权益；当前链上代币状态/分配需另核。"
+    ],
+    "evidence": [
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/polymarket-international?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:37:47.163813+00:00",
+        "http_status": 200,
+        "response_sha256": "a153f341883b638475c1073aab1dc00c3707d3440d90561f6badab5f9cd14ac9",
+        "note": "DefiLlama 适配器方法论；本次核查方法与归属，不代表本方重放所有链上计算，也不重排输入 rev30。"
+      },
+      {
+        "fields": [
+          "name",
+          "defillama_reference",
+          "metadata_symbol"
+        ],
+        "url": "https://api.llama.fi/protocol/polymarket-international",
+        "checked_utc": "2026-11-14T13:37:47.163470+00:00",
+        "http_status": 200,
+        "response_sha256": "84750e347d9769b958ec6d69fab076c564f14a8a9a9e9bf33523c18188f2a5cd",
+        "note": "metadata 的 symbol 缺失不代表没有代币。"
+      },
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/polymarket-combos?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:39:43.731958+00:00",
+        "http_status": 200,
+        "response_sha256": "c2cd96656618a151a15a0e89b9eaeccc9b52d26c7711b52fe6f6d1b478fab9d7",
+        "note": "同一 parent 的其他子产品；各自 builder/费用口径不能混同。"
+      },
+      {
+        "fields": [
+          "user_role",
+          "official_identity"
+        ],
+        "url": "https://polymarket.com",
+        "checked_utc": "2026-11-14T13:39:43.731185+00:00",
+        "http_status": 200,
+        "response_sha256": "1c2a409ca737bc373ffca772350592372fe77149353406fad06c275b02f31274",
+        "note": "只记录官方入口尝试结果；空壳/失败响应不证明文中其他事实。"
+      },
+      {
+        "fields": [
+          "token_stance",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://help.polymarket.com/en/articles/13364466-liquidity-rewards",
+        "checked_utc": "2026-11-14T13:40:06.863080+00:00",
+        "http_status": 200,
+        "response_sha256": "5dd49a6618f6f4dd51ba9a70150efda6b5c0fe740e578b0eb4b90f3cee8988c2",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      },
+      {
+        "fields": [
+          "token_stance",
+          "token_stance_date"
+        ],
+        "url": "https://help.polymarket.com/en/articles/13364250-does-polymarket-have-a-token",
+        "checked_utc": "2026-11-14T13:40:06.769496+00:00",
+        "http_status": 200,
+        "response_sha256": "b092f69f97b630eee631a12577b9df6ce4875143d1f641d7fb779a9a7dfac6fc",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      }
+    ]
+  },
+  {
+    "key": "g:parent#fomo",
+    "name": "Fomo",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "Fomo 财库/各产品 builder；钱包用户不因使用而取得财库权益。",
+    "revenue_method": "Wallet：原生 Solana USDC 收费及 Relay 平台费归 Fomo，排除推荐分成；无法归链的 Relay 费用计在 Solana。Perps/Spot/Outcome 为 Hyperliquid builder-code 费用。",
+    "wash_or_subsidy": "方法已剔除 Relay 推荐分成；自成交、补贴预算及独立付款人 U。",
+    "user_role": "钱包兑换/跨链用户；或使用其衍生品、现货和 outcome 前端。",
+    "counter": "缺官方代币承诺与可验证用户权益，跨链归因规则还可能使单链收入读数失真。",
+    "verdict": "待核验",
+    "verdict_reason": "取得各子产品方法，但发行计划、关联交易和奖励政策未取得有效一手证据。",
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+    "token_stance_note": "尚未取得足够、可读且时效明确的官方自身发行立场；不把未找到声明写成确定没有表态。",
+    "has_live_governance_token": "U",
+    "defillama_reference": "https://defillama.com/protocol/fomo-wallet",
+    "methodology_source": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/fomo",
+    "input_rank": 2,
+    "input_rev30": 9358251,
+    "input_data_date": "2026-11-14",
+    "input_children": [
+      "fomo Wallet",
+      "fomo Perps",
+      "fomo Spot",
+      "fomo Outcome"
+    ],
+    "input_reference": "attachment://Alpha雷达_Codex任务包/附件/T3_无币协议前30.json",
+    "progress": "已取得收入方法，已完成本轮可得公开补证；缺口逐项保留 U。",
+    "missing": [
+      "独立关联地址/自成交及去补贴留存审计未完成。",
+      "未独立重放全部费用与支付，适配器方法可能更新。",
+      "当前官方自身 token/积分/空投立场及适用日期 U。",
+      "官方原始表态日期 U，不用页面读取日期代替。"
+    ],
+    "evidence": [
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/fomo-wallet?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:37:47.164425+00:00",
+        "http_status": 200,
+        "response_sha256": "24ec05260bfb56587e5e7755eabfab4822778d5d16fd3fbe71842b4b288f5f73",
+        "note": "DefiLlama 适配器方法论；本次核查方法与归属，不代表本方重放所有链上计算，也不重排输入 rev30。"
+      },
+      {
+        "fields": [
+          "name",
+          "defillama_reference",
+          "metadata_symbol"
+        ],
+        "url": "https://api.llama.fi/protocol/fomo-wallet",
+        "checked_utc": "2026-11-14T13:37:47.164030+00:00",
+        "http_status": 200,
+        "response_sha256": "8483a7f4e36165c16a08acb8e83a21d9954e75d92689e27473060a2a59177f14",
+        "note": "metadata 的 symbol 缺失不代表没有代币。"
+      },
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/fomo-perps?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:39:44.764788+00:00",
+        "http_status": 200,
+        "response_sha256": "56bd3b4ba868595d0aeb4cfac3671426fc0ecac3363b4a66866e9492600c2f97",
+        "note": "同一 parent 的其他子产品；各自 builder/费用口径不能混同。"
+      },
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/fomo-spot?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:39:44.796255+00:00",
+        "http_status": 200,
+        "response_sha256": "b911cb88fb13a0c9193c3aaa9662894e38d8cba17bc7685034ce60a953e32705",
+        "note": "同一 parent 的其他子产品；各自 builder/费用口径不能混同。"
+      },
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/fomo-outcome?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:39:45.258483+00:00",
+        "http_status": 200,
+        "response_sha256": "3b4857f9aa8fcf95e0945b14306c0a8d7c21774934cab83348c68141cdb0d151",
+        "note": "同一 parent 的其他子产品；各自 builder/费用口径不能混同。"
+      },
+      {
+        "fields": [
+          "user_role",
+          "official_identity"
+        ],
+        "url": "https://fomo.family",
+        "checked_utc": "2026-11-14T13:39:43.732020+00:00",
+        "http_status": 200,
+        "response_sha256": "1eb2fadbeaaa24d4317d3a0e47234736d235e44a953390bc0e25a71a4a62e5dc",
+        "note": "只记录官方入口尝试结果；空壳/失败响应不证明文中其他事实。"
+      }
+    ]
+  },
+  {
+    "key": "g:parent#axiom",
+    "name": "Axiom",
+    "token_stance": "有积分/空投计划",
+    "token_stance_src": "https://docs.axiom.trade/getting-started/point-system",
+    "token_stance_date": "U",
+    "revenue_who": "Axiom 运营方；扣已分配的 cashback/referral 后留存。",
+    "revenue_method": "主交易终端从手续费钱包收款，净收入扣返现和推荐支付；Perps 单独统计 Hyperliquid builder-code 费用。",
+    "wash_or_subsidy": "返现与推荐支付有适配器证据，官方积分按交易/推荐积累；未证明刷量，排除激励后的持续需求 U。",
+    "user_role": "交易终端用户、推荐者；积分用户，但积分不等于代币分配保证。",
+    "counter": "交易积分和返现可能放大成交及费用，必须证明取消奖励后仍有留存。",
+    "verdict": "研究观察",
+    "verdict_reason": "收入扣减口径与官方积分机制可核，未来奖励内容及用户价值捕获仍未确定。",
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+    "token_stance_note": "只确认积分与潜在奖励，未确认代币分配。",
+    "has_live_governance_token": "U",
+    "defillama_reference": "https://defillama.com/protocol/axiom",
+    "methodology_source": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/axiom.ts",
+    "input_rank": 3,
+    "input_rev30": 8993288,
+    "input_data_date": "2026-11-14",
+    "input_children": [
+      "Axiom",
+      "Axiom Perps"
+    ],
+    "input_reference": "attachment://Alpha雷达_Codex任务包/附件/T3_无币协议前30.json",
+    "progress": "已取得收入方法，已完成本轮可得公开补证；缺口逐项保留 U。",
+    "missing": [
+      "独立关联地址/自成交及去补贴留存审计未完成。",
+      "未独立重放全部费用与支付，适配器方法可能更新。",
+      "官方计划不等于代币已发行或用户已获得权益；当前链上代币状态/分配需另核。",
+      "官方原始表态日期 U，不用页面读取日期代替。"
+    ],
+    "evidence": [
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/axiom?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:37:48.769490+00:00",
+        "http_status": 200,
+        "response_sha256": "2739f623eb5abbae3ff36675d97966073395c38e9325891a9f609b693350ac06",
+        "note": "DefiLlama 适配器方法论；本次核查方法与归属，不代表本方重放所有链上计算，也不重排输入 rev30。"
+      },
+      {
+        "fields": [
+          "name",
+          "defillama_reference",
+          "metadata_symbol"
+        ],
+        "url": "https://api.llama.fi/protocol/axiom",
+        "checked_utc": "2026-11-14T13:37:48.279908+00:00",
+        "http_status": 200,
+        "response_sha256": "0fa9885f92f38afd81430244e5571a54bf50e6e50788dcbce5c78436661392ab",
+        "note": "metadata 的 symbol 缺失不代表没有代币。"
+      },
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/axiom-perps?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:39:46.469068+00:00",
+        "http_status": 200,
+        "response_sha256": "0985bde3aafd7c3df962a57bfcc61ee4a12511325584743bad6d85cae9093587",
+        "note": "同一 parent 的其他子产品；各自 builder/费用口径不能混同。"
+      },
+      {
+        "fields": [
+          "user_role",
+          "official_identity"
+        ],
+        "url": "https://axiom.trade/",
+        "checked_utc": "2026-11-14T13:39:46.199665+00:00",
+        "http_status": 403,
+        "response_sha256": "fff52f588509731bdff0355dfc5ba09bd95368c797e51a00cb6acaee9cdc4f7b",
+        "note": "只记录官方入口尝试结果；空壳/失败响应不证明文中其他事实。"
+      },
+      {
+        "fields": [
+          "token_stance",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://docs.axiom.trade/getting-started/point-system",
+        "checked_utc": "2026-11-14T13:40:06.723134+00:00",
+        "http_status": 200,
+        "response_sha256": "30a3740f63f5b6ab42bf47f4ce83b62930249ebfcca67af6811072963dc5e22b",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      }
+    ]
+  },
+  {
+    "key": "g:parent#phantom",
+    "name": "Phantom",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "Phantom 钱包/前端运营方；不是 SOL 或任意钱包所展示代币的持有人。",
+    "revenue_method": "Wallet 收兑换/桥接费用；Perps 的收入为 Hyperliquid 前端 builder 费用；Spot/Outcome 各自 builder 费用均归前端。",
+    "wash_or_subsidy": "返佣/积分及净补贴规模 U，不能从钱包展示代币或第三方空投推断自身发行。",
+    "user_role": "钱包兑换/桥接用户及前端产品用户。",
+    "counter": "产品费用归公司而代币承诺不明，钱包使用规模并不产生可归属普通用户的资产权益。",
+    "verdict": "研究观察",
+    "verdict_reason": "四个子项的收费归属可核；仅保留正规钱包产品观察，不推导空投资格。",
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+    "token_stance_note": "尚未取得足够、可读且时效明确的官方自身发行立场；不把未找到声明写成确定没有表态。",
+    "has_live_governance_token": "U",
+    "defillama_reference": "https://defillama.com/protocol/phantom-wallet",
+    "methodology_source": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/phantom.ts",
+    "input_rank": 4,
+    "input_rev30": 5813094,
+    "input_data_date": "2026-11-14",
+    "input_children": [
+      "Phantom Wallet",
+      "Phantom Perps",
+      "Phantom Spot",
+      "Phantom Outcome"
+    ],
+    "input_reference": "attachment://Alpha雷达_Codex任务包/附件/T3_无币协议前30.json",
+    "progress": "已取得收入方法，已完成本轮可得公开补证；缺口逐项保留 U。",
+    "missing": [
+      "独立关联地址/自成交及去补贴留存审计未完成。",
+      "未独立重放全部费用与支付，适配器方法可能更新。",
+      "当前官方自身 token/积分/空投立场及适用日期 U。",
+      "官方原始表态日期 U，不用页面读取日期代替。"
+    ],
+    "evidence": [
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/phantom-wallet?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:37:48.885434+00:00",
+        "http_status": 200,
+        "response_sha256": "eda66002089d8ad7df84325e8f00ad45e4e4416b641da6150462fa2e379e4f2b",
+        "note": "DefiLlama 适配器方法论；本次核查方法与归属，不代表本方重放所有链上计算，也不重排输入 rev30。"
+      },
+      {
+        "fields": [
+          "name",
+          "defillama_reference",
+          "metadata_symbol"
+        ],
+        "url": "https://api.llama.fi/protocol/phantom-wallet",
+        "checked_utc": "2026-11-14T13:37:48.867070+00:00",
+        "http_status": 200,
+        "response_sha256": "aa88f4cb81fc77b4d8d2e7b2c6cc29398f601d82349fc958addd9a5550d6177e",
+        "note": "metadata 的 symbol 缺失不代表没有代币。"
+      },
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/phantom-perps?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:39:47.689479+00:00",
+        "http_status": 200,
+        "response_sha256": "0e65fdc72412b87e8b88aedd5bf86ae6b450f2e9d4db4aedd2208951d64d7978",
+        "note": "同一 parent 的其他子产品；各自 builder/费用口径不能混同。"
+      },
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/phantom-spot?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:39:47.998990+00:00",
+        "http_status": 200,
+        "response_sha256": "ff6bd7a2757b2fc6edc58e8804324bd4406f79aeadfd22513afdebc46b845a17",
+        "note": "同一 parent 的其他子产品；各自 builder/费用口径不能混同。"
+      },
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/phantom-outcome?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:39:48.137281+00:00",
+        "http_status": 200,
+        "response_sha256": "a89b043e823496b41cf90179fed81592b914b303d3966e8ef58a4820d6879fc0",
+        "note": "同一 parent 的其他子产品；各自 builder/费用口径不能混同。"
+      },
+      {
+        "fields": [
+          "user_role",
+          "official_identity"
+        ],
+        "url": "https://phantom.com/",
+        "checked_utc": "2026-11-14T13:39:46.676220+00:00",
+        "http_status": 200,
+        "response_sha256": "445bdef79ae83a772c1c8c2f9d0fe96676ac3c24d6d804ecda449f36d54c59f5",
+        "note": "只记录官方入口尝试结果；空壳/失败响应不证明文中其他事实。"
+      }
+    ]
+  },
+  {
+    "key": "g:5408",
+    "name": "GMGN",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "GMGN 运营方扣推荐分成后的收入。",
+    "revenue_method": "原生币/USDC 费用经链上或 Dune 汇总；Solana 推荐支出实测；EVM 推荐支出按 Solana 比例估算，不能将 EVM 净收入当精确链上实测。",
+    "wash_or_subsidy": "官方交易竞赛按积分奖励；推荐支出存在。EVM 推荐扣减为估算项；刷量/关联地址占比 U。",
+    "user_role": "交易工具用户；竞赛参加者，不据此认定平台代币或未来空投。",
+    "counter": "交易竞赛和无法隔离的 EVM 推荐款会干扰真实自然收入与净收入判断。",
+    "verdict": "待核验",
+    "verdict_reason": "费用业务可识别，但净收入部分依赖估计，尚缺官方自身代币表态及去激励数据。",
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+    "token_stance_note": "尚未取得足够、可读且时效明确的官方自身发行立场；不把未找到声明写成确定没有表态。",
+    "has_live_governance_token": "U",
+    "defillama_reference": "https://defillama.com/protocol/gmgn",
+    "methodology_source": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/gmgnai.ts",
+    "input_rank": 5,
+    "input_rev30": 5767625,
+    "input_data_date": "2026-11-14",
+    "input_children": [
+      "GMGN"
+    ],
+    "input_reference": "attachment://Alpha雷达_Codex任务包/附件/T3_无币协议前30.json",
+    "progress": "已取得收入方法，已完成本轮可得公开补证；缺口逐项保留 U。",
+    "missing": [
+      "独立关联地址/自成交及去补贴留存审计未完成。",
+      "未独立重放全部费用与支付，适配器方法可能更新。",
+      "当前官方自身 token/积分/空投立场及适用日期 U。",
+      "官方原始表态日期 U，不用页面读取日期代替。"
+    ],
+    "evidence": [
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/gmgn?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:37:50.045845+00:00",
+        "http_status": 200,
+        "response_sha256": "028e129141e336e131532741ee9484427fea1735c95b0662318917a6a6247754",
+        "note": "DefiLlama 适配器方法论；本次核查方法与归属，不代表本方重放所有链上计算，也不重排输入 rev30。"
+      },
+      {
+        "fields": [
+          "name",
+          "defillama_reference",
+          "metadata_symbol"
+        ],
+        "url": "https://api.llama.fi/protocol/gmgn",
+        "checked_utc": "2026-11-14T13:37:49.468979+00:00",
+        "http_status": 200,
+        "response_sha256": "e2c359964148b9301bfc302d0984603b124a643ccb9e030f7f146a3d6604edff",
+        "note": "metadata 的 symbol 缺失不代表没有代币。"
+      },
+      {
+        "fields": [
+          "user_role",
+          "official_identity"
+        ],
+        "url": "https://gmgn.ai",
+        "checked_utc": "2026-11-14T13:39:49.191837+00:00",
+        "http_status": 200,
+        "response_sha256": "47cd9232eb618dc041213799f62ca82982bbda4c4127911ec83ea4ba26d1c323",
+        "note": "只记录官方入口尝试结果；空壳/失败响应不证明文中其他事实。"
+      },
+      {
+        "fields": [
+          "token_stance",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://gmgn.ai/static/ggc/rules.html",
+        "checked_utc": "2026-11-14T13:42:49.876319+00:00",
+        "http_status": 200,
+        "response_sha256": "e0e6677651b6535893884b31e651dcb185aa5ac4b9b29de6f3784419410a0019",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      }
+    ]
+  },
+  {
+    "key": "g:4983",
+    "name": "Flap sh",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "Flap 协议 fee Safe；税金的其他部分付给项目营销/vault 或持有人，不能全算 Flap 收入。",
+    "revenue_method": "收入抓取所有发送方进入 fee Safe 的配置报价资产（含 wrapped native）流入；费用还含不归 Safe 的代币税款，供给方部分另列。",
+    "wash_or_subsidy": "适配器未把任何 Safe 流入都逐笔认证为外部用户手续费，可能混入非经营入金；实际关联转账/补贴数额 U。",
+    "user_role": "正规协议研究中的发射工具用户、开发者/创建者；不延伸到纯 MEME 或 0–6 小时打狗。",
+    "counter": "Safe 的所有入金不等于可持续经营收入，平台工具有用也不能替任何发行资产背书。",
+    "verdict": "待核验",
+    "verdict_reason": "已核一手协议说明，但收入与非经营流入分离、平台自身发行表态仍缺；不因存在税币模板而认定安全。",
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+    "token_stance_note": "尚未取得足够、可读且时效明确的官方自身发行立场；不把未找到声明写成确定没有表态。",
+    "has_live_governance_token": "U",
+    "defillama_reference": "https://defillama.com/protocol/flap-sh",
+    "methodology_source": "https://github.com/DefiLlama/dimension-adapters/blob/master/dexs/flap.ts",
+    "input_rank": 6,
+    "input_rev30": 4370160,
+    "input_data_date": "2026-11-14",
+    "input_children": [
+      "Flap sh"
+    ],
+    "input_reference": "attachment://Alpha雷达_Codex任务包/附件/T3_无币协议前30.json",
+    "progress": "已取得收入方法，已完成本轮可得公开补证；缺口逐项保留 U。",
+    "missing": [
+      "独立关联地址/自成交及去补贴留存审计未完成。",
+      "未独立重放全部费用与支付，适配器方法可能更新。",
+      "当前官方自身 token/积分/空投立场及适用日期 U。",
+      "官方原始表态日期 U，不用页面读取日期代替。"
+    ],
+    "evidence": [
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/flap-sh?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:37:50.476613+00:00",
+        "http_status": 200,
+        "response_sha256": "fa4ab0b3df220f9b21a963eb0206b5c958f84c779743e4f2714eed09c2992fa1",
+        "note": "DefiLlama 适配器方法论；本次核查方法与归属，不代表本方重放所有链上计算，也不重排输入 rev30。"
+      },
+      {
+        "fields": [
+          "name",
+          "defillama_reference",
+          "metadata_symbol"
+        ],
+        "url": "https://api.llama.fi/protocol/flap-sh",
+        "checked_utc": "2026-11-14T13:37:50.410341+00:00",
+        "http_status": 200,
+        "response_sha256": "5b7282da4c15177b5dbee011e118c12503db45e88f79f98ed082af831f15d21c",
+        "note": "metadata 的 symbol 缺失不代表没有代币。"
+      },
+      {
+        "fields": [
+          "token_stance",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://docs.flap.sh/en/flap",
+        "checked_utc": "2026-11-14T13:42:49.564875+00:00",
+        "http_status": 200,
+        "response_sha256": "970ec0cc8e3762c1c44a273e78d3c6348ae8c2b9f247192a1d81b8f0fa72ec23",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      }
+    ]
+  },
+  {
+    "key": "g:parent#metamask",
+    "name": "Metamask",
+    "token_stance": "官方表态会发",
+    "token_stance_src": "https://metamask.com/en-GB/news/metamask-expands-trading-with-perpetual-futures-and-rewards-confirms-token",
+    "token_stance_date": "2025-10-08",
+    "revenue_who": "MetaMask / Consensys 产品运营方；Predictions 的部分 builder 费付市场提供方。",
+    "revenue_method": "Perps 是 Hyperliquid builder-code 费；Wallet 是兑换/桥接费；Predictions 按 75% 留存、25% 付市场提供方计收入。",
+    "wash_or_subsidy": "官方 Rewards 有积分、费用优惠及合作方 token allocations；原始 Season1 已结束，2026-05-06 文章说明新活动回归；当前精确周期/预算 U，刷量 U。",
+    "user_role": "钱包/兑换/衍生品等产品用户；符合当期规则的 Rewards 参与者，不把合作方分配当 MASK。",
+    "counter": "奖励可能由合作生态补贴，公司收入并不等于用户能分享的未来 MetaMask 代币价值。",
+    "verdict": "研究观察",
+    "verdict_reason": "官方积分/奖励和收费归属可核；发行状态不能单靠 2025 新闻标题或旧季积分规则确定。",
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+    "token_stance_note": "2025 官方新闻标题/摘要明确确认 token plans/launch；这是历史发行意向，不是已发行证明。2026 Rewards 更新还含合作方分配，不能当成自身币 TGE 或当前分配条款。",
+    "has_live_governance_token": "U",
+    "defillama_reference": "https://defillama.com/protocol/metamask-perps",
+    "methodology_source": "https://github.com/DefiLlama/dimension-adapters/blob/master/factory/hyperliquid.ts",
+    "input_rank": 7,
+    "input_rev30": 3760059,
+    "input_data_date": "2026-11-14",
+    "input_children": [
+      "MetaMask Perps",
+      "MetaMask Wallet",
+      "MetaMask Predictions"
+    ],
+    "input_reference": "attachment://Alpha雷达_Codex任务包/附件/T3_无币协议前30.json",
+    "progress": "已取得收入方法，已完成本轮可得公开补证；缺口逐项保留 U。",
+    "missing": [
+      "独立关联地址/自成交及去补贴留存审计未完成。",
+      "未独立重放全部费用与支付，适配器方法可能更新。",
+      "官方计划不等于代币已发行或用户已获得权益；当前链上代币状态/分配需另核。"
+    ],
+    "evidence": [
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/metamask-perps?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:37:50.693834+00:00",
+        "http_status": 200,
+        "response_sha256": "b753d10fc02f6d241eda6c0fd2c95708eec0137679df46ce92438fd59d254a69",
+        "note": "DefiLlama 适配器方法论；本次核查方法与归属，不代表本方重放所有链上计算，也不重排输入 rev30。"
+      },
+      {
+        "fields": [
+          "name",
+          "defillama_reference",
+          "metadata_symbol"
+        ],
+        "url": "https://api.llama.fi/protocol/metamask-perps",
+        "checked_utc": "2026-11-14T13:37:50.585966+00:00",
+        "http_status": 200,
+        "response_sha256": "90ac4ea4a069c810f90bebfe2e399d55a1ca79b962785bdf86facf554e021d16",
+        "note": "metadata 的 symbol 缺失不代表没有代币。"
+      },
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/metamask-wallet?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:39:50.988642+00:00",
+        "http_status": 200,
+        "response_sha256": "ca8acd7ade7518ff853aec59f0152e0fc043a80ef0bf9779a4535b53d008aa4b",
+        "note": "同一 parent 的其他子产品；各自 builder/费用口径不能混同。"
+      },
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/metamask-predictions?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:39:51.096774+00:00",
+        "http_status": 200,
+        "response_sha256": "6c85c4137019ef0cd9ad39fa6a5188aeddcda98f362c73495c869f0c79abd121",
+        "note": "同一 parent 的其他子产品；各自 builder/费用口径不能混同。"
+      },
+      {
+        "fields": [
+          "user_role",
+          "official_identity"
+        ],
+        "url": "https://metamask.com",
+        "checked_utc": "2026-11-14T13:39:49.921310+00:00",
+        "http_status": 200,
+        "response_sha256": "611490d72e613b46bbfa73591690d5532369ce54e3537f7537b6f94c332c9110",
+        "note": "只记录官方入口尝试结果；空壳/失败响应不证明文中其他事实。"
+      },
+      {
+        "fields": [
+          "token_stance",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://metamask.com/en-GB/news/introducing-metamask-rewards",
+        "checked_utc": "2026-11-14T13:48:29.797915+00:00",
+        "http_status": 200,
+        "response_sha256": "30c2775232aeca5402c54a8b8dee472483de9169fce867a2cdc869c88bc75501",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      },
+      {
+        "fields": [
+          "token_stance",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://metamask.com/en-GB/news/metamask-expands-trading-with-perpetual-futures-and-rewards-confirms-token",
+        "checked_utc": "2026-11-14T13:48:29.798528+00:00",
+        "http_status": 200,
+        "response_sha256": "ccf8a4e52d88b29912dad77aa32c93b226dcd1e11f94d1854ca392f95cba75c5",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      }
+    ]
+  },
+  {
+    "key": "g:parent#pacifica",
+    "name": "Pacifica Perps",
+    "token_stance": "有积分/空投计划",
+    "token_stance_src": "https://app.pacifica.fi/points",
+    "token_stance_date": "U",
+    "revenue_who": "Pacifica 财库；maker 返还归做市方，尚未扣的 affiliate 部分最终归属 U。",
+    "revenue_method": "逐成交实际正手续费和清算费减负手续费 maker rebates；不是按成交额乘固定费率估算，但 API 未披露 affiliate share，收入未扣该项。",
+    "wash_or_subsidy": "积分页面仍可读；有官方活动/竞赛。返还已计入扣减，affiliate 成本未完整扣减；实际刷量 U。",
+    "user_role": "永续用户、符合规则的做市或积分用户。",
+    "counter": "未扣 affiliate 分成及积分交易会同时抬高表观收入与活跃度。",
+    "verdict": "研究观察",
+    "verdict_reason": "费用来自成交记录，积分公开；保留未扣成本，不能将收入字段称最终利润。",
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+    "token_stance_note": "只确认积分项目，不等于官方承诺自身代币。",
+    "has_live_governance_token": "U",
+    "defillama_reference": "https://defillama.com/protocol/pacifica-perps",
+    "methodology_source": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/pacifica",
+    "input_rank": 8,
+    "input_rev30": 3360183,
+    "input_data_date": "2026-11-14",
+    "input_children": [
+      "Pacifica Perps"
+    ],
+    "input_reference": "attachment://Alpha雷达_Codex任务包/附件/T3_无币协议前30.json",
+    "progress": "已取得收入方法，已完成本轮可得公开补证；缺口逐项保留 U。",
+    "missing": [
+      "独立关联地址/自成交及去补贴留存审计未完成。",
+      "未独立重放全部费用与支付，适配器方法可能更新。",
+      "官方计划不等于代币已发行或用户已获得权益；当前链上代币状态/分配需另核。",
+      "官方原始表态日期 U，不用页面读取日期代替。"
+    ],
+    "evidence": [
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/pacifica-perps?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:37:51.956571+00:00",
+        "http_status": 200,
+        "response_sha256": "53f342d8cb2f20d246251bbb5502235c8b0fc85ef44cf3beed99a147fecbc6fb",
+        "note": "DefiLlama 适配器方法论；本次核查方法与归属，不代表本方重放所有链上计算，也不重排输入 rev30。"
+      },
+      {
+        "fields": [
+          "name",
+          "defillama_reference",
+          "metadata_symbol"
+        ],
+        "url": "https://api.llama.fi/protocol/pacifica-perps",
+        "checked_utc": "2026-11-14T13:37:51.807980+00:00",
+        "http_status": 200,
+        "response_sha256": "bb3dc4925c046da7799e3757e175dda3b515111c277c57da67f87dcbe24c1a22",
+        "note": "metadata 的 symbol 缺失不代表没有代币。"
+      },
+      {
+        "fields": [
+          "user_role",
+          "official_identity"
+        ],
+        "url": "https://app.pacifica.fi",
+        "checked_utc": "2026-11-14T13:39:51.288844+00:00",
+        "http_status": 200,
+        "response_sha256": "12547080373e6ffe31378b53046ab21a0557e5e256d433d86eb8a2ad5b618dc4",
+        "note": "只记录官方入口尝试结果；空壳/失败响应不证明文中其他事实。"
+      },
+      {
+        "fields": [
+          "token_stance",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://app.pacifica.fi/events",
+        "checked_utc": "2026-11-14T13:42:41.433189+00:00",
+        "http_status": 200,
+        "response_sha256": "ad5051d1292e19a859304bd424c0b030e1dbafcff480106f664a52a0826e4128",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      },
+      {
+        "fields": [
+          "token_stance",
+          "token_stance_date"
+        ],
+        "url": "https://app.pacifica.fi/points",
+        "checked_utc": "2026-11-14T13:42:41.325910+00:00",
+        "http_status": 200,
+        "response_sha256": "3c37c3f3c429bf7118e8bf0f545133d8d2cc3347cc988d04a59d2b2b3c662dd5",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      }
+    ]
+  },
+  {
+    "key": "g:7010",
+    "name": "trade[XYZ]",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "Trade.xyz 协议方与 Hyperliquid 分成，普通前端用户并无分红权证明。",
+    "revenue_method": "交易者支付其部署市场的交易费，适配器将一半计 Trade.xyz 收入、余下归 Hyperliquid。",
+    "wash_or_subsidy": "U",
+    "user_role": "相关市场用户；具体地区/身份资格需按官方产品规则核验。",
+    "counter": "现有分成不证明未来发币或用户分配，且产品收入依赖底层 Hyperliquid 规则。",
+    "verdict": "待核验",
+    "verdict_reason": "分成方法可核；官方自身发行立场、奖励补贴及权益安排 U。",
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+    "token_stance_note": "尚未取得足够、可读且时效明确的官方自身发行立场；不把未找到声明写成确定没有表态。",
+    "has_live_governance_token": "U",
+    "defillama_reference": "https://defillama.com/protocol/trade[xyz]",
+    "methodology_source": "https://github.com/DefiLlama/dimension-adapters/blob/master/factory/hyperliquid.ts",
+    "input_rank": 9,
+    "input_rev30": 3296251,
+    "input_data_date": "2026-11-14",
+    "input_children": [
+      "trade[XYZ]"
+    ],
+    "input_reference": "attachment://Alpha雷达_Codex任务包/附件/T3_无币协议前30.json",
+    "progress": "已取得收入方法，已完成本轮可得公开补证；缺口逐项保留 U。",
+    "missing": [
+      "独立关联地址/自成交及去补贴留存审计未完成。",
+      "未独立重放全部费用与支付，适配器方法可能更新。",
+      "当前官方自身 token/积分/空投立场及适用日期 U。",
+      "官方原始表态日期 U，不用页面读取日期代替。"
+    ],
+    "evidence": [
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/trade%5Bxyz%5D?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:37:52.643017+00:00",
+        "http_status": 200,
+        "response_sha256": "4a4d16c3b04ab30c9ba06e65f62b11c57dc8a896f6024729b4115655f6f1d293",
+        "note": "DefiLlama 适配器方法论；本次核查方法与归属，不代表本方重放所有链上计算，也不重排输入 rev30。"
+      },
+      {
+        "fields": [
+          "name",
+          "defillama_reference",
+          "metadata_symbol"
+        ],
+        "url": "https://api.llama.fi/protocol/trade%5Bxyz%5D",
+        "checked_utc": "2026-11-14T13:37:52.394367+00:00",
+        "http_status": 200,
+        "response_sha256": "ee1221a80fd26b52b94f698787aaa5195c5447d4bc5d7a577b56e0defc0b2307",
+        "note": "metadata 的 symbol 缺失不代表没有代币。"
+      },
+      {
+        "fields": [
+          "user_role",
+          "official_identity"
+        ],
+        "url": "https://app.trade.xyz/",
+        "checked_utc": "2026-11-14T13:39:51.869998+00:00",
+        "http_status": 200,
+        "response_sha256": "ac361631e85e1dfbb202e88696a49adbb2a87ecf6dd88b65973b5e22d0d43d16",
+        "note": "只记录官方入口尝试结果；空壳/失败响应不证明文中其他事实。"
+      }
+    ]
+  },
+  {
+    "key": "g:parent#azverse",
+    "name": "Azverse",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "AZverse 留存交易费，builder 获取约定分成；治理持有人字段不是已发生分配证据。",
+    "revenue_method": "Perps 与 Spot 都按交易费扣 builder shares 后计协议收入；未取得独立费用分配重放。",
+    "wash_or_subsidy": "U；builder 分成有方法记录，但活动补贴、关联账户与量的独立性未证实。",
+    "user_role": "Perps/Spot 产品用户；身份及官方入口尚需确认。",
+    "counter": "缺稳定一手身份、权限和发行立场核验，高收入读数不能替代项目真实性审查。",
+    "verdict": "待核验",
+    "verdict_reason": "收入方法存在，但 API 元数据缺官网，当前无法完成一手身份/发行补证。",
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+    "token_stance_note": "尚未取得足够、可读且时效明确的官方自身发行立场；不把未找到声明写成确定没有表态。",
+    "has_live_governance_token": "U",
+    "defillama_reference": "https://defillama.com/protocol/azverse-perps",
+    "methodology_source": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/azverse-perps",
+    "input_rank": 10,
+    "input_rev30": 2980340,
+    "input_data_date": "2026-11-14",
+    "input_children": [
+      "AZverse Perps",
+      "AZverse Spot"
+    ],
+    "input_reference": "attachment://Alpha雷达_Codex任务包/附件/T3_无币协议前30.json",
+    "progress": "已取得收入方法，已完成本轮可得公开补证；缺口逐项保留 U。",
+    "missing": [
+      "独立关联地址/自成交及去补贴留存审计未完成。",
+      "未独立重放全部费用与支付，适配器方法可能更新。",
+      "当前官方自身 token/积分/空投立场及适用日期 U。",
+      "官方原始表态日期 U，不用页面读取日期代替。",
+      "收入方法存在，但 API 元数据缺官网，当前无法完成一手身份/发行补证。"
+    ],
+    "evidence": [
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/azverse-perps?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:37:53.164704+00:00",
+        "http_status": 200,
+        "response_sha256": "1b2088d0581b758db231e72b83d59afa7c5a74fe814c94603a3b8c03c854b1b3",
+        "note": "DefiLlama 适配器方法论；本次核查方法与归属，不代表本方重放所有链上计算，也不重排输入 rev30。"
+      },
+      {
+        "fields": [
+          "name",
+          "defillama_reference",
+          "metadata_symbol"
+        ],
+        "url": "https://api.llama.fi/protocol/azverse-perps",
+        "checked_utc": "2026-11-14T13:37:52.791831+00:00",
+        "http_status": 200,
+        "response_sha256": "9d7e33c688bb4f75d618c699a4653617ed00ac4b8d07e2fb5f3a608fc624cd73",
+        "note": "metadata 的 symbol 缺失不代表没有代币。"
+      },
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/azverse-spot?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:39:52.610612+00:00",
+        "http_status": 200,
+        "response_sha256": "5f2c80a338cbb2fa4ec84d58c84befacdeb81c2ccc432f457c323b184ee52c1e",
+        "note": "同一 parent 的其他子产品；各自 builder/费用口径不能混同。"
+      }
+    ]
+  },
+  {
+    "key": "g:4990",
+    "name": "DEX Screener",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "DEX Screener 公司/运营方。",
+    "revenue_method": "收费来自 token profile/listing 等资料展示服务并全部归运营方，不是平台上展示的 DEX 成交手续费。",
+    "wash_or_subsidy": "付费展示有方法证据；客户留存、独立广告主及返款 U，刷量 U。",
+    "user_role": "行情工具用户，或购买展示服务的项目方；没有据此获得代币权益的证据。",
+    "counter": "广告/资料收费是注意力市场收入，不能当作用户交易变现或空投承诺。",
+    "verdict": "研究观察",
+    "verdict_reason": "收费对象明确；仅研究工具商业模式，未来自身代币状态 U。",
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+    "token_stance_note": "尚未取得足够、可读且时效明确的官方自身发行立场；不把未找到声明写成确定没有表态。",
+    "has_live_governance_token": "U",
+    "defillama_reference": "https://defillama.com/protocol/dex-screener",
+    "methodology_source": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/dexscreener.ts",
+    "input_rank": 11,
+    "input_rev30": 2711629,
+    "input_data_date": "2026-11-14",
+    "input_children": [
+      "DEX Screener"
+    ],
+    "input_reference": "attachment://Alpha雷达_Codex任务包/附件/T3_无币协议前30.json",
+    "progress": "已取得收入方法，已完成本轮可得公开补证；缺口逐项保留 U。",
+    "missing": [
+      "独立关联地址/自成交及去补贴留存审计未完成。",
+      "未独立重放全部费用与支付，适配器方法可能更新。",
+      "当前官方自身 token/积分/空投立场及适用日期 U。",
+      "官方原始表态日期 U，不用页面读取日期代替。"
+    ],
+    "evidence": [
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/dex-screener?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:37:53.994721+00:00",
+        "http_status": 200,
+        "response_sha256": "f8ca22a85d09b6b12e507dec9adae014e6ab348812c62c5cdb9e9adbb7426ca4",
+        "note": "DefiLlama 适配器方法论；本次核查方法与归属，不代表本方重放所有链上计算，也不重排输入 rev30。"
+      },
+      {
+        "fields": [
+          "name",
+          "defillama_reference",
+          "metadata_symbol"
+        ],
+        "url": "https://api.llama.fi/protocol/dex-screener",
+        "checked_utc": "2026-11-14T13:37:53.567615+00:00",
+        "http_status": 200,
+        "response_sha256": "5136e99477077c3add900f2a27280f8e3fb2f5ed31fde3420b797b9ca8c8d359",
+        "note": "metadata 的 symbol 缺失不代表没有代币。"
+      },
+      {
+        "fields": [
+          "user_role",
+          "official_identity"
+        ],
+        "url": "https://dexscreener.com",
+        "checked_utc": "2026-11-14T13:39:53.129178+00:00",
+        "http_status": 403,
+        "response_sha256": "4ad5380f7802481aebb2dcbcb51d58514d4ef2b47f1855cb36a7e1dc753fba59",
+        "note": "只记录官方入口尝试结果；空壳/失败响应不证明文中其他事实。"
+      }
+    ]
+  },
+  {
+    "key": "g:9296",
+    "name": "The Standard Reserve",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "STANDARD 协议及相应持有人机制；费用还分给发行者、第三方 LP 等。",
+    "revenue_method": "交易税、charter/license 拍卖、launchpad 与 LP/S-Bills 相关费用减供给方分成；Revenue 与 ProtocolRevenue 不同：已执行回购在后者扣除，销毁/退出等进入持有人收益。",
+    "wash_or_subsidy": "税费、拍卖、回购等反身循环明显；是否独立外部需求与关联自成交 U，不能把回购当新增收入。",
+    "user_role": "身份核验后才可区分使用者、LP、charter 或 STANDARD 权益；本次不确认资产地址。",
+    "counter": "适配器已描述 STANDARD 代币和持有人收益，和无币标签直接冲突，官网又未取得可核正文。",
+    "verdict": "待核验",
+    "verdict_reason": "symbol 为横杠不能证明无币；先核 STANDARD 的唯一资产、官方身份和无币归类，暂不按无币机会推进。",
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+    "token_stance_note": "尚未取得足够、可读且时效明确的官方自身发行立场；不把未找到声明写成确定没有表态。",
+    "has_live_governance_token": "U",
+    "defillama_reference": "https://defillama.com/protocol/the-standard-reserve",
+    "methodology_source": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/standard",
+    "input_rank": 12,
+    "input_rev30": 2582269,
+    "input_data_date": "2026-11-14",
+    "input_children": [
+      "The Standard Reserve"
+    ],
+    "input_reference": "attachment://Alpha雷达_Codex任务包/附件/T3_无币协议前30.json",
+    "progress": "已取得收入方法，已完成本轮可得公开补证；缺口逐项保留 U。",
+    "missing": [
+      "独立关联地址/自成交及去补贴留存审计未完成。",
+      "未独立重放全部费用与支付，适配器方法可能更新。",
+      "当前官方自身 token/积分/空投立场及适用日期 U。",
+      "官方原始表态日期 U，不用页面读取日期代替。",
+      "symbol 为横杠不能证明无币；先核 STANDARD 的唯一资产、官方身份和无币归类，暂不按无币机会推进。"
+    ],
+    "evidence": [
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/the-standard-reserve?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:37:54.754383+00:00",
+        "http_status": 200,
+        "response_sha256": "e9783c594f91dceaf172009426db8f6bd21989ab1187f18aea444a9ab523ce7f",
+        "note": "DefiLlama 适配器方法论；本次核查方法与归属，不代表本方重放所有链上计算，也不重排输入 rev30。"
+      },
+      {
+        "fields": [
+          "name",
+          "defillama_reference",
+          "metadata_symbol"
+        ],
+        "url": "https://api.llama.fi/protocol/the-standard-reserve",
+        "checked_utc": "2026-11-14T13:37:54.082704+00:00",
+        "http_status": 200,
+        "response_sha256": "9ac3ce658a59c6eb59f05c440d33c39fb7bf12e1f2a54ba0c20df4d1b1ff1cf2",
+        "note": "metadata 的 symbol 缺失不代表没有代币。"
+      },
+      {
+        "fields": [
+          "user_role",
+          "official_identity"
+        ],
+        "url": "https://www.standardreserve.xyz/",
+        "checked_utc": "2026-11-14T13:39:53.142681+00:00",
+        "http_status": 200,
+        "response_sha256": "6d9077413153df4fbf1f72f1f6b3cfc8d93f92b631d8e6e2f4675e9dd90be85f",
+        "note": "只记录官方入口尝试结果；空壳/失败响应不证明文中其他事实。"
+      }
+    ]
+  },
+  {
+    "key": "g:6764",
+    "name": "Courtyard",
+    "token_stance": "有积分/空投计划",
+    "token_stance_src": "https://docs.courtyard.io/courtyard/resources/points",
+    "token_stance_date": "U",
+    "revenue_who": "Courtyard 运营方；藏品/卡包购买者取得藏品，不自动取得平台收入。",
+    "revenue_method": "收入含 NFT/卡包销售及市场费/版税；ProtocolRevenue 另扣 NFT buyback 支出。销售额/Revenue 不可直接视为扣除采购保管等成本的净利。",
+    "wash_or_subsidy": "官方积分可兑卡包额度，存在促销补贴；积分不是已承诺平台代币，实际关联成交 U。",
+    "user_role": "藏品用户、寄存/赎回用户、按规则积累与兑换积分的用户。",
+    "counter": "实物采购、回购、库存与履约成本可能让高销售额对应低盈利，积分更像消费券。",
+    "verdict": "研究观察",
+    "verdict_reason": "收费方法和官方积分兑换可核；不将消费积分包装为代币预期。",
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+    "token_stance_note": "消费积分兑卡包，不是已承诺代币空投。",
+    "has_live_governance_token": "U",
+    "defillama_reference": "https://defillama.com/protocol/courtyard",
+    "methodology_source": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/courtyard",
+    "input_rank": 13,
+    "input_rev30": 2093920,
+    "input_data_date": "2026-11-14",
+    "input_children": [
+      "Courtyard"
+    ],
+    "input_reference": "attachment://Alpha雷达_Codex任务包/附件/T3_无币协议前30.json",
+    "progress": "已取得收入方法，已完成本轮可得公开补证；缺口逐项保留 U。",
+    "missing": [
+      "独立关联地址/自成交及去补贴留存审计未完成。",
+      "未独立重放全部费用与支付，适配器方法可能更新。",
+      "官方计划不等于代币已发行或用户已获得权益；当前链上代币状态/分配需另核。",
+      "官方原始表态日期 U，不用页面读取日期代替。"
+    ],
+    "evidence": [
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/courtyard?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:37:55.260890+00:00",
+        "http_status": 200,
+        "response_sha256": "84bc2cc519109aeb6b0172cbdbc42c241975dd49dd5acac75282ddf1d2a60f88",
+        "note": "DefiLlama 适配器方法论；本次核查方法与归属，不代表本方重放所有链上计算，也不重排输入 rev30。"
+      },
+      {
+        "fields": [
+          "name",
+          "defillama_reference",
+          "metadata_symbol"
+        ],
+        "url": "https://api.llama.fi/protocol/courtyard",
+        "checked_utc": "2026-11-14T13:37:54.910929+00:00",
+        "http_status": 200,
+        "response_sha256": "59267426eb79e2dbfba0a433c78db657cf56c055d2cedcda386e0ca766c19abd",
+        "note": "metadata 的 symbol 缺失不代表没有代币。"
+      },
+      {
+        "fields": [
+          "user_role",
+          "official_identity"
+        ],
+        "url": "https://courtyard.io",
+        "checked_utc": "2026-11-14T13:39:53.695414+00:00",
+        "http_status": 200,
+        "response_sha256": "356a783396130b4d0141059f42e53934c2cdc9c175985d1ca2bca25c5fb3c028",
+        "note": "只记录官方入口尝试结果；空壳/失败响应不证明文中其他事实。"
+      },
+      {
+        "fields": [
+          "token_stance",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://docs.courtyard.io/courtyard/resources/points",
+        "checked_utc": "2026-11-14T13:42:41.498218+00:00",
+        "http_status": 200,
+        "response_sha256": "71b4084a4abd162ff755264ca4390e4aa25a670104c1fd1ac404f3a78eac89b8",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      },
+      {
+        "fields": [
+          "token_stance",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://drops.courtyard.io/blog/post/courtyard-quests-rewards-update",
+        "checked_utc": "2026-11-14T13:42:41.759976+00:00",
+        "http_status": 200,
+        "response_sha256": "b29077a6d80c6d8e711ac0697215e1a2823f334d5aa5b5593951a91b71d7fc41",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      }
+    ]
+  },
+  {
+    "key": "g:5129",
+    "name": "Predict Fun",
+    "token_stance": "有积分/空投计划",
+    "token_stance_src": "https://docs.predict.fun/knowledge-base/invites",
+    "token_stance_date": "U",
+    "revenue_who": "Predict 协议保留扣分配后的交易费；maker/推荐者领取相应份额。",
+    "revenue_method": "taker token 计费，非 USDT 按交易小时价格换 USD；净收入扣退款、maker rebates、推荐费。",
+    "wash_or_subsidy": "官方 Predict Points、推荐费返还和交易折扣存在；净独立付款、刷量程度 U。",
+    "user_role": "预测市场用户、报价者、按官方规则获得 PP 的用户。",
+    "counter": "积分和推荐激励可使高成交高收入短期化，非 USDT 计价还受交易小时价格影响。",
+    "verdict": "研究观察",
+    "verdict_reason": "收入扣减及官方积分可核；未来代币与实际份额不作推断。",
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+    "token_stance_note": "PP/推荐积分；自身币计划和转换规则 U。",
+    "has_live_governance_token": "U",
+    "defillama_reference": "https://defillama.com/protocol/predict-fun",
+    "methodology_source": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/predict-fun",
+    "input_rank": 14,
+    "input_rev30": 2077765,
+    "input_data_date": "2026-11-14",
+    "input_children": [
+      "Predict Fun"
+    ],
+    "input_reference": "attachment://Alpha雷达_Codex任务包/附件/T3_无币协议前30.json",
+    "progress": "已取得收入方法，已完成本轮可得公开补证；缺口逐项保留 U。",
+    "missing": [
+      "独立关联地址/自成交及去补贴留存审计未完成。",
+      "未独立重放全部费用与支付，适配器方法可能更新。",
+      "官方计划不等于代币已发行或用户已获得权益；当前链上代币状态/分配需另核。",
+      "官方原始表态日期 U，不用页面读取日期代替。"
+    ],
+    "evidence": [
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/predict-fun?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:37:56.160466+00:00",
+        "http_status": 200,
+        "response_sha256": "cb72c96c11622fa4133d907ad06616141589f2aa0d872ea6a66d9256b902203e",
+        "note": "DefiLlama 适配器方法论；本次核查方法与归属，不代表本方重放所有链上计算，也不重排输入 rev30。"
+      },
+      {
+        "fields": [
+          "name",
+          "defillama_reference",
+          "metadata_symbol"
+        ],
+        "url": "https://api.llama.fi/protocol/predict-fun",
+        "checked_utc": "2026-11-14T13:37:55.444225+00:00",
+        "http_status": 200,
+        "response_sha256": "7c74721dfbf280c7ecb08644b2880ab7a6a39d4a1690af08832d059b6741daff",
+        "note": "metadata 的 symbol 缺失不代表没有代币。"
+      },
+      {
+        "fields": [
+          "user_role",
+          "official_identity"
+        ],
+        "url": "https://predict.fun",
+        "checked_utc": "2026-11-14T13:39:54.104782+00:00",
+        "http_status": 200,
+        "response_sha256": "b63e5bb96d20c7ff4b987fa7172c53e55805e208cd05a4029751f36cd798b5a9",
+        "note": "只记录官方入口尝试结果；空壳/失败响应不证明文中其他事实。"
+      },
+      {
+        "fields": [
+          "token_stance",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://docs.predict.fun/knowledge-base/invites",
+        "checked_utc": "2026-11-14T13:42:42.529433+00:00",
+        "http_status": 200,
+        "response_sha256": "c07ae0e9163c100168eb2ce788360fe27abb4811a5b1e2623e5c2bc5d8cc5f2b",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      }
+    ]
+  },
+  {
+    "key": "g:parent#arcus",
+    "name": "Arcus Perps",
+    "token_stance": "有积分/空投计划",
+    "token_stance_src": "https://arcus.xyz/blog/introducing-arcus-points",
+    "token_stance_date": "2026-10-01",
+    "revenue_who": "Arcus 财库；maker 和推荐合作方有分成。",
+    "revenue_method": "总 taker/maker/清算费扣 maker 返还与推荐款后归财库；方法里的 no token distribution 仅说明该费用分配现状。",
+    "wash_or_subsidy": "官方 2026-10-01 公告 Season0/Season1 积分，按周分配；有奖励激励，实际刷量 U。",
+    "user_role": "交易产品用户、按规则积累积分的用户；并非已取得治理币。",
+    "counter": "积分周期内的交易增长可能是补贴需求，no token distribution 不能解释成永不发币。",
+    "verdict": "研究观察",
+    "verdict_reason": "官方积分与净费方法可核，但未证明积分可兑换币及独立需求。",
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+    "token_stance_note": "官方积分 Season0/1，未确认未来代币。",
+    "has_live_governance_token": "U",
+    "defillama_reference": "https://defillama.com/protocol/arcus-perps",
+    "methodology_source": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/arcus-perps",
+    "input_rank": 15,
+    "input_rev30": 1648177,
+    "input_data_date": "2026-11-14",
+    "input_children": [
+      "Arcus Perps"
+    ],
+    "input_reference": "attachment://Alpha雷达_Codex任务包/附件/T3_无币协议前30.json",
+    "progress": "已取得收入方法，已完成本轮可得公开补证；缺口逐项保留 U。",
+    "missing": [
+      "独立关联地址/自成交及去补贴留存审计未完成。",
+      "未独立重放全部费用与支付，适配器方法可能更新。",
+      "官方计划不等于代币已发行或用户已获得权益；当前链上代币状态/分配需另核。"
+    ],
+    "evidence": [
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/arcus-perps?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:37:56.462041+00:00",
+        "http_status": 200,
+        "response_sha256": "305d12549da40ae690a9607eb63e2d08a46b0344b8df2e0806ba86fcc3b4410e",
+        "note": "DefiLlama 适配器方法论；本次核查方法与归属，不代表本方重放所有链上计算，也不重排输入 rev30。"
+      },
+      {
+        "fields": [
+          "name",
+          "defillama_reference",
+          "metadata_symbol"
+        ],
+        "url": "https://api.llama.fi/protocol/arcus-perps",
+        "checked_utc": "2026-11-14T13:37:56.204471+00:00",
+        "http_status": 200,
+        "response_sha256": "7f9f4a3447c5fdf0b92185234d2bb162a94d26f1dc5695e692ee5290f8fc8c44",
+        "note": "metadata 的 symbol 缺失不代表没有代币。"
+      },
+      {
+        "fields": [
+          "user_role",
+          "official_identity"
+        ],
+        "url": "https://arcus.xyz/",
+        "checked_utc": "2026-11-14T13:39:54.634628+00:00",
+        "http_status": 200,
+        "response_sha256": "35bb3b78855e2f48b13d803fa2d02d381a8600216f9cc2c9c00172316d4955e3",
+        "note": "只记录官方入口尝试结果；空壳/失败响应不证明文中其他事实。"
+      },
+      {
+        "fields": [
+          "token_stance",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://arcus.xyz/blog/introducing-arcus-points",
+        "checked_utc": "2026-11-14T13:42:47.992231+00:00",
+        "http_status": 200,
+        "response_sha256": "32d09bdfa610e06b2adec70970fa17fd915928b3094a71f8aadc945a2a9bb086",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      }
+    ]
+  },
+  {
+    "key": "g:parent#txflow",
+    "name": "TxFlow Perps",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "TxFlow 协议方，实际 LP/交易者之间的资金费净额分配尚未核清。",
+    "revenue_method": "适配器将交易费及 funding fees 全计协议收入；同时出现 LP/holders 的模板描述，不能仅据字段名认定真实支付。",
+    "wash_or_subsidy": "U",
+    "user_role": "衍生品产品用户；官方奖励/积分参与资格 U。",
+    "counter": "把 funding fees 全算收入可能混同交易者间转移，且尚缺一手产品和补贴核验。",
+    "verdict": "待核验",
+    "verdict_reason": "收费方法取得，但费用经济归属与官方身份/发行计划还不足以确认。",
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+    "token_stance_note": "尚未取得足够、可读且时效明确的官方自身发行立场；不把未找到声明写成确定没有表态。",
+    "has_live_governance_token": "U",
+    "defillama_reference": "https://defillama.com/protocol/txflow-perps",
+    "methodology_source": "https://github.com/DefiLlama/dimension-adapters/blob/master/dexs/txflow-perps",
+    "input_rank": 16,
+    "input_rev30": 1604975,
+    "input_data_date": "2026-11-14",
+    "input_children": [
+      "TxFlow Perps"
+    ],
+    "input_reference": "attachment://Alpha雷达_Codex任务包/附件/T3_无币协议前30.json",
+    "progress": "已取得收入方法，已完成本轮可得公开补证；缺口逐项保留 U。",
+    "missing": [
+      "独立关联地址/自成交及去补贴留存审计未完成。",
+      "未独立重放全部费用与支付，适配器方法可能更新。",
+      "当前官方自身 token/积分/空投立场及适用日期 U。",
+      "官方原始表态日期 U，不用页面读取日期代替。",
+      "收费方法取得，但费用经济归属与官方身份/发行计划还不足以确认。"
+    ],
+    "evidence": [
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/txflow-perps?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:37:57.513010+00:00",
+        "http_status": 200,
+        "response_sha256": "eb0c07b0a7936df804991f61ab2731c9971c9fef6c3b8dda7572e5f71859c5ba",
+        "note": "DefiLlama 适配器方法论；本次核查方法与归属，不代表本方重放所有链上计算，也不重排输入 rev30。"
+      },
+      {
+        "fields": [
+          "name",
+          "defillama_reference",
+          "metadata_symbol"
+        ],
+        "url": "https://api.llama.fi/protocol/txflow-perps",
+        "checked_utc": "2026-11-14T13:37:57.371924+00:00",
+        "http_status": 200,
+        "response_sha256": "f2fb4f59dad14050db36d3f48a6f8f270df1af82462ed3e84c0b153111121776",
+        "note": "metadata 的 symbol 缺失不代表没有代币。"
+      },
+      {
+        "fields": [
+          "user_role",
+          "official_identity"
+        ],
+        "url": "https://app.txflow.com/",
+        "checked_utc": "2026-11-14T13:39:55.726780+00:00",
+        "http_status": 403,
+        "response_sha256": "99ee9b82a7fad9b3f3006558883433509bc8e1efa661b178496731cc983f9a50",
+        "note": "只记录官方入口尝试结果；空壳/失败响应不证明文中其他事实。"
+      }
+    ]
+  },
+  {
+    "key": "g:9146",
+    "name": "Central City",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "Central City 财库留 qualifying Feed 服务付款的 10%，卖方收其余 90%。",
+    "revenue_method": "Base/Arc 的不可变 fee router 识别含费服务支付，10% 归财库；Volume 为完整含费价格，fee-on-top 只移动费用的付款不计该 Volume；包含平台自行创建 agent 活动。",
+    "wash_or_subsidy": "官方 FAQ 明示数据含自营 agent，gas 由平台承担；这可造成激励/关联需求，尚不能据此证明恶意刷量，独立外部付款占比 U。",
+    "user_role": "AI 服务用户/提供者、开发者；是否收费依 Feed/路由规则，不自动获得协议权益。",
+    "counter": "自营 agent 与 gas 资助可能制造循环付款，AI 收费增长仍需证明最终外部客户。",
+    "verdict": "待核验",
+    "verdict_reason": "方法与官网对自营活动的披露可对上，但独立需求、外部审计及发行表态未完成。",
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+    "token_stance_note": "尚未取得足够、可读且时效明确的官方自身发行立场；不把未找到声明写成确定没有表态。",
+    "has_live_governance_token": "U",
+    "defillama_reference": "https://defillama.com/protocol/central-city",
+    "methodology_source": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/central-city.ts",
+    "input_rank": 17,
+    "input_rev30": 1594460,
+    "input_data_date": "2026-11-14",
+    "input_children": [
+      "Central City"
+    ],
+    "input_reference": "attachment://Alpha雷达_Codex任务包/附件/T3_无币协议前30.json",
+    "progress": "已取得收入方法，已完成本轮可得公开补证；缺口逐项保留 U。",
+    "missing": [
+      "独立关联地址/自成交及去补贴留存审计未完成。",
+      "未独立重放全部费用与支付，适配器方法可能更新。",
+      "当前官方自身 token/积分/空投立场及适用日期 U。",
+      "官方原始表态日期 U，不用页面读取日期代替。"
+    ],
+    "evidence": [
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/central-city?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:37:57.919601+00:00",
+        "http_status": 200,
+        "response_sha256": "f8f27193a01b510bee2e43946263ea8d9922d11080a347cda5ec02f13d4e22d3",
+        "note": "DefiLlama 适配器方法论；本次核查方法与归属，不代表本方重放所有链上计算，也不重排输入 rev30。"
+      },
+      {
+        "fields": [
+          "name",
+          "defillama_reference",
+          "metadata_symbol"
+        ],
+        "url": "https://api.llama.fi/protocol/central-city",
+        "checked_utc": "2026-11-14T13:37:57.913969+00:00",
+        "http_status": 200,
+        "response_sha256": "3ba679f5e112ed5a8e8bc3cd56d32b41380f6483af225d298a44283d339b89aa",
+        "note": "metadata 的 symbol 缺失不代表没有代币。"
+      },
+      {
+        "fields": [
+          "token_stance",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://centralcity.ai/faq",
+        "checked_utc": "2026-11-14T13:42:47.664164+00:00",
+        "http_status": 200,
+        "response_sha256": "b52f6552f0ce2bd668e8c5c5386b9e58d5ce9ccccb40f2d3cbfe7ac21660b6aa",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      }
+    ]
+  },
+  {
+    "key": "g:7016",
+    "name": "Antarctic",
+    "token_stance": "官方表态会发",
+    "token_stance_src": "https://docs.antarctic.exchange/tokenomics/token-distribution",
+    "token_stance_date": "U",
+    "revenue_who": "Antarctic 协议收交易费的 40%，LP 收 60%（适配器口径）。",
+    "revenue_method": "收入按永续总交易费的 40% 计；HoldersRevenue 的模板文字不证明已向实际代币持有人支付。",
+    "wash_or_subsidy": "官方 tokenomics 列出交易量/活跃 airdrop 奖励；有激励计划，实际执行预算和刷量 U。",
+    "user_role": "永续/LP 用户；未来空投规则须确认有效文档版本。",
+    "counter": "两套官方分配文档并存且表述不同，不能把未来空投或代币经济模型当当前已落实权益。",
+    "verdict": "待核验",
+    "verdict_reason": "取得官方发币/空投设计，但有效版本、实际发行状态及当期权益尚未核定。",
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+    "token_stance_note": "两套官方 tokenomics/airdrop 文件存在；有效版本、发行完成与当前状态 U。",
+    "has_live_governance_token": "U",
+    "defillama_reference": "https://defillama.com/protocol/antarctic",
+    "methodology_source": "https://github.com/DefiLlama/dimension-adapters/blob/master/dexs/antarctic",
+    "input_rank": 18,
+    "input_rev30": 1479360,
+    "input_data_date": "2026-11-14",
+    "input_children": [
+      "Antarctic"
+    ],
+    "input_reference": "attachment://Alpha雷达_Codex任务包/附件/T3_无币协议前30.json",
+    "progress": "已取得收入方法，已完成本轮可得公开补证；缺口逐项保留 U。",
+    "missing": [
+      "独立关联地址/自成交及去补贴留存审计未完成。",
+      "未独立重放全部费用与支付，适配器方法可能更新。",
+      "官方计划不等于代币已发行或用户已获得权益；当前链上代币状态/分配需另核。",
+      "官方原始表态日期 U，不用页面读取日期代替。"
+    ],
+    "evidence": [
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/antarctic?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:37:58.960883+00:00",
+        "http_status": 200,
+        "response_sha256": "e74848ea5def86639906c925f7c9aa38e1ca02948412cc7ad51915f6b52efc80",
+        "note": "DefiLlama 适配器方法论；本次核查方法与归属，不代表本方重放所有链上计算，也不重排输入 rev30。"
+      },
+      {
+        "fields": [
+          "name",
+          "defillama_reference",
+          "metadata_symbol"
+        ],
+        "url": "https://api.llama.fi/protocol/antarctic",
+        "checked_utc": "2026-11-14T13:37:58.715640+00:00",
+        "http_status": 200,
+        "response_sha256": "56b7b5c0488b7dc01accf957eb38199b8eba2a8a93d3e69edb842226d89ef2f4",
+        "note": "metadata 的 symbol 缺失不代表没有代币。"
+      },
+      {
+        "fields": [
+          "user_role",
+          "official_identity"
+        ],
+        "url": "https://www.antarctic.exchange/",
+        "checked_utc": "2026-11-14T13:39:57.362325+00:00",
+        "http_status": 200,
+        "response_sha256": "c9fa10affc10389dc3b524aef3733b10c1608da27c82af8815e50eb8be540096",
+        "note": "只记录官方入口尝试结果；空壳/失败响应不证明文中其他事实。"
+      },
+      {
+        "fields": [
+          "token_stance",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://docs.antarctic.exchange/tokenomics/token-distribution",
+        "checked_utc": "2026-11-14T13:42:42.595400+00:00",
+        "http_status": 200,
+        "response_sha256": "8163a387316374b882973de2094ce0ea557a78f9700bc9d418e69f180b540e4a",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      },
+      {
+        "fields": [
+          "token_stance",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://docs.antarctic.exchange/tokenomics-lightpaper/token-distribution",
+        "checked_utc": "2026-11-14T13:42:43.272248+00:00",
+        "http_status": 200,
+        "response_sha256": "8db18a6541d8f89cfd606ddf8fe191d3371efbc2b50f4de6e524d202d175f789",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      }
+    ]
+  },
+  {
+    "key": "g:8415",
+    "name": "XOX Perps",
+    "token_stance": "官方表态会发",
+    "token_stance_src": "https://www.xox.exchange/en",
+    "token_stance_date": "U",
+    "revenue_who": "XOX 前端运营方收 builder fee，底层 AZverse 收剩余路由交易费。",
+    "revenue_method": "只把 XOX 在 AZverse 的 builder share 计 XOX 收入，不能把路由市场总费或 AZverse 的收入重复计给 XOX。",
+    "wash_or_subsidy": "官方路线图含竞赛/社交增长；奖励预算和刷量 U。",
+    "user_role": "XOX 交易界面/社交产品用户；不是持有底层币即拥有 XOX 收入。",
+    "counter": "收入依赖 AZverse 且路线图 TGE 尚非可验证代币权益，生态依赖和稀释条件未知。",
+    "verdict": "待核验",
+    "verdict_reason": "官网确有 TGE 路线图，但本次正文显示 Q3–Q4 2027；有效排期、唯一资产与用户分配均未核定。",
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+    "token_stance_note": "官网有 TGE 路线图，本文读取版本排期 Q3–Q4 2027；不是实际发行证明。",
+    "has_live_governance_token": "U",
+    "defillama_reference": "https://defillama.com/protocol/xox-perps",
+    "methodology_source": "https://github.com/DefiLlama/dimension-adapters/blob/master/factory/azverse.ts",
+    "input_rank": 19,
+    "input_rev30": 1252714,
+    "input_data_date": "2026-11-14",
+    "input_children": [
+      "XOX Perps"
+    ],
+    "input_reference": "attachment://Alpha雷达_Codex任务包/附件/T3_无币协议前30.json",
+    "progress": "已取得收入方法，已完成本轮可得公开补证；缺口逐项保留 U。",
+    "missing": [
+      "独立关联地址/自成交及去补贴留存审计未完成。",
+      "未独立重放全部费用与支付，适配器方法可能更新。",
+      "官方计划不等于代币已发行或用户已获得权益；当前链上代币状态/分配需另核。",
+      "官方原始表态日期 U，不用页面读取日期代替。"
+    ],
+    "evidence": [
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/xox-perps?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:37:59.675784+00:00",
+        "http_status": 200,
+        "response_sha256": "f0fdcaa3086e275f05c664bc70709f612bf62133777d3b47628ce7462513b9e0",
+        "note": "DefiLlama 适配器方法论；本次核查方法与归属，不代表本方重放所有链上计算，也不重排输入 rev30。"
+      },
+      {
+        "fields": [
+          "name",
+          "defillama_reference",
+          "metadata_symbol"
+        ],
+        "url": "https://api.llama.fi/protocol/xox-perps",
+        "checked_utc": "2026-11-14T13:37:59.160943+00:00",
+        "http_status": 200,
+        "response_sha256": "c7b41f5a13ab8098453e25b60c023dbd346e433dbefb1d17328cbb365b533c46",
+        "note": "metadata 的 symbol 缺失不代表没有代币。"
+      },
+      {
+        "fields": [
+          "user_role",
+          "official_identity"
+        ],
+        "url": "https://www.xox.exchange/en",
+        "checked_utc": "2026-11-14T13:39:57.969190+00:00",
+        "http_status": 200,
+        "response_sha256": "860f62da2ff69aac7ef76d8af21a1302386a54aa2593125faf0caa161f5008af",
+        "note": "只记录官方入口尝试结果；空壳/失败响应不证明文中其他事实。"
+      },
+      {
+        "fields": [
+          "token_stance",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://www.xox.exchange/en",
+        "checked_utc": "2026-11-14T13:39:57.969190+00:00",
+        "http_status": 200,
+        "response_sha256": "860f62da2ff69aac7ef76d8af21a1302386a54aa2593125faf0caa161f5008af",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      },
+      {
+        "fields": [
+          "token_stance",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://docs.xox.exchange/",
+        "checked_utc": "2026-11-14T13:42:43.497287+00:00",
+        "http_status": 200,
+        "response_sha256": "ffc3210314eb6e0dae149086a0f87051bdcb293fd6f04d3919b698d916881ffa",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      }
+    ]
+  },
+  {
+    "key": "g:5864",
+    "name": "TRONSAVE",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "TRONSAVE 协议/运营方收取能量购买相关费用。",
+    "revenue_method": "适配器把购买 energy 的用户费用计协议收入；未充分解释资源提供者成本/结算是否已净额化。",
+    "wash_or_subsidy": "U",
+    "user_role": "TRON 能量采购用户或符合平台规则的资源供给者。",
+    "counter": "能量采购流水可能包含转付成本，未核清净费就无法证明协议真实盈利。",
+    "verdict": "待核验",
+    "verdict_reason": "真实使用场景可识别，但净收入/供给方成本及自身代币立场不足。",
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+    "token_stance_note": "尚未取得足够、可读且时效明确的官方自身发行立场；不把未找到声明写成确定没有表态。",
+    "has_live_governance_token": "U",
+    "defillama_reference": "https://defillama.com/protocol/tronsave",
+    "methodology_source": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/tronsave",
+    "input_rank": 20,
+    "input_rev30": 1231156,
+    "input_data_date": "2026-11-14",
+    "input_children": [
+      "TRONSAVE"
+    ],
+    "input_reference": "attachment://Alpha雷达_Codex任务包/附件/T3_无币协议前30.json",
+    "progress": "已取得收入方法，已完成本轮可得公开补证；缺口逐项保留 U。",
+    "missing": [
+      "独立关联地址/自成交及去补贴留存审计未完成。",
+      "未独立重放全部费用与支付，适配器方法可能更新。",
+      "当前官方自身 token/积分/空投立场及适用日期 U。",
+      "官方原始表态日期 U，不用页面读取日期代替。",
+      "真实使用场景可识别，但净收入/供给方成本及自身代币立场不足。"
+    ],
+    "evidence": [
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/tronsave?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:38:00.453315+00:00",
+        "http_status": 200,
+        "response_sha256": "f6e4dc9a1723eed61b70498eec5d83661b45dd8d936b875620615567641c712e",
+        "note": "DefiLlama 适配器方法论；本次核查方法与归属，不代表本方重放所有链上计算，也不重排输入 rev30。"
+      },
+      {
+        "fields": [
+          "name",
+          "defillama_reference",
+          "metadata_symbol"
+        ],
+        "url": "https://api.llama.fi/protocol/tronsave",
+        "checked_utc": "2026-11-14T13:38:00.421998+00:00",
+        "http_status": 200,
+        "response_sha256": "e86c040fe2080cb01b6067a542c277ebaa787557ba7e1d9c3a1eb48af18edf37",
+        "note": "metadata 的 symbol 缺失不代表没有代币。"
+      },
+      {
+        "fields": [
+          "user_role",
+          "official_identity"
+        ],
+        "url": "https://tronsave.io",
+        "checked_utc": "2026-11-14T13:39:59.371053+00:00",
+        "http_status": 200,
+        "response_sha256": "8f45dcb9d71d8114569b3fb81b6c2dd30e314c88559bfc4c26eade2434fcd17d",
+        "note": "只记录官方入口尝试结果；空壳/失败响应不证明文中其他事实。"
+      }
+    ]
+  },
+  {
+    "key": "g:5825",
+    "name": "Veda",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "Veda 协议获取约定收益分成，存入者获取其余资产收益。",
+    "revenue_method": "Fees 为质押资产总收益，SupplySideRevenue 为给 stakers 的收益，Revenue/ProtocolRevenue 仅给 Veda 的部分；不能把总收益都当 Veda 收入。",
+    "wash_or_subsidy": "U；本次官方合作积分页面直读 403，当前活动、规则和激励金额不可核，不把历史线索当今天开放。",
+    "user_role": "相关策略 vault 用户/集成开发者；当前积分资格 U。",
+    "counter": "底层收益、激励和合作方分成可能驱动收入，协议收费不代表存入者拥有未来代币权益。",
+    "verdict": "待核验",
+    "verdict_reason": "收入切分可核；当前发行/积分口径尚无本次可读的一手规则，保持 U。",
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+    "token_stance_note": "尚未取得足够、可读且时效明确的官方自身发行立场；不把未找到声明写成确定没有表态。",
+    "has_live_governance_token": "U",
+    "defillama_reference": "https://defillama.com/protocol/veda",
+    "methodology_source": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/veda.ts",
+    "input_rank": 21,
+    "input_rev30": 1121303,
+    "input_data_date": "2026-11-14",
+    "input_children": [
+      "Veda"
+    ],
+    "input_reference": "attachment://Alpha雷达_Codex任务包/附件/T3_无币协议前30.json",
+    "progress": "已取得收入方法，已完成本轮可得公开补证；缺口逐项保留 U。",
+    "missing": [
+      "独立关联地址/自成交及去补贴留存审计未完成。",
+      "未独立重放全部费用与支付，适配器方法可能更新。",
+      "当前官方自身 token/积分/空投立场及适用日期 U。",
+      "官方原始表态日期 U，不用页面读取日期代替。",
+      "收入切分可核；当前发行/积分口径尚无本次可读的一手规则，保持 U。"
+    ],
+    "evidence": [
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/veda?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:38:01.704334+00:00",
+        "http_status": 200,
+        "response_sha256": "1c7574f99b7cb570a3482b2ffdc39641a53d9ce168e4778312242b61bd0e0d24",
+        "note": "DefiLlama 适配器方法论；本次核查方法与归属，不代表本方重放所有链上计算，也不重排输入 rev30。"
+      },
+      {
+        "fields": [
+          "name",
+          "defillama_reference",
+          "metadata_symbol"
+        ],
+        "url": "https://api.llama.fi/protocol/veda",
+        "checked_utc": "2026-11-14T13:38:00.656684+00:00",
+        "http_status": 200,
+        "response_sha256": "96bd8fea1ffc3c1ed975d4c916627c5266461b83ef1dcaa55840f087a5164418",
+        "note": "metadata 的 symbol 缺失不代表没有代币。"
+      },
+      {
+        "fields": [
+          "user_role",
+          "official_identity"
+        ],
+        "url": "https://veda.tech",
+        "checked_utc": "2026-11-14T13:39:59.478795+00:00",
+        "http_status": 200,
+        "response_sha256": "1727ea1919e30e6977f4432f502104b7fe6f0fd4cae3110d4af485bc7bbd0bbd",
+        "note": "只记录官方入口尝试结果；空壳/失败响应不证明文中其他事实。"
+      },
+      {
+        "fields": [
+          "token_stance",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://www.veda.tech/blog/lombard-launch",
+        "checked_utc": "2026-11-14T13:42:44.919597+00:00",
+        "http_status": 403,
+        "response_sha256": "bdeeb245d45e61093b36462a8504e55f1933f4ce6df35cd386f5662dd8bb8f17",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      }
+    ]
+  },
+  {
+    "key": "g:parent#hyperdash",
+    "name": "Hyperdash",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "Hyperdash 前端运营方留存 builder 费用。",
+    "revenue_method": "Perps 为 Hyperliquid builder-code 费；Spot/Outcome 为对应路由的 builder fee，不含底层市场全部费用。",
+    "wash_or_subsidy": "U",
+    "user_role": "交易前端用户；未确认其自身积分/空投。",
+    "counter": "前端可被替代且依赖底层费率，不能将 Hyperliquid 或某交易标的 POINTS 误认成其自身积分。",
+    "verdict": "待核验",
+    "verdict_reason": "子模块收入可核，但自身发行立场、独立留存与补贴 U。",
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+    "token_stance_note": "尚未取得足够、可读且时效明确的官方自身发行立场；不把未找到声明写成确定没有表态。",
+    "has_live_governance_token": "U",
+    "defillama_reference": "https://defillama.com/protocol/hyperdash-perps",
+    "methodology_source": "https://github.com/DefiLlama/dimension-adapters/blob/master/factory/hyperliquid.ts",
+    "input_rank": 22,
+    "input_rev30": 888072,
+    "input_data_date": "2026-11-14",
+    "input_children": [
+      "HyperDash Perps",
+      "HyperDash Spot",
+      "HyperDash Outcome"
+    ],
+    "input_reference": "attachment://Alpha雷达_Codex任务包/附件/T3_无币协议前30.json",
+    "progress": "已取得收入方法，已完成本轮可得公开补证；缺口逐项保留 U。",
+    "missing": [
+      "独立关联地址/自成交及去补贴留存审计未完成。",
+      "未独立重放全部费用与支付，适配器方法可能更新。",
+      "当前官方自身 token/积分/空投立场及适用日期 U。",
+      "官方原始表态日期 U，不用页面读取日期代替。"
+    ],
+    "evidence": [
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/hyperdash-perps?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:38:02.525152+00:00",
+        "http_status": 200,
+        "response_sha256": "fe1419171b0985e45aa31d440b9bcb086b712065e3d7df947b842bfd8cc23358",
+        "note": "DefiLlama 适配器方法论；本次核查方法与归属，不代表本方重放所有链上计算，也不重排输入 rev30。"
+      },
+      {
+        "fields": [
+          "name",
+          "defillama_reference",
+          "metadata_symbol"
+        ],
+        "url": "https://api.llama.fi/protocol/hyperdash-perps",
+        "checked_utc": "2026-11-14T13:38:02.460024+00:00",
+        "http_status": 200,
+        "response_sha256": "873d873696987b11d88b3955f9064f4c93b5a15bce8643d17cc2fcfe649dae52",
+        "note": "metadata 的 symbol 缺失不代表没有代币。"
+      },
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/hyperdash-spot?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:40:01.142381+00:00",
+        "http_status": 200,
+        "response_sha256": "c5b2b7ce78428b2cc4665fa665b5825f68eebb086c90c03c003a34ecf99761c6",
+        "note": "同一 parent 的其他子产品；各自 builder/费用口径不能混同。"
+      },
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/hyperdash-outcome?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:40:01.270363+00:00",
+        "http_status": 200,
+        "response_sha256": "2f4504cfcd159bd34bb7dafd5c230335060ae3656142a620a1cce2b998613ecc",
+        "note": "同一 parent 的其他子产品；各自 builder/费用口径不能混同。"
+      },
+      {
+        "fields": [
+          "user_role",
+          "official_identity"
+        ],
+        "url": "https://hyperdash.com/",
+        "checked_utc": "2026-11-14T13:40:00.394397+00:00",
+        "http_status": 200,
+        "response_sha256": "97bf4a5368f3120dcfbf4c1cac2f2a1be33e9ab349355299355d5ef381e3669a",
+        "note": "只记录官方入口尝试结果；空壳/失败响应不证明文中其他事实。"
+      }
+    ]
+  },
+  {
+    "key": "g:parent#nado",
+    "name": "Nado",
+    "token_stance": "有积分/空投计划",
+    "token_stance_src": "https://docs.nado.xyz/incentives-and-rewards/points",
+    "token_stance_date": "U",
+    "revenue_who": "Nado 财库留净交易费，maker 收返还。",
+    "revenue_method": "Perps/Spot 均按交易费扣 maker rebates 计净收入；holders 模板字段不代表已存在实际分红币。",
+    "wash_or_subsidy": "官方 Points 按交易、NLP、推荐积累，不可转让；页面列 Season2 Live/Season1 Ended，具体当期起讫时间 U；实际刷量 U。",
+    "user_role": "交易用户、NLP 用户及积分用户，按当前官方规则确认资格。",
+    "counter": "积分驱动的交易与 LP 规模可能在奖励减少后消失，模板 holders 字段不能补足资产权利。",
+    "verdict": "研究观察",
+    "verdict_reason": "积分规则与费用扣减可核；保留版本/周期和未来代币兑付缺口。",
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+    "token_stance_note": "确认交易/NLP/推荐积分；不可转让，不推导兑币。",
+    "has_live_governance_token": "U",
+    "defillama_reference": "https://defillama.com/protocol/nado-perps",
+    "methodology_source": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/nado-perp.ts",
+    "input_rank": 23,
+    "input_rev30": 885778,
+    "input_data_date": "2026-11-14",
+    "input_children": [
+      "Nado Perps",
+      "Nado Spot"
+    ],
+    "input_reference": "attachment://Alpha雷达_Codex任务包/附件/T3_无币协议前30.json",
+    "progress": "已取得收入方法，已完成本轮可得公开补证；缺口逐项保留 U。",
+    "missing": [
+      "独立关联地址/自成交及去补贴留存审计未完成。",
+      "未独立重放全部费用与支付，适配器方法可能更新。",
+      "官方计划不等于代币已发行或用户已获得权益；当前链上代币状态/分配需另核。",
+      "官方原始表态日期 U，不用页面读取日期代替。"
+    ],
+    "evidence": [
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/nado-perps?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:38:03.851131+00:00",
+        "http_status": 200,
+        "response_sha256": "f446aa6866d30aead1074bcd0353b0c5838c3eb08d378b03799d3f1711527d3f",
+        "note": "DefiLlama 适配器方法论；本次核查方法与归属，不代表本方重放所有链上计算，也不重排输入 rev30。"
+      },
+      {
+        "fields": [
+          "name",
+          "defillama_reference",
+          "metadata_symbol"
+        ],
+        "url": "https://api.llama.fi/protocol/nado-perps",
+        "checked_utc": "2026-11-14T13:38:03.662902+00:00",
+        "http_status": 200,
+        "response_sha256": "1d8f35936527c44502e5994bd075239fdc317300b0d1370ae339fa9b20619643",
+        "note": "metadata 的 symbol 缺失不代表没有代币。"
+      },
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/nado-spot?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:40:02.325810+00:00",
+        "http_status": 200,
+        "response_sha256": "cfbfc73096605271fcd97646492e9f1c33cede787ecc2f5061591e6d5cee48c3",
+        "note": "同一 parent 的其他子产品；各自 builder/费用口径不能混同。"
+      },
+      {
+        "fields": [
+          "user_role",
+          "official_identity"
+        ],
+        "url": "https://app.nado.xyz",
+        "checked_utc": "2026-11-14T13:40:01.300711+00:00",
+        "http_status": 200,
+        "response_sha256": "6ba8bcea42cf2913ae9f1320b7638480da48768c3991ff06626d06826975076f",
+        "note": "只记录官方入口尝试结果；空壳/失败响应不证明文中其他事实。"
+      },
+      {
+        "fields": [
+          "token_stance",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://docs.nado.xyz/incentives-and-rewards/points",
+        "checked_utc": "2026-11-14T13:42:47.711481+00:00",
+        "http_status": 200,
+        "response_sha256": "51e5e1adb383c20dcfc44eeeb5b8b4f4b4c2003a3b0cf8226ad55d2b79fdaa5d",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      }
+    ]
+  },
+  {
+    "key": "g:parent#rabby",
+    "name": "Rabby",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "Rabby 前端/钱包运营方。",
+    "revenue_method": "Perps 是 Hyperliquid builder-code 费用；Wallet 是钱包兑换/桥接收费，两个模块分开统计。",
+    "wash_or_subsidy": "官方 Rabby Points 页面存在，但本次仅取得页面标题、未取得可读规则；奖励周期、规模、自成交 U。",
+    "user_role": "钱包与前端用户；积分资格/规则 U。",
+    "counter": "有 Points 入口不等于有效空投承诺，钱包收入主要归运营方。",
+    "verdict": "待核验",
+    "verdict_reason": "确认官方积分页面存在；详细规则与代币计划未读取到，不据标题升级发行结论。",
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+    "token_stance_note": "尚未取得足够、可读且时效明确的官方自身发行立场；不把未找到声明写成确定没有表态。",
+    "has_live_governance_token": "U",
+    "defillama_reference": "https://defillama.com/protocol/rabby-perps",
+    "methodology_source": "https://github.com/DefiLlama/dimension-adapters/blob/master/factory/hyperliquid.ts",
+    "input_rank": 24,
+    "input_rev30": 808472,
+    "input_data_date": "2026-11-14",
+    "input_children": [
+      "Rabby Perps",
+      "Rabby Wallet"
+    ],
+    "input_reference": "attachment://Alpha雷达_Codex任务包/附件/T3_无币协议前30.json",
+    "progress": "已取得收入方法，已完成本轮可得公开补证；缺口逐项保留 U。",
+    "missing": [
+      "独立关联地址/自成交及去补贴留存审计未完成。",
+      "未独立重放全部费用与支付，适配器方法可能更新。",
+      "当前官方自身 token/积分/空投立场及适用日期 U。",
+      "官方原始表态日期 U，不用页面读取日期代替。",
+      "确认官方积分页面存在；详细规则与代币计划未读取到，不据标题升级发行结论。"
+    ],
+    "evidence": [
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/rabby-perps?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:38:04.910702+00:00",
+        "http_status": 200,
+        "response_sha256": "c849c00bbd1a778ee732238605a031822240e5a1119ea067009b0dc76f4d0615",
+        "note": "DefiLlama 适配器方法论；本次核查方法与归属，不代表本方重放所有链上计算，也不重排输入 rev30。"
+      },
+      {
+        "fields": [
+          "name",
+          "defillama_reference",
+          "metadata_symbol"
+        ],
+        "url": "https://api.llama.fi/protocol/rabby-perps",
+        "checked_utc": "2026-11-14T13:38:04.325111+00:00",
+        "http_status": 200,
+        "response_sha256": "2b7a4ae9abd1bdc9e861cc94a0d06bc4f22d0407d897d25640210d828729ffe7",
+        "note": "metadata 的 symbol 缺失不代表没有代币。"
+      },
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/rabby-wallet?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:40:02.492377+00:00",
+        "http_status": 200,
+        "response_sha256": "0bc9b978b43ac9a8ca6d04c7832e0f8c23af5ddc76be62875b518fbff9e49007",
+        "note": "同一 parent 的其他子产品；各自 builder/费用口径不能混同。"
+      },
+      {
+        "fields": [
+          "user_role",
+          "official_identity"
+        ],
+        "url": "https://rabby.io/",
+        "checked_utc": "2026-11-14T13:40:02.419029+00:00",
+        "http_status": 200,
+        "response_sha256": "338e4f369a052ffe4ed8e3ac0b4e5b5f49d2c7d6aa49956b4e165548dc178c8f",
+        "note": "只记录官方入口尝试结果；空壳/失败响应不证明文中其他事实。"
+      },
+      {
+        "fields": [
+          "token_stance",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://rabby.io/points",
+        "checked_utc": "2026-11-14T13:42:43.853289+00:00",
+        "http_status": 200,
+        "response_sha256": "7584ba2503a0d6fae8fca641399d00d399d53985b2d28471abbab18def8bdc3b",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      }
+    ]
+  },
+  {
+    "key": "g:parent#sentora",
+    "name": "Sentora Curator",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "Sentora 作为 curator 留管理/绩效费；存入者、合作协议/DAO 收剩余收益或费份额。",
+    "revenue_method": "不同 vault 分别提取 Sentora 的绩效/管理费；BoringVault 只取其份额，EtherFi 贷款策略只计 weETH 收益费而非借贷息差，Aave V4 hub 计其 50% liquidity fee。",
+    "wash_or_subsidy": "奖励补贴、相关资金与去激励留存 U；不能把全部底层 staking yield 当 Sentora 收入。",
+    "user_role": "其管理 vault 的用户或合作集成方；以具体产品准入为准。",
+    "counter": "收入可由资产价格和底层收益周期驱动，管理费归 curator 不等于用户拥有协议资产。",
+    "verdict": "研究观察",
+    "verdict_reason": "多产品 fee split 已披露，当前只观察真实收费业务，不推导未来 token 权利。",
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+    "token_stance_note": "尚未取得足够、可读且时效明确的官方自身发行立场；不把未找到声明写成确定没有表态。",
+    "has_live_governance_token": "U",
+    "defillama_reference": "https://defillama.com/protocol/sentora-curator",
+    "methodology_source": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/sentora.ts",
+    "input_rank": 25,
+    "input_rev30": 730086,
+    "input_data_date": "2026-11-14",
+    "input_children": [
+      "Sentora Curator"
+    ],
+    "input_reference": "attachment://Alpha雷达_Codex任务包/附件/T3_无币协议前30.json",
+    "progress": "已取得收入方法，已完成本轮可得公开补证；缺口逐项保留 U。",
+    "missing": [
+      "独立关联地址/自成交及去补贴留存审计未完成。",
+      "未独立重放全部费用与支付，适配器方法可能更新。",
+      "当前官方自身 token/积分/空投立场及适用日期 U。",
+      "官方原始表态日期 U，不用页面读取日期代替。"
+    ],
+    "evidence": [
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/sentora-curator?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:38:05.680468+00:00",
+        "http_status": 200,
+        "response_sha256": "186eef8ea6e60baa06d27bd9ae487fab0b544606609c5412dcd6d9b02e731d5d",
+        "note": "DefiLlama 适配器方法论；本次核查方法与归属，不代表本方重放所有链上计算，也不重排输入 rev30。"
+      },
+      {
+        "fields": [
+          "name",
+          "defillama_reference",
+          "metadata_symbol"
+        ],
+        "url": "https://api.llama.fi/protocol/sentora-curator",
+        "checked_utc": "2026-11-14T13:38:05.140165+00:00",
+        "http_status": 200,
+        "response_sha256": "a8faca9cbda83b6d2f4f8bd4598ad21a466967fb928e7b239d0f7340d9dd3266",
+        "note": "metadata 的 symbol 缺失不代表没有代币。"
+      },
+      {
+        "fields": [
+          "user_role",
+          "official_identity"
+        ],
+        "url": "https://sentora.com/",
+        "checked_utc": "2026-11-14T13:40:02.851991+00:00",
+        "http_status": 200,
+        "response_sha256": "dd6326b14ff525ce01dc0f8eedb993bad9ab98f6e42733c21580a96dc334542b",
+        "note": "只记录官方入口尝试结果；空壳/失败响应不证明文中其他事实。"
+      }
+    ]
+  },
+  {
+    "key": "g:8916",
+    "name": "Relay",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "Relay 平台方和满足条件的 integrator 分成；具体分成未披露。",
+    "revenue_method": "Fees 含平台费、集成 app 费和 swap 成本（不含 gas）；Revenue 仅平台费但尚未扣未披露的 integrator revenue share，属于上界而非精确净收入。",
+    "wash_or_subsidy": "官方旧 FAQ 说当时没有 Relay 自身奖励/币，只提外部链活动；页面日期 2024-07-24，不能视为 2026 永久承诺。当前补贴和刷量 U。",
+    "user_role": "桥接/兑换用户、集成方；外部活动奖励不等于 Relay 发币。",
+    "counter": "未披露分成让收入只是上界，旧奖励 FAQ 也不能证明今天仍无币或未来分配。",
+    "verdict": "待核验",
+    "verdict_reason": "服务收费明确，但收入净额和当前发行/奖励立场仍缺，历史官方声明不延长有效期。",
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+    "token_stance_note": "尚未取得足够、可读且时效明确的官方自身发行立场；不把未找到声明写成确定没有表态。",
+    "has_live_governance_token": "U",
+    "defillama_reference": "https://defillama.com/protocol/relay",
+    "methodology_source": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/relay.ts",
+    "input_rank": 26,
+    "input_rev30": 696932,
+    "input_data_date": "2026-11-14",
+    "input_children": [
+      "Relay"
+    ],
+    "input_reference": "attachment://Alpha雷达_Codex任务包/附件/T3_无币协议前30.json",
+    "progress": "已取得收入方法，已完成本轮可得公开补证；缺口逐项保留 U。",
+    "missing": [
+      "独立关联地址/自成交及去补贴留存审计未完成。",
+      "未独立重放全部费用与支付，适配器方法可能更新。",
+      "当前官方自身 token/积分/空投立场及适用日期 U。",
+      "官方原始表态日期 U，不用页面读取日期代替。",
+      "服务收费明确，但收入净额和当前发行/奖励立场仍缺，历史官方声明不延长有效期。"
+    ],
+    "evidence": [
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/relay?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:38:07.899734+00:00",
+        "http_status": 200,
+        "response_sha256": "6778c8f1695bc3b18d3e9a9162e21f3e09eb2b5dfa09712f8c3b32e894069643",
+        "note": "DefiLlama 适配器方法论；本次核查方法与归属，不代表本方重放所有链上计算，也不重排输入 rev30。"
+      },
+      {
+        "fields": [
+          "name",
+          "defillama_reference",
+          "metadata_symbol"
+        ],
+        "url": "https://api.llama.fi/protocol/relay",
+        "checked_utc": "2026-11-14T13:38:05.977417+00:00",
+        "http_status": 200,
+        "response_sha256": "4e466cdbdaed1ffdcaedbcb38b3594d0c2ae6077c9c4b906d1e92e3d097bfa5e",
+        "note": "metadata 的 symbol 缺失不代表没有代币。"
+      },
+      {
+        "fields": [
+          "user_role",
+          "official_identity"
+        ],
+        "url": "https://docs.relay.link/",
+        "checked_utc": "2026-11-14T13:40:03.008345+00:00",
+        "http_status": 200,
+        "response_sha256": "7814694b60b327dd4e4192845cbc246ab9847c13ec0055c100f0520def231216",
+        "note": "只记录官方入口尝试结果；空壳/失败响应不证明文中其他事实。"
+      },
+      {
+        "fields": [
+          "token_stance",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://support.relay.link/en/articles/9654203-can-i-earn-rewards",
+        "checked_utc": "2026-11-14T13:42:44.645543+00:00",
+        "http_status": 200,
+        "response_sha256": "e53ab6a0a52fa78fe50a66feeda495d7076e18b9e0192a1ad1bc2807c2746afb",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      }
+    ]
+  },
+  {
+    "key": "g:parent#okx-dex",
+    "name": "OKX Swap",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "OKX DEX/Swap 运营方及 API 合作方/推荐方，依实际费地址分配。",
+    "revenue_method": "计入 OKX 自有地址收的接口佣金、其 API partner fees 的 20% 及自有地址取得的正滑点；付第三方推荐方的份额另列，不等于 CEX 全部收入。",
+    "wash_or_subsidy": "U；明确有 partner/referrer 分成，但奖励预算、关联成交和正滑点质量未独立核验。",
+    "user_role": "DEX 兑换用户或 API 集成方；OKX 生态资产不自动代表 Swap 现金流权益。",
+    "counter": "公司 DEX 收费不等于独立无币协议机会，也不能把 OKB 等生态关系当 Swap 的用户权益。",
+    "verdict": "待核验",
+    "verdict_reason": "费用归属可核；需先确认该雷达是否纳入中心化公司 DEX 产品及专属资产/发行口径。",
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+    "token_stance_note": "尚未取得足够、可读且时效明确的官方自身发行立场；不把未找到声明写成确定没有表态。",
+    "has_live_governance_token": "U",
+    "defillama_reference": "https://defillama.com/protocol/okx-swap",
+    "methodology_source": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/okx-swap.ts",
+    "input_rank": 27,
+    "input_rev30": 687080,
+    "input_data_date": "2026-11-14",
+    "input_children": [
+      "OKX Swap"
+    ],
+    "input_reference": "attachment://Alpha雷达_Codex任务包/附件/T3_无币协议前30.json",
+    "progress": "已取得收入方法，已完成本轮可得公开补证；缺口逐项保留 U。",
+    "missing": [
+      "独立关联地址/自成交及去补贴留存审计未完成。",
+      "未独立重放全部费用与支付，适配器方法可能更新。",
+      "当前官方自身 token/积分/空投立场及适用日期 U。",
+      "官方原始表态日期 U，不用页面读取日期代替。",
+      "费用归属可核；需先确认该雷达是否纳入中心化公司 DEX 产品及专属资产/发行口径。"
+    ],
+    "evidence": [
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/okx-swap?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:38:08.360676+00:00",
+        "http_status": 200,
+        "response_sha256": "767d4f323feb3766d4bffb780d79f437e9a716523b2353c65e6591191dff9d38",
+        "note": "DefiLlama 适配器方法论；本次核查方法与归属，不代表本方重放所有链上计算，也不重排输入 rev30。"
+      },
+      {
+        "fields": [
+          "name",
+          "defillama_reference",
+          "metadata_symbol"
+        ],
+        "url": "https://api.llama.fi/protocol/okx-swap",
+        "checked_utc": "2026-11-14T13:38:08.160816+00:00",
+        "http_status": 200,
+        "response_sha256": "84130dbf62ec323333c488dd9cd04081ab9a4e64f032ae79ac751f41311f3f6d",
+        "note": "metadata 的 symbol 缺失不代表没有代币。"
+      },
+      {
+        "fields": [
+          "user_role",
+          "official_identity"
+        ],
+        "url": "https://www.okx.com/web3/dex-swap",
+        "checked_utc": "2026-11-14T13:40:04.747669+00:00",
+        "http_status": 200,
+        "response_sha256": "665b9a060b4135c457bb95d5cc63e8aa27a3d8c1d07212dda0351636b94aa79a",
+        "note": "只记录官方入口尝试结果；空壳/失败响应不证明文中其他事实。"
+      }
+    ]
+  },
+  {
+    "key": "g:8866",
+    "name": "Loan Meme",
+    "token_stance": "官方表态会发",
+    "token_stance_src": "https://loanmeme.io/docs/",
+    "token_stance_date": "U",
+    "revenue_who": "方法称费用全归协议，其中 77% 留作未来 LOAN 回购、23% 财库；尚无实际回购收益。",
+    "revenue_method": "计借入、还款、清算及进出费用为协议收入；利息付 lender 另列；预留未来回购不等于已经执行回购或持有人分红。",
+    "wash_or_subsidy": "当前补贴/刷量 U；官方文档仍称没有部署，与运行中的 app/适配器收入状态冲突，应先核唯一身份和生产版本。",
+    "user_role": "若经确认则是借款人/出借人；当前生产合约与准入规则未核定，不提供参与路径。",
+    "counter": "官方文档说无部署无市场无 token 地址，而数据源在计收入，身份或版本冲突未消除就不能信任读数。",
+    "verdict": "待核验",
+    "verdict_reason": "有发币/回购设计但执行状态冲突；须核 app、docs、适配器与生产合约是否同一项目，非直接判诈骗。",
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+    "token_stance_note": "文档含未来 LOAN flywheel，但声称还未部署；和 app/收入读数冲突。",
+    "has_live_governance_token": "U",
+    "defillama_reference": "https://defillama.com/protocol/loan-meme",
+    "methodology_source": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/loan-meme.ts",
+    "input_rank": 28,
+    "input_rev30": 658147,
+    "input_data_date": "2026-11-14",
+    "input_children": [
+      "Loan Meme"
+    ],
+    "input_reference": "attachment://Alpha雷达_Codex任务包/附件/T3_无币协议前30.json",
+    "progress": "已取得收入方法，已完成本轮可得公开补证；缺口逐项保留 U。",
+    "missing": [
+      "独立关联地址/自成交及去补贴留存审计未完成。",
+      "未独立重放全部费用与支付，适配器方法可能更新。",
+      "官方计划不等于代币已发行或用户已获得权益；当前链上代币状态/分配需另核。",
+      "官方原始表态日期 U，不用页面读取日期代替。",
+      "有发币/回购设计但执行状态冲突；须核 app、docs、适配器与生产合约是否同一项目，非直接判诈骗。"
+    ],
+    "evidence": [
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/loan-meme?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:38:09.617100+00:00",
+        "http_status": 200,
+        "response_sha256": "d264438dbcddd2f7f9e87326c4e3626f6a3d7914b1bfddb929628f9c9d98097e",
+        "note": "DefiLlama 适配器方法论；本次核查方法与归属，不代表本方重放所有链上计算，也不重排输入 rev30。"
+      },
+      {
+        "fields": [
+          "name",
+          "defillama_reference",
+          "metadata_symbol"
+        ],
+        "url": "https://api.llama.fi/protocol/loan-meme",
+        "checked_utc": "2026-11-14T13:38:08.697440+00:00",
+        "http_status": 200,
+        "response_sha256": "a44f4e8cecd5131367ba13bae28513f354033165808919eb1c8749669f15e281",
+        "note": "metadata 的 symbol 缺失不代表没有代币。"
+      },
+      {
+        "fields": [
+          "token_stance",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://loanmeme.io/docs/",
+        "checked_utc": "2026-11-14T13:42:45.231109+00:00",
+        "http_status": 200,
+        "response_sha256": "8f0d75c5f2d3c5035b2f58cc79d3972fa45ef074f9a82c6ced77a3cf2221312e",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      },
+      {
+        "fields": [
+          "token_stance",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://app.loanmeme.io/",
+        "checked_utc": "2026-11-14T13:42:46.652110+00:00",
+        "http_status": 200,
+        "response_sha256": "75a8940c8ae9c0773944beb55695abf1fddebdb6bf547eb9d6cab6f8169fb2ae",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      }
+    ]
+  },
+  {
+    "key": "g:8144",
+    "name": "Catapult Trade",
+    "token_stance": "有积分/空投计划",
+    "token_stance_src": "https://docs.catapult.trade/pult/earn",
+    "token_stance_date": "2026-11-04",
+    "revenue_who": "Catapult 运营方留交易费；不把模板 holders/LP 字段当作已执行分红。",
+    "revenue_method": "自报公共 metrics API 的合成交易开/平/盈利费用计收入；成交额是 synthetic notional volume，不是独立真实资产成交量。",
+    "wash_or_subsidy": "官方交易/推荐积分及 Demo 奖励存在；PULT 暂为应用内余额，官方称待 TGE 可提，兑换公式未公布，实际补贴与刷量 U。",
+    "user_role": "产品或免费 Demo 用户；合成交易/奖励用户，无需由此推导可转让 token。",
+    "counter": "极端杠杆与合成市场的游戏化收费、内部 PULT 余额可能都不具备链上代币可兑现性。",
+    "verdict": "待核验",
+    "verdict_reason": "官方有积分转 PULT/TGE 计划；已发可转让币、机制独立性和是否符合正规项目范围需继续核验。",
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+    "token_stance_note": "页面最后核验日期，不是 TGE 日：积分将在 TGE 转 PULT，当前 PULT 余额不可提。",
+    "has_live_governance_token": "U",
+    "defillama_reference": "https://defillama.com/protocol/catapult-trade",
+    "methodology_source": "https://github.com/DefiLlama/dimension-adapters/blob/master/dexs/catapult.ts",
+    "input_rank": 29,
+    "input_rev30": 604327,
+    "input_data_date": "2026-11-14",
+    "input_children": [
+      "Catapult Trade"
+    ],
+    "input_reference": "attachment://Alpha雷达_Codex任务包/附件/T3_无币协议前30.json",
+    "progress": "已取得收入方法，已完成本轮可得公开补证；缺口逐项保留 U。",
+    "missing": [
+      "独立关联地址/自成交及去补贴留存审计未完成。",
+      "未独立重放全部费用与支付，适配器方法可能更新。",
+      "官方计划不等于代币已发行或用户已获得权益；当前链上代币状态/分配需另核。",
+      "官方有积分转 PULT/TGE 计划；已发可转让币、机制独立性和是否符合正规项目范围需继续核验。"
+    ],
+    "evidence": [
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/catapult-trade?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:38:10.504876+00:00",
+        "http_status": 200,
+        "response_sha256": "366ab239e062b60f0a232aadd51383bd2b1b65af6d372468010ab52188bf09fc",
+        "note": "DefiLlama 适配器方法论；本次核查方法与归属，不代表本方重放所有链上计算，也不重排输入 rev30。"
+      },
+      {
+        "fields": [
+          "name",
+          "defillama_reference",
+          "metadata_symbol"
+        ],
+        "url": "https://api.llama.fi/protocol/catapult-trade",
+        "checked_utc": "2026-11-14T13:38:09.932555+00:00",
+        "http_status": 200,
+        "response_sha256": "3907aa04161934f8a6f8b6c213ecb9713f2cf9cc75ab0fd15ae8bca55dcb7ce6",
+        "note": "metadata 的 symbol 缺失不代表没有代币。"
+      },
+      {
+        "fields": [
+          "user_role",
+          "official_identity"
+        ],
+        "url": "https://catapult.trade",
+        "checked_utc": "2026-11-14T13:40:05.181925+00:00",
+        "http_status": 200,
+        "response_sha256": "563a4575e56370d32fc17ce64793daf5f795a0240f3f5d88f76d4331a1f19f6d",
+        "note": "只记录官方入口尝试结果；空壳/失败响应不证明文中其他事实。"
+      },
+      {
+        "fields": [
+          "token_stance",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://docs.catapult.trade/rewards/points",
+        "checked_utc": "2026-11-14T13:42:46.667029+00:00",
+        "http_status": 200,
+        "response_sha256": "ece78ca65413fe1474008df1226eff84c9c3c00b4583fb3fedb793505eec86f0",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      },
+      {
+        "fields": [
+          "token_stance",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://docs.catapult.trade/pult/earn",
+        "checked_utc": "2026-11-14T13:42:47.087197+00:00",
+        "http_status": 200,
+        "response_sha256": "fee5c1dfdca609ed52fdfb2ea40a93b5e1188bd5269655648fc44994cf603688",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      }
+    ]
+  },
+  {
+    "key": "g:4980",
+    "name": "Spiko",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "Spiko 运营方收基金管理费；基金资产净收益归相应受益凭证持有人。",
+    "revenue_method": "Fees 将净 NAV 增长加管理费还原总收益，Revenue 只计管理费；Cash & Carry 的超基准绩效费未被适配器捕获，不能当完整收入。",
+    "wash_or_subsidy": "U；基金收益本身不自动等于补贴，需另核底层风险和费后收益。",
+    "user_role": "符合身份与地区资格的代币化基金份额持有人；不是默认治理币空投用户。",
+    "counter": "基金份额已有明确资产权利，但这与平台治理币机会不同，而且收入统计未含全部绩效费。",
+    "verdict": "研究观察",
+    "verdict_reason": "真实资产管理收费与可转让白名单份额结构可核；无平台币表态 U，基金份额不能误当项目治理币。",
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+    "token_stance_note": "尚未取得足够、可读且时效明确的官方自身发行立场；不把未找到声明写成确定没有表态。",
+    "has_live_governance_token": "U",
+    "defillama_reference": "https://defillama.com/protocol/spiko",
+    "methodology_source": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/spiko",
+    "input_rank": 30,
+    "input_rev30": 583043,
+    "input_data_date": "2026-11-14",
+    "input_children": [
+      "Spiko"
+    ],
+    "input_reference": "attachment://Alpha雷达_Codex任务包/附件/T3_无币协议前30.json",
+    "progress": "已取得收入方法，已完成本轮可得公开补证；缺口逐项保留 U。",
+    "missing": [
+      "独立关联地址/自成交及去补贴留存审计未完成。",
+      "未独立重放全部费用与支付，适配器方法可能更新。",
+      "当前官方自身 token/积分/空投立场及适用日期 U。",
+      "官方原始表态日期 U，不用页面读取日期代替。"
+    ],
+    "evidence": [
+      {
+        "fields": [
+          "revenue_who",
+          "revenue_method",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://api.llama.fi/summary/fees/spiko?dataType=dailyRevenue",
+        "checked_utc": "2026-11-14T13:38:11.837885+00:00",
+        "http_status": 200,
+        "response_sha256": "ea9d8f2237e8a5ac664f92dea77fbea9a55066682664722ab821049a1859f8ab",
+        "note": "DefiLlama 适配器方法论；本次核查方法与归属，不代表本方重放所有链上计算，也不重排输入 rev30。"
+      },
+      {
+        "fields": [
+          "name",
+          "defillama_reference",
+          "metadata_symbol"
+        ],
+        "url": "https://api.llama.fi/protocol/spiko",
+        "checked_utc": "2026-11-14T13:38:10.844563+00:00",
+        "http_status": 200,
+        "response_sha256": "29f5f9ef8f6825c283fae8257b478d0a085d6053a33722f773d54ef6d692eae2",
+        "note": "metadata 的 symbol 缺失不代表没有代币。"
+      },
+      {
+        "fields": [
+          "user_role",
+          "official_identity"
+        ],
+        "url": "https://www.spiko.io/",
+        "checked_utc": "2026-11-14T13:40:06.052816+00:00",
+        "http_status": 200,
+        "response_sha256": "cf70de33f237e17453a906c150a573118ec520fde1ad053fe816ae8b667162e1",
+        "note": "只记录官方入口尝试结果；空壳/失败响应不证明文中其他事实。"
+      },
+      {
+        "fields": [
+          "token_stance",
+          "wash_or_subsidy",
+          "user_role",
+          "counter",
+          "verdict_reason"
+        ],
+        "url": "https://docs.spiko.io/documentation/tokenization/transfers/",
+        "checked_utc": "2026-11-14T13:42:49.107563+00:00",
+        "http_status": 200,
+        "response_sha256": "f866f66dc348bf0b96a3699721c2b5ecacdd068b76b4ac7429ae210de3673c78",
+        "note": "本次公开读取；仅支持所列字段，非独立审计。"
+      }
+    ]
+  }
+]

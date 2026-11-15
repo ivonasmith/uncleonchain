@@ -290,13 +290,13 @@ function btcModuleHTML(b){
   if(dir==='down'){
     return '<div class="mod m1">'+head
      +'<div class="reading"><div class="big"><small>'+t('dayPre')+'</small>'+L.day+'<small>'+t('dayPost')+'</small></div><div class="gain loss">−'+f1(L.drop_pct)+'%<small>'+t('dnGain')+'</small></div></div>'
-     +'<div class="bw">'+meterHTML(L.drop_pct)+'<div class="small muted" style="margin:-18px 0 10px">'+t('meterCap')+'</div></div>'
+     +dnScaleHTML(L)
      +'<div class="tiles"><div class="tile"><div class="k">'+t('dnPeakK')+'</div><div class="v">'+sg(L.from_peak_pct)+'</div><div class="c">'+t('dnPeakC',L)+'</div></div>'
      +'<div class="tile"><div class="k">'+t('revK')+'</div><div class="v">'+px(L.reversal_line)+'</div><div class="c">'+t('revC',L.to_reversal_pct)+'</div></div></div>'+prev+'</div>';
   }
   return '<div class="mod m1">'+head
    +'<div class="reading"><div class="big"><small>'+t('dayPre')+'</small>'+L.day+'<small>'+t('dayPost')+'</small></div><div class="gain">+'+f1(L.gain_pct)+'%<small>'+t('gainLbl')+'</small></div></div>'
-   +trackHTML(L.day)
+   +trackHTML(L.day)+upScaleHTML(L)
    +'<div class="tiles"><div class="tile"><div class="k">'+t('ddK')+'</div><div class="v">'+f1(L.max_dd_pct)+'%</div><div class="c">'+t('ddC')+'</div></div>'
    +'<div class="tile"><div class="k">'+t('l89K')+'</div><div class="v">'+l89Text(L.day)+'</div><div class="c">'+t('l89C')+'</div></div></div>'+prev+'</div>';
 }
@@ -316,7 +316,7 @@ function liveHTML(d){
   if(bdir==='up'&&b.leg){
     var L=b.leg;
     h+='<div class="card panel"><div class="mod-head"><div class="mod-title">'+t('liveH')+' '+bgsHTML({badge:null},'up')+'</div><span class="small muted">'+(isStale(d.asof,TODAY)?'<span class="badge stale">'+t('staleB')+'</span> ':'')+t('asof')+' '+d.asof+'</span></div>'
-     +trackHTML(L.day)
+     +trackHTML(L.day)+upScaleHTML(L)
      +'<div class="tiles tiles3">'
      +'<div class="tile"><div class="k">'+t('liveDay')+'</div><div class="v">'+L.day+'</div><div class="c">'+t('startK')+' '+L.start_date+'<br>'+px(L.start_close)+'</div></div>'
      +'<div class="tile"><div class="k">'+t('liveGain')+'</div><div class="v">+'+f1(L.gain_pct)+'%</div><div class="c">'+t('highK')+' '+px(L.high_close)+'<br>'+L.high_date+'</div></div>'
@@ -325,7 +325,7 @@ function liveHTML(d){
   } else if(bdir==='down'&&b.leg){
     var D=b.leg;
     h+='<div class="card panel"><div class="mod-head"><div class="mod-title">'+t('liveH')+' '+bgsHTML({badge:null},'down')+'</div><span class="small muted">'+(isStale(d.asof,TODAY)?'<span class="badge stale">'+t('staleB')+'</span> ':'')+t('asof')+' '+d.asof+'</span></div>'
-     +'<div class="bw">'+meterHTML(D.drop_pct)+'</div>'
+     +dnScaleHTML(D)
      +'<div class="tiles tiles3">'
      +'<div class="tile"><div class="k">'+t('liveDnDay')+'</div><div class="v">'+D.day+'</div><div class="c">'+t('liveDnPeak')+' '+px(D.start_close)+'<br>'+D.start_date+'</div></div>'
      +'<div class="tile"><div class="k">'+t('liveDnDrop')+'</div><div class="v">−'+f1(D.drop_pct)+'%</div><div class="c">'+t('liveDnLow')+' '+px(D.low_close)+'<br>'+D.low_date+'</div></div>'
@@ -442,10 +442,10 @@ function altLegModuleHTML(d){
   var big='<div class="reading"><div class="big"><small>'+t('dayPre')+'</small>'+L.day+'<small>'+t('dayPost')+'</small></div>';
   var body;
   if(dir==='down'){
-    body=big+'<div class="gain loss">−'+f1(L.drop_pct)+'%<small>'+lt('dropLbl')+'</small></div></div>'
+    body=big+'<div class="gain loss">−'+f1(L.drop_pct)+'%<small>'+lt('dropLbl')+'</small></div></div>'+altScaleHTML(L,'down')
       +'<div class="tiles">'+tile(lt('dnK'),sg(L.from_peak_pct),lt('dnC',L))+tile(lt('revK'),'+'+f1(L.to_reversal_pct)+'%',lt('revC'))+'</div>';
   }else{
-    body=big+'<div class="gain">+'+f1(L.gain_pct)+'%<small>'+lt('gainLbl')+'</small></div></div>'
+    body=big+'<div class="gain">+'+f1(L.gain_pct)+'%<small>'+lt('gainLbl')+'</small></div></div>'+altScaleHTML(L,'up')
       +'<div class="tiles">'+tile(lt('upK'),f1(L.max_dd_pct)+'%',lt('upC'))+tile(lt('stK'),L.start_date,lt('stC',L))+'</div>';
   }
   return '<div class="mod m3">'+head+body+prev+'<div class="prev muted">'+lt('excl')+'</div></div>';
@@ -457,6 +457,99 @@ function altLegOk(a){
   if(!ks){return false;}
   for(var i=0;i<ks.length;i++){if(a.leg[ks[i]]==null){return false;}}
   return true;
+}
+
+/* ===== 分阶段刻度 + 跌腿 45 天提示线（站点自写，大叔 11-14 定）=====
+   刻度 = leg_latest.json 的 site_scale（出网站.leg_scale）：按 L2 当前状态选同阶段历史腿（偏多 → 牛市阶段，偏空 → 熊市阶段），2017-08 起已走完的腿的分位。
+   幅度做刻度线（分阶段），天数做标记线（涨腿 89 天照设计稿；跌腿 45 天不分阶段——拆开每组只剩 4～5 条）。
+   DN45 = 2017-08 起币安日线复跑（截至 2026-11-13）：走过第 45 天的跌腿、第 45 天收盘到最低收盘还跌了多少、再过几天见底。假设级，不进交易计划。 */
+var DN45={line:45, asof:'2026-11-13', nAll:79, med:12, p90:47,
+  rows:[{s:'2018-05-05',f:13.2,d:9},{s:'2018-09-04',f:40.8,d:38,x:1},{s:'2019-09-03',f:6.7,d:6},{s:'2022-03-29',f:2.2,d:14},{s:'2023-04-14',f:9.4,d:16},
+        {s:'2023-07-13',f:3.6,d:15},{s:'2024-05-20',f:2.1,d:3},{s:'2025-10-06',f:2.2,d:2},{s:'2026-05-10',f:4.0,d:6}]};
+var ST={
+zh:{bull:'牛市阶段',bear:'熊市阶段',down:'跌腿',up:'涨腿',med:'中位',
+ half:'一半', ninety:'九成', dd:function(n){return n+'天';},
+ read:function(n,who,S,d,nd,np){var g=(who==='alt'?S.alt.from.slice(0,4):'2017')+' 年以来 '+n+' 条'+st(S.phase)+(who==='alt'?'山寨整体':'')+st(d);
+   return '和 '+g+'比：'+(nd!=null?'走得比其中 <b>'+nd+'</b> 条久，':'')+(d==='down'?'跌得比':'涨得比')+'其中 <b>'+np+'</b> 条'+(d==='down'?'深':'多')+'。';},
+ legend:function(S,d,withDays){return '一半 / 九成 = 历史上一半、九成的这类'+st(d)+'不超过这个数（细线是四分之一、四分之三）· 按 L2「'+S.l2.zh.replace(/（.*）/,'')+'」选'+st(S.phase);},
+ mark:'45天', l45:function(n){return n<0?'45 天提示线：还差 '+(-n)+' 天':n===0?'45 天提示线：今天刚到':'45 天提示线：已越过 '+n+' 天';}, hyp:'假设级',
+ nav:'45天提示线', h:'跌腿 45 天提示线',
+ p1:function(){return '2017 年以来（币安日线）一共 '+DN45.nAll+' 条跌腿，中位 '+DN45.med+' 天，十分之九在约 '+DN45.p90+' 天以内。走过第 45 天的有 <b>9</b> 条，其中 <b>8</b> 条在之后 <b>2–16 天</b>内见底，第 45 天收盘到最低收盘只再跌了 <b>2.1% 到 13.2%</b>（下图）。';},
+ row:function(r){return r.s.slice(0,7);}, rem:'第 45 天收盘之后还跌了多少', peak:function(n){return n+' 天后见底';},
+ exc:'例外是 2018-09-04 开始的那条（熊市最后的投降段）：第 45 天之后又跌了 40.8%，再走 38 天才见底。所以它只说明「走得久的跌腿，剩下的通常不多」，挡不住投降式的大跌。',
+ p2:'<b>这只是 9 条样本，而且 45 天是看过数据之后挑的</b>，和 89 天提示线一样只算假设级。按牛市 / 熊市阶段拆开，每组只剩 4–5 条，所以这条线不分阶段；卡片上的跌幅、涨幅刻度才按阶段分。',
+ fals:function(cur){return '<b>什么时候作废：</b>之后走过 45 天的跌腿里，只要再出现一次像 2018-09 那样第 45 天之后又跌 20% 以上的，这条提示线就作废。'+(cur?'今天这条跌腿已经走到第 '+cur+' 天，它的结果就是第一条样本外检验。':'');},
+ scaleNote:function(S){return '<b>卡片上的刻度</b>：跌幅、涨幅按周期阶段分开比——牛市里的跌腿和牛市的比，熊市里的和熊市的比。现在属于哪个阶段不另外判断，直接读 L2 周期状态（偏多 → 牛市阶段，偏空 → 熊市阶段）'+(S?'，今天是「'+S.l2.zh+'」，所以用'+st(S.phase)+'的腿':'')+'。历史腿的阶段按价格周期事后划分，只用 2017 年以来已走完的腿。BTC 和山寨整体用同一套刻度（山寨整体用 2018 年以来的指数腿）；天数提示线只有 BTC 有：涨腿 89 天、跌腿 45 天，山寨整体没检验过，不画。';},
+ lead:'比特币每一腿——涨腿或跌腿——走了多久、涨了或跌了多少？历史上有什么规律？这一页把规律摆出来，并标出当前读数。'},
+en:{bull:'bull-phase',bear:'bear-phase',down:'down-legs',up:'up-legs',med:'Med',
+ half:'Half', ninety:'9 in 10', dd:function(n){return n+'d';},
+ read:function(n,who,S,d,nd,np){var g=n+' '+st(S.phase)+' '+(who==='alt'?'altcoin ':'')+st(d)+' since '+(who==='alt'?S.alt.from.slice(0,4):'2017');
+   return 'Against '+g+': '+(nd!=null?'longer than <b>'+nd+'</b>, ':'')+(d==='down'?'deeper than':'bigger than')+' <b>'+np+'</b>.';},
+ legend:function(S,d,withDays){return 'Half / 9 in 10 = share of these '+st(d)+' at or below that mark (thin lines: ¼ and ¾) · phase from L2 "'+S.l2.en.replace(/\s*\(.*\)/,'')+'"';},
+ mark:'Day 45', l45:function(n){return n<0?'Day-45 marker: '+(-n)+' days to go':n===0?'Day-45 marker: reached today':'Day-45 marker: '+n+' days past';}, hyp:'hypothesis',
+ nav:'Day-45 marker', h:'The day-45 marker for down-legs',
+ p1:function(){return 'Since 2017 (Binance daily closes) there have been '+DN45.nAll+' down-legs: median '+DN45.med+' days, nine in ten within about '+DN45.p90+' days. <b>9</b> lasted past day 45, and <b>8</b> of them bottomed within <b>2–16 days</b>, falling only <b>2.1% to 13.2%</b> further from the day-45 close (chart below).';},
+ row:function(r){return r.s.slice(0,7);}, rem:'further drop after the day-45 close', peak:function(n){return 'low '+n+' d later';},
+ exc:'The exception is the leg that began on 2018-09-04 (the final bear-market capitulation): after day 45 it fell another 40.8% over 38 more days. So the marker only says "long down-legs usually have little left"; it does not protect against a capitulation.',
+ p2:'<b>Only 9 samples, and day 45 was picked after looking at the data</b>, so like the day-89 marker it is hypothesis-grade. Split by bull/bear phase, each group has only 4–5 legs, so this line is not split; the drop and gain ticks on the card are.',
+ fals:function(cur){return '<b>When it is retired:</b> if another leg that passes day 45 falls 20% or more after day 45, as 2018-09 did, the marker is dropped.'+(cur?' Today\'s down-leg is on day '+cur+'; its outcome is the first out-of-sample test.':'');},
+ scaleNote:function(S){return '<b>Ticks on the card</b>: drops and gains are compared within the same cycle phase — bull-phase legs with bull-phase legs, bear with bear. The phase is not judged separately; it comes from the L2 cycle state (bullish → bull phase, bearish → bear phase)'+(S?'; today it is "'+S.l2.en+'", so '+st(S.phase)+' legs are used':'')+'. Historical phases are assigned after the fact; only completed legs since 2017 are used. BTC and altcoins use the same kind of ticks (altcoins use index legs since 2018); only BTC has duration markers — day 89 for up-legs, day 45 for down-legs; none is drawn for altcoins because none has been tested.';},
+ lead:'How long does each Bitcoin leg — up or down — last, and how far does it go? What patterns show up in history? This page lays out the historical pattern and the current readings.'}};
+function st(k){var v=ST[lang][k];if(typeof v==='function'){return v.apply(null,[].slice.call(arguments,1));}return v;}
+T.zh.lead=ST.zh.lead; T.en.lead=ST.en.lead;   // 山寨轮动窗口整节撤掉（11-14），页首导语去掉那一问
+function okScale(S,d){return !!(S&&S.phase&&S.l2&&S[d]&&S[d].pct&&S[d].days);}
+function okAlt(S,d){return !!(S&&S.phase&&S.l2&&S.alt&&S.alt[d]&&S.alt[d].pct);}
+function pctMeterHTML(v,Q,dir){   // 配色照原来的回撤刻度条：灰（不到一腿）→ 冷色渐深 → 超过 P90（跌腿红、涨腿琥珀）
+  var mx=Math.max(dir==='down'?40:100,Math.ceil(Q.p90*1.25/10)*10,Math.ceil(v*1.08/10)*10);
+  function P(x){return clamp(x/mx*100,0,100);}
+  var top=dir==='down'?'color-mix(in srgb,var(--dn) 60%,transparent)':'color-mix(in srgb,var(--warn) 60%,transparent)';
+  var segs=[[0,Math.min(10,Q.p25),'var(--line2)'],[Math.min(10,Q.p25),Q.p25,'color-mix(in srgb,var(--cool) 22%,transparent)'],[Q.p25,Q.p50,'color-mix(in srgb,var(--cool) 40%,transparent)'],
+            [Q.p50,Q.p75,'color-mix(in srgb,var(--cool) 60%,transparent)'],[Q.p75,Q.p90,'color-mix(in srgb,var(--cool) 82%,transparent)'],[Q.p90,mx,top]];
+  var h='<div class="meter">';
+  segs.forEach(function(s,i){h+='<div class="z" style="left:'+P(s[0])+'%;width:'+(P(s[1])-P(s[0]))+'%;background:'+s[2]+';'+(i===0?'border-radius:7px 0 0 7px;':'')+(i===segs.length-1?'border-radius:0 7px 7px 0;':'')+'"></div>';});
+  [[Q.p25,''],[Q.p50,'dn',st('half')],[Q.p75,''],[Q.p90,'up',st('ninety')]].forEach(function(k){
+    h+='<div class="tk '+k[1]+(k[2]?'':' bare')+'" style="left:'+P(k[0])+'%">'+(k[2]?'<span>'+k[2]+' ≤'+f1(k[0])+'%</span>':'')+'</div>';});
+  return h+'<div class="mk" style="left:'+P(v)+'%"></div></div>';
+}
+function dayTrackHTML(day,Q,line){   // 天数条：填充色同涨腿天数条；中位 / P90 细刻度在下；有提示线才画（BTC 跌腿 45 天）
+  var mx=Math.max(70,Math.ceil(day*1.1/10)*10,Q?Math.ceil(Q.p90*1.2/10)*10:0);
+  function P(x){return clamp(x/mx*100,0,100);}
+  return '<div class="track dtrack" role="img" aria-label="'+t('dayPre')+day+t('dayPost')+'"><div class="fill" style="width:'+P(day)+'%"></div>'
+   +(Q?'<div class="pq" style="left:'+P(Q.p50)+'%"><span>'+st('half')+' ≤'+st('dd',Math.round(Q.p50))+'</span></div><div class="pq" style="left:'+P(Q.p90)+'%"><span>'+st('ninety')+' ≤'+st('dd',Math.round(Q.p90))+'</span></div>':'')
+   +(line?'<div class="m89" style="left:'+P(line)+'%"><span>'+st('mark')+'</span></div>':'')
+   +'<i class="now" style="left:'+P(day)+'%"></i></div>';
+}
+function below(xs,v){var c=0;(xs||[]).forEach(function(x){if(x<v)c++;});return c;}
+function readHTML(G,d,day,mag,who,S,withDays){   // 「和 N 条同阶段的腿比：走得比 M 条久、跌得比 K 条深」+ 图例
+  return '<div class="sread">'+st('read',G.n,who,S,d,withDays?below(G.days_all,day):null,below(G.pct_all,mag))+'</div>'
+   +'<div class="small muted scap">'+st('legend',S,d,withDays)+'</div>';
+}
+function dnScaleHTML(L){   // BTC 跌腿：天数条（45 天线 + 同阶段中位 / P90）+ 跌幅刻度（同阶段分位）
+  var S=DATA&&DATA.site_scale;
+  if(!okScale(S,'down')){return '<div class="bw">'+meterHTML(L.drop_pct)+'<div class="small muted" style="margin:-18px 0 10px">'+t('meterCap')+'</div></div>';}
+  var Q=S.down;
+  return '<div class="bw">'+dayTrackHTML(L.day,Q.days,DN45.line)
+   +'<div class="d45s">'+st('l45',L.day-DN45.line)+' · <span>'+st('hyp')+'</span></div>'
+   +pctMeterHTML(L.drop_pct,Q.pct,'down')+readHTML(Q,'down',L.day,L.drop_pct,'btc',S,true)+'</div>';
+}
+function upScaleHTML(L){    // BTC 涨腿：涨幅刻度（同阶段分位）；天数条和 89 天线照设计稿
+  var S=DATA&&DATA.site_scale;
+  if(!okScale(S,'up')){return '';}
+  return '<div class="bw upsc">'+pctMeterHTML(L.gain_pct,S.up.pct,'up')+readHTML(S.up,'up',L.day,L.gain_pct,'btc',S,false)+'</div>';
+}
+function altScaleHTML(L,dir){   // 山寨整体：天数条（同阶段中位 / P90，没有提示线）+ 幅度刻度（同阶段分位）
+  var S=DATA&&DATA.site_scale;
+  if(!okAlt(S,dir)){return '';}
+  var Q=S.alt[dir];
+  return '<div class="bw altsc">'+dayTrackHTML(L.day,Q.days,0)+pctMeterHTML(dir==='down'?L.drop_pct:L.gain_pct,Q.pct,dir)
+   +readHTML(Q,dir,L.day,dir==='down'?L.drop_pct:L.gain_pct,'alt',S,true)+'</div>';
+}
+function d45BarsHTML(){
+  var h='';
+  DN45.rows.forEach(function(r){
+    h+='<div class="brow'+(r.x?' x':'')+'"><span>'+st('row',r)+'</span><div class="bg"><i style="width:'+clamp(r.f/45*100,1.5,100)+'%"></i></div><div class="val">−'+f1(r.f)+'%<small>'+st('peak',r.d)+'</small></div></div>';
+  });
+  return h+'<div class="small muted">'+st('rem')+'</div>';
 }
 
 /* ===== 总渲染（站点版：设计稿 renderAll / load 改写，去掉预览与示例数据） ===== */
@@ -478,7 +571,8 @@ var DATA=null, HIST=null, TRIED=false;
 function $(id){return document.getElementById(id);}
 function renderPage(){
   document.querySelectorAll('#leg-page [data-i18n]').forEach(function(el){var v=t(el.getAttribute('data-i18n'));if(v!=null)el.innerHTML=v;});
-  var navs=t('navs');$('legChips').innerHTML=Object.keys(navs).map(function(k){return '<a href="#'+k+'">'+navs[k]+'</a>';}).join('');
+  var navs=t('navs'),ks=[];Object.keys(navs).forEach(function(k){if(k!=='alt'){ks.push([k,navs[k]]);}if(k==='l89'){ks.push(['d45',st('nav')]);}});
+  $('legChips').innerHTML=ks.map(function(k){return '<a href="#'+k[0]+'">'+k[1]+'</a>';}).join('');
   $('liveMount').innerHTML=!TRIED?'':DATA?liveHTML(DATA)+'<div class="card panel lgalt">'+altLegModuleHTML(DATA)+'</div>':'<div class="card"><div class="errbox">'+t('err')+' · <button type="button" data-leg-retry>'+t('retry')+'</button></div></div>';
   var curDir=(DATA&&DATA.btc_leg&&DATA.btc_leg.leg)?dirOf(DATA.btc_leg):'none';
   var active=curDir==='up'?DATA.btc_leg.leg:null, down=curDir==='down'?DATA.btc_leg.leg:null;
@@ -494,8 +588,10 @@ function renderPage(){
   else if(down){$('ddLive').innerHTML=t('ddLiveDn',down.drop_pct);}
   $('histMount').innerHTML=TRIED?histHTML():'';
   $('l89Bars').innerHTML=l89BarsHTML();
-  $('altStatic').innerHTML=altBarHTML({stage:'idle'},false);
-  $('altTable').innerHTML=altTableHTML();
+  var SS=DATA&&DATA.site_scale, curDn=down&&down.day>=DN45.line?down.day:0;
+  $('scaleNote').innerHTML=st('scaleNote',okScale(SS,'down')||okScale(SS,'up')?SS:null);
+  $('d45H').textContent=st('h'); $('d45P1').innerHTML=st('p1'); $('d45Bars').innerHTML=d45BarsHTML();
+  $('d45Exc').innerHTML=st('exc'); $('d45P2').innerHTML=st('p2'); $('d45F').innerHTML=st('fals',curDn);
   $('f1Table').innerHTML=f1TableHTML();
   $('statsAsof').textContent=t('statsAsof');
 }

@@ -1,0 +1,3630 @@
+{
+ "generated": "2026-11-14T16:33:21+00:00",
+ "asof_llama": "2026-11-13",
+ "categories": [
+  {
+   "id": "tokenized-treasuries",
+   "zh": "代币化国债",
+   "en": "Tokenized treasuries",
+   "role": "asset",
+   "group": "fund",
+   "mcap": 7951865862,
+   "chg24": 0.9299517654962675,
+   "vol24": 4261644,
+   "n": 14,
+   "truncated": false,
+   "members_mcap": 7949626771,
+   "top": [
+    {
+     "id": "ondo-us-dollar-yield",
+     "sym": "USDY",
+     "name": "Ondo US Dollar Yield",
+     "mcap": 2390996379,
+     "share": 30.1,
+     "vol24": 4279175,
+     "role": null
+    },
+    {
+     "id": "hashnote-usyc",
+     "sym": "USYC",
+     "name": "Circle USYC",
+     "mcap": 2018283643,
+     "share": 25.4,
+     "vol24": 0,
+     "role": null
+    },
+    {
+     "id": "blackrock-usd-institutional-digital-liquidity-fund",
+     "sym": "BUIDL",
+     "name": "BlackRock USD Institutional Digital Liquidity Fund",
+     "mcap": 1637150776,
+     "share": 20.6,
+     "vol24": 0,
+     "role": null
+    },
+    {
+     "id": "superstate-short-duration-us-government-securities-fund-ustb",
+     "sym": "USTB",
+     "name": "Invesco Short Duration US Government Securities Fund",
+     "mcap": 673911794,
+     "share": 8.5,
+     "vol24": 0,
+     "role": null
+    },
+    {
+     "id": "eutbl",
+     "sym": "EUTBL",
+     "name": "Spiko EU T-Bills Money Market Fund",
+     "mcap": 474478774,
+     "share": 6.0,
+     "vol24": 0,
+     "role": null
+    }
+   ],
+   "cg_updated": "2026-11-14T14:44:40.000Z"
+  },
+  {
+   "id": "tokenized-money-market-fund-mmfs",
+   "zh": "代币化货币基金",
+   "en": "Tokenized MMFs",
+   "role": "asset",
+   "group": "fund",
+   "overlap": "tokenized-treasuries",
+   "mcap": 2423757053,
+   "chg24": 3.495642804020714,
+   "vol24": null,
+   "n": 8,
+   "truncated": false,
+   "members_mcap": 2423757053,
+   "top": [
+    {
+     "id": "blackrock-usd-institutional-digital-liquidity-fund",
+     "sym": "BUIDL",
+     "name": "BlackRock USD Institutional Digital Liquidity Fund",
+     "mcap": 1637150776,
+     "share": 67.5,
+     "vol24": 0,
+     "role": null
+    },
+    {
+     "id": "eutbl",
+     "sym": "EUTBL",
+     "name": "Spiko EU T-Bills Money Market Fund",
+     "mcap": 474478774,
+     "share": 19.6,
+     "vol24": 0,
+     "role": null
+    },
+    {
+     "id": "spiko-us-t-bills-money-market-fund",
+     "sym": "USTBL",
+     "name": "Spiko US T-Bills Money Market Fund",
+     "mcap": 174934866,
+     "share": 7.2,
+     "vol24": 0,
+     "role": null
+    },
+    {
+     "id": "blackrock-daily-reinvestment-stablecoin-reserve-vehicle",
+     "sym": "BRSRV",
+     "name": "BlackRock Daily Reinvestment Stablecoin Reserve Vehicle",
+     "mcap": 50512392,
+     "share": 2.1,
+     "vol24": 0,
+     "role": null
+    },
+    {
+     "id": "sygnum-fiusd-liquidity-fund",
+     "sym": "FIUSD",
+     "name": "Sygnum FIUSD Liquidity Fund",
+     "mcap": 48384279,
+     "share": 2.0,
+     "vol24": 0,
+     "role": null
+    }
+   ],
+   "cg_updated": "2026-11-14T14:44:40.000Z"
+  },
+  {
+   "id": "us-treasury-backed-stablecoin",
+   "zh": "国债支持的生息美元",
+   "en": "Treasury-backed yield dollars",
+   "role": "asset",
+   "group": "fund",
+   "overlap": "tokenized-treasuries",
+   "mcap": 2413423453,
+   "chg24": 0.018202553142520107,
+   "vol24": 4643860,
+   "n": 8,
+   "truncated": false,
+   "members_mcap": 2411950450,
+   "top": [
+    {
+     "id": "ondo-us-dollar-yield",
+     "sym": "USDY",
+     "name": "Ondo US Dollar Yield",
+     "mcap": 2390996379,
+     "share": 99.1,
+     "vol24": 4279175,
+     "role": null
+    },
+    {
+     "id": "openeden-open-dollar",
+     "sym": "USDO",
+     "name": "OpenEden OpenDollar",
+     "mcap": 12731959,
+     "share": 0.5,
+     "vol24": 5,
+     "role": null
+    },
+    {
+     "id": "citrea-usd",
+     "sym": "CTUSD",
+     "name": "Citrea USD",
+     "mcap": 3967949,
+     "share": 0.2,
+     "vol24": 12170,
+     "role": null
+    },
+    {
+     "id": "stbl-usst",
+     "sym": "USST",
+     "name": "STBL USST",
+     "mcap": 1262744,
+     "share": 0.1,
+     "vol24": 148769,
+     "role": null
+    },
+    {
+     "id": "usdm1",
+     "sym": "USDM1",
+     "name": "USDM1",
+     "mcap": 1040866,
+     "share": 0.0,
+     "vol24": 9,
+     "role": null
+    }
+   ],
+   "cg_updated": "2026-11-14T14:44:40.000Z"
+  },
+  {
+   "id": "tokenized-private-credit",
+   "zh": "代币化私募信贷",
+   "en": "Tokenized private credit",
+   "role": "asset",
+   "group": "credit",
+   "mcap": 27850750084,
+   "chg24": 4.593493106852807,
+   "vol24": 246237924,
+   "n": 1,
+   "truncated": false,
+   "members_mcap": 27851009419,
+   "top": [
+    {
+     "id": "figure-heloc",
+     "sym": "FIGR_HELOC",
+     "name": "Figure Heloc",
+     "mcap": 27851009419,
+     "share": 100.0,
+     "vol24": 246063740,
+     "role": {
+      "zh": "Figure 自家链上的房屋净值贷款记录，不能自由转让，不代表普通人可买",
+      "en": "Figure's own-chain HELOC records; not freely transferable, not retail-accessible"
+     }
+    }
+   ],
+   "cg_updated": "2026-11-14T14:44:40.000Z"
+  },
+  {
+   "id": "tokenized-credit",
+   "zh": "代币化信贷（其他）",
+   "en": "Tokenized credit (other)",
+   "role": "asset",
+   "group": "credit",
+   "mcap": 1430678143,
+   "chg24": -0.09193162860265382,
+   "vol24": null,
+   "n": 18,
+   "truncated": false,
+   "members_mcap": 2060655801,
+   "top": [
+    {
+     "id": "janus-henderson-anemoy-aaa-clo-fund",
+     "sym": "JAAA",
+     "name": "Janus Henderson Anemoy AAA CLO Fund",
+     "mcap": 576231667,
+     "share": 28.0,
+     "vol24": 0,
+     "role": null
+    },
+    {
+     "id": "tradable-na-rent-financing-platform-sstn",
+     "sym": "PC0000031",
+     "name": "Tradable NA Rent Financing Platform SSTN",
+     "mcap": 227500000,
+     "share": 11.0,
+     "vol24": 0,
+     "role": null
+    },
+    {
+     "id": "tradable-apac-diversified-finance-provider-sstn",
+     "sym": "PC0000033",
+     "name": "Tradable APAC Diversified Finance Provider SSTN",
+     "mcap": 162500000,
+     "share": 7.9,
+     "vol24": 0,
+     "role": null
+    },
+    {
+     "id": "tradable-latam-fintech-sstn",
+     "sym": "PC0000097",
+     "name": "Tradable LatAm Fintech SSTN",
+     "mcap": 134000000,
+     "share": 6.5,
+     "vol24": 0,
+     "role": null
+    },
+    {
+     "id": "tradable-singapore-fintech-ssl-2",
+     "sym": "PC0000023",
+     "name": "Tradable Singapore Fintech SSL",
+     "mcap": 114500000,
+     "share": 5.6,
+     "vol24": 0,
+     "role": null
+    }
+   ],
+   "cg_updated": "2026-11-14T14:44:40.000Z"
+  },
+  {
+   "id": "tokenized-gold",
+   "zh": "代币化黄金",
+   "en": "Tokenized gold",
+   "role": "asset",
+   "group": "commodity",
+   "nested_in": "tokenized-commodities",
+   "mcap": 5373558233,
+   "chg24": -0.5893094923067149,
+   "vol24": 179586210,
+   "n": 18,
+   "truncated": false,
+   "members_mcap": 5558050949,
+   "top": [
+    {
+     "id": "tether-gold",
+     "sym": "XAUT",
+     "name": "Tether Gold",
+     "mcap": 3119723367,
+     "share": 56.1,
+     "vol24": 102263754,
+     "role": null
+    },
+    {
+     "id": "pax-gold",
+     "sym": "PAXG",
+     "name": "PAX Gold",
+     "mcap": 1726842814,
+     "share": 31.1,
+     "vol24": 73046130,
+     "role": null
+    },
+    {
+     "id": "kinesis-gold",
+     "sym": "KAU",
+     "name": "Kinesis Gold",
+     "mcap": 342138977,
+     "share": 6.2,
+     "vol24": 60904,
+     "role": null
+    },
+    {
+     "id": "tether-gold-tokens",
+     "sym": "XAUT0",
+     "name": "Tether Gold Tokens",
+     "mcap": 108398360,
+     "share": 2.0,
+     "vol24": 2118843,
+     "role": null
+    },
+    {
+     "id": "goldfish-gold",
+     "sym": "GGBR",
+     "name": "Goldfish Gold",
+     "mcap": 79483216,
+     "share": 1.4,
+     "vol24": 124646,
+     "role": null
+    }
+   ],
+   "cg_updated": "2026-11-14T14:44:40.000Z"
+  },
+  {
+   "id": "tokenized-commodities",
+   "zh": "代币化商品（含黄金）",
+   "en": "Tokenized commodities (incl. gold)",
+   "role": "asset",
+   "group": "commodity",
+   "mcap": 5636637120,
+   "chg24": -0.6914359589457886,
+   "vol24": 186537621,
+   "n": 33,
+   "truncated": false,
+   "members_mcap": 5821728241,
+   "top": [
+    {
+     "id": "tether-gold",
+     "sym": "XAUT",
+     "name": "Tether Gold",
+     "mcap": 3119723367,
+     "share": 53.6,
+     "vol24": 102263754,
+     "role": null
+    },
+    {
+     "id": "pax-gold",
+     "sym": "PAXG",
+     "name": "PAX Gold",
+     "mcap": 1726842814,
+     "share": 29.7,
+     "vol24": 73046130,
+     "role": null
+    },
+    {
+     "id": "kinesis-gold",
+     "sym": "KAU",
+     "name": "Kinesis Gold",
+     "mcap": 342138977,
+     "share": 5.9,
+     "vol24": 60904,
+     "role": null
+    },
+    {
+     "id": "kinesis-silver",
+     "sym": "KAG",
+     "name": "Kinesis Silver",
+     "mcap": 179919028,
+     "share": 3.1,
+     "vol24": 792607,
+     "role": null
+    },
+    {
+     "id": "tether-gold-tokens",
+     "sym": "XAUT0",
+     "name": "Tether Gold Tokens",
+     "mcap": 108398360,
+     "share": 1.9,
+     "vol24": 2118843,
+     "role": null
+    }
+   ],
+   "cg_updated": "2026-11-14T14:44:40.000Z"
+  },
+  {
+   "id": "tokenized-stock",
+   "zh": "代币化股票",
+   "en": "Tokenized stocks",
+   "role": "asset",
+   "group": "equity",
+   "mcap": 2806391582,
+   "chg24": -5.085977229651699,
+   "vol24": 860896702,
+   "n": 250,
+   "truncated": true,
+   "members_mcap": 2725937809,
+   "top": [
+    {
+     "id": "spacex-bstocks-tokenized-stock",
+     "sym": "SPCXB",
+     "name": "SpaceX (bStocks Tokenized Stock)",
+     "mcap": 164817821,
+     "share": 6.0,
+     "vol24": 55080352,
+     "role": null
+    },
+    {
+     "id": "nvidia-bstocks",
+     "sym": "NVDAB",
+     "name": "NVIDIA (bStocks Tokenized Stock)",
+     "mcap": 155184759,
+     "share": 5.7,
+     "vol24": 95115899,
+     "role": null
+    },
+    {
+     "id": "circle-internet-group-bstock",
+     "sym": "CRCLB",
+     "name": "Circle Internet Group (bStocks Tokenized Stock)",
+     "mcap": 131439009,
+     "share": 4.8,
+     "vol24": 13703286,
+     "role": null
+    },
+    {
+     "id": "strategy-pp-variable-xstock",
+     "sym": "STRCX",
+     "name": "Strategy PP Variable xStock",
+     "mcap": 115900428,
+     "share": 4.3,
+     "vol24": 422163,
+     "role": null
+    },
+    {
+     "id": "circle-xstock",
+     "sym": "CRCLX",
+     "name": "Circle xStock",
+     "mcap": 107238090,
+     "share": 3.9,
+     "vol24": 4998841,
+     "role": null
+    }
+   ],
+   "cg_updated": "2026-11-14T14:44:40.000Z"
+  },
+  {
+   "id": "tokenized-exchange-traded-funds-etfs",
+   "zh": "代币化 ETF",
+   "en": "Tokenized ETFs",
+   "role": "asset",
+   "group": "equity",
+   "mcap": 686199659,
+   "chg24": -4.066766726529582,
+   "vol24": 186420926,
+   "n": 250,
+   "truncated": true,
+   "members_mcap": 775199997,
+   "top": [
+    {
+     "id": "sp500-xstock",
+     "sym": "SPYX",
+     "name": "SP500 xStock",
+     "mcap": 74805136,
+     "share": 9.6,
+     "vol24": 3951915,
+     "role": null
+    },
+    {
+     "id": "nasdaq-xstock",
+     "sym": "QQQX",
+     "name": "Nasdaq xStock",
+     "mcap": 73632765,
+     "share": 9.5,
+     "vol24": 1595108,
+     "role": null
+    },
+    {
+     "id": "ishares-core-s-p-500-etf-ondo-tokenized-etf",
+     "sym": "IVVON",
+     "name": "iShares Core S&P 500 ETF (Ondo Tokenized ETF)",
+     "mcap": 59027054,
+     "share": 7.6,
+     "vol24": 221,
+     "role": null
+    },
+    {
+     "id": "spdr-s-p-500-etf-ondo-tokenized-etf",
+     "sym": "SPYON",
+     "name": "SPDR S&P 500 ETF (Ondo Tokenized ETF)",
+     "mcap": 47146503,
+     "share": 6.1,
+     "vol24": 1469211,
+     "role": null
+    },
+    {
+     "id": "invesco-qqq-etf-ondo-tokenized-etf",
+     "sym": "QQQON",
+     "name": "Invesco QQQ ETF (Ondo Tokenized ETF)",
+     "mcap": 36104320,
+     "share": 4.7,
+     "vol24": 1013325,
+     "role": null
+    }
+   ],
+   "cg_updated": "2026-11-14T14:44:40.000Z"
+  },
+  {
+   "id": "real-estate",
+   "zh": "代币化房地产",
+   "en": "Tokenized real estate",
+   "role": "asset",
+   "group": "realestate",
+   "no_identity": true,
+   "note_zh": "这个分类里多数是房地产代币化平台自己的平台币（RNT、PROPS 等），不全是房产份额",
+   "note_en": "Mostly platform tokens of real-estate tokenization platforms (RNT, PROPS …), not property shares",
+   "mcap": 102722369,
+   "chg24": -1.8007316437551113,
+   "vol24": 1456924,
+   "n": 23,
+   "truncated": false,
+   "members_mcap": 103375575,
+   "top": [
+    {
+     "id": "reental",
+     "sym": "RNT",
+     "name": "Rnt",
+     "mcap": 51567522,
+     "share": 49.9,
+     "vol24": 10956,
+     "role": null
+    },
+    {
+     "id": "propy",
+     "sym": "PRO",
+     "name": "Propy",
+     "mcap": 26174485,
+     "share": 25.3,
+     "vol24": 213422,
+     "role": null
+    },
+    {
+     "id": "elysia",
+     "sym": "EL",
+     "name": "ELYSIA",
+     "mcap": 8527238,
+     "share": 8.2,
+     "vol24": 440834,
+     "role": null
+    },
+    {
+     "id": "imo",
+     "sym": "IMO",
+     "name": "IMO",
+     "mcap": 6072110,
+     "share": 5.9,
+     "vol24": 24010,
+     "role": null
+    },
+    {
+     "id": "parcl",
+     "sym": "PRCL",
+     "name": "Parcl",
+     "mcap": 4997230,
+     "share": 4.8,
+     "vol24": 65083,
+     "role": null
+    }
+   ],
+   "cg_updated": "2026-11-14T14:44:40.000Z"
+  },
+  {
+   "id": "trading-card-rwa-platform",
+   "zh": "收藏卡 RWA 平台",
+   "en": "Trading-card RWA platforms",
+   "role": "platform",
+   "group": "collectible",
+   "mcap": 167135017,
+   "chg24": -12.672222578797513,
+   "vol24": 13572654,
+   "n": 8,
+   "truncated": false,
+   "members_mcap": 169721970,
+   "top": [
+    {
+     "id": "collector-crypt",
+     "sym": "CARDS",
+     "name": "Collector Crypt",
+     "mcap": 152476912,
+     "share": 89.8,
+     "vol24": 8284329,
+     "role": null
+    },
+    {
+     "id": "collect-on-fanable",
+     "sym": "COLLECT",
+     "name": "Collect on Fanable",
+     "mcap": 12941239,
+     "share": 7.6,
+     "vol24": 5333777,
+     "role": null
+    },
+    {
+     "id": "charred-treasures",
+     "sym": "CHARRED",
+     "name": "Charred Treasures",
+     "mcap": 2982406,
+     "share": 1.8,
+     "vol24": 0,
+     "role": null
+    },
+    {
+     "id": "ready",
+     "sym": "READY",
+     "name": "Ready Cards",
+     "mcap": 1203486,
+     "share": 0.7,
+     "vol24": 64898,
+     "role": null
+    },
+    {
+     "id": "fudarake",
+     "sym": "FUDA",
+     "name": "Fudarake",
+     "mcap": 96269,
+     "share": 0.1,
+     "vol24": 1,
+     "role": null
+    }
+   ],
+   "cg_updated": "2026-11-14T14:44:40.000Z"
+  },
+  {
+   "id": "rwa-protocol",
+   "zh": "RWA 协议币 / 平台币",
+   "en": "RWA protocol / platform tokens",
+   "role": "platform",
+   "group": "platform",
+   "mcap": 9542442992,
+   "chg24": -7.703363624706987,
+   "vol24": 401039529,
+   "n": 89,
+   "truncated": false,
+   "members_mcap": 9534669266,
+   "top": [
+    {
+     "id": "chainlink",
+     "sym": "LINK",
+     "name": "Chainlink",
+     "mcap": 7117888075,
+     "share": 74.7,
+     "vol24": 245773003,
+     "role": {
+      "zh": "相邻：预言机，收入大头不来自 RWA",
+      "en": "Adjacent: oracle; most revenue is not RWA"
+     }
+    },
+    {
+     "id": "ondo-finance",
+     "sym": "ONDO",
+     "name": "Ondo",
+     "mcap": 1537438190,
+     "share": 16.1,
+     "vol24": 92226202,
+     "role": null
+    },
+    {
+     "id": "zebec-network",
+     "sym": "ZBCN",
+     "name": "Zebec Network",
+     "mcap": 172923089,
+     "share": 1.8,
+     "vol24": 8538771,
+     "role": {
+      "zh": "支付 / 薪资，RWA 只是标签之一",
+      "en": "Payments / payroll; RWA is one of several tags"
+     }
+    },
+    {
+     "id": "collector-crypt",
+     "sym": "CARDS",
+     "name": "Collector Crypt",
+     "mcap": 152949000,
+     "share": 1.6,
+     "vol24": 8314516,
+     "role": null
+    },
+    {
+     "id": "syrup",
+     "sym": "SYRUP",
+     "name": "Maple Finance",
+     "mcap": 120674535,
+     "share": 1.3,
+     "vol24": 6801032,
+     "role": null
+    }
+   ],
+   "cg_updated": "2026-11-14T14:44:40.000Z"
+  },
+  {
+   "id": "real-world-assets-rwa",
+   "zh": "RWA 大类（混合）",
+   "en": "RWA umbrella (mixed)",
+   "role": "mixed",
+   "group": "mixed",
+   "mcap": 70655673754,
+   "chg24": -0.3938520374509045,
+   "vol24": 2471838346,
+   "n": 250,
+   "truncated": true,
+   "members_mcap": 70753218425,
+   "top": [
+    {
+     "id": "figure-heloc",
+     "sym": "FIGR_HELOC",
+     "name": "Figure Heloc",
+     "mcap": 27850906379,
+     "share": 39.4,
+     "vol24": 246062829,
+     "role": {
+      "zh": "Figure 自家链上的房屋净值贷款记录，不能自由转让，不代表普通人可买",
+      "en": "Figure's own-chain HELOC records; not freely transferable, not retail-accessible"
+     }
+    },
+    {
+     "id": "chainlink",
+     "sym": "LINK",
+     "name": "Chainlink",
+     "mcap": 7117888075,
+     "share": 10.1,
+     "vol24": 245773003,
+     "role": {
+      "zh": "相邻：预言机，收入大头不来自 RWA",
+      "en": "Adjacent: oracle; most revenue is not RWA"
+     }
+    },
+    {
+     "id": "stellar",
+     "sym": "XLM",
+     "name": "Stellar",
+     "mcap": 4943380615,
+     "share": 7.0,
+     "vol24": 213182959,
+     "role": null
+    },
+    {
+     "id": "tether-gold",
+     "sym": "XAUT",
+     "name": "Tether Gold",
+     "mcap": 3119735264,
+     "share": 4.4,
+     "vol24": 102701105,
+     "role": null
+    },
+    {
+     "id": "ondo-us-dollar-yield",
+     "sym": "USDY",
+     "name": "Ondo US Dollar Yield",
+     "mcap": 2390496137,
+     "share": 3.4,
+     "vol24": 4285739,
+     "role": null
+    }
+   ],
+   "cg_updated": "2026-11-14T14:44:40.000Z"
+  }
+ ],
+ "platform": [
+  {
+   "id": "chainlink",
+   "sym": "LINK",
+   "name": "Chainlink",
+   "mcap": 7117888075,
+   "fdv": 9281982591,
+   "vol24": 245773003,
+   "chg24": -7.4713,
+   "role": {
+    "zh": "相邻：预言机，收入大头不来自 RWA",
+    "en": "Adjacent: oracle; most revenue is not RWA"
+   },
+   "updated": "2026-11-14T14:51:57.000Z"
+  },
+  {
+   "id": "ondo-finance",
+   "sym": "ONDO",
+   "name": "Ondo",
+   "mcap": 1537438190,
+   "fdv": 3157391235,
+   "vol24": 92226202,
+   "chg24": -8.90254,
+   "role": null,
+   "updated": "2026-11-14T14:51:57.000Z"
+  },
+  {
+   "id": "zebec-network",
+   "sym": "ZBCN",
+   "name": "Zebec Network",
+   "mcap": 172923089,
+   "fdv": 172923089,
+   "vol24": 8538771,
+   "chg24": -5.59813,
+   "role": {
+    "zh": "支付 / 薪资，RWA 只是标签之一",
+    "en": "Payments / payroll; RWA is one of several tags"
+   },
+   "updated": "2026-11-14T14:51:57.000Z"
+  },
+  {
+   "id": "collector-crypt",
+   "sym": "CARDS",
+   "name": "Collector Crypt",
+   "mcap": 152949000,
+   "fdv": 338576118,
+   "vol24": 8314516,
+   "chg24": -13.45978,
+   "role": null,
+   "updated": "2026-11-14T14:51:57.000Z"
+  },
+  {
+   "id": "syrup",
+   "sym": "SYRUP",
+   "name": "Maple Finance",
+   "mcap": 120674535,
+   "fdv": 131075046,
+   "vol24": 6801032,
+   "chg24": -12.43425,
+   "role": null,
+   "updated": "2026-11-14T14:51:57.000Z"
+  },
+  {
+   "id": "plume",
+   "sym": "PLUME",
+   "name": "Plume",
+   "mcap": 85843751,
+   "fdv": 125902756,
+   "vol24": 10915224,
+   "chg24": -10.21444,
+   "role": {
+    "zh": "RWA 专用链的原生币",
+    "en": "Native coin of an RWA chain"
+   },
+   "updated": "2026-11-14T14:51:57.000Z"
+  },
+  {
+   "id": "reental",
+   "sym": "RNT",
+   "name": "Rnt",
+   "mcap": 51566253,
+   "fdv": 71703023,
+   "vol24": 10956,
+   "chg24": -0.53159,
+   "role": null,
+   "updated": "2026-11-14T14:51:57.000Z"
+  },
+  {
+   "id": "re",
+   "sym": "RE",
+   "name": "RE",
+   "mcap": 36763044,
+   "fdv": 230344889,
+   "vol24": 7031373,
+   "chg24": -10.61191,
+   "role": null,
+   "updated": "2026-11-14T14:51:57.000Z"
+  },
+  {
+   "id": "polymesh",
+   "sym": "POLYX",
+   "name": "Polymesh",
+   "mcap": 36594012,
+   "fdv": 36594012,
+   "vol24": 672863,
+   "chg24": -7.4866,
+   "role": {
+    "zh": "证券型代币专用链的原生币",
+    "en": "Native coin of a security-token chain"
+   },
+   "updated": "2026-11-14T14:51:57.000Z"
+  },
+  {
+   "id": "centrifuge-2",
+   "sym": "CFG",
+   "name": "Centrifuge",
+   "mcap": 28505744,
+   "fdv": 50958781,
+   "vol24": 5201436,
+   "chg24": -7.60694,
+   "role": null,
+   "updated": "2026-11-14T14:51:57.000Z"
+  },
+  {
+   "id": "openeden",
+   "sym": "EDEN",
+   "name": "OpenEden",
+   "mcap": 17896650,
+   "fdv": 44590856,
+   "vol24": 1036085,
+   "chg24": -4.74255,
+   "role": null,
+   "updated": "2026-11-14T14:51:57.000Z"
+  },
+  {
+   "id": "tx",
+   "sym": "TX",
+   "name": "tx",
+   "mcap": 15162615,
+   "fdv": 132113677,
+   "vol24": 82025,
+   "chg24": 0.28393,
+   "role": null,
+   "updated": "2026-11-14T14:51:57.000Z"
+  },
+  {
+   "id": "collect-on-fanable",
+   "sym": "COLLECT",
+   "name": "Collect on Fanable",
+   "mcap": 12954449,
+   "fdv": 72371225,
+   "vol24": 5429317,
+   "chg24": -1.58036,
+   "role": null,
+   "updated": "2026-11-14T14:51:57.000Z"
+  },
+  {
+   "id": "chromaway",
+   "sym": "CHR",
+   "name": "Chromia",
+   "mcap": 12643658,
+   "fdv": 12643658,
+   "vol24": 1211896,
+   "chg24": -6.40723,
+   "role": {
+    "zh": "相邻：数据库链，RWA 只是标签之一",
+    "en": "Adjacent: database chain; RWA is one tag"
+   },
+   "updated": "2026-11-14T14:51:57.000Z"
+  },
+  {
+   "id": "chex-token",
+   "sym": "CHEX",
+   "name": "Chintai",
+   "mcap": 11805934,
+   "fdv": 11805934,
+   "vol24": 194256,
+   "chg24": -5.50738,
+   "role": null,
+   "updated": "2026-11-14T14:51:57.000Z"
+  },
+  {
+   "id": "realio-network",
+   "sym": "RIO",
+   "name": "Realio Network Token",
+   "mcap": 10412836,
+   "fdv": 10412836,
+   "vol24": 164298,
+   "chg24": -7.60063,
+   "role": null,
+   "updated": "2026-11-14T14:51:57.000Z"
+  },
+  {
+   "id": "lingo",
+   "sym": "LINGO",
+   "name": "Lingo",
+   "mcap": 10242160,
+   "fdv": 10242160,
+   "vol24": 127223,
+   "chg24": -11.36104,
+   "role": null,
+   "updated": "2026-11-14T14:51:57.000Z"
+  },
+  {
+   "id": "soil",
+   "sym": "SOIL",
+   "name": "Soil",
+   "mcap": 7845069,
+   "fdv": 10075089,
+   "vol24": 24909,
+   "chg24": 0.19213,
+   "role": null,
+   "updated": "2026-11-14T14:51:57.000Z"
+  },
+  {
+   "id": "ixs",
+   "sym": "IXS",
+   "name": "IXS",
+   "mcap": 6220575,
+   "fdv": 7068835,
+   "vol24": 13371,
+   "chg24": -5.03003,
+   "role": null,
+   "updated": "2026-11-14T14:51:57.000Z"
+  },
+  {
+   "id": "brickken",
+   "sym": "BKN",
+   "name": "Brickken",
+   "mcap": 5937763,
+   "fdv": 8896151,
+   "vol24": 50135,
+   "chg24": 0.05823,
+   "role": null,
+   "updated": "2026-11-14T14:51:57.000Z"
+  },
+  {
+   "id": "origyn-foundation",
+   "sym": "OGY",
+   "name": "ORIGYN",
+   "mcap": 5753322,
+   "fdv": 7380845,
+   "vol24": 83454,
+   "chg24": -2.34271,
+   "role": null,
+   "updated": "2026-11-14T14:51:57.000Z"
+  },
+  {
+   "id": "tokenfi",
+   "sym": "TOKEN",
+   "name": "TokenFi",
+   "mcap": 5548230,
+   "fdv": 13442846,
+   "vol24": 1015932,
+   "chg24": -5.94524,
+   "role": null,
+   "updated": "2026-11-14T14:51:57.000Z"
+  },
+  {
+   "id": "sectora",
+   "sym": "SECT",
+   "name": "Sectora",
+   "mcap": 5344079,
+   "fdv": 5344079,
+   "vol24": 22041,
+   "chg24": 0.04518,
+   "role": null,
+   "updated": "2026-11-14T14:51:57.000Z"
+  },
+  {
+   "id": "parcl",
+   "sym": "PRCL",
+   "name": "Parcl",
+   "mcap": 4982873,
+   "fdv": 5465131,
+   "vol24": 66042,
+   "chg24": -4.89846,
+   "role": null,
+   "updated": "2026-11-14T14:51:57.000Z"
+  },
+  {
+   "id": "arowana",
+   "sym": "ARW",
+   "name": "Arowana",
+   "mcap": 4496924,
+   "fdv": 4496924,
+   "vol24": 10283,
+   "chg24": 0.01005,
+   "role": null,
+   "updated": "2026-11-14T14:51:57.000Z"
+  },
+  {
+   "id": "staked-uwatt",
+   "sym": "C-UWATT",
+   "name": "Staked uWatt",
+   "mcap": 4448999,
+   "fdv": 4448999,
+   "vol24": 154,
+   "chg24": 0.13553,
+   "role": null,
+   "updated": "2026-11-14T14:51:57.000Z"
+  },
+  {
+   "id": "gold-dao",
+   "sym": "GOLDAO",
+   "name": "Gold DAO",
+   "mcap": 4086590,
+   "fdv": 4086590,
+   "vol24": 3018,
+   "chg24": -6.79998,
+   "role": null,
+   "updated": "2026-11-14T14:51:57.000Z"
+  },
+  {
+   "id": "netx",
+   "sym": "NETX",
+   "name": "NetX",
+   "mcap": 3647845,
+   "fdv": 5424273,
+   "vol24": 147708,
+   "chg24": 1.69259,
+   "role": null,
+   "updated": "2026-11-14T14:51:57.000Z"
+  },
+  {
+   "id": "pinlink",
+   "sym": "PIN",
+   "name": "PinLink",
+   "mcap": 3600995,
+   "fdv": 3600995,
+   "vol24": 169999,
+   "chg24": -3.23922,
+   "role": null,
+   "updated": "2026-11-14T14:51:57.000Z"
+  },
+  {
+   "id": "rayls",
+   "sym": "RLS",
+   "name": "Rayls",
+   "mcap": 3571438,
+   "fdv": 16773143,
+   "vol24": 754913,
+   "chg24": -1.04391,
+   "role": null,
+   "updated": "2026-11-14T14:51:57.000Z"
+  },
+  {
+   "id": "real-4",
+   "sym": "REAL",
+   "name": "Real",
+   "mcap": 3569461,
+   "fdv": 3569461,
+   "vol24": 4,
+   "chg24": -0.05762,
+   "role": null,
+   "updated": "2026-11-14T14:51:57.000Z"
+  },
+  {
+   "id": "charred-treasures",
+   "sym": "CHARRED",
+   "name": "Charred Treasures",
+   "mcap": 2982406,
+   "fdv": 2982406,
+   "vol24": 0,
+   "chg24": null,
+   "role": null,
+   "updated": "2026-11-13T03:40:38.000Z"
+  },
+  {
+   "id": "uranotoken",
+   "sym": "URANO",
+   "name": "UranoToken",
+   "mcap": 2779131,
+   "fdv": 51937554,
+   "vol24": 107,
+   "chg24": 0.02116,
+   "role": null,
+   "updated": "2026-11-14T14:51:57.000Z"
+  },
+  {
+   "id": "goldfinch",
+   "sym": "GFI",
+   "name": "Goldfinch",
+   "mcap": 2709322,
+   "fdv": 3251027,
+   "vol24": 29591,
+   "chg24": -1.72405,
+   "role": null,
+   "updated": "2026-11-14T14:51:57.000Z"
+  },
+  {
+   "id": "epic-chain",
+   "sym": "EPIC",
+   "name": "Epic Chain",
+   "mcap": 2702587,
+   "fdv": 2702587,
+   "vol24": 2306275,
+   "chg24": -2.82083,
+   "role": null,
+   "updated": "2026-11-14T14:51:57.000Z"
+  },
+  {
+   "id": "propbase",
+   "sym": "PROPS",
+   "name": "Propbase",
+   "mcap": 2418380,
+   "fdv": 5468725,
+   "vol24": 574990,
+   "chg24": -0.88511,
+   "role": null,
+   "updated": "2026-11-14T14:51:57.000Z"
+  },
+  {
+   "id": "tokenforge",
+   "sym": "TKFG",
+   "name": "tokenforge",
+   "mcap": 1840158,
+   "fdv": 6608372,
+   "vol24": 31,
+   "chg24": null,
+   "role": null,
+   "updated": "2026-11-14T14:51:57.000Z"
+  },
+  {
+   "id": "allo",
+   "sym": "RWA",
+   "name": "Allo",
+   "mcap": 1810833,
+   "fdv": 10060182,
+   "vol24": 330237,
+   "chg24": -8.04158,
+   "role": null,
+   "updated": "2026-11-14T14:51:57.000Z"
+  },
+  {
+   "id": "boson-protocol",
+   "sym": "BOSON",
+   "name": "Boson",
+   "mcap": 1785356,
+   "fdv": 2105402,
+   "vol24": 14805,
+   "chg24": 2.79313,
+   "role": null,
+   "updated": "2026-11-14T14:51:57.000Z"
+  },
+  {
+   "id": "apraemio",
+   "sym": "APRA",
+   "name": "Apraemio",
+   "mcap": 1715067,
+   "fdv": 12428025,
+   "vol24": 0,
+   "chg24": null,
+   "role": null,
+   "updated": "2026-11-12T20:29:37.000Z"
+  }
+ ],
+ "cg_sampled": "2026-11-14T14:50:03+00:00",
+ "protocols": [
+  {
+   "key": "7134|tradfi",
+   "name": "Grayscale",
+   "slug": "grayscale",
+   "kind": "tradfi",
+   "children": [
+    "Grayscale"
+   ],
+   "chains": [],
+   "category": "RWA",
+   "tvl": null,
+   "fees30": 16614835,
+   "rev30": 16614835,
+   "hrev30": 0,
+   "chg30": -8.0,
+   "token_status": "tradfi",
+   "token": null
+  },
+  {
+   "key": "4980",
+   "name": "Spiko",
+   "slug": "spiko",
+   "kind": "onchain",
+   "children": [
+    "Spiko"
+   ],
+   "chains": [],
+   "category": "RWA",
+   "tvl": null,
+   "fees30": 13136243,
+   "rev30": 583043,
+   "hrev30": 0,
+   "chg30": 171.2,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "parent#securitize|tradfi",
+   "name": "Securitize",
+   "slug": "blackrock-buidl",
+   "kind": "tradfi",
+   "children": [
+    "BlackRock BUIDL",
+    "Blockchain Capital",
+    "Securitize Tokenized AAA CLO Fund",
+    "Apollo Diversified Credit Securitize Fund",
+    "VanEck Treasury Fund",
+    "Mantle Index Four Fund",
+    "Hamilton Lane Senior Credit Opportunities Securitize Fund"
+   ],
+   "chains": [],
+   "category": "RWA",
+   "tvl": null,
+   "fees30": 10968422,
+   "rev30": 2585367,
+   "hrev30": 0,
+   "chg30": 1.8,
+   "token_status": "tradfi",
+   "token": {
+    "symbol": "MI4",
+    "gecko_id": null
+   }
+  },
+  {
+   "key": "parent#maple-finance",
+   "name": "Maple Finance",
+   "slug": "maple",
+   "kind": "onchain",
+   "children": [
+    "Maple",
+    "Maple RWA"
+   ],
+   "chains": [
+    "Ethereum",
+    "Bitcoin",
+    "Ripple"
+   ],
+   "category": "Lending",
+   "tvl": 2179400499,
+   "fees30": 9778002,
+   "rev30": 1495084,
+   "hrev30": 194475,
+   "chg30": 10.2,
+   "token_status": "registered",
+   "token": {
+    "symbol": "SYRUP",
+    "gecko_id": null
+   }
+  },
+  {
+   "key": "parent#ondo-finance",
+   "name": "Ondo Finance",
+   "slug": "ondo-yield-assets",
+   "kind": "onchain",
+   "children": [
+    "Ondo Yield Assets",
+    "Ondo Global Markets"
+   ],
+   "chains": [],
+   "category": "RWA",
+   "tvl": null,
+   "fees30": 7917581,
+   "rev30": 0,
+   "hrev30": 0,
+   "chg30": 33.4,
+   "token_status": "registered",
+   "token": {
+    "symbol": "ONDO",
+    "gecko_id": null
+   }
+  },
+  {
+   "key": "parent#centrifuge",
+   "name": "Centrifuge",
+   "slug": "centrifuge-protocol",
+   "kind": "onchain",
+   "children": [
+    "Centrifuge Protocol",
+    "Tinlake"
+   ],
+   "chains": [],
+   "category": "RWA",
+   "tvl": null,
+   "fees30": 3295527,
+   "rev30": 289130,
+   "hrev30": 0,
+   "chg30": 12.0,
+   "token_status": "registered",
+   "token": {
+    "symbol": "CFG",
+    "gecko_id": null
+   }
+  },
+  {
+   "key": "7930",
+   "name": "Huma",
+   "slug": "huma",
+   "kind": "onchain",
+   "children": [
+    "Huma"
+   ],
+   "chains": [
+    "Solana",
+    "Ethereum",
+    "Stellar"
+   ],
+   "category": "RWA",
+   "tvl": 367156944,
+   "fees30": 2810056,
+   "rev30": 0,
+   "hrev30": 0,
+   "chg30": -2.1,
+   "token_status": "registered",
+   "token": {
+    "symbol": "HUMA",
+    "gecko_id": "huma-finance"
+   }
+  },
+  {
+   "key": "7266",
+   "name": "Hastra",
+   "slug": "hastra",
+   "kind": "onchain",
+   "children": [
+    "Hastra"
+   ],
+   "chains": [],
+   "category": "RWA",
+   "tvl": null,
+   "fees30": 2752957,
+   "rev30": 0,
+   "hrev30": 0,
+   "chg30": -3.2,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "6190",
+   "name": "USD AI",
+   "slug": "usd-ai",
+   "kind": "onchain",
+   "children": [
+    "USD AI"
+   ],
+   "chains": [
+    "Arbitrum"
+   ],
+   "category": "RWA",
+   "tvl": 157238445,
+   "fees30": 2721031,
+   "rev30": 272103,
+   "hrev30": 0,
+   "chg30": -38.7,
+   "token_status": "registered",
+   "token": {
+    "symbol": "CHIP",
+    "gecko_id": "chip-2"
+   }
+  },
+  {
+   "key": "6516|tradfi",
+   "name": "WisdomTree",
+   "slug": "wisdomtree",
+   "kind": "tradfi",
+   "children": [
+    "WisdomTree"
+   ],
+   "chains": [],
+   "category": "RWA",
+   "tvl": null,
+   "fees30": 2576373,
+   "rev30": 189776,
+   "hrev30": 0,
+   "chg30": -37.4,
+   "token_status": "tradfi",
+   "token": null
+  },
+  {
+   "key": "6432",
+   "name": "OnRe",
+   "slug": "onre",
+   "kind": "onchain",
+   "children": [
+    "OnRe"
+   ],
+   "chains": [
+    "Solana"
+   ],
+   "category": "RWA",
+   "tvl": 307798106,
+   "fees30": 2461199,
+   "rev30": 11470,
+   "hrev30": 0,
+   "chg30": -4.4,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "7182",
+   "name": "Re",
+   "slug": "re",
+   "kind": "onchain",
+   "children": [
+    "Re"
+   ],
+   "chains": [
+    "Ethereum",
+    "Base",
+    "Arbitrum"
+   ],
+   "category": "RWA",
+   "tvl": 487497561,
+   "fees30": 2242798,
+   "rev30": 1965,
+   "hrev30": 0,
+   "chg30": 24.9,
+   "token_status": "registered",
+   "token": {
+    "symbol": "RE",
+    "gecko_id": "re"
+   }
+  },
+  {
+   "key": "4873",
+   "name": "Midas RWA",
+   "slug": "midas-rwa",
+   "kind": "onchain",
+   "children": [
+    "Midas RWA"
+   ],
+   "chains": [],
+   "category": "RWA",
+   "tvl": null,
+   "fees30": 1931986,
+   "rev30": 6805,
+   "hrev30": 0,
+   "chg30": 1.1,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "7618",
+   "name": "Apyx Protocol",
+   "slug": "apyx-protocol",
+   "kind": "onchain",
+   "children": [
+    "Apyx Protocol"
+   ],
+   "chains": [],
+   "category": "RWA",
+   "tvl": null,
+   "fees30": 1617842,
+   "rev30": 0,
+   "hrev30": 0,
+   "chg30": -9.8,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "parent#superstate",
+   "name": "Invesco USTB",
+   "slug": "invesco-ustb",
+   "kind": "onchain",
+   "children": [
+    "Invesco USTB"
+   ],
+   "chains": [],
+   "category": "RWA",
+   "tvl": null,
+   "fees30": 1535918,
+   "rev30": 61289,
+   "hrev30": 0,
+   "chg30": -11.0,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "5284",
+   "name": "Plume Vaults",
+   "slug": "plume-vaults",
+   "kind": "onchain",
+   "children": [
+    "Plume Vaults"
+   ],
+   "chains": [
+    "Ethereum",
+    "Plume Mainnet",
+    "Solana"
+   ],
+   "category": "RWA",
+   "tvl": 211668083,
+   "fees30": 1084205,
+   "rev30": 0,
+   "hrev30": 0,
+   "chg30": 10.9,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "6741",
+   "name": "Ember",
+   "slug": "ember",
+   "kind": "onchain",
+   "children": [
+    "Ember"
+   ],
+   "chains": [
+    "Ethereum",
+    "Sui",
+    "Base"
+   ],
+   "category": "RWA",
+   "tvl": 89566396,
+   "fees30": 865502,
+   "rev30": 2107,
+   "hrev30": 0,
+   "chg30": 21.8,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "parent#circle",
+   "name": "Circle USYC",
+   "slug": "circle-usyc",
+   "kind": "onchain",
+   "children": [
+    "Circle USYC"
+   ],
+   "chains": [],
+   "category": "RWA",
+   "tvl": null,
+   "fees30": 625158,
+   "rev30": 0,
+   "hrev30": 0,
+   "chg30": -5.0,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "parent#usual",
+   "name": "Usual",
+   "slug": "usual-usd0",
+   "kind": "onchain",
+   "children": [
+    "Usual USD0",
+    "Usual EUR0"
+   ],
+   "chains": [
+    "Ethereum"
+   ],
+   "category": "RWA",
+   "tvl": 79541157,
+   "fees30": 535784,
+   "rev30": 529571,
+   "hrev30": 368242,
+   "chg30": 73.8,
+   "token_status": "registered",
+   "token": {
+    "symbol": "USUAL",
+    "gecko_id": null
+   }
+  },
+  {
+   "key": "parent#frax-finance",
+   "name": "Frax USD",
+   "slug": "frax-usd",
+   "kind": "onchain",
+   "children": [
+    "Frax USD"
+   ],
+   "chains": [
+    "Ethereum"
+   ],
+   "category": "RWA",
+   "tvl": 93810560,
+   "fees30": 308973,
+   "rev30": 0,
+   "hrev30": 0,
+   "chg30": -5.4,
+   "token_status": "registered",
+   "token": {
+    "symbol": "FRAX",
+    "gecko_id": null
+   }
+  },
+  {
+   "key": "4863",
+   "name": "Tether Gold",
+   "slug": "tether-gold",
+   "kind": "onchain",
+   "children": [
+    "Tether Gold"
+   ],
+   "chains": [],
+   "category": "RWA",
+   "tvl": null,
+   "fees30": 196453,
+   "rev30": 196453,
+   "hrev30": 0,
+   "chg30": -82.5,
+   "token_status": "asset_token",
+   "token": {
+    "symbol": "XAUt",
+    "gecko_id": "tether-gold"
+   }
+  },
+  {
+   "key": "3193",
+   "name": "stUSDT",
+   "slug": "stusdt",
+   "kind": "onchain",
+   "children": [
+    "stUSDT"
+   ],
+   "chains": [
+    "Tron",
+    "Ethereum"
+   ],
+   "category": "RWA",
+   "tvl": 8712726,
+   "fees30": 180603,
+   "rev30": 9145,
+   "hrev30": 0,
+   "chg30": 10.6,
+   "token_status": "asset_token",
+   "token": {
+    "symbol": "STUSDT",
+    "gecko_id": "staked-usdt"
+   }
+  },
+  {
+   "key": "6535",
+   "name": "GAIB",
+   "slug": "gaib",
+   "kind": "onchain",
+   "children": [
+    "GAIB"
+   ],
+   "chains": [],
+   "category": "RWA",
+   "tvl": null,
+   "fees30": 161656,
+   "rev30": 32302,
+   "hrev30": 0,
+   "chg30": -5.8,
+   "token_status": "registered",
+   "token": {
+    "symbol": "GAIB",
+    "gecko_id": "gaib"
+   }
+  },
+  {
+   "key": "parent#openeden",
+   "name": "Openeden",
+   "slug": "openeden-tbill",
+   "kind": "onchain",
+   "children": [
+    "OpenEden TBILL",
+    "OpenEden USDO",
+    "OpenEden HYBOND",
+    "OpenEden cUSDO"
+   ],
+   "chains": [],
+   "category": "RWA",
+   "tvl": null,
+   "fees30": 118454,
+   "rev30": 77680,
+   "hrev30": 0,
+   "chg30": -0.7,
+   "token_status": "asset_token",
+   "token": {
+    "symbol": "PRISM",
+    "gecko_id": "portfolio-of-risk-adjusted-investment-strategy-mix"
+   }
+  },
+  {
+   "key": "7788",
+   "name": "XAUE Protocol",
+   "slug": "xaue-protocol",
+   "kind": "onchain",
+   "children": [
+    "XAUE Protocol"
+   ],
+   "chains": [],
+   "category": "RWA",
+   "tvl": null,
+   "fees30": 109484,
+   "rev30": 0,
+   "hrev30": 0,
+   "chg30": -8.2,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "7967",
+   "name": "Brix",
+   "slug": "brix",
+   "kind": "onchain",
+   "children": [
+    "Brix"
+   ],
+   "chains": [],
+   "category": "RWA",
+   "tvl": null,
+   "fees30": 102756,
+   "rev30": 0,
+   "hrev30": 0,
+   "chg30": -38.0,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "7845",
+   "name": "Fidelity Digital Interest Token",
+   "slug": "fidelity-digital-interest-token",
+   "kind": "onchain",
+   "children": [
+    "Fidelity Digital Interest Token"
+   ],
+   "chains": [],
+   "category": "RWA",
+   "tvl": null,
+   "fees30": 83998,
+   "rev30": 4216,
+   "hrev30": 0,
+   "chg30": 1.8,
+   "token_status": "registered",
+   "token": {
+    "symbol": "FDIT",
+    "gecko_id": "fidelity-digital-interest-token"
+   }
+  },
+  {
+   "key": "parent#matrixdock",
+   "name": "Matrixdock",
+   "slug": "matrixdock-stbt",
+   "kind": "onchain",
+   "children": [
+    "MatrixDock STBT",
+    "MatrixDock XAUM",
+    "MatrixDock XAGM"
+   ],
+   "chains": [],
+   "category": "RWA",
+   "tvl": null,
+   "fees30": 78356,
+   "rev30": 6889,
+   "hrev30": 0,
+   "chg30": 8.6,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "parent#theo",
+   "name": "Theo",
+   "slug": "theo-network-thbill",
+   "kind": "onchain",
+   "children": [
+    "Theo Network thBill",
+    "Theo Network thUSD"
+   ],
+   "chains": [
+    "Ethereum",
+    "Stable",
+    "Arbitrum"
+   ],
+   "category": "RWA",
+   "tvl": 150392512,
+   "fees30": 41625,
+   "rev30": 0,
+   "hrev30": 0,
+   "chg30": -47.6,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "7751",
+   "name": "eva Markets",
+   "slug": "eva-markets",
+   "kind": "onchain",
+   "children": [
+    "eva Markets"
+   ],
+   "chains": [
+    "Ethereum"
+   ],
+   "category": "RWA",
+   "tvl": 4946583,
+   "fees30": 38766,
+   "rev30": 0,
+   "hrev30": 0,
+   "chg30": 4.4,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "4091",
+   "name": "Binaryx Platform",
+   "slug": "binaryx-platform",
+   "kind": "onchain",
+   "children": [
+    "Binaryx Platform"
+   ],
+   "chains": [
+    "Polygon"
+   ],
+   "category": "RWA",
+   "tvl": 8997212,
+   "fees30": 38238,
+   "rev30": 1145,
+   "hrev30": 805,
+   "chg30": 22.2,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "5689",
+   "name": "KAIO",
+   "slug": "kaio",
+   "kind": "onchain",
+   "children": [
+    "KAIO"
+   ],
+   "chains": [
+    "Sei",
+    "Immutable zkEVM",
+    "Aptos"
+   ],
+   "category": "RWA",
+   "tvl": 34655423,
+   "fees30": 36570,
+   "rev30": 36570,
+   "hrev30": 0,
+   "chg30": -14.6,
+   "token_status": "registered",
+   "token": {
+    "symbol": "KAIO",
+    "gecko_id": "kaio"
+   }
+  },
+  {
+   "key": "8875",
+   "name": "RealFi",
+   "slug": "realfi",
+   "kind": "onchain",
+   "children": [
+    "RealFi"
+   ],
+   "chains": [],
+   "category": "RWA",
+   "tvl": null,
+   "fees30": 33997,
+   "rev30": 6224,
+   "hrev30": 0,
+   "chg30": 107.3,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "parent#clearpool",
+   "name": "Clearpool TPOOL",
+   "slug": "clearpool-tpool",
+   "kind": "onchain",
+   "children": [
+    "Clearpool TPOOL"
+   ],
+   "chains": [
+    "Flare",
+    "Ethereum"
+   ],
+   "category": "RWA",
+   "tvl": 13928962,
+   "fees30": 30758,
+   "rev30": 0,
+   "hrev30": 0,
+   "chg30": -34.4,
+   "token_status": "registered",
+   "token": {
+    "symbol": "CPOOL",
+    "gecko_id": null
+   }
+  },
+  {
+   "key": "<5471>",
+   "name": "OpenTrade",
+   "slug": "opentrade",
+   "kind": "onchain",
+   "children": [
+    "OpenTrade"
+   ],
+   "chains": [
+    "Avalanche",
+    "Ethereum",
+    "Plume Mainnet"
+   ],
+   "category": "RWA",
+   "tvl": 241521388,
+   "fees30": 12868,
+   "rev30": 1800,
+   "hrev30": 0,
+   "chg30": -22.3,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "7943",
+   "name": "BlackOpal",
+   "slug": "blackopal",
+   "kind": "onchain",
+   "children": [
+    "BlackOpal"
+   ],
+   "chains": [],
+   "category": "RWA",
+   "tvl": null,
+   "fees30": 11174,
+   "rev30": 11174,
+   "hrev30": 0,
+   "chg30": 0.4,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "3580",
+   "name": "DigiFT",
+   "slug": "digift",
+   "kind": "onchain",
+   "children": [
+    "DigiFT"
+   ],
+   "chains": [],
+   "category": "RWA",
+   "tvl": null,
+   "fees30": 5122,
+   "rev30": 233,
+   "hrev30": 0,
+   "chg30": 9.1,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "parent#lista-dao",
+   "name": "Lista RWA",
+   "slug": "lista-rwa",
+   "kind": "onchain",
+   "children": [
+    "Lista RWA"
+   ],
+   "chains": [
+    "Binance",
+    "Ethereum"
+   ],
+   "category": "RWA",
+   "tvl": 4056230,
+   "fees30": 3487,
+   "rev30": 410,
+   "hrev30": 0,
+   "chg30": 17.9,
+   "token_status": "registered",
+   "token": {
+    "symbol": "LISTA",
+    "gecko_id": null
+   }
+  },
+  {
+   "key": "parent#figure-markets",
+   "name": "Figure Markets",
+   "slug": "figure-markets-exchange",
+   "kind": "onchain",
+   "children": [
+    "Figure Markets Exchange",
+    "Figure Markets Prime"
+   ],
+   "chains": [
+    "Provenance"
+   ],
+   "category": "OTC Marketplace",
+   "tvl": 313630710,
+   "fees30": 2049,
+   "rev30": 2049,
+   "hrev30": 0,
+   "chg30": -60.1,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "4196",
+   "name": "Dinari",
+   "slug": "dinari",
+   "kind": "onchain",
+   "children": [
+    "Dinari"
+   ],
+   "chains": [],
+   "category": "RWA",
+   "tvl": null,
+   "fees30": 1675,
+   "rev30": 1675,
+   "hrev30": 0,
+   "chg30": -0.5,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "8619",
+   "name": "LienFi",
+   "slug": "lienfi",
+   "kind": "onchain",
+   "children": [
+    "LienFi"
+   ],
+   "chains": [],
+   "category": "RWA",
+   "tvl": null,
+   "fees30": 16,
+   "rev30": 16,
+   "hrev30": 0,
+   "chg30": -99.7,
+   "token_status": "registered",
+   "token": {
+    "symbol": "LFI",
+    "gecko_id": "lienfi"
+   }
+  },
+  {
+   "key": "2782",
+   "name": "Aktionariat",
+   "slug": "aktionariat",
+   "kind": "onchain",
+   "children": [
+    "Aktionariat"
+   ],
+   "chains": [],
+   "category": "RWA",
+   "tvl": null,
+   "fees30": 9,
+   "rev30": 5,
+   "hrev30": 0,
+   "chg30": -97.9,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "parent#ethena",
+   "name": "Ethena USDtb",
+   "slug": "ethena-usdtb",
+   "kind": "onchain",
+   "children": [
+    "Ethena USDtb"
+   ],
+   "chains": [
+    "Ethereum"
+   ],
+   "category": "RWA",
+   "tvl": 317807596,
+   "fees30": null,
+   "rev30": null,
+   "hrev30": null,
+   "chg30": null,
+   "token_status": "registered",
+   "token": {
+    "symbol": "ENA",
+    "gecko_id": null
+   }
+  },
+  {
+   "key": "7766",
+   "name": "R25",
+   "slug": "r25",
+   "kind": "onchain",
+   "children": [
+    "R25"
+   ],
+   "chains": [
+    "Pharos",
+    "Sui"
+   ],
+   "category": "RWA",
+   "tvl": 198266242,
+   "fees30": null,
+   "rev30": null,
+   "hrev30": null,
+   "chg30": null,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "parent#realt",
+   "name": "RealT Tokens",
+   "slug": "realt-tokens",
+   "kind": "onchain",
+   "children": [
+    "RealT Tokens"
+   ],
+   "chains": [
+    "xDai"
+   ],
+   "category": "RWA",
+   "tvl": 155064723,
+   "fees30": null,
+   "rev30": null,
+   "hrev30": null,
+   "chg30": null,
+   "token_status": "registered",
+   "token": {
+    "symbol": "REG",
+    "gecko_id": null
+   }
+  },
+  {
+   "key": "8283",
+   "name": "Valos",
+   "slug": "valos",
+   "kind": "onchain",
+   "children": [
+    "Valos"
+   ],
+   "chains": [
+    "Monad"
+   ],
+   "category": "RWA",
+   "tvl": 106354087,
+   "fees30": null,
+   "rev30": null,
+   "hrev30": null,
+   "chg30": null,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "1952",
+   "name": "Lofty",
+   "slug": "lofty",
+   "kind": "onchain",
+   "children": [
+    "Lofty"
+   ],
+   "chains": [
+    "Algorand"
+   ],
+   "category": "RWA",
+   "tvl": 101156148,
+   "fees30": null,
+   "rev30": null,
+   "hrev30": null,
+   "chg30": null,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "parent#maker",
+   "name": "Sky RWA",
+   "slug": "sky-rwa",
+   "kind": "onchain",
+   "children": [
+    "Sky RWA"
+   ],
+   "chains": [
+    "Ethereum"
+   ],
+   "category": "RWA",
+   "tvl": 61291745,
+   "fees30": null,
+   "rev30": null,
+   "hrev30": null,
+   "chg30": null,
+   "token_status": "registered",
+   "token": {
+    "symbol": "SKY",
+    "gecko_id": null
+   }
+  },
+  {
+   "key": "4058",
+   "name": "Brickken",
+   "slug": "brickken",
+   "kind": "onchain",
+   "children": [
+    "Brickken"
+   ],
+   "chains": [
+    "Binance",
+    "Ethereum",
+    "Base"
+   ],
+   "category": "RWA",
+   "tvl": 42551911,
+   "fees30": null,
+   "rev30": null,
+   "hrev30": null,
+   "chg30": null,
+   "token_status": "registered",
+   "token": {
+    "symbol": "BKN",
+    "gecko_id": "brickken"
+   }
+  },
+  {
+   "key": "parent#tangible",
+   "name": "Tangible",
+   "slug": "tangible-rwa",
+   "kind": "onchain",
+   "children": [
+    "Tangible RWA",
+    "Tangible USTB"
+   ],
+   "chains": [
+    "Ethereum",
+    "Polygon",
+    "Arbitrum"
+   ],
+   "category": "RWA",
+   "tvl": 41458554,
+   "fees30": 0,
+   "rev30": 0,
+   "hrev30": 0,
+   "chg30": null,
+   "token_status": "registered",
+   "token": {
+    "symbol": "TNGBL",
+    "gecko_id": null
+   }
+  },
+  {
+   "key": "5481",
+   "name": "Anemoy Capital",
+   "slug": "anemoy-capital",
+   "kind": "onchain",
+   "children": [
+    "Anemoy Capital"
+   ],
+   "chains": [
+    "Ethereum",
+    "Base",
+    "Celo"
+   ],
+   "category": "RWA",
+   "tvl": 27927856,
+   "fees30": null,
+   "rev30": null,
+   "hrev30": null,
+   "chg30": null,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "7078",
+   "name": "GoldFinger",
+   "slug": "goldfinger",
+   "kind": "onchain",
+   "children": [
+    "GoldFinger"
+   ],
+   "chains": [
+    "Binance"
+   ],
+   "category": "RWA",
+   "tvl": 23537992,
+   "fees30": null,
+   "rev30": null,
+   "hrev30": null,
+   "chg30": null,
+   "token_status": "registered",
+   "token": {
+    "symbol": "ART",
+    "gecko_id": null
+   }
+  },
+  {
+   "key": "5182",
+   "name": "Sygnum FIUSD Liquidity Fund",
+   "slug": "sygnum-fiusd-liquidity-fund",
+   "kind": "onchain",
+   "children": [
+    "Sygnum FIUSD Liquidity Fund"
+   ],
+   "chains": [
+    "zkSync Era"
+   ],
+   "category": "RWA",
+   "tvl": 14194453,
+   "fees30": null,
+   "rev30": null,
+   "hrev30": null,
+   "chg30": null,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "7418",
+   "name": "Paimon",
+   "slug": "paimon",
+   "kind": "onchain",
+   "children": [
+    "Paimon"
+   ],
+   "chains": [
+    "Binance"
+   ],
+   "category": "RWA",
+   "tvl": 14106567,
+   "fees30": null,
+   "rev30": null,
+   "hrev30": null,
+   "chg30": null,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "5226",
+   "name": "Estate Protocol",
+   "slug": "estate-protocol",
+   "kind": "onchain",
+   "children": [
+    "Estate Protocol"
+   ],
+   "chains": [
+    "Arbitrum"
+   ],
+   "category": "RWA",
+   "tvl": 13945569,
+   "fees30": null,
+   "rev30": null,
+   "hrev30": null,
+   "chg30": null,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "6033",
+   "name": "Uranium.io",
+   "slug": "uranium.io",
+   "kind": "onchain",
+   "children": [
+    "Uranium.io"
+   ],
+   "chains": [
+    "Etherlink"
+   ],
+   "category": "RWA",
+   "tvl": 10406660,
+   "fees30": null,
+   "rev30": null,
+   "hrev30": null,
+   "chg30": null,
+   "token_status": "asset_token",
+   "token": {
+    "symbol": "XU3O8",
+    "gecko_id": "uranium"
+   }
+  },
+  {
+   "key": "parent#solv-protocol",
+   "name": "Solv Protocol",
+   "slug": "solv-rwa",
+   "kind": "onchain",
+   "children": [
+    "Solv RWA",
+    "Solv Vesting"
+   ],
+   "chains": [
+    "Binance",
+    "Mantle",
+    "Ethereum"
+   ],
+   "category": "RWA",
+   "tvl": 7763793,
+   "fees30": null,
+   "rev30": null,
+   "hrev30": null,
+   "chg30": null,
+   "token_status": "registered",
+   "token": {
+    "symbol": "SOLV",
+    "gecko_id": null
+   }
+  },
+  {
+   "key": "7462",
+   "name": "Defa By InvoiceMate",
+   "slug": "defa-by-invoicemate",
+   "kind": "onchain",
+   "children": [
+    "Defa By InvoiceMate"
+   ],
+   "chains": [
+    "Stellar",
+    "ZIGChain",
+    "Starknet"
+   ],
+   "category": "RWA",
+   "tvl": 7188301,
+   "fees30": null,
+   "rev30": null,
+   "hrev30": null,
+   "chg30": null,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "parent#resolv",
+   "name": "Vault Street",
+   "slug": "vault-street",
+   "kind": "onchain",
+   "children": [
+    "Vault Street"
+   ],
+   "chains": [
+    "Ethereum"
+   ],
+   "category": "RWA",
+   "tvl": 7003548,
+   "fees30": null,
+   "rev30": null,
+   "hrev30": null,
+   "chg30": null,
+   "token_status": "registered",
+   "token": {
+    "symbol": "RESOLV",
+    "gecko_id": "resolv"
+   }
+  },
+  {
+   "key": "6679",
+   "name": "Mansory",
+   "slug": "mansory",
+   "kind": "onchain",
+   "children": [
+    "Mansory"
+   ],
+   "chains": [
+    "Binance",
+    "Solana"
+   ],
+   "category": "RWA",
+   "tvl": 5400518,
+   "fees30": null,
+   "rev30": null,
+   "hrev30": null,
+   "chg30": null,
+   "token_status": "registered",
+   "token": {
+    "symbol": "MNSRY",
+    "gecko_id": "mansory-token"
+   }
+  },
+  {
+   "key": "8639",
+   "name": "Kamui Finance",
+   "slug": "kamui-finance",
+   "kind": "onchain",
+   "children": [
+    "Kamui Finance"
+   ],
+   "chains": [
+    "Ethereum"
+   ],
+   "category": "RWA",
+   "tvl": 4374613,
+   "fees30": null,
+   "rev30": null,
+   "hrev30": null,
+   "chg30": null,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "6096",
+   "name": "Nawa Protocol",
+   "slug": "nawa-protocol",
+   "kind": "onchain",
+   "children": [
+    "Nawa Protocol"
+   ],
+   "chains": [
+    "ZIGChain",
+    "Ethereum",
+    "CORE"
+   ],
+   "category": "RWA",
+   "tvl": 3959274,
+   "fees30": null,
+   "rev30": null,
+   "hrev30": null,
+   "chg30": null,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "2965",
+   "name": "Meld Gold",
+   "slug": "meld-gold",
+   "kind": "onchain",
+   "children": [
+    "Meld Gold"
+   ],
+   "chains": [
+    "Algorand"
+   ],
+   "category": "RWA",
+   "tvl": 3944586,
+   "fees30": null,
+   "rev30": null,
+   "hrev30": null,
+   "chg30": null,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "8561",
+   "name": "NaraUSD",
+   "slug": "narausd",
+   "kind": "onchain",
+   "children": [
+    "NaraUSD"
+   ],
+   "chains": [
+    "Ethereum"
+   ],
+   "category": "RWA",
+   "tvl": 3339015,
+   "fees30": null,
+   "rev30": null,
+   "hrev30": null,
+   "chg30": null,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "4003",
+   "name": "KUMA Protocol",
+   "slug": "kuma-protocol",
+   "kind": "onchain",
+   "children": [
+    "KUMA Protocol"
+   ],
+   "chains": [
+    "Ethereum",
+    "Linea",
+    "Polygon"
+   ],
+   "category": "RWA",
+   "tvl": 3037985,
+   "fees30": null,
+   "rev30": null,
+   "hrev30": null,
+   "chg30": null,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "6719",
+   "name": "Kea Credit",
+   "slug": "kea-credit",
+   "kind": "onchain",
+   "children": [
+    "Kea Credit"
+   ],
+   "chains": [
+    "Hedera"
+   ],
+   "category": "RWA",
+   "tvl": 2975875,
+   "fees30": null,
+   "rev30": null,
+   "hrev30": null,
+   "chg30": null,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "4531",
+   "name": "International Stable Currency",
+   "slug": "international-stable-currency",
+   "kind": "onchain",
+   "children": [
+    "International Stable Currency"
+   ],
+   "chains": [
+    "Solana"
+   ],
+   "category": "RWA",
+   "tvl": 2399058,
+   "fees30": null,
+   "rev30": null,
+   "hrev30": null,
+   "chg30": null,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "6856",
+   "name": "Oro Finance",
+   "slug": "oro-finance",
+   "kind": "onchain",
+   "children": [
+    "Oro Finance"
+   ],
+   "chains": [
+    "Solana"
+   ],
+   "category": "RWA",
+   "tvl": 2242250,
+   "fees30": null,
+   "rev30": null,
+   "hrev30": null,
+   "chg30": null,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "parent#zoth",
+   "name": "Zoth",
+   "slug": "ztln-p",
+   "kind": "onchain",
+   "children": [
+    "ZTLN-P",
+    "Zoth ZTLN"
+   ],
+   "chains": [
+    "Ethereum"
+   ],
+   "category": "RWA",
+   "tvl": 2198709,
+   "fees30": null,
+   "rev30": null,
+   "hrev30": null,
+   "chg30": null,
+   "token_status": "registered",
+   "token": {
+    "symbol": "ZTLN",
+    "gecko_id": null
+   }
+  },
+  {
+   "key": "parent#byzanlink",
+   "name": "Byzanlink RWA Markets",
+   "slug": "byzanlink-rwa-markets",
+   "kind": "onchain",
+   "children": [
+    "Byzanlink RWA Markets"
+   ],
+   "chains": [
+    "Hedera",
+    "Solana",
+    "Ethereum"
+   ],
+   "category": "RWA",
+   "tvl": 2158949,
+   "fees30": null,
+   "rev30": null,
+   "hrev30": null,
+   "chg30": null,
+   "token_status": "registered",
+   "token": {
+    "symbol": "BYZAN",
+    "gecko_id": null
+   }
+  },
+  {
+   "key": "4331",
+   "name": "HiYield",
+   "slug": "hiyield",
+   "kind": "onchain",
+   "children": [
+    "HiYield"
+   ],
+   "chains": [
+    "Avalanche",
+    "Canto"
+   ],
+   "category": "RWA",
+   "tvl": 1727427,
+   "fees30": null,
+   "rev30": null,
+   "hrev30": null,
+   "chg30": null,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "3960",
+   "name": "LandX Finance",
+   "slug": "landx-finance",
+   "kind": "onchain",
+   "children": [
+    "LandX Finance"
+   ],
+   "chains": [
+    "Ethereum"
+   ],
+   "category": "RWA",
+   "tvl": 1569887,
+   "fees30": null,
+   "rev30": null,
+   "hrev30": null,
+   "chg30": null,
+   "token_status": "registered",
+   "token": {
+    "symbol": "LNDX",
+    "gecko_id": "landx-governance-token"
+   }
+  },
+  {
+   "key": "7674",
+   "name": "Travessia Credit",
+   "slug": "travessia-credit",
+   "kind": "onchain",
+   "children": [
+    "Travessia Credit"
+   ],
+   "chains": [
+    "Ethereum",
+    "Avalanche",
+    "Polygon"
+   ],
+   "category": "RWA",
+   "tvl": 1431678,
+   "fees30": null,
+   "rev30": null,
+   "hrev30": null,
+   "chg30": null,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "3598",
+   "name": "Mountain Protocol",
+   "slug": "mountain-protocol",
+   "kind": "onchain",
+   "children": [
+    "Mountain Protocol"
+   ],
+   "chains": [
+    "Ethereum",
+    "zkSync Era",
+    "Arbitrum"
+   ],
+   "category": "RWA",
+   "tvl": 1397758,
+   "fees30": null,
+   "rev30": null,
+   "hrev30": null,
+   "chg30": null,
+   "token_status": "registered",
+   "token": {
+    "symbol": "USDM",
+    "gecko_id": null
+   }
+  },
+  {
+   "key": "6728",
+   "name": "Propbase",
+   "slug": "propbase",
+   "kind": "onchain",
+   "children": [
+    "Propbase"
+   ],
+   "chains": [
+    "Aptos"
+   ],
+   "category": "RWA",
+   "tvl": 1387695,
+   "fees30": null,
+   "rev30": null,
+   "hrev30": null,
+   "chg30": null,
+   "token_status": "registered",
+   "token": {
+    "symbol": "PROPS",
+    "gecko_id": "propbase"
+   }
+  },
+  {
+   "key": "parent#exceed-finance",
+   "name": "Exceed Finance exUSDC",
+   "slug": "exceed-finance-exusdc",
+   "kind": "onchain",
+   "children": [
+    "Exceed Finance exUSDC"
+   ],
+   "chains": [
+    "Solana"
+   ],
+   "category": "RWA",
+   "tvl": 1339075,
+   "fees30": null,
+   "rev30": null,
+   "hrev30": null,
+   "chg30": null,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "7150",
+   "name": "CHATEAU",
+   "slug": "chateau",
+   "kind": "onchain",
+   "children": [
+    "CHATEAU"
+   ],
+   "chains": [
+    "Plasma"
+   ],
+   "category": "RWA",
+   "tvl": 1024451,
+   "fees30": null,
+   "rev30": null,
+   "hrev30": null,
+   "chg30": null,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "6287",
+   "name": "RealtyX",
+   "slug": "realtyx",
+   "kind": "onchain",
+   "children": [
+    "RealtyX"
+   ],
+   "chains": [
+    "Base",
+    "Plume Mainnet"
+   ],
+   "category": "RWA",
+   "tvl": 1012430,
+   "fees30": null,
+   "rev30": null,
+   "hrev30": null,
+   "chg30": null,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "4916",
+   "name": "Boson Protocol",
+   "slug": "boson-protocol",
+   "kind": "onchain",
+   "children": [
+    "Boson Protocol"
+   ],
+   "chains": [
+    "Polygon",
+    "Ethereum",
+    "Base"
+   ],
+   "category": "RWA",
+   "tvl": 229213,
+   "fees30": 0,
+   "rev30": 0,
+   "hrev30": 0,
+   "chg30": null,
+   "token_status": "registered",
+   "token": {
+    "symbol": "BOSON",
+    "gecko_id": "boson-protocol"
+   }
+  },
+  {
+   "key": "5551",
+   "name": "Zivoe",
+   "slug": "zivoe",
+   "kind": "onchain",
+   "children": [
+    "Zivoe"
+   ],
+   "chains": [
+    "Ethereum"
+   ],
+   "category": "RWA",
+   "tvl": 3044,
+   "fees30": 0,
+   "rev30": 0,
+   "hrev30": 0,
+   "chg30": null,
+   "token_status": "registered",
+   "token": {
+    "symbol": "ZVE",
+    "gecko_id": null
+   }
+  },
+  {
+   "key": "3467",
+   "name": "BackedFi",
+   "slug": "backedfi",
+   "kind": "onchain",
+   "children": [
+    "BackedFi"
+   ],
+   "chains": [],
+   "category": "RWA",
+   "tvl": null,
+   "fees30": 0,
+   "rev30": 0,
+   "hrev30": 0,
+   "chg30": null,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "parent#paxos",
+   "name": "Paxos Gold",
+   "slug": "paxos-gold",
+   "kind": "onchain",
+   "children": [
+    "Paxos Gold"
+   ],
+   "chains": [],
+   "category": "RWA",
+   "tvl": null,
+   "fees30": 0,
+   "rev30": 0,
+   "hrev30": 0,
+   "chg30": null,
+   "token_status": "registered",
+   "token": {
+    "symbol": "PAXG",
+    "gecko_id": null
+   }
+  },
+  {
+   "key": "7055",
+   "name": "Mu Digital",
+   "slug": "mu-digital",
+   "kind": "onchain",
+   "children": [
+    "Mu Digital"
+   ],
+   "chains": [
+    "Monad"
+   ],
+   "category": "RWA",
+   "tvl": null,
+   "fees30": 0,
+   "rev30": 0,
+   "hrev30": 0,
+   "chg30": null,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "7144",
+   "name": "Pleasing Gold",
+   "slug": "pleasing-gold",
+   "kind": "onchain",
+   "children": [
+    "Pleasing Gold"
+   ],
+   "chains": [],
+   "category": "RWA",
+   "tvl": null,
+   "fees30": 0,
+   "rev30": 0,
+   "hrev30": 0,
+   "chg30": null,
+   "token_status": "registered",
+   "token": {
+    "symbol": "PGOLD",
+    "gecko_id": null
+   }
+  },
+  {
+   "key": "7701",
+   "name": "PreStocks",
+   "slug": "prestocks",
+   "kind": "onchain",
+   "children": [
+    "PreStocks"
+   ],
+   "chains": [],
+   "category": "RWA",
+   "tvl": null,
+   "fees30": 0,
+   "rev30": 0,
+   "hrev30": 0,
+   "chg30": null,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "7868",
+   "name": "Reental RWA",
+   "slug": "reental-rwa",
+   "kind": "onchain",
+   "children": [
+    "Reental RWA"
+   ],
+   "chains": [],
+   "category": "RWA",
+   "tvl": null,
+   "fees30": 0,
+   "rev30": 0,
+   "hrev30": 0,
+   "chg30": null,
+   "token_status": "registered",
+   "token": {
+    "symbol": "RNT",
+    "gecko_id": "reental"
+   }
+  }
+ ],
+ "totals": {
+  "n_seen": 168,
+  "n_onchain": 83,
+  "n_tradfi": 3,
+  "fees30_onchain": 56908876,
+  "rev30_onchain": 3640553,
+  "hrev30_onchain": 563522,
+  "fees30_tradfi": 30159630,
+  "rev30_tradfi": 19389978,
+  "n_registered": 33,
+  "n_asset_token": 4,
+  "n_not_registered": 46,
+  "n_hrev_pos": 3
+ },
+ "sources": {
+  "coingecko": {
+   "ok": false,
+   "last_ok": "2026-11-14T14:50:03+00:00",
+   "n": 13,
+   "err": "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&category=tokenized-private-credit&per_page=250&order=market_cap_desc: HTTP Error 429: Too Many Requests",
+   "failed_at": "2026-11-14T16:33:21+00:00"
+  },
+  "defillama": {
+   "ok": true,
+   "last_ok": "2026-11-14T16:33:21+00:00",
+   "n": 86
+  }
+ },
+ "stale": true,
+ "research": {
+  "updated_utc": "2026-11-14",
+  "migration": {
+   "status": "已导入（待重核）",
+   "note_zh": "研究库 362 条已导入（研究库页签），实体按官网域名重新去重。10-30 的 6 项判断和 5 个复核案例已并入，但 Codex 这一轮没有按原始来源重核（答案全部为 U），所以全部标「待重核」，不给当前结论。",
+   "note_en": "The 362-record library is imported (Library tab), with entities re-deduplicated by official domain. The six 10-30 judgments and five review cases are merged, but this Codex round did not re-check at source (all answers U), so all are pending re-check with no current conclusion."
+  },
+  "items": [
+   {
+    "id": "case:kyte",
+    "name": "KYTE",
+    "segment": "trading",
+    "token_kind": "platform_token",
+    "platform_token": {
+     "status": "unverified",
+     "raw": "交接包：平台币、链、池 ID 已核（未附证据进仓库）"
+    },
+    "versions": [
+     {
+      "v": "2026-11-12",
+      "state": "pending_recheck",
+      "why_zh": "交接包称 11-12 因报价和深度恶化下调过风险观察；报价时点、gas 假设、池子身份都要重核。",
+      "why_en": "Handoff says risk view was downgraded on 11-12 after quotes and depth worsened; quote time, gas assumption and pool identity need re-checking.",
+      "reviewed_utc": null,
+      "r3_20261114": "Codex 11-14 交付：待核问题全部为 U，未按原始来源重核"
+     }
+    ],
+    "open_questions": [
+     "平台币合约、链、DEX 池 ID 分别是什么（原始来源 + 核对时间）",
+     "只读卖出报价的区块高度、报价规模、gas 假设",
+     "11-12 之后深度和报价是否继续恶化",
+     "区分期权权利金、平台币成交额及真实分费。核实连续分配、来源、退出滑点。"
+    ],
+    "links": {
+     "official": "https://kyte.sh/",
+     "source": "https://kyte.sh/docs"
+    },
+    "library_rid": "llama:kyte",
+    "entity": "Kyte（法律实体待核）",
+    "current": {
+     "v": "2026-11-12",
+     "state": "pending_recheck",
+     "why_zh": "交接包称 11-12 因报价和深度恶化下调过风险观察；报价时点、gas 假设、池子身份都要重核。",
+     "why_en": "Handoff says risk view was downgraded on 11-12 after quotes and depth worsened; quote time, gas assumption and pool identity need re-checking.",
+     "reviewed_utc": null,
+     "r3_20261114": "Codex 11-14 交付：待核问题全部为 U，未按原始来源重核"
+    },
+    "fresh": "never",
+    "age_days": null
+   },
+   {
+    "id": "case:xash",
+    "name": "Xash",
+    "segment": "issuance",
+    "token_kind": "none_declared?",
+    "platform_token": {
+     "status": "unverified",
+     "raw": "交接包：官方声明无平台币（待附原文链接）"
+    },
+    "versions": [
+     {
+      "v": "2026-11-14",
+      "state": "pending_recheck",
+      "why_zh": "PYUSD 活动的黄金奖励属于营销补贴；可提现收益、普通使用和积分预期要分开算。",
+      "why_en": "Gold rewards on the PYUSD campaign are marketing subsidies; withdrawable yield, normal usage and points expectations must be separated.",
+      "reviewed_utc": null,
+      "r3_20261114": "Codex 11-14 交付：待核问题全部为 U，未按原始来源重核"
+     }
+    ],
+    "open_questions": [
+     "「无平台币」声明原文与日期",
+     "Phase B 前奖励能否提取、何时可提",
+     "奖励资金来源与持续期",
+     "首次 PAXG 对外发放的交易能否与官方批次对应？扣除费用后的奖励有多少？"
+    ],
+    "links": {
+     "official": "https://xash.com/",
+     "source": "https://app.xash.com/terms"
+    },
+    "library_rid": "official:xash-gold-rewards",
+    "entity": "Xash, Inc.",
+    "current": {
+     "v": "2026-11-14",
+     "state": "pending_recheck",
+     "why_zh": "PYUSD 活动的黄金奖励属于营销补贴；可提现收益、普通使用和积分预期要分开算。",
+     "why_en": "Gold rewards on the PYUSD campaign are marketing subsidies; withdrawable yield, normal usage and points expectations must be separated.",
+     "reviewed_utc": null,
+     "r3_20261114": "Codex 11-14 交付：待核问题全部为 U，未按原始来源重核"
+    },
+    "fresh": "never",
+    "age_days": null
+   },
+   {
+    "id": "case:buidl-ethena",
+    "name": "BUIDL × Ethena",
+    "segment": "fund",
+    "token_kind": "asset_token",
+    "platform_token": {
+     "status": "tradfi",
+     "raw": "BUIDL = 基金份额；ENA = Ethena 的平台币，二者身份分开"
+    },
+    "versions": [
+     {
+      "v": "2026-11-14",
+      "state": "pending_recheck",
+      "why_zh": "交接包称流动性设施初始两侧合计 5,000 万美元、有条件上限 1 亿美元；真实使用量、谁能用、ENA 是否受益都需要证据。",
+      "why_en": "Handoff cites a liquidity facility of $50M initial (both sides) and a conditional $100M cap; real usage, eligibility and any ENA benefit need evidence.",
+      "reviewed_utc": null,
+      "r3_20261114": "Codex 11-14 交付：待核问题全部为 U，未按原始来源重核"
+     }
+    ],
+    "open_questions": [
+     "设施规模原文（官方公告链接）",
+     "实际使用量（链上或披露）",
+     "谁有资格使用（机构白名单？）",
+     "ENA 持有人从这条业务拿到什么",
+     "核实周末实际兑换、流动性补充、费用归属及 ENA 收益路径。"
+    ],
+    "links": {
+     "official": "https://securitize.io/",
+     "source": "https://www.prnewswire.com/news-releases/securitize-and-ethena-launch-100-million-liquidity-facility-for-blackrocks-buidl-302937776.html"
+    },
+    "library_rid": "official:buidl-ethena-liquidity",
+    "entity": "Securitize / Ethena Labs",
+    "current": {
+     "v": "2026-11-14",
+     "state": "pending_recheck",
+     "why_zh": "交接包称流动性设施初始两侧合计 5,000 万美元、有条件上限 1 亿美元；真实使用量、谁能用、ENA 是否受益都需要证据。",
+     "why_en": "Handoff cites a liquidity facility of $50M initial (both sides) and a conditional $100M cap; real usage, eligibility and any ENA benefit need evidence.",
+     "reviewed_utc": null,
+     "r3_20261114": "Codex 11-14 交付：待核问题全部为 U，未按原始来源重核"
+    },
+    "fresh": "never",
+    "age_days": null
+   },
+   {
+    "id": "case:rwaxyz-represented",
+    "name": "RWA.xyz Represented 快照下降",
+    "segment": "data",
+    "token_kind": "n/a",
+    "platform_token": {
+     "status": "n/a"
+    },
+    "versions": [
+     {
+      "v": "2026-11-14",
+      "state": "pending_recheck",
+      "why_zh": "11-14 快照较上一轮明显下降，当期 Broadridge DLR 权重很高；缺同期单项余额前不推断赎回原因。",
+      "why_en": "The 11-14 snapshot fell sharply with Broadridge DLR carrying a large weight; no redemption story until like-for-like line items exist.",
+      "reviewed_utc": null,
+      "r3_20261114": "Codex 11-14 交付：待核问题全部为 U，未按原始来源重核"
+     }
+    ],
+    "open_questions": [
+     "Broadridge DLR 前后两期余额",
+     "数据方是否改了口径 / 覆盖",
+     "rwa.xyz 数据的再分发条款",
+     "补齐逐日面值、换手与方法变更，解释余额跳变。"
+    ],
+    "links": {
+     "official": "https://www.broadridge.com/capability/middle-and-back-office-solutions/post-trade-processing/distributed-ledger-repo-solutions",
+     "source": "https://app.rwa.xyz/platforms/broadridge-dlr"
+    },
+    "library_rid": "official:broadridge-dlr",
+    "entity": "Broadridge Financial Solutions",
+    "current": {
+     "v": "2026-11-14",
+     "state": "pending_recheck",
+     "why_zh": "11-14 快照较上一轮明显下降，当期 Broadridge DLR 权重很高；缺同期单项余额前不推断赎回原因。",
+     "why_en": "The 11-14 snapshot fell sharply with Broadridge DLR carrying a large weight; no redemption story until like-for-like line items exist.",
+     "reviewed_utc": null,
+     "r3_20261114": "Codex 11-14 交付：待核问题全部为 U，未按原始来源重核"
+    },
+    "fresh": "never",
+    "age_days": null
+   },
+   {
+    "id": "case:townsquare",
+    "name": "TownSquare / TOWN",
+    "segment": "lending",
+    "token_kind": "platform_token",
+    "platform_token": {
+     "status": "unverified",
+     "raw": "交接包：TOWN 有治理规则（待附原文）"
+    },
+    "versions": [
+     {
+      "v": "2026-11-14",
+      "state": "pending_recheck",
+      "why_zh": "产品估值、发行方储备证明、借贷 TVL、TOWN 治理规则是四类不同证据；一笔链上证明交易不能验证线下资产和个人可参与性。",
+      "why_en": "Product valuation, issuer reserve attestations, lending TVL and TOWN governance are four different kinds of evidence; one onchain proof tx does not verify offchain assets or personal eligibility.",
+      "reviewed_utc": null,
+      "r3_20261114": "Codex 11-14 交付：待核问题全部为 U，未按原始来源重核"
+     }
+    ],
+    "open_questions": [
+     "储备证明出具方与日期",
+     "TOWN 持有人有无收入权",
+     "普通用户的参与资格与地区限制",
+     "核实还款、受托人及季度赎回执行；TOWN 的独立合约和交易场所待核。"
+    ],
+    "links": {
+     "official": "https://app.townsq.xyz/townRWA/townAIROBO",
+     "source": "https://app.rwa.xyz/assets/townAIROBO"
+    },
+    "library_rid": "official:townsquare-townairobo",
+    "entity": "TownSquare",
+    "current": {
+     "v": "2026-11-14",
+     "state": "pending_recheck",
+     "why_zh": "产品估值、发行方储备证明、借贷 TVL、TOWN 治理规则是四类不同证据；一笔链上证明交易不能验证线下资产和个人可参与性。",
+     "why_en": "Product valuation, issuer reserve attestations, lending TVL and TOWN governance are four different kinds of evidence; one onchain proof tx does not verify offchain assets or personal eligibility.",
+     "reviewed_utc": null,
+     "r3_20261114": "Codex 11-14 交付：待核问题全部为 U，未按原始来源重核"
+    },
+    "fresh": "never",
+    "age_days": null
+   },
+   {
+    "id": "j:maple",
+    "name": "Maple / SYRUP",
+    "segment": "credit",
+    "source": "10-30 机会判断",
+    "platform_token": {
+     "status": "issued",
+     "raw": "研究库平台币状态（未复核）"
+    },
+    "versions": [
+     {
+      "v": "2026-11-14",
+      "state": "pending_recheck",
+      "why_zh": "10-30 原判断「等收入确认」。Codex 11-14 交付没有按原始来源重核（资格、成本、退出全部为 U），条件照 10-30 原文，不当当前结论。",
+      "why_en": "10-30 judgment carried over. The 11-14 Codex delivery did not re-check at source (eligibility, cost and exit all U); conditions are the 10-30 text, not a current conclusion.",
+      "trigger_zh": "10 月收入公布后，核对回购是否按 MIP-021 规则执行；月收入超过 200 万美元时，回购比例按规则进入 30% 档",
+      "trigger_en": "After October revenue is published, check the buyback ran under MIP-021; above $2M monthly revenue the rule moves to the 30% tier",
+      "invalid_zh": "月收入回落到 150 万美元以下、回购没按规则执行，或出现重大信用损失",
+      "invalid_en": "Monthly revenue back under $1.5M, buyback not run per rule, or a major credit loss",
+      "reviewed_utc": null
+     },
+     {
+      "v": "2026-10-30",
+      "state": "historical",
+      "old_state": "等收入确认"
+     }
+    ],
+    "links": {
+     "source": "https://community.maple.finance/t/mip-021-a-rules-based-buyback-that-scales-with-revenue/1153"
+    },
+    "open_questions": [
+     "10-30 原记录：回购按年化 ÷ 流通市值约 2.15%、Q3 收入环比持平——按原始来源（Maple 透明度页、论坛 MIP-021、Q3 报告）重算",
+     "10 月收入和回购执行的原文与链上记录"
+    ],
+    "library_rid": "llama:maple",
+    "current": {
+     "v": "2026-11-14",
+     "state": "pending_recheck",
+     "why_zh": "10-30 原判断「等收入确认」。Codex 11-14 交付没有按原始来源重核（资格、成本、退出全部为 U），条件照 10-30 原文，不当当前结论。",
+     "why_en": "10-30 judgment carried over. The 11-14 Codex delivery did not re-check at source (eligibility, cost and exit all U); conditions are the 10-30 text, not a current conclusion.",
+     "trigger_zh": "10 月收入公布后，核对回购是否按 MIP-021 规则执行；月收入超过 200 万美元时，回购比例按规则进入 30% 档",
+     "trigger_en": "After October revenue is published, check the buyback ran under MIP-021; above $2M monthly revenue the rule moves to the 30% tier",
+     "invalid_zh": "月收入回落到 150 万美元以下、回购没按规则执行，或出现重大信用损失",
+     "invalid_en": "Monthly revenue back under $1.5M, buyback not run per rule, or a major credit loss",
+     "reviewed_utc": null
+    },
+    "fresh": "never",
+    "age_days": null
+   },
+   {
+    "id": "j:pendle",
+    "name": "Pendle / PENDLE",
+    "segment": "trading",
+    "source": "10-30 机会判断",
+    "platform_token": {
+     "status": "issued",
+     "raw": "研究库平台币状态（未复核）"
+    },
+    "versions": [
+     {
+      "v": "2026-11-14",
+      "state": "pending_recheck",
+      "why_zh": "10-30 原判断「等收入企稳」。Codex 11-14 交付没有按原始来源重核（资格、成本、退出全部为 U），条件照 10-30 原文，不当当前结论。",
+      "why_en": "10-30 judgment carried over. The 11-14 Codex delivery did not re-check at source (eligibility, cost and exit all U); conditions are the 10-30 text, not a current conclusion.",
+      "trigger_zh": "连续两个完整 7 日窗口的持有人收入不再下降，并核实实际分配；RWA 相关市场要有持续成交和费用",
+      "trigger_en": "Holder revenue stops falling for two full 7-day windows and actual distributions are verified; RWA markets show sustained volume and fees",
+      "invalid_zh": "分配继续缩减，或 RWA 市场只有规模、没有交易",
+      "invalid_en": "Distributions keep shrinking, or RWA markets have size but no trading",
+      "reviewed_utc": null
+     },
+     {
+      "v": "2026-10-30",
+      "state": "historical",
+      "old_state": "等收入企稳"
+     }
+    ],
+    "links": {
+     "source": "https://docs.pendle.finance/pendle-v2/ProtocolMechanics/Mechanisms/sPENDLE"
+    },
+    "open_questions": [
+     "10-30 原记录：近 30 日持有人收入 331,510 美元、年化约占流通市值 1.37%——按原始来源重算并写清期间、分母和年化方法",
+     "RWA 相关市场的成交和费用占比"
+    ],
+    "current": {
+     "v": "2026-11-14",
+     "state": "pending_recheck",
+     "why_zh": "10-30 原判断「等收入企稳」。Codex 11-14 交付没有按原始来源重核（资格、成本、退出全部为 U），条件照 10-30 原文，不当当前结论。",
+     "why_en": "10-30 judgment carried over. The 11-14 Codex delivery did not re-check at source (eligibility, cost and exit all U); conditions are the 10-30 text, not a current conclusion.",
+     "trigger_zh": "连续两个完整 7 日窗口的持有人收入不再下降，并核实实际分配；RWA 相关市场要有持续成交和费用",
+     "trigger_en": "Holder revenue stops falling for two full 7-day windows and actual distributions are verified; RWA markets show sustained volume and fees",
+     "invalid_zh": "分配继续缩减，或 RWA 市场只有规模、没有交易",
+     "invalid_en": "Distributions keep shrinking, or RWA markets have size but no trading",
+     "reviewed_utc": null
+    },
+    "fresh": "never",
+    "age_days": null
+   },
+   {
+    "id": "j:ondo",
+    "name": "Ondo / ONDO",
+    "segment": "fund",
+    "source": "10-30 机会判断",
+    "platform_token": {
+     "status": "issued",
+     "raw": "研究库平台币状态（未复核）"
+    },
+    "versions": [
+     {
+      "v": "2026-11-14",
+      "state": "pending_recheck",
+      "why_zh": "10-30 原判断「只列叙事观察」。Codex 11-14 交付没有按原始来源重核（资格、成本、退出全部为 U），条件照 10-30 原文，不当当前结论。",
+      "why_en": "10-30 judgment carried over. The 11-14 Codex delivery did not re-check at source (eligibility, cost and exit all U); conditions are the 10-30 text, not a current conclusion.",
+      "trigger_zh": "官方公告出现明确的代币权益变化或具体催化",
+      "trigger_en": "An official announcement of a concrete token-rights change or catalyst",
+      "invalid_zh": "催化延期、权益变化没通过；叙事不能改口成分红逻辑",
+      "invalid_en": "Catalyst delayed or rights change fails; the story must not turn into a dividend thesis",
+      "reviewed_utc": null
+     },
+     {
+      "v": "2026-10-30",
+      "state": "historical",
+      "old_state": "只列叙事观察"
+     }
+    ],
+    "links": {
+     "source": "https://docs.ondo.foundation/ondo-token"
+    },
+    "open_questions": [
+     "ONDO 现行代币权益原文（docs.ondo.foundation）",
+     "资管收入有没有任何路径分给 ONDO 持有人"
+    ],
+    "current": {
+     "v": "2026-11-14",
+     "state": "pending_recheck",
+     "why_zh": "10-30 原判断「只列叙事观察」。Codex 11-14 交付没有按原始来源重核（资格、成本、退出全部为 U），条件照 10-30 原文，不当当前结论。",
+     "why_en": "10-30 judgment carried over. The 11-14 Codex delivery did not re-check at source (eligibility, cost and exit all U); conditions are the 10-30 text, not a current conclusion.",
+     "trigger_zh": "官方公告出现明确的代币权益变化或具体催化",
+     "trigger_en": "An official announcement of a concrete token-rights change or catalyst",
+     "invalid_zh": "催化延期、权益变化没通过；叙事不能改口成分红逻辑",
+     "invalid_en": "Catalyst delayed or rights change fails; the story must not turn into a dividend thesis",
+     "reviewed_utc": null
+    },
+    "fresh": "never",
+    "age_days": null
+   },
+   {
+    "id": "j:curve",
+    "name": "Curve × Stellar",
+    "segment": "trading",
+    "source": "10-30 机会判断",
+    "platform_token": {
+     "status": "issued",
+     "raw": "研究库平台币状态（未复核）"
+    },
+    "versions": [
+     {
+      "v": "2026-11-14",
+      "state": "pending_recheck",
+      "why_zh": "10-30 原判断「不追上线消息」。Codex 11-14 交付没有按原始来源重核（资格、成本、退出全部为 U），条件照 10-30 原文，不当当前结论。",
+      "why_en": "10-30 judgment carried over. The 11-14 Codex delivery did not re-check at source (eligibility, cost and exit all U); conditions are the 10-30 text, not a current conclusion.",
+      "trigger_zh": "Stellar 上的池子出现持续成交，费用流向可以验证，再和 CRV 整体收入比较",
+      "trigger_en": "Stellar pools show sustained volume and verifiable fee flows, then compare with total CRV revenue",
+      "invalid_zh": "只部署没使用，或新增费用进不了能归属 CRV 的路径",
+      "invalid_en": "Deployed but unused, or new fees cannot reach CRV",
+      "reviewed_utc": null
+     },
+     {
+      "v": "2026-10-30",
+      "state": "historical",
+      "old_state": "不追上线消息"
+     }
+    ],
+    "links": {
+     "source": "https://stellar.org/press/curve-brings-onchain-liquidity-infrastructure-to-the-stellar-network-in-its-first-native-non-evm-integration"
+    },
+    "open_questions": [
+     "Stellar 池子的地址、成交额、费用（带时间）",
+     "费用分配路径（官方文档）"
+    ],
+    "current": {
+     "v": "2026-11-14",
+     "state": "pending_recheck",
+     "why_zh": "10-30 原判断「不追上线消息」。Codex 11-14 交付没有按原始来源重核（资格、成本、退出全部为 U），条件照 10-30 原文，不当当前结论。",
+     "why_en": "10-30 judgment carried over. The 11-14 Codex delivery did not re-check at source (eligibility, cost and exit all U); conditions are the 10-30 text, not a current conclusion.",
+     "trigger_zh": "Stellar 上的池子出现持续成交，费用流向可以验证，再和 CRV 整体收入比较",
+     "trigger_en": "Stellar pools show sustained volume and verifiable fee flows, then compare with total CRV revenue",
+     "invalid_zh": "只部署没使用，或新增费用进不了能归属 CRV 的路径",
+     "invalid_en": "Deployed but unused, or new fees cannot reach CRV",
+     "reviewed_utc": null
+    },
+    "fresh": "never",
+    "age_days": null
+   },
+   {
+    "id": "j:ixs",
+    "name": "IXS（Robinhood Chain 迁移）",
+    "segment": "trading",
+    "source": "10-30 机会判断",
+    "platform_token": {
+     "status": "unverified",
+     "raw": "研究库平台币状态（未复核）"
+    },
+    "versions": [
+     {
+      "v": "2026-11-14",
+      "state": "pending_recheck",
+      "why_zh": "10-30 原判断「保留早期探索」。Codex 11-14 交付没有按原始来源重核（资格、成本、退出全部为 U），条件照 10-30 原文，不当当前结论。",
+      "why_en": "10-30 judgment carried over. The 11-14 Codex delivery did not re-check at source (eligibility, cost and exit all U); conditions are the 10-30 text, not a current conclusion.",
+      "trigger_zh": "新旧合约和兑换规则、实际池子和可卖出深度、已执行的回购都核实",
+      "trigger_en": "Old/new contracts and swap rules, actual pools and sell-side depth, and executed buybacks all verified",
+      "invalid_zh": "迁移后权益不一致、费用没有执行记录、无法正常退出",
+      "invalid_en": "Post-migration rights inconsistent, no fee execution, or no normal exit",
+      "reviewed_utc": null
+     },
+     {
+      "v": "2026-10-30",
+      "state": "historical",
+      "old_state": "保留早期探索"
+     }
+    ],
+    "links": {
+     "source": "https://robinhood.ixs.finance"
+    },
+    "open_questions": [
+     "新旧合约地址与兑换规则原文",
+     "实际池子 ID 与深度（带区块 / 时间）",
+     "回购执行交易"
+    ],
+    "current": {
+     "v": "2026-11-14",
+     "state": "pending_recheck",
+     "why_zh": "10-30 原判断「保留早期探索」。Codex 11-14 交付没有按原始来源重核（资格、成本、退出全部为 U），条件照 10-30 原文，不当当前结论。",
+     "why_en": "10-30 judgment carried over. The 11-14 Codex delivery did not re-check at source (eligibility, cost and exit all U); conditions are the 10-30 text, not a current conclusion.",
+     "trigger_zh": "新旧合约和兑换规则、实际池子和可卖出深度、已执行的回购都核实",
+     "trigger_en": "Old/new contracts and swap rules, actual pools and sell-side depth, and executed buybacks all verified",
+     "invalid_zh": "迁移后权益不一致、费用没有执行记录、无法正常退出",
+     "invalid_en": "Post-migration rights inconsistent, no fee execution, or no normal exit",
+     "reviewed_utc": null
+    },
+    "fresh": "never",
+    "age_days": null
+   },
+   {
+    "id": "j:tickerspring",
+    "name": "TickerSpring",
+    "segment": "equity",
+    "source": "10-30 机会判断",
+    "platform_token": {
+     "status": "unverified",
+     "raw": "研究库平台币状态（未复核）"
+    },
+    "versions": [
+     {
+      "v": "2026-11-14",
+      "state": "pending_recheck",
+      "why_zh": "10-30 原判断「保留早期探索」。Codex 11-14 交付没有按原始来源重核（资格、成本、退出全部为 U），条件照 10-30 原文，不当当前结论。",
+      "why_en": "10-30 judgment carried over. The 11-14 Codex delivery did not re-check at source (eligibility, cost and exit all U); conditions are the 10-30 text, not a current conclusion.",
+      "trigger_zh": "官方合约和运行合约对得上、市场有双向流动性、真实收费和回购交易都核实",
+      "trigger_en": "Official contract matches the running contract, two-sided liquidity, and real fees and buybacks verified",
+      "invalid_zh": "资产权利、收费流向或退出路径无法验证",
+      "invalid_en": "Asset rights, fee flows or exit path cannot be verified",
+      "reviewed_utc": null
+     },
+     {
+      "v": "2026-10-30",
+      "state": "historical",
+      "old_state": "保留早期探索"
+     }
+    ],
+    "links": {
+     "source": "https://tickerspring.com"
+    },
+    "open_questions": [
+     "官方合约地址与运行合约",
+     "股票组合的资产权利（谁托管、持有人有什么索取权）",
+     "收费和回购交易"
+    ],
+    "current": {
+     "v": "2026-11-14",
+     "state": "pending_recheck",
+     "why_zh": "10-30 原判断「保留早期探索」。Codex 11-14 交付没有按原始来源重核（资格、成本、退出全部为 U），条件照 10-30 原文，不当当前结论。",
+     "why_en": "10-30 judgment carried over. The 11-14 Codex delivery did not re-check at source (eligibility, cost and exit all U); conditions are the 10-30 text, not a current conclusion.",
+     "trigger_zh": "官方合约和运行合约对得上、市场有双向流动性、真实收费和回购交易都核实",
+     "trigger_en": "Official contract matches the running contract, two-sided liquidity, and real fees and buybacks verified",
+     "invalid_zh": "资产权利、收费流向或退出路径无法验证",
+     "invalid_en": "Asset rights, fee flows or exit path cannot be verified",
+     "reviewed_utc": null
+    },
+    "fresh": "never",
+    "age_days": null
+   }
+  ],
+  "counts": {
+   "pending_recheck": 11
+  },
+  "stale_days": 14,
+  "problems": []
+ }
+}

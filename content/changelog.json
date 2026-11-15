@@ -1,6 +1,6 @@
 [
  {
-  "version": "2026.11.15",
+  "version": "2026.11.15.3",
   "date": "2026-11-15",
   "notify": true,
   "title_zh": "核心选币改名「龙头选币」：排行榜 + 默认观测前 10",
@@ -31,6 +31,217 @@
     "zh": "评分研究 M2 / M3 / M3b 三轮检验没有一个预测读数通过，结果全文放在「研究与规则 · 评分研究」。",
     "en": "Score research rounds M2 / M3 / M3b: no predictive reading passed; full results under Research & rules.",
     "corrections_anchor": "2026-11-15-corefact"
+   }
+  ]
+ },
+ {
+  "version": "2026.11.15.2",
+  "date": "2026-11-15",
+  "notify": false,
+  "title_zh": "Alpha 雷达：本站板块接成线索来源 + 来源台账",
+  "title_en": "Alpha Radar: site boards as lead sources + source ledger",
+  "items": [
+   {
+    "type": "new",
+    "zh": "发射台矩阵和 AI Agent 两个板块接成 Alpha 的线索来源：新平台进矩阵后起量、平台手续费突然放大、同一条链上新发射台扎堆、AI Agent 新协议起量或单日异常，都会生成机会卡。和已有来源筛到同一个协议时不另开卡，只在卡上标「多个来源都筛到」。",
+    "en": "The Launchpad matrix and AI Agent boards now feed Alpha Radar: newly listed platforms gaining fees, sudden fee jumps, clusters of new launchpads on one chain, and new or anomalous AI-agent protocols all produce cards. When several sources flag the same protocol the card shows them together."
+   },
+   {
+    "type": "new",
+    "zh": "雷达页最上面加「线索从哪来」：来源台账和每个来源的战绩（带来几张卡、几张进了研究观察、几张被拒）。来源以关键人和本站板块为主，数据榜单兜底；关键人名单在建。每张机会卡标明来源。",
+    "en": "The Radar page now opens with the source ledger and each source's track record. Key people and site boards come first, data lists are the backstop; the key-people list is being built. Every card shows its sources."
+   }
+  ]
+ },
+ {
+  "version": "2026.11.15.1",
+  "date": "2026-11-15",
+  "notify": true,
+  "title_zh": "Alpha 雷达：新增两个发现来源、评分雷达图、创新级别 M 置顶",
+  "title_en": "Alpha Radar: two new discovery sources, score radar, novelty (M) up front",
+  "items": [
+   {
+    "type": "new",
+    "zh": "新增发现来源「有币 · 收入新起量」：已有代币的协议，近 30 天协议收入过 10 万美元，而且收入史很短或突然放大（近 30 天 ≥ 前 30 天的 3 倍），当天进看板。之前只看「没发币的协议」和「新上架且 TVL 够大的」，像 Pons 这种有币的新玩法完全看不到。",
+    "en": "New source “token · revenue ramp”: protocols that already have a token, with 30-day revenue above $100K and either a very short revenue history or a 3× jump. Previously only tokenless protocols and large new listings were covered."
+   },
+   {
+    "type": "new",
+    "zh": "新增「手动线索」：推特 / 社群里看到、数据源还没收录的新玩法，登记后当天上看板最上面并排到补证队列最前（第一批：TapeOut / BEM、Pons）。",
+    "en": "New “manual leads”: plays spotted on social media that data sources have not picked up go straight to the top of the board and the research queue."
+   },
+   {
+    "type": "improve",
+    "zh": "每张卡最上面加「玩法创新级别 M」（这个玩法新在哪，0–4，要研究判断）；机制与扩张、当前参与优势八个维度改用雷达图：实心是已查清的分数，虚线是没查清的最多能到哪。案例库同样。",
+    "en": "Each card now leads with the novelty level M (0–4, research-only). The eight score dimensions are shown as a radar: solid = scored, dashed = upper bound of unknowns. Same for the case library."
+   },
+   {
+    "type": "data",
+    "corrections_anchor": "alpha-2026-11-15",
+    "zh": "口径更正：① 相近历史案例不再用系统自动打的分去比（之前多数卡只比上了类目和自动分，钱包也显示「和 YFI 100% 相似」）；玩法没查清时只列同类目案例，给最低–最高范围，不给中位数。② 需求独立性 D 不再自动打 2，收入过门槛只记事实。③ 母协议有币的新上架产品，研究前放预警观察。④ 案例价格的日期标签修正（原来覆盖率被算成 80%–93%，其实数据是全的），主口径改成「首周后一年内最高倍数」；Spacemesh 不再算估值；「流通市值」更名为「总供给市值」。⑤ 团队有已证实不良记录记 -1 分；「代币经济」更名「解锁与抛压」。",
+    "en": "Definition fixes: analog matching no longer uses auto scores and shows a range instead of a median; D is no longer auto-scored; listings under a tokened parent wait on the watchlist until researched; case price date labels fixed, main multiple is now the 1-year max from week 1; Spacemesh valuation dropped; team with a proven bad record scores −1; “token economics” renamed “unlocks & sell pressure”."
+   }
+  ]
+ },
+ {
+  "version": "2026.11.14.12",
+  "date": "2026-11-14",
+  "notify": true,
+  "title_zh": "Alpha 雷达改版：左边切换、右边看详情",
+  "title_en": "Alpha Radar redesign: pick on the left, read on the right",
+  "items": [
+   {
+    "type": "improve",
+    "zh": "机会看板和案例库改成左边列表、右边详情，直接在列表里切换标的，配色和宏观仪表盘、发射台矩阵统一；每个标的先看一句话、资金参与方式、30 天收入、评分区间和相近历史案例，再看收入走势、为什么在看和最大的风险。",
+    "en": "The board and case library now use a list on the left and details on the right, styled like the rest of the site. Each item leads with a one-liner, how capital can take part, 30-day revenue, score ranges and the closest historical cases, followed by the revenue chart, why it is here and the biggest risk."
+   },
+   {
+    "type": "improve",
+    "zh": "每个标的带官网、X 和 DefiLlama 链接（官网只留域名首页，不带别人的推荐码）和项目 logo（取不到就显示首字母）。",
+    "en": "Each item links to its website (domain root only, no referral codes), X and DefiLlama, and shows the project logo (initials when unavailable)."
+   },
+   {
+    "type": "improve",
+    "zh": "完整的打分明细、门槛、研究补证、分类依据、四个问题、历史对照区间、监控计划、基础数据，以及案例库的散点图和全部案例明细表，都收进各页底部可展开的「完整拆解」里，没有删。打分流程、评估器、研究进度、方法论原文归到「框架与方法」页签。",
+    "en": "Full score tables, gates, research notes, class reasoning, the four questions, historical ranges, monitoring plan, raw data, and the case scatter plots and full table are all kept in expandable sections at the bottom. Scoring flow, evaluator, progress and the methodology text sit under the “Framework” tab."
+   }
+  ]
+ },
+ {
+  "version": "2026.11.14.11",
+  "date": "2026-11-14",
+  "notify": false,
+  "title_zh": "Alpha 雷达：新发现置顶 + 每日自动补证",
+  "title_en": "Alpha Radar: new items on top + daily research",
+  "items": [
+   {
+    "type": "improve",
+    "zh": "机会看板最上面加「新发现」：3 天内新进看板的不管补没补证都先显示；已补证、待补证的卡全部展开，卡上标明补证来源。每天自动补证一批（新发现 → 可投资 → 收入高的顺序），待补证清单每天生成，可以下载。",
+    "en": "The board now opens with “New” — items added in the last 3 days, shown before research; researched and pending cards are all expanded and labelled by reviewer. A daily research pass works through the queue (new → investable → highest revenue); the queue is downloadable."
+   }
+  ]
+ },
+ {
+  "version": "2026.11.14.10",
+  "date": "2026-11-14",
+  "notify": false,
+  "title_zh": "Alpha 雷达：加「投资补充」评分组",
+  "title_en": "Alpha Radar: investment supplement scores",
+  "items": [
+   {
+    "type": "improve",
+    "zh": "框架加一组「投资补充」：团队可识别度、代币经济（各 0–3 分，还没发币的代币经济记不适用），单独成组、不和原方法论的评分相加；融资只记事实不打分。机会卡、评估器、框架页都已显示，分数待研究补证。",
+    "en": "New “investment supplement” group: team identifiability and token economics (0–3 each; token economics is n/a before a token exists), kept separate from the original groups; funding is recorded as facts only. Shown on cards, evaluator and framework page; scores pending research."
+   }
+  ]
+ },
+ {
+  "version": "2026.11.14.9",
+  "date": "2026-11-14",
+  "notify": true,
+  "title_zh": "Alpha 雷达改版：机会看板 + 统一框架卡 + 案例库",
+  "title_en": "Alpha Radar rebuilt: opportunity board, one framework card, case library",
+  "items": [
+   {
+    "type": "new",
+    "zh": "首页改成机会看板：每个新东西（无币但有收入的协议、新上架协议）按同一套框架拆解打分——系统规则能判断的自动打（每条写明规则和证据），要判断的记 U 等研究补证，所以给区间和覆盖率，不按分数排名。资金能参与的（买币、质押、存入或交易赚积分、发售、挖矿）进「可投资机会」，暂时没有入口的进「预警观察」。",
+    "en": "The landing page is now an opportunity board: every new thing is scored on one framework — system rules where data can decide (each rule and its evidence shown), U where research is needed — so scores are ranges with coverage, never a ranking. Capital-accessible items go to Investable, the rest to Watchlist."
+   },
+   {
+    "type": "new",
+    "zh": "每张机会卡：分类、两组评分（逐项锚点 + 来源）、门槛、研究补证、四个问题、历史量级对照（最相近的历史案例后来走到什么估值、涨幅、到峰天数）、估值该用什么、持续监控（近 180 天协议收入）。",
+    "en": "Each card: classes, two score groups (anchor by anchor, with source), gates, research, the four questions, historical analogs (what the closest past cases reached), valuation guide, and monitoring (180-day revenue)."
+   },
+   {
+    "type": "new",
+    "zh": "案例库：25 个历史案例（含 3 个对照组）用同一张框架卡显示，加上接口算出的结果——估值峰值、首日 / 首周后倍数、相对 BTC、到峰天数、热度天数、TVL 峰值，以及创新级别 × 结果量级的对照表。框架页把整套方法论的维度、流程、打分规则结构化展示；评估器可以手动给任何项目打分。",
+    "en": "Case library: 25 historical cases (3 controls) on the same card with computed outcomes, plus innovation-level × outcome tables. The framework page lays out every dimension, step and scoring rule; the evaluator scores any project by hand."
+   }
+  ]
+ },
+ {
+  "version": "2026.11.14.8",
+  "date": "2026-11-14",
+  "notify": false,
+  "title_zh": "RWA：研究库导入，判断卡并入",
+  "title_en": "RWA: research library imported, judgment cards merged",
+  "items": [
+   {
+    "type": "new",
+    "zh": "新增「研究库」页签：362 条研究记录（主库 225 + 发现队列 137），能按名字、symbol、合约地址、链搜索，按分类、平台币状态筛选；每条展开看合约（角色 / 链 / 地址 / 核对级别）、交易场所和研究记录。实体按官网域名去重为 320 个。",
+    "en": "New Library tab: 362 research records (225 main + 137 discovery), searchable by name, symbol, contract address and chain, filterable by segment and platform-token status; each expands to contracts (role / chain / address / check level), venues and research notes. Entities deduplicated by official domain: 320."
+   },
+   {
+    "type": "data",
+    "zh": "研究标的增加 10-30 的 6 项判断（Maple、Pendle、Ondo、Curve、IXS、TickerSpring），和 5 个复核案例一样全部「待重核」：外部复核这一轮没有按原始来源重核，条件照 10-30 原文，不当当前结论。",
+    "en": "The watchlist adds the six 10-30 judgments (Maple, Pendle, Ondo, Curve, IXS, TickerSpring), all pending re-check like the five review cases: this external round did not re-check at source, so conditions are the 10-30 text, not current conclusions."
+   }
+  ]
+ },
+ {
+  "version": "2026.11.14.7",
+  "date": "2026-11-14",
+  "notify": false,
+  "title_zh": "Alpha 雷达：候选池上线（第一批 30 个无币协议）",
+  "title_en": "Alpha Radar: candidate pool (first 30 tokenless protocols)",
+  "items": [
+   {
+    "type": "new",
+    "zh": "新页签「候选池」：无币协议收入榜前 30 名逐条补证——发币表态、收入归谁、刷量 / 补贴迹象、普通人能以什么角色参与、最强反方、还没查清的事项和证据链接。研究观察 12 个、待核验 18 个；两档都不是推荐，也不代表会空投。雷达表加了候选池状态列。",
+    "en": "New “Pool” tab: the top 30 tokenless protocols reviewed one by one — token stance, who gets the revenue, wash / subsidy signs, the role open to users, the strongest counter-argument, open unknowns and evidence links. 12 watching, 18 to verify; neither is a recommendation or an airdrop signal. The radar table gains a pool-status column."
+   },
+   {
+    "type": "new",
+    "zh": "研究进度页写入 A4 判定标准（之后不改）：研究观察组和对照组比 90 天后的收入保持率，两组都满 20 个才判。10-16 首批九个冻结评分的 30 天复查全部「待判」：原卡没冻结合约和发现价，算不出来，不补造；以后进研究观察的有币对象当天就冻结这些字段。",
+    "en": "The progress page now fixes the A4 test (no later changes): 90-day revenue retention, watching group vs control, judged only with 20+ in each. The 30-day review of the nine frozen 10-16 candidates is all “pending”: the original cards did not freeze contract or discovery price, so no result is fabricated; tokened candidates will have these frozen on entry from now on."
+   }
+  ]
+ },
+ {
+  "version": "2026.11.14.6",
+  "date": "2026-11-14",
+  "notify": true,
+  "title_zh": "新板块：Alpha 雷达（替换叙事埋伏）",
+  "title_en": "New section: Alpha Radar (replaces Narratives)",
+  "items": [
+   {
+    "type": "new",
+    "zh": "Alpha 雷达和核心选币互补：核心选币看币安上有连续读数的成熟代币，这里看还没成熟的机会。第一版两张日更表：没发币但近 30 天协议收入 ≥ 10 万美元的协议（按母协议合并），和 DefiLlama 最近 14 天新上架的协议。只研究正规项目，不做部署后几小时的打狗盘。",
+    "en": "Alpha Radar complements Core Picks: Core covers mature tokens with continuous readings on Binance; this covers what is not mature yet. Two daily tables to start: tokenless protocols with ≥ $100K protocol revenue over 30 days (merged by parent) and protocols added to DefiLlama in the last 14 days. Established projects only, no launch-hour meme sniping."
+   },
+   {
+    "type": "new",
+    "zh": "线索台账：进过两张表的协议都登记首次发现日和首次读数，只追加不删除；之后每天回查，首次发现时没币、后来发了币的记一次「发币」。今天是基线日，从明天起才有「首次进榜」。",
+    "en": "Lead ledger: every protocol that appears in either table is logged with its first-seen date and reading, append-only; each day it is re-checked, and a token appearing later is logged as a launch. Today is the baseline; first-entry events start tomorrow."
+   },
+   {
+    "type": "new",
+    "zh": "方法论（《Alpha 标的筛选研究体系》网站版，去掉执行纪律）、案例库（历史机制案例、C01–C10 量化读数、10-16 冻结评分）和研究进度页一起上线。只摆读数、证据和未知项，不打分排名，不是买卖建议。/narrative/ 跳到 /alpha/。",
+    "en": "The screening framework (web edition, execution rules removed), a case library (historical mechanisms, C01–C10 readouts, frozen 10-16 scores) and a progress page go live with it. Readings, evidence and unknowns only; no scores or rankings; not trade advice. /narrative/ now redirects to /alpha/."
+   }
+  ]
+ },
+ {
+  "version": "2026.11.14.5",
+  "date": "2026-11-14",
+  "notify": true,
+  "title_zh": "涨跌腿：分阶段刻度 + 跌腿 45 天提示线",
+  "title_en": "Leg tracker: phase-matched ticks + a day-45 marker for down-legs",
+  "items": [
+   {
+    "type": "new",
+    "zh": "BTC 和山寨整体的卡片都加了刻度：跌腿有天数条和跌幅刻度，涨腿有涨幅刻度（天数条和 89 天线照旧）。刻度按 L2 当前状态选同阶段的历史腿——牛市里的跌腿和牛市比，熊市里的和熊市比；标「一半」「九成」两条线，并直接写出「比 N 条里的 M 条走得久 / 跌得深」。",
+    "en": "BTC and altcoin cards now carry ticks: down-legs get a duration bar and drop ticks, up-legs get gain ticks (the duration bar and day-89 line are unchanged). Ticks compare with legs from the same cycle phase, picked from the current L2 state, show the half and 9-in-10 marks, and state how many comparable legs this one already outlasted or outdid."
+   },
+   {
+    "type": "new",
+    "zh": "BTC 跌腿加 45 天提示线（假设级）：2017 年以来走过第 45 天的 9 条跌腿，8 条在之后 2–16 天内见底、再跌 2.1%–13.2%；例外是 2018-09 的投降段。只有 9 条样本，详情页写了作废条件；不进交易计划。山寨整体没检验过，不画提示线。",
+    "en": "A hypothesis-grade day-45 marker for BTC down-legs: of 9 down-legs since 2017 that passed day 45, 8 bottomed within 2–16 days, 2.1%–13.2% lower; the exception was the 2018-09 capitulation. Only 9 samples; the retirement rule is on the detail page. Not used by the trading plan. No marker for altcoins (untested)."
+   },
+   {
+    "type": "improve",
+    "zh": "/leg-tracker/ 撤掉山寨轮动窗口的规律说明一节（读数卡 11-13 已撤），页首导语同步去掉那一问。",
+    "en": "/leg-tracker/ drops the altcoin-window section (its reading card went on 11-13), and the intro no longer asks about it."
    }
   ]
  },

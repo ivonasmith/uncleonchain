@@ -9,6 +9,9 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
 - 推送前本地跑一遍 `LP_DATA=$PWD/data LP_OUT=$PWD/build python3 pipeline/出网站.py`，用 Playwright 截图自查（Chromium 在 /opt/pw-browsers/chromium）。
 - 数字先自己核对再说；拿不到真实数据的指标标「待接入」，绝不编数字或拿近似值冒充。
 - 只给数据和过程记录，不写买卖建议。
+- **SEO（2026-11-15 起，所有会话都要遵守）**：新建 / 改页面前先读 `docs/SEO规范.md` 的「板块约定」——页面一律走 `出网站.page()`、实体要有真实路径、
+  首屏数字写进 HTML 不能只有「读取中…」、description 不写操作性措辞。head / sitemap / 结构化数据的基建只在 `出网站.py` 统一做，板块里别另写一套。
+- **备份**：方案和恢复手册在 `docs/备份方案.md`；新增不可再生的数据（自录历史、人工登记）或新 secret / 放行域名，同步更新其中的资产清单和环境清单。
 
 ## 结构
 
@@ -49,9 +52,10 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
   B 结尾且 2026-06-11 起上市的代币化股票不入篮 `ALT_STOCK_FROM`，其余参数用脚本默认）。700 来个币的日线缓存 `leg/leg_alt_cache.csv`（~30MB，gitignore，走 actions/cache）。
   卡片里的「山寨整体」模块是站点自写（`leg.js` 的 `altLegModuleHTML` / 文案 `LT`），只用百分比，不展示指数点位。校准用 `--alt-calib --alt-scan`（结果 `leg/leg_alt_report.txt`，不进仓库）。
   宏观页顶部（大叔 11-10 定）：「周期里的涨跌腿」图 `leg_cycle_chart`（价格按涨 / 跌腿分色，背景 = L2 状态，价格线用 l2_series 的 Coin Metrics 收盘）→「短期 · 波段」读数卡（只放 BTC 涨跌腿 + 山寨整体，
-  山寨轮动窗口 11-13 起连详情页的读数卡也去掉，只留规律说明一节；转换脚本 gen_leg.py 里有对应规则，设计稿换版不会带回来）→「长期 · 周期」四层综合研判 → 紧接「结合短期」`leg_short_context`（11-11 大叔定 A 方案：只摆历史位置和剩余空间，**不写买入 / 止盈等动作**；位置对比用 2010 起全部同类腿，剩余空间只用 2017-08 起的；长短期方向相反时多一句「不矛盾」）。卡片配色 11-10 起全用站点变量，不再用设计稿海报色。
+  山寨轮动窗口 11-13 起连详情页的读数卡也去掉，11-14 规律说明一节也撤掉；转换脚本 gen_leg.py 里有对应规则，设计稿换版不会带回来）→「长期 · 周期」四层综合研判 → 紧接「结合短期」`leg_short_context`（11-11 大叔定 A 方案：只摆历史位置和剩余空间，**不写买入 / 止盈等动作**；位置对比用 2010 起全部同类腿，剩余空间只用 2017-08 起的；长短期方向相反时多一句「不矛盾」）。卡片配色 11-10 起全用站点变量，不再用设计稿海报色。
   读数卡放宏观页最上面、四层综合研判之上（`leg_macro_card`，大叔 11-08 定：这是用户最直观的结论）+ 首页卡片（`leg_home_card`）；详情页 /leg-tracker/（`出网站.build_leg_tracker`，挂在宏观下，不单独占导航），都由 `leg/web/leg.js` 取数渲染（样式 `leg/web/leg.css`，全收在 `.lg` 下，变量 `--g-*`）。
   **数据字段、文案（T.zh / T.en）、STATS / ALT 统计数字、状态规则照设计稿，不许改**；统计只在研究文档升版时改并同步 `STATS_ASOF` + 更新日志。停更 = asof 比今天早 3 天以上（浏览器里判断）。
+  卡片刻度（大叔 11-14 定）：`出网站.leg_scale` 按 L2 当前状态（L2_BULLISH 偏多 → 牛市阶段，否则熊市阶段，和「结合短期」同口径）取同阶段已走完的腿——BTC 2017-08 起、山寨整体指数 2018-08 起——写进站点版 `site/data/leg_latest.json` 的 `site_scale`（分位 + 全部天数 / 幅度，原始 data/leg 不动），`leg.js` 的 `dnScaleHTML` / `upScaleHTML` / `altScaleHTML` 画：幅度 = 四条分位线（只标「一半」「九成」，英文 Half / 9 in 10，不写 P90 这类行话）+ 一句「比 N 条里的 M 条走得久 / 跌得深」；天数 = 提示线（BTC 涨腿 89 天照设计稿；BTC 跌腿 45 天 `DN45`，假设级，证据是 2017 起 9 条，作废条件在详情页 #d45；山寨不画线）。配色照原回撤条（冷色渐深，超 P90 跌腿红 / 涨腿琥珀）。45 天线不进交易计划，要进先让 project 写进《操作规格》。
   设计稿换版时照原样拆：pure 函数 + STATS/T + 渲染片段原样搬进 leg.js，只改取数 / 预览删除 / 颜色变量。三个口径常量（THR_EQ / D0_INCLUDE_IGNITION / IGN_GAP）用脚本默认值，上线前 ACCEPTANCE 四个回放（--asof 2026-09-25～28）已全部对上；改规则先跑 `--selftest` 和回放。红线：不出现挂单 / 仓位 / 止损，不给个币名单。
 - `core/`：核心选币观测台（大叔 2026-11-14 交付：Notion《核心标的基本面与叙事追踪》+ 原型 obs.html + volume_rank.py）。`core-daily.yml` 每天 UTC 04:13 跑 `core/core_daily.py`
   → `data/core/core_latest.json`（当前读数）、`series/<币>.json`（详情页走势）、`core_history.json`（评分 / 成交额排名每天一行，不回填）→ 出网站复制到 `/data/core/` 并注入 `gates`（`出网站.core_gates`：L2 状态熊底区 / 熊末→牛初才过、L1 净流动性闸门）。
@@ -73,11 +77,55 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
   五大类 共识储备 / 主流公链 / 现金流有用（7 个子类）/ 博弈控盘（叙事 / 反身性 / 控盘）/ 注意力情绪；入场 = 币安上市 + 90 日成交额排名中位 ≤ 100，每类（子类）流动性前 3，共识全列，原观测池保留。页签 #list，首页摘要卡替换原「埋伏仓候选」。
   机制拆解卡（博弈控盘型，先 TAO / WLD）：`tools/core_mech/mech.py`（只在 Actions 跑：taostats 要原始 Authorization 头、Etherscan key 在 URL 里）→ `data/core/mech.json`，页面 #mech/TAO。静态事实出自 `core/research/TAO_WLD供给与排放核查_20261114_codex.md`。
   **CoinMarketCap data-api 不许用**（安全审查拦过）。
+- `alpha/`：Alpha 雷达（2026-11-14，替换「叙事埋伏」，/narrative/ 跳 /alpha/）。和核心选币互补：核心 = 币安上有连续读数的成熟代币；Alpha = 没成熟的机会（无币协议、新协议 / 产品 / 机制、升级、上所）。
+  **大叔 11-14 定：只研究正规项目，不做部署后 0–6 小时 / 纯 MEME 打狗**（要做另起一套，不上网站）；Codex 的分钟级 alpha-worker 搁置。
+  `alpha-daily.yml` 每天 UTC 04:43 跑 `alpha/alpha_daily.py`（DefiLlama 协议列表 + dailyRevenue）→ `data/alpha/alpha_latest.json`（无币协议收入榜：本协议和母协议都没登记代币、30 天收入 ≥ 10 万美元、按母协议合并；新上架：listedAt 近 14 天）、
+  `alpha_leads.json`（线索台账，只追加不删，首日 11-14 = 基线；每天回查发币）、`alpha_history.json`（每天一行）。参数和剔除名单 `alpha/alpha_config.json`。
+  页面 `出网站.build_alpha`：/alpha/ 雷达、/alpha/cases/ 案例库、/alpha/method/ 方法论、/alpha/progress/ 研究进度，文档在 `alpha/research/*.md`（`core_md` 渲染）；首页卡片 `alpha_home_card`。
+  方法论 = Codex 交付《Alpha标的筛选研究体系》全面版，网站版去掉执行纪律（执行卡 / 固定止损止盈参数）。红线：不打分排名、不公开「执行评估」档、不点名没有协议级读数的小市值币、不写买卖 / 仓位 / 止损。
+  分工（大叔 11-14 定）：代码和推送网站 Claude 做，查证和出数据交 Codex，任务包 `alpha/review/README.md`（T1 发现源验收、T2 10-16 冻结评分 D30 复查、T3 无币协议前 30 补证），结果回到 `alpha/review/*.json` 再由 Claude 并入。
+  11-14 三个任务已交回并入：候选池 /alpha/pool/（`出网站.alpha_pool`，读 `alpha/review/*_checks.json`；`alpha_daily.py` 把 verdict 写进台账 `status` / `status_history`，只追加）；研究观察 12、待核验 18。
+  A4 判定标准已写死在 `研究进度.md`（研究观察组 vs 对照组 90 天收入保持率，各 ≥ 20 个才判），`alpha_history.json` 每天的 `rev30` 就是它的数据，**别删这个字段**。T2 九个全部待判（原卡没冻结合约 / 发现价）。
+  A2 事件流（11-14 接）：`alpha_daily.py` 的 `feed_ethresearch` / `feed_snapshot` / `feed_binance` → `data/alpha/alpha_feed.json`（只追加，记原始发布时间 + 首次抓到时间 = 发现延迟，首跑为基线），过滤词在 `alpha_config.json` 的 `feeds`；雷达页 `alpha_feed_html`。
+  **11-14 改版（大叔：要功能型网站，主角是新东西，框架维度和流程都做进网站）**：框架单一来源 `alpha/framework.json`（方法论逐节结构化 + 资金参与方式 entry + 自动打分规则 auto_rules + 类目映射 category_map + 历史量级 outcomes）；
+  机会卡 `alpha/opps.py`（日更末尾自动跑）→ `data/alpha/opps.json` + `opp_series.json`；分栏 invest（有资金参与方式）/ watch（暂无，预警观察）/ reject；研究结论优先于自动规则，自动分标「系统」。
+  历史案例 `alpha/cases.json`（25 个，含 3 个对照组；分数是 Claude 回溯 T+90 视角，待 Codex 盲评）+ `alpha/case_metrics.py`（手动跑，价格 coins.llama.fi + 缺日用 Coin Metrics 补、P0 取最早源、首周后倍数、BTC 用 Coin Metrics）→ `case_metrics.json` / `case_series.json`。
+  页面：/alpha/ 机会看板、/alpha/opp/#id 机会卡、/alpha/radar/ 雷达、/alpha/cases/ 案例库（同一卡片）、/alpha/framework/ 框架（`出网站.alpha_framework_html` 从 framework.json 生成）、/alpha/eval/ 评估器、/alpha/progress/；前端 `alpha/web/alpha.js` + `alpha.css`。/alpha/pool/ 跳 /alpha/。
+  大叔 11-14 定的两点（Claude 定）：团队可识别度、代币经济作为「投资补充」单列（还没进 framework.json，待加）；需求独立性自动打 2 的门槛 = 30 天收入 ≥ 10 万美元，攒满 4 周周复盘数据再决定要不要调。
+  Notion「Alpha 雷达」入口页 https://app.notion.com/p/418b72fc8cae8152b4c2f062d2ac389c（11-14 建，私有草稿，大叔可移动）：机会卡 / 线索台账 / 历史案例库 / 周复盘 / 数据源台账 / 规则版本 六个数据库 + 备份附件；行数据用 `alpha/notion_rows.py` 生成，数据源 ID 写在脚本头。
+  Notion 同步走服务器（11-14）：`alpha/notion_sync.py`（Notion REST API，repo secret `NOTION_TOKEN`，入口页要连接该集成）在 alpha-daily 里每天同步机会卡 + 线索，每周一出 weekly 并同步周复盘；没 token 跳过，失败不影响日更。
+  周复盘的「结论」由复盘会话写进 `data/alpha/weekly/<周>.md` 末节，同步时只在 Notion 为空才带入（不覆盖人写的）。本仓库 NOTION_TOKEN 11-14 已配好，首跑实测：机会卡更新 34、线索更新 33（按键找到已有行就更新，不重复新建）。
+  每周复盘定时任务 trig_01Us4KZPynk7ohXsPbGAoFLN（每周一新加坡 09:47，新会话）：跑 weekly.py → 写结论 → 推 main（Notion 交给 Actions；会话有 Notion 工具也可以直接写）。
+  看板（大叔 11-14 定：没补证的也要马上能看到，不能藏）：最上面「新发现」（3 天内新进、不分状态）→ 已补证 → 待补证，全部展开；卡上标补证来源（Claude 自动 / Codex）。
+  每日自动补证 trig_01T8oc3EhUfm7KVqLxWzcdhM（每天新加坡 13:47，Sonnet，新会话）：按 `data/alpha/research_queue.json`（opps.py 每天生成，排序 新发现 → 可投资 → 收入高，含给 Codex 的提示词和交付格式）取前 8 个，
+  交 `alpha/review/auto_<日期>_checks.json`（reviewer = claude-auto），推 main 触发 alpha-daily 重算。研究文件可直接带 `scores`（M A F E G T TM TE，每个带 why / src）和 `entry`，opps.py 优先采用。
+  想加快就把 research_queue.json 交给 Codex，交回 `<日期>_checks.json` 放 alpha/review/ 即可（同一格式）。
+  给 Fable 的检查清单 `alpha/review/fable_checklist.md`。
+  页面布局（11-14 大叔定）：看板 / 案例库是左列表右详情（`boardList` / `boardDetail`，`caseDetail`），核心信息在上；**改版时收起来的参数一律放进底部「完整拆解」/ 折叠区，不许删**（大叔要自己看哪些被藏了）。
+  官网链接 = DefiLlama `url` 只留域名首页（`opps.home`，不带推荐码），logo = DefiLlama `logo`（加载失败显示首字母）；案例的官网 / logo 手写在 `cases.json`。
+  **11-15 Fable 复核后改动（大叔点头）**：复核结果 `alpha/review/fable_findings_20261115.md`。发现来源加两个：`alpha_daily.py` ①b「有币 · 收入新起量」（key `s:`，参数 `alpha_config.surge`）、①c 手动线索 `alpha/manual_leads.json`（key `m:`，卡片 id `m-…`；大叔在推特看到的新玩法写这里，当天上看板）。
+  自动规则 v2：D 不再自动打分（只记事实）；母协议有币的新上架未研究前进预警观察；相似度不用自动分（`alpha.js` `analogs`），没有研究分时只列同类目案例、给范围不给中位数。
+  投资补充：TM 团队 -1–3（-1 = 有已证实不良记录，`penalty`）；TE 更名「解锁与抛压」（只看流通比例和解锁，不评分配设计）。卡片顶部 `mTile`（创新级别 M）+ `radar`（八维雷达图）。大叔：炒新不炒旧，M 最重要，补证优先查 M。
+  案例指标：日期标签按「最近 0 点的前一天」（= 当日收盘），主口径 `mult_p7_365`；估值两种口径都含未解锁份额，流通口径待补（要在 cases.json 手工登记峰值日流通量）。
+  **来源体系（大叔 11-15 定：不天天扫合约，找关键人和关键信息；本站板块的数据自己用；Alpha 自己维护一份来源）**：来源台账 `alpha/sources.json`（type = site / manual / people / data / feed，状态 on / planned / building / paused），
+  战绩 `opps.py` 每天算到 `data/alpha/sources_stats.json`，雷达页最上面 `出网站.alpha_sources_html`。站内板块 `alpha/site_sources.py`（发射台矩阵 lp_new / lp_accel / lp_chain、AI Agent ai_new / ai_spike，参数 `alpha_config.site_sources`；key `x:<板块>:<slug>`，卡片 id `x-…`）；
+  和已有行同一协议时不另开卡，行上记 `boards`，台账记 `board_seen`，基线日就在榜的也出卡。RWA、聪明钱板块上线后在 site_sources.py 各加一个函数并把 sources.json 的状态改 on。
+  关键人名单任务包 `alpha/review/sources_task.md`（S1 Grok 查 X 原帖 → S2 Codex 核对 → 交 `alpha/review/sources_people.json`；入选 = 2 个以上案例有已核实的早期实质帖），并入后每人在 sources.json 单列一行。
+  数据管理：原始层（data/alpha 接口原样）→ 清洗层（线索台账、案例指标）→ 应用层（机会卡、周复盘）。每周复盘 `alpha/weekly.py` → `data/alpha/weekly/<周>.json/.md`；Notion 单独的「Alpha 雷达」入口页（大叔：每个板块各自一个入口，不和别的板块混放）。
+  云端环境 uncleonchain 11-14 已放行 ethresear.ch、hub.snapshot.org、www.binance.com、api.bybit.com、api-manager.upbit.com；Bybit（CloudFront 按国家拦）、Upbit（Cloudflare 人机验证）实测不通，没接。Binance pageSize 超过 20 会 400。
 - 发射台活动温度（`pipeline/周期观察.py` 数据与热潮识别、`周期仪表盘.py` 展示）：每日更新。序列 = 研究快照 `content/cycle/snapshot.json`（截至 2026-10-17，sha256 在 manifest）+ 之后接 `发射台矩阵.json`「历史」的类目合计；热潮规则重算快照区间 27 轮逐字段对上（对不上会打 ⚠️）。
   仪表盘 `周期仪表盘.hero` 放在矩阵页最上面（先看温度再看细节），周期页 /launchpad/cycle/ 看这一轮、各阶段时长、历史；全站统一叫「发射台活动温度」，颜色用 `--cyc-*` 变量，文案要大白话。「钱在哪」= `出网站.money_where`。
 - 发射台长周期（2026-10-29）：`周期观察.long_view` / `coverage`。全部历史 2021-09-18 起只作背景，比高低只用可比段（`COMPARABLE_FROM` = 2024-03-01，pump.fun 开始报数；之前只有 1–6 家融资型平台报数）；
   长周期读数只作描述（距最高、常态下沿 Q05 的倍数、可比段最低），不合成分数、不贴季节。近期温度仍是 730 天 Q05–Q95（≥365 天）。覆盖 < 95% 时第一屏提示。
-- AI Agent 页 /ai-agent/（`出网站.build_ai_agent`）：读 `public/ai-agent/monitor/core_series.json`（交接包 `tools/agent-id` 导出，原样页面也发布在 /ai-agent/monitor/）。
+- `aiagent/`：AI Agent 赛道监控（2026-11-14 大叔定为重点赛道：全面监控发展情况和机会，现有东西保留）。/ai-agent/ 四个页签（`出网站.build_ai_agent`，`aia_head`）：
+  赛道总览 `aia_overview`（读 `data/aiagent/`）/ 币安 Agent ID /ai-agent/agent-id/（`agent_id_body`，就是原来的 /ai-agent/ 内容）/ 发射台功能卡 /ai-agent/launchpads/（Codex v2 的 18 张卡 + 功能矩阵，
+  `aiagent/research/launchpad_cards_v2.json` 写入即冻结；BNB 门禁平台卡片附本站链上读数 `aia_card_live`）/ 研究进度 /ai-agent/research/（`aiagent/research/研究进度.md`，缺口 G1–G10）。首页卡片 `aia_home_card`。
+  `aiagent-daily.yml` 每天 UTC 05:13 跑 `aiagent/aiagent_daily.py` → `aiagent_latest.json`、`fees_series.json`（四层逐日手续费全历史）、`aiagent_history.json`（CoinGecko 分类市值等每天一行，11-14 起自录不回填）。
+  四层 = 发行（发射台）/ 服务（Agent 雇 Agent、x402、推理额度）/ 资管（DeFAI）/ 框架，口径和协议归层在 `aiagent_config.json`，DefiLlama「AI Agents」类目新收录的自动并入 commerce 层；
+  Flap / Four.meme / Pump.fun 全平台数只作参照不进合计（Codex 同口径）。环比看去峰（各 30 天窗口去掉最高一天），前 30 天 < $1,000 不显示环比。监控地图 + 生命周期事件 `aiagent_registry.json`（只收有日期和出处的，待核日期在 open_items）。
+  分工同 Alpha：查证和找数据源交 Codex，任务包 `aiagent/review/README.md`（A1 服务层真实性 · A2 x402 / ERC-8004 数据源 · A3 ACP 逐日服务收入 · A4 非 BNB 发射台使用量 · A5 时间线与 C 级证据升级 · A6 框架清单），结果回 `aiagent/review/*.json`。
+  Codex v2 报告在 /reports/2026-11-12-ai-agent-launchpad-v2/。红线：手续费 ≠ 服务收入，不打分排名，不写买卖。
+- 币安 Agent ID 页 /ai-agent/agent-id/（`出网站.agent_id_body`）：读 `public/ai-agent/monitor/core_series.json`（交接包 `tools/agent-id` 导出，原样页面也发布在 /ai-agent/monitor/）。
   旧的 self-hosted 模板 `tools/agent-id/handoff/` 作废不用；U = 没取到完整数据，不当 0。
   云端版（2026-11-06 交接包）：`tools/agent-id-cloud` + `.github/workflows/agent-id-daily.yml`（GitHub-hosted，2026-11-09 起每天 UTC 00:20 唯一定时 + 手动，单独 concurrency 组 `agent-id-daily`）。
   节点 = 公共免费池优先（workflow 里 `AGENT_ID_RPC_PUBLIC`，开跑先探测 2026-10-20 的注册日志，查不到的剔除），`ALCHEMY_KEY` 只兜底；逐请求失败才换下一个，跑完日志里 `rpc_served` 报各节点承担了多少。
@@ -123,4 +171,4 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
    DefiLlama 稳定币分组（附注里有实际匹配到的币）、ETF（haturatu 镜像）、CME 升水（Yahoo 合约代码能否取到）是否都通；
    乐观度 z 在 2026-09-25 应约为 +0.49、净流动性约 $5.77T（研究报告 §7.1），对不上就查口径。
 2. 宏观 v2：Coinglass（多空比 / 爆仓，需 key）、Deribit 期权 P/C 与 IV。2026 年底复核净流动性闸门（规格 D1）。
-3. 叙事雷达：DefiLlama 无代币协议 × 收入增速筛选；Robinhood Chain / Arc 发射台大户地址追踪。
+3. Alpha 雷达：等 Codex T4（待核验 18 个补缺口 → `alpha/review/t4_checks.json`）和 T5（Bybit / Upbit 替代源）；EIPs / GitHub 版本源要 key（可用 Actions 的 GITHUB_TOKEN）。

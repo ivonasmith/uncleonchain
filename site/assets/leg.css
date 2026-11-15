@@ -172,3 +172,15 @@
 .lg .legbridge .lbt{font-size:12.5px;color:var(--ink2);margin-bottom:4px}
 .lg .legbridge .hz{display:inline-block;font-size:10px;color:var(--lime-ink);margin:0 8px 0 0}
 .lg .legbridge{margin-bottom:14px}
+/* 分阶段刻度 + 跌腿 45 天提示线（11-14）：天数条配色同涨腿天数条，中位 / P90 细刻度标在下面，45 天线照 89 天线样式 */
+.lg .track .pq{position:absolute;top:-3px;bottom:-3px;border-left:1px solid var(--g-muted);opacity:.85}
+.lg .track .pq span{position:absolute;top:17px;left:0;transform:translateX(-50%);font-size:10.5px;color:var(--g-muted);white-space:nowrap}
+.lg .d45s{font-size:12px;color:var(--warn);margin:-12px 0 2px}
+.lg .d45s span{color:var(--g-muted)}
+.lg .scap{margin:-18px 0 10px}
+.lg .brow.x .bg i{background:color-mix(in srgb,var(--dn) 70%,transparent)}
+.lg .upsc{padding-top:1px}.lg .upsc .meter{margin-top:18px}
+.lg .altsc .track{margin-bottom:0}.lg .altsc .meter{margin-top:50px}
+.lg .meter .tk.bare{opacity:.55}
+.lg .sread{font-size:12.5px;color:var(--g-text);margin:-16px 0 2px}.lg .sread b{font-family:var(--mono)}
+.lg .scap{margin:0 0 10px}

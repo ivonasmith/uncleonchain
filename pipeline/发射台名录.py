@@ -269,6 +269,39 @@ def _ds_blurb(e):
     return None
 
 
+NOT_SITE = ("defillama.com", "x.com", "twitter.com", "github.com", "memefees.com", "solanacompass.com", "dexsheet.com",
+            "lfg.cooking", "soltidy.com", "pumpfyi.com", "axiompro.app", "trenchfees.com", "bitquery.io", "gate.com", "kucoin.com")
+
+
+def ai_notes():
+    return _cached("ainotes", os.path.join(OC, "平台AI介绍.json"))
+
+
+def _ai_index():
+    if "aiidx" not in _CACHE:
+        idx = {}
+        for k, v in ai_notes().items():
+            keys = {k.lower(), slugify(k)}
+            for s in (v.get("内容") or {}).get("sources") or []:
+                d = domain(s.get("url") or "")
+                if s.get("kind") == "official" and d and not any(d == n or d.endswith("." + n) for n in NOT_SITE):
+                    keys.add(d)
+            for key in keys:
+                idx.setdefault(key, k)
+        _CACHE["aiidx"] = idx
+    return _CACHE["aiidx"]
+
+
+def ai_for(e):
+    """名录条目 → Grok / AI 写的研究摘要（平台AI介绍.json）：按 key、DefiLlama slug、名字、官网域名对。"""
+    idx = _ai_index()
+    cands = [e.get("key"), e.get("defillama"), e.get("profile"), (e.get("名称") or "").lower(), slugify(e.get("名称") or ""), domain(e.get("官网") or "")]
+    for c in cands:
+        if c and c.lower() in idx:
+            return ai_notes()[idx[c.lower()]]
+    return None
+
+
 def narrative(e, lang="zh"):
     """→ (一句话, 来源说明, 标签列表, X 账号)。"""
     prof = profiles().get(e.get("profile") or "", {})
@@ -284,9 +317,19 @@ def narrative(e, lang="zh"):
                 tags.append(t)
     if lang == "en":
         tags = [TAGS[t][0] if t in TAGS else t for t in tags]
+    ai = ai_for(e)
+    aic = (ai or {}).get("内容") or {}
+    if aic and not prof.get("只用人工标签"):
+        for t in auto_tags(aic.get("one_liner_en"), aic.get("differentiation_en"), aic.get("fee_split_en"), " ".join(aic.get("selling_points_en") or [])):
+            t2 = TAGS[t][0] if (lang == "en" and t in TAGS) else t
+            if t2 not in tags:
+                tags.append(t2)
     if prof.get("叙事"):
         txt = prof["叙事"] if lang == "zh" else (prof.get("叙事EN") or prof["叙事"])
         src = (prof.get("来源") or "人工整理") if lang == "zh" else (prof.get("来源EN") or "Curated")
+    elif aic.get("one_liner_zh"):
+        txt = aic["one_liner_zh"] if lang == "zh" else (aic.get("one_liner_en") or aic["one_liner_zh"])
+        src = (f"Grok 整理（{ai.get('日期')}），未人工核实" if lang == "zh" else f"Compiled by Grok ({ai.get('日期')}), not verified")
     elif llama:
         txt, src = llama, ("DefiLlama 介绍（英文原文）" if lang == "zh" else "DefiLlama description")
     elif site:
@@ -476,7 +519,8 @@ def _ts(v):
 def fetch_platform_details(cap=45):
     matrix = load(os.path.join(DATA, "发射台矩阵.json"), {}) or {}
     info = dict(platform_info())
-    slugs = list(dict.fromkeys(platform_slugs(matrix) + list(info)))     # 进过门槛的一直保留、继续更新
+    known = {p["slug"] for p in matrix.get("协议") or []}
+    slugs = list(dict.fromkeys(platform_slugs(matrix) + list(info) + [k for k in ai_notes() if k in known]))   # 进过门槛的一直保留；有 Grok 介绍的也做页面
     stale = (dt.date.today() - dt.timedelta(days=PLATFORM_REFRESH)).isoformat()
     today = dt.date.today().isoformat()
     n = 0

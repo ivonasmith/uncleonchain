@@ -1,0 +1,61 @@
+# AI Agent 赛道监控：每天 UTC 05:13 跑 aiagent/aiagent_daily.py → data/aiagent/（aiagent_latest.json、fees_series.json、aiagent_history.json），再重出网站。
+# 来源 DefiLlama 逐日手续费（四层口径在 aiagent/aiagent_config.json）+ CoinGecko 分类快照 + 本站 Agent ID 采集摘要（public/ai-agent/monitor）。
+name: AI Agent 赛道日更
+
+on:
+  schedule:
+    - cron: "13 5 * * *"
+  workflow_dispatch: {}
+  push:
+    branches: [main]
+    paths:
+      - "aiagent/**"
+      - ".github/workflows/aiagent-daily.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-pipeline
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 跑 AI Agent 赛道日更
+        run: python3 aiagent/aiagent_daily.py
+
+      - name: 重出网站（看板素材 → 网站）
+        env:
+          LP_DATA: ${{ github.workspace }}/data
+          LP_OUT: ${{ github.workspace }}/build
+        run: |
+          python3 pipeline/出看板.py
+          python3 pipeline/出网站.py
+
+      - name: 提交 data/aiagent 与 site/
+        run: |
+          git config user.name "uncleonchain-bot"
+          git config user.email "bot@uncleonchain.com"
+          git add data/aiagent site/
+          git diff --cached --quiet && echo "没有变化，跳过提交" && exit 0
+          git commit -m "AI Agent 赛道日更 $(date -u +%Y-%m-%d)"
+          BASE=$(git rev-parse HEAD~1)   # 本次出网站用的代码版本
+          git pull --rebase --autostash -X theirs origin main
+          # 运行期间别人推了代码：用最新代码重出一次网站再推，别拿旧代码出的页面盖掉新的（2026-11-10 出过）
+          if ! git diff --quiet "$BASE" HEAD -- pipeline leg core alpha rwa aiagent config content assets; then
+            LP_DATA="$GITHUB_WORKSPACE/data" LP_OUT="$GITHUB_WORKSPACE/build" python3 pipeline/出看板.py
+            LP_DATA="$GITHUB_WORKSPACE/data" LP_OUT="$GITHUB_WORKSPACE/build" python3 pipeline/出网站.py
+            git add site/ && (git diff --cached --quiet || git commit -m "重出网站（运行期间有代码更新）")
+          fi
+          git push

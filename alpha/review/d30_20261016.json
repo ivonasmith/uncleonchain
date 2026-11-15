@@ -1,0 +1,537 @@
+[
+  {
+    "id": "BEM",
+    "chain": "BSC",
+    "contract": "U",
+    "p0_date": "2026-10-16",
+    "p0": "U",
+    "p0_source": "U",
+    "rel_peak": "U",
+    "days_ge_2x": "U",
+    "label": "待判",
+    "missing": [
+      "截至核对日尚未完成 D30；2026-10-16 的日期级起点加 30 天为 2026-11-15，精确起点时分秒 U。",
+      "原卡未冻结用于二级行情回测的唯一资产/合约或等效链上标识。",
+      "原卡未冻结数值发现价 p0、报价币、价格提供方及具体市场/池。",
+      "缺同一冻结价格源的完整 30 天代币/BTC 同时点价格及完整 UTC 自然日收盘序列。"
+    ],
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+    "original_name": "BEM / TapeOut",
+    "original_role": "BSC：组件组合、电路生产与 BEM 挖矿；不是单纯买币",
+    "frozen_score_recomputed": false,
+    "p0_timestamp_utc": "U",
+    "d30_date_if_date_only": "2026-11-15",
+    "d30_timestamp_utc": "U",
+    "progress": "已完成冻结卡与方法口径复查；正式价格结果未可计算。",
+    "method": {
+      "rel_peak": "max_t[(P_token(t)/P_token(t0))/(P_BTC(t)/P_BTC(t0))]，同一时点同步。",
+      "days_ge_2x": "原发现后窗口内，绝对收盘价 >=2*p0 的完整 UTC 自然日个数。",
+      "A": "rel_peak >=5 且 days_ge_2x >=3",
+      "B": "2 <=rel_peak <5 且 days_ge_2x >=3",
+      "否": "窗口到期、关键字段齐全且不满足 A/B 才能判否。",
+      "待判": "未到期或关键数据缺失；不得用区间 high 与 BTC close 拼正式结果。"
+    },
+    "evidence": [
+      {
+        "fields": [
+          "original_name",
+          "original_role",
+          "chain",
+          "contract",
+          "p0_date",
+          "p0",
+          "p0_source"
+        ],
+        "url": "attachment://Alpha雷达_Codex任务包/附件/案例库.md#四、2026年10月的新机会",
+        "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+        "sha256": "b9475af65623086df19a1e3a675490d9999c99ddcf191de87c1721cb776389da",
+        "note": "用户指定冻结原卡；缺失字段保持 U。10-26 执行证据地址、10-12 其他价格样本均不能作为 10-16 的原 p0。"
+      },
+      {
+        "fields": [
+          "method",
+          "label"
+        ],
+        "url": "attachment://Alpha雷达_Codex任务包/附件/Alpha标的筛选研究体系.md#附录二：数据、收益与结果定义",
+        "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+        "note": "附录二 C；到期日仅为已知日期的日历加法，非补造精确 t0。"
+      }
+    ]
+  },
+  {
+    "id": "FWA",
+    "chain": "Ethereum",
+    "contract": "U",
+    "p0_date": "2026-10-16",
+    "p0": "U",
+    "p0_source": "U",
+    "rel_peak": "U",
+    "days_ge_2x": "U",
+    "label": "待判",
+    "missing": [
+      "截至核对日尚未完成 D30；2026-10-16 的日期级起点加 30 天为 2026-11-15，精确起点时分秒 U。",
+      "原卡未冻结用于二级行情回测的唯一资产/合约或等效链上标识。",
+      "原卡未冻结数值发现价 p0、报价币、价格提供方及具体市场/池。",
+      "缺同一冻结价格源的完整 30 天代币/BTC 同时点价格及完整 UTC 自然日收盘序列。"
+    ],
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+    "original_name": "FWA",
+    "original_role": "Ethereum：今天试图进入原始 15 天发行奖励的参与者（已结束路线复核）；V2 不在本行评级",
+    "frozen_score_recomputed": false,
+    "p0_timestamp_utc": "U",
+    "d30_date_if_date_only": "2026-11-15",
+    "d30_timestamp_utc": "U",
+    "progress": "已完成冻结卡与方法口径复查；正式价格结果未可计算。",
+    "method": {
+      "rel_peak": "max_t[(P_token(t)/P_token(t0))/(P_BTC(t)/P_BTC(t0))]，同一时点同步。",
+      "days_ge_2x": "原发现后窗口内，绝对收盘价 >=2*p0 的完整 UTC 自然日个数。",
+      "A": "rel_peak >=5 且 days_ge_2x >=3",
+      "B": "2 <=rel_peak <5 且 days_ge_2x >=3",
+      "否": "窗口到期、关键字段齐全且不满足 A/B 才能判否。",
+      "待判": "未到期或关键数据缺失；不得用区间 high 与 BTC close 拼正式结果。"
+    },
+    "evidence": [
+      {
+        "fields": [
+          "original_name",
+          "original_role",
+          "chain",
+          "contract",
+          "p0_date",
+          "p0",
+          "p0_source"
+        ],
+        "url": "attachment://Alpha雷达_Codex任务包/附件/案例库.md#四、2026年10月的新机会",
+        "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+        "sha256": "b9475af65623086df19a1e3a675490d9999c99ddcf191de87c1721cb776389da",
+        "note": "用户指定冻结原卡；缺失字段保持 U。10-26 执行证据地址、10-12 其他价格样本均不能作为 10-16 的原 p0。"
+      },
+      {
+        "fields": [
+          "method",
+          "label"
+        ],
+        "url": "attachment://Alpha雷达_Codex任务包/附件/Alpha标的筛选研究体系.md#附录二：数据、收益与结果定义",
+        "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+        "note": "附录二 C；到期日仅为已知日期的日历加法，非补造精确 t0。"
+      }
+    ]
+  },
+  {
+    "id": "Clanker Droids",
+    "chain": "EVM / Base 等（原卡未固定唯一链）",
+    "contract": "U",
+    "p0_date": "2026-10-16",
+    "p0": "U",
+    "p0_source": "U",
+    "rel_peak": "U",
+    "days_ge_2x": "U",
+    "label": "待判",
+    "missing": [
+      "截至核对日尚未完成 D30；2026-10-16 的日期级起点加 30 天为 2026-11-15，精确起点时分秒 U。",
+      "原卡未冻结用于二级行情回测的唯一资产/合约或等效链上标识。",
+      "原卡未冻结数值发现价 p0、报价币、价格提供方及具体市场/池。",
+      "缺同一冻结价格源的完整 30 天代币/BTC 同时点价格及完整 UTC 自然日收盘序列。",
+      "原研究对象为协议/生态或创作者角色，尚未选定具体二级标的；不能用任一生态币替代。"
+    ],
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+    "original_name": "Clanker Droids",
+    "original_role": "EVM / Base 等：创建和运营 agent token 的创作者；不是平台币持有人",
+    "frozen_score_recomputed": false,
+    "p0_timestamp_utc": "U",
+    "d30_date_if_date_only": "2026-11-15",
+    "d30_timestamp_utc": "U",
+    "progress": "已完成冻结卡与方法口径复查；正式价格结果未可计算。",
+    "method": {
+      "rel_peak": "max_t[(P_token(t)/P_token(t0))/(P_BTC(t)/P_BTC(t0))]，同一时点同步。",
+      "days_ge_2x": "原发现后窗口内，绝对收盘价 >=2*p0 的完整 UTC 自然日个数。",
+      "A": "rel_peak >=5 且 days_ge_2x >=3",
+      "B": "2 <=rel_peak <5 且 days_ge_2x >=3",
+      "否": "窗口到期、关键字段齐全且不满足 A/B 才能判否。",
+      "待判": "未到期或关键数据缺失；不得用区间 high 与 BTC close 拼正式结果。"
+    },
+    "evidence": [
+      {
+        "fields": [
+          "original_name",
+          "original_role",
+          "chain",
+          "contract",
+          "p0_date",
+          "p0",
+          "p0_source"
+        ],
+        "url": "attachment://Alpha雷达_Codex任务包/附件/案例库.md#四、2026年10月的新机会",
+        "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+        "sha256": "b9475af65623086df19a1e3a675490d9999c99ddcf191de87c1721cb776389da",
+        "note": "用户指定冻结原卡；缺失字段保持 U。10-26 执行证据地址、10-12 其他价格样本均不能作为 10-16 的原 p0。"
+      },
+      {
+        "fields": [
+          "method",
+          "label"
+        ],
+        "url": "attachment://Alpha雷达_Codex任务包/附件/Alpha标的筛选研究体系.md#附录二：数据、收益与结果定义",
+        "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+        "note": "附录二 C；到期日仅为已知日期的日历加法，非补造精确 t0。"
+      }
+    ]
+  },
+  {
+    "id": "Charms",
+    "chain": "Bitcoin 等（原卡未固定唯一链）",
+    "contract": "U",
+    "p0_date": "2026-10-16",
+    "p0": "U",
+    "p0_source": "U",
+    "rel_peak": "U",
+    "days_ge_2x": "U",
+    "label": "待判",
+    "missing": [
+      "截至核对日尚未完成 D30；2026-10-16 的日期级起点加 30 天为 2026-11-15，精确起点时分秒 U。",
+      "原卡未冻结用于二级行情回测的唯一资产/合约或等效链上标识。",
+      "原卡未冻结数值发现价 p0、报价币、价格提供方及具体市场/池。",
+      "缺同一冻结价格源的完整 30 天代币/BTC 同时点价格及完整 UTC 自然日收盘序列。",
+      "原研究对象为协议/生态或创作者角色，尚未选定具体二级标的；不能用任一生态币替代。"
+    ],
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+    "original_name": "Charms",
+    "original_role": "Bitcoin 等：应用开发与资产发行；尚未选定散户铸造资产",
+    "frozen_score_recomputed": false,
+    "p0_timestamp_utc": "U",
+    "d30_date_if_date_only": "2026-11-15",
+    "d30_timestamp_utc": "U",
+    "progress": "已完成冻结卡与方法口径复查；正式价格结果未可计算。",
+    "method": {
+      "rel_peak": "max_t[(P_token(t)/P_token(t0))/(P_BTC(t)/P_BTC(t0))]，同一时点同步。",
+      "days_ge_2x": "原发现后窗口内，绝对收盘价 >=2*p0 的完整 UTC 自然日个数。",
+      "A": "rel_peak >=5 且 days_ge_2x >=3",
+      "B": "2 <=rel_peak <5 且 days_ge_2x >=3",
+      "否": "窗口到期、关键字段齐全且不满足 A/B 才能判否。",
+      "待判": "未到期或关键数据缺失；不得用区间 high 与 BTC close 拼正式结果。"
+    },
+    "evidence": [
+      {
+        "fields": [
+          "original_name",
+          "original_role",
+          "chain",
+          "contract",
+          "p0_date",
+          "p0",
+          "p0_source"
+        ],
+        "url": "attachment://Alpha雷达_Codex任务包/附件/案例库.md#四、2026年10月的新机会",
+        "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+        "sha256": "b9475af65623086df19a1e3a675490d9999c99ddcf191de87c1721cb776389da",
+        "note": "用户指定冻结原卡；缺失字段保持 U。10-26 执行证据地址、10-12 其他价格样本均不能作为 10-16 的原 p0。"
+      },
+      {
+        "fields": [
+          "method",
+          "label"
+        ],
+        "url": "attachment://Alpha雷达_Codex任务包/附件/Alpha标的筛选研究体系.md#附录二：数据、收益与结果定义",
+        "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+        "note": "附录二 C；到期日仅为已知日期的日历加法，非补造精确 t0。"
+      }
+    ]
+  },
+  {
+    "id": "Alkanes",
+    "chain": "Bitcoin",
+    "contract": "U",
+    "p0_date": "2026-10-16",
+    "p0": "U",
+    "p0_source": "U",
+    "rel_peak": "U",
+    "days_ge_2x": "U",
+    "label": "待判",
+    "missing": [
+      "截至核对日尚未完成 D30；2026-10-16 的日期级起点加 30 天为 2026-11-15，精确起点时分秒 U。",
+      "原卡未冻结用于二级行情回测的唯一资产/合约或等效链上标识。",
+      "原卡未冻结数值发现价 p0、报价币、价格提供方及具体市场/池。",
+      "缺同一冻结价格源的完整 30 天代币/BTC 同时点价格及完整 UTC 自然日收盘序列。",
+      "原研究对象为协议/生态或创作者角色，尚未选定具体二级标的；不能用任一生态币替代。"
+    ],
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+    "original_name": "Alkanes",
+    "original_role": "Bitcoin：应用发行或使用；尚未选定具体资产",
+    "frozen_score_recomputed": false,
+    "p0_timestamp_utc": "U",
+    "d30_date_if_date_only": "2026-11-15",
+    "d30_timestamp_utc": "U",
+    "progress": "已完成冻结卡与方法口径复查；正式价格结果未可计算。",
+    "method": {
+      "rel_peak": "max_t[(P_token(t)/P_token(t0))/(P_BTC(t)/P_BTC(t0))]，同一时点同步。",
+      "days_ge_2x": "原发现后窗口内，绝对收盘价 >=2*p0 的完整 UTC 自然日个数。",
+      "A": "rel_peak >=5 且 days_ge_2x >=3",
+      "B": "2 <=rel_peak <5 且 days_ge_2x >=3",
+      "否": "窗口到期、关键字段齐全且不满足 A/B 才能判否。",
+      "待判": "未到期或关键数据缺失；不得用区间 high 与 BTC close 拼正式结果。"
+    },
+    "evidence": [
+      {
+        "fields": [
+          "original_name",
+          "original_role",
+          "chain",
+          "contract",
+          "p0_date",
+          "p0",
+          "p0_source"
+        ],
+        "url": "attachment://Alpha雷达_Codex任务包/附件/案例库.md#四、2026年10月的新机会",
+        "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+        "sha256": "b9475af65623086df19a1e3a675490d9999c99ddcf191de87c1721cb776389da",
+        "note": "用户指定冻结原卡；缺失字段保持 U。10-26 执行证据地址、10-12 其他价格样本均不能作为 10-16 的原 p0。"
+      },
+      {
+        "fields": [
+          "method",
+          "label"
+        ],
+        "url": "attachment://Alpha雷达_Codex任务包/附件/Alpha标的筛选研究体系.md#附录二：数据、收益与结果定义",
+        "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+        "note": "附录二 C；到期日仅为已知日期的日历加法，非补造精确 t0。"
+      }
+    ]
+  },
+  {
+    "id": "Pearl",
+    "chain": "U",
+    "contract": "U",
+    "p0_date": "2026-10-16",
+    "p0": "U",
+    "p0_source": "U",
+    "rel_peak": "U",
+    "days_ge_2x": "U",
+    "label": "待判",
+    "missing": [
+      "截至核对日尚未完成 D30；2026-10-16 的日期级起点加 30 天为 2026-11-15，精确起点时分秒 U。",
+      "原卡未冻结用于二级行情回测的唯一资产/合约或等效链上标识。",
+      "原卡未冻结数值发现价 p0、报价币、价格提供方及具体市场/池。",
+      "缺同一冻结价格源的完整 30 天代币/BTC 同时点价格及完整 UTC 自然日收盘序列。",
+      "原卡为 GPU 提供者角色，未固定唯一链；不能自动改成二级 PRL。"
+    ],
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+    "original_name": "Pearl",
+    "original_role": "GPU 算力提供者：有用计算/AI 网络；不评二级 PRL 买家",
+    "frozen_score_recomputed": false,
+    "p0_timestamp_utc": "U",
+    "d30_date_if_date_only": "2026-11-15",
+    "d30_timestamp_utc": "U",
+    "progress": "已完成冻结卡与方法口径复查；正式价格结果未可计算。",
+    "method": {
+      "rel_peak": "max_t[(P_token(t)/P_token(t0))/(P_BTC(t)/P_BTC(t0))]，同一时点同步。",
+      "days_ge_2x": "原发现后窗口内，绝对收盘价 >=2*p0 的完整 UTC 自然日个数。",
+      "A": "rel_peak >=5 且 days_ge_2x >=3",
+      "B": "2 <=rel_peak <5 且 days_ge_2x >=3",
+      "否": "窗口到期、关键字段齐全且不满足 A/B 才能判否。",
+      "待判": "未到期或关键数据缺失；不得用区间 high 与 BTC close 拼正式结果。"
+    },
+    "evidence": [
+      {
+        "fields": [
+          "original_name",
+          "original_role",
+          "chain",
+          "contract",
+          "p0_date",
+          "p0",
+          "p0_source"
+        ],
+        "url": "attachment://Alpha雷达_Codex任务包/附件/案例库.md#四、2026年10月的新机会",
+        "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+        "sha256": "b9475af65623086df19a1e3a675490d9999c99ddcf191de87c1721cb776389da",
+        "note": "用户指定冻结原卡；缺失字段保持 U。10-26 执行证据地址、10-12 其他价格样本均不能作为 10-16 的原 p0。"
+      },
+      {
+        "fields": [
+          "method",
+          "label"
+        ],
+        "url": "attachment://Alpha雷达_Codex任务包/附件/Alpha标的筛选研究体系.md#附录二：数据、收益与结果定义",
+        "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+        "note": "附录二 C；到期日仅为已知日期的日历加法，非补造精确 t0。"
+      }
+    ]
+  },
+  {
+    "id": "GODL",
+    "chain": "Solana",
+    "contract": "U",
+    "p0_date": "2026-10-16",
+    "p0": "U",
+    "p0_source": "U",
+    "rel_peak": "U",
+    "days_ge_2x": "U",
+    "label": "待判",
+    "missing": [
+      "截至核对日尚未完成 D30；2026-10-16 的日期级起点加 30 天为 2026-11-15，精确起点时分秒 U。",
+      "原卡未冻结用于二级行情回测的唯一资产/合约或等效链上标识。",
+      "原卡未冻结数值发现价 p0、报价币、价格提供方及具体市场/池。",
+      "缺同一冻结价格源的完整 30 天代币/BTC 同时点价格及完整 UTC 自然日收盘序列。"
+    ],
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+    "original_name": "GODL",
+    "original_role": "Solana：格子轮次参与者",
+    "frozen_score_recomputed": false,
+    "p0_timestamp_utc": "U",
+    "d30_date_if_date_only": "2026-11-15",
+    "d30_timestamp_utc": "U",
+    "progress": "已完成冻结卡与方法口径复查；正式价格结果未可计算。",
+    "method": {
+      "rel_peak": "max_t[(P_token(t)/P_token(t0))/(P_BTC(t)/P_BTC(t0))]，同一时点同步。",
+      "days_ge_2x": "原发现后窗口内，绝对收盘价 >=2*p0 的完整 UTC 自然日个数。",
+      "A": "rel_peak >=5 且 days_ge_2x >=3",
+      "B": "2 <=rel_peak <5 且 days_ge_2x >=3",
+      "否": "窗口到期、关键字段齐全且不满足 A/B 才能判否。",
+      "待判": "未到期或关键数据缺失；不得用区间 high 与 BTC close 拼正式结果。"
+    },
+    "evidence": [
+      {
+        "fields": [
+          "original_name",
+          "original_role",
+          "chain",
+          "contract",
+          "p0_date",
+          "p0",
+          "p0_source"
+        ],
+        "url": "attachment://Alpha雷达_Codex任务包/附件/案例库.md#四、2026年10月的新机会",
+        "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+        "sha256": "b9475af65623086df19a1e3a675490d9999c99ddcf191de87c1721cb776389da",
+        "note": "用户指定冻结原卡；缺失字段保持 U。10-26 执行证据地址、10-12 其他价格样本均不能作为 10-16 的原 p0。"
+      },
+      {
+        "fields": [
+          "method",
+          "label"
+        ],
+        "url": "attachment://Alpha雷达_Codex任务包/附件/Alpha标的筛选研究体系.md#附录二：数据、收益与结果定义",
+        "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+        "note": "附录二 C；到期日仅为已知日期的日历加法，非补造精确 t0。"
+      }
+    ]
+  },
+  {
+    "id": "ZINC",
+    "chain": "Solana",
+    "contract": "U",
+    "p0_date": "2026-10-16",
+    "p0": "U",
+    "p0_source": "U",
+    "rel_peak": "U",
+    "days_ge_2x": "U",
+    "label": "待判",
+    "missing": [
+      "截至核对日尚未完成 D30；2026-10-16 的日期级起点加 30 天为 2026-11-15，精确起点时分秒 U。",
+      "原卡未冻结用于二级行情回测的唯一资产/合约或等效链上标识。",
+      "原卡未冻结数值发现价 p0、报价币、价格提供方及具体市场/池。",
+      "缺同一冻结价格源的完整 30 天代币/BTC 同时点价格及完整 UTC 自然日收盘序列。"
+    ],
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+    "original_name": "ZINC",
+    "original_role": "Solana：轮次参与者",
+    "frozen_score_recomputed": false,
+    "p0_timestamp_utc": "U",
+    "d30_date_if_date_only": "2026-11-15",
+    "d30_timestamp_utc": "U",
+    "progress": "已完成冻结卡与方法口径复查；正式价格结果未可计算。",
+    "method": {
+      "rel_peak": "max_t[(P_token(t)/P_token(t0))/(P_BTC(t)/P_BTC(t0))]，同一时点同步。",
+      "days_ge_2x": "原发现后窗口内，绝对收盘价 >=2*p0 的完整 UTC 自然日个数。",
+      "A": "rel_peak >=5 且 days_ge_2x >=3",
+      "B": "2 <=rel_peak <5 且 days_ge_2x >=3",
+      "否": "窗口到期、关键字段齐全且不满足 A/B 才能判否。",
+      "待判": "未到期或关键数据缺失；不得用区间 high 与 BTC close 拼正式结果。"
+    },
+    "evidence": [
+      {
+        "fields": [
+          "original_name",
+          "original_role",
+          "chain",
+          "contract",
+          "p0_date",
+          "p0",
+          "p0_source"
+        ],
+        "url": "attachment://Alpha雷达_Codex任务包/附件/案例库.md#四、2026年10月的新机会",
+        "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+        "sha256": "b9475af65623086df19a1e3a675490d9999c99ddcf191de87c1721cb776389da",
+        "note": "用户指定冻结原卡；缺失字段保持 U。10-26 执行证据地址、10-12 其他价格样本均不能作为 10-16 的原 p0。"
+      },
+      {
+        "fields": [
+          "method",
+          "label"
+        ],
+        "url": "attachment://Alpha雷达_Codex任务包/附件/Alpha标的筛选研究体系.md#附录二：数据、收益与结果定义",
+        "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+        "note": "附录二 C；到期日仅为已知日期的日历加法，非补造精确 t0。"
+      }
+    ]
+  },
+  {
+    "id": "TapeOut ETH",
+    "chain": "Ethereum",
+    "contract": "U",
+    "p0_date": "2026-10-16",
+    "p0": "U",
+    "p0_source": "U",
+    "rel_peak": "U",
+    "days_ge_2x": "U",
+    "label": "待判",
+    "missing": [
+      "截至核对日尚未完成 D30；2026-10-16 的日期级起点加 30 天为 2026-11-15，精确起点时分秒 U。",
+      "原卡未冻结用于二级行情回测的唯一资产/合约或等效链上标识。",
+      "原卡未冻结数值发现价 p0、报价币、价格提供方及具体市场/池。",
+      "缺同一冻结价格源的完整 30 天代币/BTC 同时点价格及完整 UTC 自然日收盘序列。"
+    ],
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+    "original_name": "TapeOut ETH",
+    "original_role": "Ethereum：电路生产与 TAPEETH 挖矿；不与 BSC BEM 混同",
+    "frozen_score_recomputed": false,
+    "p0_timestamp_utc": "U",
+    "d30_date_if_date_only": "2026-11-15",
+    "d30_timestamp_utc": "U",
+    "progress": "已完成冻结卡与方法口径复查；正式价格结果未可计算。",
+    "method": {
+      "rel_peak": "max_t[(P_token(t)/P_token(t0))/(P_BTC(t)/P_BTC(t0))]，同一时点同步。",
+      "days_ge_2x": "原发现后窗口内，绝对收盘价 >=2*p0 的完整 UTC 自然日个数。",
+      "A": "rel_peak >=5 且 days_ge_2x >=3",
+      "B": "2 <=rel_peak <5 且 days_ge_2x >=3",
+      "否": "窗口到期、关键字段齐全且不满足 A/B 才能判否。",
+      "待判": "未到期或关键数据缺失；不得用区间 high 与 BTC close 拼正式结果。"
+    },
+    "evidence": [
+      {
+        "fields": [
+          "original_name",
+          "original_role",
+          "chain",
+          "contract",
+          "p0_date",
+          "p0",
+          "p0_source"
+        ],
+        "url": "attachment://Alpha雷达_Codex任务包/附件/案例库.md#四、2026年10月的新机会",
+        "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+        "sha256": "b9475af65623086df19a1e3a675490d9999c99ddcf191de87c1721cb776389da",
+        "note": "用户指定冻结原卡；缺失字段保持 U。10-26 执行证据地址、10-12 其他价格样本均不能作为 10-16 的原 p0。"
+      },
+      {
+        "fields": [
+          "method",
+          "label"
+        ],
+        "url": "attachment://Alpha雷达_Codex任务包/附件/Alpha标的筛选研究体系.md#附录二：数据、收益与结果定义",
+        "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+        "note": "附录二 C；到期日仅为已知日期的日历加法，非补造精确 t0。"
+      }
+    ]
+  }
+]

@@ -11,6 +11,10 @@ import os, re, sys, json, datetime as dt
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.abspath(os.environ.get("LP_DATA") or os.path.join(ROOT, "data"))
 OUT = os.path.join(DATA, "onchain", "平台AI介绍.json")
+# Grok 用的名字 → DefiLlama slug（对上了才有二级页面）
+ALIAS = {"believe": "launch-coin-on-believe", "boop": "boop.fun", "moonit": "moon.it", "moonshot": "moonshot-create",
+         "metaplex-genesis": "metaplex", "bordrless": "bordrless-launchpad", "rise-rich": "rise.rich", "raydium-launchlab": "launchlab",
+         "letsbonk": "bonk.fun-launchpad", "meteora-dbc": "meteora-dynamic-bonding-curve"}
 TEXT = ["one_liner", "differentiation", "fee_split", "token", "team"]
 LIST = ["selling_points", "risks", "unknowns"]
 
@@ -58,6 +62,7 @@ def main(paths):
         for obj in blocks(open(path, encoding="utf-8").read()):
             items = [(obj["slug"], obj)] if "slug" in obj and "one_liner_zh" in obj else list(obj.items())
             for slug, d in items:
+                slug = ALIAS.get(slug, slug)
                 if not isinstance(d, dict) or not d.get("one_liner_zh"):
                     print(f"  {slug}：没有 one_liner_zh，跳过")
                     continue

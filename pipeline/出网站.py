@@ -182,6 +182,8 @@ ICON = {
     "rotation": '<path d="M13.2 6A5.5 5.5 0 0 0 3.1 5.4M2.8 10a5.5 5.5 0 0 0 10.1.6M13.4 2.6v3.5H9.9M2.6 13.4V9.9h3.5"/>',
     "core": '<path d="M8 1.8l1.9 3.9 4.3.6-3.1 3 .7 4.3L8 11.6l-3.8 2 .7-4.3-3.1-3 4.3-.6z"/>',
     "narrative": '<circle cx="8" cy="8" r="6"/><circle cx="8" cy="8" r="2.4"/><path d="M8 8l4.2-4.2"/>',
+    "alpha": '<circle cx="8" cy="8" r="6"/><circle cx="8" cy="8" r="2.4"/><path d="M8 8l4.2-4.2"/>',
+    "rwa": '<rect x="2.5" y="6.5" width="11" height="7.5" rx="1"/><path d="M1.5 6.5 8 2l6.5 4.5M5.5 9v2.5M8 9v2.5M10.5 9v2.5"/>',
     "reports": '<path d="M3 1.8h7l3 3v9.4H3z"/><path d="M10 1.8v3h3M5.5 11.5V9.5M8 11.5V7.5M10.5 11.5V8.5"/>',
     "journal": '<path d="M3.5 1.8h9v12.4h-9z"/><path d="M6 5h4M6 8h4M6 11h2.5"/>',
     "methodology": '<path d="M2 12.5 12.5 2l1.5 1.5L3.5 14H2z"/><path d="M9.5 5l1.5 1.5M7.5 7l1 1M5.5 9l1.5 1.5"/>',
@@ -190,7 +192,7 @@ ICON = {
 }
 NAV_MAIN = [("home", "/", "终端总览", "Overview"), ("macro", "/macro/", "宏观仪表盘", "Macro"),
             ("calendar", "/calendar/", "事件日历", "Calendar"), ("launchpad", "/launchpad/", "发射台矩阵", "Launchpads"), ("aiagent", "/ai-agent/", "AI Agent", "AI Agent"), ("rotation", "/rotation/", "板块轮动", "Rotation"),
-            ("core", "/core/", "龙头选币", "Leader Picks"), ("narrative", "/narrative/", "叙事埋伏", "Narratives"), ("reports", "/reports/", "分析报告", "Reports"),
+            ("core", "/core/", "龙头选币", "Leader Picks"), ("alpha", "/alpha/", "Alpha 雷达", "Alpha Radar"), ("rwa", "/rwa/", "RWA", "RWA"), ("reports", "/reports/", "分析报告", "Reports"),
             ("journal", "/journal/", "解读日志", "Journal")]
 NAV_MORE = [("methodology", "/methodology/", "口径与规则", "Methodology"), ("corrections", "/corrections/", "更正记录", "Corrections"),
             ("about", "/about/", "关于", "About")]
@@ -405,7 +407,7 @@ CL_TYPE = {"new": ("新功能", "New"), "improve": ("改进", "Improved"), "fix"
 
 def nav_html(active):
     def link(k, href, zh, en):
-        tag = f'<span class="ntag">{T("筹备中", "soon")}</span>' if k == "narrative" else ""
+        tag = ""
         return f'<a href="{U(href)}" class="{"on" if k == active else ""}">{icon(k)}{esc(T(zh, en))}{tag}</a>'
     main = "".join(link(*x) for x in NAV_MAIN)
     more = "".join(link(*x) for x in NAV_MORE)
@@ -453,7 +455,9 @@ ASSET_SRC = {"site.css": ST.SITE_CSS, "ui.js": ST.UI_JS, "share.js": ST.SHARE_JS
              "leg.js": open(os.path.join(LEG_WEB, "leg.js"), encoding="utf-8").read(),
              "leg.css": open(os.path.join(LEG_WEB, "leg.css"), encoding="utf-8").read(),
              "core.js": open(os.path.join(ROOT, "core", "web", "core.js"), encoding="utf-8").read(),
-             "core.css": open(os.path.join(ROOT, "core", "web", "core.css"), encoding="utf-8").read()}
+             "core.css": open(os.path.join(ROOT, "core", "web", "core.css"), encoding="utf-8").read(),
+             "alpha.js": open(os.path.join(ROOT, "alpha", "web", "alpha.js"), encoding="utf-8").read(),
+             "alpha.css": open(os.path.join(ROOT, "alpha", "web", "alpha.css"), encoding="utf-8").read()}
 ASSET_URL = {k: f"/assets/{k}?v={hashlib.md5(v.encode('utf-8')).hexdigest()[:10]}" for k, v in ASSET_SRC.items()}
 
 # Cloudflare Pages 缓存规则：样式脚本带版本号可以长缓存；走势数据一小时；页面本身每次都向服务器确认
@@ -1129,6 +1133,9 @@ def build_home(sd, S, logs, weeks, months, rot, matrix):
 {signal_tiles(G["VS"], G["JBY"], G.get("L2"))}
 {leg_home_card()}
 {core_home_card()}
+{alpha_home_card()}
+{aia_home_card()}
+{rwa_home_card()}
 {cal_home_card(G.get("CAL"))}
 <div class="grid g2" style="margin-top:22px;align-items:start">
 <div><h2 style="margin-top:12px">{T("发射台矩阵 · 当日 Top6", "Launchpads · top 6 today")} {cycle_tag()} <a class="sub" href="{U("/launchpad/")}">{T("全部", "All")} {len((matrix or {}).get("协议", []))} {T("个协议 →", "protocols →")}</a></h2>{lp_tbl}</div>
@@ -3038,6 +3045,27 @@ def directory_html():
             body = f'<p class="lpc-n">{esc(txt)}</p><p class="lpc-src">{T("出处：", "Source: ")}{esc(src)}</p>'
         else:
             body = f'<p class="lpc-n lpc-none">{T("还没查到介绍：官网资料每天自动抓，抓到后显示在这里。", "No description yet: the site is fetched daily and its blurb will show here.")}</p>'
+        ai_ = DIR.ai_for(e)
+        aic_ = (ai_ or {}).get("内容") or {}
+        if aic_:
+            sx = "zh" if lang == "zh" else "en"
+            li = lambda xs: "".join(f"<li>{esc(x)}</li>" for x in xs[:5])  # noqa: E731
+            parts = []
+            if aic_.get(f"selling_points_{sx}"):
+                parts.append(f'<b>{T("卖点", "Selling points")}</b><ul>{li(aic_[f"selling_points_{sx}"])}</ul>')
+            if aic_.get(f"fee_split_{sx}"):
+                parts.append(f'<b>{T("手续费怎么分", "Fee split")}</b><p>{esc(aic_[f"fee_split_{sx}"])}</p>')
+            if aic_.get(f"token_{sx}"):
+                parts.append(f'<b>{T("平台币", "Token")}</b><p>{esc(aic_[f"token_{sx}"])}</p>')
+            if aic_.get(f"risks_{sx}"):
+                parts.append(f'<b>{T("风险与疑点", "Risks")}</b><ul>{li(aic_[f"risks_{sx}"])}</ul>')
+            srcs_ = [x for x in aic_.get("sources") or [] if str(x.get("url", "")).startswith("http")][:4]
+            if srcs_:
+                parts.append(f'<b>{T("来源", "Sources")}</b><p>' + " · ".join(
+                    f'<a href="{esc(x["url"])}" target="_blank" rel="noopener nofollow">{esc((x.get("note") or DIR.domain(x["url"]))[:24])}</a>' for x in srcs_) + "</p>")
+            if parts:
+                body += (f'<details class="lpc-more"><summary>{T("卖点、分账、风险（Grok 整理，未核实）", "Selling points, fees, risks (Grok, unverified)")}</summary>'
+                         + "".join(parts) + "</details>")
         mets = []
         if e["24h成交额"]:
             mets.append(f'{T("24h 成交额", "24h volume")} <b>{f_usd(e["24h成交额"])}</b>')
@@ -3290,7 +3318,7 @@ def build_launchpad(sd, matrix):
         elif p["slug"] in PSLUGS:
             nm = f'<a href="{U("/launchpad/platforms/" + p["slug"] + "/")}">{esc(p["名称"])}</a>'
         else:
-            nm = f'<a href="https://defillama.com/protocol/{esc(p["slug"])}" target="_blank" rel="noopener" title="{esc(T("份额不到 0.1%，直接看 DefiLlama", "Under 0.1% share: opens DefiLlama"))}">{esc(p["名称"])} ↗</a>'
+            nm = f'<a href="https://defillama.com/protocol/{esc(p["slug"])}" target="_blank" rel="noopener" title="{esc(T("份额不到 0.1% 且还没有介绍，直接看 DefiLlama", "Under 0.1% share and no write-up yet: opens DefiLlama"))}">{esc(p["名称"])} ↗</a>'
         logo = f'<img src="{esc(p["logo"])}" alt="" loading="lazy" referrerpolicy="no-referrer">' if p.get("logo") else '<img alt="">'
         if p.get("沿用"):
             nm += carry_chip(p.get("数据日"))
@@ -3386,7 +3414,9 @@ def _pdir():
 def platform_page_slugs(matrix):
     try:
         DIR = _pdir()
-        return set(DIR.platform_slugs(matrix or {})) | set(DIR.platform_info())      # 只要进过 0.1% 就一直有二级页面
+        known = {p["slug"] for p in (matrix or {}).get("协议") or []}
+        return (set(DIR.platform_slugs(matrix or {})) | set(DIR.platform_info())          # 只要进过 0.1% 就一直有二级页面
+                | {k for k in DIR.ai_notes() if k in known})                               # 有 Grok 介绍的也有（大叔 11-14：既然有了就填上）
     except Exception as ex:
         print(f"  平台二级页面名单失败：{ex}")
         return set()
@@ -3841,7 +3871,7 @@ def core_home_card():
 
 def core_md(src):
     """评分研究立项书（core/research/评分研究立项.md）→ HTML：标题、段落、- / 1. 列表（缩进 = 子项）、表格、**粗体**、`代码`。"""
-    out, lst, tbl, para = [], [], [], []
+    out, lst, tbl, para, hn = [], [], [], [], [0]
 
     def flush():
         if para:
@@ -3870,9 +3900,12 @@ def core_md(src):
             if para or lst:
                 flush()
             tbl.append(t); continue
-        m = re.match(r"^(#{1,3})\s+(.*)", t)
+        m = re.match(r"^(#{1,4})\s+(.*)", t)
         if m:
-            flush(); out.append(f"<h{len(m.group(1)) + 1}>{md_inline(m.group(2))}</h{len(m.group(1)) + 1}>"); continue
+            flush(); hn[0] += 1
+            out.append(f'<h{len(m.group(1)) + 1} id="h{hn[0]}">{md_inline(m.group(2))}</h{len(m.group(1)) + 1}>'); continue
+        if t.startswith(">"):
+            flush(); out.append(f'<div class="note">{md_inline(t[1:].strip())}</div>'); continue
         m = re.match(r"^(\s*)(?:-|(\d+)\.)\s+(.*)", ln)
         if m:
             if para or tbl:
@@ -3907,10 +3940,747 @@ def build_core():
                 "Daily fundamentals, flows and technicals for core assets: revenue trend, valuation, unlocks, volume board, MAs and drawdowns, with an entry checklist and risk alerts."))
 
 
+# ---------------------------------------------------------------- Alpha 雷达（alpha/：雷达读 data/alpha/alpha_latest.json；方法论 / 案例库 / 进度读 alpha/research/*.md）
+ALPHA_TABS = [("", "机会看板", "Board", "可投资机会 · 预警观察", "Investable · watchlist"),
+              ("radar/", "雷达", "Radar", "数据从哪来", "Where leads come from"),
+              ("cases/", "案例库", "Cases", "历史对照", "Historical reference")]
+ALPHA_FW = [("framework/", "框架", "Framework"), ("eval/", "评估器", "Evaluator"), ("progress/", "检验与进度", "Validation & progress"), ("method/", "方法论原文", "Original text")]
+
+
+def write_alpha_data():
+    src = os.path.join(DATA, "alpha")
+    G["ALPHA"] = load(os.path.join(src, "alpha_latest.json"))
+    G["ALPHA_HIST"] = load(os.path.join(src, "alpha_history.json"), []) or []
+    if not G["ALPHA"]:
+        return
+    G["OPPS"] = load(os.path.join(src, "opps.json"))
+    out = os.path.join(SITE, "data", "alpha")
+    os.makedirs(out, exist_ok=True)
+    for fn in ("alpha_latest.json", "alpha_history.json", "alpha_leads.json", "opps.json", "opp_series.json", "research_queue.json", "case_metrics.json", "case_series.json", "sources_stats.json"):
+        if os.path.exists(os.path.join(src, fn)):
+            shutil.copyfile(os.path.join(src, fn), os.path.join(out, fn))
+    for fn in ("framework.json", "cases.json"):   # 框架与案例定义在 alpha/（单一来源），网页按同一份读
+        shutil.copyfile(os.path.join(ROOT, "alpha", fn), os.path.join(out, fn))
+    if os.path.isdir(os.path.join(src, "rev")):   # 机会卡逐日收入（走势图组件格式）
+        shutil.copytree(os.path.join(src, "rev"), os.path.join(out, "rev"), dirs_exist_ok=True)
+    cs = load(os.path.join(src, "case_series.json"), {}) or {}   # 案例：价格 ÷ P0（周线）、30 天手续费（周线）→ 走势图组件格式
+    os.makedirs(os.path.join(out, "case"), exist_ok=True)
+    for cid, v in cs.items():
+        for sym, pts in (v.get("tokens") or {}).items():
+            json.dump({"d": [a for a, _ in pts], "s": {"p": [b for _, b in pts]}}, open(os.path.join(out, "case", f"{cid}_{sym}.json"), "w"), separators=(",", ":"))
+        if v.get("fees30"):
+            json.dump({"d": [a for a, _ in v["fees30"]], "s": {"f": [b for _, b in v["fees30"]]}}, open(os.path.join(out, "case", f"{cid}_fees.json"), "w"), separators=(",", ":"))
+
+
+ALPHA_ST = {"研究观察": ("t-up", "Watching"), "待核验": ("t-warn", "To verify"), "优先研究": ("t-up", "Priority"), "拒绝": ("t-dn", "Rejected")}
+
+
+def alpha_checks():
+    """外部补证（alpha/review/*_checks.json）：key → 最新一条。"""
+    if "ALPHA_CHK" not in G:
+        out, rd = {}, os.path.join(ROOT, "alpha", "review")
+        for fn in sorted(os.listdir(rd)) if os.path.isdir(rd) else []:
+            if fn.endswith("_checks.json"):
+                for c in load(os.path.join(rd, fn), []) or []:
+                    out[c["key"]] = c
+        G["ALPHA_CHK"] = out
+    return G["ALPHA_CHK"]
+
+
+def alpha_status_chip(key):
+    c = alpha_checks().get(key)
+    if not c:
+        return '<span class="tnote" style="margin:0">—</span>'
+    cls, en = ALPHA_ST.get(c["verdict"], ("", c["verdict"]))
+    return f'<a class="chip {cls}" href="{U("/alpha/opp/")}#{esc(key.split(":", 1)[1].replace("parent#", ""))}">{T(c["verdict"], en)}</a>'
+
+
+def alpha_pool():
+    chk = alpha_checks()
+    if not chk:
+        return f'<div class="note">{T("候选池还没有补证记录。", "No reviewed candidates yet.")}</div>'
+    cur = {r["key"]: r for r in (G.get("ALPHA") or {}).get("tokenless") or []}
+    U_ = lambda v: T("未知", "unknown") if v in (None, "", "U") else esc(str(v))
+    def card(c):
+        r = cur.get(c["key"])
+        rv = f'{a_usd(r["rev30"])}' if r else T("已不在榜", "off the board")
+        src = c.get("token_stance_src")
+        stance = U_(c.get("token_stance")) + (f' · <a href="{esc(src)}" target="_blank" rel="noopener">{T("来源", "source")}</a>' if src and src != "U" else "")
+        miss = "".join(f"<li>{esc(m)}</li>" for m in c.get("missing") or [])
+        ev = " · ".join(f'<a href="{esc(e["url"])}" target="_blank" rel="noopener">{i}</a>' for i, e in enumerate(c.get("evidence") or [], 1) if str(e.get("url", "")).startswith("http"))
+        row = lambda k, v: f'<div style="margin-top:6px"><span class="tnote" style="margin:0">{k}</span> {v}</div>'
+        return (f'<div class="card" id="{esc(c["key"])}" style="padding:14px 18px;margin:0 0 12px;font-size:13.5px;line-height:1.7">'
+                f'<div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><b style="font-size:15px">{esc(c["name"])}</b>{alpha_status_chip(c["key"])}'
+                f'<span class="tnote" style="margin:0">{T("30 天收入", "30d revenue")} {rv}</span></div>'
+                + row(T("发币表态", "Token stance"), stance)
+                + row(T("收入归谁", "Who gets revenue"), U_(c.get("revenue_who")))
+                + row(T("刷量 / 补贴", "Wash / subsidy"), U_(c.get("wash_or_subsidy")))
+                + row(T("普通人的角色", "Role for users"), U_(c.get("user_role")))
+                + row(T("最强反方", "Strongest counter"), U_(c.get("counter")))
+                + row(T("为什么是这一档", "Why this status"), U_(c.get("verdict_reason")))
+                + (f'<details style="margin-top:6px"><summary class="tnote" style="margin:0;cursor:pointer">{T("还没查清的", "Still unknown")}（{len(c.get("missing") or [])}）</summary><ul style="margin:6px 0 0;padding-left:20px">{miss}</ul></details>' if miss else "")
+                + f'<div class="tnote">{T("核对", "Checked")} {esc((c.get("checked_utc") or "")[:10])} · {T("证据", "Evidence")} {ev}</div></div>')
+    order = ["研究观察", "待核验", "优先研究", "拒绝"]
+    secs = ""
+    for st in order:
+        xs = sorted((c for c in chk.values() if c["verdict"] == st), key=lambda c: -((cur.get(c["key"]) or {}).get("rev30") or 0))
+        if xs:
+            secs += f'<h2>{T(st, ALPHA_ST[st][1])} <span class="sub">{len(xs)}</span></h2>' + "".join(card(c) for c in xs)
+    return (f'<div class="note">{T("第一批：无币协议收入榜前 30 名，Codex 2026-11-14 补证。「研究观察」= 对象明确、有可证伪的假设、还没查到否决项；「待核验」= 关键事实缺失或互相冲突。两档都不是推荐，也不代表会空投；同一档内按当前 30 天收入排，不打分。", "First batch: the top 30 of the tokenless revenue board, reviewed by Codex on 2026-11-14. “Watching” = clear object, a falsifiable hypothesis, no veto found yet; “To verify” = key facts missing or conflicting. Neither is a recommendation or an airdrop signal; ordered by current 30d revenue, no scores.")}</div>'
+            + (ZH_ONLY if LANG["v"] == "en" else "") + secs)
+
+
+ALPHA_FEED_SRC = {"ethresearch": ("研究论坛", "Research forum", "ethresear.ch"), "snapshot": ("治理提案", "Governance", "Snapshot"), "binance": ("上所公告", "Listing", "Binance")}
+
+
+def alpha_sources_html():
+    """来源台账 + 战绩（data/alpha/sources_stats.json，opps.py 每天算）。放雷达页最上面：先看线索从哪来、哪个来源靠谱。"""
+    J = load_json(os.path.join(DATA, "alpha", "sources_stats.json"), None) if "load_json" in globals() else None
+    if J is None:
+        try:
+            J = json.load(open(os.path.join(DATA, "alpha", "sources_stats.json"), encoding="utf-8"))
+        except Exception:
+            return ""
+    TY = {"site": T("本站板块", "Site board"), "manual": T("手动", "Manual"), "people": T("关键人", "Key people"), "data": T("数据兜底", "Data backstop"), "feed": T("事件流", "Feed")}
+    ST = {"on": (T("在用", "on"), "up"), "planned": (T("待接入", "planned"), "neutral"), "building": (T("在建", "building"), "warn"), "paused": (T("已降级", "paused"), "dn")}
+    rows = ""
+    for x in J.get("sources", []):
+        st, n = x["stats"], x["stats"]["cards"]
+        lab, tone = ST.get(x["status"], (x["status"], "neutral"))
+        nm = T(x["name"], x.get("name_en") or x["name"])
+        nm = f'<a href="{U(x["href"])}">{esc(nm)}</a>' if x.get("href") else esc(nm)
+        names = " · ".join(f'<a href="{U("/alpha/")}#{esc(c["id"])}">{esc(c["name"])}</a>' for c in st.get("names") or [])
+        rows += (f'<tr><td class="l"><b>{nm}</b><div class="small muted">{esc(T(x["what"], x["what"]))}</div></td><td class="l">{esc(TY.get(x["type"], x["type"]))}</td>'
+                 f'<td class="l"><span class="chip t-{tone}"><i></i>{esc(lab)}</span></td><td>{n if x["status"] == "on" else "—"}</td><td>{st["fresh"] or "—"}</td>'
+                 f'<td>{st["watching"] or "—"}</td><td>{st["rejected"] or "—"}</td><td class="l small">{names or "—"}</td></tr>')
+    return (f'<h2>{T("线索从哪来", "Where leads come from")} <span class="sub">{T("来源台账：关键人和本站板块为主，数据榜单兜底；每个来源记战绩", "Source ledger: key people and site boards first, data lists as backstop")}</span></h2>'
+            f'<div class="tw scroll"><table><thead><tr><th style="text-align:left">{T("来源", "Source")}</th><th style="text-align:left">{T("类型", "Type")}</th><th style="text-align:left">{T("状态", "Status")}</th>'
+            f'<th>{T("在看板的卡", "Cards")}</th><th>{T("3 天内新发现", "New, 3d")}</th><th>{T("进了研究观察", "Under research")}</th><th>{T("被拒", "Rejected")}</th><th style="text-align:left">{T("最近带来的", "Recent")}</th></tr></thead><tbody>{rows}</tbody></table></div>'
+            f'<p class="tnote">{T("战绩才开始记（11-15 起），要攒几周才有意义。连续三个月没有有效发现的来源降级，不删。关键人名单在建：从历史案例倒推当时谁最早公开讲过。", "Track records start 2026-11-15 and need weeks to mean anything. Sources with no useful finds for three months are paused, not deleted.")}</p>')
+
+
+def alpha_feed_html(d):
+    fs = d.get("feed") or []
+    st = d.get("sources") or {}
+    def cell(x):
+        e = x.get("extra") or {}
+        if x["src"] == "snapshot":
+            return esc(f'{e.get("space") or ""}') + (f' · {T("投票截止", "vote ends")} {TT(e["end"])}' if e.get("end") else "")
+        if x["src"] == "ethresearch":
+            return T(f'{e.get("posts") or 0} 帖 · {e.get("views") or 0} 次浏览', f'{e.get("posts") or 0} posts · {e.get("views") or 0} views')
+        return ""
+    rows = "".join(
+        f'<tr><td class="l">{T(*ALPHA_FEED_SRC[x["src"]][:2])}</td><td>{TT(x["created"])}</td>'
+        f'<td class="wrap" style="min-width:260px;text-align:left"><a href="{esc(x["url"])}" target="_blank" rel="noopener">{esc(x["title"])}</a></td>'
+        f'<td class="wrap" style="text-align:left;color:var(--muted)">{cell(x)}</td>'
+        f'<td>{"—" if x.get("delay_h") is None else (str(round(x["delay_h"])) + T(" 小时", "h"))}</td></tr>' for x in fs)
+    health = " · ".join(f'{ALPHA_FEED_SRC[k][2]} {T("正常", "ok") if (st.get(k) or {}).get("ok") else T("今天失败", "failed today")}' for k in ALPHA_FEED_SRC)
+    return (f'<h2>{T("事件流", "Event feed")} <span class="sub">{T("研究论坛新帖 · 治理提案 · 上所公告，最近 14 天", "New research posts · governance proposals · listings, last 14 days")} · {len(fs)}</span></h2>'
+            f'<p class="tnote">{T("只摆原始事件，不判断。ethresear.ch 只收新开的帖（旧帖被顶上来不算）；Snapshot 只收关注数 ≥ 1000 的空间、标题含收费 / 回购 / 激励 / 升级等词的提案，投票结束不等于执行；Binance 只收上币、Launchpool、空投和新永续，剔除 TradFi 永续和代币化股票，公告时间不等于开盘时间。发现延迟 = 本站首次抓到的时间 − 原始发布时间（11-14 首次接入的为基线，不算延迟）。Bybit、Upbit 在美国机房被拦，暂未接入。", "Raw events, no judgement. ethresear.ch: newly opened topics only; Snapshot: spaces with ≥ 1,000 followers and titles about fees / buybacks / incentives / upgrades — a vote ending is not execution; Binance: listings, Launchpool, airdrops and new perps, excluding TradFi perps and tokenized stocks — announcement time is not trading start. Discovery delay = first fetched here − original publish time (the 11-14 first fetch is the baseline). Bybit and Upbit block US data centres and are not connected yet.")}</p>'
+            + (f'<div class="tw scroll"><table><thead><tr><th style="text-align:left">{T("来源", "Source")}</th><th>{T("发布", "Published")}</th><th style="text-align:left">{T("标题", "Title")}</th><th style="text-align:left">{T("备注", "Notes")}</th><th>{T("发现延迟", "Delay")}</th></tr></thead><tbody>{rows}</tbody></table></div>' if fs else f'<div class="note">{T("最近 14 天没有符合条件的事件。", "No matching events in the last 14 days.")}</div>')
+            + f'<p class="tnote">{T("来源状态", "Source status")}：{health}</p>')
+
+
+def a_usd(v):
+    if v is None:
+        return "—"
+    a = abs(v)
+    return (f"${v / 1e9:.2f}B" if a >= 1e9 else f"${v / 1e6:.2f}M" if a >= 1e6 else f"${v / 1e3:.0f}K" if a >= 1e3 else f"${v:.0f}")
+
+
+def alpha_head(cur):
+    fw = cur in [p for p, _, _ in ALPHA_FW]
+    tabs = "".join(f'<a role="tab" href="{U("/alpha/" + p)}" class="tab{" on" if p == cur else ""}"><span class="tn">{T(zh, en)}</span><span class="ts">{T(dz, de)}</span></a>'
+                   for p, zh, en, dz, de in ALPHA_TABS)
+    tabs += f'<a role="tab" href="{U("/alpha/framework/")}" class="tab{" on" if fw else ""}" style="flex:0 0 auto;min-width:0"><span class="tn">{T("框架与方法", "Framework")}</span><span class="ts">{T("打分规则 · 工具", "Rules · tools")}</span></a>'
+    name = next((T(zh, en) for p, zh, en, _, _ in ALPHA_TABS if p == cur), None) or next((T(zh, en) for p, zh, en in ALPHA_FW if p == cur), "")
+    cr = crumbs([(T("Alpha 雷达", "Alpha Radar"), "/alpha/" if cur else None)] + ([(T("框架与方法", "Framework"), "/alpha/framework/")] if fw and cur != "framework/" else []) + ([(name, None)] if cur else []))
+    sub = ""
+    if fw:
+        sub = '<div class="ax-sub">' + "".join(f'<a href="{U("/alpha/" + p)}" class="{"on" if p == cur else ""}">{T(zh, en)}</a>' for p, zh, en in ALPHA_FW) + "</div>"
+    return (f'{cr}<div class="ph"><div><div class="eyebrow">Alpha Radar</div><h1>{T("Alpha 雷达", "Alpha radar")}</h1>'
+            f'<p class="lede">{T("新协议、新产品、新机制、没发币但有真实收入的协议：每挖到一个，按同一套框架拆解打分（系统按数据打能打的，研究补其余的，未知记 U）。资金能参与的进「可投资机会」，暂时不能的进「预警观察」。只研究正规项目，不按分数排名，不是买卖建议。", "New protocols, products and mechanisms, plus tokenless protocols with real revenue, each scored on one framework (system rules + research; unknowns stay U). Capital-accessible ones are Investable, the rest Watchlist. Established projects only; no rankings; not trade advice.")}</p></div></div>'
+            f'<div class="tabwrap"><nav class="tabs" role="tablist">{tabs}</nav></div>{sub}')
+
+
+def alpha_framework_html():
+    """框架页：直接从 alpha/framework.json 生成（单一来源），把方法论的维度、流程、打分规则做成可浏览的结构。"""
+    fw = load(os.path.join(ROOT, "alpha", "framework.json"))
+    if not fw:
+        return ""
+    e = esc
+    sec = lambda k, title, s, body: f'<section class="fwsec" id="{k}"><h3>{e(title)}<span class="sec">{e(s or "")}</span></h3>{body}</section>'
+    cards = lambda items, f: '<div class="cards">' + "".join(f'<div class="card">{f(x)}</div>' for x in items) + "</div>"
+    ladder = lambda anchors: f'<div class="ladder{" l4" if len(anchors) == 4 else ""}">' + "".join(f'<div><span class="n">{i}</span>{e(a)}</div>' for i, a in enumerate(anchors)) + "</div>"
+    c = fw["classes"]
+    h = (f'<div class="ax">{ZH_ONLY if LANG["v"] == "en" else ""}<p class="small muted">{T("框架版本", "Version")} {e(fw["version"])} · {e(fw["asof"])} · {e(fw["source"])} · '
+         f'<a href="{U("/alpha/method/")}">{T("方法论原文", "Original text")}</a> · <a href="/data/alpha/framework.json">framework.json</a></p>'
+         f'<div class="note">{e(fw["scope"])}</div>'
+         '<div class="flow">' + "".join(f'<a href="#{x["k"]}"><b>{e(x["name"])}</b><span>{e(x["out"])}</span></a>' for x in fw["flow"]) + "</div>")
+    # 1 发现
+    h += sec("discover", "1 · 发现线索", "三", f'<p class="small">{T("发现层的任务是尽早保留异常，不当场完成所有判断。低门槛登记、高门槛执行分开。本站雷达现在接了：无币协议收入榜、新上架协议、研究论坛新帖、治理提案、上所公告；每条记原始发布时间和本站发现时间。", "")} <a href="{U("/alpha/radar/")}">{T("看雷达 →", "Radar →")}</a></p>')
+    # 2 对象
+    u = fw["unit"]
+    body = f'<p class="small"><b>{e(u["text"])}</b></p>' + "".join(f'<p class="small muted" style="margin:2px 0">· {e(n)}</p>' for n in u["notes"])
+    for k in ("stage", "attribute", "mode"):
+        body += f'<p class="small" style="margin:10px 0 4px"><b>{e(c[k]["name"])}</b> <span class="muted">决定：{e(c[k]["decides"])}</span></p><div class="opts">' + "".join(f'<span class="opt{" oos" if o.get("out_of_scope") else ""}" style="cursor:default">{e(o["name"])}</span>' for o in c[k]["opts"]) + "</div>"
+    h += sec("object", "2 · 确定研究对象", u["sec"] + " / 二.2 / 二.6", body)
+    # 3 价值来源
+    body = f'<p class="small muted">{e(c["business"]["rule"])}</p>' + cards(c["business"]["opts"], lambda o: f'<b>{e(o["name"])}</b><p><em>为什么有人付费</em> {e(o["why"])}</p><p><em>重点观察</em> {e(o["watch"])}</p><p><em>不能推出</em> {e(o["not_infer"])}</p>')
+    body += f'<h4>{e(c["right"]["name"])}</h4><p class="small muted">{e(c["right"]["rule"])}</p>' + cards(c["right"]["opts"], lambda o: f'<b>{e(o["name"])}</b><p><em>优先核对</em> {e(o["basis"])}</p><p><em>比较方式</em> {e(o["compare"])}</p>')
+    body += f'<h4>{e(c["capture_case"]["name"])}</h4>' + cards(c["capture_case"]["opts"], lambda o: f'<b>{e(o["name"])}</b><p>{e(o["then"])}</p>')
+    body += f'<h4>{e(c["opportunity"]["name"])}</h4><p class="small muted">{e(c["opportunity"]["rule"])}</p>' + cards(c["opportunity"]["opts"], lambda o: f'<b>{e(o["name"])}</b><p><em>收益来源</em> {e(o["source"])}</p><p><em>必须验证</em> {e(o["core"])}</p>')
+    body += f'<h4>{e(c["path"]["name"])}</h4><div class="opts">' + "".join(f'<span class="opt" style="cursor:default">{e(o["name"])}</span>' for o in c["path"]["opts"]) + f'</div><p class="small muted">{e(c["path"]["rule"])}</p>'
+    en_ = fw["entry"]
+    body += f'<h4>{e(en_["name"])}</h4><p class="small muted">{e(en_["rule"])}</p><div class="opts">' + "".join(f'<span class="opt{"" if o.get("watch") else " on"}" style="cursor:default">{e(o["name"])}</span>' for o in en_["opts"]) + "</div>"
+    q = fw["questions"]
+    body += f'<h4>{e(q["name"])}</h4>' + cards(q["items"], lambda o: f'<b>{e(o["axis"])}</b><p>{e(o["name"])}</p><p><em>{e(o["hint"])}</em></p>')
+    h += sec("value", "3 · 识别价值来源", "一 / 二.3–二.5", body)
+    # 4 参与优势与评分
+    s = fw["scores"]
+    body = f'<p class="small muted">{e(s["rule"])}</p>'
+    for g in ("mech", "part", "token", "invest"):
+        if g not in s:
+            continue
+        body += f'<h4>{e(s[g]["name"])} <span class="small muted">{e(s[g]["sec"])} · {e(s[g]["applies"])} · 每项 0–{s[g]["max"]}</span></h4>'
+        for it in s[g]["items"]:
+            body += f'<div style="margin:8px 0"><b>{e(it["k"])} · {e(it["name"])}</b>{" <span class=" + chr(34) + "tag" + chr(34) + ">执行相关 · 不公开</span>" if it.get("private") else ""} <span class="small muted">{e(it.get("q", ""))}</span>{ladder(it["anchors"])}{"".join(f"<p class=" + chr(34) + "small" + chr(34) + " style=" + chr(34) + "color:var(--dn);margin:4px 0" + chr(34) + f">{e(k)} 分：{e(v)}</p>" for k, v in (it.get("penalty") or {}).items())}</div>'
+    if s.get("invest"):
+        body += f'<p class="small muted">{e(s["invest"]["note"])}。<b>{e(s["invest"]["facts"]["name"])}</b>：{e(s["invest"]["facts"]["rule"])}（{e("、".join(s["invest"]["facts"]["fields"]))}）</p>'
+    body += f'<div class="card small"><b>区间与覆盖</b>：{e(s["formula"]["interval"])}<br>例：{e(s["formula"]["example"])}' + "".join(f'<br><b>{e(p["name"])}</b>：{e(p["rule"])}（{e(p["note"])}）' for p in s["promote"]) + "</div>"
+    ar = fw["auto_rules"]
+    body += f'<h4 id="auto">{e(ar["name"])} <span class="small muted">{e(ar["sec"])}</span></h4><p class="small muted">{e(ar["rule"])}</p><div class="tw"><table><tbody>' + "".join(f'<tr><td class="l"><b>{e(o["name"])}</b></td><td class="l" style="white-space:normal">{e(o["how"])}</td></tr>' for o in ar["items"]) + "</tbody></table></div>"
+    cm = fw["category_map"]
+    biz = {o["k"]: o["name"] for o in c["business"]["opts"]}
+    body += '<details class="card" style="margin-top:8px"><summary class="small">DefiLlama 类目 → 需求来源映射表</summary>' + "".join(f'<p class="small"><b>{e(biz.get(k, k))}</b>：{e("、".join(v))}</p>' for k, v in cm.items() if not k.startswith("_")) + "</details>"
+    h += sec("advantage", "4 · 评分：机制与当前参与优势", "六 / 附录一", body)
+    # 5 门槛
+    g = fw["gates"]
+    h += sec("safety", "5 · " + g["name"], g["sec"], f'<p class="small muted">{e(g["state_rule"])}</p>' + cards(g["items"], lambda o: f'<b>{e(o["name"])}</b>' + "".join(f'<p>· {e(x)}</p>' for x in o["checks"]) + f'<p><em>{e(o["unknown_rule"])}</em></p>' + ('<p><em>个人执行，网站不公开</em></p>' if o.get("private") else "")))
+    # 6 判断
+    d = fw["deep"]; sx = fw["six"]; st = fw["states"]; v = fw["valuation"]; r = fw["reflexive"]
+    body = cards(d["items"], lambda o: f'<b>{e(o["name"])}</b><p>{e(o["prompt"])}</p>')
+    body += f'<h4>{e(sx["name"])}</h4>' + cards(sx["items"], lambda o: f'<b>{e(o["name"])}</b><p>{e(o["need"])}</p>') + f'<p class="small muted">{e(sx["counter"])}</p>'
+    body += f'<h4>{e(v["name"])} <span class="small muted">{e(v["sec"])}</span></h4><div class="tw"><table><thead><tr><th class="l">研究对象</th><th class="l">优先指标</th><th class="l">避免的误用</th></tr></thead><tbody>' + "".join(f'<tr><td class="l"><b>{e(o["name"])}</b></td><td class="l" style="white-space:normal">{e(o["use"])}</td><td class="l" style="white-space:normal">{e(o["avoid"])}</td></tr>' for o in v["rows"]) + "</tbody></table></div>" + "".join(f'<p class="small muted" style="margin:2px 0">· {e(m)}</p>' for m in v["metrics"])
+    body += f'<h4>{e(r["name"])}</h4><p class="small">{e(r["loop"])}</p><p class="small"><b>核心比较：</b>{e(r["core"])}</p>' + cards(r["items"], lambda o: f'<b>{e(o["name"])}</b><p><em>观测</em> {e(o["watch"])}</p><p><em>转折</em> {e(o["turn"])}</p>') + f'<p class="small muted">压力情景：{e(" / ".join(r["stress"]))}</p>'
+    for k in ("community", "listing", "environment"):
+        body += f'<h4>{e(fw[k]["name"])} <span class="small muted">{e(fw[k]["sec"])}</span></h4>' + "".join(f'<p class="small" style="margin:2px 0">· {e(x)}</p>' for x in fw[k]["items"])
+    body += f'<h4>{e(st["name"])}</h4><div class="states">' + "".join(f'<div class="card{" priv" if o.get("private") else ""}"><b>{e(o["name"])}</b><p class="small" style="margin:4px 0"><em class="muted">进入</em> {e(o["enter"])}</p><p class="small" style="margin:4px 0"><em class="muted">下一步</em> {e(o["next"])}</p>{"<p class=" + chr(34) + "small muted" + chr(34) + ">不公开</p>" if o.get("private") else ""}</div>' for o in st["items"]) + f'</div><p class="small muted">{e(st.get("infer", ""))}</p>'
+    h += sec("judge", "6 · 形成判断", "五 / 七 / 八–十 / 十一.1 / 四.1", body)
+    # 7 监控
+    m = fw["monitor"]
+    body = '<div class="tw"><table><thead><tr><th class="l">监控面</th><th class="l">什么变化值得重开判断</th><th class="l">应输出什么</th></tr></thead><tbody>' + "".join(f'<tr><td class="l"><b>{e(o["name"])}</b></td><td class="l" style="white-space:normal">{e(o["trigger"])}</td><td class="l" style="white-space:normal">{e(o["out"])}</td></tr>' for o in m["planes"]) + "</tbody></table></div>"
+    body += f'<p class="small muted">{e(m["rule"])}</p>' + cards(m["cadence"], lambda o: f'<b>{e(o["name"])}</b><p>{e(o["do"])}</p>')
+    h += sec("monitor", "7 · " + m["name"], m["sec"], body)
+    # 8 检验
+    vf = fw["verify"]; ev = fw["evidence"]; oc = fw["outcomes"]
+    body = "".join(f'<p class="small" style="margin:4px 0">· {e(x)}</p>' for x in vf["items"])
+    body += f'<h4>{e(ev["name"])}</h4><div class="tw"><table><thead><tr><th class="l">证据类别</th><th class="l">能支持</th><th class="l">不能独自支持</th></tr></thead><tbody>' + "".join(f'<tr><td class="l"><b>{e(o["name"])}</b></td><td class="l" style="white-space:normal">{e(o["can"])}</td><td class="l" style="white-space:normal">{e(o["cannot"])}</td></tr>' for o in ev["items"]) + "</tbody></table></div>"
+    body += f'<h4 id="outcomes">{e(oc["name"])} <span class="small muted">{e(oc["sec"])}</span></h4><p class="small">{e(oc["purpose"])}</p>' + "".join(f'<p class="small" style="margin:4px 0"><b>{e(o["name"])}</b>：{e(o["how"])}</p>' for o in oc["dims"]) + f'<p class="small"><b>怎么找相似案例</b>：{e(oc["match"])}</p><ul class="cav">' + "".join(f"<li>{e(x)}</li>" for x in oc["caveats"]) + f'</ul><p class="small"><a href="{U("/alpha/cases/")}">{T("看案例库 →", "Cases →")}</a></p>'
+    h += sec("verify", "8 · 用结果检验方法", vf["sec"] + " / 附录三 / 十五", body)
+    return h + "</div>"
+
+
+def alpha_home_card():
+    d = G.get("ALPHA")
+    if not d:
+        return ""
+    ev = d.get("events") or []
+    nr = sum(1 for e in ev if e["type"] == "new_rank")
+    tk = sum(1 for e in ev if e["type"] == "token")
+    base = d.get("baseline_day")
+    st = (d.get("ledger") or {}).get("status") or {}
+    lead = " ".join(f'<span>{esc(r["name"])} <b>{a_usd(r["rev30"])}</b></span>' for r in (d.get("tokenless") or [])[:5])
+    return (f'<h2>{T("Alpha 雷达", "Alpha radar")} <span class="sub">{T("没发币但有收入的协议 · 新协议", "Tokenless protocols with revenue · new protocols")}</span>'
+            f' <a class="sub" href="{U("/alpha/")}">{T("进雷达 →", "Open →")}</a></h2>'
+            f'<div class="card core-home"><div class="row"><span>{T("无币协议（30 天收入 ≥ 10 万美元）", "Tokenless (30d revenue ≥ $100K)")} <b>{len(d.get("tokenless") or [])}</b></span>'
+            f'<span>{T("最近 14 天新上架", "Listed in last 14d")} <b>{len(d.get("listings") or [])}</b></span>'
+            f'<span>{T("今天首次进榜", "New today")} <b>{nr}</b> · {T("发币", "launched a token")} <b>{tk}</b></span>'
+            f'<span><a href="{U("/alpha/pool/")}">{T("候选池", "Pool")}</a> {T("研究观察", "watching")} <b>{st.get("研究观察", 0)}</b> · {T("待核验", "to verify")} <b>{st.get("待核验", 0)}</b></span></div>'
+            f'<div class="row" style="margin-top:6px">{T("收入前五：", "Top 5 by revenue: ")}{lead}</div>'
+            f'<div class="row" style="margin-top:6px;font-size:12px;color:var(--muted)">{T("数据日", "Data day")} {esc(d.get("asof") or "")} · {T(f"台账从 {base} 起记，首日为基线", f"ledger since {base}; first day is the baseline")}</div></div>')
+
+
+def build_alpha():
+    d = G.get("ALPHA") or {}
+    desc = T("Alpha 雷达：DefiLlama 上没发币但有真实收入的协议、最近上架的新协议，加线索台账、方法论和历史案例。只研究正规项目，不是买卖建议。",
+             "Alpha radar: tokenless protocols with real revenue on DefiLlama, newly listed protocols, a lead ledger, the screening framework and historical cases. Established projects only; not trade advice.")
+    # 雷达
+    if d:
+        ev = d.get("events") or []
+        evn = {t: [e for e in ev if e["type"] == t] for t in ("new_rank", "token", "new_listing")}
+        base = d.get("baseline_day")
+        is_base = base == (d.get("generated") or "")[:10]
+        evh = ""
+        if is_base:
+            evh = f'<div class="note">{T(f"今天（{base}）是台账第一天：表里全部记为基线，从明天起才会出现「首次进榜」和「发币」事件。", f"Today ({base}) is the ledger baseline; first-entry and token-launch events start tomorrow.")}</div>'
+        else:
+            def names(xs):
+                return "、".join(esc(e["name"]) for e in xs[:12]) + (T(f" 等 {len(xs)} 个", f" and {len(xs) - 12} more") if len(xs) > 12 else "") if xs else T("无", "none")
+            evh = (f'<div class="card" style="margin:0 0 18px;padding:12px 16px;font-size:13px">'
+                   f'<div><b>{T("首次进无币收入榜", "New on the tokenless revenue board")}</b> · {names(evn["new_rank"])}</div>'
+                   f'<div style="margin-top:4px"><b>{T("发币（首次发现时无币，现在有代币）", "Launched a token (tokenless when first seen)")}</b> · {names(evn["token"])}</div>'
+                   f'<div style="margin-top:4px;color:var(--muted)">{T("新上架", "Newly listed")} {len(evn["new_listing"])} {T("个，见下表", "— see table below")}</div></div>')
+        if d.get("stale"):
+            evh = f'<div class="note">{T("今天数据源没取到，下表沿用上次结果。", "Source failed today; tables carry the last result.")}</div>' + evh
+        chg = lambda v: '<span class="muted">' + T("新", "new") + "</span>" if v is None else f'<span style="color:var(--{"up" if v >= 0 else "dn"})">{v:+.0f}%</span>'
+        trs = "".join(
+            f'<tr><td class="rk">{i}</td><td class="wrap" style="min-width:180px;text-align:left"><a href="https://defillama.com/protocol/{esc(r["slug"] or "")}" target="_blank" rel="noopener">{esc(r["name"])}</a>'
+            + (f'<div class="tnote" style="margin:2px 0 0;white-space:normal">{esc("、".join(r["children"][:3]))}{"…" if len(r["children"]) > 3 else ""}</div>' if len(r["children"]) > 1 else "")
+            + f'</td><td class="l">{esc(r["category"] or "")}</td><td class="l">{esc(" · ".join(r["chains"]))}</td><td>{a_usd(r["rev30"])}</td><td>{chg(r["chg30"])}</td><td>{esc(r.get("first_seen") or "")}</td>'
+            + f'<td class="l">{alpha_status_chip(r["key"])}</td></tr>'
+            for i, r in enumerate(d.get("tokenless") or [], 1))
+        lrs = "".join(
+            f'<tr><td>{esc(r["listed"])}</td><td class="l"><a href="https://defillama.com/protocol/{esc(r["slug"] or "")}" target="_blank" rel="noopener">{esc(r["name"])}</a></td>'
+            f'<td class="l">{esc(r["category"] or "")}</td><td class="l">{esc(" · ".join(r["chains"]))}</td><td>{a_usd(r["tvl"]) if r["tvl"] else "—"}</td><td class="l">{T("有", "yes") if r["token"] else T("无", "no")}</td></tr>'
+            for r in d.get("listings") or [])
+        lg = d.get("ledger") or {}
+        src_ok = all(v.get("ok") for v in (d.get("sources") or {}).values())
+        radar = (alpha_sources_html() + evh
+                 + f'<h2>{T("没发币、有收入的协议", "Tokenless protocols with revenue")} <span class="sub">{T("近 30 天协议收入 ≥ 10 万美元，按母协议合并", "30d protocol revenue ≥ $100K, merged by parent")} · {len(d.get("tokenless") or [])}</span></h2>'
+                 + f'<p class="tnote">{T("「没发币」= DefiLlama 上本协议和母协议都没登记代币，不等于确认不发币，也不等于会空投。已剔除稳定币发行方、交易所、CeDeFi、区块构建者和传统金融产品。环比 = 近 30 天 ÷ 前 30 天 − 1。", "“Tokenless” = no token registered on DefiLlama for the protocol or its parent; not a confirmation of no token, nor of an airdrop. Stablecoin issuers, CEXs, CeDeFi, block builders and TradFi products excluded. Change = last 30d ÷ prior 30d − 1.")}</p>'
+                 + f'<div class="tw scroll"><table><thead><tr><th>#</th><th style="text-align:left">{T("协议", "Protocol")}</th><th style="text-align:left">{T("类目", "Category")}</th><th style="text-align:left">{T("主要链", "Chains")}</th><th>{T("30 天收入", "30d revenue")}</th><th>{T("环比", "Change")}</th><th>{T("首次进榜", "First seen")}</th><th style="text-align:left">{T("机会卡", "Card")}</th></tr></thead><tbody>{trs}</tbody></table></div>'
+                 + f'<h2>{T("新上架协议", "Newly listed protocols")} <span class="sub">{T("DefiLlama 最近 14 天收录", "Added to DefiLlama in the last 14 days")} · {len(d.get("listings") or [])}</span></h2>'
+                 + f'<p class="tnote">{T("收录日不是部署日，更不是能参与的日子；TVL 是存量，不是收入。", "Listing date is not deployment date or participation date; TVL is a stock, not revenue.")}</p>'
+                 + f'<div class="tw scroll"><table><thead><tr><th>{T("收录日", "Listed")}</th><th style="text-align:left">{T("协议", "Protocol")}</th><th style="text-align:left">{T("类目", "Category")}</th><th style="text-align:left">{T("主要链", "Chains")}</th><th>TVL</th><th style="text-align:left">{T("代币", "Token")}</th></tr></thead><tbody>{lrs}</tbody></table></div>'
+                 + alpha_feed_html(d)
+                 + f'<h2>{T("线索台账", "Lead ledger")} <span class="sub">{T("保留全部分母：只追加，不删除", "All denominators kept: append-only")}</span></h2>'
+                 + f'<div class="card" style="padding:12px 16px;font-size:13px">{T("累计登记", "Logged")} <b>{lg.get("n", 0)}</b> · {T("来自无币收入榜", "from revenue board")} <b>{lg.get("tokenless_rev", 0)}</b> · {T("来自新上架", "from new listings")} <b>{lg.get("new_listing", 0)}</b> · {T("之后发币", "later launched a token")} <b>{lg.get("token_seen", 0)}</b>'
+                 + f' · <a href="/data/alpha/alpha_leads.json">{T("下载台账 JSON", "Ledger JSON")}</a></div>'
+                 + f'<p class="tnote">{T("数据日", "Data day")} {esc(d.get("asof") or "")} · {T("生成于", "Generated")} {TT(d.get("generated"))} · {T("来源 DefiLlama（协议列表、协议收入）", "Source: DefiLlama (protocols, revenue)")}{"" if src_ok else " · " + T("有数据源失败", "a source failed")}</p>')
+    else:
+        radar = f'<div class="note">{T("雷达数据还没生成。", "Radar data not generated yet.")}</div>'
+    ver = re.sub(r"[^0-9]", "", (G.get("OPPS") or {}).get("generated") or "")
+    css = f'<link rel="stylesheet" href="{ASSET_URL["alpha.css"]}">'
+    js = f'<script src="{ASSET_URL["alpha.js"]}" defer></script>'
+    zh_only = ZH_ONLY if LANG["v"] == "en" else ""
+    app = lambda mode: f'{zh_only}<div class="ax" id="alpha-app" data-mode="{mode}" data-v="{ver}"><p class="muted">{T("加载中…", "Loading…")}</p></div><noscript><p class="muted">{T("这一页需要开启 JavaScript。", "This page needs JavaScript.")}</p></noscript>'
+    page_ = lambda rel, p, title, body: emit(rel, T(f"{title} · Alpha 雷达 · {BRAND}", f"{title} · Alpha Radar · {BRAND_EN}"), alpha_head(p) + body, active="alpha", desc=desc, extra_head=css, scripts=js, chart=True)
+    page_("alpha/index.html", "", T("机会看板", "Board"), app("board"))
+    emit("alpha/opp/index.html", T(f"Alpha 雷达 · {BRAND}", f"Alpha Radar · {BRAND_EN}"),   # 旧的单张机会卡链接 → 看板同一张卡
+         f'<p><a href="{U("/alpha/")}">{T("机会卡已并入机会看板 →", "Cards now live on the board →")}</a></p><script>location.replace("{U("/alpha/")}"+location.hash)</script>', active="alpha")
+    page_("alpha/radar/index.html", "radar/", T("雷达", "Radar"), radar)
+    page_("alpha/cases/index.html", "cases/", T("案例库", "Cases"), app("cases"))
+    page_("alpha/framework/index.html", "framework/", T("框架", "Framework"), alpha_framework_html())
+    page_("alpha/eval/index.html", "eval/", T("评估器", "Evaluator"), app("eval"))
+    emit("alpha/pool/index.html", T(f"Alpha 雷达 · {BRAND}", f"Alpha Radar · {BRAND_EN}"), f'<p><a href="{U("/alpha/")}">{T("候选池已并入机会看板 →", "The pool moved to the board →")}</a></p>',
+         active="alpha", extra_head=f'<meta http-equiv="refresh" content="0; url={U("/alpha/")}">')
+    for p, fn, toc in (("method/", "Alpha标的筛选研究体系.md", True), ("progress/", "研究进度.md", False)):   # 二级：框架与方法
+        src = open(os.path.join(ROOT, "alpha", "research", fn), encoding="utf-8").read()
+        nav = ""
+        if toc:   # 目录：只列一级章节（## 开头），锚点和 core_md 的 h 编号一致
+            k, items = 0, []
+            for ln in src.split("\n"):
+                m = re.match(r"^(#{1,4})\s+(.*)", ln.strip())
+                if m:
+                    k += 1
+                    if len(m.group(1)) == 2:
+                        items.append(f'<a href="#h{k}">{esc(m.group(2))}</a>')
+            nav = '<details class="card" style="padding:10px 16px;margin:0 0 16px"><summary>' + T("目录", "Contents") + '</summary><div style="display:flex;flex-direction:column;gap:4px;margin-top:8px;font-size:13px">' + "".join(items) + "</div></details>"
+        name = next(T(zh, en) for q, zh, en in ALPHA_FW if q == p)
+        emit(f"alpha/{p}index.html", T(f"{name} · Alpha 雷达 · {BRAND}", f"{name} · Alpha Radar · {BRAND_EN}"),
+             alpha_head(p) + zh_only + nav + f'<div class="article alpha-doc">{core_md(src)}</div>', active="alpha", desc=desc)
+
+
 # ---------------------------------------------------------------- 涨腿追踪（只读 data/leg/leg_latest.json；规则在 leg/leg_data.py，文案与统计在 leg/web/leg.js）
+
+# ---------------------------------------------------------------- RWA（rwa/：看板读 data/rwa/rwa_latest.json；研究标的读其中 research 段（来自 rwa/research/watchlist.json）；方法框架 / 进度读 rwa/research/*.md）
+RWA_TABS = [("", "看板", "Board", "规模 · 谁在收钱 · 平台币", "Size · who earns · tokens"),
+            ("watch/", "研究标的", "Watchlist", "判断卡 · 待核问题", "Judgment cards · open questions"),
+            ("library/", "研究库", "Library", "记录 · 合约 · 市场", "Records · contracts · markets"),
+            ("method/", "方法框架", "Framework", "身份 · 口径 · 证据", "Identity · metrics · evidence"),
+            ("progress/", "研究进度", "Progress", "阶段 · 审查 · 外部任务", "Stages · review · tasks")]
+RWA_STATE = {"pending_recheck": ("待重核", "Pending re-check", "warn"), "watch": ("观察", "Watch", "cool"),
+             "waiting_evidence": ("等待证据", "Waiting for evidence", "cool"), "conditions_met": ("条件齐备", "Conditions met", "up"),
+             "invalidated": ("已失效", "Invalidated", "dn"), "historical": ("历史", "Historical", "")}
+RWA_PT = {"issued": ("已发平台币", "Platform token issued"), "declared_none": ("明确声明不发", "Declared no token"),
+          "unverified": ("平台币未确认", "Platform token unverified"), "tradfi": ("传统机构产品", "TradFi product"), "n/a": ("不适用", "N/A")}
+RWA_CSS = """<style>
+.rwa3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0 0 8px}
+.rwa3 .card{padding:14px 16px}.rwa3 h3{margin:0 0 8px;font-size:13px;color:var(--muted);font-weight:600;letter-spacing:.3px}
+.rwa3 .big{font:600 22px/1.25 var(--mono);margin:2px 0 6px}.rwa3 ul{margin:0;padding-left:16px;font-size:13px;line-height:1.7}
+.rwafun{display:flex;flex-direction:column;gap:6px;font-size:13px}.rwafun .r{display:flex;align-items:center;gap:8px}
+.rwafun .lb{flex:0 0 96px;color:var(--ink2)}.rwafun .tr{flex:1;height:10px;background:var(--wash);border:1px solid var(--line);border-radius:5px;overflow:hidden}
+.rwafun .tr i{display:block;height:100%;background:var(--cool)}.rwafun .v{flex:0 0 74px;text-align:right;font-family:var(--mono)}
+.rwabars{display:flex;flex-direction:column;gap:2px}.rwabar{display:grid;grid-template-columns:minmax(150px,220px) 1fr 92px;gap:10px;align-items:center;padding:8px 4px;border-bottom:1px solid var(--line)}
+.rwabar .nm{font-size:13.5px}.rwabar .nm small{display:block;color:var(--muted);font-size:11.5px;margin-top:2px;line-height:1.5}
+.rwabar .tr{height:12px;background:var(--wash);border-radius:6px;overflow:hidden}.rwabar .tr i{display:block;height:100%;background:var(--up);opacity:.75}
+.rwabar .tr i.w{background:var(--warn)}.rwabar .v{text-align:right;font-family:var(--mono);font-size:13px}.rwabar .v small{display:block;font-size:11px}
+.rwacards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.rwacard{padding:14px 16px}.rwacard h3{margin:0 0 6px;font-size:15px}
+.rwacard .chips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 8px}.rwacard dl{display:grid;grid-template-columns:86px 1fr;gap:4px 10px;margin:8px 0;font-size:12.5px}
+.rwacard dt{color:var(--muted)}.rwacard dd{margin:0}.rwacard ul{margin:4px 0 0;padding-left:16px;font-size:12.5px;line-height:1.7}
+.rwacard details{margin-top:8px;font-size:12px;color:var(--ink2)}
+.libf{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}.libf input,.libf select{background:var(--card);color:var(--ink);border:1px solid var(--line2);border-radius:8px;padding:7px 10px;font:inherit;font-size:13px}
+.libf input{flex:1 1 220px}.lib{border-bottom:1px solid var(--line)}.lib>summary{display:grid;grid-template-columns:minmax(160px,1.4fr) 1fr 1fr 130px;gap:10px;align-items:center;padding:9px 6px;cursor:pointer;list-style:none;font-size:13px}
+.lib>summary::-webkit-details-marker{display:none}.lib>summary:hover,.lib>summary:focus-visible{background:var(--hover)}.lib>summary .nm b{font-weight:600}.lib>summary .nm small{display:block;color:var(--muted);font-size:11.5px}
+.lib .bd{padding:4px 10px 14px;font-size:12.5px;line-height:1.7}.lib .bd table{font-size:12px}.lib .mono{font-family:var(--mono);font-size:11.5px;word-break:break-all}.lib .bd h4{margin:10px 0 4px;font-size:12.5px;color:var(--muted);font-weight:600}
+.libsum{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;padding:12px 16px}.libsum b{font-family:var(--mono)}
+@media (max-width:820px){.lib>summary{grid-template-columns:1fr auto}.lib>summary .c3,.lib>summary .c4{display:none}}
+@media (max-width:820px){.rwa3,.rwacards{grid-template-columns:1fr}.rwabar{grid-template-columns:1fr 84px}.rwabar .tr{grid-column:1/3;grid-row:2}}
+</style>"""
+
+
+def write_rwa_data():
+    src = os.path.join(DATA, "rwa")
+    G["RWA"] = load(os.path.join(src, "rwa_latest.json"))
+    G["RWA_HIST"] = load(os.path.join(src, "rwa_history.json"), []) or []
+    if not G["RWA"]:
+        return
+    out = os.path.join(SITE, "data", "rwa")
+    os.makedirs(out, exist_ok=True)
+    pub = {k: v for k, v in G["RWA"].items() if k != "asset_ids"}
+    with open(os.path.join(out, "rwa_latest.json"), "w", encoding="utf-8") as f:
+        json.dump(pub, f, ensure_ascii=False, indent=1)
+    shutil.copyfile(os.path.join(src, "rwa_history.json"), os.path.join(out, "rwa_history.json"))
+    G["RWA_LIB"] = load(os.path.join(src, "universe.json"))
+    if G["RWA_LIB"]:
+        shutil.copyfile(os.path.join(src, "universe.json"), os.path.join(out, "universe.json"))
+
+
+def rwa_head(cur):
+    tabs = "".join(f'<a role="tab" href="{U("/rwa/" + p)}" class="tab{" on" if p == cur else ""}"><span class="tn">{T(zh, en)}</span><span class="ts">{T(dz, de)}</span></a>'
+                   for p, zh, en, dz, de in RWA_TABS)
+    name = next(T(zh, en) for p, zh, en, _, _ in RWA_TABS if p == cur)
+    cr = crumbs([("RWA", "/rwa/" if cur else None)] + ([(name, None)] if cur else []))
+    return (f'{cr}<div class="ph"><div><div class="eyebrow">Real-World Assets</div><h1>{T("RWA 现实资产", "RWA · real-world assets")}</h1>'
+            f'<p class="lede">{T("把基金、国债、黄金、股票、信贷搬上链的整条产业链：规模在哪、谁付费谁收钱、哪些有平台币、研究标的的判断和待核问题。资产币、平台币、传统机构产品分开记；只摆读数、证据和未知项，不是买卖建议。", "The whole chain that brings funds, treasuries, gold, stocks and credit onchain: where the size is, who pays and who earns, which have platform tokens, and research judgments with open questions. Asset tokens, platform tokens and TradFi products are kept apart; readings, evidence and unknowns only — not trade advice.")}</p></div></div>'
+            f'<div class="tabwrap"><nav class="tabs" role="tablist">{tabs}</nav></div>')
+
+
+def rwa_cat(d, cid):
+    return next((c for c in (d or {}).get("categories") or [] if c.get("id") == cid and not c.get("missing")), None)
+
+
+def rwa_home_card():
+    d = G.get("RWA")
+    if not d:
+        return ""
+    t = d.get("totals") or {}
+    rs = (d.get("research") or {})
+    tre, gold = rwa_cat(d, "tokenized-treasuries"), rwa_cat(d, "tokenized-gold")
+    v = lambda c: a_usd(c.get("mcap")) if c else "—"
+    return (f'<h2>RWA <span class="sub">{T("现实资产上链：规模 · 谁在收钱 · 研究标的", "Real-world assets: size · who earns · watchlist")}</span>'
+            f' <a class="sub" href="{U("/rwa/")}">{T("进看板 →", "Open →")}</a></h2>'
+            f'<div class="card core-home"><div class="row"><span>{T("代币化国债", "Tokenized treasuries")} <b>{v(tre)}</b></span>'
+            f'<span>{T("代币化黄金", "Tokenized gold")} <b>{v(gold)}</b></span>'
+            f'<span>{T("链上 RWA 协议 30 天手续费", "Onchain RWA fees, 30d")} <b>{a_usd(t.get("fees30_onchain"))}</b> → {T("归代币持有人", "to token holders")} <b>{a_usd(t.get("hrev30_onchain"))}</b></span></div>'
+            f'<div class="row" style="margin-top:6px;font-size:12px;color:var(--muted)">{T("研究标的", "Watchlist")} {len(rs.get("items") or [])} {T("条，全部待重核（研究库迁入中）", "items, all pending re-check (library migration in progress)") if all(i["current"].get("state") == "pending_recheck" for i in rs.get("items") or []) else ""}'
+            f' · {T("采样", "Sampled")} {TT(d.get("cg_sampled"))} · CoinGecko / DefiLlama</div></div>')
+
+
+def rwa_link(kind, slug):
+    from urllib.parse import quote
+    if not slug:
+        return None
+    return (f"https://defillama.com/protocol/{quote(str(slug), safe='')}" if kind == "llama" else f"https://www.coingecko.com/en/coins/{quote(str(slug), safe='')}")
+
+
+def rwa_a(text, href):
+    return f'<a href="{esc(href)}" target="_blank" rel="noopener noreferrer">{esc(text)}</a>' if href else esc(text)
+
+
+def rwa_tok(r):
+    st, tk = r.get("token_status"), r.get("token") or {}
+    sym = esc(tk.get("symbol") or "")
+    if st == "registered":
+        return f'<span class="chip" data-tag="rwa_tok_reg">{T("登记代币", "Token")} {sym}</span>'
+    if st == "asset_token":
+        return f'<span class="chip t-cool" data-tag="rwa_tok_asset">{T("资产币", "Asset token")} {sym}</span>'
+    if st == "tradfi":
+        return f'<span class="chip" data-tag="rwa_tradfi">{T("传统机构", "TradFi")}</span>'
+    return f'<span class="chip t-warn" data-tag="rwa_tok_none">{T("未登记 ≠ 无币", "None listed ≠ no token")}</span>'
+
+
+def rwa_pct(v):
+    if v is None:
+        return '<span class="muted">—</span>'
+    return f'<span style="color:var(--{"up" if v >= 0 else "dn"})">{v:+.1f}%</span>'
+
+
+def rwa_board(d):
+    if not d:
+        return f'<div class="note">{T("RWA 数据还没生成。", "RWA data not generated yet.")}</div>'
+    src = d.get("sources") or {}
+    warn = ""
+    for k, nm in (("coingecko", "CoinGecko"), ("defillama", "DefiLlama")):
+        s = src.get(k) or {}
+        if s and not s.get("ok"):
+            warn += f'<div class="note">{nm} {T("这次没取到，下面沿用上次成功的结果（", "failed this run; showing the last good result (")}{TT(s.get("last_ok")) if s.get("last_ok") else T("无", "none")}{T("）。", ").")}</div>'
+    t = d.get("totals") or {}
+    cats = [c for c in d.get("categories") or [] if not c.get("missing")]
+    assets = [c for c in cats if c.get("role") == "asset" and c.get("mcap")]
+    hist = [h for h in G.get("RWA_HIST") or [] if h.get("cats")]
+    prev = hist[-2] if len(hist) >= 2 else None
+    # ① 发生什么
+    big = sorted(assets, key=lambda c: -(c.get("mcap") or 0))
+    def cname(c):
+        return T(c["zh"], c["en"])
+    happen = []
+    tre = rwa_cat(d, "tokenized-treasuries")
+    if tre:
+        tp = (tre.get("top") or [{}])[0]
+        happen.append(T(f"代币化国债 <b>{a_usd(tre['mcap'])}</b>，{tre['n']} 个币，最大 {esc(tp.get('sym'))} 占 {tp.get('share')}%",
+                        f"Tokenized treasuries <b>{a_usd(tre['mcap'])}</b>, {tre['n']} tokens; largest {esc(tp.get('sym'))} is {tp.get('share')}%"))
+    mv = [c for c in assets if c.get("chg24") is not None and not c.get("nested_in") and not c.get("overlap")]
+    if mv:
+        hi = max(mv, key=lambda c: abs(c["chg24"]))
+        happen.append(T(f"24 小时市值变动最大：{cname(hi)} {rwa_pct(hi['chg24'])}（CoinGecko 口径，含价格变动）", f"Biggest 24h market-cap move: {cname(hi)} {rwa_pct(hi['chg24'])} (CoinGecko, includes price)"))
+    conc = [c for c in assets if (c.get("top") or [{}])[0].get("share", 0) >= 90 and c.get("n", 0) <= 3]
+    for c in conc:
+        happen.append(T(f"{cname(c)} {a_usd(c['mcap'])} 几乎全是 {esc(c['top'][0]['sym'])} 一个，不能当行业规模读", f"{cname(c)} {a_usd(c['mcap'])} is almost entirely {esc(c['top'][0]['sym'])}; not an industry-size reading"))
+    if prev:
+        happen.append(T(f"上次采样 {TT(prev.get('cg_sampled'))}，变化见下方「规模」每行右侧", f"Previous sample {TT(prev.get('cg_sampled'))}; changes shown per row below"))
+    else:
+        happen.append(T("历史从今天开始逐日记录（不回填），满两次采样后显示「比上次」", "History is recorded daily from today (no backfill); “vs previous” appears from the second sample"))
+    # ② 谁在收钱：漏斗，宽度按手续费归一
+    f30 = t.get("fees30_onchain") or 0
+    fun = "".join(f'<div class="r"><span class="lb">{lb}</span><span class="tr"><i style="width:{(v / f30 * 100) if f30 else 0:.1f}%"></i></span><span class="v">{a_usd(v)}</span></div>'
+                  for lb, v in ((T("用户付的手续费", "Fees paid"), f30), (T("协议留下的", "Protocol revenue"), t.get("rev30_onchain") or 0), (T("归代币持有人", "To token holders"), t.get("hrev30_onchain") or 0)))
+    # ③ 研究
+    rs = d.get("research") or {}
+    items = rs.get("items") or []
+    mig = rs.get("migration") or {}
+    cnt = rs.get("counts") or {}
+    cnt_h = " · ".join(f'{T(RWA_STATE[k][0], RWA_STATE[k][1])} {v}' for k, v in cnt.items() if k in RWA_STATE)
+    top3 = f"""<div class="rwa3">
+<div class="card"><h3>{T("发生什么", "What's happening")}</h3><ul>{"".join(f"<li>{x}</li>" for x in happen)}</ul></div>
+<div class="card"><h3>{T("谁在收钱 · 链上 RWA 协议近 30 天", "Who earns · onchain RWA protocols, 30d")}</h3><div class="rwafun">{fun}</div>
+<p class="tnote" style="margin-top:8px">{T(f"{t.get('n_onchain', 0)} 个协议里只有 {t.get('n_hrev_pos', 0)} 个有持有人收入。传统机构产品（Grayscale ETF 管理费等）另有手续费 {a_usd(t.get('fees30_tradfi'))}，不算在内。", f"Only {t.get('n_hrev_pos', 0)} of {t.get('n_onchain', 0)} protocols pay token holders. TradFi products (Grayscale ETF fees etc.) add {a_usd(t.get('fees30_tradfi'))} in fees, excluded.")}</p></div>
+<div class="card"><h3>{T("研究标的 · 现在能做什么", "Watchlist · what can be done now")}</h3><div class="big">{len(items)} <span style="font-size:13px;color:var(--muted)">{T("条", "items")}</span></div>
+<div style="font-size:13px">{cnt_h}</div><p class="tnote" style="margin-top:6px">{esc(T(mig.get("note_zh", ""), mig.get("note_en", "")))}</p>
+<p style="margin:6px 0 0;font-size:13px"><a href="{U("/rwa/watch/")}">{T("看判断卡和待核问题 →", "Judgment cards & open questions →")}</a></p></div>
+</div>"""
+    # 规模
+    mx = max((c["mcap"] for c in assets), default=1)
+    def bar(c):
+        tp = (c.get("top") or [{}])[0]
+        one = tp.get("share", 0) >= 90
+        tags = []
+        if c.get("nested_in"):
+            tags.append(T("包含在「商品」里", "inside “commodities”"))
+        if c.get("overlap"):
+            tags.append(T("和「国债」大量重叠", "overlaps “treasuries”"))
+        n = (("≥" if c.get("truncated") else "") + str(c.get("n")))
+        sub = T(f"{n} 个币 · 最大 ", f"{n} tokens · top ") + rwa_a(tp.get("sym") or "", rwa_link("cg", tp.get("id"))) + f" {tp.get('share')}%"
+        if tp.get("role"):
+            sub += " · " + esc(T(tp["role"]["zh"], tp["role"]["en"]))
+        if c.get("note_zh"):
+            tags.append(T(c["note_zh"], c.get("note_en", "")))
+        if tags:
+            sub += " · " + " · ".join(tags)
+        vs = ""
+        if prev and prev["cats"].get(c["id"]) and c.get("mcap"):
+            vs = f'<small>{T("比上次", "vs prev")} {rwa_pct((c["mcap"] / prev["cats"][c["id"]] - 1) * 100)}</small>'
+        else:
+            vs = f'<small>24h {rwa_pct(c.get("chg24"))}</small>'
+        return (f'<div class="rwabar"><div class="nm">{esc(cname(c))}<small>{sub}</small></div>'
+                f'<div class="tr" title="{esc(a_usd(c["mcap"]))}"><i class="{"w" if one else ""}" style="width:{c["mcap"] / mx * 100:.1f}%"></i></div>'
+                f'<div class="v">{a_usd(c["mcap"])}{vs}</div></div>')
+    bars = "".join(bar(c) for c in big)
+    mixed = rwa_cat(d, "real-world-assets-rwa")
+    mixed_cap = a_usd((mixed or {}).get("mcap"))
+    # 谁在收钱表
+    on = [r for r in d.get("protocols") or [] if r["kind"] == "onchain" and (r.get("fees30") or 0) > 0][:30]
+    tf = [r for r in d.get("protocols") or [] if r["kind"] == "tradfi"]
+    def prow(i, r):
+        sub = ""
+        if len(r.get("children") or []) > 1:
+            sub = f'<div class="tnote" style="margin:2px 0 0;white-space:normal">{esc("、".join(r["children"][:3]))}{"…" if len(r["children"]) > 3 else ""}</div>'
+        return (f'<tr><td class="rk">{i}</td><td class="wrap" style="min-width:170px;text-align:left">{rwa_a(r["name"], rwa_link("llama", r.get("slug")))}{sub}</td>'
+                f'<td class="l">{esc(" · ".join(r.get("chains") or []))}</td><td>{a_usd(r.get("fees30"))}</td><td>{a_usd(r.get("rev30"))}</td>'
+                f'<td>{a_usd(r.get("hrev30")) if r.get("hrev30") else "—"}</td><td>{rwa_pct(r.get("chg30"))}</td><td class="l">{rwa_tok(r)}</td></tr>')
+    th = (f'<thead><tr><th>#</th><th style="text-align:left">{T("协议（按母协议合并）", "Protocol (by parent)")}</th><th style="text-align:left">{T("主要链", "Chains")}</th>'
+          f'<th>{T("手续费", "Fees")}</th><th>{T("协议收入", "Revenue")}</th><th>{T("持有人收入", "Holders")}</th><th>{T("手续费环比", "Fees chg")}</th><th style="text-align:left">{T("代币身份", "Token identity")}</th></tr></thead>')
+    ptbl = f'<div class="tw scroll"><table>{th}<tbody>{"".join(prow(i, r) for i, r in enumerate(on, 1))}</tbody></table></div>'
+    ttbl = f'<div class="tw scroll"><table>{th}<tbody>{"".join(prow(i, r) for i, r in enumerate(tf, 1))}</tbody></table></div>' if tf else ""
+    # 平台币
+    pl = (d.get("platform") or [])[:25]
+    plr = "".join(
+        f'<tr><td class="rk">{i}</td><td class="wrap" style="min-width:160px;text-align:left">{rwa_a(p["name"], rwa_link("cg", p["id"]))} <span class="muted">{esc(p["sym"])}</span>'
+        + (f'<div class="tnote" style="margin:2px 0 0;white-space:normal">{esc(T(p["role"]["zh"], p["role"]["en"]))}</div>' if p.get("role") else "")
+        + f'</td><td>{a_usd(p.get("mcap"))}</td><td>{a_usd(p.get("fdv"))}</td><td>{a_usd(p.get("vol24"))}</td><td>{rwa_pct(p.get("chg24"))}</td></tr>'
+        for i, p in enumerate(pl, 1))
+    plc = rwa_cat(d, "rwa-protocol") or {}
+    pltop = (plc.get("top") or [{}])[0]
+    pl_cap, pl_sym, pl_sh = a_usd(plc.get("mcap")), esc(pltop.get("sym") or "—"), pltop.get("share")
+    return (warn + top3
+            + f'<h2>{T("规模 · 按资产类", "Size by asset class")} <span class="sub">{T("CoinGecko 分类市值 · 资产币", "CoinGecko category market cap · asset tokens")}</span></h2>'
+            + f'<p class="tnote">{T("分类之间有包含和重叠，不求和。条宽按本表最大值等比；琥珀色 = 单个币占 90% 以上。CoinGecko 分类只覆盖它收录的币，许可制基金（只在白名单之间转让）常常缺价格或缺席，所以这里偏小，不是行业全量。", "Categories nest and overlap; not summed. Bar width is proportional to the largest row; amber = one token is over 90%. CoinGecko only covers tokens it lists; permissioned funds are often missing, so these figures understate the industry.")}</p>'
+            + f'<div class="card" style="padding:6px 14px"><div class="rwabars">{bars}</div></div>'
+            + (f'<p class="tnote">{T(f"CoinGecko 的「RWA」大类 {mixed_cap} 把资产币和平台币混在一起，只作参考。", f"CoinGecko’s “RWA” umbrella ({mixed_cap}) mixes asset and platform tokens; reference only.")}</p>' if mixed else "")
+            + f'<h2>{T("谁在收钱", "Who earns")} <span class="sub">{T("DefiLlama · 近 30 天 · 链上 RWA 协议", "DefiLlama · last 30d · onchain RWA protocols")} · {len(on)}</span></h2>'
+            + f'<p class="tnote">{T("手续费 = 用户付的总额（多数是基金管理费，归管理人）；协议收入 = 协议自己留下的；持有人收入 = 分给代币持有人的。「登记代币」是 DefiLlama 登记的代币，平台币身份还要研究层核对；「资产币」= 登记的其实是产品份额 / 黄金，不是平台币；「未登记 ≠ 无币」。环比 = 近 30 天 ÷ 前 30 天 − 1。", "Fees = total paid by users (mostly fund management fees to managers); revenue = what the protocol keeps; holders = paid to token holders. “Token” = registered on DefiLlama, platform-token identity still to be checked; “asset token” = the registered token is a product share / gold, not a platform token; “none listed ≠ no token”. Change = last 30d ÷ prior 30d − 1.")}</p>'
+            + ptbl
+            + (f'<h3 style="margin:18px 0 8px;font-size:14px">{T("传统机构产品（单列，不算进上面的合计）", "TradFi products (separate, not in the totals above)")}</h3>' + ttbl if ttbl else "")
+            + f'<h2>{T("平台币 / 协议币", "Platform & protocol tokens")} <span class="sub">{T("CoinGecko「RWA Protocol」分类", "CoinGecko “RWA Protocol” category")} · {plc.get("n", "—")}</span></h2>'
+            + f'<p class="tnote">{T(f"这个分类合计 {pl_cap}，其中 {pl_sym} 占 {pl_sh}%。平台币价格和底层资产规模不一定相关；身份特殊的在名字下面注明。", f"Category total {pl_cap}; {pl_sym} alone is {pl_sh}%. Platform-token prices need not track underlying asset size; special identities are noted under the name.")}</p>'
+            + f'<div class="tw scroll"><table><thead><tr><th>#</th><th style="text-align:left">{T("代币", "Token")}</th><th>{T("流通市值", "Market cap")}</th><th>FDV</th><th>{T("24h 成交额", "24h volume")}</th><th>24h</th></tr></thead><tbody>{plr}</tbody></table></div>'
+            + f'<p class="tnote">{T("CoinGecko 采样", "CoinGecko sampled")} {TT(d.get("cg_sampled"))} · {T("DefiLlama 30 天窗口截至", "DefiLlama 30d window to")} {esc(d.get("asof_llama") or "")} · {T("生成于", "Generated")} {TT(d.get("generated"))}'
+            + f' · <a href="/data/rwa/rwa_latest.json">{T("下载 JSON", "JSON")}</a> · <a href="/data/rwa/rwa_history.json">{T("历史", "History")}</a></p>')
+
+
+def rwa_watch(d):
+    rs = (d or {}).get("research") or {}
+    mig = rs.get("migration") or {}
+    items = rs.get("items") or []
+    lim = rs.get("stale_days", 14)
+    head = (f'<div class="note">{esc(T(mig.get("note_zh", ""), mig.get("note_en", "")))} '
+            f'{T(f"判断最后复核超过 {lim} 天的标「过期待复核」。", f"Judgments not re-checked for over {lim} days are marked stale.")}</div>')
+    na = f'<span class="muted">{T("— 待复核后填写", "— to be filled after re-check")}</span>'
+    cards = []
+    for it in items:
+        cur = it.get("current") or {}
+        st = RWA_STATE.get(cur.get("state"), (cur.get("state") or "?", cur.get("state") or "?", "warn"))
+        pt = it.get("platform_token") or {}
+        ptl = RWA_PT.get(pt.get("status"), (pt.get("status") or "?", pt.get("status") or "?"))
+        fresh = {"never": T("从未按原始来源复核", "never re-checked at source"), "stale": T(f"过期待复核（{it.get('age_days')} 天）", f"stale ({it.get('age_days')}d)"),
+                 "fresh": T(f"{it.get('age_days')} 天前复核", f"re-checked {it.get('age_days')}d ago")}.get(it.get("fresh"), "")
+        fld = lambda k: esc(T(cur.get(k + "_zh") or cur.get(k) or "", cur.get(k + "_en") or cur.get(k) or "")) or na
+        oq = "".join(f"<li>{esc(q)}</li>" for q in it.get("open_questions") or [])
+        facts = "".join(f'<li>{esc(f.get("claim"))} · {rwa_a(T("来源", "source"), f.get("src") if str(f.get("src", "")).startswith("https://") else None)} · {esc(f.get("checked_utc") or "")}</li>' for f in it.get("facts") or [])
+        vers = "".join(f'<li>{esc(v.get("v"))} · {esc(T(RWA_STATE.get(v.get("state"), (v.get("state"),) * 2)[0], RWA_STATE.get(v.get("state"), (v.get("state"),) * 2)[1]))}'
+                       + (f' · {T("原状态", "was")}「{esc(v["old_state"])}」' if v.get("old_state") else "") + "</li>" for v in it.get("versions") or [])
+        lk = it.get("links") or {}
+        links = " · ".join(x for x in (rwa_a(T("官网", "Official"), lk.get("official")) if str(lk.get("official") or "").startswith("https://") else "",
+                                        rwa_a(T("来源", "Source"), lk.get("source")) if str(lk.get("source") or "").startswith("https://") else "",
+                                        f'<a href="{U("/rwa/library/")}#{lib_anchor(it["library_rid"])}">{T("研究库记录", "Library record")}</a>' if it.get("library_rid") else "") if x)
+        cards.append(
+            f'<div class="card rwacard" id="{esc(it.get("id", "").replace(":", "-"))}"><h3>{esc(it.get("name"))}</h3><div class="chips">'
+            f'<span class="chip{" t-" + st[2] if st[2] else ""}">{esc(T(st[0], st[1]))}</span><span class="chip">{esc(T(ptl[0], ptl[1]))}</span>'
+            f'<span class="chip">{esc(fresh)}</span></div>'
+            + (f'<div style="font-size:12px;margin:0 0 6px">{links}</div>' if links else "")
+            + f'<div style="font-size:13px;line-height:1.7">{fld("why")}</div>'
+            f'<dl><dt>{T("触发条件", "Trigger")}</dt><dd>{fld("trigger")}</dd><dt>{T("失效条件", "Invalidation")}</dt><dd>{fld("invalid")}</dd>'
+            f'<dt>{T("谁能参与", "Eligibility")}</dt><dd>{fld("eligibility")}</dd><dt>{T("参与成本", "Cost")}</dt><dd>{fld("cost")}</dd><dt>{T("退出路径", "Exit")}</dt><dd>{fld("exit")}</dd></dl>'
+            + (f'<div style="font-size:12.5px;color:var(--muted)">{T("已核事实", "Verified facts")}</div><ul>{facts}</ul>' if facts else "")
+            + (f'<div style="font-size:12.5px;color:var(--muted);margin-top:6px">{T("待核问题", "Open questions")}</div><ul>{oq}</ul>' if oq else "")
+            + (f'<details><summary>{T("平台币原始标注 · 判断版本", "Raw token label · versions")}</summary><div style="margin-top:6px">{esc(pt.get("raw") or "—")}</div><ul>{vers}</ul></details>')
+            + "</div>")
+    prob = rs.get("problems") or []
+    pb = (f'<div class="note">{T("研究库校验提示：", "Library validation: ")}' + "；".join(esc(p) for p in prob) + "</div>") if prob else ""
+    return head + pb + f'<div class="rwacards">{"".join(cards)}</div>' + f'<p class="tnote">{T("研究库更新于", "Library updated")} {esc(rs.get("updated_utc") or "")} · {T("任务包", "Task pack")}: rwa/review/README.md</p>'
+
+
+def lib_anchor(rid):
+    return "r-" + re.sub(r"[^a-z0-9]+", "-", str(rid).lower()).strip("-")
+
+
+RWA_SEG_EN = {"fund": "Funds & treasuries", "equity": "Equities", "commodity": "Commodities", "credit": "Credit", "realestate": "Real estate",
+              "collectible": "Collectibles", "stablecoin": "Stablecoins / deposits", "trading": "Trading & aggregation", "derivatives": "Derivatives",
+              "settlement": "Issuance / settlement / custody", "identity": "Identity & compliance", "data": "Data / oracles", "other": "Other"}
+RWA_ROLE = {"platform_token": ("平台币", "Platform token"), "asset_token": ("资产币", "Asset token"), "business": ("业务合约", "Business contract")}
+
+
+def rwa_library():
+    from collections import Counter
+    L = G.get("RWA_LIB")
+    if not L:
+        return f'<div class="note">{T("研究库还没导入。", "Library not imported yet.")}</div>'
+    c = L["counts"]
+    segz = L.get("segments") or {}
+    seg_name = lambda k: T(segz.get(k, k), RWA_SEG_EN.get(k, k))
+    ptn = lambda k: T(*RWA_PT.get(k, (k, k)))
+    pt_tone = {"issued": " t-cool", "declared_none": "", "tradfi": "", "unverified": " t-warn"}
+    ent = {e["id"]: e for e in L["entities"]}
+    summ = (f'<div class="card libsum"><span>{T("记录", "Records")} <b>{c["records"]}</b>（{T("主库", "main")} {c["main"]} + {T("发现队列", "discovery")} {c["discovery"]}{T("，其中缺 id 的旧记录", "; legacy without id")} {c["missing_id"]}）</span>'
+            f'<span>{T("独立实体", "Entities")} <b>{c["entities"]}</b></span>'
+            + "".join(f'<span>{ptn(k)} <b>{v}</b></span>' for k, v in sorted(c["pt"].items(), key=lambda t: -t[1]))
+            + f'<span>{T("合约", "Contracts")} ' + " · ".join(f'{T(*RWA_ROLE.get(k, (k, k)))} <b>{v}</b>' for k, v in c["contracts"].items()) + '</span>'
+            + f'<span>{T("DEX 池子", "DEX pools")} <b>{c["markets_dex"]}</b>（{T("挂上同链代币", "linked to a same-chain token")} {c["markets_dex_linked"]}）· {T("CEX 交易对", "CEX pairs")} <b>{c["markets_cex"]}</b></span></div>')
+    r1n = c.get("r1_entities")
+    note = (f'<p class="tnote">{T(f"实体按官网 / 产品页的主域名去重；数据平台、新闻稿、社交站的域名不当身份，没有官网的按 DefiLlama 母协议或单条记录算（Codex 原件按来源域名并成 {r1n} 个，把 41 个项目并成了「defillama.com」，已纠正）。分类按关键词粗分，可能有误。平台币状态是研究库原记录的映射，大多数是「未确认」，不等于没有。合约「核对级别」写的是原记录怎么来的：目录提示 ≠ 官方确认 ≠ 链上验证。", "Entities are deduplicated by official / product domain; data-platform, press-release and social domains are not identities. Segments are keyword-based and rough. Platform-token status maps the library’s original labels; most are “unverified”, which is not “none”. Contract check level says how the record was obtained: directory hint ≠ official ≠ onchain.")}</p>'
+            f'<p class="tnote">{T("研究库导出于", "Exported")} {TT(L["source"].get("exported_utc"))} · {T("导入于", "Imported")} {TT(L.get("generated"))} · {T("这是研究底稿，记录里的说法大多没有逐条复核", "Research working file; most statements are not individually re-verified")} · <a href="/data/rwa/universe.json">JSON</a></p>')
+    segs = Counter(x["segment"] for x in L["records"])
+    fl = (f'<div class="libf" role="search"><input type="search" id="libq" placeholder="{T("搜名字 / symbol / 合约地址 / 链", "Search name / symbol / address / chain")}" aria-label="{T("搜索研究库", "Search library")}">'
+          f'<select id="libseg" aria-label="{T("分类", "Segment")}"><option value="">{T("全部分类", "All segments")}</option>' + "".join(f'<option value="{k}">{esc(seg_name(k))}（{n}）</option>' for k, n in segs.most_common()) + '</select>'
+          f'<select id="libpt" aria-label="{T("平台币状态", "Platform token")}"><option value="">{T("全部平台币状态", "Any token status")}</option>' + "".join(f'<option value="{k}">{esc(ptn(k))}</option>' for k in c["pt"]) + '</select>'
+          f'<select id="libpool" aria-label="{T("来源", "Pool")}"><option value="">{T("主库 + 发现队列", "Main + discovery")}</option><option value="main">{T("主库", "Main")}</option><option value="discovery">{T("发现队列", "Discovery")}</option></select>'
+          f'<span id="libn" class="muted" style="align-self:center;font-size:12.5px"></span></div>')
+    def fmt_t(x):
+        return esc(str(x)[:10]) if x else "—"
+    def link(u, txt):
+        return rwa_a(txt, u) if str(u or "").startswith("https://") else (esc(txt) if u else "")
+    rows = []
+    for x in sorted(L["records"], key=lambda r: (r["pool"] != "main", (r["name"] or "").lower())):
+        e = ent.get(x["entity"]) or {}
+        cts = "".join(f'<tr><td class="l">{esc(T(*RWA_ROLE.get(k["role"], (k["role"], k["role"]))))}{" · " + esc(k["sub"]) if k.get("sub") else ""}</td><td class="l">{esc(k.get("chain") or "—")}</td>'
+                      f'<td class="l mono">{esc(k.get("address") or "—")}</td><td class="l">{esc(k.get("check") or "U")}</td><td class="l">{fmt_t(k.get("at"))}</td><td class="l">{link(k.get("src"), T("来源", "src"))}</td></tr>' for k in x["contracts"])
+        mks = "".join(f'<tr><td class="l">{esc(m["venue"].upper())} · {esc(m.get("name") or "")}</td><td class="l">{esc(m.get("chain") or "—")}</td><td class="l">{esc(m.get("pair") or "")}</td>'
+                      f'<td class="l mono">{esc(m.get("pool") or "—")}</td><td>{a_usd(m.get("liq")) if m.get("liq") is not None else "—"}</td><td class="l">{fmt_t(m.get("at"))}</td>'
+                      f'<td class="l">{T("同链代币", "linked") if m.get("linked") else ("—" if m["venue"] == "cex" else T("未挂上", "unlinked"))}</td></tr>' for m in x["markets"])
+        nts = "".join(f'<li>{fmt_t(n.get("at"))} · {esc(n.get("text"))} {link(n.get("src"), T("来源", "src"))}{" · " + esc(n["level"]) if n.get("level") else ""}</li>' for n in x["notes"])
+        hay = " ".join([x["name"] or "", x.get("symbol") or "", " ".join(x["chains"] or []), " ".join(k.get("address") or "" for k in x["contracts"]), e.get("name") or "", x["rid"]]).lower()
+        body = (f'<div>{T("实体", "Entity")}：{esc(e.get("name") or "")} <span class="muted">（{esc(e.get("domain") or e.get("basis") or "")}，{len(e.get("records") or [])} {T("条记录", "records")}）</span>'
+                f' · {link(x.get("official"), T("官网", "Official"))} {link(x.get("source"), T("来源", "Source"))}</div>'
+                + (f'<div>{T("业务", "Business")}：{esc(x["role_text"])}</div>' if x.get("role_text") else "")
+                + f'<div class="muted">{T("平台币原标签", "Raw token label")} <span class="mono">{esc(x.get("pt_raw") or "—")}</span>'
+                + (f' · symbol {esc(x["symbol"])}（{T("只作提示", "hint only")}）' if x.get("symbol") else "")
+                + (f' · <span class="mono">{esc(x["symbol_role"])}</span>' if x.get("symbol_role") else "")
+                + f' · {T("分类原文", "Raw segment")} {esc((x.get("segment_raw") or "—")[:60])} · {T("证据级别", "Evidence")} {esc(x.get("evidence") or "U")}</div>'
+                + f'<div class="muted">{T("首次发现", "First seen")} {fmt_t(x.get("first_seen"))} · {T("最后检查", "Last checked")} {fmt_t(x.get("last_checked"))} · {T("资料核实", "Verified")} {fmt_t(x.get("verified_at"))} · {T("目录核实", "Directory checked")} {fmt_t(x.get("directory_checked"))}</div>'
+                + (f'<h4>{T("合约", "Contracts")}</h4><div class="scroll"><table><thead><tr><th class="l">{T("角色", "Role")}</th><th class="l">{T("链", "Chain")}</th><th class="l">{T("地址", "Address")}</th><th class="l">{T("核对级别", "Check")}</th><th class="l">{T("时间", "At")}</th><th class="l"></th></tr></thead><tbody>{cts}</tbody></table></div>' if cts else "")
+                + (f'<h4>{T("交易场所", "Markets")}</h4><div class="scroll"><table><thead><tr><th class="l">{T("场所", "Venue")}</th><th class="l">{T("链", "Chain")}</th><th class="l">{T("交易对", "Pair")}</th><th class="l">{T("池子 ID", "Pool ID")}</th><th>{T("流动性", "Liquidity")}</th><th class="l">{T("观测", "Observed")}</th><th class="l">{T("身份", "Identity")}</th></tr></thead><tbody>{mks}</tbody></table></div>' if mks else "")
+                + (f'<h4>{T("研究记录（未复核）", "Research notes (not re-verified)")}</h4><ul>{nts}</ul>' if nts else ""))
+        rows.append(f'<details class="lib" id="{lib_anchor(x["rid"])}" data-q="{esc(hay)}" data-seg="{x["segment"]}" data-pt="{esc(x["pt"])}" data-pool="{x["pool"]}">'
+                    f'<summary><span class="nm"><b>{esc(x["name"])}</b><small>{esc(" · ".join(x["chains"][:3]))}{" …" if len(x["chains"]) > 3 else ""}</small></span>'
+                    f'<span class="c2"><span class="chip{pt_tone.get(x["pt"], "")}">{esc(ptn(x["pt"]))}</span></span><span class="c3 muted">{esc(seg_name(x["segment"]))}</span>'
+                    f'<span class="c4 muted" style="font-size:12px">{T("主库", "Main") if x["pool"] == "main" else T("发现", "Disc.")} · {fmt_t(x.get("first_seen"))}</span></summary><div class="bd">{body}</div></details>')
+    js = """<script>(function(){const q=document.getElementById('libq'),s=document.getElementById('libseg'),p=document.getElementById('libpt'),o=document.getElementById('libpool'),n=document.getElementById('libn');
+const rs=[...document.querySelectorAll('details.lib')];function f(){const t=q.value.trim().toLowerCase();let k=0;rs.forEach(r=>{const ok=(!t||r.dataset.q.includes(t))&&(!s.value||r.dataset.seg===s.value)&&(!p.value||r.dataset.pt===p.value)&&(!o.value||r.dataset.pool===o.value);r.hidden=!ok;if(ok)k++});n.textContent=k+' / '+rs.length}
+[q,s,p,o].forEach(e=>e.addEventListener('input',f));f();const h=location.hash&&document.getElementById(location.hash.slice(1));if(h&&h.tagName==='DETAILS'){h.open=true;h.scrollIntoView()}})();</script>"""
+    return summ + note + fl + f'<div class="card" style="padding:4px 10px">{"".join(rows)}</div>', js
+
+def build_rwa():
+    d = G.get("RWA") or {}
+    desc = T("RWA 现实资产板块：代币化国债、黄金、股票、信贷的规模，RWA 协议的手续费、协议收入和持有人收入，平台币身份，研究标的判断卡。不是买卖建议。",
+             "RWA board: size of tokenized treasuries, gold, stocks and credit; RWA protocol fees, revenue and holder revenue; platform-token identity; research judgment cards. Not trade advice.")
+    emit("rwa/index.html", T(f"RWA · {BRAND}", f"RWA · {BRAND_EN}"), rwa_head("") + rwa_board(d), active="rwa", desc=desc, extra_head=RWA_CSS)
+    emit("rwa/watch/index.html", T(f"研究标的 · RWA · {BRAND}", f"Watchlist · RWA · {BRAND_EN}"), rwa_head("watch/") + rwa_watch(d), active="rwa", desc=desc, extra_head=RWA_CSS)
+    lib = rwa_library()
+    lib_html, lib_js = lib if isinstance(lib, tuple) else (lib, "")
+    emit("rwa/library/index.html", T(f"研究库 · RWA · {BRAND}", f"Library · RWA · {BRAND_EN}"), rwa_head("library/") + lib_html, active="rwa", desc=desc, extra_head=RWA_CSS, scripts=lib_js)
+    zh_only = ZH_ONLY if LANG["v"] == "en" else ""
+    for p, fn in (("method/", "方法框架.md"), ("progress/", "研究进度.md")):
+        src = open(os.path.join(ROOT, "rwa", "research", fn), encoding="utf-8").read()
+        name = next(T(zh, en) for q, zh, en, _, _ in RWA_TABS if q == p)
+        emit(f"rwa/{p}index.html", T(f"{name} · RWA · {BRAND}", f"{name} · RWA · {BRAND_EN}"),
+             rwa_head(p) + zh_only + f'<div class="article alpha-doc">{core_md(src)}</div>', active="rwa", desc=desc)
+
+
 def leg_src(fn="leg_latest.json"):
     """数据文件链接带 ?v=<asof>（设计稿要求）；页面 / 卡片由 leg.js 取数渲染，停更判断在浏览器里按当天日期算。"""
     return f'/data/{fn}?v={esc((G.get("LEG") or {}).get("asof") or G["今天"])}'
+
+
+LEG_SCALE_FROM = "2017-08-17"   # 卡片刻度只用币安时代已走完的腿（和实时读数同一数据源）
+
+
+def leg_scale():
+    """卡片刻度（大叔 11-14 定）：按 L2 当前状态选同阶段的历史腿（偏多 → 牛市阶段，偏空 → 熊市阶段；和「结合短期」同一口径），
+    2017-08 起已走完的腿，给天数 / 幅度分位。写进 site/data/leg_latest.json 的 site_scale，leg.js 画刻度；不足 10 条不给。"""
+    l2, hist = G.get("L2"), load(os.path.join(DATA, "leg", "leg_history.json"))
+    code = ((l2 or {}).get("state") or {}).get("code")
+    if not code or code not in R.L2_STATES or not hist:
+        return None
+    reg = "bull" if code in L2_BULLISH else "bear"
+    out = {"phase": reg, "l2": {"code": code, "zh": R.L2_STATES[code][0], "en": R.L2_STATES[code][1]}, "from": LEG_SCALE_FROM,
+           "note": "按 L2 当前状态选同阶段历史腿；阶段按价格周期事后划分（腿按终点日归类）；只是位置刻度，不是信号"}
+    q = lambda v: {k: round(_qs(v, p), 1) for k, p in (("p25", .25), ("p50", .5), ("p75", .75), ("p90", .9))} | {"max": round(max(v), 1)}
+    # 页面上说「比 N 条里的 M 条走得久 / 跌得深」，所以把每一组的天数、幅度原样带上（几十个数）
+    grp = lambda xs: {"n": len(xs), "days": q([x["days"] for x in xs]), "pct": q([abs(x["pct"]) for x in xs]),
+                      "days_all": sorted(x["days"] for x in xs), "pct_all": sorted(round(abs(x["pct"]), 1) for x in xs)}
+    for d in ("up", "down"):
+        xs = [x for x in hist.get("legs") or [] if x["dir"] == d and x.get("regime") == reg and not x.get("ongoing") and x["start_date"] >= LEG_SCALE_FROM]
+        if len(xs) < 10:
+            continue
+        out[d] = grp(xs)
+    # 山寨整体：同一个 L2 阶段，指数 2018-08 起全部已走完的腿（牛熊标注借用 BTC 周期口径）
+    alt = (hist.get("alt") or {})
+    for d in ("up", "down"):
+        xs = [x for x in alt.get("legs") or [] if x["dir"] == d and x.get("regime") == reg and not x.get("ongoing")]
+        if len(xs) >= 10:
+            out.setdefault("alt", {"from": alt.get("index_from")})[d] = grp(xs)
+    return out
 
 
 def leg_assets():
@@ -4053,7 +4823,7 @@ def build_leg_tracker():
 <div class="callout" data-i18n="callout"></div>
 <nav class="chips" id="legChips"></nav>
 <div id="liveMount"></div>
-<section class="blk" id="how"><h2 data-i18n="how_h"></h2><ul class="plain" data-i18n="how_ul"></ul></section>
+<section class="blk" id="how"><h2 data-i18n="how_h"></h2><ul class="plain" data-i18n="how_ul"></ul><p class="small" id="scaleNote"></p></section>
 <section class="blk" id="def"><h2 data-i18n="def_h"></h2><div data-i18n="def_body"></div></section>
 <section class="blk" id="len"><h2><span data-i18n="len_h"></span>{tags["desc"]}</h2><p data-i18n="len_p1"></p>
 <div class="sw"><div id="lenPinMount"></div><div class="strip"><i style="width:25%"></i><i style="width:25%"></i><i style="width:25%"></i><i style="width:15%"></i><i style="width:10%"></i></div></div>
@@ -4063,10 +4833,8 @@ def build_leg_tracker():
 <section class="blk" id="hist"><h2><span data-i18n="hist_h"></span>{tags["desc"]}</h2><div id="histMount"></div></section>
 <section class="blk" id="l89"><h2><span data-i18n="l89_h"></span>{tags["hyp"]}</h2><p data-i18n="l89_p1"></p><div class="bars" id="l89Bars"></div>
 <p class="muted small" data-i18n="l89_pre"></p><p data-i18n="l89_p2"></p><div class="callout" data-i18n="l89_falsify"></div></section>
-<section class="blk" id="alt"><h2><span data-i18n="alt_h"></span>{tags["ver"]}</h2><p data-i18n="alt_p1"></p><div class="bw" id="altStatic"></div>
-<ul class="plain" data-i18n="alt_ul"></ul><h3><span data-i18n="alt_t_h"></span>{tags["ver"]}</h3><table class="t" id="altTable"></table>
-<p class="muted small" data-i18n="alt_note"></p><h3><span data-i18n="alt_peak_h"></span>{tags["desc"]}</h3><p data-i18n="alt_peak_p"></p>
-<div class="callout" data-i18n="alt_notsel"></div><h3><span data-i18n="alt_f_h"></span>{tags["fals"]}</h3><p data-i18n="alt_f_p"></p></section>
+<section class="blk" id="d45"><h2><span id="d45H"></span>{tags["hyp"]}</h2><p id="d45P1"></p><div class="bars" id="d45Bars"></div>
+<p class="muted small" id="d45Exc"></p><p id="d45P2"></p><div class="callout" id="d45F"></div></section>
 <section class="blk" id="false"><h2><span data-i18n="f_h"></span>{tags["fals"]}</h2><p data-i18n="f_intro"></p>
 <h3 data-i18n="f1_h"></h3><table class="t" id="f1Table"></table><p data-i18n="f1_p"></p><h3 data-i18n="f2_h"></h3><p data-i18n="f2_p"></p><p class="muted small" data-i18n="f3_p"></p></section>
 <section class="blk" id="method"><h2 data-i18n="m_h"></h2><ul class="plain" data-i18n="m_ul"></ul><p class="small muted" id="statsAsof"></p>
@@ -4078,8 +4846,8 @@ def build_leg_tracker():
     css, js = leg_assets()
     emit("leg-tracker/index.html", T(f"涨跌腿追踪 · {BRAND}", f"Leg Tracker · {BRAND_EN}"), body, active="macro", narrow=True,
          extra_head=css, scripts=js,
-         desc=T("比特币每一轮上涨走了多久、涨了多少、回撤多深，急拉之后山寨窗口什么时候开、什么时候关：历史规律和当前读数。",
-                "How long BTC rallies last, how far they go, how deep the dips are, and when the altcoin window opens and closes: historical patterns and current readings."))
+         desc=T("比特币每一条涨腿、跌腿走了多久、涨跌了多少，放到同一周期阶段的历史里看在什么位置：历史规律和当前读数。",
+                "How long each BTC up- and down-leg lasts and how far it goes, compared with legs from the same cycle phase: historical patterns and current readings."))
 
 
 AGENT_DIR = os.path.join(ROOT, "public", "ai-agent", "monitor")      # tools/agent-id 的导出目录（交接包原样）
@@ -4093,15 +4861,12 @@ AGENT_METRICS = [  # 键、中文、英文、格式、覆盖范围
 ]
 
 
-def build_ai_agent():
-    """AI Agent：币安 Agent ID 生态六项核心数据（交接包 tools/agent-id 导出的 core_series.json）。"""
-    cr = crumbs([("AI Agent", None)])
+def agent_id_body(cr):
+    """AI Agent · 币安 Agent ID 子页：六项核心数据（交接包 tools/agent-id 导出的 core_series.json）。cr = 页头（面包屑 + 标签页）。"""
     src = os.path.join(AGENT_DIR, "core_series.json")
     d = load(src)
     if not d or not d.get("rows"):
-        body = cr + empty_state("pending", T("AI Agent · 等待数据", "AI Agent · awaiting data"), T("tools/agent-id 导出后显示。", "Shown after tools/agent-id exports data."), "")
-        emit("ai-agent/index.html", f"AI Agent · {T(BRAND, BRAND_EN)}", body, active="aiagent")
-        return
+        return cr + empty_state("pending", T("币安 Agent ID · 等待数据", "Binance Agent ID · awaiting data"), T("tools/agent-id 导出后显示。", "Shown after tools/agent-id exports data."), "")
     # 原始客户页与数据一并发布，方便核查下载
     dst = os.path.join(SITE, "ai-agent", "monitor")
     if LANG["v"] == "zh" and os.path.isdir(AGENT_DIR):
@@ -4155,7 +4920,7 @@ def build_ai_agent():
                     f'<thead><tr><th></th>{head}</tr></thead><tbody>{trs}</tbody></table>'
                     f'<p class="tnote">{T("合计里的交易地址按地址去重，同一地址在几家都交易只算一次，所以分平台相加会大于合计。Four.meme 一行是 Agent 钱包创建的币，买卖的人不一定持有 Agent ID。", "Total traders are de-duplicated across platforms, so per-platform figures can add up to more than the total. The Four.meme row covers tokens created by Agent wallets; their traders need not hold an Agent ID.")}</p></div>')
     defs = d.get("definitions") or {}
-    body = f"""{cr}<div class="ph"><div><div class="eyebrow">AI Agent</div><h1>{T("AI Agent · 币安 Agent ID 生态", "AI Agent · Binance Agent ID ecosystem")}</h1>
+    body = f"""{cr}<div class="ph"><div><h2 style="margin:0">{T("币安 Agent ID 生态", "Binance Agent ID ecosystem")}</h2>
 <p class="lede">{T("注册、交易地址、成交额与发币的每日趋势；只发布已经结束的 UTC 完整日，拿不到完整数据的日子标 U，不当 0。", "Daily registrations, trading addresses, volume and launches. Only finished UTC days are published; days without complete data show U, never 0.")}</p></div>
 <div class="stamp">{T("数据截至", "Data through")} <b>{esc(thru)}</b>{stale}<br>{TDAY(thru)}</div></div>
 <div class="note">{T(f"注册量来自完整的 Agent ID 注册表；交易地址、成交额、新发币和毕业目前只覆盖已核实的 {plats}，不代表全生态。", f"Registrations come from the full Agent ID registry; trading, volume, launches and graduations cover only the verified {plats} so far, not the whole ecosystem.")}</div>
@@ -4170,8 +4935,301 @@ def build_ai_agent():
 <li>{T("所有日期为 UTC 日；U 表示没取得完整数据，图上断开；0 表示完整读取后确实为 0。", "All dates are UTC days; U = incomplete data (gap in the chart); 0 = fully read and truly zero.")}</li>
 <li>{T("采集状态", "Collection status")}: {esc(health.get("collection_status") or "—")} · {T("身份对账", "Identity reconciliation")}: {esc(health.get("identity_reconciliation") or "—")} · <a href="/ai-agent/monitor/core_series.json" download>{T("下载数据", "Download data")}</a></li>
 </ul></details>"""
-    emit("ai-agent/index.html", f"AI Agent · {T(BRAND, BRAND_EN)}", body, active="aiagent", chart=True,
+    return body
+
+
+# ---------------------------------------------------------------- AI Agent 赛道（aiagent/：总览读 data/aiagent/*；币安 Agent ID 读 public/ai-agent/monitor；功能卡 / 进度读 aiagent/research/）
+AIA_TABS = [("", "赛道总览", "Overview", "冷热 · 四层 · 市值 · 时间线", "Heat · layers · market · timeline"),
+            ("agent-id/", "币安 Agent ID", "Binance Agent ID", "注册 · 发行 · 交易（链上）", "Registry · launches · trading"),
+            ("launchpads/", "发射台功能卡", "Launchpad cards", "18 个版本 · 功能矩阵", "18 versions · feature matrix"),
+            ("research/", "研究进度", "Progress", "缺口 · 口径 · 分工", "Gaps · rules · tasks")]
+AIA_LAYER_TONE = {"launch": "t-warn", "commerce": "t-up", "defai": "t-cool", "infra": "t-neutral", "identity": "t-cool", "market": "t-neutral"}
+AIA_LAYER_EXTRA = {"identity": ("身份 · 注册", "Identity"), "market": ("市场 · 代币", "Market · tokens")}
+
+
+def aia_head(cur):
+    tabs = "".join(f'<a role="tab" href="{U("/ai-agent/" + p)}" class="tab{" on" if p == cur else ""}"><span class="tn">{T(zh, en)}</span><span class="ts">{T(dz, de)}</span></a>'
+                   for p, zh, en, dz, de in AIA_TABS)
+    name = next(T(zh, en) for p, zh, en, _, _ in AIA_TABS if p == cur)
+    cr = crumbs([("AI Agent", "/ai-agent/" if cur else None)] + ([(name, None)] if cur else []))
+    return (f'{cr}<div class="ph"><div><div class="eyebrow">AI Agent</div><h1>{T("AI Agent 赛道监控", "AI Agent sector monitor")}</h1>'
+            f'<p class="lede">{T("Web3 × AI Agent 的发展和机会：赛道在变热还是变冷、钱是投机还是真在买 Agent 的服务、哪里冒出了新机制。分四层看（发行 / 服务 / 资管 / 框架），加链上身份和代币市场。只摆读数、证据和未知项，不打分排名，不是买卖建议。", "Development and opportunities in Web3 × AI agents: is the sector heating or cooling, is money speculating or actually buying agent services, where are new mechanisms appearing. Four layers (launch / commerce / DeFAI / infra) plus on-chain identity and the token market. Readings, evidence and unknowns only — no scores, no rankings, not trade advice.")}</p></div></div>'
+            f'<div class="tabwrap"><nav class="tabs" role="tablist">{tabs}</nav></div>')
+
+
+def aia_int(v):
+    return "U" if v is None else f"{v:,.0f}"
+
+
+def aia_layer_name(k):
+    lay = (G.get("AIA") or {}).get("_layers") or {}
+    if k in lay:
+        return T(lay[k]["zh"], lay[k]["en"])
+    zh, en = AIA_LAYER_EXTRA.get(k, (k, k))
+    return T(zh, en)
+
+
+def write_aiagent_data():
+    src = os.path.join(DATA, "aiagent")
+    G["AIA"] = load(os.path.join(src, "aiagent_latest.json"))
+    if G["AIA"]:
+        G["AIA"]["_layers"] = (load(os.path.join(ROOT, "aiagent", "aiagent_config.json")) or {}).get("layers") or {}
+    G["AIA_REG"] = load(os.path.join(ROOT, "aiagent", "aiagent_registry.json")) or {}
+    out = os.path.join(SITE, "data", "aiagent")
+    if G["AIA"]:
+        os.makedirs(out, exist_ok=True)
+        for fn in ("aiagent_latest.json", "aiagent_history.json", "fees_series.json"):
+            if os.path.exists(os.path.join(src, fn)):
+                shutil.copyfile(os.path.join(src, fn), os.path.join(out, fn))
+
+
+def aia_pct(v, base=None, minbase=1000):
+    """环比：基数（前 30 天）太小不显示；None = 新。"""
+    if base is not None and base < minbase:
+        return '<span class="muted">—</span>'
+    if v is None:
+        return f'<span class="muted">{T("新", "new")}</span>'
+    return f'<span style="color:var(--{"up" if v >= 0 else "dn"})">{v:+.0f}%</span>'
+
+
+def aia_fees_chart(d):
+    """四层逐日手续费 → 7 日滚动合计（堆叠）。"""
+    fs = load(os.path.join(DATA, "aiagent", "fees_series.json")) or {}
+    D, L = fs.get("d") or [], fs.get("layers") or {}
+    if not D:
+        return ""
+    ser = {}
+    for k, vals in L.items():
+        roll = {}
+        for i in range(6, len(D)):
+            w = vals[i - 6:i + 1]
+            roll[D[i]] = sum(x or 0 for x in w) if all(x is not None for x in w) else None
+        ser[k] = roll
+    path = write_data("aiagent/fees_layers_7d.json", D[6:], ser)
+    cols = {"launch": "s3", "commerce": "s1", "defai": "s2", "infra": "s4"}
+    return chart_div({"src": path, "fmt": "usd", "stack": True, "ranges": ["3M", "6M", "1Y", "ALL"], "range": "1Y", "group": "aia", "h": 280,
+                      "series": [{"k": k, "n": aia_layer_name(k), "c": cols.get(k, "s5"), "area": True} for k in L]})
+
+
+def aia_overview():
+    d, reg = G.get("AIA") or {}, G.get("AIA_REG") or {}
+    if not d:
+        return '<div class="note">' + T("赛道数据还没生成（aiagent/aiagent_daily.py）。", "Sector data not generated yet.") + '</div>'
+    tot, lay, mk, aid = d.get("total") or {}, d.get("layers") or {}, d.get("market") or {}, d.get("agent_id") or {}
+    cats = mk.get("categories") or {}
+    ag = cats.get("ai-agents") or {}
+    # 读数卡
+    pos = tot.get("pctile_1y")
+    c1 = (f'<div class="glass hero"><div class="k">{T("赛道手续费 · 近 30 天", "Sector fees · 30d")}</div><div class="v" style="font-size:22px">{a_usd(tot.get("f30"))}</div>'
+          f'<div class="s">{T("比前 30 天", "vs prior 30d")} {aia_pct(tot.get("chg30"))} · {T("去掉最高一天", "ex-peak")} {aia_pct(tot.get("chg30_ex_peak"))}'
+          + (f'<br>{T(f"在过去一年的 30 天合计里高于 {pos:.0f}% 的时候", f"Above {pos:.0f}% of rolling 30d totals in the past year")}' if pos is not None else "") + '</div></div>')
+    c2 = (f'<div class="glass hero"><div class="k">{T("AI Agent 代币市值", "AI Agent token market cap")} <span class="chip">CoinGecko</span></div><div class="v" style="font-size:22px">{a_usd(ag.get("mcap"))}</div>'
+          f'<div class="s">{T("24 小时", "24h")} {aia_pct(ag.get("chg24h"))} · {T("发射台代币", "Launchpad tokens")} {a_usd((cats.get("ai-agent-launchpad") or {}).get("mcap"))} · {T("框架代币", "Frameworks")} {a_usd((cats.get("ai-framework") or {}).get("mcap"))}</div></div>')
+    nid, pid = aid.get("new_ids_7d"), aid.get("new_ids_prev7d")
+    c3 = (f'<div class="glass hero"><div class="k">{T("币安 Agent ID 累计", "Binance Agent IDs")} <span class="chip">{T("链上", "on-chain")}</span></div>'
+          f'<div class="v" style="font-size:22px">{aia_int(aid.get("cumulative_ids"))}</div>'
+          f'<div class="s">{T("近 7 天新增", "New in 7d")} {aia_int(nid)}'
+          + (f'（{T("前 7 天", "prior 7d")} {pid:,.0f}）' if pid is not None else "")
+          + f' · {T("门禁发射台近 7 天发币", "Gated-pad launches 7d")} {aia_int(aid.get("launches_7d"))} · <a href="{U("/ai-agent/agent-id/")}">{T("详情", "details")}</a></div></div>')
+    # 一句话：哪层在涨、哪层在跌（只说事实）
+    parts = []
+    for k in ("launch", "commerce", "defai", "infra"):
+        x = lay.get(k) or {}
+        if x.get("f30") is None:
+            continue
+        ch = x.get("chg30_ex_peak") if x.get("chg30_ex_peak") is not None else x.get("chg30")
+        top = (f'{T("，最大一家", ", top: ")}{esc(x.get("top") or "")} {T("占", "")}{x["top_share"]:.0f}%' if (x.get("top_share") or 0) >= 50 else "")
+        parts.append(f'{aia_layer_name(k)} {a_usd(x["f30"])}（{T("去峰环比", "ex-peak")} {aia_pct(ch)}{top}）')
+    line = f'<div class="card" style="padding:12px 16px;margin:0 0 14px;font-size:13.5px">{T("近 30 天手续费按层：", "30d fees by layer: ")}' + "；".join(parts) + '</div>'
+    # 事件
+    ev = d.get("events") or []
+    EVN = {"new_protocol": T("新进名单", "Newly tracked"), "dormant": T("手续费归零", "Fees went to zero"), "spike": T("单日事件", "Single-day spike")}
+    evh = ""
+    if ev:
+        items = "".join(f'<li><span class="chip {"t-warn" if e["type"] != "new_protocol" else "t-up"}">{EVN.get(e["type"], e["type"])}</span> <b>{esc(e["name"])}</b> <small>{aia_layer_name(e["layer"])}'
+                        + (T(f" · 最高一天占近 30 天的 {e['share']:.0f}%，看去峰环比", f" · top day = {e['share']:.0f}% of 30d; use ex-peak change") if e["type"] == "spike" else "")
+                        + (T(" · 前 30 天有手续费，近 30 天为 0", " · fees in prior 30d, none in last 30d") if e["type"] == "dormant" else "") + '</small></li>' for e in ev)
+        evh = f'<h2>{T("今天的变化", "Today’s changes")}</h2><div class="card" style="padding:10px 16px"><ul class="plain">{items}</ul></div>'
+    elif d.get("baseline_day") == (d.get("generated") or "")[:10]:
+        bd = d.get("baseline_day")
+        evh = f'<div class="note">{T(f"今天（{bd}）是名单第一天，全部记为基线；从明天起新收录的协议会在这里提示。", "Today is the baseline; newly tracked protocols will be flagged from tomorrow.")}</div>'
+    # 四层表
+    lrows = ""
+    for k in ("launch", "commerce", "defai", "infra"):
+        x, m = lay.get(k) or {}, (d.get("_layers") or {}).get(k) or {}
+        lrows += (f'<tr><td class="l"><span class="chip {AIA_LAYER_TONE.get(k, "")}">{aia_layer_name(k)}</span><br><small>{esc(T(m.get("desc_zh", ""), m.get("desc_en", "")))}</small></td>'
+                  f'<td>{a_usd(x.get("f30"))}</td><td>{aia_pct(x.get("chg30"))}</td><td>{aia_pct(x.get("chg30_ex_peak"))}</td><td>{a_usd(x.get("med30"))}</td>'
+                  f'<td>{x.get("n_active", 0)} / {x.get("n", 0)}</td><td class="l">{esc(x.get("top") or "—")}' + (f' <small>{x["top_share"]:.0f}%</small>' if x.get("top_share") is not None else "") + '</td></tr>')
+    ltbl = (f'<div class="tw scroll"><table><thead><tr><th class="l">{T("层", "Layer")}</th><th>{T("30 天手续费", "30d fees")}</th><th>{T("环比", "Change")}</th><th>{T("去峰环比", "Ex-peak")}</th>'
+            f'<th>{T("中位日", "Median day")}</th><th>{T("活跃 / 在册", "Active / tracked")}</th><th class="l">{T("最大一家", "Largest")}</th></tr></thead><tbody>{lrows}</tbody></table></div>')
+    # 协议表
+    prow = ""
+    for r in d.get("protocols") or []:
+        if r.get("status") != "ok" or not r.get("f30"):
+            continue
+        small = (r.get("f30") or 0) < 1000
+        nm = f'<a href="https://defillama.com/protocol/{esc(r["slug"])}" target="_blank" rel="noopener">{esc(r["name"])}</a>'
+        note = T(r.get("note_zh") or "", r.get("note_en") or "")
+        prow += (f'<tr><td class="l wrap" style="min-width:170px">{nm}' + (f'<div class="tnote" style="margin:2px 0 0;white-space:normal">{esc(note)}</div>' if note else "")
+                 + f'</td><td class="l"><span class="chip {AIA_LAYER_TONE.get(r["layer"], "")} carry">{aia_layer_name(r["layer"])}</span></td>'
+                 f'<td class="l">{"".join(chain_badge(c) for c in (r.get("chains") or [])[:3])}</td><td>{a_usd(r.get("f30"))}</td>'
+                 f'<td>{aia_pct(None if small else r.get("chg30"), r.get("p30") if r.get("chg30") is not None else None)}</td>'
+                 f'<td>{aia_pct(None if small else r.get("chg30_ex_peak"), r.get("p30") if r.get("chg30_ex_peak") is not None else None)}</td>'
+                 f'<td>{a_usd(r.get("med30"))}</td><td>{"—" if r.get("peak_share") is None else str(round(r["peak_share"])) + "%"}</td>'
+                 f'<td>{esc(r.get("first_day") or "")}</td></tr>')
+    quiet = [r for r in d.get("protocols") or [] if r.get("status") != "ok" or not r.get("f30")]
+    qline = "、".join(esc(r["name"]) + ("" if r.get("status") == "ok" else T("（无适配器）", " (no adapter)")) for r in quiet)
+    ref = d.get("reference") or {}
+    rline = " · ".join(f'{esc(T(v["name"], k))} {a_usd(v.get("f30"))}' for k, v in ref.items())
+    ptbl = (f'<div class="tw scroll"><table><thead><tr><th class="l">{T("协议", "Protocol")}</th><th class="l">{T("层", "Layer")}</th><th class="l">{T("链", "Chains")}</th>'
+            f'<th>{T("30 天手续费", "30d fees")}</th><th>{T("环比", "Change")}</th><th>{T("去峰环比", "Ex-peak")}</th><th>{T("中位日", "Median day")}</th><th>{T("最高一天占比", "Top-day share")}</th><th>{T("有数起", "Since")}</th></tr></thead><tbody>{prow}</tbody></table></div>'
+            + (f'<p class="tnote">{T("近 30 天手续费为 0 或没有适配器：", "Zero fees in 30d or no adapter: ")}{qline}</p>' if qline else "")
+            + f'<p class="tnote">{T("量级参照（全平台，不进赛道合计，也不能归给 Agent 模式）：", "Scale reference (whole platforms; not in sector totals, not attributable to agent modes): ")}{rline}</p>')
+    # 市场
+    crow = "".join(f'<tr><td class="l">{esc(T(v["zh"], v["en"]))}</td><td>{a_usd(v.get("mcap"))}</td><td>{a_usd(v.get("vol24h"))}</td><td>{aia_pct(v.get("chg24h"))}</td></tr>' for v in cats.values())
+    topn = mk.get("top") or []
+    ts = mk.get("top_share") or {}
+    trow = "".join(f'<tr><td class="rk">{i}</td><td class="l"><b>{esc(x["symbol"])}</b> <small>{esc(x["name"])}</small></td><td>{a_usd(x.get("mcap"))}</td><td>{aia_pct(x.get("chg7d"))}</td><td>{aia_pct(x.get("chg30d"))}</td>'
+                   f'<td>{aia_pct(x.get("ath_chg"))}</td></tr>' for i, x in enumerate(topn[:10], 1))
+    market = (f'<h2 id="market">{T("代币市场", "Token market")} <span class="sub">CoinGecko · {T("快照", "snapshot")} {TT(mk.get("snapshot_utc"))}</span></h2>'
+              f'<div class="grid g2"><div class="tw scroll"><table><thead><tr><th class="l">{T("分类", "Category")}</th><th>{T("市值", "Market cap")}</th><th>{T("24h 成交", "24h volume")}</th><th>24h</th></tr></thead><tbody>{crow}</tbody></table></div>'
+              f'<div class="tw scroll"><table><thead><tr><th>#</th><th class="l">{T("AI Agent 分类市值前十", "Top 10 in AI Agents")}</th><th>{T("市值", "Mcap")}</th><th>7d</th><th>30d</th><th>{T("距最高", "From ATH")}</th></tr></thead><tbody>{trow}</tbody></table></div></div>'
+              + f'<p class="tnote">{T("CoinGecko 分类是第三方归类，同一个币可以在几个分类里，成分会变。免费接口没有分类历史，所以从 2026-11-14 起每天自录一次，满 90 天前只描述、不比高低。", "CoinGecko categories are third-party groupings and overlap; constituents change. No free category history, so we self-record daily from 2026-11-14 and only describe until 90 days accrue.")}'
+              + (T(f" 前 30 名里第一名占 {ts['top1']:.0f}%、前五名占 {ts['top5']:.0f}%。", f" Within the top 30, #1 holds {ts['top1']:.0f}% and the top five {ts['top5']:.0f}%.") if ts.get("top1") is not None else "")
+              + f' {T("列名单只为说明分类构成，不是推荐。", "Listed only to show what the category contains; not a recommendation.")}</p>')
+    # 监控地图
+    ST = {"live": ("t-up", T("已接", "Live")), "pending": ("t-warn", T("待接入", "Pending"))}
+    mrows = ""
+    for it in reg.get("monitor_map") or []:
+        tone, lab = ST.get(it["status"], ("", it["status"]))
+        nm = esc(T(it["zh"], it["en"]))
+        if it.get("href"):
+            nm = f'<a href="{U("/ai-agent/" + it["href"]) if it["href"].startswith("#") else U(it["href"])}">{nm}</a>' if not it["href"].startswith("#agent") else f'<a href="{U("/ai-agent/agent-id/")}">{nm}</a>'
+        mrows += f'<tr><td class="l"><span class="chip {AIA_LAYER_TONE.get(it["layer"], "")} carry">{aia_layer_name(it["layer"])}</span></td><td class="l wrap">{nm}</td><td class="l"><span class="chip {tone}">{lab}</span></td><td class="l wrap"><small>{esc(T(it["src"], it.get("src_en") or it["src"]))}</small></td></tr>'
+    mmap = (f'<h2 id="map">{T("监控地图", "Coverage map")} <span class="sub">{T("每一层看什么、接没接", "What each layer tracks and whether it is wired")}</span></h2>'
+            f'<div class="tw scroll"><table><thead><tr><th class="l">{T("层", "Layer")}</th><th class="l">{T("监控项", "Item")}</th><th class="l">{T("状态", "Status")}</th><th class="l">{T("来源 / 卡在哪", "Source / blocker")}</th></tr></thead><tbody>{mrows}</tbody></table></div>'
+            f'<p class="tnote">{T("待接入的项由 Codex 核数据源、Claude 接进日更，进度见", "Pending items: Codex verifies sources, Claude wires them in; see")} <a href="{U("/ai-agent/research/")}">{T("研究进度", "Progress")}</a>。</p>')
+    # 时间线
+    KIND = {"launch": ("t-up", T("上线", "Launch")), "stop": ("t-dn", T("停新 / 下线", "Stopped")), "pivot": ("t-warn", T("转型", "Pivot")), "peak": ("t-cool", T("峰值", "Peak"))}
+    evs = sorted(reg.get("events") or [], key=lambda e: e["date"], reverse=True)
+    tl = "".join(f'<li><span class="mono" style="display:inline-block;min-width:84px">{esc(e["date"])}</span> <span class="chip {KIND.get(e["kind"], ("", ""))[0]}">{KIND.get(e["kind"], ("", e["kind"]))[1]}</span> '
+                 f'<b>{esc(e["who"])}</b> {esc(T(e["zh"], e["en"]))} <small class="muted">· {esc(e["grade"])} · {esc(e["src"])}</small></li>' for e in evs)
+    timeline = (f'<h2 id="timeline">{T("生命周期时间线", "Lifecycle timeline")} <span class="sub">{T("上线 / 停新 / 转型 / 峰值，只收有日期和出处的", "Launches, stops, pivots, peaks — dated and sourced only")}</span></h2>'
+                f'<div class="card" style="padding:10px 16px"><ul class="plain">{tl}</ul>'
+                f'<p class="tnote">{T("证据：A 官方原文或可复算链上；B 第三方数据平台；C 媒体 / 社区 / 项目自述。还有", "Evidence: A official / reproducible on-chain; B third-party data; C media / community / self-reported. ")}{len(reg.get("open_items") or [])}{T(" 条日期待核，见研究进度。", " items await date checks; see Progress.")}'
+                f' {T("人工核对于", "Checked")} {esc(reg.get("checked_utc") or "—")}</p></div>')
+    src_ok = all(v.get("ok") for v in (d.get("sources") or {}).values())
+    foot = (f'<p class="tnote">{T("手续费数据日", "Fee data day")} {esc(d.get("asof") or "")}（{TDAY(d.get("asof"))}）· {T("生成于", "Generated")} {TT(d.get("generated"))} · '
+            f'{T("来源 DefiLlama 逐日手续费、CoinGecko 分类、本站 Agent ID 链上采集", "Sources: DefiLlama daily fees, CoinGecko categories, own Agent ID collector")}{"" if src_ok else " · " + T("有数据源失败，沿用上次结果", "a source failed; last result carried")}'
+            f' · <a href="/data/aiagent/aiagent_latest.json">JSON</a> · <a href="/data/aiagent/fees_series.json">{T("逐日手续费", "Daily fees")}</a></p>')
+    return (f'<div class="grid g3" style="margin:14px 0 14px">{c1}{c2}{c3}</div>{line}{evh}'
+            f'<h2 id="fees">{T("四层手续费", "Fees by layer")} <span class="sub">{T("7 日滚动合计，堆叠", "7-day rolling sum, stacked")}</span></h2><div class="card" style="padding:14px 16px">{aia_fees_chart(d)}</div>'
+            f'<p class="tnote">{T("手续费 ≠ 收入 ≠ 服务收入：发行层的手续费反映投机热度，服务层（Agent 雇 Agent、x402 按次付费、推理额度）才接近 Agent 在卖服务，而且还没剔除自付。去峰环比 = 两个 30 天窗口各去掉最高一天再比，防止单日事件带偏；前 30 天不到 1,000 美元的不显示环比。", "Fees ≠ revenue ≠ service revenue: launch-layer fees track speculation; the commerce layer (agent hiring, x402 pay-per-call, inference credits) is closer to agents selling services, and self-payment is not yet excluded. Ex-peak change drops the highest day from each 30d window; no change shown when the prior 30d is under $1,000.")}</p>'
+            + ltbl + f'<h2>{T("协议明细", "Protocols")} <span class="sub">{T("按近 30 天手续费排序", "Sorted by 30d fees")}</span></h2>' + ptbl
+            + market + timeline + mmap + foot)
+
+
+AIA_CARD_LIVE = {"K02": ("bnb", "Gang"), "K03": ("bnb", "Gang"), "K04": ("bnb", "Gang"), "K05": ("bnb", "AgentPad"), "K06": ("bnb", "Flap-AgentID"),
+                 "K07": ("bnb", "Four.meme-Agent"), "K09": ("fee", "virtuals-protocol"), "K10": ("fee", "clanker"), "K11": ("fee", "clanker"), "K12": ("fee", "bankr")}
+
+
+def aia_card_live(kid):
+    """功能卡上的「本站持续读数」：BNB 门禁平台读 Agent ID 采集（近 7 天），其他读 DefiLlama 手续费（近 30 天）。"""
+    m = AIA_CARD_LIVE.get(kid)
+    if not m:
+        return ""
+    if m[0] == "bnb":
+        rows = [r for r in ((load(os.path.join(AGENT_DIR, "core_series.json")) or {}).get("rows") or []) if r.get("by_platform")][-7:]
+        if not rows:
+            return ""
+        g = lambda k: [(r["by_platform"].get(m[1]) or {}).get(k) for r in rows]
+        ok = lambda xs: all(x is not None for x in xs)
+        tr, vo, la, gr = g("trading_addresses"), g("volume_bnb"), g("new_launches"), g("graduated")
+        s = lambda xs, f=float: "U" if not ok(xs) else f"{sum(f(x) for x in xs):,.{2 if f is float else 0}f}"
+        txt = T(f"近 7 天（{rows[0]['date'][5:]}～{rows[-1]['date'][5:]}）：交易地址合计 {s(tr, int)}、成交 {s(vo)} BNB、新发币 {s(la, int)}、毕业 {s(gr, int)}",
+                f"Last 7 days ({rows[0]['date'][5:]}–{rows[-1]['date'][5:]}): traders {s(tr, int)}, volume {s(vo)} BNB, launches {s(la, int)}, graduations {s(gr, int)}")
+        if kid in ("K02", "K03", "K04"):
+            txt += T("（Gang 全平台，未按版本拆）", " (all of Gang; not split by version)")
+        return f'<div class="note" style="margin:8px 0">{T("本站链上读数", "Our on-chain reading")} · {txt}</div>'
+    r = next((x for x in (G.get("AIA") or {}).get("protocols") or [] if x["slug"] == m[1]), None)
+    if not r or r.get("f30") is None:
+        return ""
+    return (f'<div class="note" style="margin:8px 0">{T("本站持续读数", "Our daily reading")} · {T("DefiLlama 近 30 天手续费", "DefiLlama 30d fees")} {a_usd(r["f30"])}，'
+            f'{T("去峰环比", "ex-peak change")} {aia_pct(r.get("chg30_ex_peak"))}（{T("全平台 / 跨版本，不归给本卡的版本", "whole platform / all versions; not attributable to this card")}）</div>')
+
+
+def aia_launchpads():
+    cj = load(os.path.join(ROOT, "aiagent", "research", "launchpad_cards_v2.json")) or {}
+    cards, srcs = cj.get("cards") or [], cj.get("sources") or {}
+    if not cards:
+        return ""
+    GR = {"A": "t-up", "B": "t-cool", "C": "t-warn", "U": "t-neutral"}
+    feats = list(cards[0]["flags"].keys())
+    CELL = {"✓": ("var(--up)", "✓"), "✗": ("var(--dn)", "✗"), "U": ("var(--muted)", "·")}
+    head = "".join(f'<th title="{esc(c["name"])} · {esc(c["version"])}"><a href="#{c["id"]}">{c["id"][1:]}</a></th>' for c in cards)
+    mrows = ""
+    for f in feats:
+        cells = ""
+        for c in cards:
+            v = c["flags"].get(f, "U")
+            col, ch = CELL.get(v, ("var(--muted)", v))
+            cells += f'<td style="text-align:center;color:{col};font-weight:600">{ch}</td>'
+        nyes = sum(1 for c in cards if c["flags"].get(f) == "✓")
+        mrows += f'<tr><td class="l" style="white-space:nowrap">{esc(f)} <small class="muted">{nyes}</small></td>{cells}</tr>'
+    legend = " · ".join(f'<b>{c["id"]}</b> {esc(c["name"])}' for c in cards)
+    matrix = (f'<h2 id="matrix">{T("功能矩阵", "Feature matrix")} <span class="sub">{T("✓ 有支持证据 · ✗ 有明确相反证据 · · 未知；数字 = 有证据支持的版本数", "✓ supported · ✗ explicitly not · · unknown; number = versions with support")}</span></h2>'
+              f'<div class="tw scroll"><table class="l3t" style="min-width:880px;font-size:12.5px"><thead><tr><th class="l">{T("功能", "Feature")}</th>{head}</tr></thead><tbody>{mrows}</tbody></table></div>'
+              f'<p class="tnote">{legend}</p>'
+              f'<p class="tnote">{T("「强制运行验证」「创建者审核」「持币使用权」「服务退款」「改费 / 暂停权限」18 个版本全是未知——也就是说，目前没有一家能证明发出来的 Agent 真在运行、持币人有什么权利、平台能不能单方面改规则。这是整个品类最大的空白。", "Mandatory run verification, creator review, holder usage rights, service refunds and fee / pause powers are unknown for all 18 versions: no platform can yet prove its agents actually run, what holders are entitled to, or whether the platform can change rules unilaterally. The biggest blank in the category.")}</p>')
+    body = ""
+    for c in cards:
+        params = "".join(f'<tr><td class="l" style="white-space:nowrap">{esc(k)}</td><td class="l wrap">{esc(v)}</td></tr>' for k, v in (c.get("params") or {}).items())
+        fields = "".join(f'<tr><td class="l" style="white-space:nowrap">{esc(k)}</td><td class="l wrap">{esc(v)}</td></tr>' for k, v in (c.get("fields") or {}).items() if k != "基本")
+        ev = "".join(f'<li><b>{esc(k)}</b> {esc(v)}</li>' for k, v in (c.get("evidence") or {}).items())
+        flow = " → ".join(esc(x) for x in c.get("flow") or [])
+        sl = " ".join(f'<a href="{esc(srcs[s]["url"])}" target="_blank" rel="noopener">{esc(s)}</a><small class="muted">（{esc(srcs[s]["grade"])}）</small>' for s in c.get("source_ids") or [] if s in srcs)
+        body += (f'<details class="card fold" id="{c["id"]}" style="margin:0 0 10px"><summary><b>{c["id"]}</b> {esc(c["name"])} <span class="chip {GR.get(c.get("grade"), "")}">{esc(c.get("grade") or "U")}</span> '
+                 f'<small class="muted">{esc(c.get("chain") or "")} · {esc(c.get("version") or "")} · {esc(c.get("category") or "")}</small><br><small>{esc(c.get("status") or "")}</small></summary>'
+                 + aia_card_live(c["id"])
+                 + (f'<p class="tnote" style="margin:6px 0">{T("流程", "Flow")}：{flow}</p>' if flow else "")
+                 + f'<div class="grid g2"><div><h4 style="margin:8px 0 4px">{T("参数", "Parameters")}</h4><div class="tw"><table><tbody>{params}</tbody></table></div>'
+                 f'<h4 style="margin:12px 0 4px">{T("三层核验", "Three-layer check")}</h4><ul class="plain" style="font-size:13px">{ev}</ul></div>'
+                 f'<div><h4 style="margin:8px 0 4px">{T("功能与边界", "Functions & limits")}</h4><div class="tw"><table><tbody>{fields}</tbody></table></div></div></div>'
+                 f'<p class="tnote">{T("来源", "Sources")}：{sl} · {T("读取", "Read")} {esc((c.get("utc") or "")[:10])} · {esc(c.get("read") or "")}</p></details>')
+    intro = (f'<div class="note">{T("Codex《AI Agent 发射台的功能与形态》v2（研究截止 2026-11-12），18 个版本 / 模式逐个拆：创建、定价、毕业、费用分账、服务履约和权限。卡片写入即冻结，新研究另起版本；卡片上「本站读数」是网站每天的持续读数，用来补卡片里「数据 U」的部分。证据：A 官方原文或可复算链上 · B 第三方数据平台 · C 媒体 / 社区 / 摘要 · U 未知。", "Codex research “AI Agent launchpads: functions and forms” v2 (cutoff 2026-11-12): 18 versions / modes broken down by creation, pricing, graduation, fee split, service delivery and permissions. Cards are frozen; the “our reading” lines are the site’s daily readings, filling the cards’ “data U”. Evidence: A official / reproducible on-chain · B third-party data · C media / community / summary · U unknown.")}'
+             f' <a href="{U("/reports/2026-11-12-ai-agent-launchpad-v2/")}">{T("报告全文（含附件下载）→", "Full report (with attachments) →")}</a></div>')
+    zh_only = ZH_ONLY if LANG["v"] == "en" else ""
+    return zh_only + intro + matrix + f'<h2 id="cards">{T("版本卡", "Version cards")} <span class="sub">{T("点开看参数、功能与边界、三层核验", "Expand for parameters, functions and checks")}</span></h2>' + body
+
+
+def build_ai_agent():
+    desc = T("AI Agent 赛道监控：发行 / 服务 / 资管 / 框架四层手续费、AI Agent 代币市值、币安 Agent ID 链上数据、18 个发射台功能卡和生命周期时间线。只摆读数和证据，不是买卖建议。",
+             "AI Agent sector monitor: fees across launch / commerce / DeFAI / infra, AI Agent token market cap, Binance Agent ID on-chain data, 18 launchpad feature cards and a lifecycle timeline. Readings and evidence only; not trade advice.")
+    title = lambda zh, en: T(f"{zh} · AI Agent · {BRAND}", f"{en} · AI Agent · {BRAND_EN}")
+    emit("ai-agent/index.html", T(f"AI Agent 赛道监控 · {BRAND}", f"AI Agent Monitor · {BRAND_EN}"), aia_head("") + aia_overview(), active="aiagent", chart=True, desc=desc)
+    emit("ai-agent/agent-id/index.html", title("币安 Agent ID", "Binance Agent ID"), agent_id_body(aia_head("agent-id/")), active="aiagent", chart=True,
          desc=T("币安 Agent ID 生态：累计与新增 Agent ID、交易地址、曲线成交额、新发币与毕业的每日趋势。", "Binance Agent ID ecosystem: IDs, trading addresses, curve volume, launches and graduations, daily."))
+    emit("ai-agent/launchpads/index.html", title("发射台功能卡", "Launchpad cards"), aia_head("launchpads/") + aia_launchpads(), active="aiagent", desc=desc)
+    src = open(os.path.join(ROOT, "aiagent", "research", "研究进度.md"), encoding="utf-8").read()
+    zh_only = ZH_ONLY if LANG["v"] == "en" else ""
+    emit("ai-agent/research/index.html", title("研究进度", "Progress"), aia_head("research/") + zh_only + f'<div class="article alpha-doc">{core_md(src)}</div>',
+         active="aiagent", desc=desc)
+
+
+def aia_home_card():
+    d = G.get("AIA")
+    if not d:
+        return ""
+    tot, lay, aid = d.get("total") or {}, d.get("layers") or {}, d.get("agent_id") or {}
+    ag = ((d.get("market") or {}).get("categories") or {}).get("ai-agents") or {}
+    ls = " ".join(f'<span>{aia_layer_name(k)} <b>{a_usd((lay.get(k) or {}).get("f30"))}</b> {aia_pct((lay.get(k) or {}).get("chg30_ex_peak"))}</span>' for k in ("launch", "commerce", "defai", "infra"))
+    return (f'<h2>{T("AI Agent 赛道", "AI Agent sector")} <span class="sub">{T("四层手续费 · 代币市值 · 币安 Agent ID", "Fees by layer · market cap · Binance Agent ID")}</span>'
+            f' <a class="sub" href="{U("/ai-agent/")}">{T("进监控 →", "Open →")}</a></h2>'
+            f'<div class="card core-home"><div class="row"><span>{T("赛道手续费（30 天）", "Sector fees (30d)")} <b>{a_usd(tot.get("f30"))}</b> {aia_pct(tot.get("chg30_ex_peak"))}</span>'
+            f'<span>{T("AI Agent 代币市值", "AI Agent token mcap")} <b>{a_usd(ag.get("mcap"))}</b></span>'
+            f'<span>{T("币安 Agent ID", "Binance Agent IDs")} <b>{aia_int(aid.get("cumulative_ids"))}</b></span></div>'
+            f'<div class="row" style="margin-top:6px">{ls}</div>'
+            f'<div class="row" style="margin-top:6px;font-size:12px;color:var(--muted)">{T("环比为去掉最高一天后的 30 天环比", "Changes are 30d ex-peak")} · {T("数据日", "Data day")} {esc(d.get("asof") or "")}</div></div>')
 
 
 def build_calendar():
@@ -4313,12 +5371,11 @@ s.addEventListener('input',apply);imp.addEventListener('change',apply);
 
 
 def build_narrative():
-    cards = "".join(f'<div class="pend"><b>{esc(T(t, te))} · {T("筹备中", "in preparation")}</b>{esc(T(d, de))}</div>' for t, te, d, de in RADAR)
-    body = f"""<div class="ph"><div><div class="eyebrow">Narrative Radar</div><h1>{T("叙事埋伏", "Narrative radar")}</h1>
-<p class="lede">{esc(T(PILLARS[2]["desc"], PILLARS[2]["descEN"]))}</p></div></div>
-<h2>{T("雷达", "Radar")} <span class="sub">{T("数据源接通一个上线一个", "each goes live when its data source does")}</span></h2><div class="grid g3">{cards}</div>
-<h2>{T("观察笔记", "Notes")}</h2>{post_list("narrative")}"""
-    emit("narrative/index.html", T(f"叙事埋伏 · {BRAND}", f"Narrative radar · {BRAND_EN}"), body, active="narrative", desc=T(PILLARS[2]["desc"], PILLARS[2]["descEN"]))
+    """叙事埋伏 2026-11-14 并进 Alpha 雷达：旧链接留一页跳转。"""
+    body = (f'<div class="ph"><div><h1>{T("叙事埋伏已并入 Alpha 雷达", "Narratives moved to Alpha Radar")}</h1></div></div>'
+            f'<p><a href="{U("/alpha/")}">{T("去 Alpha 雷达 →", "Go to Alpha Radar →")}</a></p>')
+    emit("narrative/index.html", T(f"Alpha 雷达 · {BRAND}", f"Alpha Radar · {BRAND_EN}"), body, active="alpha",
+         extra_head=f'<meta http-equiv="refresh" content="0; url={U("/alpha/")}"><link rel="canonical" href="https://{DOMAIN}{U("/alpha/")}">')
 
 
 ZH_ONLY = '<div class="note">This piece is written in Chinese.</div>'
@@ -4925,7 +5982,7 @@ def build_misc(logs, weeks, months):
     if os.path.exists(rd):
         os.remove(rd)
     write("robots.txt", f"User-agent: *\nAllow: /\nSitemap: https://{DOMAIN}/sitemap.xml\n")
-    urls = ["/", "/macro/", "/leg-tracker/", "/calendar/", "/launchpad/", "/ai-agent/", "/rotation/", "/narrative/", "/reports/", "/journal/", "/methodology/", "/corrections/", "/about/",
+    urls = ["/", "/macro/", "/leg-tracker/", "/calendar/", "/launchpad/", "/ai-agent/", "/rotation/", "/alpha/", "/alpha/radar/", "/alpha/cases/", "/alpha/framework/", "/alpha/eval/", "/alpha/method/", "/alpha/progress/", "/reports/", "/journal/", "/methodology/", "/corrections/", "/about/",
             "/launchpad/report/", "/launchpad/report/archive/"]
     urls += [f"/macro/{x['key']}/" for x in R.INDICATORS + R.RETIRED] + ["/changelog/"]
     for p in PILLARS:
@@ -5060,7 +6117,13 @@ def main():
     for fn in ("leg_latest.json", "leg_history.json"):
         if os.path.exists(os.path.join(DATA, "leg", fn)):
             shutil.copyfile(os.path.join(DATA, "leg", fn), os.path.join(SITE, "data", fn))
+    if G.get("LEG"):   # 站点版多一个 site_scale（卡片刻度），原始数据 data/leg/leg_latest.json 不动
+        with open(os.path.join(SITE, "data", "leg_latest.json"), "w", encoding="utf-8") as f:
+            json.dump(dict(G["LEG"], site_scale=leg_scale()), f, ensure_ascii=False, indent=1)
     write_core_data()
+    write_alpha_data()
+    write_aiagent_data()
+    write_rwa_data()
     copy_report_files()
     for lang in ("zh", "en"):
         LANG["v"] = lang
@@ -5080,6 +6143,8 @@ def main():
         build_calendar()
         build_leg_tracker()
         build_core()
+        build_alpha()
+        build_rwa()
         build_ai_agent()
         build_posts()
         build_reports()

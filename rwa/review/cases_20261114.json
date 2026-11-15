@@ -1,0 +1,774 @@
+{
+ "reviewed_utc": "2026-11-14T14:40:00Z",
+ "records": [
+  {
+   "case": "Kyte",
+   "entity": "Kyte（法律实体待核）",
+   "reviewed_utc": "2026-11-14T14:40:00Z",
+   "same_as_handoff": false,
+   "answers": [
+    {
+     "question": "区分期权权利金、平台币成交额及真实分费。核实连续分配、来源、退出滑点。",
+     "answer": "U",
+     "src": "https://kyte.sh/docs",
+     "checked_utc": "2026-11-14T14:40:00Z",
+     "kind": "U"
+    }
+   ],
+   "official_url": "https://kyte.sh/",
+   "source_url": "https://kyte.sh/docs",
+   "raw": {
+    "id": "llama:kyte",
+    "name": "Kyte",
+    "entity_name": "Kyte（法律实体待核）",
+    "first_seen_at": "2026-11-10T01:09:45.953386+00:00",
+    "actual_launch_date": null,
+    "official_product_url": "https://kyte.sh/",
+    "source_url": "https://kyte.sh/docs",
+    "business_role": "股票代币及其他代币的抵押期权",
+    "chains": [
+     "Robinhood Chain"
+    ],
+    "launch_stage": "已核实平台币和二级池，期权成交额待核",
+    "platform_token_status": "issued_contract_verified",
+    "regional_restrictions": "地区与底层股票代币转让限制待核",
+    "questions": [
+     "区分期权权利金、平台币成交额及真实分费。核实连续分配、来源、退出滑点。"
+    ],
+    "data_availability": "主网 CA、DEX 指定池与限时事件扫描已核；期权成交、累计收入及退出报价未知",
+    "evidence_level": "official_contract_plus_evm_and_independent_pool_index",
+    "verified_at": "2026-11-10T01:09:45.953386+00:00",
+    "historical_backfill": false,
+    "token_contracts": [
+     {
+      "role": "platform_token",
+      "symbol": "KYTE",
+      "chain_id": 4663,
+      "chain": "Robinhood Chain",
+      "address": "0x072D88c2F31F568C0F4B8F613692eB489541Ed45",
+      "source_url": "https://kyte.sh/docs",
+      "verified_at": "2026-11-10T01:02:51+00:00",
+      "verified_block": 110494949
+     }
+    ],
+    "cex_markets": [],
+    "dex_pools": [
+     {
+      "chain": "Robinhood Chain",
+      "chain_id": 4663,
+      "pair": "KYTE/ETH",
+      "base_asset_contract": "0x072D88c2F31F568C0F4B8F613692eB489541Ed45",
+      "quote_asset": "native ETH",
+      "dex": "Uniswap v4",
+      "pool_id": "0xe25ab929558cc6d69208ac1533224c1885ccedcfdeafefff72ea83887471229e",
+      "source_url": "https://dexscreener.com/robinhood/0xe25ab929558cc6d69208ac1533224c1885ccedcfdeafefff72ea83887471229e",
+      "data_source": "https://api.dexscreener.com/token-pairs/v1/robinhood/0x072D88c2F31F568C0F4B8F613692eB489541Ed45",
+      "verified_at": "2026-11-10T01:09:45.953386+00:00",
+      "liquidity_usd": 20864.87,
+      "volume_24h_usd": 37054.14,
+      "buy_tx_24h": 172,
+      "sell_tx_24h": 175,
+      "executable_size_usd": null,
+      "slippage_bps": null,
+      "source_as_of": null,
+      "evidence_level": "exact_chain_contract_and_pool_index"
+     }
+    ],
+    "metrics": {
+     "scale_usd": null,
+     "net_flow_usd": null,
+     "users": null,
+     "volume_usd": null,
+     "fees_usd": null,
+     "revenue_usd": null
+    },
+    "fee_event_check": {
+     "from_utc": "2026-11-09T04:20:01+00:00",
+     "through_utc": "2026-11-10T01:02:51+00:00",
+     "first_block": 109774949,
+     "last_block": 110494949,
+     "addresses": [
+      "0x78c569A1137B78cB78F42c42B4B6C2b8F1E3dDef",
+      "0x8A9d128247D8c4512411CF9D0CdCAc5Acf86FB95"
+     ],
+     "topics": [
+      "0xfa9b8b783b71447fa0cfb1c64ea9d647bcefa5c7b459549725b4f14996248dce",
+      "0xcec1bae6e024d929f2929f3478ce70f55f9c636c8ef7b5073a61d7c3a432451b"
+     ],
+     "matching_events": 0,
+     "lifetime_payouts": null
+    },
+    "asset_token_symbols": [],
+    "fee_split_claim": {
+     "stakers_pct": 30,
+     "buyback_burn_pct": 20,
+     "operations_pct": 50,
+     "source": "https://kyte.sh/docs"
+    },
+    "sources": [
+     "https://kyte.sh/docs",
+     "https://kyte.sh/proof",
+     "https://rpc.mainnet.chain.robinhood.com",
+     "https://dexscreener.com/robinhood/0xe25ab929558cc6d69208ac1533224c1885ccedcfdeafefff72ea83887471229e"
+    ],
+    "market_observations": [
+     {
+      "chain": "Robinhood Chain",
+      "chain_id": 4663,
+      "pair": "KYTE/ETH",
+      "base_asset_contract": "0x072D88c2F31F568C0F4B8F613692eB489541Ed45",
+      "quote_asset": "native ETH",
+      "dex": "Uniswap v4",
+      "pool_id": "0xe25ab929558cc6d69208ac1533224c1885ccedcfdeafefff72ea83887471229e",
+      "source_url": "https://dexscreener.com/robinhood/0xe25ab929558cc6d69208ac1533224c1885ccedcfdeafefff72ea83887471229e",
+      "data_source": "https://api.dexscreener.com/token-pairs/v1/robinhood/0x072D88c2F31F568C0F4B8F613692eB489541Ed45",
+      "verified_at": "2026-11-10T01:09:45.953386+00:00",
+      "liquidity_usd": 20864.87,
+      "volume_24h_usd": 37054.14,
+      "buy_tx_24h": 172,
+      "sell_tx_24h": 175,
+      "executable_size_usd": null,
+      "slippage_bps": null,
+      "source_as_of": null,
+      "evidence_level": "exact_chain_contract_and_pool_index"
+     },
+     {
+      "chain": "Robinhood Chain",
+      "chain_id": 4663,
+      "pair": "KYTE/ETH",
+      "base_asset_contract": "0x072D88c2F31F568C0F4B8F613692eB489541Ed45",
+      "quote_asset": "native ETH",
+      "dex": "Uniswap v4",
+      "pool_id": "0xe25ab929558cc6d69208ac1533224c1885ccedcfdeafefff72ea83887471229e",
+      "source_url": "https://dexscreener.com/robinhood/0xe25ab929558cc6d69208ac1533224c1885ccedcfdeafefff72ea83887471229e",
+      "data_source": "https://api.dexscreener.com/token-pairs/v1/robinhood/0x072D88c2F31F568C0F4B8F613692eB489541Ed45",
+      "verified_at": "2026-11-11T01:00:33.185138+00:00",
+      "liquidity_usd": 16398.12,
+      "volume_24h_usd": 13608.88,
+      "buy_tx_24h": 75,
+      "sell_tx_24h": 115,
+      "executable_size_usd": null,
+      "slippage_bps": null,
+      "source_as_of": null,
+      "evidence_level": "exact_chain_contract_and_pool_index"
+     },
+     {
+      "chain": "Robinhood Chain",
+      "chain_id": 4663,
+      "pair": "KYTE/ETH",
+      "base_asset_contract": "0x072D88c2F31F568C0F4B8F613692eB489541Ed45",
+      "quote_asset": "native ETH",
+      "dex": "Uniswap v4",
+      "pool_id": "0xe25ab929558cc6d69208ac1533224c1885ccedcfdeafefff72ea83887471229e",
+      "source_url": "https://dexscreener.com/robinhood/0xe25ab929558cc6d69208ac1533224c1885ccedcfdeafefff72ea83887471229e",
+      "data_source": "https://api.dexscreener.com/token-pairs/v1/robinhood/0x072D88c2F31F568C0F4B8F613692eB489541Ed45",
+      "verified_at": "2026-11-12T01:05:36.037811+00:00",
+      "liquidity_usd": 6801.85,
+      "volume_24h_usd": 12590.81,
+      "buy_tx_24h": 101,
+      "sell_tx_24h": 124,
+      "executable_size_usd": null,
+      "slippage_bps": null,
+      "source_as_of": null,
+      "evidence_level": "exact_chain_contract_and_pool_index",
+      "price_usd": 6.554e-06
+     },
+     {
+      "chain": "Robinhood Chain",
+      "chain_id": 4663,
+      "pair": "KYTE/ETH",
+      "base_asset_contract": "0x072D88c2F31F568C0F4B8F613692eB489541Ed45",
+      "quote_asset": "native ETH",
+      "dex": "Uniswap v4",
+      "pool_id": "0xe25ab929558cc6d69208ac1533224c1885ccedcfdeafefff72ea83887471229e",
+      "source_url": "https://dexscreener.com/robinhood/0xe25ab929558cc6d69208ac1533224c1885ccedcfdeafefff72ea83887471229e",
+      "data_source": "https://api.dexscreener.com/token-pairs/v1/robinhood/0x072D88c2F31F568C0F4B8F613692eB489541Ed45",
+      "verified_at": "2026-11-13T03:56:42.066631+00:00",
+      "liquidity_usd": 4682.47,
+      "volume_24h_usd": 1757.04,
+      "buy_tx_24h": 18,
+      "sell_tx_24h": 33,
+      "executable_size_usd": null,
+      "slippage_bps": null,
+      "source_as_of": null,
+      "evidence_level": "exact_chain_contract_and_pool_index",
+      "price_usd": 3.204e-06
+     },
+     {
+      "chain": "Robinhood Chain",
+      "chain_id": 4663,
+      "pair": "KYTE/ETH",
+      "base_asset_contract": "0x072D88c2F31F568C0F4B8F613692eB489541Ed45",
+      "quote_asset": "native ETH",
+      "dex": "Uniswap v4",
+      "pool_id": "0xe25ab929558cc6d69208ac1533224c1885ccedcfdeafefff72ea83887471229e",
+      "source_url": "https://dexscreener.com/robinhood/0xe25ab929558cc6d69208ac1533224c1885ccedcfdeafefff72ea83887471229e",
+      "data_source": "https://api.dexscreener.com/token-pairs/v1/robinhood/0x072D88c2F31F568C0F4B8F613692eB489541Ed45",
+      "verified_at": "2026-11-14T00:58:01.909779+00:00",
+      "liquidity_usd": 4573.74,
+      "volume_24h_usd": 7.45,
+      "buy_tx_24h": 2,
+      "sell_tx_24h": 3,
+      "executable_size_usd": null,
+      "slippage_bps": null,
+      "source_as_of": null,
+      "evidence_level": "exact_chain_contract_and_pool_index",
+      "price_usd": 3.128e-06
+     }
+    ],
+    "directory_checked_at": "2026-11-14T00:57:59.751219+00:00",
+    "metric_observations": [
+     {
+      "observed_at": "2026-11-10T00:58:09.548724+00:00",
+      "source": "https://api.llama.fi/protocols",
+      "source_slug": "kyte",
+      "source_as_of": null,
+      "source_tvl_usd": 1.7326390612725717,
+      "prior_observed_at": null,
+      "prior_tvl_usd": null,
+      "delta_usd": null,
+      "net_flow_usd": null
+     },
+     {
+      "observed_at": "2026-11-11T01:00:29.590337+00:00",
+      "source": "https://api.llama.fi/protocols",
+      "source_slug": "kyte",
+      "source_as_of": null,
+      "source_tvl_usd": 1.6672187169370807,
+      "prior_observed_at": "2026-11-10T00:58:09.548724+00:00",
+      "prior_tvl_usd": 1.7326390612725717,
+      "delta_usd": -0.06542034433549104,
+      "net_flow_usd": null
+     },
+     {
+      "source": "https://api.llama.fi/protocols",
+      "source_as_of": null,
+      "observed_at": "2026-11-12T01:05:35.053571+00:00",
+      "source_slug": "kyte",
+      "source_tvl_usd": 1.7072155301836842,
+      "prior_source_slug": "kyte",
+      "prior_observed_at": "2026-11-11T01:00:29.590337+00:00",
+      "prior_tvl_usd": 1.6672187169370807,
+      "delta_usd": 0.039996813246603535,
+      "net_flow_usd": null
+     },
+     {
+      "source": "https://api.llama.fi/protocols",
+      "source_as_of": null,
+      "source_slug": "kyte",
+      "source_tvl_usd": 1.7396074962994426,
+      "observed_at": "2026-11-13T03:56:40.108283+00:00",
+      "prior_tvl_usd": 1.7072155301836842,
+      "prior_observed_at": "2026-11-12T01:05:35.053571+00:00",
+      "delta_usd": 0.03239196611575834,
+      "net_flow_usd": null
+     },
+     {
+      "source": "https://api.llama.fi/protocols",
+      "source_slug": "kyte",
+      "source_as_of": null,
+      "observed_at": "2026-11-14T00:57:59.751219+00:00",
+      "source_tvl_usd": 1.42452405,
+      "prior_tvl_usd": 1.7396074962994426,
+      "prior_observed_at": "2026-11-13T03:56:40.108283+00:00",
+      "delta_usd": -0.3150834462994425,
+      "net_flow_usd": null
+     }
+    ],
+    "research_observations": [
+     {
+      "verified_at": "2026-11-11T01:10:00.656108+00:00",
+      "source": "https://rpc.mainnet.chain.robinhood.com",
+      "fee_events": {
+       "addresses": [
+        "0x78c569A1137B78cB78F42c42B4B6C2b8F1E3dDef",
+        "0x8A9d128247D8c4512411CF9D0CdCAc5Acf86FB95"
+       ],
+       "topics": [
+        "0xfa9b8b783b71447fa0cfb1c64ea9d647bcefa5c7b459549725b4f14996248dce",
+        "0xcec1bae6e024d929f2929f3478ce70f55f9c636c8ef7b5073a61d7c3a432451b"
+       ],
+       "chain_id": 4663,
+       "from_block": 110494950,
+       "to_block": 111315235,
+       "from_previous_end": "2026-11-10T01:02:51+00:00",
+       "end_time": "2026-11-11T01:00:33+00:00",
+       "matching_events": 0,
+       "cumulative_from": "2026-11-09T04:20:01+00:00",
+       "prior_events": 0,
+       "lifetime_fees_usd": null
+      }
+     },
+     {
+      "first_seen_at": "2026-11-12T01:14:53.047956+00:00",
+      "verified_at": "2026-11-12T01:14:53.047956+00:00",
+      "entity": "Kyte",
+      "event_date": "2026-11-12",
+      "source_url": "https://dexscreener.com/robinhood/0xe25ab929558cc6d69208ac1533224c1885ccedcfdeafefff72ea83887471229e",
+      "stage": "流动性与退出风险升级",
+      "evidence_level": "同池两次市场快照＋历史主网 Swap 与当前 StateView、Quoter",
+      "historical_backfill": false,
+      "note": "相同交易池美元报价下降约 83%，美元流动性下降约 59%。本次按区块模拟卖出，费用分配与销毁事件持续为零。",
+      "price_change_eth_pct": -82.90733514613042,
+      "price_change_usd_pct": -82.84742214080084,
+      "pool_liquidity_change_pct": -58.52054991669776,
+      "quotes": [
+       {
+        "kyte_in": 100000,
+        "eth_out": 0.000308722060768487,
+        "shortfall_vs_marginal_pct": 3.018689653550599,
+        "includes_pool_fee": true
+       },
+       {
+        "kyte_in": 1000000,
+        "eth_out": 0.003081876351893922,
+        "shortfall_vs_marginal_pct": 3.186573000838,
+        "includes_pool_fee": true
+       },
+       {
+        "kyte_in": 10000000,
+        "eth_out": 0.03029434129751053,
+        "shortfall_vs_marginal_pct": 4.833982132610071,
+        "includes_pool_fee": true
+       },
+       {
+        "kyte_in": 50000000,
+        "eth_out": 0.14082163005820145,
+        "shortfall_vs_marginal_pct": 11.525168145279652,
+        "includes_pool_fee": true
+       }
+      ],
+      "block": 112140717,
+      "fee_events": {
+       "chain_id": 4663,
+       "from_block": 111315236,
+       "to_block": 112140717,
+       "end_time": "2026-11-12T01:05:37+00:00",
+       "cumulative_from": "2026-11-09T04:20:01+00:00",
+       "matching_events": 0,
+       "prior_events": 0
+      }
+     },
+     {
+      "verified_at": "2026-11-13T04:05:53.711458+00:00",
+      "source": "https://rpc.mainnet.chain.robinhood.com",
+      "fee_event_check": {
+       "chain_id": 4663,
+       "from_block": 112140718,
+       "to_block": 113061567,
+       "end_time": "2026-11-13T03:56:47+00:00",
+       "cumulative_from": "2026-11-09T04:20:01+00:00",
+       "matching_events": 0,
+       "prior_events": 0
+      },
+      "pool_quotes": {
+       "pool": "0xe25ab929558cc6d69208ac1533224c1885ccedcfdeafefff72ea83887471229e",
+       "block": 113061567,
+       "spot_eth_per_kyte": 1.60608711264701e-09,
+       "quotes": [
+        {
+         "kyte_in": 1000000,
+         "eth_out": 0.001555774866626311,
+         "shortfall_vs_marginal_pct": 3.1325975798273342
+        },
+        {
+         "kyte_in": 10000000,
+         "eth_out": 0.015368669945037328,
+         "shortfall_vs_marginal_pct": 4.309860754015682
+        },
+        {
+         "kyte_in": 50000000,
+         "eth_out": 0.0729053749067475,
+         "shortfall_vs_marginal_pct": 9.213672991135146
+        }
+       ],
+       "quoter": "0x8dc178efb8111bb0973dd9d722ebeff267c98f94",
+       "state_view": "0xf3334192d15450cdd385c8b70e03f9a6bd9e673b",
+       "pool_key_hex": "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000072d88c2f31f568c0f4b8f613692eb489541ed45000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c8000000000000000000000000e5e702641ea86f4ae6cc3cdaed2b886f976be044",
+       "source": "https://developers.uniswap.org/docs/protocols/v4/deployments"
+      }
+     },
+     {
+      "source": "https://rpc.mainnet.chain.robinhood.com",
+      "verified_at": "2026-11-14T01:09:03.391415+00:00",
+      "fee_event_check": {
+       "from_block": 113061568,
+       "to_block": 113784224,
+       "end_time": "2026-11-14T00:58:04+00:00",
+       "cumulative_from": "2026-11-09T04:20:01+00:00",
+       "matching_events": 0,
+       "prior_events": 0
+      },
+      "quotes": {
+       "pool": "0xe25ab929558cc6d69208ac1533224c1885ccedcfdeafefff72ea83887471229e",
+       "block": 113784224,
+       "spot_eth_per_kyte": 1.604545036448969e-09,
+       "quotes": [
+        {
+         "kyte_in": 1000000,
+         "eth_out": 0.001554282117715547,
+         "shortfall_vs_marginal_pct": 3.132533995098019
+        },
+        {
+         "kyte_in": 10000000,
+         "eth_out": 0.015354013356757144,
+         "shortfall_vs_marginal_pct": 4.309240264534875
+        },
+        {
+         "kyte_in": 50000000,
+         "eth_out": 0.07283761568179313,
+         "shortfall_vs_marginal_pct": 9.210880309111658
+        }
+       ],
+       "quoter": "0x8dc178efb8111bb0973dd9d722ebeff267c98f94",
+       "state_view": "0xf3334192d15450cdd385c8b70e03f9a6bd9e673b",
+       "pool_key_hex": "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000072d88c2f31f568c0f4b8f613692eb489541ed45000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c8000000000000000000000000e5e702641ea86f4ae6cc3cdaed2b886f976be044",
+       "source": "https://developers.uniswap.org/docs/protocols/v4/deployments"
+      }
+     }
+    ]
+   },
+   "notes": "当前本地记录可定位来源，但未完成本轮原始页面重核，数值、资格、权属与执行状态保留U。"
+  },
+  {
+   "case": "Xash Gold Rewards",
+   "entity": "Xash, Inc.",
+   "reviewed_utc": "2026-11-14T14:40:00Z",
+   "same_as_handoff": false,
+   "answers": [
+    {
+     "question": "首次 PAXG 对外发放的交易能否与官方批次对应？扣除费用后的奖励有多少？",
+     "answer": "U",
+     "src": "https://app.xash.com/terms",
+     "checked_utc": "2026-11-14T14:40:00Z",
+     "kind": "U"
+    }
+   ],
+   "official_url": "https://xash.com/",
+   "source_url": "https://app.xash.com/terms",
+   "raw": {
+    "id": "official:xash-gold-rewards",
+    "name": "Xash Gold Rewards",
+    "entity_name": "Xash, Inc.",
+    "official_product_url": "https://xash.com/",
+    "source_url": "https://app.xash.com/terms",
+    "first_seen_at": "2026-11-13T04:05:53.711458+00:00",
+    "actual_launch_date": null,
+    "business_role": "以黄金奖励稳定币交易、借贷及提供流动性的活动",
+    "chains": [
+     "Solana"
+    ],
+    "platform_token_status": "explicit_no_platform_token_as_of_terms",
+    "launch_stage": "公开 beta；Phase B 提取待开放",
+    "regional_restrictions": "18 岁以上、须符合制裁及地域条款。FAQ 称英国、欧盟、欧洲经济区暂不开放，用户本人资格未知。",
+    "data_availability": "FAQ、条款与奖励规则可查，实际兑付、净收益、用户、补贴池规模未知。",
+    "questions": [
+     "首次 PAXG 对外发放的交易能否与官方批次对应？扣除费用后的奖励有多少？"
+    ],
+    "evidence_level": "官方条款及 FAQ；正式新闻日期与首次开放日期分开",
+    "verified_at": "2026-11-13T04:05:53.711458+00:00",
+    "historical_backfill": false,
+    "token_contracts": [],
+    "cex_markets": [],
+    "dex_pools": [],
+    "metrics": {
+     "scale_usd": null,
+     "net_flow_usd": null,
+     "users": null,
+     "volume_usd": null,
+     "fees_usd": null,
+     "revenue_usd": null
+    },
+    "asset_token_symbols": [
+     "PYUSD",
+     "PAXG"
+    ],
+    "points": "XP 不可转让或兑换",
+    "public_launch_report_date": "2026-11-12",
+    "sources": [
+     "https://app.xash.com/terms",
+     "https://app.xash.com/rewards-rules",
+     "https://xash.com/faq",
+     "https://www.cryptotimes.io/2026/11/12/xash-launches-paxg-rewards-for-pyusd-defi-activity-on-solana/"
+    ],
+    "beta_terms_effective_date": "2026-09-28",
+    "rules_effective_date": "2026-11-07",
+    "reward_funding": "beta 营销预算",
+    "withdrawal_state": "条款 6.5：Phase B 前无法提取；账面金为对 Xash 的无担保债权。",
+    "research_observations": [
+     {
+      "entity": "Xash, Inc.",
+      "event_date": "2026-11-12",
+      "publication_date": "2026-11-12",
+      "source_url": "https://www.cryptotimes.io/2026/11/12/xash-launches-paxg-rewards-for-pyusd-defi-activity-on-solana/",
+      "stage": "公开 beta 获报道",
+      "note": "已取得官方条款与奖励规则。报道日期与首次对用户开放日期分别保存。",
+      "evidence_level": "报道定日期；官方条款证明权益",
+      "first_seen_at": "2026-11-13T04:05:53.711458+00:00",
+      "verified_at": "2026-11-13T04:05:53.711458+00:00",
+      "historical_backfill": false
+     },
+     {
+      "verified_at": "2026-11-14T01:09:03.391415+00:00",
+      "source": "https://app.xash.com/terms",
+      "phase_b_withdrawals_pending": true
+     }
+    ]
+   },
+   "notes": "当前本地记录可定位来源，但未完成本轮原始页面重核，数值、资格、权属与执行状态保留U。"
+  },
+  {
+   "case": "BUIDL 24/7 Liquidity Facility",
+   "entity": "Securitize / Ethena Labs",
+   "reviewed_utc": "2026-11-14T14:40:00Z",
+   "same_as_handoff": false,
+   "answers": [
+    {
+     "question": "核实周末实际兑换、流动性补充、费用归属及 ENA 收益路径。",
+     "answer": "U",
+     "src": "https://www.prnewswire.com/news-releases/securitize-and-ethena-launch-100-million-liquidity-facility-for-blackrocks-buidl-302937776.html",
+     "checked_utc": "2026-11-14T14:40:00Z",
+     "kind": "U"
+    }
+   ],
+   "official_url": "https://securitize.io/",
+   "source_url": "https://www.prnewswire.com/news-releases/securitize-and-ethena-launch-100-million-liquidity-facility-for-blackrocks-buidl-302937776.html",
+   "raw": {
+    "id": "official:buidl-ethena-liquidity",
+    "name": "BUIDL 24/7 Liquidity Facility",
+    "entity_name": "Securitize / Ethena Labs",
+    "official_product_url": "https://securitize.io/",
+    "source_url": "https://www.prnewswire.com/news-releases/securitize-and-ethena-launch-100-million-liquidity-facility-for-blackrocks-buidl-302937776.html",
+    "first_seen_at": "2026-11-13T04:05:53.711458+00:00",
+    "actual_launch_date": "2026-11-12",
+    "business_role": "机构基金份额与稳定币之间的非营业时间双向流动性",
+    "chains": [],
+    "platform_token_status": "traditional_institution_not_directly_investable",
+    "launch_stage": "双方宣布开始服务",
+    "regional_restrictions": "仅限合资格投资者，受设施条款与资金可用性约束",
+    "data_availability": "发行方披露容量，尚无可独立归因的交易历史、运营合约或收费归集地址。",
+    "questions": [
+     "核实周末实际兑换、流动性补充、费用归属及 ENA 收益路径。"
+    ],
+    "evidence_level": "运营方公告；资金实付、使用量和代币收益未独立验证",
+    "verified_at": "2026-11-13T04:05:53.711458+00:00",
+    "historical_backfill": false,
+    "token_contracts": [],
+    "cex_markets": [],
+    "dex_pools": [],
+    "metrics": {
+     "scale_usd": null,
+     "net_flow_usd": null,
+     "users": null,
+     "volume_usd": null,
+     "fees_usd": null,
+     "revenue_usd": null
+    },
+    "asset_token_symbols": [
+     "BUIDL",
+     "USDC"
+    ],
+    "related_product_ids": [
+     "llama:blackrock-buidl"
+    ],
+    "institution_reported_usd": {
+     "initial_usdc": 25000000,
+     "initial_buidl": 25000000,
+     "initial_combined": 50000000,
+     "conditional_top_up": 50000000,
+     "max_capacity": 100000000
+    },
+    "possible_top_up_minutes": 60,
+    "ecosystem_token": "ENA；本设施没有已核实的直接代币收益",
+    "equity": "NYSE: SECZ",
+    "research_observations": [
+     {
+      "entity": "Securitize / Ethena Labs",
+      "event_date": "2026-11-12",
+      "publication_date": "2026-11-12",
+      "source_url": "https://www.prnewswire.com/news-releases/securitize-and-ethena-launch-100-million-liquidity-facility-for-blackrocks-buidl-302937776.html",
+      "stage": "运营方宣布上线",
+      "note": "BUIDL 与 USDC 等双向兑换。初始两侧合计 5,000 万美元，另 5,000 万受条件限制。机制费用、实际兑换和 ENA 归属未知。",
+      "evidence_level": "官方公告",
+      "first_seen_at": "2026-11-13T04:05:53.711458+00:00",
+      "verified_at": "2026-11-13T04:05:53.711458+00:00",
+      "historical_backfill": false
+     },
+     {
+      "verified_at": "2026-11-14T01:09:03.391415+00:00",
+      "source": "https://app.rwa.xyz/assets/BUIDL",
+      "facility_use_usd": null,
+      "note": "基金汇总页没有标记为设施交易的可归属数据，兑换量未知。"
+     }
+    ]
+   },
+   "notes": "当前本地记录可定位来源，但未完成本轮原始页面重核，数值、资格、权属与执行状态保留U。"
+  },
+  {
+   "case": "Broadridge Distributed Ledger Repo",
+   "entity": "Broadridge Financial Solutions",
+   "reviewed_utc": "2026-11-14T14:40:00Z",
+   "same_as_handoff": false,
+   "answers": [
+    {
+     "question": "补齐逐日面值、换手与方法变更，解释余额跳变。",
+     "answer": "U",
+     "src": "https://app.rwa.xyz/platforms/broadridge-dlr",
+     "checked_utc": "2026-11-14T14:40:00Z",
+     "kind": "U"
+    }
+   ],
+   "official_url": "https://www.broadridge.com/capability/middle-and-back-office-solutions/post-trade-processing/distributed-ledger-repo-solutions",
+   "source_url": "https://app.rwa.xyz/platforms/broadridge-dlr",
+   "raw": {
+    "id": "official:broadridge-dlr",
+    "name": "Broadridge Distributed Ledger Repo",
+    "entity_name": "Broadridge Financial Solutions",
+    "official_product_url": "https://www.broadridge.com/capability/middle-and-back-office-solutions/post-trade-processing/distributed-ledger-repo-solutions",
+    "source_url": "https://app.rwa.xyz/platforms/broadridge-dlr",
+    "first_seen_at": "2026-11-14T01:09:03.391415+00:00",
+    "actual_launch_date": null,
+    "business_role": "机构回购交易与记账",
+    "chains": [
+     "Canton"
+    ],
+    "platform_token_status": "traditional_institution_not_directly_investable",
+    "launch_stage": "运营中",
+    "regional_restrictions": "机构基础设施。",
+    "data_availability": "RWA.xyz 公开余额，Broadridge 定期披露处理额；可比昨日成分余额未知。",
+    "questions": [
+     "补齐逐日面值、换手与方法变更，解释余额跳变。"
+    ],
+    "evidence_level": "运营机构、数据供方和数据平台",
+    "verified_at": "2026-11-14T01:09:03.391415+00:00",
+    "historical_backfill": true,
+    "token_contracts": [],
+    "cex_markets": [],
+    "dex_pools": [],
+    "metrics": {
+     "scale_usd": null,
+     "net_flow_usd": null,
+     "users": null,
+     "volume_usd": null,
+     "fees_usd": null,
+     "revenue_usd": null
+    },
+    "research_observations": [
+     {
+      "source": "https://app.rwa.xyz/platforms/broadridge-dlr",
+      "source_update_raw": "2026-11-13T03:42:57.112614",
+      "represented_usd": 251694716708.76,
+      "share_of_represented_pct": 84.0699164862676,
+      "prior_day_value_usd": null,
+      "prior_day_dlr_attribution_usd": null,
+      "series_note": "平台总计与 tokenization_type_stats 历史基线不同，仅引用本期一致的余额。",
+      "platform_series": {
+       "val": 251694716708.76,
+       "val_7d": 344577759868.63,
+       "val_30d": 309891764329.92,
+       "val_90d": 327759596814.35,
+       "chg_7d_amt": -92883043159.87,
+       "chg_7d_pct": -26.955611759528992,
+       "chg_30d_amt": -58197047621.15997,
+       "chg_30d_pct": -18.779798084340722,
+       "chg_90d_amt": -76064880105.58997,
+       "chg_90d_pct": -23.20752186813152
+      },
+      "represented_subgroup_series": {
+       "val": 251694716708.76,
+       "val_7d": 320653748299.9,
+       "val_30d": 216213046646.27,
+       "val_90d": 327759596814.35,
+       "chg_7d_amt": -68959031591.14001,
+       "chg_7d_pct": -21.505761887007235,
+       "chg_30d_amt": 35481670062.49002,
+       "chg_30d_pct": 16.410512969894427,
+       "chg_90d_amt": -76064880105.58997,
+       "chg_90d_pct": -23.20752186813152
+      }
+     },
+     {
+      "source": "https://www.broadridge.com/press-release/2026/broadridges-distributed-ledger-repo-processes-7-point-6-trillion-in-october",
+      "month": "2026-10",
+      "monthly_processed_usd": 7600000000000,
+      "daily_average_processed_usd": 345000000000
+     }
+    ],
+    "listed_equity": "NYSE: BR"
+   },
+   "notes": "当前本地记录可定位来源，但未完成本轮原始页面重核，数值、资格、权属与执行状态保留U。"
+  },
+  {
+   "case": "TownSquare AI Robotics Credit Token",
+   "entity": "TownSquare",
+   "reviewed_utc": "2026-11-14T14:40:00Z",
+   "same_as_handoff": false,
+   "answers": [
+    {
+     "question": "核实还款、受托人及季度赎回执行；TOWN 的独立合约和交易场所待核。",
+     "answer": "U",
+     "src": "https://app.rwa.xyz/assets/townAIROBO",
+     "checked_utc": "2026-11-14T14:40:00Z",
+     "kind": "U"
+    }
+   ],
+   "official_url": "https://app.townsq.xyz/townRWA/townAIROBO",
+   "source_url": "https://app.rwa.xyz/assets/townAIROBO",
+   "raw": {
+    "id": "official:townsquare-townairobo",
+    "name": "TownSquare AI Robotics Credit Token",
+    "entity_name": "TownSquare",
+    "official_product_url": "https://app.townsq.xyz/townRWA/townAIROBO",
+    "source_url": "https://app.rwa.xyz/assets/townAIROBO",
+    "first_seen_at": "2026-11-14T01:09:03.391415+00:00",
+    "actual_launch_date": "2026-11-04",
+    "business_role": "代币化私贷债权",
+    "chains": [
+     "Base",
+     "Robinhood Chain"
+    ],
+    "platform_token_status": "unverified",
+    "launch_stage": "产品已列入资产目录",
+    "regional_restrictions": "资料列明限非美国机构或专业投资者、白名单转让，最低 100 万 USDC。",
+    "data_availability": "资产目录可见估值、地址数与 30 日转账；实际净申赎未知。",
+    "questions": [
+     "核实还款、受托人及季度赎回执行；TOWN 的独立合约和交易场所待核。"
+    ],
+    "evidence_level": "发行方产品页及 RWA.xyz",
+    "verified_at": "2026-11-14T01:09:03.391415+00:00",
+    "historical_backfill": true,
+    "token_contracts": [],
+    "cex_markets": [],
+    "dex_pools": [],
+    "metrics": {
+     "scale_usd": null,
+     "net_flow_usd": null,
+     "users": null,
+     "volume_usd": null,
+     "fees_usd": null,
+     "revenue_usd": null
+    },
+    "asset_token_symbols": [
+     "townAIROBO"
+    ],
+    "date_scope": "数据方登记成立日，首次认购未独立核实",
+    "research_observations": [
+     {
+      "source": "https://app.rwa.xyz/assets/townAIROBO",
+      "observed_at": "2026-11-14T01:09:03.391415+00:00",
+      "reported_asset_value_usd_rounded": 121570000,
+      "holding_addresses": 47,
+      "subscription_window": "weekly",
+      "redemption_window": "quarterly",
+      "valuation_frequency": "semiannual"
+     }
+    ],
+    "platform_token_evidence": {
+     "source": "https://docs.townsq.xyz/vetown-governance/town-token",
+     "note": "官方文档描述 TOWN 治理、投票和质押折扣；未提供已发行和可交易的证明，文件明确无分红或赎回权。"
+    }
+   },
+   "notes": "当前本地记录可定位来源，但未完成本轮原始页面重核，数值、资格、权属与执行状态保留U。"
+  }
+ ]
+}
