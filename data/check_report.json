@@ -1,17 +1,34 @@
 {
- "generated": "2026-11-15T17:05:31+00:00",
+ "generated": "2026-11-15T21:57:50+00:00",
  "summary": {
   "alpha": {
-   "已查证": 7,
-   "已处理但证据不足": 25,
+   "已查证": 10,
+   "已处理但证据不足": 27,
    "缺来源": 0,
    "字段格式错误": 0,
    "已过期需重核": 0,
-   "已交条目": 32,
+   "已交条目": 37,
    "其中Grok未经Codex复核": 0
   }
  },
- "issues": [],
- "n": 0,
+ "issues": [
+  {
+   "board": "alpha",
+   "file": "alpha/review/codex_2026-11-15_checks.json",
+   "key": "x:launchpad:chain-elysium",
+   "msg": "没有任何证据链接",
+   "who": "codex",
+   "level": "warn"
+  },
+  {
+   "board": "alpha",
+   "file": "alpha/review/codex_*_checks.json",
+   "key": null,
+   "msg": "35 条是空模板（分数全 U、最多 1 条证据、一句话是模板句）：没有并入、不算补证完成，这些 key 仍在待补证队列里。查不到就不要交，交就要有一手证据",
+   "who": "codex",
+   "level": "warn"
+  }
+ ],
+ "n": 2,
  "errors": 0
 }

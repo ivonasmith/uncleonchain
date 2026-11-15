@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-15T17:09:44+00:00",
+ "generated": "2026-11-15T21:56:41+00:00",
  "note": "Alpha 雷达来源台账（大叔 2026-11-15 定：维护一份自己的来源，以关键人 / 关键信息和本站板块为主，数据榜单兜底）。每个来源记为什么收；战绩（带来几张卡、几张进了研究观察、几张被拒）由 opps.py 每天算到 data/alpha/sources_stats.json。连续三个月没有有效发现的降级为 paused，不删。",
  "sources": [
   {
@@ -14,9 +14,9 @@
    "stats": {
     "cards": 5,
     "fresh": 5,
-    "watching": 1,
+    "watching": 4,
     "rejected": 0,
-    "pending": 4,
+    "pending": 1,
     "names": [
      {
       "id": "9388",
@@ -53,17 +53,17 @@
    "stats": {
     "cards": 2,
     "fresh": 2,
-    "watching": 0,
+    "watching": 1,
     "rejected": 0,
-    "pending": 2,
+    "pending": 1,
     "names": [
-     {
-      "id": "9146",
-      "name": "Central City"
-     },
      {
       "id": "x-aiagent-bankr",
       "name": "Bankr"
+     },
+     {
+      "id": "9146",
+      "name": "Central City"
      }
     ]
    }
@@ -161,13 +161,17 @@
    "stats": {
     "cards": 15,
     "fresh": 15,
-    "watching": 1,
+    "watching": 2,
     "rejected": 0,
-    "pending": 14,
+    "pending": 13,
     "names": [
      {
       "id": "9388",
       "name": "Montra"
+     },
+     {
+      "id": "9427",
+      "name": "Volta"
      },
      {
       "id": "9065",
@@ -184,10 +188,6 @@
      {
       "id": "7966",
       "name": "Render Network BME"
-     },
-     {
-      "id": "8481",
-      "name": "Fables"
      }
     ]
    }
@@ -204,17 +204,17 @@
    "stats": {
     "cards": 31,
     "fresh": 2,
-    "watching": 12,
+    "watching": 13,
     "rejected": 0,
-    "pending": 19,
+    "pending": 18,
     "names": [
-     {
-      "id": "9146",
-      "name": "Central City"
-     },
      {
       "id": "9381",
       "name": "Ascend Launchpad"
+     },
+     {
+      "id": "9146",
+      "name": "Central City"
      }
     ]
    }

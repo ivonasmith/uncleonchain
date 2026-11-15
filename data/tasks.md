@@ -1,8 +1,8 @@
-# 全站待办与检查（2026-11-15 17:05 UTC 自动生成，别手改）
+# 全站待办与检查（2026-11-15 21:57 UTC 自动生成，别手改）
 
 | 板块 | 待办 | 问题 |
 |---|---|---|
-| Alpha 雷达 | 7 | 0 |
+| Alpha 雷达 | 7 | 2 |
 | 发射台 | 2 | 0 |
 | AI Agent | 7 | 0 |
 | RWA | 0 | 0 |
@@ -13,8 +13,8 @@
 
 ## 待办
 
-- **P1 · Codex · alpha** 机会卡补证（队列 41 个，从上往下补，M 新参与机制优先查） → `alpha/review/codex_2026-11-15_checks.json（JSON 数组，reviewer = codex）`（参考 `data/alpha/research_queue.json（prompt / schema / items）`）
-- **P1 · Codex · alpha** 补「量从哪来」和关键事件（32 张已补证的卡还没有 flow / events，先做 Montra、Pons 当样板） → `alpha/review/codex_2026-11-15_checks.json（同 key 交新一条，带 flow / events / capture / next_review）`（参考 `data/alpha/research_queue.json 的 schema`）
+- **P1 · Codex · alpha** 机会卡补证（队列 37 个，从上往下补，M 新参与机制优先查） → `alpha/review/codex_2026-11-15_checks.json（JSON 数组，reviewer = codex）`（参考 `data/alpha/research_queue.json（prompt / schema / items）`）
+- **P1 · Codex · alpha** 补「量从哪来」和关键事件（35 张已补证的卡还没有 flow / events，先做 Montra、Pons 当样板） → `alpha/review/codex_2026-11-15_checks.json（同 key 交新一条，带 flow / events / capture / next_review）`（参考 `data/alpha/research_queue.json 的 schema`）
 - **P2 · Codex · aiagent** A1 服务层真实性 → `aiagent/review/a1_commerce_checks.json`（参考 `aiagent/review/README.md`）
 - **P2 · Codex · aiagent** A2 x402 与 ERC-8004 的链上数据源 → `aiagent/review/a2_rails_sources.json`（参考 `aiagent/review/README.md`）
 - **P2 · Codex · aiagent** A3 Virtuals ACP 逐日服务收入 → `aiagent/review/a3_acp_revenue.json`（参考 `aiagent/review/README.md`）
@@ -37,8 +37,9 @@
 
 | 已查证 | 已处理但证据不足 | 缺来源 | 字段格式错误 | 已过期需重核 | 已交条目 | 其中Grok未经Codex复核 |
 |---|---|---|---|---|---|---|
-| 7 | 25 | 0 | 0 | 0 | 32 | 0 |
+| 10 | 27 | 0 | 0 | 0 | 37 | 0 |
 
 ## 检查出的问题
 
-- 没有
+- [warn] Codex · `alpha/review/codex_2026-11-15_checks.json` · x:launchpad:chain-elysium：没有任何证据链接
+- [warn] Codex · `alpha/review/codex_*_checks.json`：35 条是空模板（分数全 U、最多 1 条证据、一句话是模板句）：没有并入、不算补证完成，这些 key 仍在待补证队列里。查不到就不要交，交就要有一手证据

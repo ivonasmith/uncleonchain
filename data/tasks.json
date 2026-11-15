@@ -1,11 +1,11 @@
 {
- "generated": "2026-11-15T17:05:31+00:00",
+ "generated": "2026-11-15T21:57:50+00:00",
  "boards": [
   {
    "board": "alpha",
    "name": "Alpha 雷达",
    "tasks": 7,
-   "issues": 0
+   "issues": 2
   },
   {
    "board": "launchpad",
@@ -54,46 +54,25 @@
   {
    "board": "alpha",
    "id": "alpha:research",
-   "title": "机会卡补证（队列 41 个，从上往下补，M 新参与机制优先查）",
+   "title": "机会卡补证（队列 37 个，从上往下补，M 新参与机制优先查）",
    "who": "codex",
    "pri": 1,
    "deliver": "alpha/review/codex_2026-11-15_checks.json（JSON 数组，reviewer = codex）",
    "ref": "data/alpha/research_queue.json（prompt / schema / items）",
    "items": [
     {
-     "key": "s:9427",
-     "name": "Volta",
-     "status": "原始线索",
-     "fresh": true,
-     "kind": "surge"
-    },
-    {
-     "key": "m:bem-tapeout",
-     "name": "TapeOut / BEM",
-     "status": "原始线索",
-     "fresh": true,
-     "kind": "manual"
-    },
-    {
-     "key": "x:aiagent:bankr",
-     "name": "Bankr",
-     "status": "原始线索",
-     "fresh": true,
-     "kind": "site"
-    },
-    {
-     "key": "g:9381",
-     "name": "Ascend Launchpad",
-     "status": "原始线索",
+     "key": "g:9146",
+     "name": "Central City",
+     "status": "待核验",
      "fresh": true,
      "kind": "tokenless"
     },
     {
-     "key": "x:launchpad:boxa-v1",
-     "name": "Boxa V1",
-     "status": "原始线索",
+     "key": "m:bem-tapeout",
+     "name": "TapeOut / BEM",
+     "status": "待核验",
      "fresh": true,
-     "kind": "site"
+     "kind": "manual"
     },
     {
      "key": "x:launchpad:chain-elysium",
@@ -101,13 +80,6 @@
      "status": "原始线索",
      "fresh": true,
      "kind": "site"
-    },
-    {
-     "key": "g:9146",
-     "name": "Central City",
-     "status": "待核验",
-     "fresh": true,
-     "kind": "tokenless"
     },
     {
      "key": "s:9065",
@@ -339,28 +311,27 @@
      "status": "待核验",
      "fresh": false,
      "kind": "tokenless"
+    },
+    {
+     "key": "g:8866",
+     "name": "Loan Meme",
+     "status": "待核验",
+     "fresh": false,
+     "kind": "tokenless"
     }
    ],
-   "n": 40,
+   "n": 37,
    "note": "排序：手动线索 / 本站板块 ★ → 新发现 → 有参与入口 → 收入高。同一天多批追加进同一个文件。"
   },
   {
    "board": "alpha",
    "id": "alpha:flow",
-   "title": "补「量从哪来」和关键事件（32 张已补证的卡还没有 flow / events，先做 Montra、Pons 当样板）",
+   "title": "补「量从哪来」和关键事件（35 张已补证的卡还没有 flow / events，先做 Montra、Pons 当样板）",
    "who": "codex",
    "pri": 1,
    "deliver": "alpha/review/codex_2026-11-15_checks.json（同 key 交新一条，带 flow / events / capture / next_review）",
    "ref": "data/alpha/research_queue.json 的 schema",
    "items": [
-    {
-     "key": "m:pons",
-     "name": "Pons"
-    },
-    {
-     "key": "s:9388",
-     "name": "Montra"
-    },
     {
      "key": "g:parent#polymarket",
      "name": "Polymarket"
@@ -472,6 +443,14 @@
     {
      "key": "g:8866",
      "name": "Loan Meme"
+    },
+    {
+     "key": "g:8144",
+     "name": "Catapult Trade"
+    },
+    {
+     "key": "g:4980",
+     "name": "Spiko"
     }
    ],
    "n": 30,
@@ -773,9 +752,9 @@
    "deliver": "alpha/research/<同名>.en.md（Claude 接进网站）",
    "ref": null,
    "items": [
-    "案例库.md",
+    "Alpha标的筛选研究体系.md",
     "研究进度.md",
-    "Alpha标的筛选研究体系.md"
+    "案例库.md"
    ],
    "n": 3,
    "note": null
@@ -862,13 +841,12 @@
  ],
  "queue": [
   {
-   "key": "alpha:s:9427",
+   "key": "alpha:g:9146",
    "board": "alpha",
    "priority": 1,
-   "task_type": "research",
-   "name": "Volta",
+   "task_type": "evidence",
+   "name": "Central City",
    "missing": [
-    "M",
     "A",
     "F",
     "E",
@@ -877,20 +855,24 @@
     "D",
     "T",
     "TM",
-    "TE"
+    "TE",
+    "ERC-8004注册和身份合约",
+    "x402付款交易样本",
+    "实际付费调用和收入归属",
+    "官方 token/积分立场"
    ],
    "source_refs": [
     "data/alpha/research_queue.json"
    ],
-   "status": "open",
-   "last_checked_utc": null,
+   "status": "partial",
+   "last_checked_utc": "2026-11-15T12:35:00Z",
    "deliver": "alpha/review/codex_2026-11-15_checks.json"
   },
   {
    "key": "alpha:m:bem-tapeout",
    "board": "alpha",
    "priority": 1,
-   "task_type": "research",
+   "task_type": "evidence",
    "name": "TapeOut / BEM",
    "missing": [
     "M",
@@ -902,86 +884,17 @@
     "D",
     "T",
     "TM",
-    "TE"
+    "TE",
+    "官方主页和文档",
+    "BEM合约地址与链",
+    "设计验证算法",
+    "奖励分配和总量"
    ],
    "source_refs": [
     "data/alpha/research_queue.json"
    ],
-   "status": "open",
-   "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-15_checks.json"
-  },
-  {
-   "key": "alpha:x:aiagent:bankr",
-   "board": "alpha",
-   "priority": 1,
-   "task_type": "research",
-   "name": "Bankr",
-   "missing": [
-    "M",
-    "A",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM",
-    "TE"
-   ],
-   "source_refs": [
-    "data/alpha/research_queue.json"
-   ],
-   "status": "open",
-   "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-15_checks.json"
-  },
-  {
-   "key": "alpha:g:9381",
-   "board": "alpha",
-   "priority": 1,
-   "task_type": "research",
-   "name": "Ascend Launchpad",
-   "missing": [
-    "M",
-    "A",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM"
-   ],
-   "source_refs": [
-    "data/alpha/research_queue.json"
-   ],
-   "status": "open",
-   "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-15_checks.json"
-  },
-  {
-   "key": "alpha:x:launchpad:boxa-v1",
-   "board": "alpha",
-   "priority": 1,
-   "task_type": "research",
-   "name": "Boxa V1",
-   "missing": [
-    "M",
-    "A",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM"
-   ],
-   "source_refs": [
-    "data/alpha/research_queue.json"
-   ],
-   "status": "open",
-   "last_checked_utc": null,
+   "status": "partial",
+   "last_checked_utc": "2026-11-15T12:27:58Z",
    "deliver": "alpha/review/codex_2026-11-15_checks.json"
   },
   {
@@ -1006,33 +919,6 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-15_checks.json"
-  },
-  {
-   "key": "alpha:g:9146",
-   "board": "alpha",
-   "priority": 1,
-   "task_type": "evidence",
-   "name": "Central City",
-   "missing": [
-    "M",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM",
-    "独立关联地址/自成交及去补贴留存审计未完成。",
-    "未独立重放全部费用与支付，适配器方法可能更新。",
-    "当前官方自身 token/积分/空投立场及适用日期 U。",
-    "官方原始表态日期 U，不用页面读取日期代替。"
-   ],
-   "source_refs": [
-    "data/alpha/research_queue.json"
-   ],
-   "status": "partial",
-   "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
    "deliver": "alpha/review/codex_2026-11-15_checks.json"
   },
   {
@@ -1113,7 +999,7 @@
   {
    "key": "alpha:s:7966",
    "board": "alpha",
-   "priority": 2,
+   "priority": 1,
    "task_type": "research",
    "name": "Render Network BME",
    "missing": [
@@ -1138,7 +1024,7 @@
   {
    "key": "alpha:s:8481",
    "board": "alpha",
-   "priority": 2,
+   "priority": 1,
    "task_type": "research",
    "name": "Fables",
    "missing": [
@@ -1163,7 +1049,7 @@
   {
    "key": "alpha:s:4063",
    "board": "alpha",
-   "priority": 2,
+   "priority": 1,
    "task_type": "research",
    "name": "Peapods Finance",
    "missing": [
@@ -1188,7 +1074,7 @@
   {
    "key": "alpha:s:parent#justlend",
    "board": "alpha",
-   "priority": 2,
+   "priority": 1,
    "task_type": "research",
    "name": "JustLend V1",
    "missing": [

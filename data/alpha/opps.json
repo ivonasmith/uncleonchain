@@ -1,11 +1,11 @@
 {
- "generated": "2026-11-15T17:09:44+00:00",
+ "generated": "2026-11-15T21:56:41+00:00",
  "asof": "2026-11-14",
  "framework": "v1",
  "rules": "v2（2026-11-15）",
  "counts": {
-  "invest": 25,
-  "watch": 30,
+  "invest": 28,
+  "watch": 27,
   "reject": 0
  },
  "opps": [
@@ -145,7 +145,7 @@
      "官方计划不等于代币已发行或用户已获得权益；当前链上代币状态/分配需另核。"
     ],
     "checked_utc": "2026-11-14T13:58:39.525318+00:00",
-    "events": null,
+    "events": [],
     "flow": null,
     "next_review": null,
     "capture": null,
@@ -443,7 +443,7 @@
      "官方原始表态日期 U，不用页面读取日期代替。"
     ],
     "checked_utc": "2026-11-14T13:58:39.525318+00:00",
-    "events": null,
+    "events": [],
     "flow": null,
     "next_review": null,
     "capture": null,
@@ -736,7 +736,7 @@
      "官方原始表态日期 U，不用页面读取日期代替。"
     ],
     "checked_utc": "2026-11-14T13:58:39.525318+00:00",
-    "events": null,
+    "events": [],
     "flow": null,
     "next_review": null,
     "capture": null,
@@ -1042,7 +1042,7 @@
      "官方计划不等于代币已发行或用户已获得权益；当前链上代币状态/分配需另核。"
     ],
     "checked_utc": "2026-11-14T13:58:39.525318+00:00",
-    "events": null,
+    "events": [],
     "flow": null,
     "next_review": null,
     "capture": null,
@@ -1357,7 +1357,7 @@
      "官方原始表态日期 U，不用页面读取日期代替。"
     ],
     "checked_utc": "2026-11-14T13:58:39.525318+00:00",
-    "events": null,
+    "events": [],
     "flow": null,
     "next_review": null,
     "capture": null,
@@ -1643,7 +1643,7 @@
      "官方原始表态日期 U，不用页面读取日期代替。"
     ],
     "checked_utc": "2026-11-14T13:58:39.525318+00:00",
-    "events": null,
+    "events": [],
     "flow": null,
     "next_review": null,
     "capture": null,
@@ -1724,12 +1724,12 @@
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 60823,
+      "total24h": 63774,
       "total7d": 602724,
       "total30d": 2678645
      },
      "rev": {
-      "total24h": 60823,
+      "total24h": 63774,
       "total7d": 602724,
       "total30d": 2678645
      },
@@ -1910,7 +1910,7 @@
      "官方原始表态日期 U，不用页面读取日期代替。"
     ],
     "checked_utc": "2026-11-14T13:58:39.525318+00:00",
-    "events": null,
+    "events": [],
     "flow": null,
     "next_review": null,
     "capture": null,
@@ -2008,17 +2008,17 @@
     "tok": null,
     "money": {
      "vol": {
-      "total24h": 1506321,
+      "total24h": 1548416,
       "total7d": 11120003,
       "total30d": 69660535
      },
      "fees": {
-      "total24h": 64224,
+      "total24h": 63861,
       "total7d": 482106,
       "total30d": 2111981
      },
      "rev": {
-      "total24h": 64224,
+      "total24h": 63111,
       "total7d": 482106,
       "total30d": 2111981
      },
@@ -2199,7 +2199,7 @@
      "官方原始表态日期 U，不用页面读取日期代替。"
     ],
     "checked_utc": "2026-11-14T13:58:39.525318+00:00",
-    "events": null,
+    "events": [],
     "flow": null,
     "next_review": null,
     "capture": null,
@@ -2287,17 +2287,17 @@
     "tok": null,
     "money": {
      "vol": {
-      "total24h": 16507338,
+      "total24h": 15817147,
       "total7d": 75470367,
       "total30d": 393010534
      },
      "fees": {
-      "total24h": 357333,
+      "total24h": 338024,
       "total7d": 1577165,
       "total30d": 7899977
      },
      "rev": {
-      "total24h": 86402,
+      "total24h": 81640,
       "total7d": 395486,
       "total30d": 2083289
      },
@@ -2477,7 +2477,7 @@
      "官方计划不等于代币已发行或用户已获得权益；当前链上代币状态/分配需另核。"
     ],
     "checked_utc": "2026-11-14T13:58:39.525318+00:00",
-    "events": null,
+    "events": [],
     "flow": null,
     "next_review": null,
     "capture": null,
@@ -2638,7 +2638,7 @@
    "discovered": "2026-11-15",
    "baseline": false,
    "status": "研究观察",
-   "status_src": "alpha/review/codex_2026-11-15_a_handoff_checks.json",
+   "status_src": "alpha/review/codex_2026-11-15_checks_2.json",
    "bucket": "invest",
    "entry": [
     "use"
@@ -2690,7 +2690,7 @@
     "V": {
      "v": 1,
      "src": "research",
-     "why": "当前证据只支持买回后锁仓和释放，不支持已完成销毁（来源 https://docs.ponsfamily.com/v2）"
+     "why": "官方 V2 文档明确，买回的代币进入买回金库并按五年线性释放，官方分析页当前显示 PONS burned 为 0。现有证据支持“买回并锁定/释放”，不支持“已销毁”。（来源 https://docs.ponsfamily.com/v2）"
     },
     "G": {
      "v": 1,
@@ -2725,7 +2725,7 @@
     "TE": {
      "v": 2,
      "src": "research",
-     "why": "五年线性释放机制公开，但未来 90 天净新增可售数量未知（来源 https://docs.ponsfamily.com/v2）"
+     "why": "官方文档称买回代币进入五年线性释放金库，且 vestingStart 会随新买回调整。未来 90 天净新增可售数量未核验。（来源 https://docs.ponsfamily.com/v2）"
     }
    },
    "gates": {
@@ -2745,90 +2745,74 @@
      "why": "个人执行，不公开"
     }
    },
-   "one_liner": "Robinhood Chain 上的发币平台，联合曲线发币、毕业后进锁仓的 Uniswap v4 池；协议费买回的代币进买回金库、按五年线性释放，不是销毁。",
+   "one_liner": "Robinhood Chain 上的发币平台，联合曲线发币、毕业后进锁仓的 Uniswap v4 池；协议收入买回的 PONS 进买回金库、按五年线性释放（官网显示已销毁为 0）。",
    "research": {
     "token_stance": "有代币，已在运行并有买回烧机制",
     "token_stance_src": "https://ponsfamily.com/analytics",
     "token_stance_date": "2026-07",
-    "revenue_who": "协议收入部分（当前约30%费率中的80%）用于买回烧 PONS，其余覆盖团队/基础设施，84% 费给创作者。",
-    "revenue_method": "0.0005 ETH 发币费 + 1% 交易费（V2 curve 和毕业后 Uniswap v4 hook 扫费），DefiLlama 统计 launch/curve/swept 费。",
+    "revenue_who": "官网当前说明协议收入中 80% 用于自动 TWAP 买回 PONS，20% 用于基础设施和团队扩展。页面同时显示当前累计 PONS burned 为 0，因此不能写成已完成销毁。",
+    "revenue_method": "官方分析页按发币费、V1 池交易量、曲线费、creator tax 和毕业池 sweep 统计费用。该页面显示累计协议收入和分配，但未在本批次独立重放链上金额。",
     "wash_or_subsidy": "U",
     "user_role": "普通人可作为 creator 发币，或 trader 在 curve/池买卖。",
-    "counter": "高峰期已过，月收入从 2300 万降至 40 万，竞争加剧。",
-    "verdict_reason": "对象明确为 Robinhood Chain launchpad V2 机制，M/A/F/V/TM 有明确一手合约/官网/Dune/DefiLlama 证据，无否决项。",
+    "counter": "交易和协议收入在历史高峰后下降，且买回代币进入五年释放金库，当前页面显示 PONS burned 为 0。",
+    "verdict_reason": "对象与 V2 机制有官方文档，M/A/F 部分事实可核，但 Grok 将买回锁仓误写成已买回销毁，价值捕获结论需要按锁仓与实际 burn 分开记录。",
     "missing": [
      "官方团队实名身份和历史交付细节",
-     "积分或空投的任何官方表态",
-     "未来 90 天精确解锁/买回日历",
-     "外部付费客户与补贴分离的链上可验证据",
-     "未来 90 天净新增可售数量",
-     "依据 Codex 2026-11-15 交接单（Codex 账号二次验证、暂时推不上仓库，由 Claude 按交接单并入；Codex 原始文件到了以后会盖过本条）"
+     "外部付费客户与补贴分离的链上证据",
+     "未来 90 天可释放买回代币数量",
+     "官方分析页当前买回余额与链上事件的独立重放"
     ],
     "checked_utc": "2026-11-15T16:05:00Z",
-    "events": null,
-    "flow": null,
+    "events": [],
+    "flow": {
+     "airdrop": {
+      "v": "待验证",
+      "why": "",
+      "src": "https://ponsfamily.com/analytics"
+     },
+     "newchain": {
+      "v": "低",
+      "why": "",
+      "src": "https://ponsfamily.com/analytics"
+     },
+     "subsidy": {
+      "v": "待验证",
+      "why": "",
+      "src": "https://ponsfamily.com/analytics"
+     },
+     "organic": {
+      "v": "待验证",
+      "why": "",
+      "src": "https://ponsfamily.com/analytics"
+     }
+    },
     "next_review": "2026-11-22",
-    "capture": "官方 V2 文档：买回的代币进入买回金库，按五年线性释放；官网分析页当前显示 PONS burned = 0。只能说「买回并锁定 / 释放」，不能说「已销毁」。",
+    "capture": null,
     "quality": null
    },
    "evidence": [
     {
-     "url": "https://docs.ponsfamily.com/llms.txt",
-     "fields": [
-      "M",
-      "F",
-      "A",
-      "user_role"
-     ]
-    },
-    {
      "url": "https://docs.ponsfamily.com/v2",
      "fields": [
       "M",
-      "revenue_method",
-      "V"
+      "fees",
+      "buyback vesting",
+      "contracts"
      ]
     },
     {
      "url": "https://ponsfamily.com/analytics",
      "fields": [
-      "revenue_who",
-      "TE",
-      "token_stance",
-      "T",
-      "G",
-      "D"
-     ]
-    },
-    {
-     "url": "https://defillama.com/protocol/pons-v2",
-     "fields": [
-      "revenue_method",
-      "G",
-      "D",
-      "T"
-     ]
-    },
-    {
-     "url": "https://x.com/ponsdotfamily",
-     "fields": [
-      "official_x",
-      "token_stance"
-     ]
-    },
-    {
-     "url": "https://defillama.com/protocol/pons",
-     "fields": [
-      "revenue_who",
-      "G"
+      "fee distribution",
+      "PONS burned currently 0",
+      "protocol revenue"
      ]
     },
     {
      "url": "https://docs.ponsfamily.com/",
      "fields": [
-      "V",
-      "TE",
-      "capture"
+      "current fee split",
+      "protocol buyback description"
      ]
     }
    ],
@@ -2898,15 +2882,15 @@
       "url": "https://dexscreener.com/robinhood/0x10cc6bd38112cac182db90b6a71d8bb5939526ba"
      },
      "snap": {
-      "mcap": 79665452,
-      "fdv": 79665452,
-      "vol24": 7471169.84,
-      "liq": 1350950.29,
-      "chg24": -1.53,
+      "mcap": 80144573,
+      "fdv": 80144573,
+      "vol24": 6317095.51,
+      "liq": 1357550.35,
+      "chg24": 7.24,
       "pairs": 30,
       "dex": "uniswap",
       "chain": "robinhood",
-      "at": "2026-11-15T17:09+00:00",
+      "at": "2026-11-15T21:56+00:00",
       "src": "DexScreener"
      }
     },
@@ -3143,7 +3127,7 @@
      "官方原始表态日期 U，不用页面读取日期代替。"
     ],
     "checked_utc": "2026-11-14T13:58:39.525318+00:00",
-    "events": null,
+    "events": [],
     "flow": null,
     "next_review": null,
     "capture": null,
@@ -3434,7 +3418,7 @@
      "官方原始表态日期 U，不用页面读取日期代替。"
     ],
     "checked_utc": "2026-11-14T13:58:39.525318+00:00",
-    "events": null,
+    "events": [],
     "flow": null,
     "next_review": null,
     "capture": null,
@@ -3701,7 +3685,7 @@
      "官方原始表态日期 U，不用页面读取日期代替。"
     ],
     "checked_utc": "2026-11-14T13:58:39.525318+00:00",
-    "events": null,
+    "events": [],
     "flow": null,
     "next_review": null,
     "capture": null,
@@ -3792,12 +3776,12 @@
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 20086,
+      "total24h": 20103,
       "total7d": 1755808,
       "total30d": 7682073
      },
      "rev": {
-      "total24h": 20086,
+      "total24h": 20103,
       "total7d": 140446,
       "total30d": 583823
      },
@@ -3853,7 +3837,7 @@
    "discovered": "2026-11-15",
    "baseline": false,
    "status": "研究观察",
-   "status_src": "alpha/review/codex_2026-11-15_a_handoff_checks.json",
+   "status_src": "alpha/review/codex_2026-11-15_checks_2.json",
    "bucket": "invest",
    "entry": [
     "points",
@@ -3961,30 +3945,51 @@
      "why": "个人执行，不公开"
     }
    },
-   "one_liner": "Elysium 上的 Uniswap v4 发币平台，一键发币、锁流动性、交易；官方称协议费 0.4% 进国库和回购（回购销毁的链上事件待核）。",
+   "one_liner": "Elysium 上的 Uniswap v4 发币平台，一键发币、锁流动性、交易；官方文档称协议费 0.4% 进国库和回购销毁（链上事件待核）。",
    "research": {
     "token_stance": "有积分/空投计划",
     "token_stance_src": "https://montramarkets.xyz/docs/montra",
-    "token_stance_date": "2026-11",
+    "token_stance_date": "2026-11-15",
     "revenue_who": "协议国库和MONTRA回购燃烧",
     "revenue_method": "每笔交易0.4%协议费，先全进国库，后70%买MONTRA烧掉、30%国库",
     "wash_or_subsidy": "U",
     "user_role": "普通人可一键发币、交易、提供流动性、参与积分计划",
     "counter": "上线仅一周，Partner/Listings仍coming soon，积分兑换规则未完全公布，增长留存待多期验证。",
-    "verdict_reason": "对象明确（Elysium Uniswap v4 launchpad+MONTRA回购），M/V/T有可证伪一手文档和链上数据支持，无明确否决项。",
+    "verdict_reason": "官方文档支持发币、交易、积分和费用分配的产品事实，但积分兑换细则、D7/D30 留存、独立外部付款与安全权限仍未完成核验。积分计划不等于确定代币分配。",
     "missing": [
-     "积分兑换规则和最终空投细节",
-     "多期 D30 留存",
-     "外部客户付款与补贴分离",
-     "Partner 和 Listings 的实际使用案例",
-     "协议费用和回购烧毁的链上事件",
-     "依据 Codex 2026-11-15 交接单（Codex 账号二次验证、暂时推不上仓库，由 Claude 按交接单并入；Codex 原始文件到了以后会盖过本条）"
+     "积分具体兑换规则和最终空投分配细节",
+     "多期D30增长留存与非单一资金簇证据",
+     "外部独立客户付款与补贴分离的链上验证",
+     "Montra Partner和Listings实际上线后的使用案例",
+     "官方积分兑换规则与是否构成代币分配保证",
+     "协议费用和回购烧毁的链上事件独立核验"
     ],
     "checked_utc": "2026-11-15T16:05:00Z",
-    "events": null,
-    "flow": null,
+    "events": [],
+    "flow": {
+     "airdrop": {
+      "v": "中",
+      "why": "",
+      "src": "https://montramarkets.xyz/docs"
+     },
+     "newchain": {
+      "v": "中",
+      "why": "",
+      "src": "https://montramarkets.xyz/docs"
+     },
+     "subsidy": {
+      "v": "待验证",
+      "why": "",
+      "src": "https://montramarkets.xyz/docs"
+     },
+     "organic": {
+      "v": "待验证",
+      "why": "",
+      "src": "https://montramarkets.xyz/docs"
+     }
+    },
     "next_review": "2026-11-22",
-    "capture": "积分计划不等于确定的代币分配；积分兑换规则和最终空投细节官方还没公布。",
+    "capture": null,
     "quality": null
    },
    "evidence": [
@@ -4130,15 +4135,15 @@
       "url": "https://dexscreener.com/elysium/0x3e373dfe40db272433dca58527abac38dbd7acb0b6c92090c202a1eac7272a1d"
      },
      "snap": {
-      "mcap": 3508006,
-      "fdv": 3508006,
-      "vol24": 232680.37,
-      "liq": 344059.74,
-      "chg24": 9.19,
+      "mcap": 3058731,
+      "fdv": 3058731,
+      "vol24": 235524.50999999998,
+      "liq": 322501.45,
+      "chg24": 4.01,
       "pairs": 13,
       "dex": "uniswap",
       "chain": "elysium",
-      "at": "2026-11-15T17:09+00:00",
+      "at": "2026-11-15T21:56+00:00",
       "src": "DexScreener"
      }
     },
@@ -4182,22 +4187,22 @@
     },
     "money": {
      "vol": {
-      "total24h": 866666,
+      "total24h": 604043,
       "total7d": 73688263,
       "total30d": 93058487
      },
      "fees": {
-      "total24h": 10118,
+      "total24h": 8342,
       "total7d": 1209417,
       "total30d": 1445418
      },
      "rev": {
-      "total24h": 3476,
+      "total24h": 2423,
       "total7d": 294890,
       "total30d": 372370
      },
      "hold": {
-      "total24h": 2432,
+      "total24h": 1694,
       "total7d": 100563,
       "total30d": 100563
      },
@@ -4219,6 +4224,1056 @@
     12203,
     4441
    ]
+  },
+  {
+   "fresh": true,
+   "reviewer": "codex",
+   "id": "9381",
+   "key": "g:9381",
+   "name": "Ascend Launchpad",
+   "kind": "tokenless",
+   "why_here": null,
+   "manual": null,
+   "discovered": "2026-11-15",
+   "baseline": true,
+   "status": "研究观察",
+   "status_src": "alpha/review/codex_2026-11-15_checks.json",
+   "bucket": "invest",
+   "entry": [
+    "use"
+   ],
+   "entry_why": "官方站点提供 Launch a coin、Swap、Docs、Stake、Bridge 入口；具体资金成本、滑点和退出未核验。",
+   "classes": {
+    "business": {
+     "v": "trading",
+     "src": "auto",
+     "why": "DefiLlama 类目「Launchpad」→ 映射表"
+    },
+    "right": {
+     "v": "none",
+     "src": "auto",
+     "why": "本协议和母协议都没登记代币"
+    },
+    "opportunity": {
+     "v": "genesis",
+     "src": "auto",
+     "why": "无币 → 初始参与（早期使用 / 积分）"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": 2,
+     "src": "research",
+     "why": "官方站点展示在 Elysium 上的发射、交易和社区接管流程，机制差异相对常规发射台仍需与同链产品对照。（来源 https://ascendlaunch.net/）"
+    },
+    "A": {
+     "v": 2,
+     "src": "research",
+     "why": "公开提供发币和交易入口，但全成本未验。（来源 https://ascendlaunch.net/）"
+    },
+    "F": {
+     "v": "U",
+     "src": "research",
+     "why": "普通参与者能否取得有效份额未核验。（来源 U）"
+    },
+    "E": {
+     "v": "U",
+     "src": "research",
+     "why": "独立团队付费使用未核验。（来源 U）"
+    },
+    "V": {
+     "v": "U",
+     "src": "research",
+     "why": "平台费用和参与者价值归属未核验。（来源 U）"
+    },
+    "G": {
+     "v": "U",
+     "src": "research",
+     "why": "独立参与增长未核验。（来源 U）"
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": "U",
+     "src": "research",
+     "why": "外部付款与补贴未核验。（来源 U）"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": "research",
+     "why": "当前窗口未核验。（来源 U）"
+    },
+    "TM": {
+     "v": "U",
+     "src": "research",
+     "why": "团队交付记录未核验。（来源 U）"
+    },
+    "TE": {
+     "v": "NA",
+     "src": "research",
+     "why": "目前未确认平台代币。（来源 U）"
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "通过",
+     "src": "research",
+     "why": "身份经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "one_liner": "Elysium 上用 USDC 流动性池发射和交易新代币的无平台币发射台。",
+   "research": {
+    "token_stance": "没有表态",
+    "token_stance_src": "https://ascendlaunch.net/",
+    "token_stance_date": "2026-11-15",
+    "revenue_who": "官方站点展示 launchpad 和交易产品，但费用归属和平台价值捕获未完成一手核对。",
+    "revenue_method": "本次核对未独立重放费用；第三方页面称存在交易费，但不作为官方事实写入。",
+    "wash_or_subsidy": "U",
+    "user_role": "可在 Elysium 上创建或交易发射的代币；需要 USDC 交易资金和 HYPE gas。",
+    "counter": "Elysium 上同类发射台密集，交易量和项目数量不能单独证明平台有独立需求或长期价值捕获。",
+    "verdict_reason": "官方站点可确认对象、链和公开参与入口；平台费用、权限、安全和去补贴需求仍未知，保留为研究观察。",
+    "missing": [
+     "官方费用规则及收入归属",
+     "平台合约和升级权限",
+     "USDC池深度与普通用户全成本",
+     "社区接管和代币锁定规则",
+     "团队交付记录"
+    ],
+    "checked_utc": "2026-11-15T12:27:58Z",
+    "events": [],
+    "flow": null,
+    "next_review": null,
+    "capture": null,
+    "quality": null
+   },
+   "evidence": [
+    {
+     "url": "https://ascendlaunch.net/",
+     "fields": [
+      "产品定位",
+      "Elysium部署",
+      "发币、交易、文档和桥接入口"
+     ]
+    }
+   ],
+   "data": {
+    "category": "Launchpad",
+    "chains": [
+     "Elysium"
+    ],
+    "rev30": 234440,
+    "chg30": null,
+    "rev_all": null,
+    "llama": null,
+    "fees7": null,
+    "fees30": null,
+    "sources": [
+     "llama_tokenless",
+     "site_launchpad"
+    ],
+    "boards": [
+     {
+      "board": "launchpad",
+      "rule": "lp_new",
+      "why": "进发射台矩阵 4 天，近 7 天手续费 510,726 美元",
+      "since": "2026-11-10"
+     }
+    ],
+    "tvl": null,
+    "listed": null,
+    "slug": "ascend-launchpad",
+    "url": null,
+    "logo": "https://icons.llamao.fi/icons/protocols/ascend-launchpad",
+    "twitter": "AscendLaunch",
+    "children": [
+     "Ascend Launchpad"
+    ],
+    "token": false,
+    "token_seen": null,
+    "rev_hist": [
+     [
+      "2026-11-14",
+      232756
+     ],
+     [
+      "2026-11-15",
+      234440
+     ]
+    ],
+    "age": {
+     "since": "2026-11-05",
+     "days": 10,
+     "basis": "协议收入数据首日"
+    },
+    "tok": null,
+    "lpq": {
+     "数据日": "2026-11-14",
+     "发币": {
+      "1d": 26,
+      "7d": 1162,
+      "估算": false,
+      "工厂": [
+       "elysium:0x63f6a8a8d0257c0363251a50cde8a8b1046e4d19",
+       "elysium:0xbdb8d64452191041c4daa3ad0f64be4380fea0b1"
+      ],
+      "口径": "工厂合约当天新铸整数供应量的币（拉链上新台.py），下限",
+      "来源": "链上"
+     },
+     "发币人": {
+      "7d": null,
+      "来源": "待接入",
+      "口径": "这家的币都铸给同一个合约，扫描每组只抽 3 笔交易认工厂，查到的发币人不到当天币数的一成，数不出来；要逐个币查创建交易才行"
+     },
+     "存活": {
+      "批次": "2026-11-01～2026-11-07",
+      "发出": 369,
+      "样本": 9,
+      "7天后仍有交易": 0,
+      "市值过10万美元": 0,
+      "口径": "批次那天发的币里抽 20 个，发出后 7～8 天逐个用 GeckoTerminal 查它的全部池子（含发射台曲线池）：近 24 小时有买卖的个数、市值（没有就用 FDV）≥ 10 万美元的个数；GeckoTerminal 没收录的池子看不到，算没交易，下限",
+      "来源": "GeckoTerminal（链上样本 + 第三方行情）",
+      "收录": 5,
+      "查询日": "2026-11-15",
+      "说明": "早期批次：每个工厂每天只留了 3 个样本币，这里把 7 天的样本拼成一批，币龄 7～14 天"
+     },
+     "交易者": {
+      "1d": null,
+      "7d": null,
+      "前10地址成交占比": null,
+      "口径": "要逐笔扫交易事件，每条链不一样，还没接",
+      "来源": "待接入"
+     },
+     "事件": []
+    },
+    "money": {
+     "vol": {
+      "total24h": 343379,
+      "total7d": 34867085,
+      "total30d": 39854375
+     },
+     "fees": {
+      "total24h": 5654,
+      "total7d": 510726,
+      "total30d": 591314
+     },
+     "rev": {
+      "total24h": 1773,
+      "total7d": 193769,
+      "total30d": 234440
+     },
+     "hold": {
+      "total24h": 460,
+      "total7d": 53023,
+      "total30d": 64244
+     },
+     "take": 0.00588,
+     "share7": 0.875,
+     "src": "DefiLlama",
+     "short_history": 10
+    }
+   },
+   "spark": [
+    20679,
+    10586,
+    9406,
+    41873,
+    73153,
+    37092,
+    26513,
+    10250,
+    3204,
+    1684
+   ]
+  },
+  {
+   "fresh": true,
+   "reviewer": "codex",
+   "id": "9427",
+   "key": "s:9427",
+   "name": "Volta",
+   "kind": "surge",
+   "why_here": "young+accel",
+   "manual": null,
+   "discovered": "2026-11-15",
+   "baseline": false,
+   "status": "研究观察",
+   "status_src": "alpha/review/codex_2026-11-15_checks.json",
+   "bucket": "invest",
+   "entry": [
+    "buy",
+    "use"
+   ],
+   "entry_why": "官网提供 VOLTA 交易入口和 Launch a token 入口，但交易成本、滑点、合约权限和退出深度未独立核验。",
+   "classes": {
+    "business": {
+     "v": "trading",
+     "src": "auto",
+     "why": "DefiLlama 类目「Launchpad」→ 映射表"
+    },
+    "right": {
+     "v": "governance",
+     "src": "auto",
+     "why": "已有代币，权利待补证"
+    },
+    "opportunity": {
+     "v": "rerate",
+     "src": "auto",
+     "why": "已有代币 → 产品与资产重估"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": 3,
+     "src": "research",
+     "why": "官方文档称其直接接入 Elysium 上的 Uniswap v4 PoolManager 和 UniversalRouter，以 hook 方式实现发射台，而不是运行独立 fork。（来源 https://www.volta.family/docs）"
+    },
+    "A": {
+     "v": "U",
+     "src": "research",
+     "why": "普通用户的完整成本与失败路径未核验。（来源 U）"
+    },
+    "F": {
+     "v": "U",
+     "src": "research",
+     "why": "普通参与者能否取得有效份额未核验。（来源 U）"
+    },
+    "E": {
+     "v": "U",
+     "src": "research",
+     "why": "独立团队持续使用情况未核验。（来源 U）"
+    },
+    "V": {
+     "v": "U",
+     "src": "research",
+     "why": "费用归属和回购销毁执行情况未完成链上核对。（来源 U）"
+    },
+    "G": {
+     "v": "U",
+     "src": "research",
+     "why": "去补贴后的增长与留存未核验。（来源 U）"
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": "U",
+     "src": "research",
+     "why": "外部付款与补贴占比未核验。（来源 U）"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": "research",
+     "why": "当前窗口优势未核验。（来源 U）"
+    },
+    "TM": {
+     "v": "U",
+     "src": "research",
+     "why": "团队交付记录未核验。（来源 U）"
+    },
+    "TE": {
+     "v": 1,
+     "src": "research",
+     "why": "官网公开代币和产品入口，但流通与未来抛压未核验。（来源 https://www.volta.family/）"
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "通过",
+     "src": "research",
+     "why": "身份经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "one_liner": "Elysium 上的 Uniswap v4 发射台，靠发币和交易手续费分成赚钱。",
+   "research": {
+    "token_stance": "官方表态会发",
+    "token_stance_src": "https://www.volta.family/",
+    "token_stance_date": "2026-11-15",
+    "revenue_who": "官网称协议费用用于回购并销毁 VOLTA，具体分配比例和执行地址需继续核对。",
+    "revenue_method": "官网展示交易量、代币数量和交易者数量；收入及费用口径未在本次核对中独立重放。",
+    "wash_or_subsidy": "U",
+    "user_role": "可作为发币者创建代币，也可作为交易者参与已上线代币交易。",
+    "counter": "Elysium 发射台竞争激烈，协议费用、代币捕获和交易需求可能高度依赖新币发行与补贴。",
+    "verdict_reason": "对象、产品和参与入口均有官方资料，存在可证伪的手续费和代币捕获假设；安全权限、成本、去补贴需求和费用执行仍需补证。",
+    "missing": [
+     "合约地址及权限控制",
+     "费用分配和回购销毁的链上执行证据",
+     "普通用户买入卖出全成本",
+     "去补贴后的用户留存与外部需求",
+     "流通量和解锁日历"
+    ],
+    "checked_utc": "2026-11-15T12:27:58Z",
+    "events": [],
+    "flow": null,
+    "next_review": null,
+    "capture": null,
+    "quality": null
+   },
+   "evidence": [
+    {
+     "url": "https://www.volta.family/",
+     "fields": [
+      "产品定位",
+      "交易入口",
+      "VOLTA费用表述"
+     ]
+    },
+    {
+     "url": "https://www.volta.family/docs",
+     "fields": [
+      "Uniswap v4集成方式",
+      "发币机制",
+      "供应与初始池规则"
+     ]
+    }
+   ],
+   "data": {
+    "category": "Launchpad",
+    "chains": [
+     "Elysium"
+    ],
+    "rev30": 170172,
+    "chg30": null,
+    "rev_all": 170172,
+    "llama": null,
+    "fees7": null,
+    "fees30": null,
+    "sources": [
+     "llama_surge",
+     "site_launchpad"
+    ],
+    "boards": [
+     {
+      "board": "launchpad",
+      "rule": "lp_new",
+      "why": "进发射台矩阵 1 天，近 7 天手续费 225,891 美元",
+      "since": "2026-11-13"
+     }
+    ],
+    "tvl": null,
+    "listed": null,
+    "slug": "volta",
+    "url": null,
+    "logo": "https://icons.llamao.fi/icons/protocols/volta",
+    "twitter": "VoltaFamily",
+    "children": [
+     "Volta"
+    ],
+    "token": true,
+    "token_seen": null,
+    "rev_hist": [],
+    "age": {
+     "since": "2026-11-03",
+     "days": 12,
+     "basis": "协议收入数据首日"
+    },
+    "tok": {
+     "gecko": null,
+     "sym": "VOLTA",
+     "address": "0x0f79931689Af199e7CF868ed1107bBA2C83c68f7",
+     "chain": "elysium",
+     "first": null,
+     "first_src": null,
+     "days": null,
+     "parent": false,
+     "parent_name": null,
+     "links": [
+      {
+       "k": "dexscreener",
+       "name": "DexScreener",
+       "url": "https://dexscreener.com/search?q=0x0f79931689Af199e7CF868ed1107bBA2C83c68f7"
+      },
+      {
+       "k": "defillama",
+       "name": "DefiLlama",
+       "url": "https://defillama.com/protocol/volta"
+      }
+     ],
+     "chart": {
+      "name": "DexScreener",
+      "name_en": "DexScreener",
+      "url": "https://dexscreener.com/elysium/0x7b182abb748bae25e2c73abd8b4cf3157d8d35a47e4b36d1ee5565ade94c3c27"
+     },
+     "snap": {
+      "mcap": 754536,
+      "fdv": 754536,
+      "vol24": 84012.68,
+      "liq": 91955.54,
+      "chg24": 9.59,
+      "pairs": 7,
+      "dex": "uniswap",
+      "chain": "elysium",
+      "at": "2026-11-15T21:56+00:00",
+      "src": "DexScreener"
+     }
+    },
+    "money": {
+     "vol": null,
+     "fees": {
+      "total24h": 2169,
+      "total7d": 225891,
+      "total30d": 250241
+     },
+     "rev": {
+      "total24h": 1399,
+      "total7d": 151655,
+      "total30d": 170172
+     },
+     "hold": {
+      "total24h": 1270,
+      "total7d": 138101,
+      "total30d": 155158
+     },
+     "take": null,
+     "share7": 0.903,
+     "src": "DefiLlama",
+     "short_history": 12
+    }
+   },
+   "spark": [
+    5313,
+    2431,
+    1490,
+    1684,
+    7599,
+    44488,
+    48976,
+    23914,
+    21865,
+    7183,
+    4043,
+    1186
+   ]
+  },
+  {
+   "fresh": true,
+   "reviewer": "codex",
+   "id": "x-aiagent-bankr",
+   "key": "x:aiagent:bankr",
+   "name": "Bankr",
+   "kind": "site",
+   "why_here": "AI Agent 板块标了异常：单日手续费占近 30 天的 52%",
+   "manual": null,
+   "discovered": "2026-11-15",
+   "baseline": false,
+   "status": "研究观察",
+   "status_src": "alpha/review/codex_2026-11-15_checks.json",
+   "bucket": "invest",
+   "entry": [
+    "use"
+   ],
+   "entry_why": "官方文档提供 skill、Agent API、CLI 和钱包入口；使用成本、API限额和交易执行风险需继续核验。",
+   "classes": {
+    "business": {
+     "v": "U",
+     "src": "auto",
+     "why": "类目「AI Agents · launch」不在映射表"
+    },
+    "right": {
+     "v": "governance",
+     "src": "auto",
+     "why": "已有代币，权利待补证"
+    },
+    "opportunity": {
+     "v": "rerate",
+     "src": "auto",
+     "why": "已有代币 → 产品与资产重估"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": 3,
+     "src": "research",
+     "why": "官方定位是让 AI Agent 通过钱包、交易、发币和插件技能自我融资，产品组合和费用回流机制具有明确的新参与对象。（来源 https://docs.bankr.bot/）"
+    },
+    "A": {
+     "v": 2,
+     "src": "research",
+     "why": "官方提供多种公开接入路径，但完整成本和地区限制未核验。（来源 https://docs.bankr.bot/）"
+    },
+    "F": {
+     "v": "U",
+     "src": "research",
+     "why": "Agent和普通用户是否能取得有效经济份额未核验。（来源 U）"
+    },
+    "E": {
+     "v": "U",
+     "src": "research",
+     "why": "独立团队持续付费使用未核验。（来源 U）"
+    },
+    "V": {
+     "v": 1,
+     "src": "research",
+     "why": "官方说明交易费可给 Agent，用于计算成本，但 Bankr 代币持有者权利未确认。（来源 https://docs.bankr.bot/）"
+    },
+    "G": {
+     "v": "U",
+     "src": "research",
+     "why": "去补贴后的用户和 Agent 留存未核验。（来源 U）"
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": "U",
+     "src": "research",
+     "why": "外部客户付款与内部交易活动尚未拆分。（来源 U）"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": "research",
+     "why": "当前窗口优势未核验。（来源 U）"
+    },
+    "TM": {
+     "v": "U",
+     "src": "research",
+     "why": "团队身份和交付记录未核验。（来源 U）"
+    },
+    "TE": {
+     "v": "U",
+     "src": "research",
+     "why": "代币供给与解锁未确认。（来源 U）"
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "通过",
+     "src": "research",
+     "why": "身份经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "one_liner": "给 AI Agent 提供钱包、交易、发币和 API，让 Agent 用交易费支付自己的计算成本。",
+   "research": {
+    "token_stance": "没有表态",
+    "token_stance_src": "https://docs.bankr.bot/",
+    "token_stance_date": "2026-11-15",
+    "revenue_who": "官方资料称发币后交易费可回流给 Agent 用于支付计算成本；Bankr 平台自身的收入归属未在本次核对中说明。",
+    "revenue_method": "官方文档描述的是功能和费用流向，未提供可独立核对的净收入、留存或补贴拆分。",
+    "wash_or_subsidy": "U",
+    "user_role": "开发者可接入 Bankr skill、API 或 CLI，普通用户可通过其钱包和交易入口使用产品。",
+    "counter": "Agent 发币和交易费回流可能主要依赖投机性交易，尚未证明计算需求能在补贴下降后持续支付。",
+    "verdict_reason": "官方文档足以确认产品对象、入口和基本机制，存在可证伪的外部付费与 Agent 留存假设；收入归属、补贴、权限和安全仍需补证。",
+    "missing": [
+     "Bankr自身代币或无代币立场",
+     "净收入和费用分配",
+     "独立客户与Agent留存",
+     "API和钱包权限控制",
+     "地区限制与完整参与成本"
+    ],
+    "checked_utc": "2026-11-15T12:27:58Z",
+    "events": [],
+    "flow": null,
+    "next_review": null,
+    "capture": null,
+    "quality": null
+   },
+   "evidence": [
+    {
+     "url": "https://docs.bankr.bot/",
+     "fields": [
+      "产品定位",
+      "钱包、交易、发币和API入口",
+      "交易费回流描述"
+     ]
+    },
+    {
+     "url": "https://docs.bankr.bot/getting-started/supported-chains/",
+     "fields": [
+      "支持链",
+      "Gas赞助边界",
+      "功能限制"
+     ]
+    }
+   ],
+   "data": {
+    "category": "AI Agents · launch",
+    "chains": null,
+    "rev30": null,
+    "chg30": null,
+    "rev_all": null,
+    "llama": null,
+    "fees7": null,
+    "fees30": null,
+    "sources": [
+     "site_aiagent"
+    ],
+    "boards": [
+     {
+      "board": "aiagent",
+      "rule": "ai_spike",
+      "why": "AI Agent 板块标了异常：单日手续费占近 30 天的 52%",
+      "since": null
+     }
+    ],
+    "tvl": null,
+    "listed": null,
+    "slug": "bankr",
+    "url": "https://bankr.bot",
+    "logo": "https://icons.llamao.fi/icons/protocols/bankr",
+    "twitter": "bankrbot",
+    "children": null,
+    "token": true,
+    "token_seen": null,
+    "rev_hist": [],
+    "tok": {
+     "gecko": "bankercoin-2",
+     "sym": "BNKR",
+     "address": "0x22af33fe49fd1fa80c7149773dde5890d3c76f3b",
+     "chain": "base",
+     "first": "2024-12-10",
+     "first_src": "DefiLlama 价格",
+     "days": 705,
+     "parent": false,
+     "parent_name": null,
+     "links": [
+      {
+       "k": "coingecko",
+       "name": "CoinGecko",
+       "url": "https://www.coingecko.com/en/coins/bankercoin-2"
+      },
+      {
+       "k": "dexscreener",
+       "name": "DexScreener",
+       "url": "https://dexscreener.com/search?q=0x22af33fe49fd1fa80c7149773dde5890d3c76f3b"
+      },
+      {
+       "k": "defillama",
+       "name": "DefiLlama",
+       "url": "https://defillama.com/protocol/bankr"
+      }
+     ],
+     "chart": {
+      "name": "DexScreener",
+      "name_en": "DexScreener",
+      "url": "https://dexscreener.com/base/0xaec085e5a5ce8d96a7bdd3eb3a62445d4f6ce703"
+     },
+     "snap": {
+      "mcap": 22250709,
+      "fdv": 22250709,
+      "vol24": 397514.87,
+      "liq": 1401346.81,
+      "chg24": 5.33,
+      "pairs": 18,
+      "dex": "uniswap",
+      "chain": "base",
+      "at": "2026-11-15T21:56+00:00",
+      "src": "DexScreener"
+     }
+    },
+    "money": {
+     "vol": null,
+     "fees": {
+      "total24h": 2133,
+      "total7d": 36423,
+      "total30d": 531826
+     },
+     "rev": {
+      "total24h": 707,
+      "total7d": 21188,
+      "total30d": 237857
+     },
+     "hold": {
+      "total24h": 0,
+      "total7d": 46561,
+      "total30d": 190045
+     },
+     "take": null,
+     "share7": 0.068,
+     "src": "DefiLlama",
+     "short_history": null
+    }
+   },
+   "spark": []
+  },
+  {
+   "fresh": true,
+   "reviewer": "codex",
+   "id": "x-launchpad-boxa-v1",
+   "key": "x:launchpad:boxa-v1",
+   "name": "Boxa V1",
+   "kind": "site",
+   "why_here": "进发射台矩阵 2 天，近 7 天手续费 140,989 美元",
+   "manual": null,
+   "discovered": "2026-11-15",
+   "baseline": false,
+   "status": "研究观察",
+   "status_src": "alpha/review/codex_2026-11-15_checks.json",
+   "bucket": "invest",
+   "entry": [
+    "use"
+   ],
+   "entry_why": "官方文档公开创建、交易和费用规则，但滑点、Gas和退出深度未核验。",
+   "classes": {
+    "business": {
+     "v": "trading",
+     "src": "auto",
+     "why": "DefiLlama 类目「Launchpad」→ 映射表"
+    },
+    "right": {
+     "v": "none",
+     "src": "auto",
+     "why": "本协议和母协议都没登记代币"
+    },
+    "opportunity": {
+     "v": "genesis",
+     "src": "auto",
+     "why": "无币 → 初始参与（早期使用 / 积分）"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": 3,
+     "src": "research",
+     "why": "官方文档称新发行进入 Elysium 官方 Uniswap v4 PoolManager，并通过 BOXA hook，合约不可升级或修补。（来源 https://boxa.club/developers）"
+    },
+    "A": {
+     "v": "U",
+     "src": "research",
+     "why": "本次未核验。（来源 U）"
+    },
+    "F": {
+     "v": "U",
+     "src": "research",
+     "why": "本次未核验。（来源 U）"
+    },
+    "E": {
+     "v": "U",
+     "src": "research",
+     "why": "本次未核验。（来源 U）"
+    },
+    "V": {
+     "v": "U",
+     "src": "research",
+     "why": "本次未核验。（来源 U）"
+    },
+    "G": {
+     "v": "U",
+     "src": "research",
+     "why": "本次未核验。（来源 U）"
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": "U",
+     "src": "research",
+     "why": "本次未核验。（来源 U）"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": "research",
+     "why": "本次未核验。（来源 U）"
+    },
+    "TM": {
+     "v": "U",
+     "src": "research",
+     "why": "本次未核验。（来源 U）"
+    },
+    "TE": {
+     "v": "U",
+     "src": "research",
+     "why": "本次未核验。（来源 U）"
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "通过",
+     "src": "research",
+     "why": "身份经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "one_liner": "Elysium 上的代币发射和交易平台，按交易费分配给平台、创作者和代币机制。",
+   "research": {
+    "token_stance": "U",
+    "token_stance_src": "https://boxa.club/developers",
+    "token_stance_date": "2026-11-15",
+    "revenue_who": "官方文档说明交易税由创作者设置并分配，DefiLlama 记录 BOXA 的协议收入份额。",
+    "revenue_method": "DefiLlama 方法论将收入定义为 BOXA hook 收到的交易费份额，具体净额和去补贴需求未核验。",
+    "wash_or_subsidy": "U",
+    "user_role": "发币者可创建代币，普通用户可交易和提供流动性。",
+    "counter": "Elysium 发射台竞争激烈，平台收入可能主要来自短期新币交易。",
+    "verdict_reason": "产品、入口、费用机制和合约不可升级表述均有官方资料；普通用户成本、权限复核、去补贴需求仍需补证。",
+    "missing": [
+     "合约地址及链上权限复核",
+     "普通用户完整交易成本",
+     "独立用户留存和补贴拆分",
+     "BOXA代币供给及解锁",
+     "收入归属与链上分配"
+    ],
+    "checked_utc": "2026-11-15T12:35:00Z",
+    "events": [],
+    "flow": null,
+    "next_review": null,
+    "capture": null,
+    "quality": null
+   },
+   "evidence": [
+    {
+     "url": "https://boxa.club/developers",
+     "fields": [
+      "产品定位",
+      "发币与交易流程",
+      "费用机制",
+      "不可升级表述"
+     ]
+    },
+    {
+     "url": "https://defillama.com/protocol/boxa-v1",
+     "fields": [
+      "费用、收入和交易量口径"
+     ]
+    }
+   ],
+   "data": {
+    "category": "Launchpad",
+    "chains": [
+     "Elysium"
+    ],
+    "rev30": null,
+    "chg30": null,
+    "rev_all": null,
+    "llama": null,
+    "fees7": 140989,
+    "fees30": 237261,
+    "sources": [
+     "site_launchpad"
+    ],
+    "boards": [
+     {
+      "board": "launchpad",
+      "rule": "lp_new",
+      "why": "进发射台矩阵 2 天，近 7 天手续费 140,989 美元",
+      "since": "2026-11-12"
+     }
+    ],
+    "tvl": null,
+    "listed": null,
+    "slug": "boxa-v1",
+    "url": null,
+    "logo": "https://icons.llamao.fi/icons/protocols/boxa-v1",
+    "twitter": "Boxa_Elysium",
+    "children": null,
+    "token": false,
+    "token_seen": null,
+    "rev_hist": [],
+    "age": {
+     "since": "2026-11-12",
+     "days": 3,
+     "basis": "DefiLlama 收录"
+    },
+    "tok": null,
+    "money": {
+     "vol": {
+      "total24h": 29450,
+      "total7d": 1388156,
+      "total30d": 1388156
+     },
+     "fees": {
+      "total24h": 503,
+      "total7d": 140989,
+      "total30d": 237261
+     },
+     "rev": {
+      "total24h": 150,
+      "total7d": 42294,
+      "total30d": 71179
+     },
+     "hold": null,
+     "take": 0.05128,
+     "share7": 1.0,
+     "src": "DefiLlama",
+     "short_history": 3
+    }
+   },
+   "spark": []
   },
   {
    "fresh": false,
@@ -4357,7 +5412,7 @@
      "官方原始表态日期 U，不用页面读取日期代替。"
     ],
     "checked_utc": "2026-11-14T13:58:39.525318+00:00",
-    "events": null,
+    "events": [],
     "flow": null,
     "next_review": null,
     "capture": null,
@@ -4664,7 +5719,7 @@
      "官方原始表态日期 U，不用页面读取日期代替。"
     ],
     "checked_utc": "2026-11-14T13:58:39.525318+00:00",
-    "events": null,
+    "events": [],
     "flow": null,
     "next_review": null,
     "capture": null,
@@ -4945,7 +6000,7 @@
      "官方原始表态日期 U，不用页面读取日期代替。"
     ],
     "checked_utc": "2026-11-14T13:58:39.525318+00:00",
-    "events": null,
+    "events": [],
     "flow": null,
     "next_review": null,
     "capture": null,
@@ -5068,17 +6123,17 @@
     },
     "money": {
      "vol": {
-      "total24h": 4597813,
+      "total24h": 4835250,
       "total7d": 51296822,
       "total30d": 245164708
      },
      "fees": {
-      "total24h": 318596,
+      "total24h": 329570,
       "total7d": 3275479,
       "total30d": 18245004
      },
      "rev": {
-      "total24h": 81118,
+      "total24h": 85377,
       "total7d": 878180,
       "total30d": 4247922
      },
@@ -5259,7 +6314,7 @@
      "官方原始表态日期 U，不用页面读取日期代替。"
     ],
     "checked_utc": "2026-11-14T13:58:39.525318+00:00",
-    "events": null,
+    "events": [],
     "flow": null,
     "next_review": null,
     "capture": null,
@@ -5525,7 +6580,7 @@
      "收入方法存在，但 API 元数据缺官网，当前无法完成一手身份/发行补证。"
     ],
     "checked_utc": "2026-11-14T13:58:39.525318+00:00",
-    "events": null,
+    "events": [],
     "flow": null,
     "next_review": null,
     "capture": null,
@@ -5800,7 +6855,7 @@
      "symbol 为横杠不能证明无币；先核 STANDARD 的唯一资产、官方身份和无币归类，暂不按无币机会推进。"
     ],
     "checked_utc": "2026-11-14T13:58:39.525318+00:00",
-    "events": null,
+    "events": [],
     "flow": null,
     "next_review": null,
     "capture": null,
@@ -5879,17 +6934,17 @@
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 23282,
+      "total24h": 14182,
       "total7d": 309351,
       "total30d": 2402709
      },
      "rev": {
-      "total24h": 22241,
+      "total24h": 13400,
       "total7d": 302387,
       "total30d": 2243559
      },
      "hold": {
-      "total24h": 13501,
+      "total24h": 9856,
       "total7d": 245376,
       "total30d": 1928922
      },
@@ -6070,7 +7125,7 @@
      "收费方法取得，但费用经济归属与官方身份/发行计划还不足以确认。"
     ],
     "checked_utc": "2026-11-14T13:58:39.525318+00:00",
-    "events": null,
+    "events": [],
     "flow": null,
     "next_review": null,
     "capture": null,
@@ -6210,12 +7265,12 @@
    "discovered": "2026-11-15",
    "baseline": true,
    "status": "待核验",
-   "status_src": "alpha/review/tokenless_checks.json",
-   "bucket": "watch",
+   "status_src": "alpha/review/codex_2026-11-15_checks.json",
+   "bucket": "invest",
    "entry": [
-    "none"
+    "use"
    ],
-   "entry_why": "还没查到资金参与方式",
+   "entry_why": "官网提供注册、开放协议和链上验证入口，但身份、权限、费用和实际可用性仍需核验。",
    "classes": {
     "business": {
      "v": "emerging",
@@ -6240,34 +7295,34 @@
    },
    "scores": {
     "M": {
-     "v": "U",
-     "src": null,
-     "why": ""
+     "v": 3,
+     "src": "research",
+     "why": "官网把共享 Agent 房间、ERC-8004 身份和 x402 USDC 结算组合在同一产品中，机制对象明确。（来源 https://centralcity.ai/）"
     },
     "A": {
-     "v": 2,
+     "v": "U",
      "src": "research",
-     "why": "普通人可以「AI 服务用户/提供者、开发者；是否收费依 Feed/路由规则，不自动获得协议权」参与，全成本未验 → 2"
+     "why": "本次未核验。（来源 U）"
     },
     "F": {
      "v": "U",
-     "src": null,
-     "why": ""
+     "src": "research",
+     "why": "本次未核验。（来源 U）"
     },
     "E": {
      "v": "U",
-     "src": null,
-     "why": ""
+     "src": "research",
+     "why": "本次未核验。（来源 U）"
     },
     "V": {
      "v": "U",
-     "src": null,
-     "why": ""
+     "src": "research",
+     "why": "本次未核验。（来源 U）"
     },
     "G": {
      "v": "U",
-     "src": null,
-     "why": ""
+     "src": "research",
+     "why": "本次未核验。（来源 U）"
     },
     "P": {
      "v": "U",
@@ -6276,8 +7331,8 @@
     },
     "D": {
      "v": "U",
-     "src": "auto",
-     "why": "事实：近 30 天协议收入 1,608,735 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "src": "research",
+     "why": "本次未核验。（来源 U）"
     },
     "L": {
      "v": "U",
@@ -6286,18 +7341,18 @@
     },
     "T": {
      "v": "U",
-     "src": null,
-     "why": ""
+     "src": "research",
+     "why": "本次未核验。（来源 U）"
     },
     "TM": {
      "v": "U",
-     "src": null,
-     "why": ""
+     "src": "research",
+     "why": "本次未核验。（来源 U）"
     },
     "TE": {
-     "v": "NA",
-     "src": "auto",
-     "why": "还没有代币，代币经济不适用"
+     "v": "U",
+     "src": "research",
+     "why": "本次未核验。（来源 U）"
     }
    },
    "gates": {
@@ -6317,25 +7372,26 @@
      "why": "个人执行，不公开"
     }
    },
-   "one_liner": null,
+   "one_liner": "让多个 AI Agent 在共享房间协作，并用链上 USDC 支付服务调用。",
    "research": {
-    "token_stance": "U",
-    "token_stance_src": "U",
-    "token_stance_date": "U",
-    "revenue_who": "Central City 财库留 qualifying Feed 服务付款的 10%，卖方收其余 90%。",
-    "revenue_method": "Base/Arc 的不可变 fee router 识别含费服务支付，10% 归财库；Volume 为完整含费价格，fee-on-top 只移动费用的付款不计该 Volume；包含平台自行创建 agent 活动。",
-    "wash_or_subsidy": "官方 FAQ 明示数据含自营 agent，gas 由平台承担；这可造成激励/关联需求，尚不能据此证明恶意刷量，独立外部付款占比 U。",
-    "user_role": "AI 服务用户/提供者、开发者；是否收费依 Feed/路由规则，不自动获得协议权益。",
-    "counter": "自营 agent 与 gas 资助可能制造循环付款，AI 收费增长仍需证明最终外部客户。",
-    "verdict_reason": "方法与官网对自营活动的披露可对上，但独立需求、外部审计及发行表态未完成。",
+    "token_stance": "没有表态",
+    "token_stance_src": "https://centralcity.ai/",
+    "token_stance_date": "2026-11-15",
+    "revenue_who": "官网展示 x402 支付由服务调用方和 Agent 之间结算，平台自身收入归属未说明。",
+    "revenue_method": "官网展示支付结算、Agent 数量和服务调用指标，但当前页面的数值与真实付费数据需独立复核。",
+    "wash_or_subsidy": "U",
+    "user_role": "普通用户可进入房间，开发者可接入 Agent，服务提供者可通过 x402 收款。",
+    "counter": "当前页面的 Agent 数量和支付指标可能是产品展示数据，若没有链上结算证据，不能推出真实需求。",
+    "verdict_reason": "对象和产品入口明确，但官网显示的 Agent 数量与付费指标需要链上复核，官方 token、积分、收入归属和安全权限尚未查清。",
     "missing": [
-     "独立关联地址/自成交及去补贴留存审计未完成。",
-     "未独立重放全部费用与支付，适配器方法可能更新。",
-     "当前官方自身 token/积分/空投立场及适用日期 U。",
-     "官方原始表态日期 U，不用页面读取日期代替。"
+     "ERC-8004注册和身份合约",
+     "x402付款交易样本",
+     "实际付费调用和收入归属",
+     "官方 token/积分立场",
+     "房间和 Agent 权限控制"
     ],
-    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
-    "events": null,
+    "checked_utc": "2026-11-15T12:35:00Z",
+    "events": [],
     "flow": null,
     "next_review": null,
     "capture": null,
@@ -6343,32 +7399,12 @@
    },
    "evidence": [
     {
-     "url": "https://api.llama.fi/summary/fees/central-city?dataType=dailyRevenue",
+     "url": "https://centralcity.ai/",
      "fields": [
-      "revenue_who",
-      "revenue_method",
-      "wash_or_subsidy",
-      "user_role",
-      "counter",
-      "verdict_reason"
-     ]
-    },
-    {
-     "url": "https://api.llama.fi/protocol/central-city",
-     "fields": [
-      "name",
-      "defillama_reference",
-      "metadata_symbol"
-     ]
-    },
-    {
-     "url": "https://centralcity.ai/faq",
-     "fields": [
-      "token_stance",
-      "wash_or_subsidy",
-      "user_role",
-      "counter",
-      "verdict_reason"
+      "产品定位",
+      "Base/Arc部署",
+      "x402支付描述",
+      "Agent和服务调用展示"
      ]
     }
    ],
@@ -6425,7 +7461,7 @@
     "tok": null,
     "money": {
      "vol": {
-      "total24h": 253581,
+      "total24h": 253580,
       "total7d": 6265317,
       "total30d": 16087646
      },
@@ -6616,7 +7652,7 @@
      "官方原始表态日期 U，不用页面读取日期代替。"
     ],
     "checked_utc": "2026-11-14T13:58:39.525318+00:00",
-    "events": null,
+    "events": [],
     "flow": null,
     "next_review": null,
     "capture": null,
@@ -6901,7 +7937,7 @@
      "官方原始表态日期 U，不用页面读取日期代替。"
     ],
     "checked_utc": "2026-11-14T13:58:39.525318+00:00",
-    "events": null,
+    "events": [],
     "flow": null,
     "next_review": null,
     "capture": null,
@@ -7187,7 +8223,7 @@
      "真实使用场景可识别，但净收入/供给方成本及自身代币立场不足。"
     ],
     "checked_utc": "2026-11-14T13:58:39.525318+00:00",
-    "events": null,
+    "events": [],
     "flow": null,
     "next_review": null,
     "capture": null,
@@ -7266,12 +8302,12 @@
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 42807,
+      "total24h": 43062,
       "total7d": 354333,
       "total30d": 1203549
      },
      "rev": {
-      "total24h": 42807,
+      "total24h": 43062,
       "total7d": 354333,
       "total30d": 1203549
      },
@@ -7453,7 +8489,7 @@
      "收入切分可核；当前发行/积分口径尚无本次可读的一手规则，保持 U。"
     ],
     "checked_utc": "2026-11-14T13:58:39.525318+00:00",
-    "events": null,
+    "events": [],
     "flow": null,
     "next_review": null,
     "capture": null,
@@ -7544,12 +8580,12 @@
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 155531,
+      "total24h": 125560,
       "total7d": 1197811,
       "total30d": 5166859
      },
      "rev": {
-      "total24h": 34023,
+      "total24h": 24428,
       "total7d": 258912,
       "total30d": 1121560
      },
@@ -7730,7 +8766,7 @@
      "官方原始表态日期 U，不用页面读取日期代替。"
     ],
     "checked_utc": "2026-11-14T13:58:39.525318+00:00",
-    "events": null,
+    "events": [],
     "flow": null,
     "next_review": null,
     "capture": null,
@@ -8024,7 +9060,7 @@
      "确认官方积分页面存在；详细规则与代币计划未读取到，不据标题升级发行结论。"
     ],
     "checked_utc": "2026-11-14T13:58:39.525318+00:00",
-    "events": null,
+    "events": [],
     "flow": null,
     "next_review": null,
     "capture": null,
@@ -8314,7 +9350,7 @@
      "费用归属可核；需先确认该雷达是否纳入中心化公司 DEX 产品及专属资产/发行口径。"
     ],
     "checked_utc": "2026-11-14T13:58:39.525318+00:00",
-    "events": null,
+    "events": [],
     "flow": null,
     "next_review": null,
     "capture": null,
@@ -8582,7 +9618,7 @@
      "服务收费明确，但收入净额和当前发行/奖励立场仍缺，历史官方声明不延长有效期。"
     ],
     "checked_utc": "2026-11-14T13:58:39.525318+00:00",
-    "events": null,
+    "events": [],
     "flow": null,
     "next_review": null,
     "capture": null,
@@ -8673,12 +9709,12 @@
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 348721,
+      "total24h": 291432,
       "total7d": 2438182,
       "total30d": 14041421
      },
      "rev": {
-      "total24h": 30184,
+      "total24h": 25209,
       "total7d": 171737,
       "total30d": 696287
      },
@@ -8860,7 +9896,7 @@
      "有发币/回购设计但执行状态冲突；须核 app、docs、适配器与生产合约是否同一项目，非直接判诈骗。"
     ],
     "checked_utc": "2026-11-14T13:58:39.525318+00:00",
-    "events": null,
+    "events": [],
     "flow": null,
     "next_review": null,
     "capture": null,
@@ -9140,7 +10176,7 @@
      "官方有积分转 PULT/TGE 计划；已发可转让币、机制独立性和是否符合正规项目范围需继续核验。"
     ],
     "checked_utc": "2026-11-14T13:58:39.525318+00:00",
-    "events": null,
+    "events": [],
     "flow": null,
     "next_review": null,
     "capture": null,
@@ -9287,6 +10323,245 @@
     19599,
     19536
    ]
+  },
+  {
+   "fresh": true,
+   "reviewer": "codex",
+   "id": "m-bem-tapeout",
+   "key": "m:bem-tapeout",
+   "name": "TapeOut / BEM",
+   "kind": "manual",
+   "why_here": null,
+   "manual": {
+    "what": "BNB Chain 上的「设计证明」挖矿：用户用虚拟晶体管搭数字电路，按设计效率在链上验证后拿 BEM 奖励；总量 2,100 万、约四年减半（交易所博客口径，未核对合约）。",
+    "by": "大叔（推特看到有人挖矿赚钱）",
+    "sources": [
+     "https://www.bitrue.com/blog/what-is-bem-crypto",
+     "https://www.kucoin.com/blog/what-is-bem-token-tapeout-protocol-proof-of-design"
+    ]
+   },
+   "discovered": "2026-11-15",
+   "baseline": false,
+   "status": "待核验",
+   "status_src": "alpha/review/codex_2026-11-15_checks.json",
+   "bucket": "invest",
+   "entry": [
+    "mine"
+   ],
+   "entry_why": "队列中的手动线索描述为设计证明挖矿，但该参与方式只有二手来源支持，需官方文档或合约核实。",
+   "classes": {
+    "business": {
+     "v": "U",
+     "src": "auto",
+     "why": "类目「None」不在映射表"
+    },
+    "right": {
+     "v": "governance",
+     "src": "auto",
+     "why": "已有代币，权利待补证"
+    },
+    "opportunity": {
+     "v": "rerate",
+     "src": "auto",
+     "why": "已有代币 → 产品与资产重估"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": "research",
+     "why": "现有材料只描述概念，未核对验证算法、设计评分和奖励分配的官方实现。（来源 U）"
+    },
+    "A": {
+     "v": "U",
+     "src": "research",
+     "why": "官方参与流程未核验。（来源 U）"
+    },
+    "F": {
+     "v": "U",
+     "src": "research",
+     "why": "奖励份额与竞争方式未核验。（来源 U）"
+    },
+    "E": {
+     "v": "U",
+     "src": "research",
+     "why": "外部团队复用情况未核验。（来源 U）"
+    },
+    "V": {
+     "v": "U",
+     "src": "research",
+     "why": "BEM持有者或参与者的实际权利未核验。（来源 U）"
+    },
+    "G": {
+     "v": "U",
+     "src": "research",
+     "why": "独立参与增长未核验。（来源 U）"
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": "U",
+     "src": "research",
+     "why": "持续付款者与需求来源未核验。（来源 U）"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": "research",
+     "why": "当前窗口未核验。（来源 U）"
+    },
+    "TM": {
+     "v": "U",
+     "src": "research",
+     "why": "团队与交付记录未核验。（来源 U）"
+    },
+    "TE": {
+     "v": "U",
+     "src": "research",
+     "why": "代币供给、解锁和抛压未核验。（来源 U）"
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "待核验",
+     "src": "research",
+     "why": "身份未经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "one_liner": "把数字电路设计提交到链上验证，并按设计结果分配 BEM 奖励。",
+   "research": {
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "U",
+    "revenue_method": "本次只找到交易所博客二手介绍，未找到可核对的官方收入口径。",
+    "wash_or_subsidy": "U",
+    "user_role": "二手资料称用户可提交设计并参与奖励，但官方入口、合约和验证规则未核验。",
+    "counter": "当前线索主要来自交易所博客，可能把营销叙事或未上线机制当成可执行产品。",
+    "verdict_reason": "关键身份、官方入口、合约、验证规则和奖励权利均缺少一手证据；按规则不能仅凭搜索摘要或二手介绍给出研究观察。",
+    "missing": [
+     "官方主页和文档",
+     "BEM合约地址与链",
+     "设计验证算法",
+     "奖励分配和总量",
+     "普通用户参与流程与成本",
+     "团队及安全信息"
+    ],
+    "checked_utc": "2026-11-15T12:27:58Z",
+    "events": [],
+    "flow": null,
+    "next_review": null,
+    "capture": null,
+    "quality": null
+   },
+   "evidence": [
+    {
+     "url": "https://www.bitrue.com/blog/what-is-bem-crypto",
+     "fields": [
+      "二手概念描述"
+     ]
+    },
+    {
+     "url": "https://www.kucoin.com/blog/what-is-bem-token-tapeout-protocol-proof-of-design",
+     "fields": [
+      "二手机制和供应描述"
+     ]
+    }
+   ],
+   "data": {
+    "category": null,
+    "chains": [
+     "BSC"
+    ],
+    "rev30": null,
+    "chg30": null,
+    "rev_all": null,
+    "llama": null,
+    "fees7": null,
+    "fees30": null,
+    "sources": [
+     "manual"
+    ],
+    "boards": null,
+    "tvl": null,
+    "listed": null,
+    "slug": null,
+    "url": null,
+    "logo": null,
+    "twitter": null,
+    "children": null,
+    "token": true,
+    "token_seen": null,
+    "rev_hist": [],
+    "age": {
+     "since": "2026-08-21",
+     "days": 86,
+     "basis": "官方上线日（手动登记）"
+    },
+    "tok": {
+     "gecko": "bem-2",
+     "sym": "BEM",
+     "address": "0x5ce033b2bfca3af30b3e8c8457deaf776a8b695a",
+     "chain": "bsc",
+     "first": "2026-10-02",
+     "first_src": "DefiLlama 价格",
+     "days": 44,
+     "parent": false,
+     "parent_name": null,
+     "links": [
+      {
+       "k": "coingecko",
+       "name": "CoinGecko",
+       "url": "https://www.coingecko.com/en/coins/bem-2"
+      },
+      {
+       "k": "dexscreener",
+       "name": "DexScreener",
+       "url": "https://dexscreener.com/search?q=0x5ce033b2bfca3af30b3e8c8457deaf776a8b695a"
+      }
+     ],
+     "chart": {
+      "name": "DexScreener",
+      "name_en": "DexScreener",
+      "url": "https://dexscreener.com/bsc/0x3098d7a051045000d68ec0360753a40c8cabea31"
+     },
+     "snap": {
+      "mcap": 5055002,
+      "fdv": 5055002,
+      "vol24": 330136.33999999997,
+      "liq": 148614.12,
+      "chg24": 6.6,
+      "pairs": 7,
+      "dex": "pancakeswap",
+      "chain": "bsc",
+      "at": "2026-11-15T21:56+00:00",
+      "src": "DexScreener"
+     }
+    }
+   },
+   "spark": []
   },
   {
    "fresh": false,
@@ -9473,15 +10748,15 @@
       "url": "https://dexscreener.com/hyperevm/0xc8e5ee73b80bb3f6c9b5348771de8217abd412e7"
      },
      "snap": {
-      "mcap": 77247213,
-      "fdv": 238399927,
-      "vol24": 1121784.83,
-      "liq": 776543.29,
-      "chg24": 8.33,
+      "mcap": 77717931,
+      "fdv": 239852654,
+      "vol24": 710391.43,
+      "liq": 785402.38,
+      "chg24": 9.3,
       "pairs": 13,
       "dex": "nest",
       "chain": "hyperevm",
-      "at": "2026-11-15T17:09+00:00",
+      "at": "2026-11-15T21:56+00:00",
       "src": "DexScreener"
      }
     }
@@ -9676,15 +10951,15 @@
       "url_en": "https://www.binance.com/en/trade/PENDLE_USDT?type=spot"
      },
      "snap": {
-      "mcap": 250000627,
-      "fdv": 404128448,
-      "vol24": 266776.35,
-      "liq": 419920.61,
-      "chg24": -2.08,
-      "pairs": 17,
+      "mcap": 250631762,
+      "fdv": 405142903,
+      "vol24": 234611.47999999998,
+      "liq": 463383.4,
+      "chg24": 4.8,
+      "pairs": 16,
       "dex": "uniswap",
       "chain": "ethereum",
-      "at": "2026-11-15T17:09+00:00",
+      "at": "2026-11-15T21:56+00:00",
       "src": "DexScreener"
      }
     }
@@ -9878,17 +11153,17 @@
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 117470,
+      "total24h": 90081,
       "total7d": 4092066,
       "total30d": 25350155
      },
      "rev": {
-      "total24h": 117470,
+      "total24h": 90081,
       "total7d": 4092066,
       "total30d": 25350155
      },
      "hold": {
-      "total24h": 58771,
+      "total24h": 45181,
       "total7d": 3875268,
       "total30d": 23281006
      },
@@ -10118,25 +11393,25 @@
      "snap": {
       "mcap": 1463364,
       "fdv": 1553148,
-      "vol24": 311.07,
+      "vol24": 254.62,
       "liq": 76192.91,
-      "chg24": -0.7,
+      "chg24": 2.29,
       "pairs": 2,
       "dex": "curve",
       "chain": "ethereum",
-      "at": "2026-11-15T17:09+00:00",
+      "at": "2026-11-15T21:56+00:00",
       "src": "DexScreener"
      }
     },
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 2312,
+      "total24h": 2010,
       "total7d": 16206,
       "total30d": 76346
      },
      "rev": {
-      "total24h": 509,
+      "total24h": 209,
       "total7d": 1668,
       "total30d": 2008.6
      },
@@ -10309,17 +11584,17 @@
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 588,
+      "total24h": 603,
       "total7d": 2640,
       "total30d": 3401.35
      },
      "rev": {
-      "total24h": 585,
+      "total24h": 600,
       "total7d": 2610,
       "total30d": 3277.01
      },
      "hold": {
-      "total24h": 585,
+      "total24h": 600,
       "total7d": 2610,
       "total30d": 3277.01
      },
@@ -10515,15 +11790,15 @@
       "url": "https://dexscreener.com/hyperevm/0xf01e7b40b9da303a0a097b69cd81c06c2c06b658"
      },
      "snap": {
-      "mcap": 2276789,
-      "fdv": 2276789,
-      "vol24": 58020.69,
-      "liq": 418860.5,
-      "chg24": 1.85,
+      "mcap": 2287575,
+      "fdv": 2287575,
+      "vol24": 57058.55,
+      "liq": 421730.61,
+      "chg24": 6.63,
       "pairs": 3,
       "dex": "hyperswap",
       "chain": "hyperevm",
-      "at": "2026-11-15T17:09+00:00",
+      "at": "2026-11-15T21:56+00:00",
       "src": "DexScreener"
      }
     },
@@ -10772,27 +12047,27 @@
       "url": "https://dexscreener.com/solana/4gwh5sakgzoukhhj4rh3p5fmpu6ypuaexv6fah5jqyfm"
      },
      "snap": {
-      "mcap": 13100894,
-      "fdv": 22964156,
-      "vol24": 938636.71,
-      "liq": 582573.22,
-      "chg24": 17.41,
+      "mcap": 13739108,
+      "fdv": 24083109,
+      "vol24": 735308.6799999999,
+      "liq": 596993.99,
+      "chg24": 4,
       "pairs": 15,
       "dex": "raydium",
       "chain": "solana",
-      "at": "2026-11-15T17:09+00:00",
+      "at": "2026-11-15T21:56+00:00",
       "src": "DexScreener"
      }
     },
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 27543,
+      "total24h": 17617,
       "total7d": 211485,
       "total30d": 1076757
      },
      "rev": {
-      "total24h": 27543,
+      "total24h": 17617,
       "total7d": 211485,
       "total30d": 1076757
      },
@@ -11028,32 +12303,32 @@
       "url_en": "https://www.binance.com/en/trade/RENDER_USDT?type=spot"
      },
      "snap": {
-      "mcap": 708743740,
-      "fdv": 728908826,
-      "vol24": 164547.27,
-      "liq": 286371.02,
-      "chg24": -2.57,
-      "pairs": 14,
+      "mcap": 713097782,
+      "fdv": 733386749,
+      "vol24": 109238.49999999999,
+      "liq": 287985.74,
+      "chg24": 2.09,
+      "pairs": 15,
       "dex": "uniswap",
       "chain": "ethereum",
-      "at": "2026-11-15T17:09+00:00",
+      "at": "2026-11-15T21:56+00:00",
       "src": "DexScreener"
      }
     },
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 5380,
+      "total24h": 5029,
       "total7d": 32050,
       "total30d": 775576
      },
      "rev": {
-      "total24h": 5380,
+      "total24h": 5029,
       "total7d": 32050,
       "total30d": 775576
      },
      "hold": {
-      "total24h": 5112,
+      "total24h": 4777,
       "total7d": 30446,
       "total30d": 736799
      },
@@ -11283,36 +12558,36 @@
       "url": "https://dexscreener.com/robinhood/0xcce8dcf7c4dcfee6b6588db724240d9d6a22ee456f9387bb831c8fcea970869e"
      },
      "snap": {
-      "mcap": 767180,
-      "fdv": 4416391,
-      "vol24": 124594.01,
-      "liq": 300171.81,
-      "chg24": -12.19,
-      "pairs": 6,
+      "mcap": 731583,
+      "fdv": 4213878,
+      "vol24": 148183.99,
+      "liq": 285559.97,
+      "chg24": -7.37,
+      "pairs": 8,
       "dex": "uniswap",
       "chain": "robinhood",
-      "at": "2026-11-15T17:09+00:00",
+      "at": "2026-11-15T21:56+00:00",
       "src": "DexScreener"
      }
     },
     "money": {
      "vol": {
-      "total24h": 6029778,
+      "total24h": 5451372,
       "total7d": 72532717,
       "total30d": 820157691
      },
      "fees": {
-      "total24h": 18908,
+      "total24h": 16387,
       "total7d": 166530,
       "total30d": 1461717
      },
      "rev": {
-      "total24h": 8707,
+      "total24h": 8058,
       "total7d": 115760,
       "total30d": 525716
      },
      "hold": {
-      "total24h": 8707,
+      "total24h": 8058,
       "total7d": 142023,
       "total30d": 567885
      },
@@ -11544,27 +12819,27 @@
       "url": "https://dexscreener.com/ethereum/0xae750560b09ad1f5246f3b279b3767afd1d79160"
      },
      "snap": {
-      "mcap": 9748028,
-      "fdv": 9748028,
-      "vol24": 35526.15,
-      "liq": 991390.54,
-      "chg24": -5.48,
-      "pairs": 18,
+      "mcap": 9880767,
+      "fdv": 9880767,
+      "vol24": 29720.79,
+      "liq": 998720.42,
+      "chg24": -1.5,
+      "pairs": 19,
       "dex": "uniswap",
       "chain": "ethereum",
-      "at": "2026-11-15T17:09+00:00",
+      "at": "2026-11-15T21:56+00:00",
       "src": "DexScreener"
      }
     },
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 0.9,
+      "total24h": 0.82,
       "total7d": 339601.77999999997,
       "total30d": 356069.13999999996
      },
      "rev": {
-      "total24h": 0.9,
+      "total24h": 0.82,
       "total7d": 339601.77999999997,
       "total30d": 356069.13999999996
      },
@@ -11800,15 +13075,15 @@
       "url_en": "https://www.binance.com/en/trade/JST_USDT?type=spot"
      },
      "snap": {
-      "mcap": 1411674163,
-      "fdv": 1411674163,
-      "vol24": 299103.56,
-      "liq": 14400509.41,
-      "chg24": -0.41,
+      "mcap": 1415093589,
+      "fdv": 1415093589,
+      "vol24": 235031.56000000003,
+      "liq": 14417965.87,
+      "chg24": 1.13,
       "pairs": 3,
       "dex": "sunswap",
       "chain": "tron",
-      "at": "2026-11-15T17:09+00:00",
+      "at": "2026-11-15T21:56+00:00",
       "src": "DexScreener"
      }
     },
@@ -11866,257 +13141,6 @@
     35386,
     38560,
     20144
-   ]
-  },
-  {
-   "fresh": true,
-   "reviewer": null,
-   "id": "9381",
-   "key": "g:9381",
-   "name": "Ascend Launchpad",
-   "kind": "tokenless",
-   "why_here": null,
-   "manual": null,
-   "discovered": "2026-11-15",
-   "baseline": true,
-   "status": "原始线索",
-   "status_src": "auto",
-   "bucket": "watch",
-   "entry": [
-    "none"
-   ],
-   "entry_why": "还没查到资金参与方式",
-   "classes": {
-    "business": {
-     "v": "trading",
-     "src": "auto",
-     "why": "DefiLlama 类目「Launchpad」→ 映射表"
-    },
-    "right": {
-     "v": "none",
-     "src": "auto",
-     "why": "本协议和母协议都没登记代币"
-    },
-    "opportunity": {
-     "v": "genesis",
-     "src": "auto",
-     "why": "无币 → 初始参与（早期使用 / 积分）"
-    },
-    "attribute": {
-     "v": "product",
-     "src": "auto",
-     "why": "协议级对象，默认产品型"
-    }
-   },
-   "scores": {
-    "M": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "A": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "F": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "E": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "V": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "G": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "P": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "D": {
-     "v": "U",
-     "src": "auto",
-     "why": "事实：近 30 天协议收入 234,440 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
-    },
-    "L": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "T": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "TM": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "TE": {
-     "v": "NA",
-     "src": "auto",
-     "why": "还没有代币，代币经济不适用"
-    }
-   },
-   "gates": {
-    "safety": {
-     "v": "待核验",
-     "src": "auto",
-     "why": "没有完成控制权审计一律待核验"
-    },
-    "data": {
-     "v": "待核验",
-     "src": "auto",
-     "why": "身份未经研究核对"
-    },
-    "exec": {
-     "v": "U",
-     "src": null,
-     "why": "个人执行，不公开"
-    }
-   },
-   "one_liner": null,
-   "research": null,
-   "evidence": [],
-   "data": {
-    "category": "Launchpad",
-    "chains": [
-     "Elysium"
-    ],
-    "rev30": 234440,
-    "chg30": null,
-    "rev_all": null,
-    "llama": null,
-    "fees7": null,
-    "fees30": null,
-    "sources": [
-     "llama_tokenless",
-     "site_launchpad"
-    ],
-    "boards": [
-     {
-      "board": "launchpad",
-      "rule": "lp_new",
-      "why": "进发射台矩阵 4 天，近 7 天手续费 510,726 美元",
-      "since": "2026-11-10"
-     }
-    ],
-    "tvl": null,
-    "listed": null,
-    "slug": "ascend-launchpad",
-    "url": null,
-    "logo": "https://icons.llamao.fi/icons/protocols/ascend-launchpad",
-    "twitter": "AscendLaunch",
-    "children": [
-     "Ascend Launchpad"
-    ],
-    "token": false,
-    "token_seen": null,
-    "rev_hist": [
-     [
-      "2026-11-14",
-      232756
-     ],
-     [
-      "2026-11-15",
-      234440
-     ]
-    ],
-    "age": {
-     "since": "2026-11-05",
-     "days": 10,
-     "basis": "协议收入数据首日"
-    },
-    "tok": null,
-    "lpq": {
-     "数据日": "2026-11-14",
-     "发币": {
-      "1d": 26,
-      "7d": 1162,
-      "估算": false,
-      "工厂": [
-       "elysium:0x63f6a8a8d0257c0363251a50cde8a8b1046e4d19",
-       "elysium:0xbdb8d64452191041c4daa3ad0f64be4380fea0b1"
-      ],
-      "口径": "工厂合约当天新铸整数供应量的币（拉链上新台.py），下限",
-      "来源": "链上"
-     },
-     "发币人": {
-      "7d": null,
-      "来源": "待接入",
-      "口径": "这家的币都铸给同一个合约，扫描每组只抽 3 笔交易认工厂，查到的发币人不到当天币数的一成，数不出来；要逐个币查创建交易才行"
-     },
-     "存活": {
-      "批次": "2026-11-01～2026-11-07",
-      "发出": 369,
-      "样本": 9,
-      "7天后仍有交易": 0,
-      "市值过10万美元": 0,
-      "口径": "批次那天发的币里抽 20 个，发出后 7～8 天逐个用 GeckoTerminal 查它的全部池子（含发射台曲线池）：近 24 小时有买卖的个数、市值（没有就用 FDV）≥ 10 万美元的个数；GeckoTerminal 没收录的池子看不到，算没交易，下限",
-      "来源": "GeckoTerminal（链上样本 + 第三方行情）",
-      "收录": 5,
-      "查询日": "2026-11-15",
-      "说明": "早期批次：每个工厂每天只留了 3 个样本币，这里把 7 天的样本拼成一批，币龄 7～14 天"
-     },
-     "交易者": {
-      "1d": null,
-      "7d": null,
-      "前10地址成交占比": null,
-      "口径": "要逐笔扫交易事件，每条链不一样，还没接",
-      "来源": "待接入"
-     },
-     "事件": []
-    },
-    "money": {
-     "vol": {
-      "total24h": 397340,
-      "total7d": 34867085,
-      "total30d": 39854375
-     },
-     "fees": {
-      "total24h": 6019,
-      "total7d": 510726,
-      "total30d": 591314
-     },
-     "rev": {
-      "total24h": 1881,
-      "total7d": 193769,
-      "total30d": 234440
-     },
-     "hold": {
-      "total24h": 488,
-      "total7d": 53023,
-      "total30d": 64244
-     },
-     "take": 0.00588,
-     "share7": 0.875,
-     "src": "DefiLlama",
-     "short_history": 10
-    }
-   },
-   "spark": [
-    20679,
-    10586,
-    9406,
-    41873,
-    73153,
-    37092,
-    26513,
-    10250,
-    3204,
-    1684
    ]
   },
   {
@@ -12306,36 +13330,36 @@
       "url": "https://dexscreener.com/base/0x8a8277fa0624a2112d6a049647d432ef9a9e75e2"
      },
      "snap": {
-      "mcap": 555865,
-      "fdv": 11547380,
-      "vol24": 17084.79,
-      "liq": 233898.1,
-      "chg24": 5.34,
-      "pairs": 5,
+      "mcap": 556313,
+      "fdv": 11556723,
+      "vol24": 6016.49,
+      "liq": 233991.6,
+      "chg24": -0.94,
+      "pairs": 4,
       "dex": "aero",
       "chain": "base",
-      "at": "2026-11-15T17:09+00:00",
+      "at": "2026-11-15T21:56+00:00",
       "src": "DexScreener"
      }
     },
     "money": {
      "vol": {
-      "total24h": 1409103,
+      "total24h": 2707631,
       "total7d": 21889089,
       "total30d": 21889089
      },
      "fees": {
-      "total24h": 3982,
+      "total24h": 5529,
       "total7d": 68149,
       "total30d": 211924
      },
      "rev": {
-      "total24h": 3982,
+      "total24h": 5529,
       "total7d": 68149,
       "total30d": 211924
      },
      "hold": {
-      "total24h": 1637,
+      "total24h": 2568,
       "total7d": 34190,
       "total30d": 102969
      },
@@ -12567,15 +13591,15 @@
       "url_en": "https://www.binance.com/en/trade/LQTY_USDT?type=spot"
      },
      "snap": {
-      "mcap": 14346952,
-      "fdv": 14346952,
-      "vol24": 49369.07,
-      "liq": 365949.17,
-      "chg24": -4.17,
-      "pairs": 10,
+      "mcap": 14267823,
+      "fdv": 14267823,
+      "vol24": 29951.75,
+      "liq": 364382.35,
+      "chg24": 1.03,
+      "pairs": 9,
       "dex": "uniswap",
       "chain": "ethereum",
-      "at": "2026-11-15T17:09+00:00",
+      "at": "2026-11-15T21:56+00:00",
       "src": "DexScreener"
      }
     },
@@ -12633,246 +13657,6 @@
     764,
     15755,
     2597
-   ]
-  },
-  {
-   "fresh": true,
-   "reviewer": null,
-   "id": "9427",
-   "key": "s:9427",
-   "name": "Volta",
-   "kind": "surge",
-   "why_here": "young+accel",
-   "manual": null,
-   "discovered": "2026-11-15",
-   "baseline": false,
-   "status": "原始线索",
-   "status_src": "auto",
-   "bucket": "invest",
-   "entry": [
-    "buy"
-   ],
-   "entry_why": "已有代币，可二级买入",
-   "classes": {
-    "business": {
-     "v": "trading",
-     "src": "auto",
-     "why": "DefiLlama 类目「Launchpad」→ 映射表"
-    },
-    "right": {
-     "v": "governance",
-     "src": "auto",
-     "why": "已有代币，权利待补证"
-    },
-    "opportunity": {
-     "v": "rerate",
-     "src": "auto",
-     "why": "已有代币 → 产品与资产重估"
-    },
-    "attribute": {
-     "v": "product",
-     "src": "auto",
-     "why": "协议级对象，默认产品型"
-    }
-   },
-   "scores": {
-    "M": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "A": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "F": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "E": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "V": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "G": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "P": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "D": {
-     "v": "U",
-     "src": "auto",
-     "why": "事实：近 30 天协议收入 170,172 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
-    },
-    "L": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "T": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "TM": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "TE": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    }
-   },
-   "gates": {
-    "safety": {
-     "v": "待核验",
-     "src": "auto",
-     "why": "没有完成控制权审计一律待核验"
-    },
-    "data": {
-     "v": "待核验",
-     "src": "auto",
-     "why": "身份未经研究核对"
-    },
-    "exec": {
-     "v": "U",
-     "src": null,
-     "why": "个人执行，不公开"
-    }
-   },
-   "one_liner": null,
-   "research": null,
-   "evidence": [],
-   "data": {
-    "category": "Launchpad",
-    "chains": [
-     "Elysium"
-    ],
-    "rev30": 170172,
-    "chg30": null,
-    "rev_all": 170172,
-    "llama": null,
-    "fees7": null,
-    "fees30": null,
-    "sources": [
-     "llama_surge",
-     "site_launchpad"
-    ],
-    "boards": [
-     {
-      "board": "launchpad",
-      "rule": "lp_new",
-      "why": "进发射台矩阵 1 天，近 7 天手续费 225,891 美元",
-      "since": "2026-11-13"
-     }
-    ],
-    "tvl": null,
-    "listed": null,
-    "slug": "volta",
-    "url": null,
-    "logo": "https://icons.llamao.fi/icons/protocols/volta",
-    "twitter": "VoltaFamily",
-    "children": [
-     "Volta"
-    ],
-    "token": true,
-    "token_seen": null,
-    "rev_hist": [],
-    "age": {
-     "since": "2026-11-03",
-     "days": 12,
-     "basis": "协议收入数据首日"
-    },
-    "tok": {
-     "gecko": null,
-     "sym": "VOLTA",
-     "address": "0x0f79931689Af199e7CF868ed1107bBA2C83c68f7",
-     "chain": "elysium",
-     "first": null,
-     "first_src": null,
-     "days": null,
-     "parent": false,
-     "parent_name": null,
-     "links": [
-      {
-       "k": "dexscreener",
-       "name": "DexScreener",
-       "url": "https://dexscreener.com/search?q=0x0f79931689Af199e7CF868ed1107bBA2C83c68f7"
-      },
-      {
-       "k": "defillama",
-       "name": "DefiLlama",
-       "url": "https://defillama.com/protocol/volta"
-      }
-     ],
-     "chart": {
-      "name": "DexScreener",
-      "name_en": "DexScreener",
-      "url": "https://dexscreener.com/elysium/0x7b182abb748bae25e2c73abd8b4cf3157d8d35a47e4b36d1ee5565ade94c3c27"
-     },
-     "snap": {
-      "mcap": 640468,
-      "fdv": 640468,
-      "vol24": 61248.96,
-      "liq": 83881.57,
-      "chg24": 3.1,
-      "pairs": 7,
-      "dex": "uniswap",
-      "chain": "elysium",
-      "at": "2026-11-15T17:09+00:00",
-      "src": "DexScreener"
-     }
-    },
-    "money": {
-     "vol": null,
-     "fees": {
-      "total24h": 1933,
-      "total7d": 225891,
-      "total30d": 250241
-     },
-     "rev": {
-      "total24h": 1188,
-      "total7d": 151655,
-      "total30d": 170172
-     },
-     "hold": {
-      "total24h": 1071,
-      "total7d": 138101,
-      "total30d": 155158
-     },
-     "take": null,
-     "share7": 0.903,
-     "src": "DefiLlama",
-     "short_history": 12
-    }
-   },
-   "spark": [
-    5313,
-    2431,
-    1490,
-    1684,
-    7599,
-    44488,
-    48976,
-    23914,
-    21865,
-    7183,
-    4043,
-    1186
    ]
   },
   {
@@ -13063,36 +13847,36 @@
       "url_en": "https://www.binance.com/en/trade/YB_USDT?type=spot"
      },
      "snap": {
-      "mcap": 11325426,
-      "fdv": 32121275,
-      "vol24": 69460.23,
-      "liq": 365885.88,
-      "chg24": -2.53,
+      "mcap": 11390434,
+      "fdv": 32305650,
+      "vol24": 39621.520000000004,
+      "liq": 366956.18,
+      "chg24": 2.84,
       "pairs": 5,
       "dex": "curve",
       "chain": "ethereum",
-      "at": "2026-11-15T17:09+00:00",
+      "at": "2026-11-15T21:56+00:00",
       "src": "DexScreener"
      }
     },
     "money": {
      "vol": {
-      "total24h": 4236443,
+      "total24h": 3656073,
       "total7d": 8466291,
       "total30d": 17193733
      },
      "fees": {
-      "total24h": 112375,
+      "total24h": 239896,
       "total7d": -32160,
       "total30d": 197284
      },
      "rev": {
-      "total24h": 0,
+      "total24h": 345,
       "total7d": 0,
       "total30d": 147539
      },
      "hold": {
-      "total24h": 0,
+      "total24h": 345,
       "total7d": 0,
       "total30d": 147539
      },
@@ -13323,32 +14107,32 @@
       "url": "https://dexscreener.com/solana/6ejg4ayjm3mk1t2zbkjbj43df3s7rbmpc9mgo526k51g"
      },
      "snap": {
-      "mcap": 1025683,
-      "fdv": 1039039,
-      "vol24": 149556.23,
-      "liq": 189610.73,
-      "chg24": -7.12,
+      "mcap": 1137518,
+      "fdv": 1152311,
+      "vol24": 171805.27000000002,
+      "liq": 199985.52,
+      "chg24": -1.34,
       "pairs": 5,
       "dex": "pumpswap",
       "chain": "solana",
-      "at": "2026-11-15T17:09+00:00",
+      "at": "2026-11-15T21:56+00:00",
       "src": "DexScreener"
      }
     },
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 990,
+      "total24h": 800,
       "total7d": 4788,
       "total30d": 196360
      },
      "rev": {
-      "total24h": 593,
+      "total24h": 481,
       "total7d": 2977,
       "total30d": 119661
      },
      "hold": {
-      "total24h": 493,
+      "total24h": 399,
       "total7d": 2384,
       "total30d": 98025
      },
@@ -13578,27 +14362,27 @@
       "url": "https://dexscreener.com/solana/4mwjp1abqqe9y6ic5cd3nrvvwwchsn2lgpjwymdk7u7e"
      },
      "snap": {
-      "mcap": 255504,
-      "fdv": 255504,
-      "vol24": 20566.45,
-      "liq": 44426.03,
-      "chg24": -4.08,
+      "mcap": 288906,
+      "fdv": 288906,
+      "vol24": 17756.21,
+      "liq": 47615.24,
+      "chg24": 3.85,
       "pairs": 4,
       "dex": "pumpswap",
       "chain": "solana",
-      "at": "2026-11-15T17:09+00:00",
+      "at": "2026-11-15T21:56+00:00",
       "src": "DexScreener"
      }
     },
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 88.52,
+      "total24h": 175,
       "total7d": 4646,
       "total30d": 118674.53
      },
      "rev": {
-      "total24h": 88.52,
+      "total24h": 175,
       "total7d": 4646,
       "total30d": 118674.53
      },
@@ -13833,15 +14617,15 @@
       "url": "https://dexscreener.com/ethereum/0x870d82eacef699418a83bbfec2500b2150673525690a165f5cefb9f81d3ce87a"
      },
      "snap": {
-      "mcap": 459662,
-      "fdv": 459662,
-      "vol24": 11708.320000000002,
-      "liq": 73950.78,
-      "chg24": 3.41,
-      "pairs": 8,
+      "mcap": 373459,
+      "fdv": 373459,
+      "vol24": 26312.38,
+      "liq": 66654.97,
+      "chg24": -9.92,
+      "pairs": 9,
       "dex": "uniswap",
       "chain": "ethereum",
-      "at": "2026-11-15T17:09+00:00",
+      "at": "2026-11-15T21:56+00:00",
       "src": "DexScreener"
      }
     },
@@ -13852,12 +14636,12 @@
       "total30d": 31034527
      },
      "fees": {
-      "total24h": 1981,
+      "total24h": 1770,
       "total7d": 40924,
       "total30d": 216897
      },
      "rev": {
-      "total24h": 990,
+      "total24h": 887,
       "total7d": 20898,
       "total30d": 109271
      },
@@ -13904,407 +14688,6 @@
     575,
     4996
    ]
-  },
-  {
-   "fresh": true,
-   "reviewer": null,
-   "id": "m-bem-tapeout",
-   "key": "m:bem-tapeout",
-   "name": "TapeOut / BEM",
-   "kind": "manual",
-   "why_here": null,
-   "manual": {
-    "what": "BNB Chain 上的「设计证明」挖矿：用户用虚拟晶体管搭数字电路，按设计效率在链上验证后拿 BEM 奖励；总量 2,100 万、约四年减半（交易所博客口径，未核对合约）。",
-    "by": "大叔（推特看到有人挖矿赚钱）",
-    "sources": [
-     "https://www.bitrue.com/blog/what-is-bem-crypto",
-     "https://www.kucoin.com/blog/what-is-bem-token-tapeout-protocol-proof-of-design"
-    ]
-   },
-   "discovered": "2026-11-15",
-   "baseline": false,
-   "status": "原始线索",
-   "status_src": "auto",
-   "bucket": "invest",
-   "entry": [
-    "mine",
-    "buy"
-   ],
-   "entry_why": "按设计效率挖矿拿 BEM，也可以二级买入（出处是交易所博客，待补证）",
-   "classes": {
-    "business": {
-     "v": "U",
-     "src": "auto",
-     "why": "类目「None」不在映射表"
-    },
-    "right": {
-     "v": "governance",
-     "src": "auto",
-     "why": "已有代币，权利待补证"
-    },
-    "opportunity": {
-     "v": "rerate",
-     "src": "auto",
-     "why": "已有代币 → 产品与资产重估"
-    },
-    "attribute": {
-     "v": "product",
-     "src": "auto",
-     "why": "协议级对象，默认产品型"
-    }
-   },
-   "scores": {
-    "M": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "A": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "F": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "E": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "V": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "G": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "P": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "D": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "L": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "T": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "TM": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "TE": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    }
-   },
-   "gates": {
-    "safety": {
-     "v": "待核验",
-     "src": "auto",
-     "why": "没有完成控制权审计一律待核验"
-    },
-    "data": {
-     "v": "待核验",
-     "src": "auto",
-     "why": "身份未经研究核对"
-    },
-    "exec": {
-     "v": "U",
-     "src": null,
-     "why": "个人执行，不公开"
-    }
-   },
-   "one_liner": "BNB Chain 上的「设计证明」挖矿：用户用虚拟晶体管搭数字电路，按设计效率在链上验证后拿 BEM 奖励；总量 2,100 万、约四年减半（交易所博客口径，未核对合约）。",
-   "research": null,
-   "evidence": [
-    {
-     "url": "https://www.bitrue.com/blog/what-is-bem-crypto",
-     "fields": [
-      "手动线索出处"
-     ]
-    },
-    {
-     "url": "https://www.kucoin.com/blog/what-is-bem-token-tapeout-protocol-proof-of-design",
-     "fields": [
-      "手动线索出处"
-     ]
-    }
-   ],
-   "data": {
-    "category": null,
-    "chains": [
-     "BSC"
-    ],
-    "rev30": null,
-    "chg30": null,
-    "rev_all": null,
-    "llama": null,
-    "fees7": null,
-    "fees30": null,
-    "sources": [
-     "manual"
-    ],
-    "boards": null,
-    "tvl": null,
-    "listed": null,
-    "slug": null,
-    "url": null,
-    "logo": null,
-    "twitter": null,
-    "children": null,
-    "token": true,
-    "token_seen": null,
-    "rev_hist": [],
-    "age": {
-     "since": "2026-08-21",
-     "days": 86,
-     "basis": "官方上线日（手动登记）"
-    },
-    "tok": {
-     "gecko": "bem-2",
-     "sym": "BEM",
-     "address": "0x5ce033b2bfca3af30b3e8c8457deaf776a8b695a",
-     "chain": "bsc",
-     "first": "2026-10-02",
-     "first_src": "DefiLlama 价格",
-     "days": 44,
-     "parent": false,
-     "parent_name": null,
-     "links": [
-      {
-       "k": "coingecko",
-       "name": "CoinGecko",
-       "url": "https://www.coingecko.com/en/coins/bem-2"
-      },
-      {
-       "k": "dexscreener",
-       "name": "DexScreener",
-       "url": "https://dexscreener.com/search?q=0x5ce033b2bfca3af30b3e8c8457deaf776a8b695a"
-      }
-     ],
-     "chart": {
-      "name": "DexScreener",
-      "name_en": "DexScreener",
-      "url": "https://dexscreener.com/bsc/0x3098d7a051045000d68ec0360753a40c8cabea31"
-     },
-     "snap": {
-      "mcap": 5233393,
-      "fdv": 5233393,
-      "vol24": 383772.36,
-      "liq": 148714.8,
-      "chg24": 9.91,
-      "pairs": 7,
-      "dex": "pancakeswap",
-      "chain": "bsc",
-      "at": "2026-11-15T17:09+00:00",
-      "src": "DexScreener"
-     }
-    }
-   },
-   "spark": []
-  },
-  {
-   "fresh": true,
-   "reviewer": null,
-   "id": "x-launchpad-boxa-v1",
-   "key": "x:launchpad:boxa-v1",
-   "name": "Boxa V1",
-   "kind": "site",
-   "why_here": "进发射台矩阵 2 天，近 7 天手续费 140,989 美元",
-   "manual": null,
-   "discovered": "2026-11-15",
-   "baseline": false,
-   "status": "原始线索",
-   "status_src": "auto",
-   "bucket": "watch",
-   "entry": [
-    "none"
-   ],
-   "entry_why": "还没查到资金参与方式",
-   "classes": {
-    "business": {
-     "v": "trading",
-     "src": "auto",
-     "why": "DefiLlama 类目「Launchpad」→ 映射表"
-    },
-    "right": {
-     "v": "none",
-     "src": "auto",
-     "why": "本协议和母协议都没登记代币"
-    },
-    "opportunity": {
-     "v": "genesis",
-     "src": "auto",
-     "why": "无币 → 初始参与（早期使用 / 积分）"
-    },
-    "attribute": {
-     "v": "product",
-     "src": "auto",
-     "why": "协议级对象，默认产品型"
-    }
-   },
-   "scores": {
-    "M": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "A": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "F": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "E": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "V": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "G": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "P": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "D": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "L": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "T": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "TM": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "TE": {
-     "v": "NA",
-     "src": "auto",
-     "why": "还没有代币，代币经济不适用"
-    }
-   },
-   "gates": {
-    "safety": {
-     "v": "待核验",
-     "src": "auto",
-     "why": "没有完成控制权审计一律待核验"
-    },
-    "data": {
-     "v": "待核验",
-     "src": "auto",
-     "why": "身份未经研究核对"
-    },
-    "exec": {
-     "v": "U",
-     "src": null,
-     "why": "个人执行，不公开"
-    }
-   },
-   "one_liner": null,
-   "research": null,
-   "evidence": [],
-   "data": {
-    "category": "Launchpad",
-    "chains": [
-     "Elysium"
-    ],
-    "rev30": null,
-    "chg30": null,
-    "rev_all": null,
-    "llama": null,
-    "fees7": 140989,
-    "fees30": 237261,
-    "sources": [
-     "site_launchpad"
-    ],
-    "boards": [
-     {
-      "board": "launchpad",
-      "rule": "lp_new",
-      "why": "进发射台矩阵 2 天，近 7 天手续费 140,989 美元",
-      "since": "2026-11-12"
-     }
-    ],
-    "tvl": null,
-    "listed": null,
-    "slug": "boxa-v1",
-    "url": null,
-    "logo": "https://icons.llamao.fi/icons/protocols/boxa-v1",
-    "twitter": "Boxa_Elysium",
-    "children": null,
-    "token": false,
-    "token_seen": null,
-    "rev_hist": [],
-    "age": {
-     "since": "2026-11-12",
-     "days": 3,
-     "basis": "DefiLlama 收录"
-    },
-    "tok": null,
-    "money": {
-     "vol": {
-      "total24h": 35206,
-      "total7d": 1388156,
-      "total30d": 1388156
-     },
-     "fees": {
-      "total24h": 589,
-      "total7d": 140989,
-      "total30d": 237261
-     },
-     "rev": {
-      "total24h": 176,
-      "total7d": 42294,
-      "total30d": 71179
-     },
-     "hold": null,
-     "take": 0.05128,
-     "share7": 1.0,
-     "src": "DefiLlama",
-     "short_history": 3
-    }
-   },
-   "spark": []
   },
   {
    "fresh": true,
@@ -14463,229 +14846,7 @@
     "tok": null
    },
    "spark": []
-  },
-  {
-   "fresh": true,
-   "reviewer": null,
-   "id": "x-aiagent-bankr",
-   "key": "x:aiagent:bankr",
-   "name": "Bankr",
-   "kind": "site",
-   "why_here": "AI Agent 板块标了异常：单日手续费占近 30 天的 52%",
-   "manual": null,
-   "discovered": "2026-11-15",
-   "baseline": false,
-   "status": "原始线索",
-   "status_src": "auto",
-   "bucket": "invest",
-   "entry": [
-    "buy"
-   ],
-   "entry_why": "已有代币，可二级买入",
-   "classes": {
-    "business": {
-     "v": "U",
-     "src": "auto",
-     "why": "类目「AI Agents · launch」不在映射表"
-    },
-    "right": {
-     "v": "governance",
-     "src": "auto",
-     "why": "已有代币，权利待补证"
-    },
-    "opportunity": {
-     "v": "rerate",
-     "src": "auto",
-     "why": "已有代币 → 产品与资产重估"
-    },
-    "attribute": {
-     "v": "product",
-     "src": "auto",
-     "why": "协议级对象，默认产品型"
-    }
-   },
-   "scores": {
-    "M": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "A": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "F": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "E": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "V": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "G": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "P": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "D": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "L": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "T": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "TM": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "TE": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    }
-   },
-   "gates": {
-    "safety": {
-     "v": "待核验",
-     "src": "auto",
-     "why": "没有完成控制权审计一律待核验"
-    },
-    "data": {
-     "v": "待核验",
-     "src": "auto",
-     "why": "身份未经研究核对"
-    },
-    "exec": {
-     "v": "U",
-     "src": null,
-     "why": "个人执行，不公开"
-    }
-   },
-   "one_liner": null,
-   "research": null,
-   "evidence": [],
-   "data": {
-    "category": "AI Agents · launch",
-    "chains": null,
-    "rev30": null,
-    "chg30": null,
-    "rev_all": null,
-    "llama": null,
-    "fees7": null,
-    "fees30": null,
-    "sources": [
-     "site_aiagent"
-    ],
-    "boards": [
-     {
-      "board": "aiagent",
-      "rule": "ai_spike",
-      "why": "AI Agent 板块标了异常：单日手续费占近 30 天的 52%",
-      "since": null
-     }
-    ],
-    "tvl": null,
-    "listed": null,
-    "slug": "bankr",
-    "url": "https://bankr.bot",
-    "logo": "https://icons.llamao.fi/icons/protocols/bankr",
-    "twitter": "bankrbot",
-    "children": null,
-    "token": true,
-    "token_seen": null,
-    "rev_hist": [],
-    "tok": {
-     "gecko": "bankercoin-2",
-     "sym": "BNKR",
-     "address": "0x22af33fe49fd1fa80c7149773dde5890d3c76f3b",
-     "chain": "base",
-     "first": "2024-12-10",
-     "first_src": "DefiLlama 价格",
-     "days": 705,
-     "parent": false,
-     "parent_name": null,
-     "links": [
-      {
-       "k": "coingecko",
-       "name": "CoinGecko",
-       "url": "https://www.coingecko.com/en/coins/bankercoin-2"
-      },
-      {
-       "k": "dexscreener",
-       "name": "DexScreener",
-       "url": "https://dexscreener.com/search?q=0x22af33fe49fd1fa80c7149773dde5890d3c76f3b"
-      },
-      {
-       "k": "defillama",
-       "name": "DefiLlama",
-       "url": "https://defillama.com/protocol/bankr"
-      }
-     ],
-     "chart": {
-      "name": "DexScreener",
-      "name_en": "DexScreener",
-      "url": "https://dexscreener.com/base/0xaec085e5a5ce8d96a7bdd3eb3a62445d4f6ce703"
-     },
-     "snap": {
-      "mcap": 22202516,
-      "fdv": 22202516,
-      "vol24": 599209.4,
-      "liq": 1397380.98,
-      "chg24": -0.55,
-      "pairs": 19,
-      "dex": "uniswap",
-      "chain": "base",
-      "at": "2026-11-15T17:09+00:00",
-      "src": "DexScreener"
-     }
-    },
-    "money": {
-     "vol": null,
-     "fees": {
-      "total24h": 2133,
-      "total7d": 36423,
-      "total30d": 531826
-     },
-     "rev": {
-      "total24h": 707,
-      "total7d": 21188,
-      "total30d": 237857
-     },
-     "hold": {
-      "total24h": 0,
-      "total7d": 46561,
-      "total30d": 190045
-     },
-     "take": null,
-     "share7": 0.068,
-     "src": "DefiLlama",
-     "short_history": null
-    }
-   },
-   "spark": []
   }
  ],
- "queue_n": 41
+ "queue_n": 37
 }
