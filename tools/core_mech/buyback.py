@@ -32,7 +32,8 @@ TOK = {"UNI": ("eth", "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984", 18), "LDO": 
 # kind: buyback（回购）/ burn（销毁）/ hold（持仓变化，只作参考）
 # EVM：to = 官方地址集合，src = 只数这些对手方转来的（None = 全部流入都列进 diag，但 qty 只认 src）
 MEASURES = [
-    {"sym": "UNI", "kind": "burn", "label": "以太坊 Firepit 送去销毁的 UNI", "to": DEAD, "frm": ["0x0d5cd355e2abeb8fb1552f56c965b867346d6721"], "diag_all_to_dead": True},
+    # 11-15 改：Firepit 的 release 是调用者自己把 UNI 送去销毁（发送方 = 调用者），所以按「交易调用的合约 = Firepit」认，不按发送方
+    {"sym": "UNI", "kind": "burn", "label": "以太坊 Firepit 交易里送去销毁的 UNI", "to": DEAD, "via_tx_to": ["0x0d5cd355e2abeb8fb1552f56c965b867346d6721"], "diag_all_to_dead": True},
     {"sym": "LDO", "kind": "buyback", "label": "CoW 成交转入回购 Safe / Aragon Agent 的 LDO", "to": ["0xf6f0732c1e9971497342c295141566e6f1a31e96", "0x3e40d73eb977dc6a537af587d48316fee66e9c8c"], "src": [COW]},
     {"sym": "AAVE", "kind": "buyback", "label": "CoW 成交转入 AFC / Collector / Swap Steward 的 AAVE",
      "to": ["0x22740deba78d5a0c24c58c740e3715ec29de1bfa", "0x464c71f6c2f760dda6093dcb91c24c39e5d6e18c", "0xb7d402138cb01bfe97d95181c849379d6ad14d19"], "src": [COW]},
@@ -52,7 +53,7 @@ MEASURES = [
         "99mRw3EzdJZWEUjgp1nrU4WeHsukUBjbh7gYE7pm4F3c", "9jHrTCwpDANHLNQz5cem6XLUBM8KiTWKe766Br6KVCXM", "2ifjKjqtETDeHXKsrRxeKWUuwUtXxNS4HepT6eftj6Qz",
         "78hoB7emUo7zF5kdNf9TFxzpLRKCy8Jgft5cu69Byuax", "G8CcfRffqZWHSAQJXLDfwbAkGE95SddUqVXnTrL4kqjm"], "candidate": True},
 ]
-SOL_MAX_TX = int(os.environ.get("SOL_MAX_TX", "6000"))    # 每个代币账户最多拉多少笔交易，超了标 partial
+SOL_MAX_TX = int(os.environ.get("SOL_MAX_TX", "40000"))    # 每个代币账户最多拉多少笔交易，超了标 partial
 
 
 def rpc(chain, method, params, tries=4):
@@ -113,9 +114,27 @@ def evm(m):
     chain, token, dec = TOK[m["sym"]]
     b0, b1 = block_at(chain, int(T0.timestamp())), block_at(chain, int(T1.timestamp()))
     res = {"chain": chain, "blocks": [b0, b1]}
+    if m.get("via_tx_to"):                             # 销毁：交易调用对象是官方合约、代币转去销毁地址
+        ls, partial = logs(chain, token, b0, b1, topic2=m["to"])
+        via, qty, n, last, last_tx, by, big = {a.lower() for a in m["via_tx_to"]}, 0, 0, None, None, {}, []
+        for l in ls:
+            v, f = int(l["data"], 16) / 10 ** dec, "0x" + l["topics"][1][-40:]
+            by[f] = by.get(f, 0) + v
+            big.append((v, l["transactionHash"]))
+            tx, e = rpc(chain, "eth_getTransactionByHash", [l["transactionHash"]])
+            if e or not tx:
+                partial = True; continue
+            if (tx.get("to") or "").lower() in via:
+                qty += v; n += 1; bn = int(l["blockNumber"], 16)
+                if not last or bn > last:
+                    last, last_tx = bn, l["transactionHash"]
+        res.update(qty=qty, n=n, partial=partial, last=last and dt.datetime.fromtimestamp(ts_of(chain, last), dt.timezone.utc).strftime("%Y-%m-%d"), last_tx=last_tx,
+                   diag={"all_to_burn_total": sum(by.values()), "by_sender_top": sorted(by.items(), key=lambda kv: -kv[1])[:10], "largest": sorted(big, reverse=True)[:5]})
+        return res
     if m.get("frm"):                                   # 销毁：官方地址 → 销毁地址
         ls, partial = logs(chain, token, b0, b1, topic1=m["frm"], topic2=m["to"])
         qty = sum(int(l["data"], 16) for l in ls) / 10 ** dec
+        res["largest"] = sorted(((int(l["data"], 16) / 10 ** dec, l["transactionHash"], "0x" + l["topics"][2][-40:]) for l in ls), reverse=True)[:5]
         last = max((int(l["blockNumber"], 16) for l in ls), default=None)
         res.update(qty=qty, n=len(ls), partial=partial, last=last and dt.datetime.fromtimestamp(ts_of(chain, last), dt.timezone.utc).strftime("%Y-%m-%d"),
                    last_tx=last and [l["transactionHash"] for l in ls if int(l["blockNumber"], 16) == last][0])
@@ -147,10 +166,33 @@ def evm(m):
     return res
 
 
+def sol_batch(sigs, size=50):
+    """Alchemy 支持 JSON-RPC 批量；一次 50 笔，失败的单笔再试一次。"""
+    url, out = f"https://{NET['sol']}.g.alchemy.com/v2/{KEY}", []
+    for i in range(0, len(sigs), size):
+        chunk = sigs[i:i + size]
+        body = json.dumps([{"jsonrpc": "2.0", "id": k, "method": "getTransaction", "params": [sg, {"encoding": "jsonParsed", "maxSupportedTransactionVersion": 0}]} for k, sg in enumerate(chunk)]).encode()
+        got = {}
+        for t in range(4):
+            try:
+                req = urllib.request.Request(url, data=body, headers={"content-type": "application/json"})
+                with urllib.request.urlopen(req, timeout=120) as r:
+                    got = {x["id"]: x.get("result") for x in json.loads(r.read())}
+                break
+            except Exception:  # noqa
+                time.sleep(3 * (t + 1))
+        for k, sg in enumerate(chunk):
+            tx = got.get(k)
+            if tx is None:
+                tx, _ = rpc("sol", "getTransaction", [sg, {"encoding": "jsonParsed", "maxSupportedTransactionVersion": 0}])
+            out.append(tx)
+    return out
+
+
 def sol(m):
     mint, dec = TOK[m["sym"]][1], TOK[m["sym"]][2]
     t0, t1 = int(T0.timestamp()), int(T1.timestamp())
-    tot_in, tot_burn, n_in, n_burn, last, partial, accts, scanned = 0, 0, 0, 0, None, False, [], 0
+    tot_in, tot_burn, n_in, n_burn, last, partial, accts, scanned, seen_from = 0, 0, 0, 0, None, False, [], 0, None
     by_src = {}
     for owner in m["owner"]:
         ta, e = rpc("sol", "getTokenAccountsByOwner", [owner, {"mint": mint}, {"encoding": "jsonParsed"}])
@@ -174,10 +216,14 @@ def sol(m):
                     break
                 if len(sigs) >= SOL_MAX_TX:
                     partial = True; break
-            for s in sigs[:SOL_MAX_TX]:
-                tx, e = rpc("sol", "getTransaction", [s["signature"], {"encoding": "jsonParsed", "maxSupportedTransactionVersion": 0}])
+            sigs = sigs[:SOL_MAX_TX]
+            if sigs:
+                d0 = dt.datetime.fromtimestamp(min(x["blockTime"] for x in sigs), dt.timezone.utc).strftime("%Y-%m-%d")
+                seen_from = min(seen_from or d0, d0)
+            txs = sol_batch([x["signature"] for x in sigs])
+            for s, tx in zip(sigs, txs):
                 scanned += 1
-                if e or not tx:
+                if not tx:
                     partial = True; continue
                 meta = tx["meta"]
                 keys = [k["pubkey"] if isinstance(k, dict) else k for k in tx["transaction"]["message"]["accountKeys"]]
@@ -196,7 +242,7 @@ def sol(m):
                 if burned or (d > 0 and not m.get("burn_only")):
                     day = dt.datetime.fromtimestamp(s["blockTime"], dt.timezone.utc).strftime("%Y-%m-%d")
                     last = max(last or day, day)
-    res = {"chain": "sol", "accounts": accts, "tx_scanned": scanned, "partial": partial, "burn_qty": tot_burn, "burn_n": n_burn,
+    res = {"chain": "sol", "accounts": accts, "tx_scanned": scanned, "seen_from": seen_from, "partial": partial, "burn_qty": tot_burn, "burn_n": n_burn,
            "diag": {"inflow_by_fee_payer_top": sorted(by_src.items(), key=lambda kv: -kv[1])[:10]}}
     if m.get("burn_only"):
         res.update(qty=tot_burn, n=n_burn, last=last)
