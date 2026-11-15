@@ -1278,10 +1278,17 @@
     "category": "Launchpad"
    },
    "tokenless_at_first": true,
-   "status": "原始线索",
+   "status": "研究观察",
    "token_seen": null,
    "last_seen": "2026-11-15",
-   "board_seen": "2026-11-15"
+   "board_seen": "2026-11-15",
+   "status_history": [
+    {
+     "status": "研究观察",
+     "date": "2026-11-15",
+     "src": "alpha/review/codex_2026-11-15_checks.json"
+    }
+   ]
   },
   "g:parent#coindcx": {
    "key": "g:parent#coindcx",
@@ -4834,10 +4841,17 @@
     "why": "young+accel"
    },
    "tokenless_at_first": false,
-   "status": "原始线索",
+   "status": "研究观察",
    "token_seen": null,
    "last_seen": "2026-11-15",
-   "board_seen": "2026-11-15"
+   "board_seen": "2026-11-15",
+   "status_history": [
+    {
+     "status": "研究观察",
+     "date": "2026-11-15",
+     "src": "alpha/review/codex_2026-11-15_checks.json"
+    }
+   ]
   },
   "s:6771": {
    "key": "s:6771",
@@ -4923,9 +4937,16 @@
     "category": null
    },
    "tokenless_at_first": false,
-   "status": "原始线索",
+   "status": "待核验",
    "token_seen": null,
-   "last_seen": "2026-11-15"
+   "last_seen": "2026-11-15",
+   "status_history": [
+    {
+     "status": "待核验",
+     "date": "2026-11-15",
+     "src": "alpha/review/codex_2026-11-15_checks.json"
+    }
+   ]
   },
   "m:pons": {
    "key": "m:pons",
@@ -4963,9 +4984,16 @@
     "category": "Launchpad"
    },
    "tokenless_at_first": true,
-   "status": "原始线索",
+   "status": "研究观察",
    "token_seen": null,
-   "last_seen": "2026-11-15"
+   "last_seen": "2026-11-15",
+   "status_history": [
+    {
+     "status": "研究观察",
+     "date": "2026-11-15",
+     "src": "alpha/review/codex_2026-11-15_checks.json"
+    }
+   ]
   },
   "x:launchpad:chain-elysium": {
    "key": "x:launchpad:chain-elysium",
@@ -4995,6 +5023,98 @@
     "rule": "ai_spike",
     "fees7": null,
     "category": "AI Agents · launch"
+   },
+   "tokenless_at_first": false,
+   "status": "研究观察",
+   "token_seen": null,
+   "last_seen": "2026-11-15",
+   "status_history": [
+    {
+     "status": "研究观察",
+     "date": "2026-11-15",
+     "src": "alpha/review/codex_2026-11-15_checks.json"
+    }
+   ]
+  },
+  "p:9451": {
+   "key": "p:9451",
+   "name": "BLNT V3",
+   "slug": "blnt-v3",
+   "source": "new_listing",
+   "first_seen": "2026-11-15",
+   "baseline": false,
+   "first": {
+    "tvl": 274394,
+    "category": "Lending",
+    "listed": "2026-11-15"
+   },
+   "tokenless_at_first": false,
+   "status": "原始线索",
+   "token_seen": null,
+   "last_seen": "2026-11-15"
+  },
+  "p:9454": {
+   "key": "p:9454",
+   "name": "Hookr",
+   "slug": "hookr",
+   "source": "new_listing",
+   "first_seen": "2026-11-15",
+   "baseline": false,
+   "first": {
+    "tvl": 15007,
+    "category": "Liquidity Automation",
+    "listed": "2026-11-15"
+   },
+   "tokenless_at_first": false,
+   "status": "原始线索",
+   "token_seen": null,
+   "last_seen": "2026-11-15"
+  },
+  "p:9450": {
+   "key": "p:9450",
+   "name": "AurixDEX",
+   "slug": "aurixdex",
+   "source": "new_listing",
+   "first_seen": "2026-11-15",
+   "baseline": false,
+   "first": {
+    "tvl": 1035,
+    "category": "Dexs",
+    "listed": "2026-11-15"
+   },
+   "tokenless_at_first": true,
+   "status": "原始线索",
+   "token_seen": null,
+   "last_seen": "2026-11-15"
+  },
+  "p:9452": {
+   "key": "p:9452",
+   "name": "Stoa",
+   "slug": "stoa",
+   "source": "new_listing",
+   "first_seen": "2026-11-15",
+   "baseline": false,
+   "first": {
+    "tvl": 0,
+    "category": "DEX Aggregator",
+    "listed": "2026-11-15"
+   },
+   "tokenless_at_first": false,
+   "status": "原始线索",
+   "token_seen": null,
+   "last_seen": "2026-11-15"
+  },
+  "p:9453": {
+   "key": "p:9453",
+   "name": "GreenDildo",
+   "slug": "greendildo",
+   "source": "new_listing",
+   "first_seen": "2026-11-15",
+   "baseline": false,
+   "first": {
+    "tvl": 0,
+    "category": "Launchpad",
+    "listed": "2026-11-15"
    },
    "tokenless_at_first": false,
    "status": "原始线索",

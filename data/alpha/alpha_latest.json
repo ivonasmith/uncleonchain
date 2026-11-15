@@ -1,16 +1,16 @@
 {
- "generated": "2026-11-15T17:06:16+00:00",
+ "generated": "2026-11-15T21:58:33+00:00",
  "asof": "2026-11-14",
  "stale": false,
  "baseline_day": "2026-11-14",
  "sources": {
   "defillama_protocols": {
    "ok": true,
-   "n": 9050
+   "n": 9055
   },
   "defillama_revenue": {
    "ok": true,
-   "n": 2867
+   "n": 2872
   },
   "site_sources": {
    "ok": true,
@@ -18,11 +18,11 @@
   },
   "ethresearch": {
    "ok": true,
-   "n": 15
+   "n": 14
   },
   "snapshot": {
    "ok": true,
-   "n": 7
+   "n": 8
   },
   "binance": {
    "ok": true,
@@ -691,7 +691,8 @@
    "category": "CDP Manager",
    "chains": [
     "Ethereum",
-    "Hyperliquid L1"
+    "Arbitrum",
+    "Base"
    ],
    "rev30": 561906,
    "rev_prev30": 173313,
@@ -2646,6 +2647,82 @@
  ],
  "listings": [
   {
+   "key": "p:9451",
+   "name": "BLNT V3",
+   "slug": "blnt-v3",
+   "category": "Lending",
+   "url": "",
+   "logo": "https://icons.llamao.fi/icons/protocols/blnt-v3",
+   "twitter": "BlntProtocol",
+   "chains": [
+    "Stellar"
+   ],
+   "tvl": 274394,
+   "listed": "2026-11-15",
+   "token": true,
+   "parent": null
+  },
+  {
+   "key": "p:9454",
+   "name": "Hookr",
+   "slug": "hookr",
+   "category": "Liquidity Automation",
+   "url": "https://hookr.fun/",
+   "logo": "https://icons.llamao.fi/icons/protocols/hookr",
+   "twitter": "hookrfun",
+   "chains": [
+    "Robinhood Chain"
+   ],
+   "tvl": 15007,
+   "listed": "2026-11-15",
+   "token": true,
+   "parent": null
+  },
+  {
+   "key": "p:9450",
+   "name": "AurixDEX",
+   "slug": "aurixdex",
+   "category": "Dexs",
+   "url": "",
+   "logo": "https://icons.llamao.fi/icons/protocols/aurixdex",
+   "twitter": "Aurix_Nft",
+   "chains": [
+    "Flare"
+   ],
+   "tvl": 1035,
+   "listed": "2026-11-15",
+   "token": false,
+   "parent": null
+  },
+  {
+   "key": "p:9452",
+   "name": "Stoa",
+   "slug": "stoa",
+   "category": "DEX Aggregator",
+   "url": "",
+   "logo": "https://icons.llamao.fi/icons/protocols/stoa",
+   "twitter": "StoaDEX",
+   "chains": [],
+   "tvl": 0,
+   "listed": "2026-11-15",
+   "token": true,
+   "parent": null
+  },
+  {
+   "key": "p:9453",
+   "name": "GreenDildo",
+   "slug": "greendildo",
+   "category": "Launchpad",
+   "url": "",
+   "logo": "https://icons.llamao.fi/icons/protocols/greendildo",
+   "twitter": "LaunchOnDildo",
+   "chains": [],
+   "tvl": 0,
+   "listed": "2026-11-15",
+   "token": true,
+   "parent": null
+  },
+  {
    "key": "p:9438",
    "name": "nest AVR",
    "slug": "nest-avr",
@@ -2656,7 +2733,7 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 1869816,
+   "tvl": 1870956,
    "listed": "2026-11-14",
    "token": true,
    "parent": "parent#nest"
@@ -2672,7 +2749,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 561759,
+   "tvl": 561777,
    "listed": "2026-11-14",
    "token": false,
    "parent": "parent#drakewell"
@@ -2688,7 +2765,7 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 43227,
+   "tvl": 42975,
    "listed": "2026-11-14",
    "token": true,
    "parent": "parent#kleos"
@@ -2876,7 +2953,7 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 7144,
+   "tvl": 6865,
    "listed": "2026-11-13",
    "token": false,
    "parent": null
@@ -2892,7 +2969,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 1543,
+   "tvl": 1537,
    "listed": "2026-11-13",
    "token": false,
    "parent": null
@@ -2964,7 +3041,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 6808437,
+   "tvl": 6816686,
    "listed": "2026-11-12",
    "token": false,
    "parent": null
@@ -2982,7 +3059,7 @@
     "Base",
     "Berachain"
    ],
-   "tvl": 194475,
+   "tvl": 193245,
    "listed": "2026-11-12",
    "token": false,
    "parent": null
@@ -2998,7 +3075,7 @@
    "chains": [
     "Sui"
    ],
-   "tvl": 67241,
+   "tvl": 67077,
    "listed": "2026-11-12",
    "token": false,
    "parent": null
@@ -3014,7 +3091,7 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 63371,
+   "tvl": 64961,
    "listed": "2026-11-12",
    "token": false,
    "parent": "parent#boxa"
@@ -3030,7 +3107,7 @@
    "chains": [
     "Binance"
    ],
-   "tvl": 49045,
+   "tvl": 50683,
    "listed": "2026-11-12",
    "token": false,
    "parent": null
@@ -3046,7 +3123,7 @@
    "chains": [
     "Sonic"
    ],
-   "tvl": 2952,
+   "tvl": 2983,
    "listed": "2026-11-12",
    "token": true,
    "parent": null
@@ -3181,7 +3258,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 3396638,
+   "tvl": 3403489,
    "listed": "2026-11-11",
    "token": false,
    "parent": null
@@ -3197,7 +3274,7 @@
    "chains": [
     "Solana"
    ],
-   "tvl": 1813302,
+   "tvl": 1818588,
    "listed": "2026-11-11",
    "token": true,
    "parent": "parent#jupiter"
@@ -3213,7 +3290,7 @@
    "chains": [
     "Strato"
    ],
-   "tvl": 598483,
+   "tvl": 600889,
    "listed": "2026-11-11",
    "token": false,
    "parent": "parent#strato"
@@ -3229,7 +3306,7 @@
    "chains": [
     "Sui"
    ],
-   "tvl": 13346,
+   "tvl": 13385,
    "listed": "2026-11-11",
    "token": false,
    "parent": null
@@ -3246,7 +3323,7 @@
     "Base",
     "Robinhood Chain"
    ],
-   "tvl": 6635,
+   "tvl": 6704,
    "listed": "2026-11-11",
    "token": false,
    "parent": null
@@ -3262,7 +3339,7 @@
    "chains": [
     "Base"
    ],
-   "tvl": 1249,
+   "tvl": 1257,
    "listed": "2026-11-11",
    "token": true,
    "parent": null
@@ -3278,7 +3355,7 @@
    "chains": [
     "Hedera"
    ],
-   "tvl": 899,
+   "tvl": 900,
    "listed": "2026-11-11",
    "token": true,
    "parent": null
@@ -3310,7 +3387,7 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 58,
+   "tvl": 61,
    "listed": "2026-11-11",
    "token": true,
    "parent": null
@@ -3502,7 +3579,7 @@
    "chains": [
     "Soneium"
    ],
-   "tvl": 625193,
+   "tvl": 624829,
    "listed": "2026-11-10",
    "token": false,
    "parent": null
@@ -3518,7 +3595,7 @@
    "chains": [
     "Hyperliquid L1"
    ],
-   "tvl": 144728,
+   "tvl": 139112,
    "listed": "2026-11-10",
    "token": false,
    "parent": null
@@ -3534,7 +3611,7 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 15782,
+   "tvl": 15979,
    "listed": "2026-11-10",
    "token": false,
    "parent": "parent#kalos"
@@ -3550,7 +3627,7 @@
    "chains": [
     "Arc"
    ],
-   "tvl": 14868,
+   "tvl": 14921,
    "listed": "2026-11-10",
    "token": false,
    "parent": null
@@ -3566,7 +3643,7 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 2042,
+   "tvl": 2055,
    "listed": "2026-11-10",
    "token": false,
    "parent": "parent#kalos"
@@ -3684,7 +3761,7 @@
    "chains": [
     "Hyperliquid L1"
    ],
-   "tvl": 49876296,
+   "tvl": 49165903,
    "listed": "2026-11-09",
    "token": true,
    "parent": "parent#kinetiq"
@@ -3700,7 +3777,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 8737,
+   "tvl": 8836,
    "listed": "2026-11-09",
    "token": true,
    "parent": null
@@ -3716,7 +3793,7 @@
    "chains": [
     "Solana"
    ],
-   "tvl": 6342,
+   "tvl": 6119,
    "listed": "2026-11-09",
    "token": true,
    "parent": null
@@ -3732,7 +3809,7 @@
    "chains": [
     "Binance"
    ],
-   "tvl": 851,
+   "tvl": 905,
    "listed": "2026-11-09",
    "token": false,
    "parent": null
@@ -3878,7 +3955,7 @@
     "Arbitrum",
     "Base"
    ],
-   "tvl": 117321,
+   "tvl": 117901,
    "listed": "2026-11-08",
    "token": false,
    "parent": "parent#bitty"
@@ -3894,7 +3971,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 8333714,
+   "tvl": 8335881,
    "listed": "2026-11-07",
    "token": true,
    "parent": "parent#vesper"
@@ -3910,7 +3987,7 @@
    "chains": [
     "Anubis"
    ],
-   "tvl": 307944,
+   "tvl": 400557,
    "listed": "2026-11-07",
    "token": false,
    "parent": "parent#rocketswap-anubis"
@@ -4118,7 +4195,7 @@
    "chains": [
     "Hyperliquid L1"
    ],
-   "tvl": 19475,
+   "tvl": 19487,
    "listed": "2026-11-05",
    "token": false,
    "parent": null
@@ -4134,7 +4211,7 @@
    "chains": [
     "Robinhood Chain"
    ],
-   "tvl": 14223,
+   "tvl": 14239,
    "listed": "2026-11-05",
    "token": true,
    "parent": "parent#glazecorp"
@@ -4150,7 +4227,7 @@
    "chains": [
     "Base"
    ],
-   "tvl": 3564,
+   "tvl": 3604,
    "listed": "2026-11-05",
    "token": false,
    "parent": null
@@ -4168,7 +4245,7 @@
     "Ethereum",
     "Binance"
    ],
-   "tvl": 140,
+   "tvl": 141,
    "listed": "2026-11-05",
    "token": false,
    "parent": null
@@ -4230,7 +4307,7 @@
     "Avalanche",
     "Arbitrum"
    ],
-   "tvl": 1740643,
+   "tvl": 1753088,
    "listed": "2026-11-04",
    "token": true,
    "parent": "parent#dexalot"
@@ -4246,7 +4323,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 817459,
+   "tvl": 817533,
    "listed": "2026-11-04",
    "token": false,
    "parent": null
@@ -4264,7 +4341,7 @@
     "Base",
     "Arbitrum"
    ],
-   "tvl": 729493,
+   "tvl": 753100,
    "listed": "2026-11-04",
    "token": false,
    "parent": "parent#privacy-pools"
@@ -4297,7 +4374,7 @@
     "Base",
     "Arbitrum"
    ],
-   "tvl": 18628,
+   "tvl": 18627,
    "listed": "2026-11-04",
    "token": false,
    "parent": null
@@ -4315,7 +4392,7 @@
     "Base",
     "Ethereum"
    ],
-   "tvl": 1325,
+   "tvl": 1336,
    "listed": "2026-11-04",
    "token": false,
    "parent": null
@@ -4489,7 +4566,7 @@
    "chains": [
     "SASEUL"
    ],
-   "tvl": 17964,
+   "tvl": 17870,
    "listed": "2026-11-03",
    "token": false,
    "parent": null
@@ -4505,9 +4582,25 @@
    "chains": [
     "Sui"
    ],
-   "tvl": 4193,
+   "tvl": 4137,
    "listed": "2026-11-03",
    "token": false,
+   "parent": null
+  },
+  {
+   "key": "p:9319",
+   "name": "H081 Capital",
+   "slug": "h081-capital",
+   "category": "Lending",
+   "url": "",
+   "logo": "https://icons.llamao.fi/icons/protocols/h081-capital",
+   "twitter": "H081CAP",
+   "chains": [
+    "Solana"
+   ],
+   "tvl": 260,
+   "listed": "2026-11-03",
+   "token": true,
    "parent": null
   },
   {
@@ -4522,26 +4615,10 @@
     "Robinhood Chain",
     "Arbitrum"
    ],
-   "tvl": 471,
+   "tvl": 9,
    "listed": "2026-11-03",
    "token": true,
    "parent": "parent#dopex"
-  },
-  {
-   "key": "p:9319",
-   "name": "H081 Capital",
-   "slug": "h081-capital",
-   "category": "Lending",
-   "url": "",
-   "logo": "https://icons.llamao.fi/icons/protocols/h081-capital",
-   "twitter": "H081CAP",
-   "chains": [
-    "Solana"
-   ],
-   "tvl": 163,
-   "listed": "2026-11-03",
-   "token": true,
-   "parent": null
   },
   {
    "key": "p:9317",
@@ -4610,7 +4687,7 @@
    "chains": [
     "Arbitrum"
    ],
-   "tvl": 154447,
+   "tvl": 150753,
    "listed": "2026-11-02",
    "token": true,
    "parent": "parent#camelot"
@@ -4626,7 +4703,7 @@
    "chains": [
     "Solana"
    ],
-   "tvl": 94838,
+   "tvl": 95798,
    "listed": "2026-11-02",
    "token": false,
    "parent": "parent#exceed-finance"
@@ -4642,7 +4719,7 @@
    "chains": [
     "Supra"
    ],
-   "tvl": 15358,
+   "tvl": 16007,
    "listed": "2026-11-02",
    "token": false,
    "parent": null
@@ -4658,7 +4735,7 @@
    "chains": [
     "Solana"
    ],
-   "tvl": 557,
+   "tvl": 553,
    "listed": "2026-11-02",
    "token": false,
    "parent": "parent#exceed-finance"
@@ -4834,76 +4911,6 @@
    "parent": null
   },
   {
-   "key": "p:9290",
-   "name": "Kraken",
-   "slug": "kraken",
-   "category": "CEX",
-   "url": "https://www.kraken.com/",
-   "logo": "https://icons.llamao.fi/icons/protocols/kraken",
-   "twitter": "krakenfx",
-   "chains": [],
-   "tvl": 0,
-   "listed": "2026-11-01",
-   "token": false,
-   "parent": null
-  },
-  {
-   "key": "p:9291",
-   "name": "Coinbase",
-   "slug": "coinbase",
-   "category": "CEX",
-   "url": "https://www.coinbase.com/",
-   "logo": "https://icons.llamao.fi/icons/protocols/coinbase",
-   "twitter": "coinbase",
-   "chains": [],
-   "tvl": 0,
-   "listed": "2026-11-01",
-   "token": false,
-   "parent": null
-  },
-  {
-   "key": "p:9292",
-   "name": "Upbit",
-   "slug": "upbit",
-   "category": "CEX",
-   "url": "https://upbit.com/",
-   "logo": "https://icons.llamao.fi/icons/protocols/upbit",
-   "twitter": "Official_Upbit",
-   "chains": [],
-   "tvl": 0,
-   "listed": "2026-11-01",
-   "token": false,
-   "parent": null
-  },
-  {
-   "key": "p:9293",
-   "name": "Bithumb",
-   "slug": "bithumb",
-   "category": "CEX",
-   "url": "https://www.bithumb.com/",
-   "logo": "https://icons.llamao.fi/icons/protocols/bithumb",
-   "twitter": "BithumbOfficial",
-   "chains": [],
-   "tvl": 0,
-   "listed": "2026-11-01",
-   "token": false,
-   "parent": null
-  },
-  {
-   "key": "p:9294",
-   "name": "Highbar",
-   "slug": "highbar",
-   "category": "Launchpad",
-   "url": "",
-   "logo": "https://icons.llamao.fi/icons/protocols/highbar",
-   "twitter": "highbar_capital",
-   "chains": [],
-   "tvl": 0,
-   "listed": "2026-11-01",
-   "token": false,
-   "parent": null
-  },
-  {
    "key": "p:9295",
    "name": "WenLong",
    "slug": "wenlong",
@@ -4932,8 +4939,94 @@
    "parent": null
   }
  ],
- "events": [],
+ "events": [
+  {
+   "type": "new_listing",
+   "key": "p:9451",
+   "name": "BLNT V3",
+   "tvl": 274394,
+   "category": "Lending",
+   "listed": "2026-11-15"
+  },
+  {
+   "type": "new_listing",
+   "key": "p:9454",
+   "name": "Hookr",
+   "tvl": 15007,
+   "category": "Liquidity Automation",
+   "listed": "2026-11-15"
+  },
+  {
+   "type": "new_listing",
+   "key": "p:9450",
+   "name": "AurixDEX",
+   "tvl": 1035,
+   "category": "Dexs",
+   "listed": "2026-11-15"
+  },
+  {
+   "type": "new_listing",
+   "key": "p:9452",
+   "name": "Stoa",
+   "tvl": 0,
+   "category": "DEX Aggregator",
+   "listed": "2026-11-15"
+  },
+  {
+   "type": "new_listing",
+   "key": "p:9453",
+   "name": "GreenDildo",
+   "tvl": 0,
+   "category": "Launchpad",
+   "listed": "2026-11-15"
+  },
+  {
+   "type": "status",
+   "key": "s:9427",
+   "name": "Volta",
+   "status": "研究观察"
+  },
+  {
+   "type": "status",
+   "key": "m:bem-tapeout",
+   "name": "TapeOut / BEM",
+   "status": "待核验"
+  },
+  {
+   "type": "status",
+   "key": "x:aiagent:bankr",
+   "name": "Bankr",
+   "status": "研究观察"
+  },
+  {
+   "type": "status",
+   "key": "g:9381",
+   "name": "Ascend Launchpad",
+   "status": "研究观察"
+  },
+  {
+   "type": "status",
+   "key": "x:launchpad:boxa-v1",
+   "name": "Boxa V1",
+   "status": "研究观察"
+  }
+ ],
  "feed": [
+  {
+   "id": "snap:0xd010fad9c1abd897c165f2ff93cee3d321251330c977cb354bb59ddf3ae713df",
+   "src": "snapshot",
+   "title": "Upgrade VolatilePair hook and update X Layer Releaser",
+   "url": "https://snapshot.box/#/s:uniswapgovernance.eth/proposal/0xd010fad9c1abd897c165f2ff93cee3d321251330c977cb354bb59ddf3ae713df",
+   "created": "2026-11-15T20:34:33+00:00",
+   "extra": {
+    "space": "Uniswap",
+    "followers": 125298,
+    "end": "2026-11-20T20:34:33+00:00"
+   },
+   "first_seen": "2026-11-15T21:58:33+00:00",
+   "delay_h": 1.4,
+   "baseline": false
+  },
   {
    "id": "snap:0x7ed3e17373060128618599b425fd0b4312bea86fcd903a1aa99c2622403f7f98",
    "src": "snapshot",
@@ -5245,29 +5338,15 @@
    "first_seen": "2026-11-14T14:43:08+00:00",
    "delay_h": null,
    "baseline": true
-  },
-  {
-   "id": "ethr:26205",
-   "src": "ethresearch",
-   "title": "Asset-level spending limits and recovery: should rate limiting live in the asset rather than the account?",
-   "url": "https://ethresear.ch/t/asset-level-spending-limits-and-recovery-should-rate-limiting-live-in-the-asset-rather-than-the-account/26205",
-   "created": "2026-11-01T17:15:34+00:00",
-   "extra": {
-    "posts": 1,
-    "views": 60
-   },
-   "first_seen": "2026-11-14T14:43:08+00:00",
-   "delay_h": null,
-   "baseline": true
   }
  ],
  "ledger": {
-  "n": 280,
+  "n": 285,
   "tokenless_rev": 105,
-  "new_listing": 155,
+  "new_listing": 160,
   "by_source": {
    "manual": 2,
-   "new_listing": 155,
+   "new_listing": 160,
    "rev_surge": 15,
    "site:aiagent": 2,
    "site:launchpad": 5,
@@ -5276,8 +5355,8 @@
   "multi": 4,
   "token_seen": 0,
   "status": {
-   "待核验": 18,
-   "研究观察": 14,
+   "待核验": 19,
+   "研究观察": 18,
    "优先研究": 0,
    "拒绝": 0
   }
