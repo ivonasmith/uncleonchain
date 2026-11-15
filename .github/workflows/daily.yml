@@ -80,3 +80,10 @@ jobs:
             git add site/ && (git diff --cached --quiet || git commit -m "重出网站（运行期间有代码更新）")
           fi
           git push
+
+      - name: IndexNow 推送今天变化的页面（只在定时运行；失败不影响日更）
+        if: github.event_name == 'schedule'
+        continue-on-error: true
+        run: |
+          sleep 180   # 等 Cloudflare Pages 部署完
+          python3 pipeline/indexnow.py

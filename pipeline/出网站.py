@@ -478,10 +478,95 @@ def stats_tag():
     return f'\n<script defer src="https://cloud.umami.is/script.js" data-website-id="{esc(uid)}" data-domains="{DOMAIN}"></script>' if uid else ""
 
 
-def page(title, body, active="", desc="", extra_head="", narrow=False, share=False, scripts="", chart=False):
-    d = esc(desc or T(SLOGAN, SLOGAN_EN))
+# ---- SEO 基建（docs/SEO规范.md，2026-11-15）：canonical / hreflang / robots / JSON-LD / lastmod 全在这里统一出，板块里别另写
+SEO = {"pages": {}, "state": None, "new": {}}
+SEO_STATE = os.path.join(SITE, "seo_lastmod.json")   # 放 site/：每个 workflow 都提交 site/。每页正文指纹 + 最后变化日（UTC）：sitemap lastmod / JSON-LD dateModified 用
+
+
+def seo_kind(path):
+    """按路径推页面类型（调用方不用改）：article = 日志 / 周月复盘 / 报告 / 文章；dataset = 指标详情页；其余 page。"""
+    if path == "/":
+        return "home"
+    if re.match(r"^/(journal/(\d{4}-\d{2}-\d{2}|week/[^/]+|month/[^/]+)|reports/[^/]+|(rotation|narrative)/[^/]+)/$", path):
+        return "article"
+    if re.match(r"^/macro/[^/]+/$", path):
+        return "dataset"
+    return "page"
+
+
+def seo_lastmod(key, body):
+    """正文指纹没变 → 沿用上次的日期；变了 → 今天（UTC）。"""
+    import hashlib
+    if SEO["state"] is None:
+        SEO["state"] = load(SEO_STATE, {}) or {}
+    norm = re.sub(r"\bg\d{5,}\b", "g", body)   # 迷你走势图的渐变 id 每次随机，不算正文变化
+    h = hashlib.sha1(norm.encode("utf-8")).hexdigest()[:16]
+    old = SEO["state"].get(key) or {}
+    today = G.get("今天") or dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d")
+    d = old.get("d") if old.get("h") == h and old.get("d") else today
+    SEO["new"][key] = {"h": h, "d": d}
+    return d
+
+
+def seo_desc(desc):
+    """meta description 超长时在句号处截断（中文 ≤150 字、英文 ≤220 字符），截不到句号就硬截加省略号。"""
+    lim = 220 if LANG["v"] == "en" else 150
+    desc = re.sub(r"\s+", " ", desc or "").strip()
+    if len(desc) <= lim:
+        return desc
+    cut = desc[:lim]
+    k = max(cut.rfind(c) for c in ("。", "；", ". ", "; ", "！", "？"))
+    return cut[:k + 1].strip() if k >= lim * 0.4 else cut[:lim - 1].rstrip("，,、 ") + "…"
+
+
+def seo_head(title, desc, path, body, kind=None, updated=None, published=None, noindex=False, extra_head="", canonical=None):
+    """<head> 里的 SEO 段 + 登记到 sitemap。"""
+    en = LANG["v"] == "en"
+    if "http-equiv=\"refresh\"" in extra_head or path == "/404.html":
+        noindex = True
+    if en and ZH_ONLY in body:          # 英文站没翻译的页（正文是中文）不进索引
+        noindex = True
+    kind = kind or seo_kind(path)
+    zh_u, en_u = f"https://{DOMAIN}{path}", f"https://{DOMAIN}/en{path}"
+    me = en_u if en else zh_u
+    canon = f"https://{DOMAIN}{'/en' if en else ''}{canonical}" if canonical else me
+    mod = updated or seo_lastmod(("en" if en else "zh") + path, body)
+    if not published:
+        m = re.search(r"(\d{4}-\d{2}-\d{2})", path)
+        published = m.group(1) if m and kind == "article" else None
+    SEO["pages"][(LANG["v"], path)] = {"noindex": noindex, "lastmod": mod, "kind": kind, "alias": bool(canonical)}
+    org = {"@type": "Organization", "name": T(BRAND, BRAND_EN), "url": f"https://{DOMAIN}/", "logo": f"https://{DOMAIN}/assets/favicon-192.png", "sameAs": [X_URL]}
+    name = re.sub(r"\s*·\s*(链上大叔研究台|Uncle Onchain)$", "", title).strip()
+    lang = "zh-CN" if not en else "en"
+    if kind == "home":
+        ld = {"@context": "https://schema.org", "@type": "WebSite", "name": T(BRAND, BRAND_EN), "url": me, "inLanguage": lang, "description": desc, "publisher": org}
+    elif kind == "article":
+        ld = {"@context": "https://schema.org", "@type": "Article", "headline": name[:110], "description": desc, "url": me, "mainEntityOfPage": me, "inLanguage": lang,
+              "dateModified": mod, "author": org, "publisher": org, "image": f"https://{DOMAIN}/assets/og.png"}
+        if published:
+            ld["datePublished"] = published
+    elif kind == "dataset":
+        ld = {"@context": "https://schema.org", "@type": "Dataset", "name": name, "description": desc if len(desc) >= 50 else (desc + T(" · 全历史走势、区间规则与数据来源见本页。", " · Full history, zone rules and data sources on this page.")),
+              "url": me, "inLanguage": lang, "dateModified": mod, "creator": org, "isAccessibleForFree": True}
+    else:
+        ld = {"@context": "https://schema.org", "@type": "WebPage", "name": name, "description": desc, "url": me, "inLanguage": lang, "dateModified": mod,
+              "isPartOf": {"@type": "WebSite", "name": T(BRAND, BRAND_EN), "url": f"https://{DOMAIN}/"}}
+    ldj = json.dumps(ld, ensure_ascii=False).replace("</", "<\\/")
+    return (f'<link rel="canonical" href="{canon}">'
+            + ('<meta name="robots" content="noindex,follow">' if noindex else "")
+            + f'\n<link rel="alternate" hreflang="zh-CN" href="{zh_u}"><link rel="alternate" hreflang="en" href="{en_u}"><link rel="alternate" hreflang="x-default" href="{zh_u}">'
+            + f'\n<meta property="og:url" content="{me}"><meta property="og:locale" content="{"en_US" if en else "zh_CN"}">'
+            + f'\n<script type="application/ld+json">{ldj}</script>')
+
+
+def page(title, body, active="", desc="", extra_head="", narrow=False, share=False, scripts="", chart=False,
+         kind=None, updated=None, published=None, noindex=False, canonical=None):
+    """kind / updated / published / noindex / canonical 都可不传（按路径自动推），见 docs/SEO规范.md。"""
+    desc = seo_desc(desc or T(SLOGAN, SLOGAN_EN))
+    d = esc(desc)
     t = esc(title)
     path = G["url"]
+    seo = seo_head(title, desc, path, body, kind, updated, published, noindex, extra_head, canonical)
     return f"""<!DOCTYPE html>
 <html lang="{T('zh-CN', 'en')}" data-theme="dark">
 <head>
@@ -491,9 +576,9 @@ def page(title, body, active="", desc="", extra_head="", narrow=False, share=Fal
 <script>{ST.HEAD_JS}</script>
 <meta name="description" content="{d}">
 <meta name="theme-color" content="#05070c">
-<link rel="alternate" hreflang="zh-CN" href="https://{DOMAIN}{path}"><link rel="alternate" hreflang="en" href="https://{DOMAIN}/en{path}">
+{seo}
 <meta property="og:title" content="{t}"><meta property="og:description" content="{d}">
-<meta property="og:type" content="website"><meta property="og:site_name" content="{esc(T(BRAND, BRAND_EN))}">
+<meta property="og:type" content="{"article" if seo_kind(path) == "article" else "website"}"><meta property="og:site_name" content="{esc(T(BRAND, BRAND_EN))}">
 <meta property="og:image" content="https://{DOMAIN}/assets/og.png">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="{TWITTER}">
 <meta name="twitter:image" content="https://{DOMAIN}/assets/og.png">
@@ -1147,7 +1232,8 @@ def build_home(sd, S, logs, weeks, months, rot, matrix):
     js = f"<script>function shareHome(){{ucShare({json.dumps(share_obj, ensure_ascii=False)})}}</script>"
     emit("index.html", T(f"{BRAND} · 链上数据情报终端", f"{BRAND_EN} · Onchain research terminal"), body, active="home", share=True,
          scripts=js + leg_assets()[1], extra_head=leg_assets()[0] + f'<link rel="stylesheet" href="{ASSET_URL["core.css"]}">',
-         desc=LF(comp or {}, "一句话") or T(SLOGAN, SLOGAN_EN))
+         desc=T("每天自动更新的链上数据研究台：BTC 四层框架（宏观流动性、周期、筹码、情绪）、涨跌腿、发射台、核心选币、Alpha 雷达、AI Agent 与 RWA 赛道，附写入即冻结的解读日志。",
+                "A daily-updated onchain research terminal: a four-layer BTC framework (macro liquidity, cycle, supply, sentiment), leg tracker, launchpads, core coins, Alpha radar, AI agents and RWA, with frozen daily research logs."))
 
 
 def ind_card(ind, j, as_of, extra=""):
@@ -2135,7 +2221,7 @@ def build_macro(L, S, logs):
 {deep}"""
     emit("macro/index.html", T(f"宏观四层仪表盘 · {BRAND}", f"Macro dashboard · {BRAND_EN}"), body, active="macro", chart=True,
          extra_head=leg_assets()[0], scripts=leg_assets()[1],
-         desc=LF(comp or {}, "一句话") or T(PILLARS[0]["desc"], PILLARS[0]["descEN"]))
+         desc=T(PILLARS[0]["desc"], PILLARS[0]["descEN"]))
 
 
 def write_indicator_data(S):
@@ -3682,7 +3768,8 @@ def build_launchpad_report(sd):
         body = (crumbs([(T("发射台矩阵", "Launchpads"), "/launchpad/"), (T("文字解读", "Narrative"), "/launchpad/report/archive/"), (cur, None)])
                 + note_en + f'<div class="rpt">{sd["正文"]}{links}</div>')
         emit(rel, f'{T("发射台日更 · 文字解读", "Launchpad daily narrative")} · {sd["日期"]} · {T(BRAND, BRAND_EN)}', body, active="launchpad",
-             extra_head=extra, desc=sd["一句话"], scripts=scripts)
+             extra_head=extra, desc=sd["一句话"], scripts=scripts, noindex=LANG["v"] == "en",
+             canonical=None if sd["日期"] in rel else f'/launchpad/report/{sd["日期"]}/')
     ds = sorted([d for d in os.listdir(rd) if re.match(r"^\d{4}-\d{2}-\d{2}$", d)], reverse=True)
     for base in (rd, os.path.join(SITE, "en", "launchpad", "report")):
         for d in (os.listdir(base) if os.path.isdir(base) else []):
@@ -4687,10 +4774,32 @@ def leg_assets():
     return (f'<link rel="stylesheet" href="{ASSET_URL["leg.css"]}">', f'<script src="{ASSET_URL["leg.js"]}" defer></script>')
 
 
+def leg_static():
+    """涨跌腿卡片的静态兜底（SEO 规范 S3）：出网站时把当前读数写进 HTML，leg.js 加载后整块换成交互卡片。只摆读数，不加判断。"""
+    lg = G.get("LEG") or {}
+
+    def one(name, x):
+        L = (x or {}).get("leg") or {}
+        if not x or not L.get("day"):
+            return ""
+        if x.get("direction") == "up":
+            txt = T(f"涨腿第 {L['day']} 天，自 {L.get('start_date', '—')} 起涨 {L.get('gain_pct', 0):+.1f}%",
+                    f"day {L['day']} of an up-leg, {L.get('gain_pct', 0):+.1f}% since {L.get('start_date', '—')}")
+        else:
+            txt = T(f"跌腿第 {L['day']} 天，自 {L.get('start_date', '—')} 起最深 −{L.get('drop_pct', 0):.1f}%",
+                    f"day {L['day']} of a down-leg, at most −{L.get('drop_pct', 0):.1f}% since {L.get('start_date', '—')}")
+        return f"<li><b>{name}</b>{CN}{esc(txt)}</li>"
+    items = one("BTC", lg.get("btc_leg")) + one(T("山寨整体", "Altcoins"), lg.get("alt_leg"))
+    if not items:
+        return f'<div class="card"><div class="empty">{T("读取中…", "Loading…")}</div></div>'
+    return (f'<div class="card"><ul class="small" style="margin:0;padding-left:18px">{items}</ul>'
+            f'<p class="tnote">{T("数据截至", "As of")} {esc(lg.get("asof") or "—")} {T("（UTC 收盘）", "(UTC close)")}</p></div>')
+
+
 def leg_home_card():
     return (f'<h2>{T("涨跌腿追踪 · BTC 与山寨整体", "Leg tracker · BTC & altcoins")} <a class="sub" href="{U("/leg-tracker/")}">{T("看规律说明 →", "How it works →")}</a></h2>'
             f'<div class="lg legh"><div id="leg-card" data-src="{leg_src()}" data-href="{U("/leg-tracker/")}">'
-            f'<div class="card"><div class="empty">{T("读取中…", "Loading…")}</div></div></div></div>')
+            f'{leg_static()}</div></div>')
 
 
 def leg_cycle_chart():
@@ -4809,7 +4918,7 @@ def leg_macro_card():
             + leg_cycle_chart()
             + f'<div class="hzrow"><span class="hz">{T("短期 · 波段", "Short term · swings")}</span>{T("按天看：BTC 和山寨整体这一波在涨还是在跌、走了多久，一条腿通常一到两周", "In days: whether BTC and altcoins are in an up- or down-leg and for how long; a leg usually lasts one to two weeks")}</div>'
             f'<div id="leg-card" data-src="{leg_src()}" data-href="{U("/leg-tracker/")}">'
-            f'<div class="card"><div class="empty">{T("读取中…", "Loading…")}</div></div></div></div>')
+            f'{leg_static()}</div></div>')
 
 
 def build_leg_tracker():
@@ -5638,7 +5747,8 @@ def build_journal(S, logs, weeks, months, sd):
 <div class="pager">{pager_prev}<a href="{U("/journal/")}">{T("全部日志", "All logs")}</a>{pager_next}</div>"""
         js = f"<script>function shareLog(){{ucShare({json.dumps(share_obj, ensure_ascii=False)})}}</script>"
         emit(f'journal/{lg["日期"]}/index.html', f'{lg["日期"]} {T("解读日志", "log")} · {T(BRAND, BRAND_EN)}', body, active="journal", share=True,
-             scripts=js, desc=LF(lg["综合"], "一句话"))
+             scripts=js, desc=T(f'{lg["日期"]} 解读日志：BTC 四层框架当天的读数、各层结论、预警和数据源状态，写入即冻结。',
+                                f'Research log for {lg["日期"]}: that day\'s readings, layer verdicts, alerts and data-source status for the four-layer BTC framework, frozen once written.'))
 
     def review_note(rv):
         hits = [(d, zh, en) for d, zh, en in RULE_SEP if rv["起"] <= d <= rv["止"]]
@@ -5677,10 +5787,12 @@ def build_journal(S, logs, weeks, months, sd):
 
     for wk in weeks:
         t_ = T(f'{wk["标签"]} 周复盘', f'{wk["标签"]} weekly review')
-        emit(f'journal/week/{wk["标签"]}/index.html', f'{t_} · {T(BRAND, BRAND_EN)}', review_page(wk, "week", t_), active="journal", desc=LF(wk, "一句话"))
+        emit(f'journal/week/{wk["标签"]}/index.html', f'{t_} · {T(BRAND, BRAND_EN)}', review_page(wk, "week", t_), active="journal",
+             desc=T(f'{t_}：这一周 BTC 四层框架的层结论变化、指标区间切换和预警回顾。', f'{t_}: how the four-layer BTC framework\'s verdicts, metric zones and alerts changed over the week.'))
     for mo in months:
         t_ = T(f'{mo["标签"]} 月复盘', f'{mo["标签"]} monthly review')
-        emit(f'journal/month/{mo["标签"]}/index.html', f'{t_} · {T(BRAND, BRAND_EN)}', review_page(mo, "month", t_), active="journal", desc=LF(mo, "一句话"))
+        emit(f'journal/month/{mo["标签"]}/index.html', f'{t_} · {T(BRAND, BRAND_EN)}', review_page(mo, "month", t_), active="journal",
+             desc=T(f'{t_}：这个月 BTC 四层框架的层结论变化、指标区间切换和预警回顾。', f'{t_}: how the four-layer BTC framework\'s verdicts, metric zones and alerts changed over the month.'))
 
     # ---- 日志列表（P4）：按月分组；规则变更那天插分隔行；和前一天不同的层高亮；标题和前一天相同时变浅
     by_month = {}
@@ -5971,6 +6083,60 @@ def build_404():
          f'<h1>{T("页面不存在", "Page not found")}</h1><p class="lede keep">{T("链接可能过期了，回", "The link may be outdated. Back to the ")}<a href="{U("/")}">{T("终端总览", "overview")}</a>{T("看看。", ".")}</p>')
 
 
+INDEXNOW_KEY = "6f1c2a9e4b7d48e3a05c9d2f7b18e6a4"   # IndexNow 公钥（按协议本来就公开，放在站点根目录 /<key>.txt）
+
+
+def write_sitemap():
+    """sitemap 从 page() 的登记自动生成（不再手写清单）：noindex 的不进；带 lastmod。
+    往期发射台日报等不是每次都重出的页面，按目录补进来。顺带：英文版 noindex 的页，中文版去掉指向它的 hreflang。"""
+    pages = dict(SEO["pages"])
+    for sub in ("launchpad/report", "launchpad/platforms"):
+        d0 = os.path.join(SITE, sub)
+        if os.path.isdir(d0):
+            for x in os.listdir(d0):
+                pth = f"/{sub}/{x}/"
+                if os.path.exists(os.path.join(SITE, sub, x, "index.html")):
+                    for lg in ("zh", "en"):
+                        if (lg, pth) not in pages and os.path.exists(os.path.join(SITE, *(["en"] if lg == "en" else []), sub, x, "index.html")):
+                            m = re.match(r"^\d{4}-\d{2}-\d{2}$", x)
+                            fp = os.path.join(SITE, *(["en"] if lg == "en" else []), sub, x, "index.html")
+                            h = open(fp, encoding="utf-8").read()
+                            ni = lg == "en" and "in Chinese only" in h     # 往期英文版正文是中文
+                            if 'rel="canonical"' not in h:              # 以前出的旧页补上 canonical / noindex
+                                me = f"https://{DOMAIN}{'/en' if lg == 'en' else ''}{pth}"
+                                tag = f'<link rel="canonical" href="{me}">' + ('<meta name="robots" content="noindex,follow">' if ni else "")
+                                with open(fp, "w", encoding="utf-8") as fh:
+                                    fh.write(h.replace("</title>", "</title>\n" + tag, 1))
+                            pages[(lg, pth)] = {"noindex": ni, "lastmod": x if m else None}
+    rows = []
+    for (lg, pth), v in sorted(pages.items(), key=lambda kv: (kv[0][1], kv[0][0])):
+        if v.get("noindex") or v.get("alias") or not pth.endswith("/"):
+            continue
+        loc = f"https://{DOMAIN}{'/en' if lg == 'en' else ''}{pth}"
+        rows.append(f"<url><loc>{loc}</loc>" + (f"<lastmod>{v['lastmod']}</lastmod>" if v.get("lastmod") else "") + "</url>\n")
+    xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(rows) + "</urlset>\n"
+    write("sitemap.xml", xml)
+    # 英文版不进索引（或没有英文版）的页：中文页里去掉 hreflang=en
+    for (lg, pth), v in SEO["pages"].items():
+        if lg != "zh" or not pth.endswith("/"):
+            continue
+        e = SEO["pages"].get(("en", pth))
+        if e and not e.get("noindex"):
+            continue
+        fp = os.path.join(SITE, pth.strip("/"), "index.html") if pth != "/" else os.path.join(SITE, "index.html")
+        if os.path.exists(fp):
+            h = open(fp, encoding="utf-8").read()
+            h2 = h.replace(f'<link rel="alternate" hreflang="en" href="https://{DOMAIN}/en{pth}">', "")
+            if h2 != h:
+                with open(fp, "w", encoding="utf-8") as fh:
+                    fh.write(h2)
+    if SEO["new"]:   # 只保留本次出过的页，删掉已下线的
+        with open(SEO_STATE, "w", encoding="utf-8") as fh:
+            json.dump(dict(sorted(SEO["new"].items())), fh, ensure_ascii=False, indent=0)
+    write(f"{INDEXNOW_KEY}.txt", INDEXNOW_KEY)
+    print(f"sitemap：{len(rows)} 个 URL（noindex {sum(1 for v in pages.values() if v.get('noindex'))} 个不进）")
+
+
 def build_misc(logs, weeks, months):
     os.makedirs(os.path.join(SITE, "assets"), exist_ok=True)
     for k, v in ASSET_SRC.items():
@@ -5982,23 +6148,7 @@ def build_misc(logs, weeks, months):
     if os.path.exists(rd):
         os.remove(rd)
     write("robots.txt", f"User-agent: *\nAllow: /\nSitemap: https://{DOMAIN}/sitemap.xml\n")
-    urls = ["/", "/macro/", "/leg-tracker/", "/calendar/", "/launchpad/", "/ai-agent/", "/rotation/", "/alpha/", "/alpha/radar/", "/alpha/cases/", "/alpha/framework/", "/alpha/eval/", "/alpha/method/", "/alpha/progress/", "/reports/", "/journal/", "/methodology/", "/corrections/", "/about/",
-            "/launchpad/report/", "/launchpad/report/archive/"]
-    urls += [f"/macro/{x['key']}/" for x in R.INDICATORS + R.RETIRED] + ["/changelog/"]
-    for p in PILLARS:
-        urls += [f'/{p["slug"]}/{x["slug"]}/' for x in ALL_POSTS[p["slug"]]]
-    urls += [f'/reports/{r["slug"]}/' for r in ALL_REPORTS]
-    rd = os.path.join(SITE, "launchpad", "report")
-    if os.path.isdir(rd):
-        urls += [f"/launchpad/report/{d}/" for d in os.listdir(rd) if re.match(r"^\d{4}-\d{2}-\d{2}$", d)]
-    pd_ = os.path.join(SITE, "launchpad", "platforms")
-    if os.path.isdir(pd_):
-        urls += [f"/launchpad/platforms/{d}/" for d in os.listdir(pd_)]
-    urls += [f'/journal/{x["日期"]}/' for x in logs] + [f'/journal/week/{x["标签"]}/' for x in weeks] + [f'/journal/month/{x["标签"]}/' for x in months]
-    allu = sorted(set(urls))
-    xml = ('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-           + "".join(f"<url><loc>https://{DOMAIN}{u}</loc></url>\n<url><loc>https://{DOMAIN}/en{u}</loc></url>\n" for u in allu) + "</urlset>\n")
-    write("sitemap.xml", xml)
+    write_sitemap()
     os.makedirs(os.path.join(SITE, "assets"), exist_ok=True)
     for f in ("favicon.ico", "favicon-32.png", "favicon-192.png", "apple-touch-icon.png", "avatar-96.png", "og.png"):
         src = os.path.join(ASSETS, f)
@@ -6158,6 +6308,11 @@ def main():
     build_misc(logs, weeks, months)
     n = sum(1 for _, _, fs in os.walk(SITE) for f in fs if f == "index.html")
     print(f"网站已生成到 {SITE}（{n} 个页面，中英各一套；日志 {len(logs)} 篇、周复盘 {len(weeks)}、月复盘 {len(months)}、报告 {len(ALL_REPORTS)}）")
+    try:   # SEO 检查只报警告，不拦构建（docs/SEO规范.md）
+        import seo_check
+        seo_check.run(SITE)
+    except Exception as e:  # noqa
+        print("SEO 检查失败：", e)
 
 
 if __name__ == "__main__":
