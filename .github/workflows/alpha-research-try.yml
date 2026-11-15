@@ -8,6 +8,10 @@ on:
         description: "补几个（按队列顺序）"
         required: false
         default: "1"
+      model:
+        description: "模型（空 = 用 alpha_config.json 里的）"
+        required: false
+        default: ""
 
 permissions:
   contents: read
@@ -30,4 +34,5 @@ jobs:
       - name: 试跑
         env:
           XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
+          XAI_MODEL: ${{ inputs.model }}
         run: python3 -u alpha/grok_research.py --dry --n "${{ inputs.n }}"
