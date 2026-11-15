@@ -1,5 +1,19 @@
 [
  {
+  "version": "2026.11.15.6",
+  "date": "2026-11-15",
+  "notify": false,
+  "title_zh": "Alpha 雷达：机会卡头部精简",
+  "title_en": "Alpha Radar: leaner card header",
+  "items": [
+   {
+    "type": "improve",
+    "zh": "机会卡头部压成三行：一句话介绍、资金参与方式（右边是发现日和补证来源）、一行读数（上线天数、币上线天数、市值、24 小时成交额、24 小时涨跌）。数字带下划线，鼠标放上去看口径和出处；参与方式的依据也放进悬停。「K 线」并进官网、X 那一排，按 币安 → CMC → DexScreener 的顺序选（CMC 只用核对过的页面地址）。",
+    "en": "Card header trimmed to three lines; details moved into hover notes. The Chart link sits with Website / X and picks Binance → CMC → DexScreener."
+   }
+  ]
+ },
+ {
   "version": "2026.11.15.5",
   "date": "2026-11-15",
   "notify": false,
