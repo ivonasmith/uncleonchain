@@ -219,7 +219,9 @@ def series(cards):
 
 QUEUE_PROMPT = """你在给「链上大叔研究台」Alpha 雷达补证（只研究正规项目，不写买卖建议）。对清单里每个协议，查官方网站 / 文档 / 公告、DefiLlama 方法论和可核对的链上信息，
 按下面格式交一个 JSON 数组（文件名 <日期>_checks.json）。第一项 one_liner 用一句大白话说清它是什么（给没听过的人看）。每条事实带来源链接和核对日期；查不到写 "U"，不要估，不要编。
-结论 verdict 只能是：研究观察（对象明确、有可证伪假设、没查到否决项）/ 待核验（关键事实缺失或冲突，写清缺什么）/ 拒绝（身份错误、已确认风险、其实已有代币、不是对普通人开放的正规项目，写证据）。
+结论 verdict 只能是：研究观察（对象明确、有可证伪假设、没查到否决项）/ 待核验（关键事实缺失或冲突，写清缺什么）/ 拒绝（身份错误、已确认风险、不是对普通人开放的正规项目，写证据）。
+「已有代币」本身不是拒绝理由：清单里 kind = tokenless 的如果查到其实已经有代币，写进 token_stance 和 missing、verdict 给待核验；kind = surge / site / manual 的本来就可能有代币，照常研究它的新玩法。
+只靠搜索摘要、打不开官网和文档的，verdict 最多给待核验，不给拒绝（拒绝必须有一手证据）。
 分数按 framework.json 附录一锚点给（M A F E G T D 是 0–4；TM 是 -1–3，有已证实不良记录给 -1；TE 是 0–3；不知道写 U，没有代币时 TE 写 NA）。M（新参与机制：这个玩法新在哪）优先查，每个分数写 why 和 src。
 资金参与方式 entry 从 buy / stake / points / use / presale / mine / none 里选（none = 暂时没有资金入口），写 entry_why。"""
 
@@ -233,9 +235,10 @@ QUEUE_SCHEMA = {"key": "清单里的 key（原样）", "name": "名称", "one_li
 
 
 def queue(cards):
-    """补证队列：没补完的卡，按 新发现 → 可投资 → 收入 / TVL 排序。给每日自动补证会话和 Codex 用。"""
+    """补证队列：没补完的卡，按 手动线索 / 本站板块 → 新发现 → 可投资 → 收入 / TVL 排序。给每日自动补证会话和 Codex 用。"""
     q = [c for c in cards if c["status"] in ("原始线索", "待核验")]
-    q.sort(key=lambda c: (not c["fresh"], c["bucket"] != "invest", c["status"] != "原始线索", -(c["data"]["rev30"] or c["data"]["tvl"] or 0)))
+    own = lambda c: any(x == "manual" or x.startswith("site_") for x in c["data"].get("sources") or [])   # 手动线索和本站板块筛到的排最前（11-15 定：来源以这两类为主）
+    q.sort(key=lambda c: (not own(c), not c["fresh"], c["bucket"] != "invest", c["status"] != "原始线索", -(c["data"]["rev30"] or c["data"]["tvl"] or 0)))
     items = [{"key": c["key"], "name": c["name"], "status": c["status"], "kind": c["kind"], "fresh": c["fresh"], "bucket": c["bucket"],
               "discovered": c["discovered"], "category": c["data"]["category"], "chains": c["data"]["chains"], "rev30": c["data"]["rev30"], "tvl": c["data"]["tvl"],
               "defillama": f"https://defillama.com/protocol/{c['data']['slug']}" if c["data"].get("slug") else None, "manual": c.get("manual"),
