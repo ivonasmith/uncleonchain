@@ -91,6 +91,48 @@ def first_day(gecko, meta):
     return out
 
 
+def market(t, meta):
+    """看 K 线的入口 + 市值 / 成交额快照（大叔 11-15 定：按交易的思路，先把人引到第三方看价格走势、市值、成交量）。
+    优先级：币安现货（CoinGecko 行情表里确认这个币在币安有 USDT 对，防同名不同币，如 Nullmask 的 MASK ≠ 币安的 MASK）
+           → DexScreener 流动性最大的交易对（按合约地址查，直接打开 K 线）→ CoinGecko 币页。
+    快照来自 DexScreener（日更时的读数，不是实时）。"""
+    out = {"chart": None, "snap": None}
+    g = t.get("gecko")
+    if g:
+        m = meta.setdefault(g, {})
+        if m.get("bn_checked", "") < (dt.date.today() - dt.timedelta(days=7)).isoformat():
+            try:
+                d = _get(f"https://api.coingecko.com/api/v3/coins/{g}/tickers?exchange_ids=binance", 40)
+                tk = [x for x in d.get("tickers") or [] if x.get("target") in ("USDT", "FDUSD", "USDC") and not x.get("is_stale")]
+                m["binance"] = tk[0]["base"] + "_" + tk[0]["target"] if tk else None
+                m["bn_checked"] = dt.date.today().isoformat()
+                time.sleep(6)
+            except Exception:
+                pass
+        if m.get("binance"):
+            out["chart"] = {"name": "币安 K 线", "name_en": "Binance chart", "url": f"https://www.binance.com/zh-CN/trade/{m['binance']}?type=spot", "url_en": f"https://www.binance.com/en/trade/{m['binance']}?type=spot"}
+    if t.get("address"):
+        try:
+            d = _get(f"https://api.dexscreener.com/latest/dex/tokens/{t['address']}", 30)
+            ps = [p for p in d.get("pairs") or [] if (p.get("baseToken") or {}).get("address", "").lower() == t["address"].lower()]
+            ps.sort(key=lambda p: -((p.get("liquidity") or {}).get("usd") or 0))
+            if ps:
+                p = ps[0]
+                if not out["chart"]:
+                    out["chart"] = {"name": "DexScreener K 线", "name_en": "DexScreener chart", "url": p.get("url")}
+                out["snap"] = {"mcap": p.get("marketCap"), "fdv": p.get("fdv"), "vol24": sum(((x.get("volume") or {}).get("h24") or 0) for x in ps),
+                               "liq": (p.get("liquidity") or {}).get("usd"), "chg24": (p.get("priceChange") or {}).get("h24"), "pairs": len(ps),
+                               "dex": p.get("dexId"), "chain": p.get("chainId"), "at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="minutes"), "src": "DexScreener"}
+            time.sleep(0.3)
+        except Exception:
+            pass
+    if not out["chart"] and g:
+        out["chart"] = {"name": "CoinGecko 走势", "name_en": "CoinGecko chart", "url": f"https://www.coingecko.com/en/coins/{g}"}
+    if not out["chart"] and t.get("sym"):   # 只有代码：按代码搜（可能有同名币，页面上写明）
+        out["chart"] = {"name": "DexScreener 搜索", "name_en": "DexScreener search", "url": f"https://dexscreener.com/search?q={t['sym']}", "search": True}
+    return out
+
+
 def links(t, slug):
     L = []
     if t and t.get("gecko"):
@@ -168,6 +210,10 @@ def enrich(cards, manual, first_rev):
             t["parent"] = bool(par_id and pn and pn.lower() != c["name"].lower())   # 卡片是子产品、币是母协议的（如 Pendle Loop → PENDLE）
             t["parent_name"] = pn if t["parent"] else None
             t["links"] = links(t, d.get("slug"))
+            try:
+                t.update(market(t, meta))
+            except Exception as e:
+                print("看盘入口失败", t.get("sym"), str(e)[:80])
             d["tok"] = t
         else:
             d["tok"] = None

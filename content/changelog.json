@@ -1,5 +1,24 @@
 [
  {
+  "version": "2026.11.15.5",
+  "date": "2026-11-15",
+  "notify": false,
+  "title_zh": "Alpha 雷达：有币的卡加「看 K 线」入口和市值 / 成交额快照",
+  "title_en": "Alpha Radar: chart button and market snapshot for tokens",
+  "items": [
+   {
+    "type": "improve",
+    "zh": "有币的机会卡加「看 K 线」按钮：在币安有现货的直接开币安 K 线（先核对是同一个币，防同名），没有的开 DexScreener 上流动性最大的交易对，再不行开 CoinGecko。旁边列市值、完全稀释估值、24 小时链上成交额、24 小时涨跌（DexScreener 日更快照，不是实时，只算去中心化交易所）。列表每行也显示市值。",
+    "en": "Token cards now have a Chart button (Binance spot if verified listed, otherwise the deepest DexScreener pair, otherwise CoinGecko) plus market cap, FDV, 24h DEX volume and 24h change from a daily DexScreener snapshot."
+   },
+   {
+    "type": "improve",
+    "zh": "每日补证改为主要由 Codex 做（直接连仓库交结果），Grok 自动补证默认关闭。",
+    "en": "Daily research now mainly done by Codex; the Grok auto-research is off by default."
+   }
+  ]
+ },
+ {
   "version": "2026.11.15.4",
   "date": "2026-11-15",
   "notify": false,

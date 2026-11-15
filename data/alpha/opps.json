@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-15T11:42:29+00:00",
+ "generated": "2026-11-15T11:53:06+00:00",
  "asof": "2026-11-14",
  "framework": "v1",
  "rules": "v2（2026-11-15）",
@@ -2637,7 +2637,24 @@
        "name": "DefiLlama",
        "url": "https://defillama.com/protocol/pons-v2"
       }
-     ]
+     ],
+     "chart": {
+      "name": "DexScreener K 线",
+      "name_en": "DexScreener chart",
+      "url": "https://dexscreener.com/robinhood/0x10cc6bd38112cac182db90b6a71d8bb5939526ba"
+     },
+     "snap": {
+      "mcap": 82154064,
+      "fdv": 82154064,
+      "vol24": 8963883.14,
+      "liq": 1377111.55,
+      "chg24": -4.6,
+      "pairs": 30,
+      "dex": "uniswap",
+      "chain": "robinhood",
+      "at": "2026-11-15T11:53+00:00",
+      "src": "DexScreener"
+     }
     }
    },
    "spark": [
@@ -3710,7 +3727,24 @@
        "name": "DefiLlama",
        "url": "https://defillama.com/protocol/montra"
       }
-     ]
+     ],
+     "chart": {
+      "name": "DexScreener K 线",
+      "name_en": "DexScreener chart",
+      "url": "https://dexscreener.com/elysium/0x3e373dfe40db272433dca58527abac38dbd7acb0b6c92090c202a1eac7272a1d"
+     },
+     "snap": {
+      "mcap": 3778677,
+      "fdv": 3778677,
+      "vol24": 518279.18,
+      "liq": 360906.61,
+      "chg24": -21.23,
+      "pairs": 15,
+      "dex": "uniswap",
+      "chain": "elysium",
+      "at": "2026-11-15T11:53+00:00",
+      "src": "DexScreener"
+     }
     }
    },
    "spark": [
@@ -8490,7 +8524,24 @@
        "name": "DefiLlama",
        "url": "https://defillama.com/protocol/kinetiq-elysium-bridge"
       }
-     ]
+     ],
+     "chart": {
+      "name": "DexScreener K 线",
+      "name_en": "DexScreener chart",
+      "url": "https://dexscreener.com/hyperevm/0xc8e5ee73b80bb3f6c9b5348771de8217abd412e7"
+     },
+     "snap": {
+      "mcap": 79894752,
+      "fdv": 246570747,
+      "vol24": 1481892.28,
+      "liq": 794552.37,
+      "chg24": -0.22,
+      "pairs": 14,
+      "dex": "nest",
+      "chain": "hyperevm",
+      "at": "2026-11-15T11:53+00:00",
+      "src": "DexScreener"
+     }
     }
    },
    "spark": []
@@ -8675,7 +8726,25 @@
        "name": "DefiLlama",
        "url": "https://defillama.com/protocol/pendle-loop"
       }
-     ]
+     ],
+     "chart": {
+      "name": "币安 K 线",
+      "name_en": "Binance chart",
+      "url": "https://www.binance.com/zh-CN/trade/PENDLE_USDT?type=spot",
+      "url_en": "https://www.binance.com/en/trade/PENDLE_USDT?type=spot"
+     },
+     "snap": {
+      "mcap": 249694915,
+      "fdv": 403634261,
+      "vol24": 321665.78,
+      "liq": 420801.32,
+      "chg24": -5.41,
+      "pairs": 18,
+      "dex": "uniswap",
+      "chain": "ethereum",
+      "at": "2026-11-15T11:53+00:00",
+      "src": "DexScreener"
+     }
     }
    },
    "spark": []
@@ -8855,7 +8924,14 @@
        "name": "DefiLlama",
        "url": "https://defillama.com/protocol/papertrade"
       }
-     ]
+     ],
+     "chart": {
+      "name": "DexScreener 搜索",
+      "name_en": "DexScreener search",
+      "url": "https://dexscreener.com/search?q=PAPER",
+      "search": true
+     },
+     "snap": null
     }
    },
    "spark": [
@@ -9069,7 +9145,24 @@
        "name": "DefiLlama",
        "url": "https://defillama.com/protocol/vesper-v2"
       }
-     ]
+     ],
+     "chart": {
+      "name": "DexScreener K 线",
+      "name_en": "DexScreener chart",
+      "url": "https://dexscreener.com/ethereum/0x20f858d88124857274994516eeac7720fe39b8ea"
+     },
+     "snap": {
+      "mcap": 1463364,
+      "fdv": 1553148,
+      "vol24": 312.82,
+      "liq": 76192.91,
+      "chg24": -0.7,
+      "pairs": 3,
+      "dex": "curve",
+      "chain": "ethereum",
+      "at": "2026-11-15T11:53+00:00",
+      "src": "DexScreener"
+     }
     }
    },
    "spark": []
@@ -9407,7 +9500,24 @@
        "name": "DefiLlama",
        "url": "https://defillama.com/protocol/paperstrategy-pstr"
       }
-     ]
+     ],
+     "chart": {
+      "name": "DexScreener K 线",
+      "name_en": "DexScreener chart",
+      "url": "https://dexscreener.com/hyperevm/0xf01e7b40b9da303a0a097b69cd81c06c2c06b658"
+     },
+     "snap": {
+      "mcap": 2556920,
+      "fdv": 2556920,
+      "vol24": 99737.73,
+      "liq": 446958.08,
+      "chg24": 9.12,
+      "pairs": 3,
+      "dex": "hyperswap",
+      "chain": "hyperevm",
+      "at": "2026-11-15T11:53+00:00",
+      "src": "DexScreener"
+     }
     }
    },
    "spark": [
@@ -9625,7 +9735,24 @@
        "name": "DefiLlama",
        "url": "https://defillama.com/protocol/nullmask"
       }
-     ]
+     ],
+     "chart": {
+      "name": "DexScreener K 线",
+      "name_en": "DexScreener chart",
+      "url": "https://dexscreener.com/solana/4gwh5sakgzoukhhj4rh3p5fmpu6ypuaexv6fah5jqyfm"
+     },
+     "snap": {
+      "mcap": 14495580,
+      "fdv": 25408858,
+      "vol24": 1445747.56,
+      "liq": 617850.92,
+      "chg24": 28.98,
+      "pairs": 14,
+      "dex": "raydium",
+      "chain": "solana",
+      "at": "2026-11-15T11:53+00:00",
+      "src": "DexScreener"
+     }
     }
    },
    "spark": [
@@ -9841,7 +9968,25 @@
        "name": "DefiLlama",
        "url": "https://defillama.com/protocol/render-network-bme"
       }
-     ]
+     ],
+     "chart": {
+      "name": "币安 K 线",
+      "name_en": "Binance chart",
+      "url": "https://www.binance.com/zh-CN/trade/RENDER_USDT?type=spot",
+      "url_en": "https://www.binance.com/en/trade/RENDER_USDT?type=spot"
+     },
+     "snap": {
+      "mcap": 729461812,
+      "fdv": 750216366,
+      "vol24": 233827.36000000002,
+      "liq": 292617.81,
+      "chg24": -5.34,
+      "pairs": 14,
+      "dex": "uniswap",
+      "chain": "ethereum",
+      "at": "2026-11-15T11:53+00:00",
+      "src": "DexScreener"
+     }
     }
    },
    "spark": [
@@ -10057,7 +10202,24 @@
        "name": "DefiLlama",
        "url": "https://defillama.com/protocol/fables"
       }
-     ]
+     ],
+     "chart": {
+      "name": "DexScreener K 线",
+      "name_en": "DexScreener chart",
+      "url": "https://dexscreener.com/robinhood/0xcce8dcf7c4dcfee6b6588db724240d9d6a22ee456f9387bb831c8fcea970869e"
+     },
+     "snap": {
+      "mcap": 823830,
+      "fdv": 4616176,
+      "vol24": 182545.79,
+      "liq": 310446.25,
+      "chg24": 3.53,
+      "pairs": 11,
+      "dex": "uniswap",
+      "chain": "robinhood",
+      "at": "2026-11-15T11:53+00:00",
+      "src": "DexScreener"
+     }
     }
    },
    "spark": [
@@ -10275,7 +10437,24 @@
        "name": "DefiLlama",
        "url": "https://defillama.com/protocol/peapods-finance"
       }
-     ]
+     ],
+     "chart": {
+      "name": "DexScreener K 线",
+      "name_en": "DexScreener chart",
+      "url": "https://dexscreener.com/ethereum/0xae750560b09ad1f5246f3b279b3767afd1d79160"
+     },
+     "snap": {
+      "mcap": 9968355,
+      "fdv": 9968355,
+      "vol24": 22143.22,
+      "liq": 1003285.67,
+      "chg24": -4.04,
+      "pairs": 19,
+      "dex": "uniswap",
+      "chain": "ethereum",
+      "at": "2026-11-15T11:53+00:00",
+      "src": "DexScreener"
+     }
     }
    },
    "spark": [
@@ -10491,7 +10670,25 @@
        "name": "DefiLlama",
        "url": "https://defillama.com/protocol/justlend-v1"
       }
-     ]
+     ],
+     "chart": {
+      "name": "币安 K 线",
+      "name_en": "Binance chart",
+      "url": "https://www.binance.com/zh-CN/trade/JST_USDT?type=spot",
+      "url_en": "https://www.binance.com/en/trade/JST_USDT?type=spot"
+     },
+     "snap": {
+      "mcap": 1421741874,
+      "fdv": 1421741874,
+      "vol24": 297567.31,
+      "liq": 14451687.21,
+      "chg24": -0.65,
+      "pairs": 2,
+      "dex": "sunswap",
+      "chain": "tron",
+      "at": "2026-11-15T11:53+00:00",
+      "src": "DexScreener"
+     }
     }
    },
    "spark": [
@@ -10893,7 +11090,24 @@
        "name": "DefiLlama",
        "url": "https://defillama.com/protocol/thorwallet"
       }
-     ]
+     ],
+     "chart": {
+      "name": "DexScreener K 线",
+      "name_en": "DexScreener chart",
+      "url": "https://dexscreener.com/base/0x8a8277fa0624a2112d6a049647d432ef9a9e75e2"
+     },
+     "snap": {
+      "mcap": 558463,
+      "fdv": 11601348,
+      "vol24": 30820.75,
+      "liq": 234440.19,
+      "chg24": 10.13,
+      "pairs": 6,
+      "dex": "aero",
+      "chain": "base",
+      "at": "2026-11-15T11:53+00:00",
+      "src": "DexScreener"
+     }
     }
    },
    "spark": [
@@ -11110,7 +11324,25 @@
        "name": "DefiLlama",
        "url": "https://defillama.com/protocol/liquity-v1"
       }
-     ]
+     ],
+     "chart": {
+      "name": "币安 K 线",
+      "name_en": "Binance chart",
+      "url": "https://www.binance.com/zh-CN/trade/LQTY_USDT?type=spot",
+      "url_en": "https://www.binance.com/en/trade/LQTY_USDT?type=spot"
+     },
+     "snap": {
+      "mcap": 14456582,
+      "fdv": 14456582,
+      "vol24": 54883.14,
+      "liq": 368924.41,
+      "chg24": -5.3,
+      "pairs": 13,
+      "dex": "uniswap",
+      "chain": "ethereum",
+      "at": "2026-11-15T11:53+00:00",
+      "src": "DexScreener"
+     }
     }
    },
    "spark": [
@@ -11329,7 +11561,24 @@
        "name": "DefiLlama",
        "url": "https://defillama.com/protocol/volta"
       }
-     ]
+     ],
+     "chart": {
+      "name": "DexScreener K 线",
+      "name_en": "DexScreener chart",
+      "url": "https://dexscreener.com/elysium/0x7b182abb748bae25e2c73abd8b4cf3157d8d35a47e4b36d1ee5565ade94c3c27"
+     },
+     "snap": {
+      "mcap": 500650,
+      "fdv": 500650,
+      "vol24": 48503.450000000004,
+      "liq": 74370.67,
+      "chg24": -1.02,
+      "pairs": 8,
+      "dex": "uniswap",
+      "chain": "elysium",
+      "at": "2026-11-15T11:53+00:00",
+      "src": "DexScreener"
+     }
     }
    },
    "spark": [
@@ -11527,7 +11776,25 @@
        "name": "DefiLlama",
        "url": "https://defillama.com/protocol/yield-basis"
       }
-     ]
+     ],
+     "chart": {
+      "name": "币安 K 线",
+      "name_en": "Binance chart",
+      "url": "https://www.binance.com/zh-CN/trade/YB_USDT?type=spot",
+      "url_en": "https://www.binance.com/en/trade/YB_USDT?type=spot"
+     },
+     "snap": {
+      "mcap": 11448987,
+      "fdv": 32471719,
+      "vol24": 90725.67,
+      "liq": 367098.25,
+      "chg24": -7.5,
+      "pairs": 5,
+      "dex": "curve",
+      "chain": "ethereum",
+      "at": "2026-11-15T11:53+00:00",
+      "src": "DexScreener"
+     }
     }
    },
    "spark": [
@@ -11744,7 +12011,24 @@
        "name": "DefiLlama",
        "url": "https://defillama.com/protocol/sapling"
       }
-     ]
+     ],
+     "chart": {
+      "name": "DexScreener K 线",
+      "name_en": "DexScreener chart",
+      "url": "https://dexscreener.com/solana/6ejg4ayjm3mk1t2zbkjbj43df3s7rbmpc9mgo526k51g"
+     },
+     "snap": {
+      "mcap": 1009807,
+      "fdv": 1022728,
+      "vol24": 203794.43000000002,
+      "liq": 190287.21,
+      "chg24": 4.9,
+      "pairs": 5,
+      "dex": "pumpswap",
+      "chain": "solana",
+      "at": "2026-11-15T11:53+00:00",
+      "src": "DexScreener"
+     }
     }
    },
    "spark": [
@@ -11960,7 +12244,24 @@
        "name": "DefiLlama",
        "url": "https://defillama.com/protocol/veil"
       }
-     ]
+     ],
+     "chart": {
+      "name": "DexScreener K 线",
+      "name_en": "DexScreener chart",
+      "url": "https://dexscreener.com/solana/4mwjp1abqqe9y6ic5cd3nrvvwwchsn2lgpjwymdk7u7e"
+     },
+     "snap": {
+      "mcap": 276295,
+      "fdv": 276295,
+      "vol24": 30051.079999999998,
+      "liq": 46642.74,
+      "chg24": 3.31,
+      "pairs": 4,
+      "dex": "pumpswap",
+      "chain": "solana",
+      "at": "2026-11-15T11:53+00:00",
+      "src": "DexScreener"
+     }
     }
    },
    "spark": [
@@ -12176,7 +12477,24 @@
        "name": "DefiLlama",
        "url": "https://defillama.com/protocol/stockereum"
       }
-     ]
+     ],
+     "chart": {
+      "name": "DexScreener K 线",
+      "name_en": "DexScreener chart",
+      "url": "https://dexscreener.com/ethereum/0x870d82eacef699418a83bbfec2500b2150673525690a165f5cefb9f81d3ce87a"
+     },
+     "snap": {
+      "mcap": 483283,
+      "fdv": 483283,
+      "vol24": 14862.810000000001,
+      "liq": 76405.43,
+      "chg24": -8.33,
+      "pairs": 8,
+      "dex": "uniswap",
+      "chain": "ethereum",
+      "at": "2026-11-15T11:53+00:00",
+      "src": "DexScreener"
+     }
     }
    },
    "spark": [
@@ -12406,7 +12724,24 @@
        "name": "DexScreener",
        "url": "https://dexscreener.com/search?q=0x5ce033b2bfca3af30b3e8c8457deaf776a8b695a"
       }
-     ]
+     ],
+     "chart": {
+      "name": "DexScreener K 线",
+      "name_en": "DexScreener chart",
+      "url": "https://dexscreener.com/bsc/0x3098d7a051045000d68ec0360753a40c8cabea31"
+     },
+     "snap": {
+      "mcap": 5039710,
+      "fdv": 5039710,
+      "vol24": 378513.0,
+      "liq": 144540.56,
+      "chg24": 0.37,
+      "pairs": 9,
+      "dex": "pancakeswap",
+      "chain": "bsc",
+      "at": "2026-11-15T11:53+00:00",
+      "src": "DexScreener"
+     }
     }
    },
    "spark": []
@@ -12910,7 +13245,24 @@
        "name": "DefiLlama",
        "url": "https://defillama.com/protocol/bankr"
       }
-     ]
+     ],
+     "chart": {
+      "name": "DexScreener K 线",
+      "name_en": "DexScreener chart",
+      "url": "https://dexscreener.com/base/0xaec085e5a5ce8d96a7bdd3eb3a62445d4f6ce703"
+     },
+     "snap": {
+      "mcap": 22096441,
+      "fdv": 22096441,
+      "vol24": 549908.13,
+      "liq": 1400640.91,
+      "chg24": -6.86,
+      "pairs": 18,
+      "dex": "uniswap",
+      "chain": "base",
+      "at": "2026-11-15T11:54+00:00",
+      "src": "DexScreener"
+     }
     }
    },
    "spark": []

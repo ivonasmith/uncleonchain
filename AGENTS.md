@@ -34,11 +34,12 @@ Codex 发现代码有错：写进 `*/review/` 的复核文件（`文件:行号 �
 
 按优先级。做完在对应 README 里把状态改成「已交回」，结果文件放在写明的位置。
 
-1. **Alpha · 关键人名单**：`alpha/review/sources_task.md`（S2：核对 Grok 列的 X 原帖 → `alpha/review/sources_people.json`；S1 Grok 的原始回答大叔会放进 `alpha/review/`）。
-2. **Alpha · 复核 Grok 自动补证**：每天日更会写 `alpha/review/grok_<日期>_checks.json`（便宜模型，结论偏乐观）。逐条打开 evidence 核对，
-   交 `alpha/review/codex_<日期>_checks.json`（同一格式，reviewer = codex；后交的覆盖先交的）。优先核「研究观察」和带 ★（本站板块 / 手动线索）的卡。
-   队列和格式：`data/alpha/research_queue.json`（prompt、schema、items）。
-3. **Alpha · 补证队列**：同上格式，直接从 `research_queue.json` 前面往后补，Grok 每天只补 1 个左右。
+1. **Alpha · 每日补证（主力，大叔 11-15 定：补证和查信息尽量交 Codex，Grok API 贵、已默认关）**：每天读 `data/alpha/research_queue.json`（日更 UTC 04:43 后更新；prompt、schema、items 已排好序：
+   手动线索 / 本站板块 ★ → 新发现 → 可投资 → 收入高），从前往后补，能补多少补多少，交 `alpha/review/codex_<UTC 日期>_checks.json`（JSON 数组，reviewer = codex）。
+   **M（新参与机制：这个玩法新在哪）优先查**。同一天多批就追加进同一个文件。推上 main 后下一次日更自动并入网站（想马上看到就手动触发 alpha-daily）。
+2. **Alpha · 复核已有的自动补证**：`alpha/review/grok_*_checks.json`（便宜模型，结论偏乐观，例如 Pons 没发现文档写的回购是锁 5 年不销毁、和官网说法冲突）。
+   逐条打开 evidence 核对，结论交进当天的 `codex_<日期>_checks.json`（同 key 会盖过 Grok 的）。
+3. **Alpha · 关键人名单**：`alpha/review/sources_task.md`（S2：核对 Grok 列的 X 原帖 → `alpha/review/sources_people.json`；S1 Grok 的原始回答大叔会放进 `alpha/review/`）。
 4. **Alpha · T4 / T5**：`alpha/review/README.md`（待核验的补缺口、Bybit / Upbit 替代源）。
 5. **AI Agent · A1–A6**：`aiagent/review/README.md`。
 6. **核心选币 · 评分复核与 M3**：`core/review/README.md`、`core/review/M3_分工.md`。

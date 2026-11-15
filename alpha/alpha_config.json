@@ -67,7 +67,8 @@
     "max_items": 8,
     "daily_usd": 0.17,
     "monthly_usd": 5,
-    "_说明": "每日自动补证（alpha/grok_research.py，2026-11-15 起替代定时云端会话）。按接口返回的实际花费记账（data/alpha/research_cost.json）：每天到 daily_usd 停，每月到 monthly_usd 停并让工作流标红提醒（大叔 11-15 定：超过 5 美元就告诉他）。",
-    "_实测": "11-15 试跑 Pons：grok-4.7（推理）$0.88 / 个，查得细（发现文档写回购是锁 5 年不销毁、和官网说法冲突）；grok-4.20 non-reasoning $0.17 / 个，快但粗（TE 依据和锚点对不上、结论偏乐观）。默认用便宜的，5 美元一个月约 30 个。"
+    "_说明": "每日自动补证（alpha/grok_research.py，2026-11-15 起替代定时云端会话）。按接口返回的实际花费记账（data/alpha/research_cost.json）：每天到 daily_usd 停，每月到 monthly_usd 停并让工作流标红提醒（大叔 11-15 定：超过 5 美元就告诉他）。 11-15 大叔定：补证尽量交 Codex（额度多），Grok 贵，默认关（enabled=false）；要用时改 true 或手动跑 alpha-research-try.yml。",
+    "_实测": "11-15 试跑 Pons：grok-4.7（推理）$0.88 / 个，查得细（发现文档写回购是锁 5 年不销毁、和官网说法冲突）；grok-4.20 non-reasoning $0.17 / 个，快但粗（TE 依据和锚点对不上、结论偏乐观）。默认用便宜的，5 美元一个月约 30 个。",
+    "enabled": false
   }
 }

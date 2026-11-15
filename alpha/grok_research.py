@@ -148,6 +148,9 @@ def main():
     dry = "--dry" in sys.argv
     n_max = int(sys.argv[sys.argv.index("--n") + 1]) if "--n" in sys.argv else CFG.get("max_items", 8)
     key = os.environ.get("XAI_API_KEY", "").strip()
+    if not CFG.get("enabled", True) and not dry:
+        print("自动补证（Grok）：alpha_config.grok.enabled = false，跳过（大叔 11-15 定：补证尽量交 Codex，Grok 贵）")
+        return 0
     if not key:
         print("自动补证：没配 XAI_API_KEY，跳过")
         return 0
