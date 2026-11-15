@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-15T11:26:36+00:00",
+ "generated": "2026-11-15T11:41:46+00:00",
  "asof": "2026-11-14",
  "stale": false,
  "baseline_day": "2026-11-14",
@@ -95,9 +95,9 @@
     "Solana",
     "BSC"
    ],
-   "rev30": 8544211,
+   "rev30": 8723579,
    "rev_prev30": 16981769,
-   "chg30": -49.7,
+   "chg30": -48.6,
    "first_seen": "2026-11-14"
   },
   {
@@ -385,7 +385,8 @@
     {
      "board": "aiagent",
      "rule": "ai_new",
-     "why": "AI Agent 板块：手续费从 2026-10-15 才开始，近 7 天 873,228 美元；板块备注：2026-10 才收录，30 天手续费很快冲到第一，真实需求还是自付刷量待 Codex 核"
+     "why": "AI Agent 板块：手续费从 2026-10-15 才开始，近 7 天 873,228 美元；板块备注：2026-10 才收录，30 天手续费很快冲到第一，真实需求还是自付刷量待 Codex 核",
+     "since": "2026-10-15"
     }
    ],
    "first_seen": "2026-11-14"
@@ -1320,7 +1321,8 @@
     {
      "board": "launchpad",
      "rule": "lp_new",
-     "why": "进发射台矩阵 4 天，近 7 天手续费 510,726 美元"
+     "why": "进发射台矩阵 4 天，近 7 天手续费 510,726 美元",
+     "since": "2026-11-10"
     }
    ],
    "first_seen": "2026-11-14"
@@ -2306,7 +2308,8 @@
     {
      "board": "launchpad",
      "rule": "lp_new",
-     "why": "进发射台矩阵 4 天，近 7 天手续费 1,209,417 美元"
+     "why": "进发射台矩阵 4 天，近 7 天手续费 1,209,417 美元",
+     "since": "2026-11-10"
     }
    ]
   },
@@ -2421,7 +2424,8 @@
     {
      "board": "launchpad",
      "rule": "lp_new",
-     "why": "进发射台矩阵 1 天，近 7 天手续费 225,891 美元"
+     "why": "进发射台矩阵 1 天，近 7 天手续费 225,891 美元",
+     "since": "2026-11-13"
     }
    ]
   },
@@ -2559,6 +2563,7 @@
    ],
    "logo": "https://icons.llamao.fi/icons/protocols/boxa-v1",
    "category": "Launchpad",
+   "since": "2026-11-12",
    "fees7": 140989,
    "fees_prev7": 54667,
    "fees30": 237261,
@@ -2571,7 +2576,8 @@
     {
      "board": "launchpad",
      "rule": "lp_new",
-     "why": "进发射台矩阵 2 天，近 7 天手续费 140,989 美元"
+     "why": "进发射台矩阵 2 天，近 7 天手续费 140,989 美元",
+     "since": "2026-11-12"
     }
    ],
    "token": false,
@@ -2600,7 +2606,8 @@
     {
      "board": "launchpad",
      "rule": "lp_chain",
-     "why": "30 天内 Elysium 上新进矩阵的发射台有 11 个：Montra、Ascend Launchpad、Volta、Boxa V1、ElysPump V2、Kleos Launchpad；合计近 7 天手续费 2,160,872 美元"
+     "why": "30 天内 Elysium 上新进矩阵的发射台有 11 个：Montra、Ascend Launchpad、Volta、Boxa V1、ElysPump V2、Kleos Launchpad；合计近 7 天手续费 2,160,872 美元",
+     "since": null
     }
    ],
    "token": false,
@@ -2624,7 +2631,8 @@
     {
      "board": "aiagent",
      "rule": "ai_spike",
-     "why": "AI Agent 板块标了异常：单日手续费占近 30 天的 52%"
+     "why": "AI Agent 板块标了异常：单日手续费占近 30 天的 52%",
+     "since": null
     }
    ],
    "token": true,
@@ -4924,7 +4932,20 @@
    "parent": null
   }
  ],
- "events": [],
+ "events": [
+  {
+   "type": "status",
+   "key": "m:pons",
+   "name": "Pons",
+   "status": "研究观察"
+  },
+  {
+   "type": "status",
+   "key": "s:9388",
+   "name": "Montra",
+   "status": "研究观察"
+  }
+ ],
  "feed": [
   {
    "id": "snap:0x3a61c64d6f7d0546d76c8b7d93d29becf262a30240109c4ea9fa8d067ad6c2e2",
@@ -5245,7 +5266,7 @@
   "token_seen": 0,
   "status": {
    "待核验": 18,
-   "研究观察": 12,
+   "研究观察": 14,
    "优先研究": 0,
    "拒绝": 0
   }
