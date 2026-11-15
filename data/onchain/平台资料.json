@@ -155,7 +155,7 @@
 "审计数": "0",
 "审计链接": [],
 "市值": null,
-"日期": "2026-11-14",
+"日期": "2026-11-15",
 "母协议": null,
 "融资": [],
 "进门槛": "2026-11-13",
@@ -573,8 +573,8 @@
 "官网简介": null,
 "审计数": "0",
 "审计链接": [],
-"市值": 9915101.118236061,
-"日期": "2026-11-14",
+"市值": 8894806.25113888,
+"日期": "2026-11-15",
 "母协议": null,
 "融资": [],
 "进门槛": "2026-11-13",
@@ -614,6 +614,38 @@
 "进门槛": "2026-11-14",
 "链": [
 "Solana"
+]
+},
+"kleos-launchpad": {
+"GitHub": [],
+"X": "TheKleos_",
+"gecko_id": null,
+"上线DefiLlama": "2026-11-12",
+"介绍": "Kleos is a launchpad on Elysium: every coin launches straight into its own DEX pool with the liquidity locked forever, with taxed Uniswap v4 launches that pay creators, holders and buybacks, coins paired with HYPE, $KLEOS, KNTQ, tokenized stocks or ETH, and a Road to Core fund that lists coins on Hyperliquid's HyperCore",
+"代币": "KLEOS",
+"分叉自": [],
+"口径": {
+"Fees": "The buy / sell tax each coin's creator set (1-10%), paid in the pool's pair asset on every trade of a coin launched on Kleos with a tax. Classic coins' trading fees are in KleosSwap's listing.",
+"HoldersRevenue": "The platform's cut of taxes on $KLEOS-paired coins, which is burned.",
+"ProtocolRevenue": "The platform's cut of taxes, kept by the platform.",
+"Revenue": "The platform's cut of every tax: kept by the platform, or burned for a pair asset whose platform cut burns, such as $KLEOS.",
+"SupplySideRevenue": "The rest of each tax: to the coin's creator, its holders (rewards) and its buyback & burn."
+},
+"口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/kleos-launchpad.ts",
+"合约": "elysium:0x51C343Ed5131F17895991849860B61C2cb0E7e7a",
+"名称": "Kleos Launchpad",
+"大事记": [],
+"安全事件": [],
+"官网": null,
+"审计数": "0",
+"审计链接": [],
+"市值": null,
+"日期": "2026-11-15",
+"母协议": "kleos",
+"融资": [],
+"进门槛": "2026-11-15",
+"链": [
+"Elysium"
 ]
 },
 "launch-coin-on-believe": {
