@@ -4110,7 +4110,7 @@ def alpha_framework_html():
             continue
         body += f'<h4>{e(s[g]["name"])} <span class="small muted">{e(s[g]["sec"])} · {e(s[g]["applies"])} · 每项 0–{s[g]["max"]}</span></h4>'
         for it in s[g]["items"]:
-            body += f'<div style="margin:8px 0"><b>{e(it["k"])} · {e(it["name"])}</b>{" <span class=" + chr(34) + "tag" + chr(34) + ">执行相关 · 不公开</span>" if it.get("private") else ""} <span class="small muted">{e(it.get("q", ""))}</span>{ladder(it["anchors"])}</div>'
+            body += f'<div style="margin:8px 0"><b>{e(it["k"])} · {e(it["name"])}</b>{" <span class=" + chr(34) + "tag" + chr(34) + ">执行相关 · 不公开</span>" if it.get("private") else ""} <span class="small muted">{e(it.get("q", ""))}</span>{ladder(it["anchors"])}{"".join(f"<p class=" + chr(34) + "small" + chr(34) + " style=" + chr(34) + "color:var(--dn);margin:4px 0" + chr(34) + f">{e(k)} 分：{e(v)}</p>" for k, v in (it.get("penalty") or {}).items())}</div>'
     if s.get("invest"):
         body += f'<p class="small muted">{e(s["invest"]["note"])}。<b>{e(s["invest"]["facts"]["name"])}</b>：{e(s["invest"]["facts"]["rule"])}（{e("、".join(s["invest"]["facts"]["fields"]))}）</p>'
     body += f'<div class="card small"><b>区间与覆盖</b>：{e(s["formula"]["interval"])}<br>例：{e(s["formula"]["example"])}' + "".join(f'<br><b>{e(p["name"])}</b>：{e(p["rule"])}（{e(p["note"])}）' for p in s["promote"]) + "</div>"

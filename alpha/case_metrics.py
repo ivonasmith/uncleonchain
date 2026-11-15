@@ -2,7 +2,7 @@
 """历史案例结果指标（框架第十五节「历史量级对照」）。只用标准库；历史数据不日更，案例或口径改了再跑。
 
 每个案例的代币（alpha/cases.json 的 tokens）：
-  价格     Coin Metrics 有的（supply = cm:*）用 PriceUSD 逐日完整；其余 coins.llama.fi/chart（CoinGecko 价格，按 UTC 日取最后一个点 = 当日收盘代理），每次最多 500 天，分段拼
+  价格     Coin Metrics 有的（supply = cm:*）用 PriceUSD 逐日完整；其余 coins.llama.fi/chart（CoinGecko 价格，取离次日 0 点最近的报价 = 当日收盘），每次最多 500 天，分段拼
   BTC      Coin Metrics 社区版 PriceUSD（逐日完整；coins.llama.fi 的 BTC 日线有缺日，11-14 实测 ARB 首日对不上），用来算相对 BTC 峰值倍数（附录二 C：max_t[(P_t/P0)/(BTC_t/BTC0)]，同一天对齐）
   估值     supply = "cm:<资产>" → Coin Metrics 社区版 CapMrktCurUSD（流通市值，峰值和日期）；
            supply = "max" → 峰值收盘 × CoinGecko 最大供给（没有最大供给用总供给），叫「峰值完全稀释估值」；
@@ -49,7 +49,15 @@ def prices(cg, start="2010-07-01"):
         d = get(f"https://coins.llama.fi/chart/coingecko:{cg}?start={t}&span=500&period=1d")
         pts = (d.get("coins", {}).get(f"coingecko:{cg}") or {}).get("prices") or []
         for p in pts:
-            out[day(p["timestamp"])] = p["price"]
+            # 接口返回的是离每天 0 点最近的一个报价（23:5x 或 00:0x）= 前一天的收盘，标到前一天，和 Coin Metrics 的「当日收盘」对齐。
+            # 11-15 复核：原来按报价自己的日期标，同一天会撞两个、另一天空着，覆盖率被算成 80%–93%，其实源是全的。
+            # 离 0 点超过 2 小时的（上线当天的第一个报价）标在当天，之后会被当天收盘覆盖。
+            t0 = dt.datetime.fromtimestamp(p["timestamp"], dt.timezone.utc)
+            near = (t0 + dt.timedelta(hours=12)).replace(hour=0, minute=0, second=0, microsecond=0)
+            if abs((t0 - near).total_seconds()) <= 7200:
+                out[(near.date() - dt.timedelta(days=1)).isoformat()] = p["price"]
+            else:
+                out.setdefault(t0.date().isoformat(), p["price"])
         t += 500 * 86400
         time.sleep(0.4)
     return {k: v for k, v in sorted(out.items()) if k < TODAY.isoformat()}
@@ -87,6 +95,8 @@ def price_metrics(px, btc):
     p7 = px[d7] if d7 else None
     pk7 = max((d for d in ds if d7 and d >= d7), key=lambda d: px[d], default=None)
     rel7 = [(d, (px[d] / p7) / (btc[d] / btc[d7])) for d in ds if d7 and d >= d7 and d in btc and d7 in btc]
+    d7y = (dt.date.fromisoformat(d7) + dt.timedelta(days=365)).isoformat() if d7 else None
+    pk7y = max((d for d in ds if d7 and d7 <= d <= d7y), key=lambda d: px[d], default=None)   # 首周后一年内的最高收盘（11-15 加：全历史峰值把 6 天和 15 年混在一起）
     last = ds[-1]
     return {"p0_date": d0, "p0": p0, "peak_date": pk, "peak": px[pk], "mult": px[pk] / p0,
             "days_to_peak": (dt.date.fromisoformat(pk) - dt.date.fromisoformat(d0)).days,
@@ -96,7 +106,7 @@ def price_metrics(px, btc):
             "days_peak_to_below_p0": (dt.date.fromisoformat(below) - dt.date.fromisoformat(pk)).days if below else None,
             "last_date": last, "last": px[last], "dd_from_peak": px[last] / px[pk] - 1, "last_vs_p0": px[last] / p0,
             "n_days": len(ds), "coverage": round(len(ds) / span, 3),
-            "p7_date": d7, "p7": p7, "mult_p7": px[pk7] / p7 if pk7 else None, "rel_btc_peak_p7": max(r[1] for r in rel7) if rel7 else None}
+            "p7_date": d7, "p7": p7, "mult_p7": px[pk7] / p7 if pk7 else None, "mult_p7_365": px[pk7y] / p7 if pk7y else None, "peak_p7_365_date": pk7y, "rel_btc_peak_p7": max(r[1] for r in rel7) if rel7 else None}
 
 
 def fees_metrics(slug):
@@ -158,7 +168,7 @@ def main():
                 else:
                     px = prices(t["cg"], t.get("from") or "2010-07-01")
                     if t["supply"].startswith("cm:"):
-                        # P0 以最早有数据的源为准（11-14 实测：Coin Metrics 的 UNI 从 09-18 才有，漏了 09-17 首日，倍数差一倍多）；
+                        # 以 coins.llama.fi 为主（11-14 实测：Coin Metrics 的 UNI 从 09-18 才有，漏了 09-17 首日）；Coin Metrics 只补它之后缺的日子；
                         # coins.llama.fi 缺的日子用 Coin Metrics 同日收盘补，不前向填充
                         cmp_ = cm_price(t["supply"][3:])
                         filled = {k: v for k, v in cmp_.items() if k not in px and (not px or k > next(iter(px)))}
@@ -171,7 +181,7 @@ def main():
                     mc = cm_mcap(t["supply"][3:])
                     if mc:
                         k = max(mc, key=mc.get)
-                        m.update(val_peak=mc[k], val_peak_date=k, val_kind="流通市值（Coin Metrics）")
+                        m.update(val_peak=mc[k], val_peak_date=k, val_kind="总供给市值（Coin Metrics：价格 × 当日已发行总量，含未解锁份额）")
                 elif t["supply"] == "max":
                     try:
                         mx, tot = cg_supply(t["cg"])

@@ -156,7 +156,7 @@ def main():
 
     # ① 无币协议收入榜
     tc = CFG["tokenless"]
-    groups, allrev = {}, {}
+    groups, allrev, allg = {}, {}, {}
     if rev is not None:
         for x in rev:
             pid = x.get("defillamaId")
@@ -166,6 +166,15 @@ def main():
                 continue           # 协议列表里对不上身份的不收（不猜）
             tok = has_tok(pp) or bool(par and ptok.get(par))
             allrev[par or pid] = allrev.get(par or pid, 0.0) + (x.get("total30d") or 0)   # 全部协议（含有币），给台账做结果追踪
+            ag = allg.setdefault(par or pid, {"key": par or pid, "children": [], "rev30": 0.0, "rev_prev30": 0.0, "all": 0.0, "token": False, "cats": {}, "chains": {}})
+            ag["rev30"] += x.get("total30d") or 0
+            ag["rev_prev30"] += x.get("total60dto30d") or 0
+            ag["all"] += x.get("totalAllTime") or 0
+            ag["token"] = ag["token"] or tok
+            ag["children"].append({"name": x.get("name"), "slug": x.get("slug"), "rev30": round(x.get("total30d") or 0), "id": pid})
+            ag["cats"][x.get("category")] = ag["cats"].get(x.get("category"), 0) + (x.get("total30d") or 0)
+            for c in x.get("chains") or []:
+                ag["chains"][c] = ag["chains"].get(c, 0) + (x.get("total30d") or 0)
             if tok or x.get("category") in tc["exclude_categories"] or x.get("name") in tc["exclude_names"]:
                 continue
             g = groups.setdefault(par or pid, {"key": par or pid, "children": [], "rev30": 0.0, "rev_prev30": 0.0, "cats": {}, "chains": {}})
@@ -191,6 +200,44 @@ def main():
                      "chg30": round((g["rev30"] / g["rev_prev30"] - 1) * 100, 1) if g["rev_prev30"] > 0 else None})
     rows.sort(key=lambda r: -r["rev30"])
 
+    def grow(ag, key):          # 一个协议组 → 榜单行
+        ch = sorted(ag["children"], key=lambda c: -c["rev30"])
+        top = byid.get(ch[0]["id"]) or {}
+        return {"key": key, "name": ch[0]["name"] if len(ch) == 1 else ag["key"].split("#", 1)[-1].replace("-", " ").title(), "slug": ch[0]["slug"],
+                "url": top.get("url"), "logo": top.get("logo"), "twitter": top.get("twitter"), "children": [c["name"] for c in ch],
+                "category": max(ag["cats"], key=ag["cats"].get) if ag["cats"] else None,
+                "chains": [c for c, _ in sorted(ag["chains"].items(), key=lambda t: -t[1])][:3],
+                "rev30": round(ag["rev30"]), "rev_prev30": round(ag["rev_prev30"]), "rev_all": round(ag["all"]),
+                "chg30": round((ag["rev30"] / ag["rev_prev30"] - 1) * 100, 1) if ag["rev_prev30"] > 0 else None, "token": ag["token"]}
+
+    # ①b 收入新起量（11-15 加：有币的新协议原来完全看不到，如 Pons）。只收已有代币的组——没币的已经在上面的榜里。
+    #     条件写在 alpha_config.surge：近 30 天收入过门槛，且「收入史很短」（全部历史收入 ≤ 近 60 天的 1.5 倍）或「突然放大」（近 30 天 ≥ 前 30 天的 3 倍）
+    sc = CFG.get("surge") or {}
+    surge = []
+    for ag in allg.values():
+        if not ag["token"] or ag["rev30"] < sc.get("min_rev30_usd", 100000) or not ag["cats"]:
+            continue
+        if max(ag["cats"], key=ag["cats"].get) in tc["exclude_categories"] + sc.get("exclude_categories", []) or any(c["name"] in tc["exclude_names"] for c in ag["children"]):
+            continue
+        young = ag["all"] <= sc.get("young_ratio", 1.5) * (ag["rev30"] + ag["rev_prev30"])
+        acc = ag["rev_prev30"] * sc.get("accel_x", 3) < ag["rev30"]
+        if young or acc:
+            r = grow(ag, "s:" + ag["key"])
+            r["why"] = "+".join(w for w, ok in (("young", young), ("accel", acc)) if ok)
+            surge.append(r)
+    surge.sort(key=lambda r: -r["rev30"])
+
+    # ①c 手动线索（alpha/manual_leads.json：推特 / 社群里看到、数据源还没收录的。登记了 llama 组的带上收入读数）
+    manual = []
+    for m in (load(os.path.join(HERE, "manual_leads.json"), {}) or {}).get("leads", []):
+        ag = allg.get(m.get("llama")) if m.get("llama") else None
+        r = grow(ag, "m:" + m["id"]) if ag else {"key": "m:" + m["id"], "slug": None, "children": None, "category": None, "chains": m.get("chains"), "rev30": None, "chg30": None, "token": bool(m.get("token"))}
+        r.update(name=m["name"], added=m.get("added"), token=bool(m.get("token")) or r.get("token", False))
+        for k2 in ("url", "twitter", "logo"):
+            if m.get(k2):
+                r[k2] = m[k2]
+        manual.append(r)
+
     # ② 新上架协议
     days = CFG["listings"]["days"]
     cut = now.timestamp() - days * 86400
@@ -213,7 +260,7 @@ def main():
                     "baseline": baseline, "first": metric, "tokenless_at_first": not r.get("token", False),
                     "status": "原始线索", "token_seen": None, "last_seen": today}
             if not baseline:
-                events.append({"type": "new_rank" if source == "tokenless_rev" else "new_listing", "key": k, "name": r["name"], **metric})
+                events.append({"type": {"tokenless_rev": "new_rank", "rev_surge": "new_surge", "manual": "manual"}.get(source, "new_listing"), "key": k, "name": r["name"], **metric})
         else:
             L[k]["last_seen"] = today
             if source not in L[k]["source"].split("+"):
@@ -222,6 +269,13 @@ def main():
         reg(r, "tokenless_rev", {"rev30": r["rev30"], "chg30": r["chg30"], "category": r["category"]})
     for r in lst:
         reg(r, "new_listing", {"tvl": r["tvl"], "category": r["category"], "listed": r["listed"]})
+    for r in surge:
+        reg(r, "rev_surge", {"rev30": r["rev30"], "chg30": r["chg30"], "category": r["category"], "why": r["why"]})
+    for r in manual:
+        reg(r, "manual", {"rev30": r.get("rev30"), "category": r.get("category")})
+        if r.get("added") and r["added"] < L[r["key"]]["first_seen"]:
+            L[r["key"]]["first_seen"] = r["added"]
+        L[r["key"]]["baseline"] = False
     # 发币回查：首次发现时无币、现在有代币
     for k, v in L.items():
         if not v.get("tokenless_at_first") or v.get("token_seen"):
@@ -277,7 +331,7 @@ def main():
     out = {"generated": now.isoformat(timespec="seconds"), "asof": asof, "stale": rev is None,
            "baseline_day": min((v["first_seen"] for v in L.values() if v.get("baseline")), default=today),
            "sources": src, "params": {"min_rev30_usd": tc["min_rev30_usd"], "listing_days": days},
-           "tokenless": rows, "listings": lst, "events": events, "feed": feed_recent,
+           "tokenless": rows, "surge": surge, "manual": manual, "listings": lst, "events": events, "feed": feed_recent,
            "ledger": {"n": len(L), "tokenless_rev": sum(1 for v in L.values() if "tokenless_rev" in v["source"]),
                       "new_listing": sum(1 for v in L.values() if "new_listing" in v["source"]),
                       "token_seen": sum(1 for v in L.values() if v.get("token_seen")),

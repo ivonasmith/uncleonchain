@@ -1,5 +1,35 @@
 [
  {
+  "version": "2026.11.15.1",
+  "date": "2026-11-15",
+  "notify": true,
+  "title_zh": "Alpha 雷达：新增两个发现来源、评分雷达图、创新级别 M 置顶",
+  "title_en": "Alpha Radar: two new discovery sources, score radar, novelty (M) up front",
+  "items": [
+   {
+    "type": "new",
+    "zh": "新增发现来源「有币 · 收入新起量」：已有代币的协议，近 30 天协议收入过 10 万美元，而且收入史很短或突然放大（近 30 天 ≥ 前 30 天的 3 倍），当天进看板。之前只看「没发币的协议」和「新上架且 TVL 够大的」，像 Pons 这种有币的新玩法完全看不到。",
+    "en": "New source “token · revenue ramp”: protocols that already have a token, with 30-day revenue above $100K and either a very short revenue history or a 3× jump. Previously only tokenless protocols and large new listings were covered."
+   },
+   {
+    "type": "new",
+    "zh": "新增「手动线索」：推特 / 社群里看到、数据源还没收录的新玩法，登记后当天上看板最上面并排到补证队列最前（第一批：TapeOut / BEM、Pons）。",
+    "en": "New “manual leads”: plays spotted on social media that data sources have not picked up go straight to the top of the board and the research queue."
+   },
+   {
+    "type": "improve",
+    "zh": "每张卡最上面加「玩法创新级别 M」（这个玩法新在哪，0–4，要研究判断）；机制与扩张、当前参与优势八个维度改用雷达图：实心是已查清的分数，虚线是没查清的最多能到哪。案例库同样。",
+    "en": "Each card now leads with the novelty level M (0–4, research-only). The eight score dimensions are shown as a radar: solid = scored, dashed = upper bound of unknowns. Same for the case library."
+   },
+   {
+    "type": "data",
+    "corrections_anchor": "alpha-2026-11-15",
+    "zh": "口径更正：① 相近历史案例不再用系统自动打的分去比（之前多数卡只比上了类目和自动分，钱包也显示「和 YFI 100% 相似」）；玩法没查清时只列同类目案例，给最低–最高范围，不给中位数。② 需求独立性 D 不再自动打 2，收入过门槛只记事实。③ 母协议有币的新上架产品，研究前放预警观察。④ 案例价格的日期标签修正（原来覆盖率被算成 80%–93%，其实数据是全的），主口径改成「首周后一年内最高倍数」；Spacemesh 不再算估值；「流通市值」更名为「总供给市值」。⑤ 团队有已证实不良记录记 -1 分；「代币经济」更名「解锁与抛压」。",
+    "en": "Definition fixes: analog matching no longer uses auto scores and shows a range instead of a median; D is no longer auto-scored; listings under a tokened parent wait on the watchlist until researched; case price date labels fixed, main multiple is now the 1-year max from week 1; Spacemesh valuation dropped; team with a proven bad record scores −1; “token economics” renamed “unlocks & sell pressure”."
+   }
+  ]
+ },
+ {
   "version": "2026.11.14.12",
   "date": "2026-11-14",
   "notify": true,

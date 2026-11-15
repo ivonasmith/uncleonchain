@@ -1969,3 +1969,14 @@ RULE_CHANGES.append(
      "原因EN": "The prototype's 0–3 thresholds were never tested; in the backtest none of R/C/V/D or the total passed.",
      "内容": "立项一轮评分研究（core/research/评分研究立项.md，观测台「评分研究」页签）；研究出结论前页面不打分、不按分数排名，只摆读数与回测结论（分数仍在后台记录，留作样本外检验）。建仓条件判定只用已验证规则（闸门 1/2/3、R4）和流程规则（R1 六问卡）；R2、R3、R6 降为提示。",
      "EN": "Scores and score rankings removed from the page (still logged for out-of-sample tests). The entry verdict counts only verified rules (gates 1/2/3, R4) and the process rule R1; R2, R3 and R6 are info only."})
+
+RULE_CHANGES.append(
+    {"日期": "2026-11-15", "锚": "alpha-2026-11-15", "范围": "Alpha 雷达 · 相近历史案例、自动打分、案例指标", "EN范围": "Alpha Radar · analogs, auto scores, case metrics",
+     "原因": "上线第二天复核（alpha/review/fable_findings_20261115.md）：多数机会卡的「相近历史案例」只比上了类目和系统自动打的分，27 张里 19 张显示同一组案例，钱包类也显示「和 YFI 100% 相似」；"
+             "需求独立性自动打 2 的门槛就是进榜门槛，所有卡都是 2；案例价格按报价自己的日期标，同一天撞两个、另一天空着，覆盖率被算成 80%–93%；Spacemesh 的完全稀释估值比当时流通市值至少高 33 倍。",
+     "原因EN": "A day-two review found that most cards' analogs matched only on class and auto scores, the auto D=2 threshold equalled the list threshold, case price dates were mislabeled, and Spacemesh's FDV overstated its market cap by at least 33×.",
+     "内容": "相似度不再用系统自动分；玩法一项都没查清时只列同类目案例、给最低–最高范围，不给中位数。需求独立性 D 不自动打分，收入过门槛只记事实。母协议有币的新上架产品研究前进预警观察。"
+             "案例价格日期改按当日收盘对齐后重算，主口径改为「首周后一年内最高倍数」；Spacemesh 不算估值；Coin Metrics 口径更名「总供给市值」。团队有已证实不良记录记 -1；「代币经济」更名「解锁与抛压」。"
+             "新增发现来源：有币协议收入新起量、手动线索。",
+     "EN": "Analog matching ignores auto scores and shows a min–max range; D is not auto-scored; listings under a tokened parent wait on the watchlist; case prices re-aligned to daily closes with the 1-year max from week 1 as the main multiple; "
+           "Spacemesh valuation dropped; team with a proven bad record scores −1; two new discovery sources (revenue ramp with token, manual leads)."})

@@ -62,14 +62,16 @@ def build():
         if fn.endswith("_checks.json"):
             for c in load(os.path.join(rd, fn), []) or []:
                 checks[c["key"]] = dict(c, _file=fn)   # 后交的批次覆盖先交的
-    rows = {r["key"]: r for r in latest.get("tokenless", [])}
+    rows = {r["key"]: r for r in latest.get("tokenless", []) + latest.get("surge", []) + latest.get("manual", [])}
+    manual = {"m:" + m["id"]: m for m in (load(os.path.join(HERE, "manual_leads.json"), {}) or {}).get("leads", [])}
     lst = {r["key"]: r for r in latest.get("listings", [])}
     base = latest.get("baseline_day")
     min_tvl = (CFG.get("opps") or {}).get("listing_min_tvl", 5e6)
     min_rev = CFG["tokenless"]["min_rev30_usd"]
 
     keys = list(checks)
-    keys += [k for k, v in leads.items() if k not in checks and k.startswith("g:") and not v.get("baseline") and k in rows]
+    keys += [k for k in manual if k not in checks]                       # 手动线索：登记当天就上看板
+    keys += [k for k, v in leads.items() if k not in checks and k[:2] in ("g:", "s:") and not v.get("baseline") and k in rows]
     keys += [k for k, r in lst.items() if k not in checks and (r.get("tvl") or 0) >= min_tvl]
     cards = []
     for k in dict.fromkeys(keys):
@@ -79,7 +81,9 @@ def build():
         c = checks.get(k)
         name = (c or {}).get("name") or r.get("name") or li.get("name") or L.get("name") or k
         cat = r.get("category") or li.get("category") or (L.get("first") or {}).get("category")
-        has_token = bool(li.get("token")) or bool(L.get("token_seen"))
+        has_token = bool(li.get("token")) or bool(L.get("token_seen")) or bool(r.get("token"))
+        mn = manual.get(k) or {}
+        kind = {"g": "tokenless", "s": "surge", "m": "manual"}.get(k[0], "listing")
         # ---- 分类（自动 → 研究覆盖）
         biz = CAT2BIZ.get(cat)
         cls = {"business": S(biz or "U", "auto", f"DefiLlama 类目「{cat}」→ 映射表" if biz else f"类目「{cat}」不在映射表"),
@@ -89,15 +93,20 @@ def build():
         # ---- 资金参与方式
         entry, entry_why = [], ""
         stance = (c or {}).get("token_stance")
-        if has_token:
+        if has_token and li.get("parent") and not c:
+            # 11-15：母协议有币的新上架产品，没研究前不进可投资——买母币任何时候都能买，说明不了这个新产品
+            entry_why = "母协议已有代币，但这个新产品和母币的关系还没研究，先放预警观察"
+        elif has_token:
             entry, entry_why = ["buy"], ("母协议已有代币，可二级买入母协议代币（新产品本身不单独发币）" if li.get("parent") else "已有代币，可二级买入")
         if stance == "有积分/空投计划":
-            entry.append("use"); entry_why = (entry_why + "；" if entry_why else "") + "官方有积分 / 空投计划（研究补证）"
+            entry.append("use"); entry_why = (entry_why + "；" if entry_why else "") + "官方有积分计划（研究补证）；积分不等于代币，兑现规则未公布"
         if stance == "官方确认不发币":
             entry_why = entry_why or "官方确认不发币"
         ENTRY_KEYS = {o["k"] for o in FW["entry"]["opts"]}
         if c and isinstance(c.get("entry"), list) and c["entry"] and all(e in ENTRY_KEYS for e in c["entry"]):
             entry, entry_why = list(c["entry"]), (c.get("entry_why") or "研究补证给出的资金参与方式")   # 研究结论优先
+        if mn.get("entry") and not (c and c.get("entry")):
+            entry, entry_why = list(mn["entry"]), mn.get("entry_why") or "手动线索登记的参与方式，待补证"
         if not entry:
             entry = ["none"]
             entry_why = entry_why or {"官方表态会发": "官方表态会发币，但还没开放资金参与 → 预警观察，等发币 / 积分开放",
@@ -108,7 +117,8 @@ def build():
         sc["TE"] = S("U") if has_token else S("NA", "auto", "还没有代币，代币经济不适用")   # 投资补充：代币经济
         rev30 = r.get("rev30")
         if rev30 and rev30 >= min_rev:
-            sc["D"] = S(2, "auto", f"近 30 天协议收入 {rev30:,.0f} 美元 ≥ {min_rev:,.0f} → 2（可识别外部客户但账单未核）")
+            # 自动规则 v2（11-15）：收入过门槛只记事实，不再自动打 2——门槛就是进榜门槛，所有卡都是 2，分不出谁是真外部客户
+            sc["D"] = S("U", "auto", f"事实：近 30 天协议收入 {rev30:,.0f} 美元，已过 {min_rev:,.0f} 门槛；是谁在付钱、去掉补贴还剩多少，待研究")
         if c:
             ws = c.get("wash_or_subsidy") or ""
             if c.get("user_role") and c["user_role"] != "U":
@@ -119,12 +129,12 @@ def build():
                 sc["V"] = S(1, "research", "有积分 / 空投计划 → 1（仅排放或升值预期）")
             if "刷量" in ws and ("为主" in ws or "主要" in ws):
                 sc["D"] = S(1, "research", "研究查到刷量 / 补贴为主 → 1")
-            mx = {"TM": 3, "TE": 3}
+            mx, mn_ = {"TM": 3, "TE": 3}, {"TM": -1}                     # 团队有已证实不良记录 = -1（大叔 11-15 定）
             for k2, v2 in (c.get("scores") or {}).items():   # 研究直接给的分（每条要有依据），优先于上面的自动 / 推导分
                 if k2 not in sc or not isinstance(v2, dict):
                     continue
                 val = v2.get("v")
-                if val in ("U", "NA") or (isinstance(val, int) and 0 <= val <= mx.get(k2, 4)):
+                if val in ("U", "NA") or (isinstance(val, int) and mn_.get(k2, 0) <= val <= mx.get(k2, 4)):
                     why = (v2.get("why") or "")[:200] + (f"（来源 {v2['src']}）" if v2.get("src") else "")
                     sc[k2] = S(val, "research", why)
         # ---- 门槛
@@ -137,21 +147,22 @@ def build():
             status = "原始线索"
         # 历史 rev30（台账每天记的）
         rev_hist = [[h["date"], (h.get("rev30") or {}).get(k)] for h in hist if (h.get("rev30") or {}).get(k) is not None]
-        disc = L.get("first_seen")
+        disc = mn.get("added") or L.get("first_seen")
         fresh = bool(disc and not L.get("baseline") and (dt.date.today() - dt.date.fromisoformat(disc)).days <= 3)
         cards.append({
             "fresh": fresh, "reviewer": (c or {}).get("reviewer") or ("codex" if c else None),
-            "id": k.split(":", 1)[1].replace("parent#", ""), "key": k, "name": name,
-            "kind": "tokenless" if k.startswith("g:") else "listing",
-            "discovered": L.get("first_seen"), "baseline": bool(L.get("baseline")),
+            "id": ("m-" if k[0] == "m" else "") + k.split(":", 1)[1].replace("parent#", ""), "key": k, "name": name,
+            "kind": kind, "why_here": r.get("why"), "manual": {x: mn.get(x) for x in ("what", "by", "sources")} if mn else None,
+            "discovered": disc, "baseline": bool(L.get("baseline")),
             "status": status, "status_src": f"alpha/review/{c['_file']}" if c else "auto",
             "bucket": "reject" if status == "拒绝" else ("watch" if entry == ["none"] else "invest"),
             "entry": entry, "entry_why": entry_why, "classes": cls, "scores": sc, "gates": gates,
-            "one_liner": (c or {}).get("one_liner"),
+            "one_liner": (c or {}).get("one_liner") or mn.get("what"),
             "research": {x: (c or {}).get(x) for x in ("token_stance", "token_stance_src", "token_stance_date", "revenue_who", "revenue_method", "wash_or_subsidy",
                                                       "user_role", "counter", "verdict_reason", "missing", "checked_utc")} if c else None,
-            "evidence": [{"url": e.get("url"), "fields": e.get("fields")} for e in (c or {}).get("evidence") or [] if str(e.get("url", "")).startswith("http")],
-            "data": {"category": cat, "chains": r.get("chains") or li.get("chains"), "rev30": rev30, "chg30": r.get("chg30"),
+            "evidence": [{"url": e.get("url"), "fields": e.get("fields")} for e in (c or {}).get("evidence") or [] if str(e.get("url", "")).startswith("http")]
+                        or [{"url": u, "fields": ["手动线索出处"]} for u in mn.get("sources") or []],
+            "data": {"category": cat, "chains": r.get("chains") or li.get("chains"), "rev30": rev30, "chg30": r.get("chg30"), "rev_all": r.get("rev_all"), "llama": mn.get("llama"),
                      "tvl": li.get("tvl"), "listed": li.get("listed"), "slug": r.get("slug") or li.get("slug") or L.get("slug"),
                      "url": home(r.get("url") or li.get("url")), "logo": r.get("logo") or li.get("logo"), "twitter": r.get("twitter") or li.get("twitter"),
                      "children": r.get("children"), "token": has_token, "token_seen": L.get("token_seen"), "rev_hist": rev_hist},
@@ -171,8 +182,9 @@ def series(cards):
     os.makedirs(os.path.join(OUT, "rev"), exist_ok=True)
     for c in cards:
         k = c["key"]
-        slug = k[len("g:parent#"):] if k.startswith("g:parent#") else c["data"].get("slug")
-        if not slug or c["kind"] != "tokenless":
+        g = c["data"].get("llama") or k[2:]
+        slug = g[len("parent#"):] if g.startswith("parent#") else c["data"].get("slug")
+        if not slug or c["kind"] == "listing":
             continue
         try:
             d = get(f"https://api.llama.fi/summary/fees/{slug}?dataType=dailyRevenue")
@@ -190,7 +202,7 @@ def series(cards):
 QUEUE_PROMPT = """你在给「链上大叔研究台」Alpha 雷达补证（只研究正规项目，不写买卖建议）。对清单里每个协议，查官方网站 / 文档 / 公告、DefiLlama 方法论和可核对的链上信息，
 按下面格式交一个 JSON 数组（文件名 <日期>_checks.json）。第一项 one_liner 用一句大白话说清它是什么（给没听过的人看）。每条事实带来源链接和核对日期；查不到写 "U"，不要估，不要编。
 结论 verdict 只能是：研究观察（对象明确、有可证伪假设、没查到否决项）/ 待核验（关键事实缺失或冲突，写清缺什么）/ 拒绝（身份错误、已确认风险、其实已有代币、不是对普通人开放的正规项目，写证据）。
-分数按 framework.json 附录一锚点给（M A F E G T 是 0–4，TM TE 是 0–3，不知道写 U，没有代币时 TE 写 NA），每个分数写 why 和 src。
+分数按 framework.json 附录一锚点给（M A F E G T D 是 0–4；TM 是 -1–3，有已证实不良记录给 -1；TE 是 0–3；不知道写 U，没有代币时 TE 写 NA）。M（新参与机制：这个玩法新在哪）优先查，每个分数写 why 和 src。
 资金参与方式 entry 从 buy / stake / points / use / presale / mine / none 里选（none = 暂时没有资金入口），写 entry_why。"""
 
 QUEUE_SCHEMA = {"key": "清单里的 key（原样）", "name": "名称", "one_liner": "一句话介绍：它是什么、给谁用、靠什么收钱（30 字内，大白话）", "reviewer": "claude-auto 或 codex", "checked_utc": "核对时间 ISO",
@@ -208,7 +220,7 @@ def queue(cards):
     q.sort(key=lambda c: (not c["fresh"], c["bucket"] != "invest", c["status"] != "原始线索", -(c["data"]["rev30"] or c["data"]["tvl"] or 0)))
     items = [{"key": c["key"], "name": c["name"], "status": c["status"], "kind": c["kind"], "fresh": c["fresh"], "bucket": c["bucket"],
               "discovered": c["discovered"], "category": c["data"]["category"], "chains": c["data"]["chains"], "rev30": c["data"]["rev30"], "tvl": c["data"]["tvl"],
-              "defillama": f"https://defillama.com/protocol/{c['data']['slug']}" if c["data"].get("slug") else None,
+              "defillama": f"https://defillama.com/protocol/{c['data']['slug']}" if c["data"].get("slug") else None, "manual": c.get("manual"),
               "pending": [k for k, v in c["scores"].items() if v["v"] == "U" and k not in ("P", "L")],
               "missing_before": (c.get("research") or {}).get("missing") or []} for c in q]
     return {"generated": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"), "n": len(items), "prompt": QUEUE_PROMPT, "schema": QUEUE_SCHEMA, "items": items}

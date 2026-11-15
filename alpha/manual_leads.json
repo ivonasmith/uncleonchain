@@ -1,0 +1,38 @@
+{
+ "_说明": "手动线索：推特 / 社群里看到、数据源还没收录或漏掉的新玩法。写进来当天就上机会看板最上面（新发现），并排到补证队列最前。只登记事实和出处，不写结论；结论等研究补证。llama = DefiLlama 协议组（parent#xxx 或协议 id），有就带收入读数。 entry / entry_why 可选（buy / stake / points / use / presale / mine）。",
+ "leads": [
+  {
+   "id": "bem-tapeout",
+   "name": "TapeOut / BEM",
+   "added": "2026-11-15",
+   "by": "大叔（推特看到有人挖矿赚钱）",
+   "token": true,
+   "chains": [
+    "BSC"
+   ],
+   "what": "BNB Chain 上的「设计证明」挖矿：用户用虚拟晶体管搭数字电路，按设计效率在链上验证后拿 BEM 奖励；总量 2,100 万、约四年减半（交易所博客口径，未核对合约）。",
+   "sources": [
+    "https://www.bitrue.com/blog/what-is-bem-crypto",
+    "https://www.kucoin.com/blog/what-is-bem-token-tapeout-protocol-proof-of-design"
+   ],
+   "entry": [
+    "mine",
+    "buy"
+   ],
+   "entry_why": "按设计效率挖矿拿 BEM，也可以二级买入（出处是交易所博客，待补证）"
+  },
+  {
+   "id": "pons",
+   "name": "Pons",
+   "added": "2026-11-15",
+   "by": "大叔",
+   "token": true,
+   "llama": "parent#pons",
+   "what": "Robinhood Chain 上的发币平台，2026-07 上线、08 月出 V2；协议费用于回购销毁 PONS（媒体口径，未核对合约）。收入高峰在 9 月，系统 11-14 才开始记录，所以没赶上。",
+   "sources": [
+    "https://www.theblock.co/news/ecosystems/2026-09-08-pons-propels-robinhood-chain-fees-record-6-million-daily-fees-doubles-413852",
+    "https://decrypt.co/377349/pons-robinhood-chain-meme-coin-token-factory"
+   ]
+  }
+ ]
+}

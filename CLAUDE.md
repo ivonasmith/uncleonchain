@@ -99,6 +99,10 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
   给 Fable 的检查清单 `alpha/review/fable_checklist.md`。
   页面布局（11-14 大叔定）：看板 / 案例库是左列表右详情（`boardList` / `boardDetail`，`caseDetail`），核心信息在上；**改版时收起来的参数一律放进底部「完整拆解」/ 折叠区，不许删**（大叔要自己看哪些被藏了）。
   官网链接 = DefiLlama `url` 只留域名首页（`opps.home`，不带推荐码），logo = DefiLlama `logo`（加载失败显示首字母）；案例的官网 / logo 手写在 `cases.json`。
+  **11-15 Fable 复核后改动（大叔点头）**：复核结果 `alpha/review/fable_findings_20261115.md`。发现来源加两个：`alpha_daily.py` ①b「有币 · 收入新起量」（key `s:`，参数 `alpha_config.surge`）、①c 手动线索 `alpha/manual_leads.json`（key `m:`，卡片 id `m-…`；大叔在推特看到的新玩法写这里，当天上看板）。
+  自动规则 v2：D 不再自动打分（只记事实）；母协议有币的新上架未研究前进预警观察；相似度不用自动分（`alpha.js` `analogs`），没有研究分时只列同类目案例、给范围不给中位数。
+  投资补充：TM 团队 -1–3（-1 = 有已证实不良记录，`penalty`）；TE 更名「解锁与抛压」（只看流通比例和解锁，不评分配设计）。卡片顶部 `mTile`（创新级别 M）+ `radar`（八维雷达图）。大叔：炒新不炒旧，M 最重要，补证优先查 M。
+  案例指标：日期标签按「最近 0 点的前一天」（= 当日收盘），主口径 `mult_p7_365`；估值两种口径都含未解锁份额，流通口径待补（要在 cases.json 手工登记峰值日流通量）。
   数据管理：原始层（data/alpha 接口原样）→ 清洗层（线索台账、案例指标）→ 应用层（机会卡、周复盘）。每周复盘 `alpha/weekly.py` → `data/alpha/weekly/<周>.json/.md`；Notion 单独的「Alpha 雷达」入口页（大叔：每个板块各自一个入口，不和别的板块混放）。
   云端环境 uncleonchain 11-14 已放行 ethresear.ch、hub.snapshot.org、www.binance.com、api.bybit.com、api-manager.upbit.com；Bybit（CloudFront 按国家拦）、Upbit（Cloudflare 人机验证）实测不通，没接。Binance pageSize 超过 20 会 400。
 - 发射台活动温度（`pipeline/周期观察.py` 数据与热潮识别、`周期仪表盘.py` 展示）：每日更新。序列 = 研究快照 `content/cycle/snapshot.json`（截至 2026-10-17，sha256 在 manifest）+ 之后接 `发射台矩阵.json`「历史」的类目合计；热潮规则重算快照区间 27 轮逐字段对上（对不上会打 ⚠️）。

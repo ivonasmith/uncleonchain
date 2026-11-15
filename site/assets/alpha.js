@@ -56,10 +56,12 @@
       const a = q.scores[k], b = c.scores[k];
       if (a !== '' && a != null && a !== 'U' && b !== 'U' && b != null) { w += 4; d += Math.abs(Number(a) - Number(b)); used.push(k); }
     }
+    const kn = NUM.filter(k => { const a = q.scores[k], b = c.scores[k]; return a !== '' && a != null && a !== 'U' && b !== 'U' && b != null; });
+    if (!kn.length) return q.business && q.business === c.classes.business ? { sim: null, n: 0, mode: 'cat', hasM: false } : null;   // 玩法一项都没查清：只列同类目案例，不算相似度
     if (used.length < 3 && w < 12) return null;   // 至少比 3 项（类别一致或分数都已知）才比较
     let n = 0; for (const k of ['business', 'right', 'opportunity']) if (q[k] && c.classes[k]) n++; for (const k of NUM) { const a = q.scores[k], b = c.scores[k]; if (a !== '' && a != null && a !== 'U' && b !== 'U' && b != null) n++; }
     if (n < 3) return null;
-    return { sim: 1 - d / w, n };
+    return { sim: 1 - d / w, n, mode: 'play', hasM: kn.includes('M') };
   }
 
   /* ====================================================================== 评估器 */
@@ -199,7 +201,7 @@
     const planes = f.monitor.planes.filter(p => want.has(p.k));
     // 相似案例
     const q = { business: S.business, right: S.right === 'none' ? '' : S.right, opportunity: S.opportunity, scores: S.scores };
-    const sims = CASES.cases.map(c => ({ c, s: similar(q, c), o: outcome(c) })).filter(x => x.s).sort((a, b) => b.s.sim - a.s.sim).slice(0, 6);
+    const sims = CASES.cases.map(c => ({ c, s: similar(q, c), o: outcome(c) })).filter(x => x.s && x.s.mode === 'play').sort((a, b) => b.s.sim - a.s.sim).slice(0, 6);
     const withOut = sims.filter(x => x.o.tok);
     const rng = (arr, fmt) => { const v = arr.filter(x => x != null && isFinite(x)).sort((a, b) => a - b); if (!v.length) return '—'; return `<span class="range">${fmt(v[0])} · <span class="md">${fmt(med(v))}</span> · ${fmt(v[v.length - 1])}</span>`; };
 
@@ -318,19 +320,44 @@
   const meter = x => x ? `<div class="meter"><i style="left:0;width:${x.lo}%"></i><i class="span" style="left:${x.lo}%;width:${x.hi - x.lo}%"></i></div>` : '';
   function analogs(card, k) {
     const q = { business: card.classes.business.v === 'U' ? '' : card.classes.business.v, right: card.classes.right.v === 'none' ? '' : card.classes.right.v,
-                opportunity: card.classes.opportunity.v, scores: Object.fromEntries(Object.entries(card.scores).map(([a, b]) => [a, b.v])) };
-    return CASES.cases.filter(c => c.id !== card.caseId).map(c => ({ c, s: similar(q, c), o: outcome(c) })).filter(x => x.s).sort((a, b) => b.s.sim - a.s.sim).slice(0, k || 5);
+                opportunity: card.classes.opportunity.v, scores: Object.fromEntries(Object.entries(card.scores).map(([a, b]) => [a, b.src === 'auto' ? 'U' : b.v])) };   // 系统自动打的分不参与（11-15）
+    const all = CASES.cases.filter(c => c.id !== card.caseId).map(c => ({ c, s: similar(q, c), o: outcome(c) })).filter(x => x.s);
+    const play = all.filter(x => x.s.mode === 'play').sort((a, b) => b.s.sim - a.s.sim).slice(0, k || 5);
+    return play.length ? play : all.filter(x => !x.c.control).sort((a, b) => ((b.o.tok || {}).val_peak || 0) - ((a.o.tok || {}).val_peak || 0));
   }
-  const ANALOG_TIP = T('按需求来源、资产权利、机会类型和 M / E / V / D 找最像的历史案例（括号里是真正比上的项数，越少越不可靠）。历史对照不是预测：样本 25 个、大多是后来成功的项目，案例分数是事后回溯打的。',
+  const m7y = t => t.mult_p7_365 != null ? t.mult_p7_365 : t.mult_p7;
+  const rngOf = (arr, fmt) => { const v = arr.filter(x => x != null && isFinite(x)).sort((a, b) => a - b); return v.length ? (v.length === 1 ? fmt(v[0]) : `${fmt(v[0])} – ${fmt(v[v.length - 1])}`) : '—'; };
+  const ANALOG_TIP = T('研究给出玩法分数（M 创新级别、E 独立扩散、V 价值归属、D 需求独立）后，按这些分数加类目找最像的历史案例；系统自动打的分不参与。玩法一项都没查清时，只列同类目的历史案例，不算相似度。给的是范围（最低 – 最高），不是目标价：样本 25 个、大多是后来成功的项目，案例分数是事后回溯打的，估值含未解锁份额。',
     'Closest historical cases by demand source, asset right, opportunity type and M / E / V / D (brackets: dimensions actually compared). Not a forecast: 25 mostly successful cases with retrospective scores.');
   function analogTable(sims) {
-    return `<div class="tw"><table><thead><tr><th class="l">${T('案例', 'Case')}</th><th>${T('相似', 'Sim')}</th><th>${T('估值峰值', 'Peak val.')}</th><th>${T('首周后倍数', '×wk-1')}</th><th>${T('到峰', 'To peak')}</th></tr></thead><tbody>
-      ${sims.map(x => `<tr class="go" data-case="${x.c.id}"><td class="l">${esc(x.c.name)}${x.c.control ? ` <span class="tag ctl">${T('对照', 'control')}</span>` : ''}</td><td>${Math.round(x.s.sim * 100)}% <span class="muted">(${x.s.n})</span></td><td>${x.o.tok ? usd(x.o.tok.val_peak) : '—'}</td><td>${x.o.tok ? mx(x.o.tok.mult_p7) : '—'}</td><td>${x.o.tok ? dd(x.o.tok.days_to_peak) : '—'}</td></tr>`).join('')}</tbody></table></div>`;
+    return `<div class="tw"><table><thead><tr><th class="l">${T('案例', 'Case')}</th><th>${T('相似', 'Sim')}</th><th>${T('估值峰值', 'Peak val.')}</th><th>${T('首周后一年内', '×wk-1, 1y')}</th><th>${T('到峰', 'To peak')}</th></tr></thead><tbody>
+      ${sims.map(x => `<tr class="go" data-case="${x.c.id}"><td class="l">${esc(x.c.name)}${x.c.control ? ` <span class="tag ctl">${T('对照', 'control')}</span>` : ''}</td><td>${x.s.mode === 'cat' ? `<span class="muted">${T('同类目', 'same class')}</span>` : `${Math.round(x.s.sim * 100)}% <span class="muted">(${x.s.n})</span>`}</td><td>${x.o.tok ? usd(x.o.tok.val_peak) : '—'}</td><td>${x.o.tok ? mx(m7y(x.o.tok)) : '—'}</td><td>${x.o.tok ? dd(x.o.tok.days_to_peak) : '—'}</td></tr>`).join('')}</tbody></table></div>`;
+  }
+  const AXES = () => FW.scores.mech.items.concat(FW.scores.part.items.filter(i => !i.private));
+  const known = v => v !== 'U' && v !== 'NA' && v != null && v !== '';
+  function radar(card) {
+    const ax = AXES(), n = ax.length, W = 300, C = W / 2, R = 104;
+    const pt = (i, v) => { const a = -Math.PI / 2 + i * 2 * Math.PI / n; return [C + R * v / 4 * Math.cos(a), C + R * v / 4 * Math.sin(a)]; };
+    const poly = f => ax.map((it, i) => pt(i, f((card.scores[it.k] || {}).v)).map(x => x.toFixed(1)).join(',')).join(' ');
+    let g = [1, 2, 3, 4].map(r => `<polygon class="ring" points="${ax.map((_, i) => pt(i, r).map(x => x.toFixed(1)).join(',')).join(' ')}"/>`).join('');
+    g += ax.map((_, i) => { const [x, y] = pt(i, 4); return `<line class="ring" x1="${C}" y1="${C}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}"/>`; }).join('');
+    g += `<polygon class="hi" points="${poly(v => known(v) ? Number(v) : 4)}"/><polygon class="lo" points="${poly(v => known(v) ? Number(v) : 0)}"/>`;
+    g += ax.map((it, i) => { const v = (card.scores[it.k] || {}).v, k = known(v); const [x, y] = pt(i, k ? Number(v) : 0); const [lx, ly] = pt(i, 4.75);
+      return (k ? `<circle class="dotk" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3.5"/>` : '') + `<text class="${k ? 'k' : 'u'}" x="${lx.toFixed(1)}" y="${(ly + 4).toFixed(1)}" text-anchor="middle">${it.k} ${k ? v : '?'}<title>${esc(it.name)}：${k ? esc(it.anchors[v] || '') : T('待研究补证', 'pending research')}</title></text>`; }).join('');
+    const nk = ax.filter(it => known((card.scores[it.k] || {}).v)).length;
+    return `<div class="ax-radar"><svg viewBox="0 0 ${W} ${W}" role="img" aria-label="${T('评分雷达图', 'Score radar')}">${g}</svg>
+      <div class="lg"><p class="small muted">${T(`八个维度，每项 0–4。实心 = 已查清的分数；虚线 = 没查清的按满分算能到哪。查清 ${nk} / ${n}。`, `Eight dimensions, 0–4. Solid = scored; dashed = unknowns at max. ${nk} / ${n} covered.`)}</p>
+        ${ax.map(it => { const sc = card.scores[it.k] || {}, k = known(sc.v); return `<div class="row${k ? '' : ' u'}"><b>${it.k}</b><span>${esc(it.name)}</span><em>${k ? sc.v + '/4' : '?'}</em><i>${k ? esc(it.anchors[sc.v] || '') : esc(it.q || '')}</i></div>`; }).join('')}</div></div>`;
+  }
+  function mTile(card) {
+    const it = FW.scores.mech.items.find(i => i.k === 'M'), sc = card.scores.M || {}, k = known(sc.v);
+    return `<div class="glass hero"><div class="k">${T('玩法创新级别 M', 'Novelty of the play (M)')}${tip(T('这个玩法新在哪：0 只是改名 · 1 改参数 · 2 老机制新组合 · 3 有能跑的新资产 / 新生产动作 · 4 被多个独立产品验证可复用。要研究判断，系统不自动打。', 'How new the mechanism is, 0–4. Needs research; never auto-scored.'))}</div>
+      <div class="v${k && sc.v >= 3 ? ' t-up' : ''}">${k ? 'M' + sc.v : T('待研究', 'Pending')}</div><div class="s">${k ? esc(it.anchors[sc.v]) : T('这个玩法新在哪，还没查', 'not researched yet')}</div></div>`;
   }
   function scoreTable(card, grp, max) {
     const g = FW.scores[grp];
     return `<div class="tw"><table><tbody>${g.items.filter(i => !i.private).map(it => { const s = card.scores[it.k] || {}; const v = s.v; const known = v !== 'U' && v !== 'NA' && v != null && v !== '';
-      return `<tr><td class="l" style="width:34%"><b>${it.k}</b> ${esc(it.name)}<div class="small muted">${esc(it.q || '')}</div></td><td style="width:44px">${known ? `<b>${v}</b><span class="muted">/${max}</span>` : `<span class="muted">${v === 'NA' ? 'NA' : 'U'}</span>`}</td><td class="l small wrapc">${known ? esc(it.anchors[v]) : `<span class="muted">${v === 'NA' ? T('不适用', 'n/a') : T('待研究补证', 'pending research')}</span>`}${s.why ? `<div class="muted">${esc(s.why)}</div>` : ''}</td><td class="l" style="width:52px">${srcTag(s.src)}</td></tr>`; }).join('')}</tbody></table></div>`;
+      return `<tr><td class="l" style="width:34%"><b>${it.k}</b> ${esc(it.name)}<div class="small muted">${esc(it.q || '')}</div></td><td style="width:44px">${known ? `<b${v < 0 ? ' class="t-dn"' : ''}>${v}</b><span class="muted">/${max}</span>` : `<span class="muted">${v === 'NA' ? 'NA' : 'U'}</span>`}</td><td class="l small wrapc">${known ? esc(v < 0 ? (it.penalty || {})[v] || '' : it.anchors[v]) : `<span class="muted">${v === 'NA' ? T('不适用', 'n/a') : T('待研究补证', 'pending research')}</span>`}${s.why ? `<div class="muted">${esc(s.why)}</div>` : ''}</td><td class="l" style="width:52px">${srcTag(s.src)}</td></tr>`; }).join('')}</tbody></table></div>`;
   }
   function classRows(card) {
     const A = Object.fromEntries(FW.classes.attribute.opts.map(o => [o.k, o.name]));
@@ -339,7 +366,7 @@
   }
   function rangeRows(w) {
     const rng = (arr, fmt) => { const v = arr.filter(x => x != null && isFinite(x)).sort((a, b) => a - b); return v.length ? `${fmt(v[0])} · <b>${fmt(med(v))}</b> · ${fmt(v[v.length - 1])}` : '—'; };
-    return `<dl class="ax-dl"><dt>${T('估值峰值', 'Peak val.')}</dt><dd>${rng(w.map(x => x.o.tok.val_peak), usd)}</dd><dt>${T('首周后倍数', '×wk-1')}</dt><dd>${rng(w.map(x => x.o.tok.mult_p7), mx)}</dd>
+    return `<dl class="ax-dl"><dt>${T('估值峰值', 'Peak val.')}</dt><dd>${rng(w.map(x => x.o.tok.val_peak), usd)}</dd><dt>${T('首周后一年内倍数', '×wk-1, 1y')}</dt><dd>${rng(w.map(x => m7y(x.o.tok)), mx)}</dd><dt>${T('首周后至今最高', '×wk-1, all')}</dt><dd>${rng(w.map(x => x.o.tok.mult_p7), mx)}</dd>
       <dt>${T('相对 BTC', 'vs BTC')}</dt><dd>${rng(w.map(x => x.o.tok.rel_btc_peak_p7), mx)}</dd><dt>${T('到峰天数', 'To peak')}</dt><dd>${rng(w.map(x => x.o.tok.days_to_peak), v => Math.round(v))}</dd>
       <dt>${T('一年内 ≥2× 天数', '≥2× days yr-1')}</dt><dd>${rng(w.map(x => x.o.tok.days_ge2x_365), v => Math.round(v))}</dd></dl>`;
   }
@@ -371,7 +398,7 @@
       return `<button type="button" class="md-row${o.id === SELID ? ' on' : ''}" data-id="${esc(o.id)}">
         <span class="r1"><span class="nm">${logo(d.logo, o.name, 20)}<b>${esc(o.name)}</b></span><i class="dot t-${STC[o.status] || 'neutral'}" title="${esc(o.status)}"></i></span>
         <span class="r2"><span>${d.rev30 != null ? usd(v) : (v ? 'TVL ' + usd(v) : '—')} ${pct(d.chg30)}</span>${sparkSvg(o.spark, (d.chg30 || 0) >= 0 ? 'up' : 'dn', 64, 18)}</span>
-        <span class="r3">${o.entry.filter(e => e !== 'none').map(e => esc(ENTRY()[e])).join(' · ') || `<span class="muted">${T('暂无资金入口', 'No entry yet')}</span>`}</span></button>`; };
+        <span class="r3"><em class="mtag${known((o.scores.M || {}).v) ? ' k' : ''}">M${known((o.scores.M || {}).v) ? o.scores.M.v : '?'}</em>${o.entry.filter(e => e !== 'none').map(e => esc(ENTRY()[e])).join(' · ') || `<span class="muted">${T('暂无资金入口', 'No entry yet')}</span>`}</span></button>`; };
     return `<div class="fg md-filter">${[['invest', T('可投资', 'Investable')], ['watch', T('预警观察', 'Watchlist')], ['all', T('全部', 'All')], ['reject', T('已拒绝', 'Rejected')]]
         .map(([k, l]) => `<button type="button" class="pill${BF === k ? ' on' : ''}" data-bf="${k}">${l}<small>${k === 'all' ? os.filter(o => o.bucket !== 'reject').length : os.filter(o => o.bucket === k).length}</small></button>`).join('')}</div>
       ${groups.filter(g => g[1].length).map(([t, xs]) => `<div class="md-grp">${t}<span>${xs.length}</span></div>${xs.map(row).join('')}`).join('') || `<p class="muted small" style="padding:12px">${T('这一栏暂时没有。', 'Nothing here yet.')}</p>`}`;
@@ -380,7 +407,9 @@
     if (!o) return `<div class="card" style="padding:24px" class="muted">${T('左边选一个机会。', 'Pick an opportunity on the left.')}</div>`;
     const d = o.data, R = o.research || {}, iv = cardIntervals(o), En = ENTRY();
     const sims = analogs(o, 5), w = sims.filter(x => x.o.tok);
-    const vm = med(w.map(x => x.o.tok.val_peak)), m7 = med(w.map(x => x.o.tok.mult_p7));
+    const amode = sims.length ? sims[0].s.mode : null, hasM = sims.some(x => x.s.hasM);
+    const ax = AXES(), nk = ax.filter(it => known((o.scores[it.k] || {}).v)).length;
+    const KIND = { tokenless: T('无币协议', 'tokenless protocol'), surge: T('有币 · 收入新起量', 'token · revenue ramp'), manual: T('手动线索', 'manual lead'), listing: T('新上架协议', 'new listing') };
     const gatesOpen = FW.gates.items.filter(x => !x.private && (o.gates[x.k] || {}).v !== '通过').map(x => `${x.name}：${(o.gates[x.k] || {}).v || 'U'}`);
     const list = (OPPS.opps.filter(x => BF === 'all' ? x.bucket !== 'reject' : x.bucket === BF));
     const idx = list.findIndex(x => x.id === o.id);
@@ -390,15 +419,16 @@
       <div class="ax-entry">${o.entry.map(e => `<span class="ent${e === 'none' ? ' none' : ''}">${esc(En[e] || e)}</span>`).join('')}<span class="muted small">${esc(o.entry_why || '')}</span></div>
       <div class="ax-meta small muted">${T('发现', 'Seen')} ${esc(o.discovered || '—')} · ${o.reviewer === 'claude-auto' ? T('补证：Claude 自动', 'Research: Claude (auto)') : o.reviewer ? T('补证：Codex', 'Research: Codex') : T('还没补证：只有系统按数据打的分', 'Not researched yet: system scores only')}${R.checked_utc ? ' · ' + esc(R.checked_utc.slice(0, 10)) : ''}</div></div>`;
     h += `<div class="grid g4 ax-kpis">
-      <div class="glass hero"><div class="k">${d.rev30 != null ? T('30 天协议收入', '30d protocol revenue') : 'TVL'}<span>${d.rev30 != null ? T('环比', 'vs prior') : ''}</span></div><div class="v">${usd(d.rev30 != null ? d.rev30 : d.tvl)}</div><div class="s">${d.rev30 != null ? (d.chg30 == null ? T('前 30 天没有收入', 'no prior revenue') : pct(d.chg30) + T(' 比前 30 天', ' vs prior 30d')) : T('新上架，还没有收入读数', 'new listing, no revenue yet')}</div>${sparkSvg(o.spark, (d.chg30 || 0) >= 0 ? 'up' : 'dn', 200, 30)}</div>
-      <div class="glass hero"><div class="k">${T('机制与扩张', 'Mechanism')}${tip(T('新参与机制、可达性、分配公平、独立扩散、价值归属五项，每项 0–4。区间下沿 = 已查清的得分，上沿 = 未知项全按满分；覆盖率 = 查清了几成。', 'Five items 0–4; range low = scored so far, high = unknowns at max.'))}</div><div class="v">${iv.mech.lo}–${iv.mech.hi}</div><div class="s">${T('查清', 'covered')} ${Math.round(iv.mech.cov * 100)}%</div>${meter(iv.mech)}</div>
-      <div class="glass hero"><div class="k">${T('当前参与优势', 'Participation')}${tip(T('有效增长、需求独立性、当前窗口三项（个人执行项不公开），每项 0–4。', 'Growth, demand independence, window; 0–4 each.'))}</div><div class="v">${iv.part.lo}–${iv.part.hi}</div><div class="s">${T('查清', 'covered')} ${Math.round(iv.part.cov * 100)}%</div>${meter(iv.part)}</div>
-      <div class="glass hero"><div class="k">${T('相近历史案例', 'Closest cases')}${tip(ANALOG_TIP)}</div><div class="v">${w.length ? usd(vm) : '—'}</div><div class="s">${w.length ? T(`估值峰值中位 · ${w.length} 个案例 · 首周后中位 ${mx(m7)}`, `median peak valuation · ${w.length} cases · ${mx(m7)}`) : T('已知维度太少，还找不到可比案例', 'too few known dimensions')}</div></div></div>`;
+      <div class="glass hero"><div class="k">${d.rev30 != null ? T('30 天协议收入', '30d protocol revenue') : o.kind === 'manual' ? T('协议读数', 'Protocol data') : 'TVL'}<span>${d.rev30 != null ? T('环比', 'vs prior') : ''}</span></div><div class="v">${usd(d.rev30 != null ? d.rev30 : d.tvl)}</div><div class="s">${d.rev30 != null ? (d.chg30 == null ? T('前 30 天没有收入', 'no prior revenue') : pct(d.chg30) + T(' 比前 30 天', ' vs prior 30d')) : (o.kind === 'manual' ? T('数据源还没收录，等补证', 'not covered by data sources yet') : T('新上架，还没有收入读数', 'new listing, no revenue yet'))}</div>${sparkSvg(o.spark, (d.chg30 || 0) >= 0 ? 'up' : 'dn', 200, 30)}</div>
+      ${mTile(o)}
+      <div class="glass hero"><div class="k">${T('查清了多少', 'Coverage')}${tip(T('八个评分维度里已经有分数的个数。机制与扩张（M A F E V）、当前参与优势（G D T）的区间见下面的雷达图和「完整拆解」。', 'How many of the eight score dimensions are known.'))}</div><div class="v">${nk}<span class="muted" style="font-size:15px"> / ${ax.length}</span></div><div class="s">${T('机制', 'mech')} ${iv.mech.lo}–${iv.mech.hi} · ${T('参与', 'part')} ${iv.part.lo}–${iv.part.hi}</div>${meter({ lo: Math.round(100 * nk / ax.length), hi: Math.round(100 * nk / ax.length) })}</div>
+      <div class="glass hero"><div class="k">${amode === 'cat' ? T('同类目历史案例', 'Same-class cases') : T('相近历史案例', 'Closest cases')}${tip(ANALOG_TIP)}</div><div class="v" style="font-size:19px">${w.length ? rngOf(w.map(x => x.o.tok.val_peak), usd) : '—'}</div><div class="s">${!w.length ? T('这个类目还没有历史案例', 'no cases in this class yet') : amode === 'cat' ? T(`估值峰值范围 · ${w.length} 个同类目案例 · 玩法还没查，只按类目列`, `peak valuation range · ${w.length} same-class cases · play not researched`) : T(`估值峰值范围 · ${w.length} 个案例 · ${hasM ? '已按创新级别比' : '还没比创新级别 M'}`, `peak valuation range · ${w.length} cases · ${hasM ? 'M compared' : 'M not compared'}`)}</div></div></div>
+    <div class="card ax-box" style="margin-top:12px"><h3>${T('评分雷达', 'Score radar')}${tip(T('机制与扩张：M 新参与机制、A 有效可达性、F 分配公平、E 独立扩散、V 价值归属。当前参与优势：G 有效增长、D 需求独立性、T 当前窗口。每项的打分依据在「完整拆解」。', 'Mechanism: M A F E V. Participation: G D T. Reasons in the full teardown.'))}</h3>${radar(o)}</div>`;
     h += d.rev30 != null ? `<div class="card ax-chart"><h3>${T('协议收入 · 近 180 天', 'Protocol revenue · last 180 days')}</h3><div data-chart="${esc(JSON.stringify({ v2: true, src: `/data/alpha/rev/${o.id}.json`, fmt: 'usd', series: [{ k: 'rev', n: T('每日协议收入', 'Daily revenue'), c: 's1', area: true }], note: T('DefiLlama dailyRevenue（协议留存的收入，不是持有人所得）。', 'DefiLlama dailyRevenue (protocol-retained, not holder income).') }))}"></div></div>` : '';
     h += `<div class="grid g2" style="margin-top:12px">
-      <div class="card ax-box up"><h3>${T('为什么在看', 'Why it is here')}</h3>${R.verdict_reason ? `<p>${esc(R.verdict_reason)}</p>` : `<p class="muted">${T('系统按数据收进来：', 'Added by data rule: ')}${o.kind === 'tokenless' ? T('没发币、近 30 天协议收入达到门槛。', 'tokenless with revenue above threshold.') : T('新上架、TVL 达到门槛。', 'new listing with TVL above threshold.')}</p>`}${R.user_role && R.user_role !== 'U' ? `<p><span class="muted">${T('普通人怎么参与：', 'How to take part: ')}</span>${esc(R.user_role)}</p>` : ''}</div>
+      <div class="card ax-box up"><h3>${T('为什么在看', 'Why it is here')}</h3>${R.verdict_reason ? `<p>${esc(R.verdict_reason)}</p>` : `<p class="muted">${T('系统按数据收进来：', 'Added by data rule: ')}${o.kind === 'tokenless' ? T('没发币、近 30 天协议收入达到门槛。', 'tokenless with revenue above threshold.') : o.kind === 'surge' ? T('已有代币，近 30 天收入过门槛，而且收入史很短或突然放大。', 'has a token; revenue above threshold and young or accelerating.') : o.kind === 'manual' ? T('手动登记的线索（推特 / 社群里看到的），等研究补证。', 'manually added lead, pending research.') : T('新上架、TVL 达到门槛。', 'new listing with TVL above threshold.')}</p>`}${R.user_role && R.user_role !== 'U' ? `<p><span class="muted">${T('普通人怎么参与：', 'How to take part: ')}</span>${esc(R.user_role)}</p>` : ''}</div>
       <div class="card ax-box dn"><h3>${T('最大的风险', 'Biggest risk')}</h3>${R.counter && R.counter !== 'U' ? `<p>${esc(R.counter)}</p>` : `<p class="muted">${T('还没研究出最强反方。', 'No counter-argument researched yet.')}</p>`}${gatesOpen.length ? `<p class="small muted">${T('门槛未过：', 'Gates open: ')}${esc(gatesOpen.join('；'))}</p>` : ''}${R.wash_or_subsidy && R.wash_or_subsidy !== 'U' ? `<p class="small muted">${T('刷量 / 补贴：', 'Wash / subsidy: ')}${esc(R.wash_or_subsidy)}</p>` : ''}</div></div>`;
-    if (sims.length) h += `<div class="card ax-box" style="margin-top:12px"><h3>${T('最像它的历史案例', 'Closest historical cases')}${tip(ANALOG_TIP)}</h3>${analogTable(sims)}</div>`;
+    if (sims.length) h += `<div class="card ax-box" style="margin-top:12px"><h3>${amode === 'cat' ? T('同类目的历史案例（玩法还没查，不算相似度）', 'Same-class historical cases (play not researched)') : T('最像它的历史案例', 'Closest historical cases')}${tip(ANALOG_TIP)}</h3>${analogTable(sims)}</div>`;
     const vr = valuationRows(o);
     h += `<details class="card ax-more"><summary>${T('完整拆解', 'Full teardown')} <span class="muted small">${T('逐项评分 · 研究字段 · 估值口径 · 证据', 'scores · research · valuation · evidence')}</span></summary>
       <h4>${T('分类', 'Classes')}</h4>${classRows(o)}
@@ -411,7 +441,7 @@
       <h4>${T('四个问题（缺一项先查，不能用总分弥补）', 'Four questions')}</h4>${FW.questions.items.map(q => `<p class="small"><b>${esc(q.axis)}</b> · ${esc(q.name)}<br><span class="muted">${esc(q.hint)}</span></p>`).join('')}
       ${w.length ? `<h4>${T('历史对照区间（最低 · 中位 · 最高）', 'Historical ranges (min · median · max)')}</h4>${rangeRows(w)}` : ''}
       <h4>${T('持续监控', 'Monitoring')}</h4>${monitorPlanes(o)}
-      <h4>${T('基础数据', 'Data')}</h4><dl class="ax-dl"><dt>${T('类型', 'Kind')}</dt><dd>${o.kind === 'tokenless' ? T('无币协议', 'tokenless protocol') : T('新上架协议', 'new listing')}</dd><dt>DefiLlama ${T('类目', 'category')}</dt><dd>${esc(d.category || '—')}</dd><dt>${T('链', 'Chains')}</dt><dd>${esc((d.chains || []).join(' · ') || '—')}</dd>${(d.children || []).length > 1 ? `<dt>${T('子产品', 'Products')}</dt><dd>${esc(d.children.join('、'))}</dd>` : ''}${d.listed ? `<dt>${T('收录日', 'Listed')}</dt><dd>${esc(d.listed)}</dd>` : ''}${d.tvl ? `<dt>TVL</dt><dd>${usd(d.tvl)}</dd>` : ''}${d.token_seen ? `<dt>${T('发币日', 'Token since')}</dt><dd>${esc(d.token_seen)}</dd>` : ''}<dt>${T('状态来源', 'State from')}</dt><dd>${esc(o.status_src)}</dd></dl>
+      <h4>${T('基础数据', 'Data')}</h4><dl class="ax-dl"><dt>${T('类型', 'Kind')}</dt><dd>${KIND[o.kind] || esc(o.kind)}${o.why_here ? ` · ${o.why_here.split('+').map(x => x === 'young' ? T('收入史很短', 'young revenue') : T('收入突然放大', 'accelerating')).join(' + ')}` : ''}${o.manual && o.manual.by ? ` · ${esc(o.manual.by)}` : ''}</dd>${d.rev_all ? `<dt>${T('历史总收入', 'All-time revenue')}</dt><dd>${usd(d.rev_all)}</dd>` : ''}<dt>DefiLlama ${T('类目', 'category')}</dt><dd>${esc(d.category || '—')}</dd><dt>${T('链', 'Chains')}</dt><dd>${esc((d.chains || []).join(' · ') || '—')}</dd>${(d.children || []).length > 1 ? `<dt>${T('子产品', 'Products')}</dt><dd>${esc(d.children.join('、'))}</dd>` : ''}${d.listed ? `<dt>${T('收录日', 'Listed')}</dt><dd>${esc(d.listed)}</dd>` : ''}${d.tvl ? `<dt>TVL</dt><dd>${usd(d.tvl)}</dd>` : ''}${d.token_seen ? `<dt>${T('发币日', 'Token since')}</dt><dd>${esc(d.token_seen)}</dd>` : ''}<dt>${T('状态来源', 'State from')}</dt><dd>${esc(o.status_src)}</dd></dl>
       <h4>${T('估值该用什么', 'Valuation to use')}</h4>${vr.map(r => `<p class="small"><b>${esc(r.name)}</b> · ${T('用', 'use')}：${esc(r.use)}<br><span class="t-dn">${T('别', 'avoid')}</span>：${esc(r.avoid)}</p>`).join('') || '<p class="small muted">—</p>'}
       ${(o.evidence || []).length ? `<h4>${T('证据', 'Evidence')}</h4><p class="small">${o.evidence.map((e, i) => `<a href="${esc(e.url)}" target="_blank" rel="noopener">${i + 1}</a>`).join(' · ')}</p>` : ''}
       <p class="small muted">${T('框架和打分规则见「框架与方法」。', 'Rules: see Framework.')}</p></details>`;
@@ -467,7 +497,7 @@
   let CSEL = null, CF = 'all';
   function rowsData() {
     const B = BIZ(); return CASES.cases.map(c => { const o = outcome(c); const t = o.tok || {}; return { c, o, t, name: c.name, biz: B[c.classes.business] || '',
-      val: t.val_peak, mult: t.mult, mult7: t.mult_p7, rel: t.rel_btc_peak_p7, tp: t.days_to_peak, d2: t.days_ge2x_365, back: t.days_peak_to_below_p0,
+      val: t.val_peak, mult: t.mult, mult7: t.mult_p7_365 != null ? t.mult_p7_365 : t.mult_p7, rel: t.rel_btc_peak_p7, tp: t.days_to_peak, d2: t.days_ge2x_365, back: t.days_peak_to_below_p0,
       fee: o.fees && o.fees.peak30, hot: o.fees && !o.fees.late ? o.fees.hot_days : null, tvl: o.tvl && o.tvl.peak, M: c.scores.M, D: c.scores.D, E: c.scores.E, V: c.scores.V }; });
   }
   function groupTable(dim, label) {
@@ -486,7 +516,7 @@
     rs.sort((a, b) => { const x = a[SORT.k], y = b[SORT.k]; if (x == null || x === 'U') return 1; if (y == null || y === 'U') return -1; return typeof x === 'string' ? SORT.d * x.localeCompare(y) : SORT.d * (x - y); });
     const B = BIZ();
     const th = (k, l, cls) => `<th data-s="${k}" class="${cls || ''}">${l}${SORT.k === k ? (SORT.d > 0 ? ' ↑' : ' ↓') : ''}</th>`;
-    return `<div class="tw" style="max-height:640px;overflow:auto"><table><thead><tr>${th('name', T('案例', 'Case'), 'l')}${th('biz', T('需求来源', 'Demand'), 'l')}${th('M', T('创新 M', 'Innov. M'))}${th('D', T('需求独立 D', 'Demand D'))}${th('val', T('估值峰值', 'Peak val.'))}${th('mult7', T('首周后倍数', 'From wk-1'))}${th('mult', T('首日倍数', 'From day-1'))}${th('rel', T('相对 BTC', 'vs BTC'))}${th('tp', T('到峰', 'To peak'))}${th('d2', T('≥2× 天', '≥2× days'))}${th('back', T('峰后跌回起点', 'Back below P0'))}${th('fee', T('30 天手续费峰值', 'Peak 30d fees'))}${th('hot', T('热度天数', 'Hot days'))}${th('tvl', T('TVL 峰值', 'Peak TVL'))}</tr></thead><tbody>
+    return `<div class="tw" style="max-height:640px;overflow:auto"><table><thead><tr>${th('name', T('案例', 'Case'), 'l')}${th('biz', T('需求来源', 'Demand'), 'l')}${th('M', T('创新 M', 'Innov. M'))}${th('D', T('需求独立 D', 'Demand D'))}${th('val', T('估值峰值', 'Peak val.'))}${th('mult7', T('首周后一年内', 'From wk-1'))}${th('mult', T('首日倍数', 'From day-1'))}${th('rel', T('相对 BTC', 'vs BTC'))}${th('tp', T('到峰', 'To peak'))}${th('d2', T('≥2× 天', '≥2× days'))}${th('back', T('峰后跌回起点', 'Back below P0'))}${th('fee', T('30 天手续费峰值', 'Peak 30d fees'))}${th('hot', T('热度天数', 'Hot days'))}${th('tvl', T('TVL 峰值', 'Peak TVL'))}</tr></thead><tbody>
       ${rs.map(r => `<tr data-id="${r.c.id}" class="${r.c.control ? 'ctl' : ''}${CSEL === r.c.id ? ' sel' : ''}"><td class="l"><b>${esc(r.c.name)}</b>${r.c.control ? `<span class="tag ctl">${T('对照', 'control')}</span>` : ''}<div class="small muted">${esc(r.c.period)}</div></td>
         <td class="l small">${esc(B[r.c.classes.business] || '')}</td><td>${bars(r.M)}</td><td>${bars(r.D)}</td>
         <td>${usd(r.val)}${r.val != null ? `<div><span class="tier">${esc(tierOf(r.val))}</span></div>` : ''}</td><td><b>${mx(r.mult7)}</b></td><td class="muted">${mx(r.mult)}</td><td>${mx(r.rel)}</td><td>${dd(r.tp)}</td><td>${r.d2 == null ? '—' : r.d2}</td>
@@ -522,9 +552,10 @@
         <p class="ax-one">${esc(c.change)}</p><div class="ax-meta small muted">${esc(B[c.classes.business] || '')} · ${esc(Rt[c.classes.right] || '')} · ${esc(c.period)} · ${esc(c.src)}</div></div>
       <div class="grid g4 ax-kpis">
         <div class="glass hero"><div class="k">${T('估值峰值', 'Peak valuation')}${tip(t.val_kind || T('供给无上限或有迁移，不算估值', 'no valuation'))}</div><div class="v">${usd(t.val_peak)}</div><div class="s">${t.val_peak_date ? esc(t.val_peak_date) : T('没有价格结果', 'no price data')}</div></div>
-        <div class="glass hero"><div class="k">${T('首周后最高倍数', 'Max × from week 1')}${tip(T('从上线第 7 天收盘算到之后最高收盘。第一天的价格普通人基本买不到，所以主看这个；首日倍数另列。', 'From the day-7 close to the later peak close.'))}</div><div class="v t-up">${mx(t.mult_p7)}</div><div class="s">${T('首日起', 'from day 1')} ${mx(t.mult)} · ${T('相对 BTC', 'vs BTC')} ${mx(t.rel_btc_peak_p7)}</div></div>
+        <div class="glass hero"><div class="k">${T('首周后一年内最高倍数', 'Max × within 1y of week 1')}${tip(T('从上线第 7 天收盘算到之后一年内的最高收盘。第一天的价格普通人基本买不到，全历史峰值又把 6 天和 15 年混在一起，所以主看这个；首日倍数和至今最高另列。', 'From the day-7 close to the highest close within the next year.'))}</div><div class="v t-up">${mx(m7y(t))}</div><div class="s">${T('至今最高', 'all-time')} ${mx(t.mult_p7)} · ${T('首日起', 'from day 1')} ${mx(t.mult)}</div></div>
         <div class="glass hero"><div class="k">${T('多久到顶', 'Time to peak')}</div><div class="v">${dd(t.days_to_peak)}</div><div class="s">${T('峰后跌回起点：', 'Back below P0: ')}${t.sym ? (t.days_peak_to_below_p0 == null ? T('至今没有', 'never') : dd(t.days_peak_to_below_p0)) : '—'}</div></div>
         <div class="glass hero"><div class="k">${T('手续费 30 天峰值', 'Peak 30d fees')}${tip(T('DefiLlama 手续费 30 天滚动合计的峰值；热度天数 = 30 天均值 ≥ 峰值一半的天数。', '30d rolling fees peak; hot days = days at ≥ half the peak.'))}</div><div class="v">${o.fees ? usd(o.fees.peak30) : '—'}</div><div class="s">${o.fees ? (o.fees.late ? T('序列开始太晚，不代表早期', 'series starts late') : T('热度', 'hot') + ' ' + dd(o.fees.hot_days)) : (o.tvl ? 'TVL ' + T('峰值', 'peak') + ' ' + usd(o.tvl.peak) : '—')}</div></div></div>`;
+    h += `<div class="card ax-box" style="margin-top:12px"><h3>${T('评分雷达（事后回溯）', 'Score radar (retrospective)')}</h3>${radar(card)}</div>`;
     toks.forEach(x => { h += `<div class="card ax-chart"><h3>${esc(x.sym)} ${T('价格 ÷ 首日价（对数，周线）', 'price ÷ day-1 price (log, weekly)')}</h3><div data-chart="${esc(JSON.stringify({ v2: true, src: `/data/alpha/case/${c.id}_${x.sym}.json`, fmt: 'x', log: true, series: [{ k: 'p', n: x.sym + T(' 倍数', ' multiple'), c: 's1' }] }))}"></div></div>`; });
     if (o.fees && ((SER || {})[c.id] || {}).fees30) h += `<div class="card ax-chart"><h3>${T('30 天滚动手续费（周线）', '30d rolling fees (weekly)')}</h3><div data-chart="${esc(JSON.stringify({ v2: true, src: `/data/alpha/case/${c.id}_fees.json`, fmt: 'usd', series: [{ k: 'f', n: T('手续费', 'Fees'), c: 's2', area: true }] }))}"></div></div>`;
     h += `<div class="grid g2" style="margin-top:12px"><div class="card ax-box up"><h3>${T('当时怎么参与、解决了什么', 'Entry & problem solved')}</h3><p>${esc(c.entry)}</p><p class="muted">${esc(c.problem)}</p></div>
@@ -549,7 +580,7 @@
         <div class="glass hero"><div class="k">${T('怎么用', 'How to use')}${tip(ANALOG_TIP)}</div><div class="v" style="font-size:15px;line-height:1.5">${T('给新机会做预期管理', 'Expectation management')}</div><div class="s">${T('不是预测，不是目标价', 'not a forecast')}</div></div></div>
       <div class="md"><aside class="md-list"><div class="fg md-filter">${[['all', T('全部', 'All')], ['ctl', T('只看对照组', 'Controls')]].map(([k, l]) => `<button type="button" class="pill${CF === k ? ' on' : ''}" data-cf="${k}">${l}</button>`).join('')}</div>
         ${pool.map(r => `<button type="button" class="md-row${r.c.id === CSEL ? ' on' : ''}" data-id="${r.c.id}"><span class="r1"><span class="nm">${logo(r.c.logo, r.c.name, 20)}<b>${esc(r.c.name)}</b></span>${r.c.control ? `<span class="tag ctl">${T('对照', 'ctl')}</span>` : ''}</span>
-          <span class="r2"><span>${r.val != null ? usd(r.val) : '—'}</span><span class="t-up">${r.mult7 != null ? mx(r.mult7) : ''}</span></span><span class="r3">${esc(r.c.period)}</span></button>`).join('')}</aside>
+          <span class="r2"><span>${r.val != null ? usd(r.val) : '—'}</span><span class="t-up">${r.mult7 != null ? mx(r.mult7) : ''}</span></span><span class="r3"><em class="mtag k">M${r.M == null ? '?' : r.M}</em>${esc(r.c.period)}</span></button>`).join('')}</aside>
         <section class="md-detail" id="ax-detail">${caseDetail(CASES.cases.find(c => c.id === CSEL))}</section></div>
       <details class="card ax-more" style="margin-top:16px"><summary>${T('创新级别 × 结果量级', 'Innovation level × outcome')} <span class="muted small">${T('不含对照组 · 中位数只描述这批样本', 'controls excluded · medians describe this sample only')}</span></summary>
         <h4>${T('按创新级别 M', 'By innovation M')}</h4>${groupTable('M', 'M')}<h4>${T('按需求独立性 D', 'By demand independence D')}</h4>${groupTable('D', 'D')}
