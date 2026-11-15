@@ -1,67 +1,15 @@
 [
  {
-  "version": "2026.11.15.7",
-  "date": "2026-11-15",
-  "notify": false,
-  "title_zh": "发射台平台页：量的质量",
-  "title_en": "Launchpad pages: quality of volume",
-  "items": [
-   {
-    "type": "new",
-    "zh": "发射台二级页面加「量的质量」：近 7 日发币数、发币人（下限）、某天发的币 7 天后还有几个在交易 / 几个市值过 10 万美元（逐个币查 GeckoTerminal 的全部池子，含曲线池）；交易者和刷量还没接，显示「待接入」。同一份数据（data/onchain/平台质量.json）给 Alpha 雷达的机会卡读。存活样本 11-15 起每个工厂每天多留 30 个币，之前的批次用每天 3 个样本拼 7 天，页面标明。",
-    "en": "Launchpad platform pages gain a ‘quality of volume’ block: tokens launched (7d), creators (floor), how many tokens from a given day still trade 7 days later and how many top $100k (GeckoTerminal, all pools incl. bonding curves). Traders / wash trading pending. The same file feeds Alpha Radar."
-   }
-  ]
- },
- {
-  "version": "2026.11.15.6",
-  "date": "2026-11-15",
-  "notify": false,
-  "title_zh": "Alpha 雷达：机会卡头部精简",
-  "title_en": "Alpha Radar: leaner card header",
-  "items": [
-   {
-    "type": "improve",
-    "zh": "机会卡头部压成三行：一句话介绍、资金参与方式（右边是发现日和补证来源）、一行读数（上线天数、币上线天数、市值、24 小时成交额、24 小时涨跌）。数字带下划线，鼠标放上去看口径和出处；参与方式的依据也放进悬停。「K 线」并进官网、X 那一排，按 币安 → CMC → DexScreener 的顺序选（CMC 只用核对过的页面地址）。",
-    "en": "Card header trimmed to three lines; details moved into hover notes. The Chart link sits with Website / X and picks Binance → CMC → DexScreener."
-   }
-  ]
- },
- {
-  "version": "2026.11.15.5",
-  "date": "2026-11-15",
-  "notify": false,
-  "title_zh": "Alpha 雷达：有币的卡加「看 K 线」入口和市值 / 成交额快照",
-  "title_en": "Alpha Radar: chart button and market snapshot for tokens",
-  "items": [
-   {
-    "type": "improve",
-    "zh": "有币的机会卡加「看 K 线」按钮：在币安有现货的直接开币安 K 线（先核对是同一个币，防同名），没有的开 DexScreener 上流动性最大的交易对，再不行开 CoinGecko。旁边列市值、完全稀释估值、24 小时链上成交额、24 小时涨跌（DexScreener 日更快照，不是实时，只算去中心化交易所）。列表每行也显示市值。",
-    "en": "Token cards now have a Chart button (Binance spot if verified listed, otherwise the deepest DexScreener pair, otherwise CoinGecko) plus market cap, FDV, 24h DEX volume and 24h change from a daily DexScreener snapshot."
-   },
-   {
-    "type": "improve",
-    "zh": "每日补证改为主要由 Codex 做（直接连仓库交结果），Grok 自动补证默认关闭。",
-    "en": "Daily research now mainly done by Codex; the Grok auto-research is off by default."
-   }
-  ]
- },
- {
   "version": "2026.11.15.4",
   "date": "2026-11-15",
-  "notify": false,
-  "title_zh": "Alpha 雷达：每张卡标上线天数、币上线天数和看盘入口",
-  "title_en": "Alpha Radar: project age, token age and chart links on every card",
+  "notify": true,
+  "title_zh": "数据更新改成一天两档、准点",
+  "title_en": "Data now updates twice a day, on time",
   "items": [
    {
     "type": "improve",
-    "zh": "每张机会卡写明项目上线约多少天（取能查到的最早一天：DefiLlama 收录、协议收入首日、本站板块首次记录或官方上线日，并注明以哪个为准）；有币的写币上线约多少天（价格数据起点）和代币代码，母协议的币会注明；附 CoinGecko、DexScreener、DefiLlama 看盘入口。列表每行也显示两个天数。",
-    "en": "Every card now shows roughly how long the project has been live (earliest of DefiLlama listing, first revenue day, first seen by our boards, or an official launch date, with the basis noted) and, for tokens, how long it has traded plus CoinGecko, DexScreener and DefiLlama links."
-   },
-   {
-    "type": "improve",
-    "zh": "机会看板首屏的读数写进页面源码（搜索引擎和关掉脚本也能看到全部机会、读数、上线天数和资金参与方式）。",
-    "en": "The board's key readings are now in the page HTML, visible without JavaScript."
+    "zh": "原来十几个板块各自定时，GitHub 实测每天晚 6～10 小时，偶尔还互相挤掉。现在一天两档统一跑：新加坡 08:05 先出一版（昨天收盘价、涨跌腿、日历等），16:30 出完整版（L2 / L3 链上数据此时才出齐）；交易用的数据还没到昨天时 17:50 再补一次。各板块数据截至哪天公开在 /data/status.json。",
+    "en": "Each board used to run on its own GitHub schedule, which in practice ran 6–10 hours late and sometimes got dropped. Now everything runs twice a day on time: an early run at 19:05 ET (previous day's close, legs, calendar) and the full run at 03:30 ET once on-chain data (L2 / L3) is published, with a catch-up at 04:50 ET if trading inputs are still behind. Each board's data date is public at /data/status.json."
    }
   ]
  },

@@ -5,8 +5,7 @@
 # concurrency 单独一组：首轮回填可能跑几个小时，放进 daily-pipeline 会把排队的 L2/L3/L4/日历挤掉。
 name: Agent ID daily data
 on:
-  schedule:
-    - cron: '20 0 * * *'     # UTC 00:20 = 新加坡 08:20，处理前一个完整 UTC 日
+  # 定时改由总调度 refresh.yml 统一跑（2026-11-15）；这里只留手动和推送触发
   workflow_dispatch:
 permissions:
   contents: write

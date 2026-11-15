@@ -803,13 +803,13 @@ def schedules():
         p = os.path.join(ROOT, ".github", "workflows", t["文件"])
         txt = open(p, encoding="utf-8").read() if os.path.exists(p) else ""
         m = re.search(r'cron:\s*"(\d+)\s+(\d+)\s', txt)
-        out.append({**t, "时间": f"{int(m.group(2)):02d}:{int(m.group(1)):02d}" if m else "—"})
+        out.append({**t, "时间": t.get("时间") or (f"{int(m.group(2)):02d}:{int(m.group(1)):02d}" if m else "—")})
     return out
 
 
 SCHED = schedules()
 MAIN_TIME = next((x["时间"] for x in SCHED if x.get("主")), "—")
-L2_TIME = next((x["时间"] for x in SCHED if x["文件"] == "l2-daily.yml"), "—")
+L2_TIME = next((x["时间"] for x in SCHED if x["文件"] == "l2-daily.yml"), MAIN_TIME)
 
 
 def sched_text():
@@ -1598,8 +1598,8 @@ def l2_tab(l2, as_of):
 
 
 # ---------------------------------------------------------------- L3 筹码层（只读 data/l3/*.json 展示，规则和计算都在 l3/l3_daily.py）
-L3_TIME = next((x["时间"] for x in SCHED if x["文件"] == "l3-daily.yml"), "02:47")
-L4_TIME = next((x["时间"] for x in SCHED if x["文件"] == "l4-daily.yml"), "03:17")
+L3_TIME = next((x["时间"] for x in SCHED if x["文件"] == "l3-daily.yml"), MAIN_TIME)
+L4_TIME = next((x["时间"] for x in SCHED if x["文件"] == "l4-daily.yml"), MAIN_TIME)
 L3_RES = {"held": ("守住", "Held", "up"), "broken": ("被突破", "Broken", "dn"), "open": ("进行中", "Ongoing", "neutral")}
 L3_NOT_SHOWN = [
     ("「筹码墙 = 强支撑 / 强压力」", "'Supply wall = strong support / resistance'", "同距离比较，筹码墙守住率和真空区的差在各年代正负相反，2022 年后筹码墙更容易被穿过", "At equal distance the wall-vs-gap hold-rate difference flips sign across eras; since 2022 walls are crossed more easily", "§4.3"),
@@ -6313,6 +6313,9 @@ def main():
     G["FILES"] = files
     write_latest(S, rs)
     os.makedirs(os.path.join(SITE, "data", "l2"), exist_ok=True)
+    # 数据新鲜度（总调度 refresh.yml 写；大叔的交易程序取数前先读 /data/status.json）
+    if os.path.exists(os.path.join(DATA, "refresh_status.json")):
+        shutil.copyfile(os.path.join(DATA, "refresh_status.json"), os.path.join(SITE, "data", "status.json"))
     for sub, fns in (("l4", ("l4_latest.json", "l4_history.json")), ("cal", ("cal_latest.json",))):
         os.makedirs(os.path.join(SITE, "data", sub), exist_ok=True)
         for fn in fns:

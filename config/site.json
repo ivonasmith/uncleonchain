@@ -1,84 +1,42 @@
 {
- "_说明": "全站配置。定时任务的时间不在这里写死：出网站时从 .github/workflows/ 里的 cron 读出来，页面文案（含欢迎弹窗）一律引用这里生成的结果。",
+ "_说明": "全站配置。定时：2026-11-15 起一天两档由 refresh.yml 统一跑，准点由 Cloudflare Worker（tools/refresh-trigger/wrangler.toml 的 crons）触发，这里的「时间」要和 Worker 一致；页面文案（含欢迎弹窗）一律引用这里。",
  "统计": {
   "_说明": "访问统计 Umami Cloud（无 cookie）。umami_id 是公开的站点标识，留空则不加载统计脚本。看板：cloud.umami.is",
   "umami_id": "a4ab5991-72d0-4aa6-8670-4990dd3643b5"
  },
  "定时任务": [
   {
-   "文件": "cal-daily.yml",
-   "名称": "事件日历",
-   "EN": "Event calendar",
-   "覆盖": "美联储议息 / CPI / 非农等 BTC 宏观事件与 Web3 行业动向；跑完重出网站",
-   "覆盖EN": "FOMC / CPI / payrolls and other BTC macro events plus Web3 industry events; rebuilds the site"
+   "文件": "refresh.yml",
+   "名称": "早档",
+   "EN": "Early run",
+   "时间": "00:05",
+   "覆盖": "全部板块跑一遍：BTC 价格与涨跌腿、事件日历、发射台、核心选币、Alpha（含自动补证）、AI Agent、RWA；Coin Metrics / DefiLlama 当时多半还没出昨天的数，L2 / L3 沿用上一天，晚档补齐。由 Cloudflare 准时触发 GitHub Actions",
+   "覆盖EN": "Runs every board: BTC price and legs, event calendar, launchpads, leader picks, Alpha (with auto-research), AI Agent, RWA. Coin Metrics / DefiLlama usually haven't published yesterday yet, so L2 / L3 keep the previous day until the late run. Triggered on time by Cloudflare"
   },
   {
-   "文件": "leg-daily.yml",
-   "名称": "涨跌腿追踪",
-   "EN": "Leg tracker",
-   "覆盖": "BTC 涨跌腿、山寨整体涨跌腿（成交额前 50 左右山寨币等权指数）与山寨轮动窗口（币安已收盘日线）；跑完重出网站",
-   "覆盖EN": "BTC up/down legs, the altcoin-wide up/down leg (equal-weight index of ~50 top-volume altcoins) and the altcoin window (closed Binance daily candles); rebuilds the site"
-  },
-  {
-   "文件": "core-daily.yml",
-   "名称": "龙头选币",
-   "EN": "Leader picks",
-   "覆盖": "核心标的手续费 / 协议收入 / 持有人收入 / 业务量（DefiLlama）、币安现货 + 永续成交额榜、均线与回撤、估值与解锁、评分历史；跑完重出网站",
-   "覆盖EN": "Fees / revenue / holder revenue / activity of core assets (DefiLlama), Binance spot + perp volume board, MAs and drawdowns, valuation and unlocks, score history; rebuilds the site"
-  },
-  {
-   "文件": "alpha-daily.yml",
-   "名称": "Alpha 雷达",
-   "EN": "Alpha radar",
-   "覆盖": "没发币但有协议收入的协议榜、DefiLlama 新上架协议、线索台账与发币回查（DefiLlama）；跑完重出网站",
-   "覆盖EN": "Tokenless protocols with revenue, newly listed protocols on DefiLlama, the lead ledger and token-launch checks (DefiLlama); rebuilds the site"
-  },
-  {
-   "文件": "aiagent-daily.yml",
-   "名称": "AI Agent 赛道",
-   "EN": "AI Agent sector",
-   "覆盖": "AI Agent 四层（发行 / 服务 / 资管 / 框架）逐日手续费（DefiLlama）、AI Agent 代币分类市值（CoinGecko）、币安 Agent ID 链上摘要；跑完重出网站",
-   "覆盖EN": "Daily fees across the four AI-agent layers (launch / commerce / DeFAI / infra, DefiLlama), AI Agent token category market caps (CoinGecko), Binance Agent ID summary; rebuilds the site"
-  },
-  {
-   "文件": "rwa-daily.yml",
-   "名称": "RWA",
-   "EN": "RWA",
-   "覆盖": "代币化国债 / 黄金 / 股票 / 信贷的分类市值、RWA 平台币（CoinGecko），RWA 协议手续费 / 协议收入 / 持有人收入与代币身份（DefiLlama），研究标的校验；跑完重出网站",
-   "覆盖EN": "Category market caps of tokenized treasuries / gold / stocks / credit and RWA platform tokens (CoinGecko), RWA protocol fees / revenue / holder revenue and token identity (DefiLlama), watchlist validation; rebuilds the site"
-  },
-  {
-   "文件": "l2-daily.yml",
-   "名称": "L2 周期状态机",
-   "EN": "L2 cycle state machine",
-   "覆盖": "L2 状态、14 条信号、关键价位、估值与持有者 6 个指标（Coin Metrics + bitview.space）；跑完重出网站",
-   "覆盖EN": "L2 state, 14 signals, key levels and the six valuation & holder gauges (Coin Metrics + bitview.space); rebuilds the site"
-  },
-  {
-   "文件": "l3-daily.yml",
-   "名称": "L3 筹码层",
-   "EN": "L3 supply layer",
-   "覆盖": "STH 成本 +1σ 压力区、STH 成本、筹码集中度与 30 天波动（大波动预警）、筹码分布、短期持有者与大户 / 散户描述（Coin Metrics + bitview.space）；跑完重出网站",
-   "覆盖EN": "STH cost +1σ pressure zone, STH cost, supply concentration and 30-day volatility (large-move warning), supply map, short-term holder and whale/retail lines (Coin Metrics + bitview.space); rebuilds the site"
-  },
-  {
-   "文件": "l4-daily.yml",
-   "名称": "L4 情绪衍生品",
-   "EN": "L4 sentiment & derivatives",
-   "覆盖": "资金费率 30 日均信号、8 个温度读数、6 个观察项（Coinalyze 等）；跑完重出网站",
-   "覆盖EN": "30-day funding signal, eight temperature readings and six watch items (Coinalyze etc.); rebuilds the site"
-  },
-  {
-   "文件": "daily.yml",
-   "名称": "日更",
-   "EN": "Daily run",
+   "文件": "refresh.yml",
+   "名称": "晚档",
+   "EN": "Late run",
+   "时间": "08:30",
    "主": true,
-   "覆盖": "L1 宏观与 L1-B 资金通道、L3 交易所流量、L4 情绪、发射台、板块快照；写当天解读日志（写入即冻结）；重出网站",
-   "覆盖EN": "L1 macro and L1-B channels, L3 exchange flows, L4 sentiment, launchpads, sector snapshots; writes the day's log (frozen once written); rebuilds the site"
+   "覆盖": "全部板块完整版：L1 宏观、L2 周期、L3 筹码、L4 情绪、涨跌腿、日历、发射台、核心选币、Alpha、AI Agent、RWA → 写解读日志 → 出网站。交易用的数据要是还没到昨天，09:50 再补跑一次",
+   "覆盖EN": "Full run of every board: L1 macro, L2 cycle, L3 on-chain, L4 sentiment, legs, calendar, launchpads, leader picks, Alpha, AI Agent, RWA → daily log → site. If trading inputs are still not at yesterday, it re-runs at 09:50"
   }
  ],
  "推送重跑": "改了脚本、文章或配置推上来时，会立刻额外跑一次（所以个别日志的生成时间早于定时时间）。",
  "推送重跑EN": "Pushing code, posts or config triggers an extra run right away (so some logs are generated before the scheduled time).",
  "反馈账号": "Uncle_Onchain",
- "_时间": "后端统计一律 UTC+0（UTC 完整日，UTC 0 点收盘 = 新加坡时间 08:00）；前端显示按语言换算：中文站新加坡时间，英文站美东时间。定时任务在收盘后分批跑。"
+ "_时间": "后端统计一律 UTC+0（UTC 完整日，UTC 0 点收盘 = 新加坡时间 08:00）；前端显示按语言换算：中文站新加坡时间，英文站美东时间。定时任务在收盘后分批跑。",
+ "_定时任务旧版": [
+  "cal-daily.yml",
+  "leg-daily.yml",
+  "core-daily.yml",
+  "alpha-daily.yml",
+  "aiagent-daily.yml",
+  "rwa-daily.yml",
+  "l2-daily.yml",
+  "l3-daily.yml",
+  "l4-daily.yml",
+  "daily.yml"
+ ]
 }

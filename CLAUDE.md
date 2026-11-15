@@ -17,7 +17,12 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
 
 ## 结构
 
-- `pipeline/跑日更.py --site`：GitHub Actions 每天 UTC 10:20 跑（推送 pipeline/content/assets 也会触发）。
+- **定时 = 总调度 `refresh.yml`（2026-11-15 大叔定方案 A）**：GitHub 自带 schedule 实测晚 6～10 小时，各板块 workflow 的定时已全部撤掉（只留推送 / 手动触发）。
+  Cloudflare Worker `uncleonchain-refresh`（`tools/refresh-trigger/`，secret `GH_TOKEN`）准点 dispatch：am UTC 00:05、pm 08:30、retry 09:50（只在交易数据没齐时真跑）；refresh.yml 自己的 schedule 只兜底。
+  并行 job：btc（L2→L3→L4）/ legcore（涨跌腿→核心）/ side（日历、AI Agent、RWA）/ alpha（Grok 补证只 am 档）/ launchpad（跑日更.py 不带 --site）→ publish 解包 → 出看板 → 拉宏观 → 写日志 → `pipeline/数据状态.py --write` → 出网站 → 推一次。
+  单独 concurrency 组 `refresh`（不进 daily-pipeline，免得被挤掉）；am 档顺带 dispatch agent-id-daily.yml。改钟点要同时改 wrangler.toml、worker.js 的 SLOTS、`config/site.json` 定时任务的「时间」。
+  **大叔的交易程序新加坡 19:00（UTC 11:00）取数、20:00 发推**：取数前读 `/data/status.json`（`ready_for_trading`、`not_ready`、各模块 `data_date`），pm 档要在这之前跑完，别把重活加进 pm 档。
+- `pipeline/跑日更.py --site`：日更主脚本（推送 pipeline/content/assets 时 daily.yml 也会跑）。
   拉日度 → 读销毁 → 拉估值 → 拉Arc → 出看板 → 拉宏观 → 写日志 → 出网站，结果提交回 `data/` 和 `site/`。
 - `pipeline/宏观规则.py`：四层框架（L2 除外，见 `l2/`）（流动性 / 周期 / 筹码 / 情绪）的指标注册表、区间规则、层结论、预警、日志与周月复盘生成。
   每个指标 = 一条「判定序列」（原始或派生，如 13 周变化，W-FRI 对齐）+ 一张 cuts 区间表，卡片、详情页全历史图、正常波动范围都用它。
