@@ -42,13 +42,14 @@ def load(p, d=None):
 
 
 _last = [0.0]
+_gap = [2.2]            # 两次请求间隔；遇到 429 自动放慢（最多 8 秒一次）
 
 
 def gt_pools(net, addr):
     """GeckoTerminal 一个币的全部池子（含发射台曲线池）→ [attributes]；没收录返回 []。失败抛异常。"""
     url = f"{GT}/networks/{net}/tokens/{addr}/pools"
     for i in range(4):
-        wait = 2.2 - (time.time() - _last[0])
+        wait = _gap[0] - (time.time() - _last[0])
         if wait > 0:
             time.sleep(wait)
         _last[0] = time.time()
@@ -59,6 +60,7 @@ def gt_pools(net, addr):
             if e.code == 404:
                 return []
             if e.code == 429 and i < 3:
+                _gap[0] = min(8.0, _gap[0] * 1.6)
                 print(f"    GeckoTerminal 429，等 {30 * (i + 1)} 秒", flush=True)
                 time.sleep(30 * (i + 1))
                 continue
