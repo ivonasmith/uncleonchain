@@ -1,38 +1,38 @@
 {
- "updated_utc": "2026-11-14 09:03",
- "data_date": "2026-11-13",
+ "updated_utc": "2026-11-15 09:33",
+ "data_date": "2026-11-14",
  "state": {
   "code": "RECOVERY",
   "name_zh": "熊末→牛初（底部已确认）",
   "desc_zh": "满足底部确认条件，到收复上一轮新高之前都在这个阶段",
   "since": "2026-08-27",
-  "days": 79,
+  "days": 80,
   "previous": null,
   "next_zh": "底部已确认，熊末→牛初。历史上之后一年中位 +152%、92% 为正，但期间出现 20~60% 回撤很常见。收盘跌破本轮最低点则退回熊市。",
   "next_en": "Bottom confirmed. Historically +152% median 1y forward; 20–60% drawdowns along the way are common."
  },
- "summary_zh": "L2 周期状态：熊末→牛初（底部已确认）（自 2026-08-27 起，第 79 天）\n价格 68,096，距历史高点 -45.4%，距本轮最低收盘 +16.4%（最低点已过 136 天），距上次减半 937 天。\n底部区信号 2/6：一年已实现利润 < 已实现亏损、长期持有者占比（剔除 >7 年）> 75%。底部确认信号：6-12 月成本跌破 12-18 月成本（本轮出现过即计入）、6-12 月成本跌破 1-2 年成本（本轮出现过即计入）。\n上方关键价位：200 日均线 73,031（+7.2%）；短期持有者成本 75,113（+10.3%）；真实市场均价 TMMP 77,253（+13.4%）\n下方关键价位：200 周均线 67,878（-0.3%）；3-6 月持币成本 64,864（-4.7%）；本轮最低收盘 58,525（-14.1%）\n接下来：底部已确认，熊末→牛初。历史上之后一年中位 +152%、92% 为正，但期间出现 20~60% 回撤很常见。收盘跌破本轮最低点则退回熊市。",
- "price": 68096.31,
+ "summary_zh": "L2 周期状态：熊末→牛初（底部已确认）（自 2026-08-27 起，第 80 天）\n价格 63,821，距历史高点 -48.9%，距本轮最低收盘 +9.0%（最低点已过 137 天），距上次减半 938 天。\n底部区信号 4/6：盈利供应占比 < 50%、一年已实现利润 < 已实现亏损、价格 < 200 周均线、长期持有者占比（剔除 >7 年）> 75%。底部确认信号：6-12 月成本跌破 12-18 月成本（本轮出现过即计入）、6-12 月成本跌破 1-2 年成本（本轮出现过即计入）。\n上方关键价位：3-6 月持币成本 64,784（+1.5%）；200 周均线 67,909（+6.4%）；200 日均线 72,968（+14.3%）\n下方关键价位：本轮最低收盘 58,525（-8.3%）；全网平均成本（已实现价格） 53,730（-15.8%）；CVDD 价格下限 48,993（-23.2%）\n今日信号变化：亮起：盈利供应占比 < 50%；亮起：价格 < 200 周均线。\n接下来：底部已确认，熊末→牛初。历史上之后一年中位 +152%、92% 为正，但期间出现 20~60% 回撤很常见。收盘跌破本轮最低点则退回熊市。",
+ "price": 63820.73,
  "cycle": {
   "ath": 124824.45,
-  "drawdown_pct": -45.4,
-  "days_since_ath": 403,
+  "drawdown_pct": -48.9,
+  "days_since_ath": 404,
   "cycle_low": 58525.08,
-  "rebound_pct": 16.4,
-  "days_since_low": 136,
-  "days_since_halving": 937,
+  "rebound_pct": 9.0,
+  "days_since_low": 137,
+  "days_since_halving": 938,
   "next_halving_est": "2028-04-10"
  },
  "valuation": {
-  "mvrv": 1.267,
-  "price_to_200w": 1.003,
-  "psip_pct": 54.0,
-  "realized_pl_ratio_1y": 0.769,
+  "mvrv": 1.188,
+  "price_to_200w": 0.94,
+  "psip_pct": 48.5,
+  "realized_pl_ratio_1y": 0.771,
   "lth_share_ex7y_pct": 74.1,
   "green_black": 0.953
  },
  "counts": {
-  "bottom_zone": 2,
+  "bottom_zone": 4,
   "bottom_confirm_agebands": 2
  },
  "signals": [
@@ -44,14 +44,14 @@
    "evidence": "已验证·方向",
    "ref": "§3.4 #10",
    "note": "一半以上的币处在浮亏，历轮熊底都出现过",
-   "on": false,
-   "changed_today": false,
-   "reading_zh": "当前 54.0%",
-   "reading_en": "now 54.0%",
+   "on": true,
+   "changed_today": true,
+   "reading_zh": "当前 48.5%",
+   "reading_en": "now 48.5%",
    "metric": "psip",
    "rule": "mem30",
-   "last_true": "2026-08-16",
-   "now_true": false
+   "last_true": "2026-11-14",
+   "now_true": true
   },
   {
    "key": "Z_利润365<亏损365",
@@ -63,11 +63,11 @@
    "note": "过去一年市场卖币时亏的比赚的多，属于投降式卖出",
    "on": true,
    "changed_today": false,
-   "reading_zh": "当前 0.769",
-   "reading_en": "now 0.769",
+   "reading_zh": "当前 0.771",
+   "reading_en": "now 0.771",
    "metric": "rpl365",
    "rule": "mem30",
-   "last_true": "2026-11-13",
+   "last_true": "2026-11-14",
    "now_true": true
   },
   {
@@ -80,8 +80,8 @@
    "note": "价格低于全网平均成本",
    "on": false,
    "changed_today": false,
-   "reading_zh": "当前 1.267",
-   "reading_en": "now 1.267",
+   "reading_zh": "当前 1.188",
+   "reading_en": "now 1.188",
    "metric": "mvrv",
    "rule": "mem30",
    "last_true": "2023-01-12",
@@ -95,14 +95,14 @@
    "evidence": "已验证·方向",
    "ref": "§2.4",
    "note": "历史上之后一年几乎都上涨",
-   "on": false,
-   "changed_today": false,
-   "reading_zh": "当前 价/200 周均 1.003",
-   "reading_en": "now price/200WMA 1.003",
+   "on": true,
+   "changed_today": true,
+   "reading_zh": "当前 价/200 周均 0.940",
+   "reading_en": "now price/200WMA 0.940",
    "metric": "price_200wma",
    "rule": "mem30",
-   "last_true": "2026-08-16",
-   "now_true": false
+   "last_true": "2026-11-14",
+   "now_true": true
   },
   {
    "key": "Z_LTH占比>75%",
@@ -131,8 +131,8 @@
    "note": "接近历史上从未跌破的价格下限",
    "on": false,
    "changed_today": false,
-   "reading_zh": "当前 价 / CVDD 1.39",
-   "reading_en": "now price/CVDD 1.39",
+   "reading_zh": "当前 价 / CVDD 1.30",
+   "reading_en": "now price/CVDD 1.30",
    "metric": null,
    "rule": "mem30",
    "last_true": "2026-07-01",
@@ -148,8 +148,8 @@
    "note": "历史上唯一一次假信号在 2014 年",
    "on": false,
    "changed_today": false,
-   "reading_zh": "当前 +16.4%，最低点已过 136 天",
-   "reading_en": "now +16.4%, low 136 days ago",
+   "reading_zh": "当前 +9.0%，最低点已过 137 天",
+   "reading_en": "now +9.0%, low 137 days ago",
    "metric": null
   },
   {
@@ -192,8 +192,8 @@
    "note": "三叉筑底的第三叉，出现在真实底前后 85 天内",
    "on": true,
    "changed_today": false,
-   "reading_zh": "当前 6-12 月 ÷ 1-2 年成本 0.779",
-   "reading_en": "now 6-12M ÷ 1-2Y cost 0.779",
+   "reading_zh": "当前 6-12 月 ÷ 1-2 年成本 0.778",
+   "reading_en": "now 6-12M ÷ 1-2Y cost 0.778",
    "metric": null,
    "rule": "cycle",
    "cycle_first": "2026-08-11"
@@ -240,8 +240,8 @@
    "note": "后三轮都在减半后 525~546 天见顶",
    "on": false,
    "changed_today": false,
-   "reading_zh": "当前 减半后第 937 天",
-   "reading_en": "now day 937 after the halving",
+   "reading_zh": "当前 减半后第 938 天",
+   "reading_en": "now day 938 after the halving",
    "metric": null
   },
   {
@@ -254,8 +254,8 @@
    "note": "2018 年后，之后一年中位收益为负",
    "on": false,
    "changed_today": false,
-   "reading_zh": "当前 MVRV 1.267 · 价/200 周均 1.003",
-   "reading_en": "now MVRV 1.267 · price/200WMA 1.003",
+   "reading_zh": "当前 MVRV 1.188 · 价/200 周均 0.940",
+   "reading_en": "now MVRV 1.188 · price/200WMA 0.940",
    "metric": "mvrv",
    "rule": "mem30",
    "last_true": "2025-10-28",
@@ -268,137 +268,137 @@
    "name_zh": "历史最高收盘",
    "name_en": "ATH",
    "value": 124824.45,
-   "pct_from_price": 83.3
+   "pct_from_price": 95.6
   },
   {
    "key": "rp_1_2y",
    "name_zh": "1-2 年持币成本",
    "name_en": "1-2Y cost",
-   "value": 105645.28,
-   "pct_from_price": 55.1
+   "value": 105591.17,
+   "pct_from_price": 65.4
   },
   {
    "key": "rp_6_12m",
    "name_zh": "6-12 月持币成本",
    "name_en": "6-12M cost",
-   "value": 82274.48,
-   "pct_from_price": 20.8
+   "value": 82130.88,
+   "pct_from_price": 28.7
   },
   {
    "key": "tmmp",
    "name_zh": "真实市场均价 TMMP",
    "name_en": "True Market Mean",
-   "value": 77253.3,
-   "pct_from_price": 13.4
+   "value": 77205.29,
+   "pct_from_price": 21.0
   },
   {
    "key": "sth_rp",
    "name_zh": "短期持有者成本",
    "name_en": "STH cost",
-   "value": 75112.8,
-   "pct_from_price": 10.3
+   "value": 74945.68,
+   "pct_from_price": 17.4
   },
   {
    "key": "rp_3_6m",
    "name_zh": "3-6 月持币成本",
    "name_en": "3-6M cost",
-   "value": 64863.6,
-   "pct_from_price": -4.7
+   "value": 64784.01,
+   "pct_from_price": 1.5
   },
   {
    "key": "ma200d",
    "name_zh": "200 日均线",
    "name_en": "200D MA",
-   "value": 73030.6,
-   "pct_from_price": 7.2
+   "value": 72968.22,
+   "pct_from_price": 14.3
   },
   {
    "key": "ma200w",
    "name_zh": "200 周均线",
    "name_en": "200W MA",
-   "value": 67878.11,
-   "pct_from_price": -0.3
+   "value": 67908.69,
+   "pct_from_price": 6.4
   },
   {
    "key": "cyc_low",
    "name_zh": "本轮最低收盘",
    "name_en": "Cycle low",
    "value": 58525.08,
-   "pct_from_price": -14.1
+   "pct_from_price": -8.3
   },
   {
    "key": "rp",
    "name_zh": "全网平均成本（已实现价格）",
    "name_en": "Realized price",
-   "value": 53762.42,
-   "pct_from_price": -21.0
+   "value": 53730.29,
+   "pct_from_price": -15.8
   },
   {
    "key": "lth_rp",
    "name_zh": "长期持有者成本",
    "name_en": "LTH cost",
-   "value": 48721.89,
-   "pct_from_price": -28.5
+   "value": 48720.87,
+   "pct_from_price": -23.7
   },
   {
    "key": "cvdd",
    "name_zh": "CVDD 价格下限",
    "name_en": "CVDD",
-   "value": 48981.97,
-   "pct_from_price": -28.1
+   "value": 48993.08,
+   "pct_from_price": -23.2
   },
   {
    "key": "balanced",
    "name_zh": "均衡价格（近似）",
    "name_en": "Balanced price (approx.)",
-   "value": 39149.31,
-   "pct_from_price": -42.5
+   "value": 39114.18,
+   "pct_from_price": -38.7
   }
  ],
  "levels_above": [
   {
-   "key": "ma200d",
-   "name_zh": "200 日均线",
-   "name_en": "200D MA",
-   "value": 73030.6,
-   "pct_from_price": 7.2
+   "key": "rp_3_6m",
+   "name_zh": "3-6 月持币成本",
+   "name_en": "3-6M cost",
+   "value": 64784.01,
+   "pct_from_price": 1.5
   },
-  {
-   "key": "sth_rp",
-   "name_zh": "短期持有者成本",
-   "name_en": "STH cost",
-   "value": 75112.8,
-   "pct_from_price": 10.3
-  },
-  {
-   "key": "tmmp",
-   "name_zh": "真实市场均价 TMMP",
-   "name_en": "True Market Mean",
-   "value": 77253.3,
-   "pct_from_price": 13.4
-  }
- ],
- "levels_below": [
   {
    "key": "ma200w",
    "name_zh": "200 周均线",
    "name_en": "200W MA",
-   "value": 67878.11,
-   "pct_from_price": -0.3
+   "value": 67908.69,
+   "pct_from_price": 6.4
   },
   {
-   "key": "rp_3_6m",
-   "name_zh": "3-6 月持币成本",
-   "name_en": "3-6M cost",
-   "value": 64863.6,
-   "pct_from_price": -4.7
-  },
+   "key": "ma200d",
+   "name_zh": "200 日均线",
+   "name_en": "200D MA",
+   "value": 72968.22,
+   "pct_from_price": 14.3
+  }
+ ],
+ "levels_below": [
   {
    "key": "cyc_low",
    "name_zh": "本轮最低收盘",
    "name_en": "Cycle low",
    "value": 58525.08,
-   "pct_from_price": -14.1
+   "pct_from_price": -8.3
+  },
+  {
+   "key": "rp",
+   "name_zh": "全网平均成本（已实现价格）",
+   "name_en": "Realized price",
+   "value": 53730.29,
+   "pct_from_price": -15.8
+  },
+  {
+   "key": "cvdd",
+   "name_zh": "CVDD 价格下限",
+   "name_en": "CVDD",
+   "value": 48993.08,
+   "pct_from_price": -23.2
   }
  ],
  "data_status": {
