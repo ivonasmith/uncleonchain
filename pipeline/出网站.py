@@ -168,7 +168,7 @@ PILLARS = [
      "descEN": "Four layers: macro liquidity → cycle → coin flows → sentiment. Every indicator with its reading, zones and full history."},
     {"slug": "rotation", "nav": "板块轮动", "en": "Rotation", "desc": "CoinGecko 类目逐日快照看资金在哪些赛道之间流动，加手写的轮动交易复盘。",
      "descEN": "Daily CoinGecko category snapshots showing where money rotates, plus hand-written rotation reviews."},
-    {"slug": "narrative", "nav": "叙事埋伏", "en": "Narratives", "desc": "低位叙事币的观察笔记：为什么进、仓位怎么摆、后续怎么跟踪——过程记录，不是喊单。",
+    {"slug": "narrative", "nav": "叙事埋伏", "en": "Narratives", "desc": "低位叙事币的观察笔记：为什么关注、后续怎么跟踪——过程记录，不是喊单。",
      "descEN": "Notes on early-stage narratives: why, how it is sized, how it is tracked — a process log, not calls."},
 ]
 
@@ -1675,7 +1675,7 @@ def l3_main_cards(l3):
     left = (f'<div class="card l3main"><div class="top"><span class="nm">{T("上方压力区 · STH 成本 +1σ", "Pressure zone above · STH cost +1σ")}</span>{grade_chip("已验证·方向")}</div>'
             f'<div class="v">{_m0(a["value"])} <span class="sub">{T("离收盘价", "vs close")} {_pc(a["pct_from_price"])}</span></div>'
             f'<div class="b">{T("压力区", "Zone")} {_m0(a["lo"])} ~ {_m0(a["hi"])} · {tone_chip(T(a["status_zh"], a["status_en"]), st_tone)}</div>'
-            f'<p class="tnote">{esc(T(a["hold_rate_zh"], a["hold_rate_en"]))}{T("。用法：多单止盈参考、追高提醒；不当挂单位；冲过去站上 STH-MVRV 1.3 不据此做空。", ". Use: a take-profit reference and a no-chasing reminder; not an order level; no shorting once price breaks through and holds STH-MVRV 1.3.")}</p>'
+            f'<p class="tnote">{esc(T(a["hold_rate_zh"], a["hold_rate_en"]))}{T("。它是一段区间、不是一个价位；冲过去并站上 STH-MVRV 1.3 后，历史上多是一段延续（假设，2018 年后 14 次）。", ". It is a band, not a price level; once price breaks through and holds STH-MVRV 1.3, history mostly shows a continuing move (a hypothesis; 14 cases since 2018).")}</p>'
             f'<div class="sub2">{T("最近 5 次碰线（从下方碰到压力区）", "Last 5 touches (from below)")}</div>{l3_touch_rows(a.get("touches") or [])}</div>')
     on = bool(w.get("on"))
     vol, conc = w.get("vol30"), w.get("conc")
@@ -1690,7 +1690,7 @@ def l3_main_cards(l3):
              f'<div class="mb"><span style="width:{vb:.1f}%" class="{"ok" if vol is not None and vol < 40 else ""}"></span><i style="left:40%"></i></div></div>'
              f'<div class="meter"><div class="ml"><span>{T("筹码集中度（现价 ±5%）", "Concentration (price ±5%)")}</span><b>{"—" if conc is None else f"{conc:.1f}%"}</b><em>{T("不低于 12% 才算", "counts at 12%+")}</em></div>'
              f'<div class="mb"><span style="width:{cb:.1f}%" class="{"ok" if conc is not None and conc >= 12 else ""}"></span><i style="left:48%"></i></div></div>'
-             f'<p class="tnote">{T("只说幅度，不说方向：亮灯后顺着 MA200 趋势做并不更准，所以只用于「该做的风控照做」——逐笔确认止损、盯衰竭信号。", "Magnitude only, not direction: following the MA200 trend after the light is no more accurate, so it only means doing the risk control you should — confirm every stop, watch for exhaustion.")}'
+             f'<p class="tnote">{T("只说幅度，不说方向：亮灯后顺着 MA200 趋势去猜方向并不更准。它说的是接下来 30 天波动大概率变大。", "Magnitude only, not direction: guessing the direction from the MA200 trend after the light is no more accurate. It only says moves over the next 30 days are likely to get bigger.")}'
              f'{T("集中度数据日 ", " Concentration as of ")}{esc(w.get("conc_date") or "—")}{rk}{T("。", ".")}</p></div>')
     return f'<div class="grid g2 l3mains">{left}{right}</div>'
 
@@ -1862,8 +1862,8 @@ L4_WATCH_EN = {
     "elr_low": "Aggregated OI ÷ exchange balance bottom 10%: 10 cases, up 80% (control 58%), only since 2022",
     "lev_drop": "Net position 4-week change bottom 10%: 13 cases, up 31% (control 52%); may mostly reflect basis-trade flows",
 }
-L4_NOTE = ("只有「资金费率 30 日均转负」一条通过了历史检验，会改变动作；其余读数只描述温度。费率高要回调、恐慌是买点、OI 堆积会瀑布、低波动是大行情前夜，这些常见说法用我们的口径检验都不成立。分位 = 今天的值在过去两年里排第几。样本有限，最高到「已验证·方向」，不构成投资建议。",
-           "Only '30-day average funding below zero' passed historical testing and changes the action; every other reading only describes temperature. 'High funding means a pullback', 'fear is a buy', 'OI build-ups cause cascades', 'low volatility precedes big moves' — common claims that did not hold in our tests. Percentile = where today's value ranks over the past two years. Samples are limited; the highest grade is 'validated · direction'. Not investment advice.")
+L4_NOTE = ("只有「资金费率 30 日均转负」一条通过了历史检验，会进结论句；其余读数只描述温度。费率高要回调、恐慌是买点、OI 堆积会瀑布、低波动是大行情前夜，这些常见说法用我们的口径检验都不成立。分位 = 今天的值在过去两年里排第几。样本有限，最高到「已验证·方向」，不构成投资建议。",
+           "Only '30-day average funding below zero' passed historical testing and goes into the summary line; every other reading only describes temperature. 'High funding means a pullback', 'fear is a buy', 'OI build-ups cause cascades', 'low volatility precedes big moves' — common claims that did not hold in our tests. Percentile = where today's value ranks over the past two years. Samples are limited; the highest grade is 'validated · direction'. Not investment advice.")
 L4_BAND_TONE = {"过热": "warn", "偏热": "warn", "中性": "neutral", "偏冷": "cool", "极冷": "cool"}
 
 
@@ -1895,11 +1895,11 @@ def l4_signal_card(l4):
         state = f'<div class="lamp"><i></i><b>{T("今天不判断", "No call today")}</b></div><p class="big quiet0">{T("资金费率数据延迟，今天不判断，不拿旧值顶替。", "Funding data is delayed; no call today and no stale value substituted.")}</p>'
     elif on:
         state = (f'<div class="lamp"><i></i><b>{T("亮", "ON")}</b><span class="dd">{T("已连续", "for")} {sg.get("days_on")} {T("天", "days")}{T("（自 ", " (since ")}{esc(sg.get("since") or "—")}{T("）", ")")}</span></div>'
-                 f'<p class="big">{esc(T(sg.get("use_zh") or "", "No new shorts; when L2 is not in a bear market, scaling in within the L1 budget is allowed. The risk budget does not grow."))}</p>')
+                 f'<p class="big">{esc(T("过去 31 次，之后 30 天上涨 74%（同年代同周期状态对照 58%）；熊市里偏弱，历史 8 次只有一半上涨。", "Of 31 past episodes, price was higher 30 days later 74% of the time (58% for comparable controls); weaker in bear markets (8 episodes, 50%)."))}</p>')
     else:
         ln = l4_last_neg()
         state = (f'<div class="lamp"><i></i><b>{T("不亮", "Off")}</b><span class="dd">{T("最近一次为负：", "Last negative: ")}{esc(ln or T("近 400 天没有", "none in 400 days"))}</span></div>'
-                 f'<p class="big quiet0">{T("资金费率 30 日均在 0 以上，不改动作。", "The 30-day average is above zero; no change to the action.")}</p>')
+                 f'<p class="big quiet0">{T("资金费率 30 日均在 0 以上，信号不亮。", "The 30-day average is above zero; the signal is off.")}</p>')
     bar = ""
     if pos is not None:
         bar = (f'<div class="zbar"><span class="neg" style="width:{zero}%"></span><i class="z" style="left:{zero}%"></i><b class="pt" style="left:{pos:.1f}%"></b></div>'
@@ -1957,7 +1957,7 @@ def l4_tab(l4, as_of):
     ws = sorted(l4.get("watch") or [], key=lambda x: not x.get("on"))
     watch = "".join(f'<li class="{"on" if x.get("on") else ""}"><b>{esc(T(x["name_zh"], x.get("name_en") or x["name_zh"]))}</b>'
                     f'<span class="chip{" t-warn" if x.get("on") else ""}"><i></i>{T("亮", "on") if x.get("on") else T("未亮", "off")}</span>'
-                    f'<em>{T("假设 · 不改动作", "hypothesis · no action")}</em><span class="s">{esc(T(x.get("stat_zh") or "", L4_WATCH_EN.get(x["key"], "")))}</span></li>' for x in ws)
+                    f'<em>{T("假设 · 只作描述", "hypothesis · description only")}</em><span class="s">{esc(T(x.get("stat_zh") or "", L4_WATCH_EN.get(x["key"], "")))}</span></li>' for x in ws)
     n_on = sum(1 for x in ws if x.get("on"))
     head = (f'<div class="card l3pos l4head"><div class="eb">L4 {T("BTC 短期杠杆与情绪温度", "BTC short-term leverage & sentiment temperature")} · {T("数据日", "data date")} {esc(l4.get("data_date") or "—")}'
             f' · {T("运行", "run")} {TT(l4.get("updated_utc"))}'
@@ -1975,7 +1975,7 @@ def l4_tab(l4, as_of):
             f'<p class="tnote">{esc(T(c.get("key_reading_zh") or "", ""))}</p></div></div>'
             + f'<h3 id="grp-4-0">{T("温度计 · 杠杆（只作描述）", "Thermometer · leverage (descriptive)")}</h3><div class="grid g3">{lev}</div>'
             + f'<h3 id="grp-4-1">{T("温度计 · 情绪（只作描述）", "Thermometer · sentiment (descriptive)")}</h3><div class="grid g3">{sen}</div>'
-            + f'<details class="raw l3d l4watch"><summary>{T(f"观察项（假设，不改动作）· 亮 {n_on}/{len(ws)}", f"Watch items (hypotheses, no action) · {n_on}/{len(ws)} on")}</summary><ul>{watch}</ul></details>'
+            + f'<details class="raw l3d l4watch"><summary>{T(f"观察项（假设，只作描述）· 亮 {n_on}/{len(ws)}", f"Watch items (hypotheses, description only) · {n_on}/{len(ws)} on")}</summary><ul>{watch}</ul></details>'
             + l4_chart()
             + f'<details class="raw l3d"><summary>{T("方法与 FAQ", "Method & FAQ")}</summary><div class="faqs" style="margin-top:8px">{faq_h}</div></details>'
             + f'<p class="l2disc">{esc(T(*L4_NOTE))}</p>')
@@ -2008,7 +2008,7 @@ def switch_text(i, lay, l2):
                  "大波动预警：30 天波动低于 40% 且筹码集中度不低于 12% 时亮。线每天随 STH 成本移动。",
                  f"A close above the zone top ({_m0(a.get('hi'))}) = through the zone; inside {_m0(a.get('lo'))}–{_m0(a.get('hi'))} = in the zone; below the STH cost ({_m0(s_.get('value'))}) = below STH cost. "
                  "Large-move warning: on when 30-day volatility is below 40% and supply concentration is at least 12%. The lines move daily with the STH cost.")
-    return T("资金费率 30 日均跌破 0 = 信号（空头拥挤，唯一会改动作的一条）；否则按杠杆分位（费率 30 日均、OI ÷ 市值的平均）和情绪分位（恐慌贪婪）再平均：≥ 85 过热、65~85 偏热、≤ 35 偏冷、其余中性。分档是描述，不是检验出来的。",
+    return T("资金费率 30 日均跌破 0 = 信号（空头拥挤，唯一通过检验的一条）；否则按杠杆分位（费率 30 日均、OI ÷ 市值的平均）和情绪分位（恐慌贪婪）再平均：≥ 85 过热、65~85 偏热、≤ 35 偏冷、其余中性。分档是描述，不是检验出来的。",
              "30-day average funding below zero = signal (crowded shorts — the only action-changing rule); otherwise the leverage percentile (funding 30-day avg and OI ÷ market cap) and the sentiment percentile (Fear & Greed) are averaged: ≥ 85 hot, 65–85 warm, ≤ 35 cool, otherwise normal. The bands describe; they were not tested.")
 
 
@@ -2095,7 +2095,7 @@ def l1_table(rs, v1, rot):
 
 
 L1_ANCHOR = {"乐观度 · 美股腿": ("乐观度", "Optimism"), "乐观度 · 信用腿": ("信用", "Credit"), "实际利率（状态变量）": ("实际利率", "Real yield"),
-             "流动性闸门（只打折不加仓）": ("流动性闸门", "Liquidity gate"), R.G_SC[0]: ("稳定币", "Stablecoins"), R.G_ETF[0]: ("ETF", "ETF"),
+             "流动性闸门": ("流动性闸门", "Liquidity gate"), R.G_SC[0]: ("稳定币", "Stablecoins"), R.G_ETF[0]: ("ETF", "ETF"),
              R.G_FUT[0]: ("期货升水", "Basis"), R.G_SEP[0]: ("单列观察", "Watched"), "联动与监控": ("联动", "Linkage"), "观察项（测过，未达可用标准）": ("观察项", "Watch-only")}
 
 
@@ -6010,7 +6010,7 @@ def build_journal(S, logs, weeks, months, sd):
 
 
 # ---------------------------------------------------------------- 口径 / 更正 / 关于
-L1_RULES_ZH = """<p style="margin:0 0 8px"><b style="color:var(--ink)">L1 宏观流动性</b>（2026-10-02 起，依据《BTC 全周期宏观相关性与归因研究》）：L1 管周到月的波动、节奏和风险预算，不管方向。</p>
+L1_RULES_ZH = """<p style="margin:0 0 8px"><b style="color:var(--ink)">L1 宏观流动性</b>（2026-10-02 起，依据《BTC 全周期宏观相关性与归因研究》）：L1 说宏观在推还是在拖（周到月的波动和节奏），不管方向。下面「框架里……」是研究框架原文 · 作者自用规则，不是给读者的建议。</p>
 <ul style="margin:0 0 10px;padding-left:20px"><li><b>顺风</b>：乐观度 z &gt; 0 且 BAA 信用利差 13 周收窄，实际利率没有急升。</li>
 <li><b>中性偏谨慎</b>：实际利率急升（13 周 ≥ +0.40pp）单独出现——框架里风险预算降一档、不加仓。</li>
 <li><b>逆风</b>：实际利率急升 且（BAA / NFCI 13 周转紧 或 乐观度 z &lt; 0），或流动性闸门触发（净流动性 13 周 ≤ −2.72% 且美元 13 周走强）——框架里名义风险预算 ×0.7，两项不叠乘。</li>
@@ -6130,8 +6130,8 @@ def build_methodology():
 <p style="margin:0 0 8px"><b style="color:var(--ink)">L3 {T("筹码", "Supply")}</b>{CN}{T("按价格相对短期持有者成本 +1σ 压力区（上下 2%）的位置：收盘站上上沿 = 冲过压力区，进入 ±2% = 在压力区，压力区下方到 STH 成本之间 = 压力区下方，跌破 STH 成本 = STH 成本下方；30 天波动 < 40% 且筹码集中度 ≥ 12% 时追加「大波动预警」（2026-10-11 起，此前以交易所 7 日净流量为准）。交易所流量、大户 / 散户持币只作描述。", "By price position relative to the STH cost +1σ pressure zone (±2%): a close above the top = through the zone, inside ±2% = in the zone, between the zone and the STH cost = below the zone, under the STH cost = below STH cost; a 'large-move warning' is added when 30-day volatility < 40% and supply concentration ≥ 12% (since 2026-10-11; previously the 7-day exchange net flow). Exchange flows and whale/retail holdings are descriptive only.")}</p>
 <p style="margin:0"><b style="color:var(--ink)">L4 {T("情绪", "Sentiment")}</b>{CN}{T("读 l4/l4_daily.py 的结论档：资金费率 30 日均跌破 0 = 信号（空头拥挤，唯一会改动作的规则，已验证·方向）；否则按杠杆和情绪的过去 730 天分位分为过热 / 偏热 / 中性 / 偏冷，只作描述（2026-10-22 起，此前是恐慌贪婪 + 资金费率 + 未平仓三项打分）。", "Reads the level from l4/l4_daily.py: 30-day average funding below zero = signal (crowded shorts, the only action-changing rule, validated · direction); otherwise leverage and sentiment 730-day percentiles band it as hot / warm / normal / cool, descriptive only (since 2026-10-22; previously a Fear & Greed + funding + OI score).")}</p></div>
 <h2 id="comp">{T("综合研判怎么来", "How the overall read is made")}</h2>{comp_rules_html()}
-<h2 id="l1rules">{T("L1 规则清单（宏观总文档 §10.2，逐条照抄）", "L1 rule list (macro study §10.2, copied rule by rule)")}</h2>
-<div class="card mcard"><p>{T("「能否改交易参数」分四种：", "“May it change trading parameters” has four values:")}</p><ul>{pdef}</ul></div>
+<h2 id="l1rules">{T("L1 规则清单（宏观总文档 §10.2，逐条照抄 · 作者自用）", "L1 rule list (macro study §10.2, verbatim · author’s own rules)")}</h2>
+<div class="card mcard"><p><b>{T("研究框架原文 · 作者自用规则，不是给读者的建议。", "Research framework, copied verbatim — the author’s own trading rules, not advice to readers.")}</b>{T("这里照抄是为了让网站上每个读数怎么来、能不能用都可以核对；网站结论句只说状态和历史，不用这些动作。", " It is copied here so every reading on the site can be traced and checked; the site’s summary lines only state conditions and history and never use these actions.")}</p><p>{T("「能否改交易参数」分四种：", "“May it change trading parameters” has four values:")}</p><ul>{pdef}</ul></div>
 <div class="tw" style="margin-top:10px"><table><thead><tr><th>#</th><th class="l">{T("规则", "Rule")}</th><th class="l">{T("怎么用", "How to use")}</th><th class="l">{T("可靠程度", "Reliability")}</th><th class="l">{T("能否改交易参数", "Trading parameters")}</th></tr></thead><tbody>{rrows}</tbody></table></div>
 <h2 id="legend">{T("标签说明", "What the tags mean")}</h2><p class="tnote">{T("「级别」和「证据等级」是两个维度：级别说这个指标在本层判定里起什么作用，证据等级说它在研究里被检验到什么程度。", "Level and evidence grade are two separate dimensions: level is the gauge's role in the layer verdict, evidence grade is how well the research has tested it.")}</p>{tag_legend()}
 <h2 id="delayed">{T("延迟平台（发射台矩阵）", "Delayed platforms (launchpad matrix)")}</h2>
@@ -6213,7 +6213,7 @@ def build_corrections(sd, fixes):
 
 def build_about():
     txt = T(f"""<p>写这个站的人在 web3 做了快十年，做过项目运营、产品设计，也做过 AMM DEX。现在把自己的研究方式搬到台面上：
-先看宏观环境给多少风险预算，再看周期位置（贵不贵），再看筹码结构（哪些价位有人在守、波动会不会放大），再看情绪（会不会超调），最后落到发射台一级市场——每天赚多少钱、钱从哪来。</p>
+先看宏观在推还是在拖，再看周期位置（贵不贵），再看筹码结构（哪些价位有人在守、波动会不会放大），再看情绪（会不会超调），最后落到发射台一级市场——每天赚多少钱、钱从哪来。</p>
 <p>所有判断都按公开规则自动生成，每天一篇解读日志，写入即冻结；每周、每月再复盘一次；系统性的研究整理成分析报告。对了错了都留在这里，不做事后诸葛亮。</p>
 <p>{esc(DISCLAIMER)}</p>
 <p class="muted">访问统计：本站用 Umami 统计访问量和少量点击（生成长图、语言切换、报告是否读完等），只为了解哪些内容有人看。不用 cookie，不收集个人信息，不跨站追踪。</p>""", f"""<p>The author has spent close to ten years in web3 — operations, product design and an AMM DEX. This site puts the research process in public:

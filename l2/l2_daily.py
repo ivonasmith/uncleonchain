@@ -270,7 +270,7 @@ LEVELS = [("ath", "历史最高收盘", "ATH"), ("rp_1_2y", "1-2 年持币成本
 NEXT = {
     "BULL": ("新高后的上升期。观察：是否进入减半后 480~600 天的见顶时间窗，或估值进入高估区。",
              "Uptrend after a new high. Watch the halving +480~600 day window and valuation."),
-    "BULL_RISK": ("处在历史见顶时间窗或高估区：2018 年后这一状态之后一年中位收益为负，不追高，按 L1 风险预算减仓或收紧止盈。从新高回撤超过 20% 转为“牛市回撤·待确认”。",
+    "BULL_RISK": ("处在历史见顶时间窗或高估区：历史回放里这一状态之后一年中位 −6%，上涨的时候只有 47%，接近抛硬币。从新高回撤超过 20% 转为“牛市回撤·待确认”。",
                   "Historical top window / overvaluation. Since 2018 the following year has a negative median return."),
     "BULL_PULLBACK": ("从新高回撤超过 20%。回撤收窄到 10% 以内回到牛市；回撤超过 35% 且新高已过 90 天、减半已过 450 天则确认转熊。",
                       "Pullback >20% from the high; bear is confirmed at −35% with the high ≥90 days old."),
