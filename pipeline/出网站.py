@@ -1477,45 +1477,54 @@ def l2_signals(l2):
     return f'<div class="grid g3 sigs">{out}</div>'
 
 
-def ruler_svg(price, levels, h=460, w=440, date=None):
-    """M6：竖向对数价格轴，每条价位按真实距离摆放；现价醒目横线，现价到上下最近价位铺色带。"""
+def ruler_svg(price, levels, h=460, w=600, date=None):
+    """M6：竖向对数价格轴，每条价位按真实距离摆放；现价醒目横线，现价到上下最近价位铺色带。
+    标签全部在右侧：太挤就上下推开（避开收盘价那一行），用折线连回刻度（11-15：原来换到左侧会被裁掉、压到收盘价线）。"""
     if not levels or not price:
         return ""
     vals = [x["value"] for x in levels] + [price]
     lo, hi = math.log10(min(vals) * 0.96), math.log10(max(vals) * 1.04)
     top, bot = 22, h - 22
     Y = lambda v: top + (bot - top) * (1 - (math.log10(v) - lo) / (hi - lo))
-    ax = 150
+    ax = 180
     out = [f'<line x1="{ax}" x2="{ax}" y1="{top}" y2="{bot}" class="rax"/>']
     above = sorted([x for x in levels if x["value"] > price], key=lambda x: x["value"])
     below = sorted([x for x in levels if x["value"] <= price], key=lambda x: -x["value"])
     yp = Y(price)
-    if below:
-        yb = Y(below[0]["value"])
-        out.append(f'<rect x="{ax - 40}" y="{yp:.1f}" width="80" height="{yb - yp:.1f}" class="rsafe"/>')
-        out.append(f'<text x="{ax - 46}" y="{(yp + yb) / 2 + 4:.1f}" text-anchor="end" class="rbt up">{T("安全垫", "cushion")} {below[0]["pct_from_price"]:+.1f}%</text>')
+    # 左侧三行：上方压力 / 收盘价 / 安全垫，贴着收盘价线叠放，不和色带中点挂钩（色带很窄时会挤成一团）
     if above:
         ya = Y(above[0]["value"])
         out.append(f'<rect x="{ax - 40}" y="{ya:.1f}" width="80" height="{yp - ya:.1f}" class="rres"/>')
-        out.append(f'<text x="{ax - 46}" y="{(yp + ya) / 2 + 4:.1f}" text-anchor="end" class="rbt dn">{T("上方压力", "resistance")} {above[0]["pct_from_price"]:+.1f}%</text>')
-    # 价位标签：按高度排，离上一个标签太近就换到另一侧
-    placed = {"r": [], "l": []}
-    for x in sorted(levels, key=lambda x: -x["value"]):
-        y = Y(x["value"])
-        side = "r"
-        if any(abs(y - q) < 15 for q in placed["r"]):
-            side = "l" if not any(abs(y - q) < 15 for q in placed["l"]) else "r"
-        placed[side].append(y)
+        out.append(f'<text x="{ax - 46}" y="{yp - 22:.1f}" text-anchor="end" class="rbt dn">{T("上方压力", "resistance")} {above[0]["pct_from_price"]:+.1f}%</text>')
+    if below:
+        yb = Y(below[0]["value"])
+        out.append(f'<rect x="{ax - 40}" y="{yp:.1f}" width="80" height="{yb - yp:.1f}" class="rsafe"/>')
+        out.append(f'<text x="{ax - 46}" y="{yp + 17:.1f}" text-anchor="end" class="rbt up">{T("安全垫", "cushion")} {below[0]["pct_from_price"]:+.1f}%</text>')
+    out.append(f'<line x1="{ax - 170}" x2="{ax + 10}" y1="{yp:.1f}" y2="{yp:.1f}" class="rnow"/>')
+    out.append(f'<text x="{ax - 46}" y="{yp - 5:.1f}" text-anchor="end" class="rnl">{T("收盘价", "Close")} ${price:,.0f}</text>')
+    # 右侧标签：按高度排，间距不足 GAP 就往下推，越界再整体往上收；收盘价占一个空位
+    GAP = 16
+    items = sorted(levels, key=lambda x: -x["value"])
+    ys = [Y(x["value"]) for x in items]
+    slots = sorted([(y, i) for i, y in enumerate(ys)] + [(yp, -1)])
+    pos = [y for y, _ in slots]
+    for k in range(1, len(pos)):
+        pos[k] = max(pos[k], pos[k - 1] + GAP)
+    if pos and pos[-1] > bot:
+        pos[-1] = bot
+        for k in range(len(pos) - 2, -1, -1):
+            pos[k] = min(pos[k], pos[k + 1] - GAP)
+    lab_y = {i: pos[k] for k, (_, i) in enumerate(slots)}
+    lx = ax + 34
+    for i, x in enumerate(items):
+        y, ly = ys[i], lab_y[i]
         cls = "up" if x["value"] <= price else "dn"
         lab = f'{esc(T(x["name_zh"], x["name_en"]))} ${x["value"]:,.0f} ({x["pct_from_price"]:+.1f}%)'
         out.append(f'<line x1="{ax - 10}" x2="{ax + 10}" y1="{y:.1f}" y2="{y:.1f}" class="rtk {cls}"/>')
-        if side == "r":
-            out.append(f'<text x="{ax + 16}" y="{y + 4:.1f}" class="rlb">{lab}</text>')
-        else:
-            out.append(f'<text x="{ax - 16}" y="{y + 4:.1f}" text-anchor="end" class="rlb">{lab}</text>')
-    out.append(f'<line x1="{ax - 60}" x2="{w - 6}" y1="{yp:.1f}" y2="{yp:.1f}" class="rnow"/>')
-    out.append(f'<text x="{w - 6}" y="{yp - 6:.1f}" text-anchor="end" class="rnl">{T("收盘价", "Close")} ${price:,.0f}</text>')
+        out.append(f'<polyline points="{ax + 10},{y:.1f} {ax + 18},{y:.1f} {lx - 6},{ly:.1f} {lx - 2},{ly:.1f}" class="rld {cls}"/>')
+        out.append(f'<text x="{lx}" y="{ly + 4:.1f}" class="rlb">{lab}</text>')
     return f'<svg viewBox="0 0 {w} {h}" class="ruler-svg" role="img" aria-label="{T("关键价位刻度尺", "Key level ruler")}">{"".join(out)}</svg>'
+
 
 
 def l2_levels(l2):
