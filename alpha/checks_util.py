@@ -2,8 +2,8 @@
 """补证文件的统一合并规则（opps / alpha_daily / 出网站 / 任务清单 都用这一份）。
 
 顺序：grok_* 先读，其余按 checked_utc（核对时间）；同一个 key 新的盖过旧的。两条例外（2026-11-16，Codex 首批 41 条里 35 条是空模板）：
-  · 空壳 = 所有分数都是 U / NA 且证据链接不超过 1 条。空壳不许盖掉已有的补证；key 还没有补证时才记下它，并标 _stub，
-    它的 entry（一律 none）和 one_liner（模板句）不采用，状态只记「待核验」。
+  · 空壳 = 所有分数都是 U / NA 且证据链接不超过 1 条。空壳一律不并入：不盖已有补证，也不把没补过的卡标成「已补证 / 待核验」，
+    这些 key 留在待补证队列里。
   · alpha/review/patches.json：Claude 对个别字段的更正（{key: {字段: 值, "_why": 原因}}），在全部合并之后套上，不改原文件。
 flow / events 两种写法都认：flow 可以是 {airdrop: {v, why, src}} 或 {"积分空投": "中", ..., "evidence": 链接}；events 的说明可以叫 what 或 zh。
 events 里日期等于核对当天的（「今天去看了一眼」）不是项目事件，不展示。
@@ -57,10 +57,7 @@ def merged():
     recs.sort(key=lambda r: r[:3])   # Grok 自动的先读；其余按核对时间，新的盖旧的（不按文件名：tokenless_checks 字母序排在 codex_ 后面，会盖掉更新的）
     for _, _, fn, c in recs:
         if is_stub(c):
-            if c["key"] in out:
-                continue
-            c = dict(c, _stub=True, verdict="待核验")
-            c.pop("entry", None); c.pop("one_liner", None)
+            continue   # 空壳一律不并入：卡片保持原状态（原始线索）、不显示成「已补证」，key 留在待补证队列
         out[c["key"]] = norm(dict(c, _file=fn))
     for k, pt in (_load(os.path.join(RD, "patches.json"), {}) or {}).items():
         if k in out and isinstance(pt, dict):
