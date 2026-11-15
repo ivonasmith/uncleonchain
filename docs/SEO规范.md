@@ -57,7 +57,7 @@
 ## 2.1 搜索引擎后台
 
 - Google Search Console：11-15 用「网域」方式验证了 uncleonchain.com（Cloudflare 自动加 TXT 记录，**别删**），并提交 `sitemap.xml`。账号在大叔手里。
-- Bing 等走 IndexNow（daily.yml 定时推送）；Bing Webmaster Tools 可从 Search Console 一键导入（可选）。
+- Bing Webmaster Tools：11-15 已从 Search Console 导入（站点 + sitemap）。Bing / Yandex 等另走 IndexNow（daily.yml 定时推送）。
 
 ## 3. 不做的
 
