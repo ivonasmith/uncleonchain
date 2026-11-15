@@ -183,6 +183,7 @@ ICON = {
     "core": '<path d="M8 1.8l1.9 3.9 4.3.6-3.1 3 .7 4.3L8 11.6l-3.8 2 .7-4.3-3.1-3 4.3-.6z"/>',
     "narrative": '<circle cx="8" cy="8" r="6"/><circle cx="8" cy="8" r="2.4"/><path d="M8 8l4.2-4.2"/>',
     "alpha": '<circle cx="8" cy="8" r="6"/><circle cx="8" cy="8" r="2.4"/><path d="M8 8l4.2-4.2"/>',
+    "smart": '<circle cx="6" cy="6.5" r="3.5"/><path d="M8.6 9.1 13.5 14M4.6 6.5h2.8"/>',
     "rwa": '<rect x="2.5" y="6.5" width="11" height="7.5" rx="1"/><path d="M1.5 6.5 8 2l6.5 4.5M5.5 9v2.5M8 9v2.5M10.5 9v2.5"/>',
     "reports": '<path d="M3 1.8h7l3 3v9.4H3z"/><path d="M10 1.8v3h3M5.5 11.5V9.5M8 11.5V7.5M10.5 11.5V8.5"/>',
     "journal": '<path d="M3.5 1.8h9v12.4h-9z"/><path d="M6 5h4M6 8h4M6 11h2.5"/>',
@@ -190,12 +191,12 @@ ICON = {
     "corrections": '<path d="M2.5 8.5l3.5 3.5 7.5-8"/>',
     "about": '<circle cx="8" cy="5.2" r="2.8"/><path d="M2.5 14c.9-2.9 2.9-4.2 5.5-4.2s4.6 1.3 5.5 4.2"/>',
 }
-NAV_MAIN = [("home", "/", "终端总览", "Overview"), ("macro", "/macro/", "宏观仪表盘", "Macro"),
-            ("calendar", "/calendar/", "事件日历", "Calendar"), ("launchpad", "/launchpad/", "发射台矩阵", "Launchpads"), ("aiagent", "/ai-agent/", "AI Agent", "AI Agent"), ("rotation", "/rotation/", "板块轮动", "Rotation"),
-            ("core", "/core/", "龙头选币", "Leader Picks"), ("alpha", "/alpha/", "Alpha 雷达", "Alpha Radar"), ("rwa", "/rwa/", "RWA", "RWA"), ("reports", "/reports/", "分析报告", "Reports"),
-            ("journal", "/journal/", "解读日志", "Journal")]
-NAV_MORE = [("methodology", "/methodology/", "口径与规则", "Methodology"), ("corrections", "/corrections/", "更正记录", "Corrections"),
-            ("about", "/about/", "关于", "About")]
+NAV_MAIN = [("home", "/", "终端总览", "Overview"), ("calendar", "/calendar/", "事件日历", "Calendar"), ("smart", "/smart-money/", "聪明钱", "Smart Money"),
+            ("macro", "/macro/", "宏观仪表盘", "Macro"), ("launchpad", "/launchpad/", "发射台矩阵", "Launchpads"), ("aiagent", "/ai-agent/", "AI Agent", "AI Agent"),
+            ("rwa", "/rwa/", "RWA", "RWA"), ("core", "/core/", "龙头选币", "Leader Picks"), ("alpha", "/alpha/", "Alpha 雷达", "Alpha Radar"),
+            ("reports", "/reports/", "分析报告", "Reports"), ("journal", "/journal/", "解读日志", "Journal")]   # 顺序大叔 11-15 定
+NAV_MORE = [("methodology", "/methodology/", "口径与规则", "Methodology"),
+            ("corrections", "/corrections/", "更正记录", "Corrections"), ("about", "/about/", "关于", "About")]
 
 G = {"更新": None, "url": "/"}      # 侧边栏「数据更新」时间；当前页面路径（语言切换用）
 
@@ -1224,7 +1225,7 @@ def build_home(sd, S, logs, weeks, months, rot, matrix):
 {cal_home_card(G.get("CAL"))}
 <div class="grid g2" style="margin-top:22px;align-items:start">
 <div><h2 style="margin-top:12px">{T("发射台矩阵 · 当日 Top6", "Launchpads · top 6 today")} {cycle_tag()} <a class="sub" href="{U("/launchpad/")}">{T("全部", "All")} {len((matrix or {}).get("协议", []))} {T("个协议 →", "protocols →")}</a></h2>{lp_tbl}</div>
-<div><h2 style="margin-top:12px">{T("板块轮动 · 24h 领涨", "Rotation · 24h leaders")} <a class="sub" href="{U("/rotation/")}">{T("看全部 →", "See all →")}</a></h2>{cats}</div>
+<div><h2 style="margin-top:12px">{T("板块轮动 · 24h 领涨", "Rotation · 24h leaders")} <a class="sub" href="{U("/smart-money/")}">{T("看全部 →", "See all →")}</a></h2>{cats}</div>
 </div>
 {reports_block}
 <h2>{T("解读日志", "Journal")} <a class="sub" href="{U("/journal/")}">{T("全部日志与复盘 →", "All logs and reviews →")}</a></h2>
@@ -3868,13 +3869,19 @@ def build_rotation(rot):
                  + (" · 疑似成分调整、未进排行：" + "、".join(f"{c['名称']} {c['24h']:+.0f}%" for c in odd[:6]) if odd else ""),
                  f'Snapshot {dates[-1]} · {len(last)} categories (cap ≥ $50M); showing {len(big)} with cap ≥ $300M · {len(dates)} days of history'
                  + (" · likely constituent changes excluded: " + ", ".join(f"{c['名称']} {c['24h']:+.0f}%" for c in odd[:6]) if odd else ""))
-    body = f"""<div class="ph"><div><div class="eyebrow">Sector Rotation</div><h1>{T("板块轮动", "Sector rotation")}</h1>
+    body = f"""<div class="ph"><div><div class="eyebrow">Smart Money</div><h1>{T("聪明钱", "Smart Money")}</h1>
 <p class="lede">{esc(T(PILLARS[1]["desc"], PILLARS[1]["descEN"]))} {T("类目口径来自 CoinGecko，一个币可以同时属于多个类目，看相对强弱，不要把类目市值加总。", "Categories overlap (a coin can be in several), so compare relative strength; don't sum category caps.")}</p></div></div>
+<h2>{T("板块轮动", "Sector rotation")}</h2>
 {f'<p class="tnote">{esc(meta)}</p>' if meta else ''}
-<h2>{T("24h 领涨赛道", "24h leaders")}</h2>{f'<div class="grid g4">{grid}</div>' if grid else '<div class="empty">' + T("板块快照待生成。", "Snapshot pending.") + '</div>'}
-<h2>{T("24h 领跌赛道", "24h laggards")}</h2>{f'<div class="grid g4">{lose}</div>' if lose else ''}
-<h2>{T("轮动复盘", "Rotation reviews")}</h2>{post_list("rotation")}"""
-    emit("rotation/index.html", T(f"板块轮动 · {BRAND}", f"Sector rotation · {BRAND_EN}"), body, active="rotation", desc=T(PILLARS[1]["desc"], PILLARS[1]["descEN"]))
+<h3>{T("24h 领涨赛道", "24h leaders")}</h3>{f'<div class="grid g4">{grid}</div>' if grid else '<div class="empty">' + T("板块快照待生成。", "Snapshot pending.") + '</div>'}
+<h3>{T("24h 领跌赛道", "24h laggards")}</h3>{f'<div class="grid g4">{lose}</div>' if lose else ''}
+<h3>{T("轮动复盘", "Rotation reviews")}</h3>{post_list("rotation")}"""
+    # 大叔 11-15 定：板块轮动并进「聪明钱」（聪明钱自己的数据源还在准备），旧地址 /rotation/ 留一页跳转
+    emit("smart-money/index.html", T(f"聪明钱 · {BRAND}", f"Smart Money · {BRAND_EN}"), body, active="smart",
+         desc=T("聪明钱：先放板块轮动——" + PILLARS[1]["desc"], "Smart money, starting with sector rotation: " + PILLARS[1]["descEN"]))
+    emit("rotation/index.html", T(f"聪明钱 · {BRAND}", f"Smart Money · {BRAND_EN}"),
+         f'<div class="ph"><div><h1>{T("板块轮动已并入聪明钱", "Rotation moved to Smart Money")}</h1></div></div><p><a href="{U("/smart-money/")}">{T("去聪明钱 →", "Go to Smart Money →")}</a></p>',
+         active="smart", extra_head=f'<meta http-equiv="refresh" content="0; url={U("/smart-money/")}"><link rel="canonical" href="https://{DOMAIN}{U("/smart-money/")}">')
 
 
 RADAR = [
@@ -5555,7 +5562,8 @@ ZH_ONLY = '<div class="note">This piece is written in Chinese.</div>'
 def build_posts():
     for p in PILLARS:
         for x in ALL_POSTS[p["slug"]]:
-            cr = crumbs([(T(p["nav"], p["en"]), f'/{p["slug"]}/'), (x["标题"], None)])
+            up = ((T("聪明钱", "Smart Money"), "/smart-money/") if p["slug"] == "rotation" else (T(p["nav"], p["en"]), f'/{p["slug"]}/'))   # 板块轮动 11-15 并进聪明钱
+            cr = crumbs([up, (x["标题"], None)])
             note = ZH_ONLY if LANG["v"] == "en" else ""
             if x["kind"] == "html":
                 body, extra = cr + note + x["html"], (f"<style>{x['css']}</style>" if x["css"] else "")
@@ -5563,7 +5571,7 @@ def build_posts():
                 body = (cr + note + f'<div class="eyebrow">{esc(T(p["nav"], p["en"]))}</div><h1>{esc(x["标题"])}</h1><p class="stamp" style="text-align:left">{esc(x["日期"])}</p>'
                         f'<div class="article" style="margin-top:18px">{x["html"]}</div>')
                 extra = ""
-            emit(f'{p["slug"]}/{x["slug"]}/index.html', f'{x["标题"]} · {T(BRAND, BRAND_EN)}', body, active=p["slug"], desc=x["摘要"],
+            emit(f'{p["slug"]}/{x["slug"]}/index.html', f'{x["标题"]} · {T(BRAND, BRAND_EN)}', body, active="smart" if p["slug"] == "rotation" else p["slug"], desc=x["摘要"],
                  extra_head=extra, narrow=x["kind"] == "md")
 
 
