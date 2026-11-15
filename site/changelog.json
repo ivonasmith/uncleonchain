@@ -1,52 +1,5 @@
 [
  {
-  "version": "2026.11.15.7",
-  "date": "2026-11-15",
-  "notify": false,
-  "title_zh": "发射台平台页：量的质量",
-  "title_en": "Launchpad pages: quality of volume",
-  "items": [
-   {
-    "type": "new",
-    "zh": "发射台二级页面加「量的质量」：近 7 日发币数、发币人（下限）、某天发的币 7 天后还有几个在交易 / 几个市值过 10 万美元（逐个币查 GeckoTerminal 的全部池子，含曲线池）；交易者和刷量还没接，显示「待接入」。同一份数据（data/onchain/平台质量.json）给 Alpha 雷达的机会卡读。存活样本 11-15 起每个工厂每天多留 30 个币，之前的批次用每天 3 个样本拼 7 天，页面标明。",
-    "en": "Launchpad platform pages gain a ‘quality of volume’ block: tokens launched (7d), creators (floor), how many tokens from a given day still trade 7 days later and how many top $100k (GeckoTerminal, all pools incl. bonding curves). Traders / wash trading pending. The same file feeds Alpha Radar."
-   }
-  ]
- },
- {
-  "version": "2026.11.15.6",
-  "date": "2026-11-15",
-  "notify": false,
-  "title_zh": "Alpha 雷达：机会卡头部精简",
-  "title_en": "Alpha Radar: leaner card header",
-  "items": [
-   {
-    "type": "improve",
-    "zh": "机会卡头部压成三行：一句话介绍、资金参与方式（右边是发现日和补证来源）、一行读数（上线天数、币上线天数、市值、24 小时成交额、24 小时涨跌）。数字带下划线，鼠标放上去看口径和出处；参与方式的依据也放进悬停。「K 线」并进官网、X 那一排，按 币安 → CMC → DexScreener 的顺序选（CMC 只用核对过的页面地址）。",
-    "en": "Card header trimmed to three lines; details moved into hover notes. The Chart link sits with Website / X and picks Binance → CMC → DexScreener."
-   }
-  ]
- },
- {
-  "version": "2026.11.15.5",
-  "date": "2026-11-15",
-  "notify": false,
-  "title_zh": "Alpha 雷达：有币的卡加「看 K 线」入口和市值 / 成交额快照",
-  "title_en": "Alpha Radar: chart button and market snapshot for tokens",
-  "items": [
-   {
-    "type": "improve",
-    "zh": "有币的机会卡加「看 K 线」按钮：在币安有现货的直接开币安 K 线（先核对是同一个币，防同名），没有的开 DexScreener 上流动性最大的交易对，再不行开 CoinGecko。旁边列市值、完全稀释估值、24 小时链上成交额、24 小时涨跌（DexScreener 日更快照，不是实时，只算去中心化交易所）。列表每行也显示市值。",
-    "en": "Token cards now have a Chart button (Binance spot if verified listed, otherwise the deepest DexScreener pair, otherwise CoinGecko) plus market cap, FDV, 24h DEX volume and 24h change from a daily DexScreener snapshot."
-   },
-   {
-    "type": "improve",
-    "zh": "每日补证改为主要由 Codex 做（直接连仓库交结果），Grok 自动补证默认关闭。",
-    "en": "Daily research now mainly done by Codex; the Grok auto-research is off by default."
-   }
-  ]
- },
- {
   "version": "2026.11.15.4",
   "date": "2026-11-15",
   "notify": true,
