@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-14T18:36:42+00:00",
+ "generated": "2026-11-15T01:13:57+00:00",
  "n": 22,
  "prompt": "你在给「链上大叔研究台」Alpha 雷达补证（只研究正规项目，不写买卖建议）。对清单里每个协议，查官方网站 / 文档 / 公告、DefiLlama 方法论和可核对的链上信息，\n按下面格式交一个 JSON 数组（文件名 <日期>_checks.json）。第一项 one_liner 用一句大白话说清它是什么（给没听过的人看）。每条事实带来源链接和核对日期；查不到写 \"U\"，不要估，不要编。\n结论 verdict 只能是：研究观察（对象明确、有可证伪假设、没查到否决项）/ 待核验（关键事实缺失或冲突，写清缺什么）/ 拒绝（身份错误、已确认风险、其实已有代币、不是对普通人开放的正规项目，写证据）。\n分数按 framework.json 附录一锚点给（M A F E G T 是 0–4，TM TE 是 0–3，不知道写 U，没有代币时 TE 写 NA），每个分数写 why 和 src。\n资金参与方式 entry 从 buy / stake / points / use / presale / mine / none 里选（none = 暂时没有资金入口），写 entry_why。",
  "schema": {
@@ -60,7 +60,7 @@
     "Hyperliquid L1"
    ],
    "rev30": null,
-   "tvl": 48610826,
+   "tvl": 47112360,
    "defillama": "https://defillama.com/protocol/kinetiq-elysium-bridge",
    "pending": [
     "M",
@@ -120,7 +120,7 @@
     "Ethereum"
    ],
    "rev30": null,
-   "tvl": 8545396,
+   "tvl": 8330622,
    "defillama": "https://defillama.com/protocol/vesper-v2",
    "pending": [
     "M",
@@ -148,7 +148,7 @@
    "chains": [
     "Off Chain"
    ],
-   "rev30": 604327,
+   "rev30": 589995,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/catapult-trade",
    "pending": [
@@ -179,7 +179,7 @@
     "Ethereum"
    ],
    "rev30": null,
-   "tvl": 6101785,
+   "tvl": 6662024,
    "defillama": "https://defillama.com/protocol/swan-dao",
    "pending": [
     "M",
@@ -208,7 +208,7 @@
     "Monad",
     "BSC"
    ],
-   "rev30": 9358195,
+   "rev30": 8896380,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/fomo-wallet",
    "pending": [
@@ -241,7 +241,7 @@
     "Solana",
     "Base"
    ],
-   "rev30": 5767625,
+   "rev30": 5417516,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/gmgn",
    "pending": [
@@ -274,7 +274,7 @@
     "X Layer",
     "Monad"
    ],
-   "rev30": 4370160,
+   "rev30": 4247872,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/flap-sh",
    "pending": [
@@ -305,7 +305,7 @@
    "chains": [
     "Hyperliquid L1"
    ],
-   "rev30": 3296251,
+   "rev30": 3285258,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/trade[xyz]",
    "pending": [
@@ -336,7 +336,7 @@
    "chains": [
     "Off Chain"
    ],
-   "rev30": 2980340,
+   "rev30": 2904532,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/azverse-perps",
    "pending": [
@@ -368,7 +368,7 @@
    "chains": [
     "Robinhood Chain"
    ],
-   "rev30": 2582269,
+   "rev30": 2241996,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/the-standard-reserve",
    "pending": [
@@ -389,6 +389,38 @@
    ]
   },
   {
+   "key": "g:9146",
+   "name": "Central City",
+   "status": "待核验",
+   "kind": "tokenless",
+   "fresh": false,
+   "bucket": "watch",
+   "discovered": "2026-11-14",
+   "category": "AI Agents",
+   "chains": [
+    "Base",
+    "Arc"
+   ],
+   "rev30": 1608735,
+   "tvl": null,
+   "defillama": "https://defillama.com/protocol/central-city",
+   "pending": [
+    "M",
+    "F",
+    "E",
+    "V",
+    "G",
+    "T",
+    "TM"
+   ],
+   "missing_before": [
+    "独立关联地址/自成交及去补贴留存审计未完成。",
+    "未独立重放全部费用与支付，适配器方法可能更新。",
+    "当前官方自身 token/积分/空投立场及适用日期 U。",
+    "官方原始表态日期 U，不用页面读取日期代替。"
+   ]
+  },
+  {
    "key": "g:parent#txflow",
    "name": "TxFlow Perps",
    "status": "待核验",
@@ -400,7 +432,7 @@
    "chains": [
     "TxFlow"
    ],
-   "rev30": 1604975,
+   "rev30": 1551183,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/txflow-perps",
    "pending": [
@@ -421,38 +453,6 @@
    ]
   },
   {
-   "key": "g:9146",
-   "name": "Central City",
-   "status": "待核验",
-   "kind": "tokenless",
-   "fresh": false,
-   "bucket": "watch",
-   "discovered": "2026-11-14",
-   "category": "AI Agents",
-   "chains": [
-    "Base",
-    "Arc"
-   ],
-   "rev30": 1594460,
-   "tvl": null,
-   "defillama": "https://defillama.com/protocol/central-city",
-   "pending": [
-    "M",
-    "F",
-    "E",
-    "V",
-    "G",
-    "T",
-    "TM"
-   ],
-   "missing_before": [
-    "独立关联地址/自成交及去补贴留存审计未完成。",
-    "未独立重放全部费用与支付，适配器方法可能更新。",
-    "当前官方自身 token/积分/空投立场及适用日期 U。",
-    "官方原始表态日期 U，不用页面读取日期代替。"
-   ]
-  },
-  {
    "key": "g:7016",
    "name": "Antarctic",
    "status": "待核验",
@@ -464,7 +464,7 @@
    "chains": [
     "Off Chain"
    ],
-   "rev30": 1479360,
+   "rev30": 1423066,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/antarctic",
    "pending": [
@@ -495,7 +495,7 @@
    "chains": [
     "Off Chain"
    ],
-   "rev30": 1252714,
+   "rev30": 1229202,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/xox-perps",
    "pending": [
@@ -526,7 +526,7 @@
    "chains": [
     "Tron"
    ],
-   "rev30": 1231156,
+   "rev30": 1203932,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/tronsave",
    "pending": [
@@ -560,7 +560,7 @@
     "Ethereum",
     "Sonic"
    ],
-   "rev30": 1121303,
+   "rev30": 1121121,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/veda",
    "pending": [
@@ -592,7 +592,7 @@
    "chains": [
     "Hyperliquid L1"
    ],
-   "rev30": 888072,
+   "rev30": 870337,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/hyperdash-perps",
    "pending": [
@@ -625,7 +625,7 @@
     "Ethereum",
     "BSC"
    ],
-   "rev30": 808472,
+   "rev30": 785934,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/rabby-perps",
    "pending": [
@@ -646,40 +646,6 @@
    ]
   },
   {
-   "key": "g:8916",
-   "name": "Relay",
-   "status": "待核验",
-   "kind": "tokenless",
-   "fresh": false,
-   "bucket": "watch",
-   "discovered": "2026-11-14",
-   "category": "Cross Chain Bridge",
-   "chains": [
-    "Mythos",
-    "XRPL",
-    "Eclipse"
-   ],
-   "rev30": 696932,
-   "tvl": null,
-   "defillama": "https://defillama.com/protocol/relay",
-   "pending": [
-    "M",
-    "F",
-    "E",
-    "V",
-    "G",
-    "T",
-    "TM"
-   ],
-   "missing_before": [
-    "独立关联地址/自成交及去补贴留存审计未完成。",
-    "未独立重放全部费用与支付，适配器方法可能更新。",
-    "当前官方自身 token/积分/空投立场及适用日期 U。",
-    "官方原始表态日期 U，不用页面读取日期代替。",
-    "服务收费明确，但收入净额和当前发行/奖励立场仍缺，历史官方声明不延长有效期。"
-   ]
-  },
-  {
    "key": "g:parent#okx-dex",
    "name": "OKX Swap",
    "status": "待核验",
@@ -693,7 +659,7 @@
     "Blast",
     "Sonic"
    ],
-   "rev30": 687080,
+   "rev30": 718086,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/okx-swap",
    "pending": [
@@ -714,6 +680,40 @@
    ]
   },
   {
+   "key": "g:8916",
+   "name": "Relay",
+   "status": "待核验",
+   "kind": "tokenless",
+   "fresh": false,
+   "bucket": "watch",
+   "discovered": "2026-11-14",
+   "category": "Cross Chain Bridge",
+   "chains": [
+    "Mythos",
+    "XRPL",
+    "Eclipse"
+   ],
+   "rev30": 694936,
+   "tvl": null,
+   "defillama": "https://defillama.com/protocol/relay",
+   "pending": [
+    "M",
+    "F",
+    "E",
+    "V",
+    "G",
+    "T",
+    "TM"
+   ],
+   "missing_before": [
+    "独立关联地址/自成交及去补贴留存审计未完成。",
+    "未独立重放全部费用与支付，适配器方法可能更新。",
+    "当前官方自身 token/积分/空投立场及适用日期 U。",
+    "官方原始表态日期 U，不用页面读取日期代替。",
+    "服务收费明确，但收入净额和当前发行/奖励立场仍缺，历史官方声明不延长有效期。"
+   ]
+  },
+  {
    "key": "g:8866",
    "name": "Loan Meme",
    "status": "待核验",
@@ -727,7 +727,7 @@
     "BSC",
     "Solana"
    ],
-   "rev30": 658147,
+   "rev30": 637130,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/loan-meme",
    "pending": [
