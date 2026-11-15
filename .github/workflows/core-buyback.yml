@@ -1,0 +1,40 @@
+# 回购 / 销毁 12 个月链上数量（tools/core_mech/buyback.py，Alchemy）。会话分支推送时试跑并把结果提交回该分支；上线后由 core-daily 每周跑。
+name: 回购销毁链上统计
+
+on:
+  push:
+    branches: [claude/stoic-gates-xxol8a]
+    paths:
+      - "tools/core_mech/buyback.py"
+      - ".github/workflows/core-buyback.yml"
+  workflow_dispatch: {}
+
+concurrency:
+  group: core-buyback
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: 统计
+        env:
+          ALCHEMY_KEY: ${{ secrets.ALCHEMY_KEY }}
+        run: python3 tools/core_mech/buyback.py | tail -c 3000
+      - name: 提交结果回会话分支
+        if: github.ref_name == 'claude/stoic-gates-xxol8a'
+        run: |
+          git config user.name "uncleonchain-bot"
+          git config user.email "bot@uncleonchain.com"
+          git add data/core/buyback.json
+          git diff --cached --quiet && exit 0
+          git commit -m "回购销毁统计（试跑）"
+          git pull --rebase -X theirs origin claude/stoic-gates-xxol8a && git push origin HEAD:claude/stoic-gates-xxol8a
