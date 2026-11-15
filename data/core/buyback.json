@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-15 06:39 UTC",
+ "generated": "2026-11-15 07:34 UTC",
  "window": [
   "2025-11-15",
   "2026-11-15"
@@ -12,11 +12,11 @@
     23800871,
     26416670
    ],
-   "qty": 0.0,
-   "n": 0,
+   "qty": 8000.0,
+   "n": 2,
    "partial": false,
-   "last": null,
-   "last_tx": null,
+   "last": "2025-12-29",
+   "last_tx": "0x103e62cd94fc5ea4ad2923a806c7ca6c898bc96460b94d875e1deca96460b576",
    "diag": {
     "all_to_burn_total": 114066004.5928092,
     "by_sender_top": [
@@ -60,11 +60,33 @@
       "0xffb4008dee363b9a837b513f419c3ac822acd05d",
       320000.0
      ]
+    ],
+    "largest": [
+     [
+      100000000.0,
+      "0x091f0083242a777d55821c1189e568d6d033d9da501b75087dc736fa143d2c1e"
+     ],
+     [
+      4000.0,
+      "0xffef21bd9ee7f43b677ce1eff8bec8714d6e0e04c79441b494a1ae4eb775bbad"
+     ],
+     [
+      4000.0,
+      "0xffb633f53fb0d616c01daa24e96435f062ccf28110c710ecf3053cd0759e97db"
+     ],
+     [
+      4000.0,
+      "0xff751e0255ee7f35e960a887af344bf93367a405c936f8aa6704b816c3e11c4a"
+     ],
+     [
+      4000.0,
+      "0xfefbc3057c0eb394dc6d39fce3c319afc7104af2279eef5d37c1b54a5b708f1b"
+     ]
     ]
    },
    "sym": "UNI",
    "kind": "burn",
-   "label": "以太坊 Firepit 送去销毁的 UNI",
+   "label": "以太坊 Firepit 交易里送去销毁的 UNI",
    "candidate": false,
    "diag_only": false
   },
@@ -309,6 +331,33 @@
     68218281,
     133635907
    ],
+   "largest": [
+    [
+     64027103.0,
+     "0x310866450a63be210134762523f13231b5cc2182918345a92b048b28df8e181a",
+     "0x000000000000000000000000000000000000dead"
+    ],
+    [
+     61255558.0,
+     "0xb856c71b0bdfc570b27eb821d9cd2e5ad649e82009bb4cf6035b378936cccddb",
+     "0x000000000000000000000000000000000000dead"
+    ],
+    [
+     61051862.0,
+     "0xac23e8e0a9b674c3a7a43f2118ccb31c807d36d4b6b7edf7c786f641e907f54d",
+     "0x000000000000000000000000000000000000dead"
+    ],
+    [
+     60544653.0,
+     "0x7f35379a47b89462dc4e7e73ee633b07d43bfa5e0663c56966ca28b03213adb9",
+     "0x000000000000000000000000000000000000dead"
+    ],
+    [
+     60510046.0,
+     "0x2a9f14d9849df5e9d27de89e5c3b189e408439f29c4dd37d8fe487a9924c8ed3",
+     "0x000000000000000000000000000000000000dead"
+    ]
+   ],
    "qty": 2887323557.0,
    "n": 53,
    "partial": false,
@@ -325,6 +374,13 @@
    "blocks": [
     68218281,
     133635907
+   ],
+   "largest": [
+    [
+     23365111.69616219,
+     "0x09cd10d44287f4b912caef093d649a245705984132fc5fe48c341c705fd70b9c",
+     "0x000000000000000000000000000000000000dead"
+    ]
    ],
    "qty": 23365111.69616219,
    "n": 1,
@@ -447,24 +503,37 @@
    "accounts": [
     "DpVH8xQZ4aapxwZ6KW9nuEUs9zEePa8HQvXny9Ajj93T"
    ],
-   "tx_scanned": 6000,
+   "tx_scanned": 40000,
+   "seen_from": "2026-04-02",
    "partial": true,
    "burn_qty": 0,
    "burn_n": 0,
    "diag": {
     "inflow_by_fee_payer_top": [
      [
-      "3rA996DAZe5G67HWbC4jdyYPLeNptLXuybtLnx6dvkxn",
-      9465356.649823338
+      "7JQeyNK55fkUPUmEotupBFpiBGpgEQYLe8Ht1VdSfxcP",
+      52483482.95282793
      ],
      [
-      "7JQeyNK55fkUPUmEotupBFpiBGpgEQYLe8Ht1VdSfxcP",
-      4000365.5283816755
+      "3rA996DAZe5G67HWbC4jdyYPLeNptLXuybtLnx6dvkxn",
+      31118226.515156105
+     ],
+     [
+      "71WDyyCsZwyEYDV91Qrb212rdg6woCHYQhFnmZUBxiJ6",
+      23259.51214800775
+     ],
+     [
+      "EccxYg7rViwYfn9EMoNu7sUaV82QGyFt6ewiQaH1GYjv",
+      34.7445779889822
+     ],
+     [
+      "AfQ1oaudsGjvznX4JNEw671hi57JfWo4CWqhtkdgoVHU",
+      8.34672997891903
      ]
     ]
    },
-   "qty": 13465722.178205013,
-   "n": 5999,
+   "qty": 83625012.07144001,
+   "n": 39999,
    "last": "2026-11-14",
    "sym": "JUP",
    "kind": "buyback",
@@ -482,23 +551,24 @@
     "G7rxL8ySm5qPbtTus9FhAn2nEAZn8DDsUEeHGXgWTP1x",
     "GX4HMQz73cHETFMMW4SsCG5dYnWG8DYZYLhMMzV6ZfuC"
    ],
-   "tx_scanned": 18866,
-   "partial": true,
+   "tx_scanned": 26134,
+   "seen_from": "2025-11-15",
+   "partial": false,
    "burn_qty": 0,
    "burn_n": 0,
    "diag": {
     "inflow_by_fee_payer_top": [
      [
       "projjosVCPQH49d5em7VYS7fJZzaqKixqKtus7yk416",
-      5196752.227768999
+      6980512.911729999
      ],
      [
       "PNLCQcVCD26aC7ZWgRyr5ptfaR7bBrWdTFgRWwu2tvF",
-      2947170.9513069987
+      4708585.383244999
      ],
      [
       "ProCXqRcXJjoUd1RNoo28bSizAA6EEqt9wURZYPDc5u",
-      1478393.2681759996
+      2693641.9779709997
      ],
      [
       "PNLJ777mhif3oiBPPTsHriajdshfpGDNT3r8dXHJZeK",
@@ -530,8 +600,8 @@
      ]
     ]
    },
-   "qty": 9622423.964226998,
-   "n": 18862,
+   "qty": 14382847.789921092,
+   "n": 26130,
    "last": "2026-11-14",
    "sym": "RAY",
    "kind": "buyback",
@@ -544,15 +614,16 @@
    "accounts": [
     "GqE7wcwRw86xxMz4pNq5cV3BkM64h3bvajQRQbigYqTX"
    ],
-   "tx_scanned": 6000,
+   "tx_scanned": 40000,
+   "seen_from": "2025-12-15",
    "partial": true,
-   "burn_qty": 416425.0281541491,
-   "burn_n": 5998,
+   "burn_qty": 1284030.2188789032,
+   "burn_n": 39995,
    "diag": {
     "inflow_by_fee_payer_top": []
    },
-   "qty": 416425.0281541491,
-   "n": 5998,
+   "qty": 1284030.2188789032,
+   "n": 39995,
    "last": "2026-11-14",
    "sym": "RENDER",
    "kind": "burn",
@@ -572,48 +643,57 @@
     "78TsNCAkm7iZvsjN3Df1pevrkymCGbP8xeMsVrPHJK4Z",
     "HdtUyEC7TeLGrA7ddRRJWM6nUYk5UZsL9pJuWnXAFQ32"
    ],
-   "tx_scanned": 24936,
+   "tx_scanned": 141637,
+   "seen_from": "2026-04-08",
    "partial": true,
-   "burn_qty": 124653436736.67702,
-   "burn_n": 6567,
+   "burn_qty": 126059506635.77002,
+   "burn_n": 41232,
    "diag": {
     "inflow_by_fee_payer_top": [
      [
       "99mRw3EzdJZWEUjgp1nrU4WeHsukUBjbh7gYE7pm4F3c",
-      1015046470.5535824
+      10550204849.771084
      ],
      [
       "2ifjKjqtETDeHXKsrRxeKWUuwUtXxNS4HepT6eftj6Qz",
-      494682488.6922923
+      1490801785.6408498
+     ],
+     [
+      "4zmJQ6KQXftutXjLAHJFmgANchhPD98Tm9vpNe3zogGP",
+      64564733.116392985
      ],
      [
       "78hoB7emUo7zF5kdNf9TFxzpLRKCy8Jgft5cu69Byuax",
       50649671.47206204
      ],
      [
-      "4zmJQ6KQXftutXjLAHJFmgANchhPD98Tm9vpNe3zogGP",
-      11984831.001433996
-     ],
-     [
       "9jHrTCwpDANHLNQz5cem6XLUBM8KiTWKe766Br6KVCXM",
-      1401833.133067
-     ],
-     [
-      "7rhxnLV8C77o6d8oz26AgK8x8m5ePsdeRawjqvojbjnQ",
-      918900.1147310009
+      10800026.794776976
      ],
      [
       "FkaLnX17cXZGyeu3kZGdHCNdFMJJzBrPPYVvd18B3MZp",
-      445522.81634900026
+      8292617.83655
      ],
      [
-      "HckQ93Xqjjo8mwt5pNPWvyCTZXQZ858rvzmm7ZRrZg9t",
-      30.641737999863768
+      "7rhxnLV8C77o6d8oz26AgK8x8m5ePsdeRawjqvojbjnQ",
+      2236637.2839880027
+     ],
+     [
+      "CreQJ2t94QK5dsxUZGXfPJ8Nx7wA9LHr5chxjSMkbNft",
+      349410.12529800006
+     ],
+     [
+      "MfDuWeqSHEqTFVYZ7LoexgAK9dxk7cy4DFJWjWMGVWa",
+      101274.588931
+     ],
+     [
+      "6UWsi9WKQbE5jLxLcycfr5NZ1DQGVNKUCkW1pzUaRVCE",
+      597.280416
      ]
     ]
    },
-   "qty": 1575129748.4252567,
-   "n": 18355,
+   "qty": 12178001693.886515,
+   "n": 100373,
    "last": "2026-11-14",
    "sym": "PUMP",
    "kind": "buyback",
@@ -626,7 +706,7 @@
    "kind": "burn",
    "label": "Assistance Fund 持有的 HYPE（官方认定为已销毁）",
    "chain": "hypercore",
-   "balance_now": 48975378.62473923,
+   "balance_now": 48975902.03473923,
    "fills": 10115,
    "buy_qty_seen": 512533.71,
    "seen_from": "2026-11-03",
