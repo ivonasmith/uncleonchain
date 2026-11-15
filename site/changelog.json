@@ -1,5 +1,40 @@
 [
  {
+  "version": "2026.11.15.3",
+  "date": "2026-11-15",
+  "notify": true,
+  "title_zh": "核心选币改名「龙头选币」：排行榜 + 默认观测前 10",
+  "title_en": "Core picks is now Leader Picks: leaderboard + default top-10 watch",
+  "items": [
+   {
+    "type": "new",
+    "zh": "按《选币规则 v1》每天从币安成交额前 100 里分五类（共识储备 / 主流公链 / 现金流有用 / 博弈控盘 / 注意力情绪）选出各类龙头，共 46 个，每天冻结一份、事后对账。",
+    "en": "Rules v1 now pick class leaders daily from the Binance top 100 (46 names), frozen daily for later reconciliation."
+   },
+   {
+    "type": "new",
+    "zh": "默认观测 = 事实条件分前 10：流动性前 50、月收入 ≥ 100 万美元、收入在涨、持有人分到 ≥ 30%、回购 / 分红已执行，一条 1 分。这是条件齐备度，不是涨跌预测。",
+    "en": "Default watch = top 10 by a five-fact condition score (liquidity, revenue, growth, holder share, live value capture). Condition completeness, not a forecast."
+   },
+   {
+    "type": "new",
+    "zh": "TAO、WLD 机制拆解卡：能卖的有多少、排放 vs 真实收入、是不是合约在带价格、筹码在谁手里。",
+    "en": "Mechanism cards for TAO and WLD."
+   },
+   {
+    "type": "improve",
+    "zh": "总观测台和全部标的合成「排行榜」；重大发现、评分研究、口径与规则合成「研究与规则」；页面上所有标签都可以悬停看说明。",
+    "en": "Overview and All assets merged into a Leaderboard; findings, research and method merged; every tag now has a hover explanation."
+   },
+   {
+    "type": "data",
+    "zh": "评分研究 M2 / M3 / M3b 三轮检验没有一个预测读数通过，结果全文放在「研究与规则 · 评分研究」。",
+    "en": "Score research rounds M2 / M3 / M3b: no predictive reading passed; full results under Research & rules.",
+    "corrections_anchor": "2026-11-15-corefact"
+   }
+  ]
+ },
+ {
   "version": "2026.11.15.2",
   "date": "2026-11-15",
   "notify": false,

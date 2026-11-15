@@ -1968,7 +1968,9 @@ RULE_CHANGES.append(
      "原因": "原型的 0–3 分阈值没有检验过。回测（core/score_backtest.py，38 个代币、2023-03 起每月、标准事先写死）R / C / V / D 和合计分全部未通过；大叔要求没验证的不能拿来打分。",
      "原因EN": "The prototype's 0–3 thresholds were never tested; in the backtest none of R/C/V/D or the total passed.",
      "内容": "立项一轮评分研究（core/research/评分研究立项.md，观测台「评分研究」页签）；研究出结论前页面不打分、不按分数排名，只摆读数与回测结论（分数仍在后台记录，留作样本外检验）。建仓条件判定只用已验证规则（闸门 1/2/3、R4）和流程规则（R1 六问卡）；R2、R3、R6 降为提示。",
-     "EN": "Scores and score rankings removed from the page (still logged for out-of-sample tests). The entry verdict counts only verified rules (gates 1/2/3, R4) and the process rule R1; R2, R3 and R6 are info only."},
+     "EN": "Scores and score rankings removed from the page (still logged for out-of-sample tests). The entry verdict counts only verified rules (gates 1/2/3, R4) and the process rule R1; R2, R3 and R6 are info only."})
+
+RULE_CHANGES.append(
     {"日期": "2026-11-15", "锚": "2026-11-15-corefact", "范围": "龙头选币 · 默认观测与事实条件分", "EN范围": "Leader picks · default watch and fact score",
      "原因": "评分研究 M2 / M3 / M3b 三轮检验 10 个预测读数和 R3 全部未通过，没有可用的预测分；大叔要求有一个默认观测列表，避免条件太严最后没东西可看。",
      "原因EN": "No predictive reading passed rounds M2 / M3 / M3b; a default watch list was still needed.",
