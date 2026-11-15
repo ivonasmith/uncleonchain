@@ -54,6 +54,11 @@
 8. **改 URL 要留跳转**：旧路径在 `_redirects` 或跳转页里 301 / meta refresh 到新路径，并在新页 canonical 指向自己。
 9. 出网站末尾会打印「SEO 检查：N 页，M 条警告」，推送前看一眼，新增的警告自己修掉（11-15 基线 = 0 条）。
 
+## 2.1 搜索引擎后台
+
+- Google Search Console：11-15 用「网域」方式验证了 uncleonchain.com（Cloudflare 自动加 TXT 记录，**别删**），并提交 `sitemap.xml`。账号在大叔手里。
+- Bing 等走 IndexNow（daily.yml 定时推送）；Bing Webmaster Tools 可从 Search Console 一键导入（可选）。
+
 ## 3. 不做的
 
 - 不为 SEO 写软文、不堆关键词、不出没数据的落地页。
