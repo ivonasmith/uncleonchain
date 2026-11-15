@@ -3534,7 +3534,8 @@ def platform_quality_html(slug):
     else:
         s_v, s_s = na, T("攒样本中：某天发的币 7 天后才查", "collecting: checked 7 days after launch")
     k = (tpl(T("近 7 日发币", "Tokens launched (7d)"), n(fb.get("7d")) + est, T(f'最近一天 {n(fb.get("1d"))} · {esc(q.get("数据日") or "")}', f'last day {n(fb.get("1d"))} · {esc(q.get("数据日") or "")}'))
-         + tpl(T("发币人（下限）", "Creators (floor)"), n(fr.get("7d")), T("7 天里单日最多的一天", "busiest day in 7d"))
+         + tpl(T("发币人（下限）", "Creators (floor)"), n(fr.get("7d")), T("7 天里单日最多的一天", "busiest day in 7d") if fr.get("7d") is not None
+               else T("币都铸给同一个合约，抽样数不出来", "all tokens minted via one contract; sampling can’t count creators"))
          + tpl(T("7 天后还在交易", "Still trading after 7d"), s_v, s_s)
          + tpl(T("交易者 / 刷量", "Traders / wash"), na, T("要逐笔扫交易，还没接", "needs per-trade scan")))
     ev = q.get("事件") or []
