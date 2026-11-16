@@ -92,7 +92,7 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
   `alpha_leads.json`（线索台账，只追加不删，首日 11-14 = 基线；每天回查发币）、`alpha_history.json`（每天一行）。参数和剔除名单 `alpha/alpha_config.json`。
   页面 `出网站.build_alpha`：/alpha/ 雷达、/alpha/cases/ 案例库、/alpha/method/ 方法论、/alpha/progress/ 研究进度，文档在 `alpha/research/*.md`（`core_md` 渲染）；首页卡片 `alpha_home_card`。
   方法论 = Codex 交付《Alpha标的筛选研究体系》全面版，网站版去掉执行纪律（执行卡 / 固定止损止盈参数）。红线：不打分排名、不公开「执行评估」档、不点名没有协议级读数的小市值币、不写买卖 / 仓位 / 止损。
-  分工（大叔 11-14 定）：代码和推送网站 Claude 做，查证和出数据交 Codex，任务包 `alpha/review/README.md`（T1 发现源验收、T2 10-16 冻结评分 D30 复查、T3 无币协议前 30 补证），结果回到 `alpha/review/*.json` 再由 Claude 并入。
+  **Codex 一律推分支 `codex/review`，Claude 审核后并进 main（大叔 11-16 定，AGENTS.md 第 2 节）**。分工（大叔 11-14 定）：代码和推送网站 Claude 做，查证和出数据交 Codex，任务包 `alpha/review/README.md`（T1 发现源验收、T2 10-16 冻结评分 D30 复查、T3 无币协议前 30 补证），结果回到 `alpha/review/*.json` 再由 Claude 并入。
   11-14 三个任务已交回并入：候选池 /alpha/pool/（`出网站.alpha_pool`，读 `alpha/review/*_checks.json`；`alpha_daily.py` 把 verdict 写进台账 `status` / `status_history`，只追加）；研究观察 12、待核验 18。
   A4 判定标准已写死在 `研究进度.md`（研究观察组 vs 对照组 90 天收入保持率，各 ≥ 20 个才判），`alpha_history.json` 每天的 `rev30` 就是它的数据，**别删这个字段**。T2 九个全部待判（原卡没冻结合约 / 发现价）。
   A2 事件流（11-14 接）：`alpha_daily.py` 的 `feed_ethresearch` / `feed_snapshot` / `feed_binance` → `data/alpha/alpha_feed.json`（只追加，记原始发布时间 + 首次抓到时间 = 发现延迟，首跑为基线），过滤词在 `alpha_config.json` 的 `feeds`；雷达页 `alpha_feed_html`。
@@ -131,6 +131,9 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
   **补证主力 = Codex（大叔 11-15 定，Grok 贵）**：`alpha_config.grok.enabled = false`，Codex 每天按 research_queue 交 `alpha/review/codex_<日期>_checks.json`（AGENTS.md 第 4 节任务 1）。
   补证合并顺序：`grok_*` 先读，Codex / 人工的盖过它（opps / alpha_daily / 出网站三处同一规则）；Grok 跳过 Codex 30 天内核过的。Codex 协作说明在根目录 `AGENTS.md`，需要配合的事记 `docs/协作记录.md`。
   数据管理：原始层（data/alpha 接口原样）→ 清洗层（线索台账、案例指标）→ 应用层（机会卡、周复盘）。每周复盘 `alpha/weekly.py` → `data/alpha/weekly/<周>.json/.md`；Notion 单独的「Alpha 雷达」入口页（大叔：每个板块各自一个入口，不和别的板块混放）。
+  **交易所上币线（11-16，大叔要求必须做完）**：Binance 完整事件 `alpha/listings.py` → `data/alpha/listings.json`（公告 / 修订 / 计划开盘 / 首笔成交各一个字段，首笔 = 第一根 1 分钟 K 线；窗口 30m / 1h / 4h / 24h + 24h 高低，参考价 = 第一根开盘价，是事后读数不是可成交价；满 24 小时冻结；只追加；12 个月回填 114 个、107 个有窗口；`--recheck` 重看规则改动后被跳过的公告）。
+  其它所 `alpha/exch_announce.py` → `data/alpha/exch_announce.json`（公告层：标题 / 链接 / 公告时间 / 首次抓到 / 粗分类 / 代码），来源台账 `alpha/exch_sources.json`（10 家，名单是 Claude 定的，方法论只点名 Binance）：
+  OKX / Bitget / Kraken（RSS）官网通 = on；Bybit / Coinbase / Upbit / Bithumb / Gate / MEXC 在 Actions 被拦 = blocked，走官方 X 账号（`X_BEARER_TOKEN` 已验通，按次付费），等 Codex / Grok 按 `docs/提示词_交易所公告源.md` 交 `alpha/review/x1_exchange_sources.json` 核实用户名后填 `x_user_id` 再开。两者都在 alpha_daily.py 末尾调用。探测工作流 `probe-exchanges.yml`（手动）。KuCoin、HTX 官网接口也通，没接。页面还没做（大叔要先看本地截图再上线）。
   云端环境 uncleonchain 11-14 已放行 ethresear.ch、hub.snapshot.org、www.binance.com、api.bybit.com、api-manager.upbit.com；Bybit（CloudFront 按国家拦）、Upbit（Cloudflare 人机验证）实测不通，没接。Binance pageSize 超过 20 会 400。
 - 左侧菜单（大叔 11-15 定，`出网站.NAV_MAIN`）：终端总览 / 事件日历 / 聪明钱 / 宏观仪表盘 / 发射台矩阵 / AI Agent / RWA / 龙头选币 / Alpha 雷达 / 分析报告 / 解读日志。
   聪明钱 /smart-money/ 先放原板块轮动（`build_rotation` 输出到这里，/rotation/ 留 meta refresh 跳转页，轮动文章面包屑指向聪明钱）；聪明钱自己的数据源上线后加在同一页。

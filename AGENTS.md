@@ -14,7 +14,7 @@ Codex 发现代码有错：写进 `*/review/` 的复核文件（`文件:行号 �
 
 ## 2. 怎么提交
 
-- 只动第 1 节「Codex」那一行的文件时：可以直接推 `main`（提交前 `git pull --rebase origin main`，冲突以远端为准，别 force push）。
+- **（大叔 11-16 定）一律不直接推 `main`**：补证 / 登记文件也推到分支 `codex/review`（`git fetch origin && git checkout -B codex/review origin/main`，提交后 `git push -f origin codex/review`），Claude 审核后并进 main；分支上的「补证检查」会先跑一遍，结果看工作流日志。
 - 要改代码、工作流、页面：开分支 `codex/<主题>`，发 PR，描述写「改了什么、为什么、怎么验证的」，等 Claude 或大叔合并。
 - 不要提交 `site/`、`data/` 下的生成文件（日更会重出），也不要提交缓存（`*/cache/`、`leg/leg_alt_cache.csv`）。
 - 提交信息用中文，第一行说清做了什么。
@@ -57,7 +57,7 @@ Codex 发现代码有错：写进 `*/review/` 的复核文件（`文件:行号 �
    查不到的不要交空模板（分数全 U、证据 ≤ 1 条的不会并入，11-15 首批 41 条里 35 条是这样）；每条至少有一条一手证据链接；
    写数字趋势要写具体数和时间段并带链接（如「9 月 $1.32 亿 → 10 月 $1,623 万」），不写「降到百万级」这类概括。
 4. 规矩：每条事实带链接和核对日期（UTC），查不到写 "U"，不估不编；拒绝要一手证据；不写买卖 / 仓位 / 止损；不提交 site/ 和 data/ 下的生成文件；仓库公开，不放 key。
-5. 只改 AGENTS.md 第 1 节 Codex 那一行的文件时直接推 main（推之前 git pull --rebase origin main，冲突以远端为准）；要改代码就开 codex/<主题> 分支发 PR。
+5. 一律不推 main：补证 / 登记文件推分支 codex/review（每次从最新 origin/main 建：git fetch origin && git checkout -B codex/review origin/main，提交后 git push -f origin codex/review），等 Claude 审核并入；要改代码就开 codex/<主题> 分支发 PR。
 6. 最后在 docs/协作记录.md 末尾追加一行：日期 · Codex · 做了哪些 / 没做完的 / 查不到的。
 ```
 
