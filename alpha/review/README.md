@@ -63,8 +63,7 @@
 ## X3 报价币换算日源 → `alpha/review/x3_quote_fx.json`
 ## X4 上市事件样本库（过去 12 个月，≥100 条）→ `alpha/review/x4_listing_events.json`
 ## X5 多所聚类规则草案 → `alpha/review/x5_cluster_draft.md`
-## X6 交易所全景表（前几十名，供按质量准入）→ `alpha/review/x6_exchange_universe.json`
-## X7 上所路径样本（30 个币 × 各所首次上线时间）→ `alpha/review/x7_listing_paths.json`
+## X9 交易所上币数据源普查（第一步，先做；提示词 docs/提示词_交易所统一研究.md）→ `alpha/review/x9_exchange_data.json`
 ## M1 技术与开发者雷达来源 → `alpha/review/m1_dev_sources.json`
 ## M2 链上创世动作字段 → `alpha/review/m2_genesis_fields.md`
 ## M3 卡片决策条件与证据分类字段 → `alpha/review/m3_card_schema.md`
