@@ -749,7 +749,7 @@
    "page": "https://www.okx.com/help/section/announcements-new-listings",
    "x_handle": "待核实",
    "note": "官网接口通（/api/v5/support/announcements）",
-   "last_ok_utc": "2026-11-16T15:47:26Z",
+   "last_ok_utc": "2026-11-16T16:42:01Z",
    "n_total": 40,
    "err": null
   },
@@ -760,7 +760,7 @@
    "page": "https://www.bitget.com/support/categories/11865590960081",
    "x_handle": "待核实",
    "note": "官网接口通（/api/v2/public/annoucements）",
-   "last_ok_utc": "2026-11-16T15:47:26Z",
+   "last_ok_utc": "2026-11-16T16:42:01Z",
    "n_total": 10,
    "err": null
   },
@@ -771,7 +771,7 @@
    "page": "https://blog.kraken.com/category/product/asset-listings",
    "x_handle": "待核实",
    "note": "博客 RSS 通",
-   "last_ok_utc": "2026-11-16T15:47:26Z",
+   "last_ok_utc": "2026-11-16T16:42:01Z",
    "n_total": 10,
    "err": null
   },
@@ -824,8 +824,28 @@
    "note": "Access Denied（403）；等官方 X 账号核实或替代入口",
    "last_ok_utc": null,
    "n_total": 0
+  },
+  "KuCoin": {
+   "exchange": "KuCoin",
+   "via": "kucoin",
+   "state": "candidate",
+   "page": "https://www.kucoin.com/announcement/latest-announcements",
+   "x_handle": "@kucoincom",
+   "note": "官网接口通（/api/v3/announcements?annType=new-listings，公告描述里直接写交易对和开盘时间，如 Trading: 11:00 on November 11, 2026 (UTC)）；待按准入标准评估",
+   "last_ok_utc": null,
+   "n_total": 0
+  },
+  "HTX": {
+   "exchange": "HTX",
+   "via": "htx",
+   "state": "candidate",
+   "page": "https://www.htx.com/en-us/support/list/360000039942/",
+   "x_handle": "@HuobiGlobal",
+   "note": "官网接口通（getList/v2，带 dealPair 字段）；近期公告多为代币化股票 / 股票永续，噪音比例待评估",
+   "last_ok_utc": null,
+   "n_total": 0
   }
  },
- "generated": "2026-11-16T15:47:26Z",
+ "generated": "2026-11-16T16:42:01Z",
  "note": "公告时间原样记录；计划开盘 / 首笔成交 / 窗口目前只有 Binance（alpha/listings.py）"
 }
