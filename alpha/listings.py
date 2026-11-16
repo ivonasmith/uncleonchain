@@ -13,7 +13,7 @@
 输出 data/alpha/listings.json：events 按 id（bn:<公告 id>:<交易对>）只追加；窗口算满 24 小时后冻结不再改。
 首跑回填 BACKFILL_DAYS 天，之后每天只翻最近几页。用法：python3 alpha/listings.py [--pages N] [--days N]
 """
-import csv, datetime as dt, io, json, os, re, sys, time, urllib.error, urllib.request, zipfile
+import csv, datetime as dt, io, json, os, re, sys, time, urllib.error, urllib.parse, urllib.request, zipfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -75,10 +75,12 @@ def classify(title):
     """→ 'spot' | 'perp' | None"""
     if DROP.search(title):
         return None
-    if re.search(r"Binance Will List\b", title) or re.search(r"Binance Will Add .+ on Earn, Buy Crypto.*Spot|Will Open Trading for", title):
-        return "spot"
-    if re.search(r"Binance Futures Will Launch USD.?-Margined .*Perpetual", title):
-        return "perp"
+    if re.search(r"Pre-IPO|Equity|Quanto|Stock", title, re.I):
+        return None
+    if re.search(r"Binance Will List\b|Will Open Trading for", title) or re.search(r"Introducing .+ on Binance (HODLer Airdrops|Launchpool|Megadrop)", title):
+        return "spot"   # HODLer 空投 / Launchpool 公告正文里写了现货开盘时间和交易对
+    if re.search(r"Binance Futures Will Launch (Multiple )?USD.?-Margined .*Perpetual", title) or re.search(r"Will Be Available on Binance Alpha and Binance Futures", title):
+        return "perp"   # 「XXXUSDT USDⓈ-Margined Perpetual」这种词序的全是股票 / Pre-IPO 标的，不收（大叔 11-14：美股直接去掉）
     return None
 
 
@@ -96,9 +98,14 @@ def parse_spot(title, txt):
     times = re.findall(r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}) \(UTC\)", txt)
     pairs = []
     for m in re.finditer(r"New Spot Trading Pairs?:\s*([^\n]+)", txt):
-        pairs += re.findall(r"\b([A-Z0-9]{1,15})/([A-Z0-9]{1,6})\b", m.group(1))
+        pairs += re.findall(r"([^\s/,()]{1,15})/([A-Z0-9]{1,6})\b", m.group(1))
     if not pairs:
-        pairs = re.findall(r"\b([A-Z0-9]{2,15})/(USDT|USDC|FDUSD|BNB|BTC|TRY|EUR|BRL|JPY|USD1|U)\b", txt)
+        pairs = re.findall(r"([^\s/,()]{1,15})/(USDT|USDC|FDUSD|BNB|BTC|TRY|EUR|BRL|JPY|USD1|U)\b", txt)
+    if not pairs:   # HODLer / Launchpool：「list SYM at TIME (UTC) and open trading against USDT, USDC, BNB ... pairs」
+        mt = re.search(r"\(([^\s()]{1,15})\)", title)
+        mq = re.search(r"against\s+([A-Z0-9, and]+?)\s+pairs", txt)
+        if mt and mq:
+            pairs = [(mt.group(1), q) for q in re.findall(r"[A-Z0-9]+", mq.group(1)) if q in QUOTES]
     seen = set()
     for base, q in pairs:
         if (base, q) in seen:
@@ -107,7 +114,10 @@ def parse_spot(title, txt):
         # 该币的开盘时间：正文里离「(BASE)」最近的下一个时间，否则第一个时间
         t = None
         m = re.search(r"\(" + re.escape(base) + r"\)[^\n]*?(\d{4}-\d{2}-\d{2} \d{2}:\d{2}) \(UTC\)", txt)
-        if m:
+        m2 = re.search(r"list " + re.escape(base) + r" at (\d{4}-\d{2}-\d{2} \d{2}:\d{2}) \(UTC\)", txt)
+        if m2:
+            t = m2.group(1)
+        elif m:
             t = m.group(1)
         elif times:
             t = times[0]
@@ -117,11 +127,12 @@ def parse_spot(title, txt):
 
 def parse_perp(title, txt):
     out, seen = [], set()
-    for m in re.finditer(r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}) \(UTC\):\s*([A-Z0-9]{2,20}USD[TC1]?) Perpetual", txt):
+    PS = r"[^\s,()/]{1,20}?(?:USDT|USDC|USD1|U)"
+    for m in re.finditer(r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}) \(UTC\):\s*(" + PS + r") Perpetual", txt):
         if m.group(2) not in seen:
             seen.add(m.group(2)); out.append((m.group(2), ms(m.group(1))))
     if not out:
-        syms = re.findall(r"\b([A-Z0-9]{2,20}USD[TC])\b", title) or re.findall(r"\b([A-Z0-9]{2,20}USD[TC]) [Pp]erpetual", txt)
+        syms = [x for x in re.findall(r"(?<![^\s,(])(" + PS + r")(?=[\s,)]|$)", title) if x not in ("USDT", "USDC", "U")] or re.findall(r"(" + PS + r") [Pp]erpetual", txt)
         t = re.search(r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}) \(UTC\)", txt)
         for s in syms:
             if s not in seen:
@@ -136,7 +147,7 @@ def parse_perp(title, txt):
 def spot_candles(sym, start_ms, need_until):
     rows, t = [], start_ms
     while t < need_until and len(rows) < 3000:
-        k = get(SPOT_K.format(s=sym, t=t))
+        k = get(SPOT_K.format(s=urllib.parse.quote(sym), t=t))
         if not k:
             break
         rows += [(int(x[0]), float(x[1]), float(x[2]), float(x[3]), float(x[4]), float(x[7])) for x in k]
@@ -151,7 +162,7 @@ def fut_candles(sym, start_ms, days=3):
     d0 = dt.datetime.fromtimestamp(start_ms / 1000, dt.timezone.utc).date()
     for i in range(days):
         d = (d0 + dt.timedelta(days=i)).isoformat()
-        b = get(FUT_ZIP.format(s=sym, d=d), raw=True)
+        b = get(FUT_ZIP.format(s=urllib.parse.quote(sym), d=d), raw=True)
         if not b:
             if rows:
                 break
@@ -198,9 +209,12 @@ def main():
     except Exception:
         store = {"events": {}, "articles": {}}
     E, A = store["events"], store.setdefault("articles", {})
-    first = not A
+    first = not A or "--backfill" in args
+    if "--recheck" in args:   # 规则改了以后：没收的、解析出 0 个的公告重看一遍
+        for k in [k for k, a in A.items() if not a.get("kind") or not a.get("n")]:
+            del A[k]
     days = opt("--days", BACKFILL_DAYS)
-    max_pages = opt("--pages", 60 if first else 3)
+    max_pages = opt("--pages", 60 if first or "--recheck" in args else 3)
     cutoff = (now - dt.timedelta(days=days)).timestamp() * 1000
     status = {"list_ok": False, "pages": 0, "detail_fail": 0, "kline_fail": 0}
     # 1) 公告列表
