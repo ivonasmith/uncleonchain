@@ -466,7 +466,7 @@
   }
   function boardList() {
     const os = OPPS.opps;
-    const pool = (BF === 'all' ? os.filter(o => o.bucket !== 'reject') : os.filter(o => o.bucket === BF)).filter(passK);
+    const pool = (BF === 'all' ? os.filter(o => o.bucket !== 'reject') : BF === 'fresh' ? os.filter(o => o.bucket !== 'reject' && o.fresh) : os.filter(o => o.bucket === BF)).filter(passK);
     const fresh = pool.filter(o => o.fresh), rest = pool.filter(o => !o.fresh);
     const groups = [[T('新发现 · 3 天内', 'New · last 3 days'), fresh], [T('研究观察', 'Under research'), rest.filter(o => DONE.includes(o.status))], [T('待核验 / 未补证', 'Checking / raw'), rest.filter(o => !DONE.includes(o.status))]];
     const row = o => { const d = o.data; const v = d.rev30 != null ? d.rev30 : d.tvl;
@@ -539,7 +539,7 @@
     const os = OPPS.opps, act = os.filter(o => o.bucket !== 'reject');
     const doneN = act.filter(o => DONE.includes(o.status)).length;
     const freshN = act.filter(o => o.fresh).length;
-    const list = () => (BF === 'all' ? act : os.filter(o => o.bucket === BF)).filter(passK);
+    const list = () => (BF === 'all' ? act : BF === 'fresh' ? act.filter(o => o.fresh) : os.filter(o => o.bucket === BF)).filter(passK);
     if (!SELID || !os.some(o => o.id === SELID)) SELID = (list()[0] || {}).id;
     const ord = () => { const l = list(); const g = [l.filter(o => o.fresh), l.filter(o => !o.fresh && DONE.includes(o.status)), l.filter(o => !o.fresh && !DONE.includes(o.status))]; return [].concat(...g); };
     app.innerHTML = `<details class="card ax-guide"${(() => { try { return localStorage.getItem('alpha-guide-closed') ? '' : ' open'; } catch (e) { return ' open'; } })()}><summary>${T('怎么读这个看板', 'How to read this board')}</summary>
@@ -551,7 +551,7 @@
         ${cardBF('invest', T('有参与入口', 'Has entry'), OPPS.counts.invest || 0, 't-up', tip(T('有资金参与的方式（买币、质押、交易赚积分等）。只说明「能参与」，不代表研究过、更不代表可以执行：研究状态看每张卡的标签（原始线索 → 待核验 → 研究观察）。', 'Capital can take part. Not a research verdict.')), T('有资金参与方式（不等于研究过）', 'capital can take part — not a verdict'))}
         ${cardBF('watch', T('预警观察', 'Watchlist'), OPPS.counts.watch || 0, '', tip(T('新东西，但暂时没有资金参与的入口（没币、没积分、没开放）。和「有参与入口」加起来 = 看板上全部机会（不含已拒绝）。', 'No capital entry yet. Together with Has entry = all cards (excluding rejected).')), T('新东西，暂时没有资金入口', 'no capital entry yet'))}
         ${cardBF('all', T('全部', 'All'), os.filter(o => o.bucket !== 'reject').length, '', '', `<span class="klink" data-bf="reject">${T('已拒绝', 'Rejected')} ${os.filter(o => o.bucket === 'reject').length}</span>`)}
-        <div class="glass hero"><div class="k">${T('新发现', 'New')}${tip(T('看板上当前全部机会（不含已拒绝），按补证状态拆成三段。新发现的数量在左侧列表的「新发现」分组里。', 'All active cards (excluding rejected), split by research status. New-discovery count is in the list group.'))}</div><div class="v">${act.length}</div><div class="s">${T(`研究观察${doneN} 待核验${act.filter(o => o.status === '待核验').length} 未补证${act.filter(o => o.status === '原始线索').length}`, `Researched ${doneN} · checking ${act.filter(o => o.status === '待核验').length} · raw ${act.filter(o => o.status === '原始线索').length}`)}</div></div>
+        <div role="button" tabindex="0" class="glass hero ktop${BF === 'fresh' ? ' on' : ''}" data-bf="fresh"><div class="k">${T('新发现', 'New')}${tip(T('3 天内新进看板的机会（不含已拒绝），不等补证先放出来；下面一行是这些机会的补证进度。点卡片只看新发现。', 'Cards added in the last 3 days (excluding rejected), shown before research; the line below is their research progress. Click to show only these.'))}</div><div class="v">${act.filter(o => o.fresh).length}</div><div class="s">${(() => { const f = act.filter(o => o.fresh); const n = st => f.filter(o => o.status === st).length; const dn = f.filter(o => DONE.includes(o.status)).length; return T(`研究观察${dn} 待核验${n('待核验')} 未补证${n('原始线索')}`, `Researched ${dn} · checking ${n('待核验')} · raw ${n('原始线索')}`); })()}</div></div>
       </div>
       <div class="md"><aside class="md-list">${boardList()}</aside><section class="md-detail" id="ax-detail">${boardDetail(os.find(o => o.id === SELID))}</section></div>
       <p class="small muted" style="margin-top:12px">${T('数据日', 'Data day')} ${esc(OPPS.asof || '')} · ${T('框架', 'Framework')} ${esc(OPPS.framework)} · ${T('自动规则', 'Rules')} ${esc(OPPS.rules || '')} · <a href="${EN ? '/en' : ''}/alpha/framework/#auto">${T('打分规则', 'Scoring rules')}</a> · ${T('不按分数排名，不是买卖建议', 'no rankings, not trade advice')}</p>
