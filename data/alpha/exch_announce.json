@@ -749,7 +749,7 @@
    "page": "https://www.okx.com/help/section/announcements-new-listings",
    "x_handle": "待核实",
    "note": "官网接口通（/api/v5/support/announcements）",
-   "last_ok_utc": "2026-11-16T15:01:30Z",
+   "last_ok_utc": "2026-11-16T15:34:47Z",
    "n_total": 40,
    "err": null
   },
@@ -760,7 +760,7 @@
    "page": "https://www.bitget.com/support/categories/11865590960081",
    "x_handle": "待核实",
    "note": "官网接口通（/api/v2/public/annoucements）",
-   "last_ok_utc": "2026-11-16T15:01:30Z",
+   "last_ok_utc": "2026-11-16T15:34:47Z",
    "n_total": 10,
    "err": null
   },
@@ -773,7 +773,7 @@
    "note": "博客 RSS 通",
    "last_ok_utc": "2026-11-16T15:01:30Z",
    "n_total": 10,
-   "err": null
+   "err": "HTTP Error 403: Forbidden"
   },
   "Bybit": {
    "exchange": "Bybit",
@@ -836,6 +836,6 @@
    "n_total": 0
   }
  },
- "generated": "2026-11-16T15:01:30Z",
+ "generated": "2026-11-16T15:34:47Z",
  "note": "公告时间原样记录；计划开盘 / 首笔成交 / 窗口目前只有 Binance（alpha/listings.py）"
 }
