@@ -408,3 +408,8 @@ if __name__ == "__main__":
         listings_x.main()
     except Exception as e:
         print("其它所上币事件失败：", e)
+    try:   # 上币后回报统计 R0（24 小时窗口，口径见 alpha/research/交易所上币回报研究.md）→ data/alpha/listing_stats.json
+        import listing_stats
+        listing_stats.main()
+    except Exception as e:
+        print("上币回报统计失败：", e)
