@@ -11,3 +11,16 @@ jobs:
       - uses: actions/checkout@v4
       - name: 探测
         run: python3 tools/probe/exchange_sources.py
+      - name: 试跑交易所公告流水（不提交）
+        run: |
+          python3 alpha/exch_announce.py
+          python3 - <<'PY'
+          import json, collections
+          d = json.load(open("data/alpha/exch_announce.json", encoding="utf-8"))
+          for n, s in d["sources"].items():
+              print(n, s["state"], s.get("via"), "累计", s.get("n_total"), "错误", s.get("err"))
+          c = collections.Counter((i["exchange"], i["kind"]) for i in d["items"].values()); print(dict(c))
+          for ex in ("OKX", "Bitget", "Kraken"):
+              for i in [i for i in d["items"].values() if i["exchange"] == ex and i["kind"] != "other"][:6]:
+                  print(" ", ex, i["announce_utc"], i["kind"], i["assets"], i["title"][:90])
+          PY

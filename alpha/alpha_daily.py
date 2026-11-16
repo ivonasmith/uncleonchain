@@ -397,3 +397,9 @@ if __name__ == "__main__":
         listings.main()
     except Exception as e:
         print("上币事件库失败：", e)
+    try:   # 其它交易所的上币公告流水（OKX / Bitget / Kraken 官网；被拦的所等官方 X 账号核实）→ data/alpha/exch_announce.json
+        import exch_announce
+        sys.argv = sys.argv[:1]
+        exch_announce.main()
+    except Exception as e:
+        print("交易所公告流水失败：", e)

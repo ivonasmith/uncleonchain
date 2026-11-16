@@ -1,0 +1,15 @@
+{
+ "_说明": "交易所上币公告来源台账（大叔列的 10 家）。state: on = 在跑；blocked = 官网被拦、等官方 X 账号核实后改 via=x 并填 x_user_id 再开；Binance 的完整事件库在 alpha/listings.py。x_handle 标「待核实」的不启用——由 Codex / Grok 按 docs/提示词_交易所公告源.md 核对后填。实测日 2026-11-16（GitHub Actions 美国机房）。",
+ "exchanges": [
+  {"exchange": "Binance", "state": "on", "via": "listings", "page": "https://www.binance.com/en/support/announcement/list/48", "x_handle": "@binance", "x_user_id": "877807935493033984", "note": "官网接口通；公告 → 计划开盘 → 首笔成交 → 窗口都有（alpha/listings.py）"},
+  {"exchange": "OKX", "state": "on", "via": "okx", "pages": 2, "page": "https://www.okx.com/help/section/announcements-new-listings", "x_handle": "待核实", "note": "官网接口通（/api/v5/support/announcements）"},
+  {"exchange": "Bitget", "state": "on", "via": "bitget", "page": "https://www.bitget.com/support/categories/11865590960081", "x_handle": "待核实", "note": "官网接口通（/api/v2/public/annoucements）"},
+  {"exchange": "Kraken", "state": "on", "via": "kraken", "page": "https://blog.kraken.com/category/product/asset-listings", "x_handle": "待核实", "note": "博客 RSS 通"},
+  {"exchange": "Bybit", "state": "blocked", "via": "x", "page": "https://announcements.bybit.com/en/?category=new_crypto", "x_handle": "待核实", "note": "官网接口按国家拦（CloudFront，美国机房 403）；等官方 X 账号核实"},
+  {"exchange": "Coinbase", "state": "blocked", "via": "x", "page": "https://www.coinbase.com/blog/landing/product", "x_handle": "待核实", "note": "没有结构化公告接口，网页有人机验证；上币历来在官方 X 账号发，等账号核实"},
+  {"exchange": "Upbit", "state": "blocked", "via": "x", "page": "https://upbit.com/service_center/notice", "x_handle": "待核实", "note": "Cloudflare 人机验证（403）；等官方 X 账号核实或替代入口"},
+  {"exchange": "Bithumb", "state": "blocked", "via": "x", "page": "https://feed.bithumb.com/notice", "x_handle": "待核实", "note": "Cloudflare 人机验证（403）；等官方 X 账号核实或替代入口"},
+  {"exchange": "Gate", "state": "blocked", "via": "x", "page": "https://www.gate.com/announcements/newlisted", "x_handle": "待核实", "note": "Access Denied（403）；等官方 X 账号核实或替代入口"},
+  {"exchange": "MEXC", "state": "blocked", "via": "x", "page": "https://www.mexc.com/support/sections/15425930840734", "x_handle": "待核实", "note": "Access Denied（403）；等官方 X 账号核实或替代入口"}
+ ]
+}
