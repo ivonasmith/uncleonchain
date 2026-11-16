@@ -6,13 +6,19 @@ permissions:
 jobs:
   probe:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - name: 探测
         run: python3 tools/probe/exchange_sources.py
-      - name: 试跑 OKX 上币事件（不提交）：开盘时间 + 真实 K 线窗口
-        run: python3 alpha/listings_x.py
+      - name: X9 数据源实测（TokenEarly / CoinGecko 前 70 / CCXT K 线回溯）
+        run: |
+          pip install -q ccxt
+          python3 tools/probe/x9_data.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: x9-probe-out
+          path: x9_probe_out.json
       - name: 试跑交易所公告流水（不提交）
         run: |
           python3 alpha/exch_announce.py

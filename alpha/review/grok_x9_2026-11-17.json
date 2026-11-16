@@ -1,0 +1,44 @@
+{
+ "_说明": "Grok 交付（大叔 2026-11-17 转交，原样保存）：各所官方 X 账号、最近上币帖、第三方多所聚合源。reviewer = grok，未经 Codex / Actions 复核；TokenEarly「公开 listings.json 不用 key」与 Codex X9「未发现公开读取接口」说法不一，以 tools/probe/x9_data.py 的 Actions 实测为准。",
+ "reviewer": "grok",
+ "received_utc": "2026-11-17",
+ "exchanges": [
+  {"exchange": "Binance", "x_handle": "binance", "x_user_id": "877807935493033984", "listing_account": "U", "listing_posts": [
+   {"url": "https://x.com/binance/status/2115790593536532946", "posted_utc": "2026-10-29T12:59:21Z", "pairs": "PREDICT", "open_utc": "U"},
+   {"url": "https://x.com/binance/status/2115997882629435456", "posted_utc": "2026-10-30T02:43:03Z", "pairs": "PREDICT", "open_utc": "U"},
+   {"url": "https://x.com/binance/status/2112877130862174252", "posted_utc": "2026-10-21T12:02:18Z", "pairs": "BOTB/USDT, BRKBB/USDT, KSTRB/USDT, TMFB/USDT, VSTB/USDT", "open_utc": "U"}]},
+  {"exchange": "OKX", "x_handle": "okx", "x_user_id": "867617849208037377", "listing_account": "U", "listing_posts": [
+   {"url": "https://x.com/okx/status/2114755458338533404", "posted_utc": "2026-10-26T16:26:06Z", "pairs": "Anthropic related (X-Perps)", "open_utc": "U"}]},
+  {"exchange": "Bybit", "x_handle": "Bybit_Official", "x_user_id": "999947328621395968", "listing_account": "U", "listing_posts": [
+   {"url": "https://x.com/Bybit_Official/status/2116427623937052727", "posted_utc": "2026-10-31T07:10:41Z", "pairs": "XPUSDT, XLIUSDT, BKNGUSDT", "open_utc": "U"},
+   {"url": "https://x.com/Bybit_Official/status/2114869686126981408", "posted_utc": "2026-10-27T00:00:00Z", "pairs": "Multiple TradFi and crypto perps", "open_utc": "U"}]},
+  {"exchange": "Bitget", "x_handle": "bitget", "x_user_id": "1098881129057112064", "listing_account": "U", "listing_posts": [
+   {"url": "https://x.com/bitget/status/2122328845001084953", "posted_utc": "2026-11-16T14:00:02Z", "pairs": "ANT (Anthropic related)", "open_utc": "U"}]},
+  {"exchange": "Coinbase", "x_handle": "coinbase", "x_user_id": "574032254", "listing_account": "CoinbaseMarkets", "listing_posts": [
+   {"url": "https://x.com/CoinbaseMarkets/status/2118814698753937829", "posted_utc": "2026-11-06T21:16:04Z", "pairs": "CARD-USD", "open_utc": "U"},
+   {"url": "https://x.com/CoinbaseMarkets/status/2115174088574382195", "posted_utc": "2026-10-27T20:09:35Z", "pairs": "STABLE", "open_utc": "U"},
+   {"url": "https://x.com/CoinbaseMarkets/status/2114742358801838084", "posted_utc": "2026-10-26T15:34:03Z", "pairs": "RITUAL-USD", "open_utc": "2026-10-26 (subject to liquidity)"}]},
+  {"exchange": "Kraken", "x_handle": "krakenfx", "x_user_id": "1399148563", "listing_account": "krakenlistings", "listing_posts": [
+   {"url": "https://x.com/krakenlistings/status/2121241900124721522", "posted_utc": "2026-11-13T14:00:54Z", "pairs": "PEARL", "open_utc": "U"},
+   {"url": "https://x.com/krakenlistings/status/2122344039634862280", "posted_utc": "2026-11-16T15:00:24Z", "pairs": "XsollaZK (coming soon)", "open_utc": "U"}]},
+  {"exchange": "Upbit", "x_handle": "Official_Upbit", "x_user_id": "1641009608822231041", "listing_account": "U", "listing_posts": [
+   {"url": "https://x.com/Official_Upbit/status/2097863280282976535", "posted_utc": "2026-09-10T01:42:37Z", "pairs": "U", "open_utc": "U"}]},
+  {"exchange": "Bithumb", "x_handle": "BithumbOfficial", "x_user_id": "908496633196814337", "listing_account": "U", "listing_posts": [
+   {"url": "https://x.com/BithumbOfficial/status/2121114835681440125", "posted_utc": "2026-11-13T05:35:59Z", "pairs": "DNA/KRW", "open_utc": "U"},
+   {"url": "https://x.com/BithumbOfficial/status/2120045980859158573", "posted_utc": "2026-11-10T06:48:45Z", "pairs": "CARDS/KRW", "open_utc": "U"},
+   {"url": "https://x.com/BithumbOfficial/status/2120043659299315967", "posted_utc": "2026-11-10T06:39:31Z", "pairs": "HYPE/KRW", "open_utc": "U"}]},
+  {"exchange": "Gate", "x_handle": "Gate", "x_user_id": "912539725071777792", "listing_account": "U", "listing_posts": []},
+  {"exchange": "KuCoin", "x_handle": "kucoincom", "x_user_id": "910110294625492992", "listing_account": "U", "listing_posts": []},
+  {"exchange": "HTX", "x_handle": "HTX_Global", "x_user_id": "914029581610377217", "listing_account": "U", "listing_posts": [
+   {"url": "https://x.com/HTX_Global/status/2121119808888664324", "posted_utc": "2026-11-13T05:55:45Z", "pairs": "QQQ, TQQQ, SOXL", "open_utc": "U"}]}
+ ],
+ "aggregators": [
+  {"name": "Tokenearly", "covers": "Binance, OKX, Bybit, Bitget, Gate.io, HTX, KuCoin, Upbit, Bithumb (and more; MEXC also listed in sources)", "data": "Exchange listing announcements, new spot/futures pairs; public JSON feed of listings; news and X activity monitoring", "price": "Free: announcements and news with delayed delivery. Paid plans from 19.9 USDT per month: real-time delivery, more keywords, Developer API on Business plan. Paid in USDT on BSC.", "api": "Yes (public listings.json without key; Developer API on Business plan)", "src": "https://tokenearly.com/en"},
+  {"name": "CoinMarketCal", "covers": "Crypto events including exchange listings (curated catalog across coins)", "data": "Curated, dated, scored crypto events (listings, upgrades, etc.) with titles, dates, categories, coins, impact scores (tiered)", "price": "Free (limited upcoming events, limited data). Standard $49.80/mo and higher tiers for fuller access (see official pricing page).", "api": "Yes (v2 events endpoint with x-api-key)", "src": "https://coinmarketcal.com/developer"},
+  {"name": "CryptoPanic", "covers": "U", "data": "U", "price": "U", "api": "U", "src": "U"},
+  {"name": "CCData", "covers": "U", "data": "U", "price": "U", "api": "U", "src": "U"},
+  {"name": "Kaiko", "covers": "U", "data": "U", "price": "U", "api": "U", "src": "U"},
+  {"name": "Amberdata", "covers": "U", "data": "U", "price": "U", "api": "U", "src": "U"},
+  {"name": "TokenInsight", "covers": "U", "data": "U", "price": "U", "api": "U", "src": "U"}
+ ]
+}
