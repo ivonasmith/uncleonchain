@@ -250,3 +250,12 @@
 .kchip{font:inherit;font-size:12px;padding:3px 9px;border-radius:999px;border:1px solid var(--line2);background:transparent;color:var(--ink2);cursor:pointer}
 .kchip.on{border-color:var(--lime-ink);color:var(--lime-ink);background:var(--up-bg, transparent)}
 .kchip.all{align-self:flex-start;color:var(--muted)}
+
+/* 顶部卡片即页签（11-16）：有参与入口 / 预警观察 / 全部；第四张卡在新发现与补证之间切换 */
+.ktop{display:block;width:100%;text-align:left;font:inherit;color:inherit;cursor:pointer;border:1px solid transparent}
+.ktop.on{border-color:var(--lime-ink)}
+.ktop2{position:relative}
+.ktoggle{display:inline-flex;gap:4px;margin-left:8px;vertical-align:middle}
+.ktoggle button{font:inherit;font-size:11px;padding:2px 8px;border-radius:999px;border:1px solid var(--line2);background:transparent;color:var(--muted);cursor:pointer}
+.ktoggle button.on{border-color:var(--lime-ink);color:var(--lime-ink)}
+.klink{text-decoration:underline dotted;cursor:pointer}

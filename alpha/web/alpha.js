@@ -454,12 +454,16 @@
   // 二级分类（11-16 大叔定）：来源类型、业务类型，可多选，默认全选；只过滤列表，KPI 仍按全量算
   const SRC_NAME = { tokenless: [T('无币收入榜', 'Tokenless'), 'Tokenless'], surge: [T('有币 · 收入新起量', 'Revenue ramp'), 'Revenue ramp'], listing: [T('新上架', 'New listing'), 'New listing'], manual: [T('手动线索', 'Manual'), 'Manual'], site: [T('本站板块', 'Site board'), 'Site board'] };
   let KSRC = null, KBIZ = null;
+  let TOPM = 'fresh'; // 顶部第四张卡：新发现 / 补证状态 二选一（11-16）
   const kindSet = () => KSRC || (KSRC = new Set(Object.keys(SRC_NAME)));
   const bizSet = () => KBIZ || (KBIZ = new Set(Object.keys(BIZ()).concat(['U'])));
   const passK = o => kindSet().has(o.kind) && bizSet().has(o.classes.business.v || 'U');
   const DONE = ['研究观察', '优先研究'];
   function oneLiner(o) {
     return o.one_liner || [BIZ()[o.classes.business.v], o.data.category, (o.data.chains || []).slice(0, 2).join(' · ')].filter(Boolean).join(' · ');
+  }
+  function cardBF(k, lab, n, cls, tipHtml, sub, extra) {
+    return `<div role="button" tabindex="0" class="glass hero ktop${BF === k ? ' on' : ''}" data-bf="${k}"><div class="k">${lab}${tipHtml}</div><div class="v ${cls}">${n}</div><div class="s">${sub}</div></div>`;
   }
   function boardList() {
     const os = OPPS.opps;
@@ -475,9 +479,7 @@
     const bizN = o => BIZ()[o.classes.business.v] || T('未判明', 'Unknown');
     const chip = (grp, k, lab, on) => `<button type="button" class="kchip${on ? ' on' : ''}" data-kf="${grp}|${esc(k)}">${esc(lab)}</button>`;
     const srcAll = kindSet().size === Object.keys(SRC_NAME).length, bizAll = bizSet().size === Object.keys(BIZ()).length + 1;
-    return `<div class="fg md-filter">${[['invest', T('有参与入口', 'Has entry')], ['watch', T('预警观察', 'Watchlist')], ['all', T('全部', 'All')], ['reject', T('已拒绝', 'Rejected')]]
-        .map(([k, l]) => `<button type="button" class="pill${BF === k ? ' on' : ''}" data-bf="${k}">${l}<small>${k === 'all' ? os.filter(o => o.bucket !== 'reject').length : os.filter(o => o.bucket === k).length}</small></button>`).join('')}</div>
-      <div class="kfilt"><div class="krow"><span class="klab">${T('来源', 'Source')}</span>${Object.keys(SRC_NAME).map(k => chip('src', k, SRC_NAME[k][0], kindSet().has(k))).join('')}</div>
+    return `      <div class="kfilt"><div class="krow"><span class="klab">${T('来源', 'Source')}</span>${Object.keys(SRC_NAME).map(k => chip('src', k, SRC_NAME[k][0], kindSet().has(k))).join('')}</div>
         <div class="krow"><span class="klab">${T('类型', 'Type')}</span>${Object.keys(BIZ()).concat(['U']).map(k => chip('biz', k, k === 'U' ? T('未判明', 'Unknown') : BIZ()[k], bizSet().has(k))).join('')}</div>
         ${(!srcAll || !bizAll) ? `<button type="button" class="kchip all" data-kf="all|all">${T('全选', 'Select all')}</button>` : ''}</div>
       ${groups.filter(g => g[1].length).map(([t, xs]) => `<div class="md-grp">${t}<span>${xs.length}</span></div>${xs.map(row).join('')}`).join('') || `<p class="muted small" style="padding:12px">${T('这一栏暂时没有。', 'Nothing here yet.')}</p>`}`;
@@ -547,10 +549,13 @@
         <li>${T('再看三件事：<b>量从哪来</b>（积分空投、新链首发、补贴还是自然需求）、<b>量是不是真的</b>、<b>激励结束后还剩多少</b>。成交和收入只是读数，不等于代币有价值。', 'Then: where volume comes from, whether it is real, what is left after incentives.')}</li>
         <li>${T('带下划线的数字，鼠标放上去看口径；历史对照默认收起，它不是目标价。', 'Underlined numbers have definitions on hover; analogs are collapsed — not targets.')}</li></ol></details>
       <div class="grid g4 ax-top">
-        <div class="glass hero"><div class="k">${T('有参与入口', 'Has entry')}${tip(T('有资金参与的方式（买币、质押、交易赚积分等）。只说明「能参与」，不代表研究过、更不代表可以执行：研究状态看每张卡的标签（原始线索 → 待核验 → 研究观察）。', 'Capital can take part. Not a research verdict.'))}</div><div class="v t-up">${OPPS.counts.invest || 0}</div><div class="s">${T('有资金参与方式（不等于研究过）', 'capital can take part — not a verdict')}</div></div>
-        <div class="glass hero"><div class="k">${T('预警观察', 'Watchlist')}${tip(T('新东西，但暂时没有资金参与的入口（没币、没积分、没开放）。和「有参与入口」加起来 = 看板上全部机会（不含已拒绝）。', 'No capital entry yet. Together with Has entry = all cards (excluding rejected).'))}</div><div class="v">${OPPS.counts.watch || 0}</div><div class="s">${T('新东西，暂时没有资金入口', 'no capital entry yet')}</div></div>
-        <div class="glass hero"><div class="k">${T('新发现 · 3 天内', 'New · 3 days')}${tip(T('3 天内新进看板的全部机会，不分栏、不分状态。左边列表里的「新发现」只数当前筛选那一栏的，所以可能比这里少。', 'All cards added in the last 3 days, any column. The list shows only the selected column.'))}</div><div class="v">${freshN}</div><div class="s">${T('不等补证，先放出来', 'shown before research')}</div></div>
-        <div class="glass hero"><div class="k">${T('补证状态', 'Research status')}${tip(T('研究观察 = 补证完、对象明确、没查到否决项；待核验 = 补过但关键事实还缺（写进文件不等于查证完成）；原始线索 = 还没补。分母 = 看板上全部机会（不含已拒绝）。每天按队列补：手动线索 / 本站板块 ★ → 新发现 → 有参与入口 → 收入高。', 'Under research / needs checking / raw lead. Denominator = all cards excluding rejected.'))}</div><div class="v">${doneN}<span class="muted" style="font-size:15px"> / ${act.length}</span></div><div class="s">${T(`研究观察 ${doneN} · 待核验 ${act.filter(o => o.status === '待核验').length} · 未补证 ${act.filter(o => o.status === '原始线索').length}`, `${doneN} researched · ${act.filter(o => o.status === '待核验').length} checking · ${act.filter(o => o.status === '原始线索').length} raw`)} · <a href="/data/alpha/research_queue.json" download>${T('下载待补证清单', 'Download queue')}</a></div></div></div>
+        ${cardBF('invest', T('有参与入口', 'Has entry'), OPPS.counts.invest || 0, 't-up', tip(T('有资金参与的方式（买币、质押、交易赚积分等）。只说明「能参与」，不代表研究过、更不代表可以执行：研究状态看每张卡的标签（原始线索 → 待核验 → 研究观察）。', 'Capital can take part. Not a research verdict.')), T('有资金参与方式（不等于研究过）', 'capital can take part — not a verdict'))}
+        ${cardBF('watch', T('预警观察', 'Watchlist'), OPPS.counts.watch || 0, '', tip(T('新东西，但暂时没有资金参与的入口（没币、没积分、没开放）。和「有参与入口」加起来 = 看板上全部机会（不含已拒绝）。', 'No capital entry yet. Together with Has entry = all cards (excluding rejected).')), T('新东西，暂时没有资金入口', 'no capital entry yet'))}
+        ${cardBF('all', T('全部', 'All'), os.filter(o => o.bucket !== 'reject').length, '', '', `<span class="klink" data-bf="reject">${T('已拒绝', 'Rejected')} ${os.filter(o => o.bucket === 'reject').length}</span>`)}
+        <div class="glass hero ktop2"><div class="k">${TOPM === 'fresh' ? T('新发现 · 3 天内', 'New · 3 days') : T('补证状态', 'Research status')}<span class="ktoggle"><button type="button" class="${TOPM === 'fresh' ? 'on' : ''}" data-top="fresh">${T('新发现', 'New')}</button><button type="button" class="${TOPM === 'research' ? 'on' : ''}" data-top="research">${T('补证', 'Research')}</button></span>${TOPM === 'fresh' ? tip(T('3 天内新进看板的全部机会，不分栏、不分状态。', 'All cards added in the last 3 days, any column.')) : tip(T('研究观察 = 补证完、对象明确、没查到否决项；待核验 = 补过但关键事实还缺（写进文件不等于查证完成）；原始线索 = 还没补。分母 = 看板上全部机会（不含已拒绝）。每天按队列补：手动线索 / 本站板块 ★ → 新发现 → 有参与入口 → 收入高。', 'Under research / needs checking / raw lead. Denominator = all cards excluding rejected.'))}</div>
+          <div class="v">${TOPM === 'fresh' ? freshN : `${doneN}<span class="muted" style="font-size:15px"> / ${act.length}</span>`}</div>
+          <div class="s">${TOPM === 'fresh' ? T('不等补证，先放出来', 'shown before research') : T(`研究观察 ${doneN} · 待核验 ${act.filter(o => o.status === '待核验').length} · 未补证 ${act.filter(o => o.status === '原始线索').length}`, `${doneN} researched · ${act.filter(o => o.status === '待核验').length} checking · ${act.filter(o => o.status === '原始线索').length} raw`) + ` · <a href="/data/alpha/research_queue.json" download>${T('下载待补证清单', 'Download queue')}</a>`}</div></div>
+      </div>
       <div class="md"><aside class="md-list">${boardList()}</aside><section class="md-detail" id="ax-detail">${boardDetail(os.find(o => o.id === SELID))}</section></div>
       <p class="small muted" style="margin-top:12px">${T('数据日', 'Data day')} ${esc(OPPS.asof || '')} · ${T('框架', 'Framework')} ${esc(OPPS.framework)} · ${T('自动规则', 'Rules')} ${esc(OPPS.rules || '')} · <a href="${EN ? '/en' : ''}/alpha/framework/#auto">${T('打分规则', 'Scoring rules')}</a> · ${T('不按分数排名，不是买卖建议', 'no rankings, not trade advice')}</p>
       <details class="card ax-more"><summary>${T('待补证清单（每天自动生成）', 'Research queue (generated daily)')} <span class="muted small">${OPPS.queue_n == null ? '' : OPPS.queue_n + T(' 个', ' items')}</span></summary>
@@ -571,6 +576,8 @@
     app.onclick = e => {
       const f = e.target.closest('[data-bf]');
       if (f) { BF = f.dataset.bf; SELID = (list()[0] || {}).id; renderBoard(); return; }
+      const tp = e.target.closest('[data-top]');
+      if (tp) { TOPM = tp.dataset.top; renderBoard(); return; }
       const kf = e.target.closest('[data-kf]');
       if (kf) {
         const [grp, key] = kf.dataset.kf.split('|');
