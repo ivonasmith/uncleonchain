@@ -58,7 +58,7 @@
 
 `verdict` 只有三档；「优先研究」「执行评估」由 Claude 和大叔定，不在这里给。
 
-## X1 交易所公告源验收（含第三方聚合源：Tokenearly、Listing Radar、Sharpe、CryptoListingWS 等）→ `alpha/review/x1_exchange_sources.json`
+## X1 交易所公告源验收（含第三方聚合源和交易所官方 X 账号）→ `alpha/review/x1_exchange_sources.json`
 ## X2 历史 K 线源验收 → `alpha/review/x2_kline_sources.json`
 ## X3 报价币换算日源 → `alpha/review/x3_quote_fx.json`
 ## X4 上市事件样本库（过去 12 个月，≥100 条）→ `alpha/review/x4_listing_events.json`
