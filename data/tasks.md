@@ -1,4 +1,4 @@
-# 全站待办与检查（2026-11-16 08:33 UTC 自动生成，别手改）
+# 全站待办与检查（2026-11-16 09:43 UTC 自动生成，别手改）
 
 | 板块 | 待办 | 问题 |
 |---|---|---|
@@ -43,7 +43,7 @@
 - **P3 · Codex · alpha** 英文稿（3 篇研究文档；英文站现在只有导航是英文） → `alpha/research/<同名>.en.md（Claude 接进网站）`
 - **P3 · Codex · core** 六问卡草稿（30 个币没有核对过的卡；Codex 出草稿，大叔核对后才进 cards） → `core/review/cards_draft_<日期>.json（键同 core_config.json 的 _cards_说明，每栏带出处）`（参考 `core/core_config.json _cards_说明`）
 - **P3 · 大叔 · core** 核对六问卡草稿（只有大叔核对过的才算，R1 要七栏齐）（参考 `core/review/cards_draft_*.json`）
-- **P3 · Claude · launchpad** 平台质量待接入字段：交易者、发币人（参考 `docs/接口_发射台给Alpha.md 字段优先级 4`）
+- **P3 · Claude · launchpad** 平台质量待接入字段：交易者、发币人（参考 `docs/接口_发射台给Alpha.md 字段优先级 4（进度见文末）`）
 - **P3 · 大叔 · smartmoney** 聪明钱：等立项书定稿（主体 / 证据等级 / 入选规则写死后才开 S1）（参考 `smartmoney/research/立项书.md`）
 
 ## alpha 补证状态（已覆盖 ≠ 已查证）

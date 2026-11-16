@@ -385,7 +385,7 @@
         <tr><td class="l">${hv(T('7 天发币', '7d launches'), T('发币数', 'Launches'), (q.发币 || {}).口径 || '')}</td><td>${(q.发币 || {})['7d'] != null ? Number(q.发币['7d']).toLocaleString() : na}</td></tr>
         <tr><td class="l">${hv(T('7 天后仍有交易', 'Still trading after 7d'), T('存活', 'Survival'), (sv.口径 || '') + (sv.批次 ? T(` 批次 ${sv.批次}。`, '') : ''))}</td><td>${sv.样本 ? `${sv['7天后仍有交易']} / ${sv.样本} ${T('个样本', 'sampled')}` : na}</td></tr>
         <tr><td class="l">${T('市值过 10 万美元', 'Mcap > $100K')}</td><td>${sv.样本 ? `${sv['市值过10万美元']} / ${sv.样本}` : na}</td></tr>
-        <tr><td class="l">${T('7 天交易者', '7d traders')}</td><td>${(q.交易者 || {})['7d'] != null ? Number(q.交易者['7d']).toLocaleString() : na}</td></tr></tbody></table></div>
+        <tr><td class="l">${hv((q.交易者 || {})['7d'] == null && (q.交易者 || {})['1d'] != null ? T('交易者（最近一天）', 'Traders (last day)') : T('7 天交易者', '7d traders'), T('交易者', 'Traders'), (q.交易者 || {}).口径 || '')}</td><td>${(q.交易者 || {})['7d'] != null ? Number(q.交易者['7d']).toLocaleString() : (q.交易者 || {})['1d'] != null ? Number(q.交易者['1d']).toLocaleString() : na}</td></tr></tbody></table></div>
         <p class="small muted">${T('发射台板块提供（链上 + GeckoTerminal 样本），数据日', 'From the launchpad board, data day')} ${esc(q.数据日 || '')}</p>` : '';
     if (!rows && !qq && !(R.wash_or_subsidy && R.wash_or_subsidy !== 'U')) return '';
     return `<div class="card ax-box" style="margin-top:12px"><h3>${T('量从哪来 · 量的质量', 'Volume source & quality')}</h3>

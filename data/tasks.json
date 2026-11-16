@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-16T08:33:03+00:00",
+ "generated": "2026-11-16T09:43:43+00:00",
  "boards": [
   {
    "board": "alpha",
@@ -900,9 +900,9 @@
    "deliver": "alpha/research/<同名>.en.md（Claude 接进网站）",
    "ref": null,
    "items": [
-    "案例库.md",
+    "Alpha标的筛选研究体系.md",
     "研究进度.md",
-    "Alpha标的筛选研究体系.md"
+    "案例库.md"
    ],
    "n": 3,
    "note": null
@@ -969,9 +969,28 @@
    "who": "claude",
    "pri": 3,
    "deliver": null,
-   "ref": "docs/接口_发射台给Alpha.md 字段优先级 4",
-   "items": null,
-   "n": null,
+   "ref": "docs/接口_发射台给Alpha.md 字段优先级 4（进度见文末）",
+   "items": [
+    {
+     "字段": "交易者",
+     "待接入平台": [
+      "ascend-launchpad",
+      "clanker",
+      "montra",
+      "pons-v2",
+      "sentry",
+      "zora-coins"
+     ]
+    },
+    {
+     "字段": "发币人",
+     "待接入平台": [
+      "clanker",
+      "montra"
+     ]
+    }
+   ],
+   "n": 2,
    "note": null
   },
   {

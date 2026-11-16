@@ -221,7 +221,8 @@ def board_launchpad():
         T.append(task("launchpad", "intro", f"平台介绍（前 25 里 {len(no_note)} 家没有）", "codex", 3, deliver="按 pipeline/导入平台介绍.py 的格式", items=no_note))
     pend = sorted({k for v in P.values() for k, x in v.items() if isinstance(x, dict) and x.get("来源") == "待接入"})
     if pend:
-        T.append(task("launchpad", "quality-fields", f"平台质量待接入字段：{'、'.join(pend)}", "claude", 3, ref="docs/接口_发射台给Alpha.md 字段优先级 4"))
+        T.append(task("launchpad", "quality-fields", f"平台质量待接入字段：{'、'.join(pend)}", "claude", 3, ref="docs/接口_发射台给Alpha.md 字段优先级 4（进度见文末）",
+                      items=[{"字段": k, "待接入平台": sorted(s for s, v in P.items() if (v.get(k) or {}).get("来源") == "待接入")} for k in pend]))
     for slug, v in P.items():
         d = days_since(v.get("数据日"))
         if d is not None and d > 3:

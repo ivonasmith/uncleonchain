@@ -264,12 +264,22 @@ jobs:
     needs: guard
     if: needs.guard.outputs.run == 'yes'
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
         with: { ref: main }
       - uses: actions/setup-python@v5
         with: { python-version: "${{ env.PY }}" }
+      # 交易者 / 发币人试点（Four.meme、Flap，BSC 公共节点）：逐日地址集合走缓存，算 7 天去重；每天只扫没扫过的完整 UTC 日（am 档扫，pm 档基本空跑）
+      - uses: actions/cache@v4
+        with: { path: pipeline/cache/traders, key: "lp-traders-${{ github.run_id }}", restore-keys: lp-traders- }
+      - name: 平台交易者（试点）
+        continue-on-error: true
+        timeout-minutes: 18
+        env:
+          LP_DATA: ${{ github.workspace }}/data
+          TRADERS_TIME: "840"
+        run: python3 pipeline/平台交易者.py
       - name: 平台质量（存活）
         continue-on-error: true
         timeout-minutes: 22
@@ -278,7 +288,7 @@ jobs:
           SURV_TIME: "1200"
         run: python3 pipeline/平台质量.py
       - if: always()
-        run: tar czf out-lpq.tgz data/onchain/平台质量.json data/onchain/平台质量_history.json   # 解包排在 out-launchpad 后面，覆盖它那份
+        run: tar czf out-lpq.tgz data/onchain/平台质量.json data/onchain/平台质量_history.json $(ls data/onchain/平台交易者.json 2>/dev/null)   # 解包排在 out-launchpad 后面，覆盖它那份
       - if: always()
         uses: actions/upload-artifact@v4
         with: { name: out-lpq, path: out-lpq.tgz, retention-days: 3 }

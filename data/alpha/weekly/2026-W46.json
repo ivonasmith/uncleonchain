@@ -2,17 +2,50 @@
  "week": "2026-W46",
  "from": "2026-11-09",
  "to": "2026-11-16",
- "days_with_data": 1,
+ "days_with_data": 2,
  "leads": {
-  "new": 3,
+  "new": 33,
   "by_source": {
    "tokenless_rev": 0,
-   "new_listing": 3
+   "new_listing": 13,
+   "rev_surge": 15,
+   "manual": 2,
+   "site:": 5
   },
   "new_names": [
    "Exodus Pay",
    "Send Card",
-   "COCA Card"
+   "COCA Card",
+   "KleosSwap",
+   "Paboxo",
+   "Curveball",
+   "StratiDex",
+   "Nexwest",
+   "Papertrade",
+   "Paperstrategy",
+   "Nullmask",
+   "Render Network BME",
+   "Fables",
+   "Montra",
+   "Peapods Finance",
+   "JustLend V1",
+   "THORWallet",
+   "Liquity",
+   "Volta",
+   "Yield Basis",
+   "Sapling",
+   "Veil",
+   "Stockereum",
+   "TapeOut / BEM",
+   "Pons",
+   "Boxa V1",
+   "Elysium 生态（新发射台聚集）",
+   "Bankr",
+   "BLNT V3",
+   "Hookr",
+   "AurixDEX",
+   "Stoa",
+   "GreenDildo"
   ],
   "status_changes": [
    {
@@ -164,45 +197,87 @@
     "name": "Spiko",
     "status": "研究观察",
     "date": "2026-11-14"
+   },
+   {
+    "name": "Ascend Launchpad",
+    "status": "研究观察",
+    "date": "2026-11-15"
+   },
+   {
+    "name": "Montra",
+    "status": "研究观察",
+    "date": "2026-11-15"
+   },
+   {
+    "name": "Volta",
+    "status": "研究观察",
+    "date": "2026-11-15"
+   },
+   {
+    "name": "TapeOut / BEM",
+    "status": "待核验",
+    "date": "2026-11-15"
+   },
+   {
+    "name": "Pons",
+    "status": "研究观察",
+    "date": "2026-11-15"
+   },
+   {
+    "name": "Boxa V1",
+    "status": "研究观察",
+    "date": "2026-11-15"
+   },
+   {
+    "name": "Bankr",
+    "status": "研究观察",
+    "date": "2026-11-15"
    }
   ],
   "token_launch": [],
-  "total": 255
+  "total": 286
  },
  "feed": {
-  "new": 27,
+  "new": 29,
   "by_source": {
    "ethresearch": 16,
-   "snapshot": 6,
+   "snapshot": 8,
    "binance": 5
   },
-  "delay_median_h": null
+  "delay_median_h": 1.7
  },
- "sources_fail_days": {},
+ "sources_fail_days": {
+  "defillama_protocols": 0,
+  "defillama_revenue": 0,
+  "ethresearch": 0,
+  "snapshot": 0,
+  "binance": 0,
+  "site_sources": 0
+ },
  "board": {
   "counts": {
-   "invest": 10,
-   "watch": 24,
+   "invest": 26,
+   "watch": 28,
    "reject": 0
   },
   "moves": [],
   "prev_snapshot": false
  },
  "a4": {
-  "watch_n": 12,
+  "watch_n": 18,
   "control_n": 93,
   "first_watch": "2026-11-14",
   "days_to_d90": 88,
   "judgeable": false
  },
  "threshold": {
-  "n": 105,
-  "p25": 182378.0,
-  "p50": 270806.0,
-  "p75": 687080.0,
-  "p90": 2659885.000000001,
+  "n": 104,
+  "p25": 183871.75,
+  "p50": 268435.0,
+  "p75": 704536.75,
+  "p90": 2468688.6000000015,
   "current_usd": 100000
  },
  "framework": "v1",
- "generated": "2026-11-14T17:12:17+00:00"
+ "generated": "2026-11-16T09:34:21+00:00"
 }

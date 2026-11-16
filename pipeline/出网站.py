@@ -3526,7 +3526,7 @@ def platform_quality_html(slug):
     head = f'<h3>{T("量的质量", "Quality of volume")}</h3>'
     if not q:
         return head + f'<p class="tnote">{T("本站链上扫描还没对上这个平台的发币合约（Solana 平台、或工厂合约还没认出来），这一块暂时没有。", "Our on-chain scan has not matched this platform’s token factory yet (Solana platforms, or factory not identified), so nothing here yet.")}</p>'
-    fb, fr, sv = q.get("发币") or {}, q.get("发币人") or {}, q.get("存活") or {}
+    fb, fr, sv, tr = q.get("发币") or {}, q.get("发币人") or {}, q.get("存活") or {}, q.get("交易者") or {}
     est = T("（估算）", " (est.)") if fb.get("估算") else ""
     n = lambda v: f"{v:,}" if isinstance(v, (int, float)) else na  # noqa: E731
     if sv.get("7天后仍有交易") is not None:
@@ -3537,15 +3537,23 @@ def platform_quality_html(slug):
     else:
         s_v, s_s = na, T("攒样本中：某天发的币 7 天后才查", "collecting: checked 7 days after launch")
     k = (tpl(T("近 7 日发币", "Tokens launched (7d)"), n(fb.get("7d")) + est, T(f'最近一天 {n(fb.get("1d"))} · {esc(q.get("数据日") or "")}', f'last day {n(fb.get("1d"))} · {esc(q.get("数据日") or "")}'))
-         + tpl(T("发币人（下限）", "Creators (floor)"), n(fr.get("7d")), T("7 天里单日最多的一天", "busiest day in 7d") if fr.get("7d") is not None
-               else T("币都铸给同一个合约，抽样数不出来", "all tokens minted via one contract; sampling can’t count creators"))
+         + (tpl(T("发币人（下限）", "Creators (floor)"), n(fr["7d"] if fr.get("7d") is not None else fr["1d"]),
+                (T("近 7 天去重 · 平台合约创建事件", "unique in 7d · platform create events") if fr.get("7d") is not None
+                 else T(f'最近一天 {esc(fr.get("数据日") or "")} · 平台合约创建事件；7 天去重攒满才出', f'last day {esc(fr.get("数据日") or "")} · create events; 7d unique once 7 days are in')))
+            if fr.get("1d") is not None else
+            tpl(T("发币人（下限）", "Creators (floor)"), n(fr.get("7d")), T("7 天里单日最多的一天", "busiest day in 7d") if fr.get("7d") is not None
+               else T("币都铸给同一个合约，抽样数不出来", "all tokens minted via one contract; sampling can’t count creators")))
          + tpl(T("7 天后还在交易", "Still trading after 7d"), s_v, s_s)
-         + tpl(T("交易者 / 刷量", "Traders / wash"), na, T("要逐笔扫交易，还没接", "needs per-trade scan")))
+         + (tpl(T("交易者（下限）", "Traders (floor)"), n(tr["7d"] if tr.get("7d") is not None else tr["1d"]),
+                T(f'{"近 7 天去重" if tr.get("7d") is not None else "最近一天 " + esc(tr.get("数据日") or "")} · 前 10 个钱包占 {tr["前10地址笔数占比"] * 100:.0f}% 笔数；刷量待接入',
+                  f'{"unique in 7d" if tr.get("7d") is not None else "last day " + esc(tr.get("数据日") or "")} · top 10 wallets = {tr["前10地址笔数占比"] * 100:.0f}% of trades; wash pending'))
+            if tr.get("1d") is not None else tpl(T("交易者 / 刷量", "Traders / wash"), na, T("要逐笔扫交易，还没接", "needs per-trade scan"))))
     ev = q.get("事件") or []
     evh = ""
     if ev:
         evh = '<ul class="pm">' + "".join(f'<li><b>{esc(e.get("日期") or "")}</b> {esc(e.get("事") or "")} <a href="{esc(e.get("出处") or "")}" target="_blank" rel="noopener">{T("出处", "source")}</a></li>' for e in ev) + "</ul>"
-    note = T(f'口径：发币 = {esc(fb.get("口径") or "")}；存活 = {esc(sv.get("口径") or "")}。数据同时供 Alpha 雷达读取。',
+    note = T(f'口径：发币 = {esc(fb.get("口径") or "")}；存活 = {esc(sv.get("口径") or "")}'
+             + (f'；交易者 = {esc(tr.get("口径") or "")}' if tr.get("1d") is not None else "") + '。数据同时供 Alpha 雷达读取。',
              f'Method: launches = factory mints of round-supply tokens on our own node scan (floor{", sampled and scaled" if fb.get("估算") else ""}); survival = sampled tokens checked on GeckoTerminal 7–8 days later (floor). Also read by Alpha Radar.')
     return head + f'<div class="grid g4">{k}</div>{evh}<p class="tnote">{note}</p>'
 

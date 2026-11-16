@@ -8,7 +8,7 @@
   发币    工厂合约当天新铸整数供应量的币（拉链上新台.py），1d = 最近一个扫完的 UTC 日，7d = 最近 7 个扫过的日子合计
   发币人  查过交易的不同发币地址（每天单独数，取 7 天里最多的一天）—— 下限
   存活    某天发的币，7～8 天后用 GeckoTerminal 查：近 24 小时还有成交的几个、市值（没有就用 FDV）过 10 万美元的几个
-  交易者  要扫每笔交易事件，还没接 —— null（页面显示「待接入」）
+  交易者  试点 Four.meme、Flap：读 平台交易者.py 的结果（平台合约买卖事件）；其它平台还没接 —— null（页面显示「待接入」）
   事件    人工登记 config/launchpad_events.json，必须带日期和官方出处
 
 规矩：拿不到写 null，不估；抽样扫描的链（每小时只扫 1/k 的块）发币数是 ×k 放大的，字段里标「估算」。
@@ -109,6 +109,7 @@ def main():
     batches = hist.setdefault("存活批次", {})
     daily = hist.setdefault("逐日", {})
     events = {k: v for k, v in (load(EVENTS, {}) or {}).items() if not k.startswith("_")}
+    traders = (load(os.path.join(OC, "平台交易者.json"), {}) or {}).get("平台") or {}   # 平台交易者.py 试点（交易者 / 发币人）
 
     # 平台 slug → [(链, 工厂地址)]：用名录的合并结果（档案 / 名字 / 域名对上 DefiLlama 的）
     addr = defaultdict(list)
@@ -188,6 +189,17 @@ def main():
                     elif sample:
                         surv["来源"] = "待接入（GeckoTerminal 没有这条链）"
         rec["交易者"] = {"1d": None, "7d": None, "前10地址成交占比": None, "口径": "要逐笔扫交易事件，每条链不一样，还没接", "来源": "待接入"}
+        tz = ((traders.get(slug) or {}).get("汇总")) or {}
+        if tz:   # 试点平台（平台交易者.py：Four.meme、Flap）：读平台合约买卖 / 创建事件，合约下单换成交易发起钱包
+            scope = (traders.get(slug) or {}).get("范围", "")
+            rec["交易者"] = {"1d": tz["交易者1d"], "7d": tz["交易者7d"], "前10地址成交占比": None, "前10地址笔数占比": tz["前10地址笔数占比1d"],
+                          "数据日": tz["数据日"], "覆盖天数": tz["覆盖天数"],
+                          "口径": f"{scope}。当天内盘买卖的不同钱包（经机器人 / 路由合约下单的换成交易发起钱包），毕业后 DEX 成交不算，下限；"
+                                  f"7d = 最近 7 天去重，攒满 7 天才出（现在 {tz['覆盖天数']} 天）；前10 按笔数算，成交额口径要统一计价币，待接入",
+                          "来源": "链上（BSC 公共节点）"}
+            if (rec.get("发币人") or {}).get("7d") is None and tz.get("发币人1d") is not None:
+                rec["发币人"] = {"7d": tz["发币人7d"], "1d": tz["发币人1d"], "数据日": tz["数据日"], "来源": "链上（BSC 公共节点）",
+                              "口径": f"{scope}。创建事件里不同的发币钱包（合约发起的换成交易发起钱包）；7d = 最近 7 天去重，攒满 7 天才出（现在 {tz['覆盖天数']} 天）"}
         rec["事件"] = sorted(events.get(slug) or [], key=lambda x: x.get("日期") or "")
         out[slug] = rec
         if rec.get("发币"):

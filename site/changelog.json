@@ -1,5 +1,19 @@
 [
  {
+  "version": "2026.11.16.6",
+  "date": "2026-11-16",
+  "notify": false,
+  "title_zh": "发射台量的质量：Four.meme、Flap 接上交易者和发币人（试点）",
+  "title_en": "Launchpad quality: traders and creators for Four.meme and Flap (pilot)",
+  "items": [
+   {
+    "type": "new",
+    "zh": "Four.meme 和 Flap（BSC）开始按 UTC 完整日读平台合约自己的买卖和创建事件：交易者 = 当天内盘买卖的不同钱包，经交易机器人 / 路由合约下单的换成发起交易的钱包；发币人 = 创建事件里不同的发币钱包。毕业后在 DEX 上的成交不算，都是下限；7 天去重要攒满 7 天才显示；前 10 个钱包按笔数算，按成交额算还要统一计价币，待接入。其它平台仍是「待接入」。",
+    "en": "Four.meme and Flap (BSC) now read the platforms' own buy/sell and create events per full UTC day: traders = distinct wallets trading on the bonding curve that day (trades routed through bot/router contracts are attributed to the wallet that sent the transaction); creators = distinct wallets in create events. Post-graduation DEX trades are excluded, so both are floors. 7-day unique counts appear once 7 days are collected; the top-10 share is by trade count. Other platforms remain pending."
+   }
+  ]
+ },
+ {
   "version": "2026.11.16.5",
   "date": "2026-11-16",
   "notify": false,
