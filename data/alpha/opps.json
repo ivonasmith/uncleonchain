@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-16T08:12:02+00:00",
+ "generated": "2026-11-16T09:10:41+00:00",
  "asof": "2026-11-15",
  "framework": "v1",
  "rules": "v2（2026-11-15）",
@@ -1748,12 +1748,12 @@
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 63174,
+      "total24h": 63722,
       "total7d": 589969,
       "total30d": 2625813
      },
      "rev": {
-      "total24h": 63174,
+      "total24h": 63722,
       "total7d": 589969,
       "total30d": 2625813
      },
@@ -2036,17 +2036,17 @@
     "tok": null,
     "money": {
      "vol": {
-      "total24h": 1354688,
+      "total24h": 1348776,
       "total7d": 11016861,
       "total30d": 67542031
      },
      "fees": {
-      "total24h": 56659,
+      "total24h": 56354,
       "total7d": 474230,
       "total30d": 2098492
      },
      "rev": {
-      "total24h": 56659,
+      "total24h": 56354,
       "total7d": 474230,
       "total30d": 2098492
      },
@@ -2319,17 +2319,17 @@
     "tok": null,
     "money": {
      "vol": {
-      "total24h": 13076131,
+      "total24h": 13009160,
       "total7d": 76933486,
       "total30d": 393161533
      },
      "fees": {
-      "total24h": 263198,
+      "total24h": 261515,
       "total7d": 1604636,
       "total30d": 7901995
      },
      "rev": {
-      "total24h": 64752,
+      "total24h": 63537,
       "total7d": 388243,
       "total30d": 2081703
      },
@@ -2918,15 +2918,15 @@
       "url": "https://dexscreener.com/robinhood/0x10cc6bd38112cac182db90b6a71d8bb5939526ba"
      },
      "snap": {
-      "mcap": 81489799,
-      "fdv": 81489799,
-      "vol24": 5447814.0,
-      "liq": 1364198.02,
-      "chg24": 3.46,
+      "mcap": 81683290,
+      "fdv": 81683290,
+      "vol24": 5346661.07,
+      "liq": 1361046.59,
+      "chg24": 1.35,
       "pairs": 30,
       "dex": "uniswap",
       "chain": "robinhood",
-      "at": "2026-11-16T08:12+00:00",
+      "at": "2026-11-16T09:10+00:00",
       "src": "DexScreener"
      }
     },
@@ -2949,13 +2949,16 @@
       "口径": "查过交易的不同发币地址；每天单独数，取 7 天里最多的一天（没记 7 天去重），下限"
      },
      "存活": {
-      "批次": null,
-      "发出": null,
-      "样本": null,
-      "7天后仍有交易": null,
-      "市值过10万美元": null,
+      "批次": "2026-11-02～2026-11-08",
+      "发出": 5917,
+      "样本": 20,
+      "7天后仍有交易": 1,
+      "市值过10万美元": 0,
       "口径": "批次那天发的币里抽 20 个，发出后 7～8 天逐个用 GeckoTerminal 查它的全部池子（含发射台曲线池）：近 24 小时有买卖的个数、市值（没有就用 FDV）≥ 10 万美元的个数；GeckoTerminal 没收录的池子看不到，算没交易，下限",
-      "来源": "GeckoTerminal（链上样本 + 第三方行情）"
+      "来源": "GeckoTerminal（链上样本 + 第三方行情）",
+      "收录": 20,
+      "查询日": "2026-11-16",
+      "说明": "早期批次：每个工厂每天只留了 3 个样本币，这里把 7 天的样本拼成一批，币龄 7～14 天"
      },
      "交易者": {
       "1d": null,
@@ -3824,12 +3827,12 @@
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 20107,
+      "total24h": 20109,
       "total7d": 1756089,
       "total30d": 7050328
      },
      "rev": {
-      "total24h": 20107,
+      "total24h": 20109,
       "total7d": 140727,
       "total30d": 584602
      },
@@ -4183,15 +4186,15 @@
       "url": "https://dexscreener.com/elysium/0x3e373dfe40db272433dca58527abac38dbd7acb0b6c92090c202a1eac7272a1d"
      },
      "snap": {
-      "mcap": 4384077,
-      "fdv": 4384077,
-      "vol24": 323225.27999999997,
-      "liq": 390219.04,
-      "chg24": 26.72,
+      "mcap": 4036602,
+      "fdv": 4036602,
+      "vol24": 331633.41,
+      "liq": 371564.03,
+      "chg24": 6.61,
       "pairs": 13,
       "dex": "uniswap",
       "chain": "elysium",
-      "at": "2026-11-16T08:12+00:00",
+      "at": "2026-11-16T09:10+00:00",
       "src": "DexScreener"
      }
     },
@@ -4235,22 +4238,22 @@
     },
     "money": {
      "vol": {
-      "total24h": 611645,
+      "total24h": 644712,
       "total7d": 67651484,
       "total30d": 93639430
      },
      "fees": {
-      "total24h": 35121,
+      "total24h": 35254,
       "total7d": 1141360,
       "total30d": 1453530
      },
      "rev": {
-      "total24h": 2447,
+      "total24h": 2578,
       "total7d": 270744,
       "total30d": 374695
      },
      "hold": {
-      "total24h": 1711,
+      "total24h": 1802,
       "total7d": 102189,
       "total30d": 102189
      },
@@ -4500,15 +4503,15 @@
       "口径": "查过交易的不同发币地址；每天单独数，取 7 天里最多的一天（没记 7 天去重），下限"
      },
      "存活": {
-      "批次": "2026-11-01～2026-11-07",
-      "发出": 369,
-      "样本": 9,
+      "批次": "2026-11-02～2026-11-08",
+      "发出": 277,
+      "样本": 6,
       "7天后仍有交易": 0,
       "市值过10万美元": 0,
       "口径": "批次那天发的币里抽 20 个，发出后 7～8 天逐个用 GeckoTerminal 查它的全部池子（含发射台曲线池）：近 24 小时有买卖的个数、市值（没有就用 FDV）≥ 10 万美元的个数；GeckoTerminal 没收录的池子看不到，算没交易，下限",
       "来源": "GeckoTerminal（链上样本 + 第三方行情）",
-      "收录": 5,
-      "查询日": "2026-11-15",
+      "收录": 2,
+      "查询日": "2026-11-16",
       "说明": "早期批次：每个工厂每天只留了 3 个样本币，这里把 7 天的样本拼成一批，币龄 7～14 天"
      },
      "交易者": {
@@ -4522,22 +4525,22 @@
     },
     "money": {
      "vol": {
-      "total24h": 314082,
+      "total24h": 308101,
       "total7d": 26466500,
       "total30d": 40199506
      },
      "fees": {
-      "total24h": 6748,
+      "total24h": 6740,
       "total7d": 419077,
       "total30d": 597983
      },
      "rev": {
-      "total24h": 2045,
+      "total24h": 2039,
       "total7d": 153907,
       "total30d": 236451
      },
      "hold": {
-      "total24h": 529,
+      "total24h": 527,
       "total7d": 41972,
       "total30d": 64764
      },
@@ -4792,32 +4795,32 @@
       "url": "https://dexscreener.com/elysium/0x7b182abb748bae25e2c73abd8b4cf3157d8d35a47e4b36d1ee5565ade94c3c27"
      },
      "snap": {
-      "mcap": 672357,
-      "fdv": 672357,
-      "vol24": 109191.16,
-      "liq": 85710.21,
-      "chg24": 0.9,
+      "mcap": 611851,
+      "fdv": 611851,
+      "vol24": 115731.07,
+      "liq": 81692.04,
+      "chg24": -1.5,
       "pairs": 7,
       "dex": "uniswap",
       "chain": "elysium",
-      "at": "2026-11-16T08:12+00:00",
+      "at": "2026-11-16T09:10+00:00",
       "src": "DexScreener"
      }
     },
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 2820,
+      "total24h": 2799,
       "total7d": 163029,
       "total30d": 253132
      },
      "rev": {
-      "total24h": 2065,
+      "total24h": 2060,
       "total7d": 109217,
       "total30d": 172222
      },
      "hold": {
-      "total24h": 1899,
+      "total24h": 1895,
       "total7d": 99437,
       "total30d": 157036
      },
@@ -5068,15 +5071,15 @@
       "url": "https://dexscreener.com/base/0xaec085e5a5ce8d96a7bdd3eb3a62445d4f6ce703"
      },
      "snap": {
-      "mcap": 22790462,
-      "fdv": 22790462,
-      "vol24": 466914.12,
-      "liq": 1416739.07,
-      "chg24": 4.98,
+      "mcap": 22566611,
+      "fdv": 22566611,
+      "vol24": 437155.89999999997,
+      "liq": 1402502.96,
+      "chg24": 2.02,
       "pairs": 21,
       "dex": "uniswap",
       "chain": "base",
-      "at": "2026-11-16T08:12+00:00",
+      "at": "2026-11-16T09:10+00:00",
       "src": "DexScreener"
      }
     },
@@ -5306,17 +5309,17 @@
     "tok": null,
     "money": {
      "vol": {
-      "total24h": 20764,
+      "total24h": 22130,
       "total7d": 1411969,
       "total30d": 1411969
      },
      "fees": {
-      "total24h": 376,
+      "total24h": 401,
       "total7d": 136450,
       "total30d": 237681
      },
      "rev": {
-      "total24h": 112,
+      "total24h": 120,
       "total7d": 40931,
       "total30d": 71305
      },
@@ -6189,17 +6192,17 @@
     },
     "money": {
      "vol": {
-      "total24h": 5971995,
+      "total24h": 6028766,
       "total7d": 51669286,
       "total30d": 236602926
      },
      "fees": {
-      "total24h": 355891,
+      "total24h": 348991,
       "total7d": 3125072,
       "total30d": 17753272
      },
      "rev": {
-      "total24h": 98509,
+      "total24h": 98403,
       "total7d": 862302,
       "total30d": 4125956
      },
@@ -7012,7 +7015,7 @@
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 18451,
+      "total24h": 18454,
       "total7d": 270809,
       "total30d": 2254014
      },
@@ -7022,7 +7025,7 @@
       "total30d": 2102065
      },
      "hold": {
-      "total24h": 12723,
+      "total24h": 12722,
       "total7d": 226677,
       "total30d": 1857528
      },
@@ -7510,7 +7513,7 @@
      {
       "board": "aiagent",
       "rule": "ai_new",
-      "why": "AI Agent 板块：手续费从 2026-10-15 才开始，近 7 天 626,517 美元；板块备注：2026-10 才收录，30 天手续费很快冲到第一，真实需求还是自付刷量待 Codex 核",
+      "why": "AI Agent 板块：手续费从 2026-10-15 才开始，近 7 天 254,734 美元；板块备注：2026-10 才收录，30 天手续费很快冲到第一，真实需求还是自付刷量待 Codex 核",
       "since": "2026-10-15"
      }
     ],
@@ -8400,12 +8403,12 @@
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 47854,
+      "total24h": 51119,
       "total7d": 373433,
       "total30d": 1191894
      },
      "rev": {
-      "total24h": 47854,
+      "total24h": 51119,
       "total7d": 373433,
       "total30d": 1191894
      },
@@ -8682,12 +8685,12 @@
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 151962,
+      "total24h": 152428,
       "total7d": 1170595,
       "total30d": 5142179
      },
      "rev": {
-      "total24h": 32732,
+      "total24h": 32905,
       "total7d": 252689,
       "total30d": 1117304
      },
@@ -9827,12 +9830,12 @@
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 180434,
+      "total24h": 177821,
       "total7d": 2335704,
       "total30d": 13380923
      },
      "rev": {
-      "total24h": 15106,
+      "total24h": 15171,
       "total7d": 172821,
       "total30d": 695656
      },
@@ -10674,15 +10677,15 @@
       "url": "https://dexscreener.com/bsc/0x3098d7a051045000d68ec0360753a40c8cabea31"
      },
      "snap": {
-      "mcap": 5368021,
-      "fdv": 5368021,
-      "vol24": 322430.61,
-      "liq": 151475.31,
-      "chg24": 8.62,
+      "mcap": 5567716,
+      "fdv": 5567716,
+      "vol24": 330513.0,
+      "liq": 139357.23,
+      "chg24": 10.37,
       "pairs": 8,
       "dex": "pancakeswap",
       "chain": "bsc",
-      "at": "2026-11-16T08:12+00:00",
+      "at": "2026-11-16T09:10+00:00",
       "src": "DexScreener"
      }
     }
@@ -10826,7 +10829,7 @@
      "llama_listing"
     ],
     "boards": null,
-    "tvl": 47725010,
+    "tvl": 47653539,
     "listed": "2026-11-09",
     "slug": "kinetiq-elysium-bridge",
     "url": "https://elysium.kinetiq.xyz",
@@ -10874,15 +10877,15 @@
       "url": "https://dexscreener.com/hyperevm/0xc8e5ee73b80bb3f6c9b5348771de8217abd412e7"
      },
      "snap": {
-      "mcap": 78580292,
-      "fdv": 242514068,
-      "vol24": 719849.3,
-      "liq": 807806.56,
-      "chg24": 0.94,
+      "mcap": 77982192,
+      "fdv": 240668213,
+      "vol24": 717337.63,
+      "liq": 801971.05,
+      "chg24": -2.3,
       "pairs": 11,
       "dex": "nest",
       "chain": "hyperevm",
-      "at": "2026-11-16T08:12+00:00",
+      "at": "2026-11-16T09:10+00:00",
       "src": "DexScreener"
      }
     }
@@ -11028,7 +11031,7 @@
      "llama_listing"
     ],
     "boards": null,
-    "tvl": 34151700,
+    "tvl": 34159135,
     "listed": "2026-11-11",
     "slug": "pendle-loop",
     "url": "https://app.pendle.finance",
@@ -11077,15 +11080,15 @@
       "url_en": "https://www.binance.com/en/trade/PENDLE_USDT?type=spot"
      },
      "snap": {
-      "mcap": 251065206,
-      "fdv": 405843560,
-      "vol24": 196033.08000000002,
-      "liq": 463917.65,
-      "chg24": 3.06,
+      "mcap": 248021779,
+      "fdv": 400923900,
+      "vol24": 183794.37,
+      "liq": 458376.31,
+      "chg24": -0.17,
       "pairs": 13,
       "dex": "uniswap",
       "chain": "ethereum",
-      "at": "2026-11-16T08:12+00:00",
+      "at": "2026-11-16T09:10+00:00",
       "src": "DexScreener"
      }
     }
@@ -11279,17 +11282,17 @@
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 26735,
+      "total24h": 23868,
       "total7d": 3402966,
       "total30d": 19953915
      },
      "rev": {
-      "total24h": 26735,
+      "total24h": 23868,
       "total7d": 3402966,
       "total30d": 19953915
      },
      "hold": {
-      "total24h": 13785,
+      "total24h": 11954,
       "total7d": 3178830,
       "total30d": 18285376
      },
@@ -11469,7 +11472,7 @@
      "llama_listing"
     ],
     "boards": null,
-    "tvl": 8335521,
+    "tvl": 8335546,
     "listed": "2026-11-07",
     "slug": "vesper-v2",
     "url": "https://vesper.finance",
@@ -11517,15 +11520,15 @@
       "url": "https://dexscreener.com/ethereum/0x132eeb05d5cb6829bd34f552cde0b6b708ef5014"
      },
      "snap": {
-      "mcap": 1480778,
-      "fdv": 1565111,
-      "vol24": 16.89,
-      "liq": 8598.43,
-      "chg24": -1.28,
+      "mcap": 1482558,
+      "fdv": 1566992,
+      "vol24": 25.3,
+      "liq": 8591.96,
+      "chg24": -1.16,
       "pairs": 3,
       "dex": "sushiswap",
       "chain": "ethereum",
-      "at": "2026-11-16T08:12+00:00",
+      "at": "2026-11-16T09:10+00:00",
       "src": "DexScreener"
      }
     },
@@ -11691,7 +11694,7 @@
      "llama_listing"
     ],
     "boards": null,
-    "tvl": 6808038,
+    "tvl": 6810139,
     "listed": "2026-11-12",
     "slug": "swan-dao",
     "url": "https://www.swanusd.com",
@@ -11710,7 +11713,7 @@
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 605,
+      "total24h": 606,
       "total7d": 3005,
       "total30d": 4005.35
      },
@@ -11916,15 +11919,15 @@
       "url": "https://dexscreener.com/hyperevm/0xf01e7b40b9da303a0a097b69cd81c06c2c06b658"
      },
      "snap": {
-      "mcap": 2129016,
-      "fdv": 2129016,
-      "vol24": 37962.32,
-      "liq": 402628.63,
-      "chg24": 0.1,
+      "mcap": 2117967,
+      "fdv": 2117967,
+      "vol24": 37892.51,
+      "liq": 400595.03,
+      "chg24": -2.67,
       "pairs": 2,
       "dex": "hyperswap",
       "chain": "hyperevm",
-      "at": "2026-11-16T08:12+00:00",
+      "at": "2026-11-16T09:10+00:00",
       "src": "DexScreener"
      }
     },
@@ -12173,27 +12176,27 @@
       "url": "https://dexscreener.com/solana/4gwh5sakgzoukhhj4rh3p5fmpu6ypuaexv6fah5jqyfm"
      },
      "snap": {
-      "mcap": 13542618,
-      "fdv": 23738684,
-      "vol24": 385232.31,
-      "liq": 590073.05,
-      "chg24": -5.42,
+      "mcap": 13359155,
+      "fdv": 23417095,
+      "vol24": 366679.94,
+      "liq": 582689.85,
+      "chg24": -5.67,
       "pairs": 15,
       "dex": "raydium",
       "chain": "solana",
-      "at": "2026-11-16T08:12+00:00",
+      "at": "2026-11-16T09:10+00:00",
       "src": "DexScreener"
      }
     },
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 23232,
+      "total24h": 13427,
       "total7d": 214353,
       "total30d": 1027267
      },
      "rev": {
-      "total24h": 23232,
+      "total24h": 13427,
       "total7d": 214353,
       "total30d": 1027267
      },
@@ -12428,36 +12431,36 @@
       "url": "https://dexscreener.com/robinhood/0xcce8dcf7c4dcfee6b6588db724240d9d6a22ee456f9387bb831c8fcea970869e"
      },
      "snap": {
-      "mcap": 727894,
-      "fdv": 4198799,
-      "vol24": 112082.04999999999,
-      "liq": 279649.18,
-      "chg24": -8.11,
+      "mcap": 728915,
+      "fdv": 4205121,
+      "vol24": 111559.99,
+      "liq": 279767.15,
+      "chg24": -7.49,
       "pairs": 8,
       "dex": "uniswap",
       "chain": "robinhood",
-      "at": "2026-11-16T08:12+00:00",
+      "at": "2026-11-16T09:10+00:00",
       "src": "DexScreener"
      }
     },
     "money": {
      "vol": {
-      "total24h": 5662435,
+      "total24h": 5759277,
       "total7d": 67741232,
       "total30d": 747868840
      },
      "fees": {
-      "total24h": 12748,
+      "total24h": 12826,
       "total7d": 155571,
       "total30d": 1356304
      },
      "rev": {
-      "total24h": 6668,
+      "total24h": 6698,
       "total7d": 105547,
       "total30d": 533141
      },
      "hold": {
-      "total24h": 6668,
+      "total24h": 6698,
       "total7d": 131815,
       "total30d": 575310
      },
@@ -12691,13 +12694,13 @@
      "snap": {
       "mcap": 9693747,
       "fdv": 9693747,
-      "vol24": 32859.25,
+      "vol24": 32796.67,
       "liq": 988524.49,
       "chg24": -2.75,
       "pairs": 18,
       "dex": "uniswap",
       "chain": "ethereum",
-      "at": "2026-11-16T08:12+00:00",
+      "at": "2026-11-16T09:10+00:00",
       "src": "DexScreener"
      }
     },
@@ -12945,15 +12948,15 @@
       "url_en": "https://www.binance.com/en/trade/JST_USDT?type=spot"
      },
      "snap": {
-      "mcap": 1412799370,
-      "fdv": 1412799370,
-      "vol24": 178613.71,
-      "liq": 14406327.41,
-      "chg24": 1.06,
+      "mcap": 1409556277,
+      "fdv": 1409556277,
+      "vol24": 138576.02,
+      "liq": 14389807.82,
+      "chg24": -0.26,
       "pairs": 3,
       "dex": "sunswap",
       "chain": "tron",
-      "at": "2026-11-16T08:12+00:00",
+      "at": "2026-11-16T09:10+00:00",
       "src": "DexScreener"
      }
     },
@@ -13202,34 +13205,34 @@
      "snap": {
       "mcap": 558157,
       "fdv": 11595031,
-      "vol24": 3389.88,
+      "vol24": 2920.1,
       "liq": 234376.69,
-      "chg24": -0.38,
+      "chg24": -0.92,
       "pairs": 4,
       "dex": "aero",
       "chain": "base",
-      "at": "2026-11-16T08:12+00:00",
+      "at": "2026-11-16T09:10+00:00",
       "src": "DexScreener"
      }
     },
     "money": {
      "vol": {
-      "total24h": 4638543,
+      "total24h": 4640909,
       "total7d": 22747298,
       "total30d": 26078762
      },
      "fees": {
-      "total24h": 10480,
+      "total24h": 10422,
       "total7d": 55161,
       "total30d": 218889
      },
      "rev": {
-      "total24h": 10480,
+      "total24h": 10422,
       "total7d": 55161,
       "total30d": 218889
      },
      "hold": {
-      "total24h": 5603,
+      "total24h": 5571,
       "total7d": 26910,
       "total30d": 106569
      },
@@ -13461,15 +13464,15 @@
       "url_en": "https://www.binance.com/en/trade/LQTY_USDT?type=spot"
      },
      "snap": {
-      "mcap": 14160217,
-      "fdv": 14160217,
-      "vol24": 15961.679999999998,
-      "liq": 362339.97,
-      "chg24": -1.57,
+      "mcap": 13986735,
+      "fdv": 13986735,
+      "vol24": 13643.14,
+      "liq": 357770.67,
+      "chg24": -4.5,
       "pairs": 8,
       "dex": "uniswap",
       "chain": "ethereum",
-      "at": "2026-11-16T08:12+00:00",
+      "at": "2026-11-16T09:10+00:00",
       "src": "DexScreener"
      }
     },
@@ -13717,26 +13720,26 @@
       "url_en": "https://www.binance.com/en/trade/YB_USDT?type=spot"
      },
      "snap": {
-      "mcap": 11169973,
-      "fdv": 31680378,
-      "vol24": 18460.98,
-      "liq": 363378.29,
-      "chg24": -2.28,
+      "mcap": 11136645,
+      "fdv": 31585850,
+      "vol24": 53573.39,
+      "liq": 362985.18,
+      "chg24": -3.46,
       "pairs": 5,
       "dex": "curve",
       "chain": "ethereum",
-      "at": "2026-11-16T08:12+00:00",
+      "at": "2026-11-16T09:10+00:00",
       "src": "DexScreener"
      }
     },
     "money": {
      "vol": {
-      "total24h": 704185,
+      "total24h": 773421,
       "total7d": 9248506,
       "total30d": 19165047
      },
      "fees": {
-      "total24h": 119875,
+      "total24h": 116875,
       "total7d": 319364,
       "total30d": 381681
      },
@@ -13977,32 +13980,32 @@
       "url": "https://dexscreener.com/solana/6ejg4ayjm3mk1t2zbkjbj43df3s7rbmpc9mgo526k51g"
      },
      "snap": {
-      "mcap": 1226206,
-      "fdv": 1242063,
-      "vol24": 159269.36,
-      "liq": 207137.48,
-      "chg24": 19.99,
+      "mcap": 1192978,
+      "fdv": 1208403,
+      "vol24": 158328.65,
+      "liq": 203164.85,
+      "chg24": 15.46,
       "pairs": 5,
       "dex": "pumpswap",
       "chain": "solana",
-      "at": "2026-11-16T08:12+00:00",
+      "at": "2026-11-16T09:10+00:00",
       "src": "DexScreener"
      }
     },
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 673,
+      "total24h": 684,
       "total7d": 4513,
       "total30d": 196200
      },
      "rev": {
-      "total24h": 404,
+      "total24h": 410,
       "total7d": 2772,
       "total30d": 119565
      },
      "hold": {
-      "total24h": 335,
+      "total24h": 340,
       "total7d": 2247,
       "total30d": 97942
      },
@@ -14232,32 +14235,32 @@
       "url": "https://dexscreener.com/solana/4mwjp1abqqe9y6ic5cd3nrvvwwchsn2lgpjwymdk7u7e"
      },
      "snap": {
-      "mcap": 299677,
-      "fdv": 299677,
-      "vol24": 12701.119999999999,
-      "liq": 48251.64,
-      "chg24": 18.01,
+      "mcap": 292684,
+      "fdv": 292684,
+      "vol24": 12261.77,
+      "liq": 47589.04,
+      "chg24": 14.46,
       "pairs": 3,
       "dex": "pumpswap",
       "chain": "solana",
-      "at": "2026-11-16T08:12+00:00",
+      "at": "2026-11-16T09:10+00:00",
       "src": "DexScreener"
      }
     },
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 197,
+      "total24h": 298,
       "total7d": 4009,
       "total30d": 118497.53
      },
      "rev": {
-      "total24h": 197,
+      "total24h": 298,
       "total7d": 4009,
       "total30d": 118497.53
      },
      "hold": {
-      "total24h": 391,
+      "total24h": 575,
       "total7d": 1352,
       "total30d": 24506
      },
@@ -14463,17 +14466,17 @@
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 6539,
+      "total24h": 6503,
       "total7d": 71226,
       "total30d": 122437
      },
      "rev": {
-      "total24h": 5372,
+      "total24h": 5346,
       "total7d": 58790,
       "total30d": 100926
      },
      "hold": {
-      "total24h": 4700,
+      "total24h": 4676,
       "total7d": 51082,
       "total30d": 87457
      },
