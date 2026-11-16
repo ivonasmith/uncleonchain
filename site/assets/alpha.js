@@ -454,8 +454,6 @@
   // 二级分类（11-16 大叔定）：来源类型、业务类型，可多选，默认全选；只过滤列表，KPI 仍按全量算
   const SRC_NAME = { tokenless: [T('无币收入榜', 'Tokenless'), 'Tokenless'], surge: [T('有币 · 收入新起量', 'Revenue ramp'), 'Revenue ramp'], listing: [T('新上架', 'New listing'), 'New listing'], manual: [T('手动线索', 'Manual'), 'Manual'], site: [T('本站板块', 'Site board'), 'Site board'] };
   let KSRC = null, KBIZ = null;
-  let QV = false; // 右侧是否显示待补证清单（先列表，下载在底部）
-  let TOPM = 'fresh'; // 顶部第四张卡：新发现 / 补证状态 二选一（11-16）
   const kindSet = () => KSRC || (KSRC = new Set(Object.keys(SRC_NAME)));
   const bizSet = () => KBIZ || (KBIZ = new Set(Object.keys(BIZ()).concat(['U'])));
   const passK = o => kindSet().has(o.kind) && bizSet().has(o.classes.business.v || 'U');
@@ -484,15 +482,6 @@
         <div class="krow"><span class="klab">${T('类型', 'Type')}</span>${Object.keys(BIZ()).concat(['U']).map(k => chip('biz', k, k === 'U' ? T('未判明', 'Unknown') : BIZ()[k], bizSet().has(k))).join('')}</div>
         ${(!srcAll || !bizAll) ? `<button type="button" class="kchip all" data-kf="all|all">${T('全选', 'Select all')}</button>` : ''}</div>
       ${groups.filter(g => g[1].length).map(([t, xs]) => `<div class="md-grp">${t}<span>${xs.length}</span></div>${xs.map(row).join('')}`).join('') || `<p class="muted small" style="padding:12px">${T('这一栏暂时没有。', 'Nothing here yet.')}</p>`}`;
-  }
-  function queueView() {
-    const os = OPPS.opps;
-    const todo = os.filter(o => o.bucket !== 'reject' && !DONE.includes(o.status)).filter(passK);
-    const ord = [...todo.filter(o => o.fresh), ...todo.filter(o => !o.fresh)];
-    return `<div class="card" style="padding:18px"><div class="kq-head"><b>${T('待补证清单', 'Research queue')}</b> <span class="muted small">${ord.length} ${T('个', 'items')}</span></div>
-      <p class="small muted" style="margin:6px 0 12px">${T('新发现排最前，然后按有没有补证、收入高低。点名字进详情。', 'New first, then by research status and revenue. Click a name for details.')}</p>
-      ${ord.map((o, i) => `<button type="button" class="kq-row" data-qid="${esc(o.id)}"><span class="kq-n">${i + 1}</span><span class="kq-nm">${esc(o.name)}</span><span class="kq-st">${o.fresh ? `<em>${T('新发现', 'new')}</em>` : ''}${esc(o.status || '')}</span></button>`).join('') || `<p class="muted small">${T('清单是空的。', 'Empty.')}</p>`}
-      <p class="small" style="margin-top:14px"><a href="/data/alpha/research_queue.json" download>${T('下载完整清单（JSON，含给 Codex 的提示词和交付格式）', 'Download full queue (JSON, with prompt and schema)')}</a></p></div>`;
   }
   function boardDetail(o) {
     if (!o) return `<div class="card" style="padding:24px" class="muted">${T('左边选一个机会。', 'Pick an opportunity on the left.')}</div>`;
@@ -562,18 +551,16 @@
         ${cardBF('invest', T('有参与入口', 'Has entry'), OPPS.counts.invest || 0, 't-up', tip(T('有资金参与的方式（买币、质押、交易赚积分等）。只说明「能参与」，不代表研究过、更不代表可以执行：研究状态看每张卡的标签（原始线索 → 待核验 → 研究观察）。', 'Capital can take part. Not a research verdict.')), T('有资金参与方式（不等于研究过）', 'capital can take part — not a verdict'))}
         ${cardBF('watch', T('预警观察', 'Watchlist'), OPPS.counts.watch || 0, '', tip(T('新东西，但暂时没有资金参与的入口（没币、没积分、没开放）。和「有参与入口」加起来 = 看板上全部机会（不含已拒绝）。', 'No capital entry yet. Together with Has entry = all cards (excluding rejected).')), T('新东西，暂时没有资金入口', 'no capital entry yet'))}
         ${cardBF('all', T('全部', 'All'), os.filter(o => o.bucket !== 'reject').length, '', '', `<span class="klink" data-bf="reject">${T('已拒绝', 'Rejected')} ${os.filter(o => o.bucket === 'reject').length}</span>`)}
-        <div class="glass hero ktop2"><div class="k">${TOPM === 'fresh' ? T('新发现 · 3 天内', 'New · 3 days') : T('补证状态', 'Research status')}<span class="ktoggle"><button type="button" class="${TOPM === 'fresh' ? 'on' : ''}" data-top="fresh">${T('新发现', 'New')}</button><button type="button" class="${TOPM === 'research' ? 'on' : ''}" data-top="research">${T('补证', 'Research')}</button></span>${TOPM === 'fresh' ? tip(T('3 天内新进看板的全部机会，不分栏、不分状态。', 'All cards added in the last 3 days, any column.')) : tip(T('研究观察 = 补证完、对象明确、没查到否决项；待核验 = 补过但关键事实还缺（写进文件不等于查证完成）；原始线索 = 还没补。分母 = 看板上全部机会（不含已拒绝）。每天按队列补：手动线索 / 本站板块 ★ → 新发现 → 有参与入口 → 收入高。', 'Under research / needs checking / raw lead. Denominator = all cards excluding rejected.'))}</div>
-          <div class="v">${TOPM === 'fresh' ? freshN : `${doneN}<span class="muted" style="font-size:15px"> / ${act.length}</span>`}</div>
-          <div class="s">${TOPM === 'fresh' ? T('不等补证，先放出来', 'shown before research') : T(`研究观察 ${doneN} · 待核验 ${act.filter(o => o.status === '待核验').length} · 未补证 ${act.filter(o => o.status === '原始线索').length}`, `${doneN} researched · ${act.filter(o => o.status === '待核验').length} checking · ${act.filter(o => o.status === '原始线索').length} raw`)}${TOPM === 'research' ? `<br><button type="button" class="kqueue" data-queue="1">${T('看待补证清单 →', 'Open the queue →')}</button>` : ''}</div></div>
+        <div class="glass hero"><div class="k">${T('新发现', 'New')}${tip(T('看板上当前全部机会（不含已拒绝），按补证状态拆成三段。新发现的数量在左侧列表的「新发现」分组里。', 'All active cards (excluding rejected), split by research status. New-discovery count is in the list group.'))}</div><div class="v">${act.length}</div><div class="s">${T(`研究观察${doneN} 待核验${act.filter(o => o.status === '待核验').length} 未补证${act.filter(o => o.status === '原始线索').length}`, `Researched ${doneN} · checking ${act.filter(o => o.status === '待核验').length} · raw ${act.filter(o => o.status === '原始线索').length}`)}</div></div>
       </div>
-      <div class="md"><aside class="md-list">${boardList()}</aside><section class="md-detail" id="ax-detail">${QV ? queueView() : boardDetail(os.find(o => o.id === SELID))}</section></div>
+      <div class="md"><aside class="md-list">${boardList()}</aside><section class="md-detail" id="ax-detail">${boardDetail(os.find(o => o.id === SELID))}</section></div>
       <p class="small muted" style="margin-top:12px">${T('数据日', 'Data day')} ${esc(OPPS.asof || '')} · ${T('框架', 'Framework')} ${esc(OPPS.framework)} · ${T('自动规则', 'Rules')} ${esc(OPPS.rules || '')} · <a href="${EN ? '/en' : ''}/alpha/framework/#auto">${T('打分规则', 'Scoring rules')}</a> · ${T('不按分数排名，不是买卖建议', 'no rankings, not trade advice')}</p>
       <details class="card ax-more"><summary>${T('待补证清单（每天自动生成）', 'Research queue (generated daily)')} <span class="muted small">${OPPS.queue_n == null ? '' : OPPS.queue_n + T(' 个', ' items')}</span></summary>
         <p class="small"><a href="/data/alpha/research_queue.json" download>${T('下载 JSON（含给 Codex 的提示词和交付格式）', 'Download JSON (with prompt and schema)')}</a></p>
         <p class="small muted">${T('每天的自动补证会话先补排在最前面的几个；想加快就把这个文件交给 Codex，交回的 <日期>_checks.json 放进 alpha/review/ 就会自动并入。', 'The daily session researches the top items; to go faster hand this file to Codex and drop the returned <date>_checks.json into alpha/review/.')}</p>
         <p class="small muted">${T('已拒绝的卡不删，左上「已拒绝」里能看到保留原因。', 'Rejected cards are kept with reasons under the Rejected filter.')}</p></details>`;
     const sel = (id, push) => {
-      SELID = id; QV = false;
+      SELID = id;
       app.querySelectorAll('.md-row').forEach(b => b.classList.toggle('on', b.dataset.id === id));
       const det = document.getElementById('ax-detail');
       det.innerHTML = boardDetail(os.find(o => o.id === id));
@@ -586,8 +573,6 @@
     app.onclick = e => {
       const f = e.target.closest('[data-bf]');
       if (f) { BF = f.dataset.bf; SELID = (list()[0] || {}).id; renderBoard(); return; }
-      const tp = e.target.closest('[data-top]');
-      if (tp) { TOPM = tp.dataset.top; renderBoard(); return; }
       const kf = e.target.closest('[data-kf]');
       if (kf) {
         const [grp, key] = kf.dataset.kf.split('|');
@@ -595,10 +580,6 @@
         else { const set = grp === 'src' ? kindSet() : bizSet(); set.has(key) ? set.delete(key) : set.add(key); }
         SELID = null; renderBoard(); return;
       }
-      const qb = e.target.closest('[data-queue]');
-      if (qb) { QV = true; renderBoard(); if (window.innerWidth < 900) window.scrollTo({ top: app.offsetTop - 60 }); return; }
-      const qr = e.target.closest('[data-qid]');
-      if (qr) { QV = false; sel(qr.dataset.qid); return; }
       const r = e.target.closest('.md-row');
       if (r) { sel(r.dataset.id); if (window.innerWidth < 900) window.scrollTo({ top: app.offsetTop - 60 }); return; }
       const n = e.target.closest('[data-nav]');
