@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""探测 OKX / Bitget 上币公告正文 + 历史 1 分钟 K 线（只读，不写数据）。在 Actions 上跑。"""
-import datetime as dt, json, re, sys, urllib.request
+"""探测 OKX / Bitget 上币：开盘时间正则、历史 1 分钟 K 线可回溯多久、Bitget 翻页（只读，不写数据）。Actions 上跑。"""
+import datetime as dt, json, re, sys, time, urllib.request
 
 UA = {"User-Agent": "Mozilla/5.0", "Accept-Language": "en-US"}
 
@@ -23,59 +23,62 @@ def text_of(html):
     return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", t))
 
 
-def body_after_title(html, n=900):
-    m = re.search(r"<title>(.*?)</title>", html, re.S | re.I)
-    title = (m.group(1).split("|")[0].strip() if m else "")
-    t = text_of(html)
-    idx = [x.start() for x in re.finditer(re.escape(title), t)] if title else []
-    start = idx[1] if len(idx) > 1 else (idx[0] if idx else 0)
-    return t[start:start + n]
-
-
-def okx_time(txt):
-    m = re.search(r"([A-Z][a-z]{2} \d{1,2}, \d{4} \d{1,2}:\d{2}) ?UTC", txt)
-    return int(dt.datetime.strptime(m.group(1), "%b %d, %Y %H:%M").replace(tzinfo=dt.timezone.utc).timestamp() * 1000) if m else None
+def okx_open(txt):
+    """→ [(base, quote, open_ms)]"""
+    out = []
+    P = r"([A-Z0-9]{1,15}) ?/ ?(USDT|USDC|USD|EUR|BTC)"
+    for m in re.finditer(P + r" (?:spot )?trading (?:will )?open(?:s)? at (?:([A-Z][a-z]{2,8} \d{1,2}, \d{4}) (\d{1,2}:\d{2})|(\d{1,2}:\d{2}) UTC on ([A-Z][a-z]{2,8} \d{1,2}, \d{4}))", txt):
+        d, t = (m.group(3), m.group(4)) if m.group(3) else (m.group(6), m.group(5))
+        fmt = "%b %d, %Y %H:%M" if len(d.split()[0]) <= 3 else "%B %d, %Y %H:%M"
+        out.append((m.group(1), m.group(2), int(dt.datetime.strptime(f"{d} {t}", fmt).replace(tzinfo=dt.timezone.utc).timestamp() * 1000)))
+    for m in re.finditer(P + r"[^.]*? in our spot trading at ([A-Z][a-z]{2} \d{1,2}, \d{4} \d{1,2}:\d{2}) ?UTC", txt):
+        out.append((m.group(1), m.group(2), int(dt.datetime.strptime(m.group(3), "%b %d, %Y %H:%M").replace(tzinfo=dt.timezone.utc).timestamp() * 1000)))
+    return out
 
 
 def main():
     d = json.load(open("data/alpha/exch_announce.json", encoding="utf-8"))
-    okx = [v for v in d["items"].values() if v["exchange"] == "OKX"]
-    # --- OKX：各种标题模板各取 1 条，打印正文并试 K 线
-    seen_tpl = set()
-    for v in okx:
-        tpl = re.sub(r"[A-Z0-9]{2,}", "X", v["title"])[:60]
-        if tpl in seen_tpl or len(seen_tpl) >= 5:
-            continue
-        seen_tpl.add(tpl)
+    okx = [v for v in d["items"].values() if v["exchange"] == "OKX" and v["kind"] == "spot"]
+    for v in okx[:10]:
         try:
-            body = body_after_title(get(v["url"]))
+            txt = text_of(get(v["url"]))
         except Exception as e:
-            print("OKX 取页失败", v["url"], str(e)[:100]); continue
-        print("OKX ·", v["title"], "· pTime", v["announce_utc"], "\n   ", body[:700].split("OKX team")[0])
-        t = okx_time(body)
-        m = re.search(r"\b([A-Z0-9]{2,15}) ?/ ?(USDT|USD)\b", v["title"] + " " + body)
-        if t and m and m.group(2) == "USDT":
-            inst = f"{m.group(1)}-USDT"
-            j = jget(f"https://www.okx.com/api/v5/market/history-candles?instId={inst}&bar=1m&before={t-1}&after={t+100*60000}&limit=100")
+            print("OKX 取页失败", v["url"], str(e)[:80]); continue
+        ev = okx_open(txt)
+        print("OKX ·", v["title"][:70], "· 公告", v["announce_utc"], "→ 开盘", [(b, q, dt.datetime.fromtimestamp(t / 1000, dt.timezone.utc).strftime("%m-%d %H:%M")) for b, q, t in ev])
+        for b, q, t in ev:
+            if q != "USDT":
+                continue
+            j = jget(f"https://www.okx.com/api/v5/market/history-candles?instId={b}-USDT&bar=1m&before={t-1}&after={t+100*60000}&limit=100")
             rows = j.get("data") or []
-            print(f"   → {inst} 开盘 {dt.datetime.fromtimestamp(t/1000, dt.timezone.utc):%Y-%m-%d %H:%M} UTC · history-candles code={j.get('code')} msg={j.get('msg') or j.get('error')} 条数={len(rows)}",
-                  "首根", rows[-1][:6] if rows else None)
-    # --- Bitget：翻页 + 子类型 + 现货上币样本
+            print(f"     {b}-USDT code={j.get('code')} msg={j.get('msg') or j.get('error')} 条数={len(rows)}",
+                  "首根", (dt.datetime.fromtimestamp(int(rows[-1][0]) / 1000, dt.timezone.utc).strftime("%H:%M"), rows[-1][1:5]) if rows else None)
+    # OKX 1 分钟历史回溯深度：BTC-USDT 在 N 天前
+    now = int(time.time() * 1000)
+    for days in (30, 60, 90, 120, 150, 200):
+        t = now - days * 86400000
+        j = jget(f"https://www.okx.com/api/v5/market/history-candles?instId=BTC-USDT&bar=1m&before={t-1}&after={t+30*60000}&limit=100")
+        print(f"OKX 1m 回溯 {days} 天前: 条数={len(j.get('data') or [])} code={j.get('code')}")
+    # Bitget：翻页参数
     base = "https://api.bitget.com/api/v2/public/annoucements?annType=coin_listings&language=en_US"
-    j = jget(base + "&limit=100")
+    for lim in (10, 20, 50, 100):
+        j = jget(base + f"&limit={lim}")
+        print(f"Bitget limit={lim}: code={j.get('code')} msg={j.get('msg') or j.get('error')} 条数={len(j.get('data') or [])}")
+    j = jget(base + "&limit=10")
     rows = j.get("data") or []
-    print("Bitget limit=100 条数", len(rows), "子类型", {s: sum(1 for r in rows if r.get("annSubType") == s) for s in {r.get("annSubType") for r in rows}})
     if rows:
-        j2 = jget(base + f"&limit=100&cursor={rows[-1]['annId']}")
-        r2 = j2.get("data") or []
-        print("Bitget cursor 翻页 条数", len(r2), j2.get("msg") or j2.get("error"), "首条", (r2[0]["annTitle"], r2[0]["cTime"]) if r2 else None)
-    spot = [r for r in rows if re.search(r"\bspot\b|will list|to list", r.get("annTitle", ""), re.I) and "copy" not in r.get("annTitle", "").lower()]
-    print("Bitget 疑似现货上币标题:", [(r["annSubType"], r["annTitle"][:80]) for r in spot[:8]])
-    for r in spot[:1]:
-        try:
-            print("Bitget 正文 ·", r["annTitle"], "\n   ", body_after_title(get(r["annUrl"]), 1400))
-        except Exception as e:
-            print("Bitget 取页失败", str(e)[:100])
+        for pname in ("cursor", "beforeId", "pageNo"):
+            val = rows[-1]["annId"] if pname != "pageNo" else 2
+            j2 = jget(base + f"&limit=10&{pname}={val}")
+            r2 = j2.get("data") or []
+            print(f"Bitget {pname}: 条数={len(r2)} msg={j2.get('msg') or j2.get('error')} 首条", (r2[0]["annId"], r2[0]["annSubType"], r2[0]["annTitle"][:60]) if r2 else None)
+        print("Bitget 第一页 annId 范围", rows[0]["annId"], rows[-1]["annId"])
+    # Bitget 其它 annType 中是否有现货上币
+    for t in ("coin_listings", "latest_news", "product_updates"):
+        j = jget(f"https://api.bitget.com/api/v2/public/annoucements?annType={t}&language=en_US")
+        rs = j.get("data") or []
+        print(f"Bitget annType={t}: 条数={len(rs)} 子类型={sorted({r.get('annSubType') for r in rs})} 含spot标题:",
+              [r["annTitle"][:70] for r in rs if re.search(r"\blist(s|ing)?\b", r["annTitle"], re.I) and "copy" not in r["annTitle"].lower() and "perpetual" not in r["annTitle"].lower()][:4])
 
 
 if __name__ == "__main__":
