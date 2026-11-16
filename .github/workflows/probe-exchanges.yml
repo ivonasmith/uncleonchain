@@ -1,0 +1,13 @@
+name: 探测交易所公告源（手动）
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: 探测
+        run: python3 tools/probe/exchange_sources.py
