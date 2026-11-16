@@ -729,6 +729,17 @@
    "assets": [
     "DEBIT"
    ]
+  },
+  "Bitget:12560603900704": {
+   "exchange": "Bitget",
+   "via": "bitget",
+   "title": "Bitget spot copy trading now supports 2 trading pairs",
+   "url": "https://www.bitget.com/en/support/articles/12560603900704",
+   "announce_utc": "2026-11-16T17:36:00Z",
+   "first_seen_utc": "2026-11-16T18:08:14Z",
+   "baseline": false,
+   "kind": "other",
+   "assets": []
   }
  },
  "sources": {
@@ -749,7 +760,7 @@
    "page": "https://www.okx.com/help/section/announcements-new-listings",
    "x_handle": "待核实",
    "note": "官网接口通（/api/v5/support/announcements）",
-   "last_ok_utc": "2026-11-16T17:11:08Z",
+   "last_ok_utc": "2026-11-16T18:08:14Z",
    "n_total": 40,
    "err": null
   },
@@ -760,8 +771,8 @@
    "page": "https://www.bitget.com/support/categories/11865590960081",
    "x_handle": "待核实",
    "note": "官网接口通（/api/v2/public/annoucements）",
-   "last_ok_utc": "2026-11-16T17:11:08Z",
-   "n_total": 10,
+   "last_ok_utc": "2026-11-16T18:08:14Z",
+   "n_total": 11,
    "err": null
   },
   "Kraken": {
@@ -771,7 +782,7 @@
    "page": "https://blog.kraken.com/category/product/asset-listings",
    "x_handle": "待核实",
    "note": "博客 RSS 通",
-   "last_ok_utc": "2026-11-16T17:11:08Z",
+   "last_ok_utc": "2026-11-16T18:08:14Z",
    "n_total": 10,
    "err": null
   },
@@ -846,6 +857,6 @@
    "n_total": 0
   }
  },
- "generated": "2026-11-16T17:11:08Z",
+ "generated": "2026-11-16T18:08:14Z",
  "note": "公告时间原样记录；计划开盘 / 首笔成交 / 窗口目前只有 Binance（alpha/listings.py）"
 }
