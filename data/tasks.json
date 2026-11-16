@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-16T04:16:24+00:00",
+ "generated": "2026-11-16T04:24:01+00:00",
  "boards": [
   {
    "board": "alpha",
@@ -735,12 +735,12 @@
      "name": "Graphite Protocol"
     },
     {
-     "slug": "binance-alpha",
-     "name": "Binance Alpha"
-    },
-    {
      "slug": "meteora-dynamic-bonding-curve",
      "name": "Meteora Dynamic Bonding Curve"
+    },
+    {
+     "slug": "binance-alpha",
+     "name": "Binance Alpha"
     },
     {
      "slug": "volta",
@@ -759,16 +759,16 @@
      "name": "Bags"
     },
     {
+     "slug": "pons-v1",
+     "name": "Pons V1"
+    },
+    {
      "slug": "four.meme",
      "name": "four.meme"
     },
     {
      "slug": "otc",
      "name": "OTC"
-    },
-    {
-     "slug": "pons-v1",
-     "name": "Pons V1"
     },
     {
      "slug": "noxa-fun",
@@ -783,12 +783,12 @@
      "name": "ElysPump V2"
     },
     {
-     "slug": "pools",
-     "name": "Pools"
-    },
-    {
      "slug": "rise.rich",
      "name": "Rise.rich"
+    },
+    {
+     "slug": "pools",
+     "name": "Pools"
     },
     {
      "slug": "metaplex",
@@ -1125,31 +1125,6 @@
    "priority": 1,
    "task_type": "research",
    "name": "Nullmask",
-   "missing": [
-    "M",
-    "A",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM",
-    "TE"
-   ],
-   "source_refs": [
-    "data/alpha/research_queue.json"
-   ],
-   "status": "open",
-   "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-16_checks.json"
-  },
-  {
-   "key": "alpha:s:7966",
-   "board": "alpha",
-   "priority": 1,
-   "task_type": "research",
-   "name": "Render Network BME",
    "missing": [
     "M",
     "A",
@@ -1600,11 +1575,11 @@
    "deliver": "alpha/review/codex_2026-11-16_checks.json"
   },
   {
-   "key": "alpha:g:7010",
+   "key": "alpha:g:parent#azverse",
    "board": "alpha",
    "priority": 2,
    "task_type": "evidence",
-   "name": "trade[XYZ]",
+   "name": "Azverse",
    "missing": [
     "M",
     "F",
@@ -1627,11 +1602,11 @@
    "deliver": "alpha/review/codex_2026-11-16_checks.json"
   },
   {
-   "key": "alpha:g:parent#azverse",
+   "key": "alpha:g:7010",
    "board": "alpha",
    "priority": 2,
    "task_type": "evidence",
-   "name": "Azverse",
+   "name": "trade[XYZ]",
    "missing": [
     "M",
     "F",
