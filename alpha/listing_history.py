@@ -12,7 +12,8 @@
      第一笔开盘价只作上限读数。开盘时刻 = 上币当天第一根 1 分钟 K 线。回报 = 第 7 / 30 / 90 天日线收盘相对起点；
      90 天内最高点涨幅和出现在第几天；BTC 同期涨跌和超额。
   5. 分组：上币日处在哪条 BTC 涨 / 跌腿、牛 / 熊阶段（data/leg/leg_history.json，事后划分：腿的起止是走完才确认的）；
-     另给「当时已确认的腿」（confirm_date ≤ 上币日的最近一条，交易时实际能知道的）；L2 状态（data/l2/l2_series.json）；年份。
+     另给「当时已确认的腿」（confirm_date ≤ 上币日的最近一条，交易时实际能知道的）；L2 状态（data/l2/l2_series.json，状态机有确认滞后，比如 2021-05 大跌后到 11 月才翻回牛市）；年份。
+     90 天最高点按日收盘价取（不用日内最高价，避开冷门交易对的插针），不含上币当天。
 剔除：杠杆代币（UP / DOWN / BULL / BEAR）、稳定币、法币、2026-06-11 起 B 结尾的代币化股票（项目规则）、交易所开张头两周的首批币。
 已知偏差：改名 / 迁移（如 MATIC→POL）会被当成新币（标 rename_suspect，待名单剔除）；首日 K 线可能不满 24 小时。
 输出 data/alpha/listing_history_binance.json（逐币）+ listing_regime_stats.json（分组统计）。缓存 data/alpha/cache_listing_first.json。
@@ -264,7 +265,8 @@ def main():
         cand = [(cache.get(s), s, q) for s, q in pairs if cache.get(s)]
         if not cand:
             continue
-        t0, sym, q = min(cand, key=lambda x: (x[0], x[2] not in USDQ))   # 同一天优先美元计价的对
+        QP = ("USDT", "BUSD", "USDC", "FDUSD", "TUSD", "BTC", "BNB", "ETH")
+        t0, sym, q = min(cand, key=lambda x: (x[0], QP.index(x[2])))   # 同一天按 USDT → BUSD → USDC → FDUSD → TUSD → BTC → BNB → ETH 选
         d0 = day(t0)
         row = {"asset": b, "pair": sym, "quote": q, "listed": d0, "pairs": len(pairs)}
         if d0 <= LAUNCH_END:
@@ -302,8 +304,8 @@ def main():
                                 row[f"x{w}"] = round(row[f"r{w}"] - row[f"btc{w}"], 4)
                     win = usd[1:91]   # 不含上币当天：当天日线最高价含开盘尖峰，15 分钟后的当天高点只有日线算不出，先不计
                     if win:
-                        hi = max(win, key=lambda u: u[1])
-                        row["peak90"] = round(hi[1] / ref - 1, 4)
+                        hi = max(win, key=lambda u: u[2])   # 按日收盘取最高（冷门交易对的单根插针不算）
+                        row["peak90"] = round(hi[2] / ref - 1, 4)
                         row["peak90_day"] = usd.index(hi)
                 else:
                     row["excluded"] = "取不到第 15 分钟价格"
