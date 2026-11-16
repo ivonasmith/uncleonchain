@@ -27,6 +27,10 @@
 
 交易所：Binance、Bybit、OKX、Coinbase、Upbit、Bithumb、Kraken、Gate、MEXC、Bitget。
 
+**第三方聚合源也要评估**（文档附录三 C 写明：聚合源只做发现，事实要回查官方）。候选：Tokenearly（文档里点名的）、Listing Radar（Apify）、Exchange Listing Monitor（Apify）、Sharpe.ai 的 New Listings API、CryptoListingWS、Oanor 的 Binance 公告接口（非官方包装，要核对）。
+每个聚合源另外写：覆盖的所；能否给出计划开盘时间、交易对、报价币、现货 / 永续；能否取到历史公告（回溯到 12 个月前，用来补 X4）；价格与条款（是否允许我们存档和再分发）；延迟；是否有读取接口（很多只有推送）。价格只记官方页面写的数字，不做估算。
+Telegram 频道（t.me/s/...）和机器人：只评估，不作为主来源。频道的网页预览要在 Actions 里验证能否访问，条款要核对；机器人多为付费服务。
+
 每家一条：
 ```json
 {"exchange": "Binance", "list_endpoint": "URL", "fields_present": {"announce_time": true, "planned_open": true, "revision_time": false, "spot_or_perp": true, "pair": true, "quote": true}, "needs_key": false, "region_blocked": "U", "sample": [{"title": "", "url": "", "announce_utc": "", "planned_open_utc": ""}], "http_status": 200, "checked_utc": "", "verdict": "可接|需key|需换源|不可接", "notes": ""}
