@@ -16,7 +16,7 @@
    "baseline": true,
    "w": null,
    "primary": true,
-   "tries": 4
+   "tries": 5
   },
   "bn:289715:TRXUSDC": {
    "exchange": "Binance",
@@ -34,7 +34,7 @@
    "baseline": true,
    "w": null,
    "primary": true,
-   "tries": 4
+   "tries": 5
   },
   "bn:288627:PREDICTUSDT": {
    "exchange": "Binance",
@@ -52,7 +52,7 @@
    "baseline": true,
    "w": null,
    "primary": true,
-   "tries": 4
+   "tries": 5
   },
   "bn:288627:PREDICTUSDC": {
    "exchange": "Binance",
@@ -4687,6 +4687,686 @@
    "w": null,
    "primary": true,
    "tries": 3
+  },
+  "okx:okx-will-launch-grvt-usd-for-spot-trading:GRVTUSD": {
+   "exchange": "OKX",
+   "asset": "GRVT",
+   "pair": "GRVTUSD",
+   "quote": "USD",
+   "market": "现货",
+   "premarket": false,
+   "title": "OKX will launch GRVT/USD for spot trading",
+   "url": "https://www.okx.com/en-us/help/okx-will-launch-grvt-usd-for-spot-trading",
+   "announce_utc": "2026-07-30T03:00:09Z",
+   "revision_utc": null,
+   "planned_open_utc": "2026-07-30T15:00:00Z",
+   "first_seen_utc": "2026-11-16T15:47:28Z",
+   "baseline": true,
+   "venue": "okx_us",
+   "w": null,
+   "inst": "GRVT-USD",
+   "primary": false,
+   "w_note": "OKX US 的 USD 交易对：全球站公开 K 线接口没有这个交易对，窗口不算"
+  },
+  "okx:okx-will-launch-aeon-usd-for-spot-trading:AEONUSD": {
+   "exchange": "OKX",
+   "asset": "AEON",
+   "pair": "AEONUSD",
+   "quote": "USD",
+   "market": "现货",
+   "premarket": false,
+   "title": "OKX will launch AEON/USD for spot trading",
+   "url": "https://www.okx.com/en-us/help/okx-will-launch-aeon-usd-for-spot-trading",
+   "announce_utc": "2026-07-27T03:00:10Z",
+   "revision_utc": null,
+   "planned_open_utc": "2026-07-27T12:00:00Z",
+   "first_seen_utc": "2026-11-16T15:47:28Z",
+   "baseline": true,
+   "venue": "okx_us",
+   "w": null,
+   "inst": "AEON-USD",
+   "primary": false,
+   "w_note": "OKX US 的 USD 交易对：全球站公开 K 线接口没有这个交易对，窗口不算"
+  },
+  "okx:okx-will-launch-cards-usd-for-spot-trading:CARDSUSD": {
+   "exchange": "OKX",
+   "asset": "CARDS",
+   "pair": "CARDSUSD",
+   "quote": "USD",
+   "market": "现货",
+   "premarket": false,
+   "title": "OKX will launch CARDS/USD for spot trading",
+   "url": "https://www.okx.com/en-us/help/okx-will-launch-cards-usd-for-spot-trading",
+   "announce_utc": "2026-06-25T02:00:09Z",
+   "revision_utc": null,
+   "planned_open_utc": "2026-06-25T13:00:00Z",
+   "first_seen_utc": "2026-11-16T15:47:28Z",
+   "baseline": true,
+   "venue": "okx_us",
+   "w": null,
+   "inst": "CARDS-USD",
+   "primary": false,
+   "w_note": "OKX US 的 USD 交易对：全球站公开 K 线接口没有这个交易对，窗口不算"
+  },
+  "okx:okx-to-list-cards-usdt-collector-crypt-for-spot-trading:CARDSUSDT": {
+   "exchange": "OKX",
+   "asset": "CARDS",
+   "pair": "CARDSUSDT",
+   "quote": "USDT",
+   "market": "现货",
+   "premarket": false,
+   "title": "OKX to list CARDS/USDT (Collector Crypt) for spot trading",
+   "url": "https://www.okx.com/en-us/help/okx-to-list-cards-usdt-collector-crypt-for-spot-trading",
+   "announce_utc": "2026-06-25T02:00:06Z",
+   "revision_utc": null,
+   "planned_open_utc": "2026-06-25T12:00:00Z",
+   "first_seen_utc": "2026-11-16T15:47:28Z",
+   "baseline": true,
+   "venue": "okx",
+   "w": {
+    "ref_price": 0.2744,
+    "first_trade_utc": "2026-06-25T12:00:00Z",
+    "first_trade_basis": "第一根 1 分钟 K 线的开盘时刻",
+    "m30": 0.1578,
+    "h1": 0.2638,
+    "h4": 0.0324,
+    "h24": -0.1122,
+    "high24": 0.2974,
+    "high24_min": 58,
+    "low24": -0.1396,
+    "low24_min": 1425,
+    "quote_vol24": 9070327,
+    "complete": true,
+    "lag_min": 0
+   },
+   "inst": "CARDS-USDT",
+   "primary": true,
+   "w_note": null,
+   "tries": 1
+  },
+  "okx:okx-will-launch-re-usd-for-spot-trading:REUSD": {
+   "exchange": "OKX",
+   "asset": "RE",
+   "pair": "REUSD",
+   "quote": "USD",
+   "market": "现货",
+   "premarket": false,
+   "title": "OKX will launch RE/USD for spot trading",
+   "url": "https://www.okx.com/en-us/help/okx-will-launch-re-usd-for-spot-trading",
+   "announce_utc": "2026-06-18T02:00:10Z",
+   "revision_utc": null,
+   "planned_open_utc": "2026-06-18T15:00:00Z",
+   "first_seen_utc": "2026-11-16T15:47:28Z",
+   "baseline": true,
+   "venue": "okx_us",
+   "w": null,
+   "inst": "RE-USD",
+   "primary": false,
+   "w_note": "OKX US 的 USD 交易对：全球站公开 K 线接口没有这个交易对，窗口不算"
+  },
+  "okx:okx-to-list-re-re-for-spot-trading-and-convert-pre-market-futures-to-standard-perpetual-futures:REUSDT": {
+   "exchange": "OKX",
+   "asset": "RE",
+   "pair": "REUSDT",
+   "quote": "USDT",
+   "market": "现货",
+   "premarket": false,
+   "title": "OKX to list RE (Re) for spot trading and convert pre-market futures to standard perpetual futures",
+   "url": "https://www.okx.com/en-us/help/okx-to-list-re-re-for-spot-trading-and-convert-pre-market-futures-to-standard-perpetual-futures",
+   "announce_utc": "2026-06-18T02:00:10Z",
+   "revision_utc": null,
+   "planned_open_utc": "2026-06-18T14:00:00Z",
+   "first_seen_utc": "2026-11-16T15:47:28Z",
+   "baseline": true,
+   "venue": "okx",
+   "w": {
+    "ref_price": 0.4,
+    "first_trade_utc": "2026-06-18T14:00:00Z",
+    "first_trade_basis": "第一根 1 分钟 K 线的开盘时刻",
+    "m30": 0.1058,
+    "h1": 0.407,
+    "h4": 0.2399,
+    "h24": 0.8846,
+    "high24": 1.19,
+    "high24_min": 1346,
+    "low24": -0.05,
+    "low24_min": 3,
+    "quote_vol24": 19859712,
+    "complete": true,
+    "lag_min": 0
+   },
+   "inst": "RE-USDT",
+   "primary": true,
+   "w_note": null,
+   "tries": 1
+  },
+  "okx:okx-completed-ton-token-migration:GRAMUSDT": {
+   "exchange": "OKX",
+   "asset": "GRAM",
+   "pair": "GRAMUSDT",
+   "quote": "USDT",
+   "market": "现货",
+   "premarket": false,
+   "title": "OKX completed TON token migration",
+   "url": "https://www.okx.com/en-us/help/okx-completed-ton-token-migration",
+   "announce_utc": "2026-06-17T07:30:05Z",
+   "revision_utc": null,
+   "planned_open_utc": "2026-06-17T10:00:00Z",
+   "first_seen_utc": "2026-11-16T15:47:28Z",
+   "baseline": true,
+   "venue": "okx",
+   "w": {
+    "ref_price": 1.631,
+    "first_trade_utc": "2026-06-17T10:00:00Z",
+    "first_trade_basis": "第一根 1 分钟 K 线的开盘时刻",
+    "m30": 0.0074,
+    "h1": 0.0092,
+    "h4": 0.0123,
+    "h24": 0.0184,
+    "high24": 0.0362,
+    "high24_min": 1031,
+    "low24": -0.019,
+    "low24_min": 617,
+    "quote_vol24": 4146948,
+    "complete": true,
+    "lag_min": 0
+   },
+   "inst": "GRAM-USDT",
+   "primary": true,
+   "w_note": null,
+   "tries": 1
+  },
+  "okx:okx-will-launch-gram-usd-for-spot-trading:GRAMUSD": {
+   "exchange": "OKX",
+   "asset": "GRAM",
+   "pair": "GRAMUSD",
+   "quote": "USD",
+   "market": "现货",
+   "premarket": false,
+   "title": "OKX will launch GRAM/USD for spot trading",
+   "url": "https://www.okx.com/en-us/help/okx-will-launch-gram-usd-for-spot-trading",
+   "announce_utc": "2026-06-17T07:30:05Z",
+   "revision_utc": null,
+   "planned_open_utc": "2026-06-17T11:00:00Z",
+   "first_seen_utc": "2026-11-16T15:47:28Z",
+   "baseline": true,
+   "venue": "okx_us",
+   "w": null,
+   "inst": "GRAM-USD",
+   "primary": false,
+   "w_note": "OKX US 的 USD 交易对：全球站公开 K 线接口没有这个交易对，窗口不算"
+  },
+  "okx:okx-to-list-irys-usdt-irys-for-spot-trading:IRYSUSDT": {
+   "exchange": "OKX",
+   "asset": "IRYS",
+   "pair": "IRYSUSDT",
+   "quote": "USDT",
+   "market": "现货",
+   "premarket": false,
+   "title": "OKX to list IRYS/USDT (Irys) for spot trading",
+   "url": "https://www.okx.com/en-us/help/okx-to-list-irys-usdt-irys-for-spot-trading",
+   "announce_utc": "2026-05-27T05:00:13Z",
+   "revision_utc": null,
+   "planned_open_utc": "2026-05-27T10:00:00Z",
+   "first_seen_utc": "2026-11-16T15:47:28Z",
+   "baseline": true,
+   "venue": "okx",
+   "w": {
+    "ref_price": 0.02925,
+    "first_trade_utc": "2026-05-27T10:00:00Z",
+    "first_trade_basis": "第一根 1 分钟 K 线的开盘时刻",
+    "m30": -0.0427,
+    "h1": -0.0479,
+    "h4": -0.0253,
+    "h24": -0.1398,
+    "high24": 0.0253,
+    "high24_min": 0,
+    "low24": -0.1744,
+    "low24_min": 1106,
+    "quote_vol24": 8478380,
+    "complete": true,
+    "lag_min": 0
+   },
+   "inst": "IRYS-USDT",
+   "primary": true,
+   "w_note": null,
+   "tries": 1
+  },
+  "okx:okx-will-launch-irys-usd-for-spot-trading:IRYSUSD": {
+   "exchange": "OKX",
+   "asset": "IRYS",
+   "pair": "IRYSUSD",
+   "quote": "USD",
+   "market": "现货",
+   "premarket": false,
+   "title": "OKX will launch IRYS/USD for spot trading",
+   "url": "https://www.okx.com/en-us/help/okx-will-launch-irys-usd-for-spot-trading",
+   "announce_utc": "2026-05-26T14:15:18Z",
+   "revision_utc": null,
+   "planned_open_utc": "2026-05-27T11:00:00Z",
+   "first_seen_utc": "2026-11-16T15:47:28Z",
+   "baseline": true,
+   "venue": "okx_us",
+   "w": null,
+   "inst": "IRYS-USD",
+   "primary": false,
+   "w_note": "OKX US 的 USD 交易对：全球站公开 K 线接口没有这个交易对，窗口不算"
+  },
+  "okx:okx-to-list-ai-usdt-gensyn-for-spot-trading:AIUSDT": {
+   "exchange": "OKX",
+   "asset": "AI",
+   "pair": "AIUSDT",
+   "quote": "USDT",
+   "market": "现货",
+   "premarket": false,
+   "title": "OKX to list AI/USDT (Gensyn) for spot trading",
+   "url": "https://www.okx.com/en-us/help/okx-to-list-ai-usdt-gensyn-for-spot-trading",
+   "announce_utc": "2026-05-22T07:30:09Z",
+   "revision_utc": null,
+   "planned_open_utc": "2026-05-22T10:00:00Z",
+   "first_seen_utc": "2026-11-16T15:47:28Z",
+   "baseline": true,
+   "venue": "okx",
+   "w": {
+    "ref_price": 0.03315,
+    "first_trade_utc": "2026-05-22T10:00:00Z",
+    "first_trade_basis": "第一根 1 分钟 K 线的开盘时刻",
+    "m30": 0.0097,
+    "h1": 0.0097,
+    "h4": -0.0302,
+    "h24": 0.009,
+    "high24": 0.0845,
+    "high24_min": 1155,
+    "low24": -0.0721,
+    "low24_min": 580,
+    "quote_vol24": 20356971,
+    "complete": true,
+    "lag_min": 0
+   },
+   "inst": "AI-USDT",
+   "primary": true,
+   "w_note": null,
+   "tries": 1
+  },
+  "okx:okx-will-launch-ai-usd-for-spot-trading:AIUSD": {
+   "exchange": "OKX",
+   "asset": "AI",
+   "pair": "AIUSD",
+   "quote": "USD",
+   "market": "现货",
+   "premarket": false,
+   "title": "OKX will launch AI/USD for spot trading",
+   "url": "https://www.okx.com/en-us/help/okx-will-launch-ai-usd-for-spot-trading",
+   "announce_utc": "2026-05-22T07:30:09Z",
+   "revision_utc": null,
+   "planned_open_utc": "2026-05-22T11:00:00Z",
+   "first_seen_utc": "2026-11-16T15:47:28Z",
+   "baseline": true,
+   "venue": "okx_us",
+   "w": null,
+   "inst": "AI-USD",
+   "primary": false,
+   "w_note": "OKX US 的 USD 交易对：全球站公开 K 线接口没有这个交易对，窗口不算"
+  },
+  "okx:okx-to-list-pros-usdt-pharos-for-spot-trading:PROSUSDT": {
+   "exchange": "OKX",
+   "asset": "PROS",
+   "pair": "PROSUSDT",
+   "quote": "USDT",
+   "market": "现货",
+   "premarket": false,
+   "title": "OKX to list PROS/USDT (Pharos) for spot trading",
+   "url": "https://www.okx.com/en-us/help/okx-to-list-pros-usdt-pharos-for-spot-trading",
+   "announce_utc": "2026-05-13T04:00:10Z",
+   "revision_utc": null,
+   "planned_open_utc": "2026-05-13T10:00:00Z",
+   "first_seen_utc": "2026-11-16T15:47:28Z",
+   "baseline": true,
+   "venue": "okx",
+   "w": {
+    "ref_price": 0.806,
+    "first_trade_utc": "2026-05-13T10:00:00Z",
+    "first_trade_basis": "第一根 1 分钟 K 线的开盘时刻",
+    "m30": 0.0107,
+    "h1": -0.0314,
+    "h4": -0.0797,
+    "h24": -0.0881,
+    "high24": 0.0146,
+    "high24_min": 14,
+    "low24": -0.1702,
+    "low24_min": 360,
+    "quote_vol24": 4695019,
+    "complete": true,
+    "lag_min": 0
+   },
+   "inst": "PROS-USDT",
+   "primary": true,
+   "w_note": null,
+   "tries": 1
+  },
+  "okx:okx-to-list-edge-edgex-for-spot-trading:EDGEUSDT": {
+   "exchange": "OKX",
+   "asset": "EDGE",
+   "pair": "EDGEUSDT",
+   "quote": "USDT",
+   "market": "现货",
+   "premarket": false,
+   "title": "OKX to list EDGE/USDT (edgeX) for spot trading",
+   "url": "https://www.okx.com/en-us/help/okx-to-list-edge-edgex-for-spot-trading",
+   "announce_utc": "2026-05-06T05:00:16Z",
+   "revision_utc": null,
+   "planned_open_utc": "2026-05-06T11:00:00Z",
+   "first_seen_utc": "2026-11-16T15:47:28Z",
+   "baseline": true,
+   "venue": "okx",
+   "w": {
+    "ref_price": 1.3634,
+    "first_trade_utc": "2026-05-06T11:00:00Z",
+    "first_trade_basis": "第一根 1 分钟 K 线的开盘时刻",
+    "m30": -0.012,
+    "h1": -0.0133,
+    "h4": -0.0252,
+    "h24": -0.0201,
+    "high24": 0.0711,
+    "high24_min": 892,
+    "low24": -0.0396,
+    "low24_min": 1066,
+    "quote_vol24": 2401540,
+    "complete": true,
+    "lag_min": 0
+   },
+   "inst": "EDGE-USDT",
+   "primary": true,
+   "w_note": null,
+   "tries": 1
+  },
+  "okx:okx-to-list-mega-megaeth-for-spot-trading:MEGAUSDT": {
+   "exchange": "OKX",
+   "asset": "MEGA",
+   "pair": "MEGAUSDT",
+   "quote": "USDT",
+   "market": "现货",
+   "premarket": false,
+   "title": "OKX to list MEGA (MegaETH) for spot trading",
+   "url": "https://www.okx.com/en-us/help/okx-to-list-mega-megaeth-for-spot-trading",
+   "announce_utc": "2026-04-30T10:15:08Z",
+   "revision_utc": null,
+   "planned_open_utc": "2026-04-30T11:00:00Z",
+   "first_seen_utc": "2026-11-16T15:47:28Z",
+   "baseline": true,
+   "venue": "okx",
+   "w": {
+    "ref_price": 0.15,
+    "first_trade_utc": "2026-04-30T11:00:00Z",
+    "first_trade_basis": "第一根 1 分钟 K 线的开盘时刻",
+    "m30": 0.0833,
+    "h1": 0.136,
+    "h4": 0.1187,
+    "h24": 0.04,
+    "high24": 0.402,
+    "high24_min": 9,
+    "low24": -0.0427,
+    "low24_min": 479,
+    "quote_vol24": 28355352,
+    "complete": true,
+    "lag_min": 0
+   },
+   "inst": "MEGA-USDT",
+   "primary": true,
+   "w_note": null,
+   "tries": 1
+  },
+  "okx:okx-to-list-usds-for-spot-trading:USDSUSDT": {
+   "exchange": "OKX",
+   "asset": "USDS",
+   "pair": "USDSUSDT",
+   "quote": "USDT",
+   "market": "现货",
+   "premarket": false,
+   "title": "OKX to list USDS for spot trading",
+   "url": "https://www.okx.com/en-us/help/okx-to-list-usds-for-spot-trading",
+   "announce_utc": "2026-04-17T03:30:11Z",
+   "revision_utc": null,
+   "planned_open_utc": "2026-04-17T09:00:00Z",
+   "first_seen_utc": "2026-11-16T15:47:28Z",
+   "baseline": true,
+   "venue": "okx",
+   "w": {
+    "ref_price": 0.9997,
+    "first_trade_utc": "2026-04-17T09:00:00Z",
+    "first_trade_basis": "第一根 1 分钟 K 线的开盘时刻",
+    "m30": -0.0004,
+    "h1": -0.0004,
+    "h4": -0.0004,
+    "h24": -0.0005,
+    "high24": 0.0172,
+    "high24_min": 0,
+    "low24": -0.0063,
+    "low24_min": 122,
+    "quote_vol24": 1192569,
+    "complete": true,
+    "lag_min": 0
+   },
+   "inst": "USDS-USDT",
+   "primary": true,
+   "w_note": null,
+   "tries": 1
+  },
+  "okx:okx-to-list-ofc-onefootball-credits-for-spot-trading:OFCUSDT": {
+   "exchange": "OKX",
+   "asset": "OFC",
+   "pair": "OFCUSDT",
+   "quote": "USDT",
+   "market": "现货",
+   "premarket": false,
+   "title": "OKX to list OFC (OneFootball Credits) for spot trading",
+   "url": "https://www.okx.com/en-us/help/okx-to-list-ofc-onefootball-credits-for-spot-trading",
+   "announce_utc": "2026-04-09T02:00:09Z",
+   "revision_utc": null,
+   "planned_open_utc": "2026-04-09T10:00:00Z",
+   "first_seen_utc": "2026-11-16T15:47:28Z",
+   "baseline": true,
+   "venue": "okx",
+   "w": {
+    "ref_price": 0.025,
+    "first_trade_utc": "2026-04-09T10:10:00Z",
+    "first_trade_basis": "第一根 1 分钟 K 线的开盘时刻",
+    "m30": 1.8504,
+    "h1": 1.7408,
+    "h4": 0.8532,
+    "h24": 0.8136,
+    "high24": 3.0,
+    "high24_min": 0,
+    "low24": 0.0,
+    "low24_min": 0,
+    "quote_vol24": 10188126,
+    "complete": true,
+    "lag_min": 10
+   },
+   "inst": "OFC-USDT",
+   "primary": true,
+   "w_note": null,
+   "tries": 1
+  },
+  "okx:okx-to-list-based-for-spot-trading:BASEDUSDT": {
+   "exchange": "OKX",
+   "asset": "BASED",
+   "pair": "BASEDUSDT",
+   "quote": "USDT",
+   "market": "现货",
+   "premarket": false,
+   "title": "OKX to list BASED for spot trading",
+   "url": "https://www.okx.com/en-us/help/okx-to-list-based-for-spot-trading",
+   "announce_utc": "2026-03-30T02:00:22Z",
+   "revision_utc": null,
+   "planned_open_utc": "2026-03-30T10:00:00Z",
+   "first_seen_utc": "2026-11-16T15:47:28Z",
+   "baseline": true,
+   "venue": "okx",
+   "w": {
+    "ref_price": 0.15,
+    "first_trade_utc": "2026-03-30T10:00:00Z",
+    "first_trade_basis": "第一根 1 分钟 K 线的开盘时刻",
+    "m30": -0.282,
+    "h1": -0.176,
+    "h4": -0.208,
+    "h24": -0.2887,
+    "high24": 0.0,
+    "high24_min": 0,
+    "low24": -0.362,
+    "low24_min": 19,
+    "quote_vol24": 21288413,
+    "complete": true,
+    "lag_min": 0
+   },
+   "inst": "BASED-USDT",
+   "primary": true,
+   "w_note": null,
+   "tries": 1
+  },
+  "okx:okx-to-list-mon-monad-for-spot-trading:MONUSDT": {
+   "exchange": "OKX",
+   "asset": "MON",
+   "pair": "MONUSDT",
+   "quote": "USDT",
+   "market": "现货",
+   "premarket": false,
+   "title": "OKX to list MON (Monad) for spot trading",
+   "url": "https://www.okx.com/en-us/help/okx-to-list-mon-monad-for-spot-trading",
+   "announce_utc": "2026-03-23T02:00:10Z",
+   "revision_utc": null,
+   "planned_open_utc": "2026-03-23T11:00:00Z",
+   "first_seen_utc": "2026-11-16T15:47:28Z",
+   "baseline": true,
+   "venue": "okx",
+   "w": {
+    "ref_price": 0.02125,
+    "first_trade_utc": "2026-03-23T11:00:00Z",
+    "first_trade_basis": "第一根 1 分钟 K 线的开盘时刻",
+    "m30": 0.0207,
+    "h1": 0.0198,
+    "h4": 0.0282,
+    "h24": 0.048,
+    "high24": 0.0527,
+    "high24_min": 1438,
+    "low24": -0.0028,
+    "low24_min": 0,
+    "quote_vol24": 4071215,
+    "complete": true,
+    "lag_min": 0
+   },
+   "inst": "MON-USDT",
+   "primary": true,
+   "w_note": null,
+   "tries": 1
+  },
+  "okx:okx-to-list-kat-katana-for-spot-trading-and-convert-pre-market-futures-to:KATUSDT": {
+   "exchange": "OKX",
+   "asset": "KAT",
+   "pair": "KATUSDT",
+   "quote": "USDT",
+   "market": "现货",
+   "premarket": false,
+   "title": "OKX to list KAT (Katana) for spot trading and convert pre-market futures to standard perpetual futures",
+   "url": "https://www.okx.com/en-us/help/okx-to-list-kat-katana-for-spot-trading-and-convert-pre-market-futures-to",
+   "announce_utc": "2026-03-17T05:00:10Z",
+   "revision_utc": null,
+   "planned_open_utc": "2026-03-18T13:00:00Z",
+   "first_seen_utc": "2026-11-16T15:47:28Z",
+   "baseline": true,
+   "venue": "okx",
+   "w": {
+    "ref_price": 0.015,
+    "first_trade_utc": "2026-03-18T13:00:00Z",
+    "first_trade_basis": "第一根 1 分钟 K 线的开盘时刻",
+    "m30": -0.18,
+    "h1": -0.2053,
+    "h4": -0.1707,
+    "h24": -0.3053,
+    "high24": 0.256,
+    "high24_min": 0,
+    "low24": -0.346,
+    "low24_min": 1052,
+    "quote_vol24": 12430456,
+    "complete": true,
+    "lag_min": 0
+   },
+   "inst": "KAT-USDT",
+   "primary": true,
+   "w_note": null,
+   "tries": 1
+  },
+  "okx:okx-to-list-cc-canton-for-spot-trading:CCUSDT": {
+   "exchange": "OKX",
+   "asset": "CC",
+   "pair": "CCUSDT",
+   "quote": "USDT",
+   "market": "现货",
+   "premarket": false,
+   "title": "OKX to list CC (Canton) for spot trading",
+   "url": "https://www.okx.com/en-us/help/okx-to-list-cc-canton-for-spot-trading",
+   "announce_utc": "2026-02-12T03:00:12Z",
+   "revision_utc": null,
+   "planned_open_utc": "2026-02-12T10:00:00Z",
+   "first_seen_utc": "2026-11-16T15:47:28Z",
+   "baseline": true,
+   "venue": "okx",
+   "w": {
+    "ref_price": 0.16952,
+    "first_trade_utc": "2026-02-12T10:00:00Z",
+    "first_trade_basis": "第一根 1 分钟 K 线的开盘时刻",
+    "m30": -0.0019,
+    "h1": 0.0103,
+    "h4": -0.001,
+    "h24": -0.0565,
+    "high24": 0.0193,
+    "high24_min": 60,
+    "low24": -0.0705,
+    "low24_min": 1087,
+    "quote_vol24": 1209938,
+    "complete": true,
+    "lag_min": 0
+   },
+   "inst": "CC-USDT",
+   "primary": true,
+   "w_note": null,
+   "tries": 1
+  },
+  "okx:okx-to-list-zama-zama-for-spot-trading-and-convert-pre-market-futures-to:ZAMAUSDT": {
+   "exchange": "OKX",
+   "asset": "ZAMA",
+   "pair": "ZAMAUSDT",
+   "quote": "USDT",
+   "market": "现货",
+   "premarket": false,
+   "title": "OKX to list ZAMA (Zama) for spot trading and convert pre-market futures to standard perpetual futures",
+   "url": "https://www.okx.com/en-us/help/okx-to-list-zama-zama-for-spot-trading-and-convert-pre-market-futures-to",
+   "announce_utc": "2026-01-30T13:00:09Z",
+   "revision_utc": null,
+   "planned_open_utc": "2026-02-02T13:00:00Z",
+   "first_seen_utc": "2026-11-16T15:47:28Z",
+   "baseline": true,
+   "venue": "okx",
+   "w": {
+    "ref_price": 0.025,
+    "first_trade_utc": "2026-02-02T13:00:00Z",
+    "first_trade_basis": "第一根 1 分钟 K 线的开盘时刻",
+    "m30": 0.2668,
+    "h1": 0.2808,
+    "h4": 0.44,
+    "h24": 0.2524,
+    "high24": 0.5596,
+    "high24_min": 0,
+    "low24": 0.0,
+    "low24_min": 0,
+    "quote_vol24": 18775577,
+    "complete": true,
+    "lag_min": 0
+   },
+   "inst": "ZAMA-USDT",
+   "primary": true,
+   "w_note": null,
+   "tries": 1
   }
  },
  "articles": {
@@ -5932,17 +6612,178 @@
    "title": "GAIB (GAIB) Will Be Available on Binance Alpha and Binance Futures (2025-11-19)",
    "kind": "perp",
    "n": 1
+  },
+  "okx:okx-to-support-velodrome-crypto-migration": {
+   "title": "OKX to support VELODROME crypto migration",
+   "n": 0
+  },
+  "okx:okx-will-launch-grvt-usd-for-spot-trading": {
+   "title": "OKX will launch GRVT/USD for spot trading",
+   "n": 1
+  },
+  "okx:okx-will-launch-aeon-usd-for-spot-trading": {
+   "title": "OKX will launch AEON/USD for spot trading",
+   "n": 1
+  },
+  "okx:okx-will-launch-cards-usd-for-spot-trading": {
+   "title": "OKX will launch CARDS/USD for spot trading",
+   "n": 1
+  },
+  "okx:okx-to-list-cards-usdt-collector-crypt-for-spot-trading": {
+   "title": "OKX to list CARDS/USDT (Collector Crypt) for spot trading",
+   "n": 1
+  },
+  "okx:okx-will-launch-re-usd-for-spot-trading": {
+   "title": "OKX will launch RE/USD for spot trading",
+   "n": 1
+  },
+  "okx:okx-to-list-re-re-for-spot-trading-and-convert-pre-market-futures-to-standard-perpetual-futures": {
+   "title": "OKX to list RE (Re) for spot trading and convert pre-market futures to standard perpetual futures",
+   "n": 1
+  },
+  "okx:okx-completed-ton-token-migration": {
+   "title": "OKX completed TON token migration",
+   "n": 1
+  },
+  "okx:okx-will-launch-gram-usd-for-spot-trading": {
+   "title": "OKX will launch GRAM/USD for spot trading",
+   "n": 1
+  },
+  "okx:okx-to-list-irys-usdt-irys-for-spot-trading": {
+   "title": "OKX to list IRYS/USDT (Irys) for spot trading",
+   "n": 1
+  },
+  "okx:okx-will-launch-irys-usd-for-spot-trading": {
+   "title": "OKX will launch IRYS/USD for spot trading",
+   "n": 1
+  },
+  "okx:okx-to-list-ai-usdt-gensyn-for-spot-trading": {
+   "title": "OKX to list AI/USDT (Gensyn) for spot trading",
+   "n": 1
+  },
+  "okx:okx-will-launch-ai-usd-for-spot-trading": {
+   "title": "OKX will launch AI/USD for spot trading",
+   "n": 1
+  },
+  "okx:okx-will-launch-pros-usd-for-spot-trading": {
+   "title": "OKX will launch PROS/USD for spot trading",
+   "n": 0
+  },
+  "okx:okx-to-list-pros-usdt-pharos-for-spot-trading": {
+   "title": "OKX to list PROS/USDT (Pharos) for spot trading",
+   "n": 1
+  },
+  "okx:okx-to-list-pi-for-spot-trading": {
+   "title": "OKX to list Pi for Spot Trading",
+   "n": 0
+  },
+  "okx:okx-to-list-edge-edgex-for-spot-trading": {
+   "title": "OKX to list EDGE/USDT (edgeX) for spot trading",
+   "n": 1
+  },
+  "okx:okx-will-launch-edge-usd-for-spot-trading": {
+   "title": "OKX will launch EDGE/USD for spot trading",
+   "n": 0
+  },
+  "okx:okx-will-launch-mega-usd-for-spot-trading": {
+   "title": "OKX will launch MEGA/USD for spot trading",
+   "n": 0
+  },
+  "okx:okx-to-list-mega-megaeth-for-spot-trading": {
+   "title": "OKX to list MEGA (MegaETH) for spot trading",
+   "n": 1
+  },
+  "okx:okx-to-list-rlusd-ripple-usd-for-spot-trading": {
+   "title": "OKX to list RLUSD (Ripple USD) for spot trading",
+   "n": 0
+  },
+  "okx:okx-will-launch-usds-usd-for-spot-trading": {
+   "title": "OKX will launch USDS/USD for spot trading",
+   "n": 0
+  },
+  "okx:okx-to-list-usds-for-spot-trading": {
+   "title": "OKX to list USDS for spot trading",
+   "n": 1
+  },
+  "okx:okx-will-launch-ofc-usd-for-spot-trading": {
+   "title": "OKX will launch OFC/USD for spot trading",
+   "n": 0
+  },
+  "okx:okx-to-list-ofc-onefootball-credits-for-spot-trading": {
+   "title": "OKX to list OFC (OneFootball Credits) for spot trading",
+   "n": 1
+  },
+  "okx:okx-to-list-based-for-spot-trading": {
+   "title": "OKX to list BASED for spot trading",
+   "n": 1
+  },
+  "okx:okx-will-launch-based-usd-for-spot-trading": {
+   "title": "OKX will launch BASED/USD for spot trading",
+   "n": 0
+  },
+  "okx:okx-to-list-mon-monad-for-spot-trading": {
+   "title": "OKX to list MON (Monad) for spot trading",
+   "n": 1
+  },
+  "okx:okx-will-launch-mon-usd-for-spot-trading": {
+   "title": "OKX will launch MON/USD for spot trading",
+   "n": 0
+  },
+  "okx:okx-will-launch-kat-usd-for-spot-trading": {
+   "title": "OKX will launch KAT/USD for spot trading",
+   "n": 0
+  },
+  "okx:okx-to-list-kat-katana-for-spot-trading-and-convert-pre-market-futures-to": {
+   "title": "OKX to list KAT (Katana) for spot trading and convert pre-market futures to standard perpetual futures",
+   "n": 1
+  },
+  "okx:okx-to-list-luna-enj-ace-velodrome-steth-ethw-woo-for-spot-trading": {
+   "title": "OKX to list LUNA, ENJ, ACE, VELODROME, STETH, ETHW, and WOO for Spot Trading",
+   "n": 0
+  },
+  "okx:okx-will-launch-robo-usd-for-spot-trading": {
+   "title": "OKX will launch ROBO/USD for spot trading",
+   "n": 0
+  },
+  "okx:okx-to-list-xaut-tether-gold-for-spot-trading": {
+   "title": "OKX to list XAUT (Tether Gold) for Spot Trading",
+   "n": 0
+  },
+  "okx:okx-will-launch-cc-usd-for-spot-trading": {
+   "title": "OKX will launch CC/USD for spot trading",
+   "n": 0
+  },
+  "okx:okx-to-list-cc-canton-for-spot-trading": {
+   "title": "OKX to list CC (Canton) for spot trading",
+   "n": 1
+  },
+  "okx:okx-to-list-usd-margined-expiry-futures": {
+   "title": "OKX to list USD-margined expiry futures",
+   "n": 0
+  },
+  "okx:okx-will-launch-zama-usds-for-spot-trading": {
+   "title": "OKX will launch ZAMA/USDⓈ for spot trading",
+   "n": 0
+  },
+  "okx:okx-will-launch-zama-usd-for-spot-trading": {
+   "title": "OKX will launch ZAMA/USD for spot trading",
+   "n": 0
+  },
+  "okx:okx-to-list-zama-zama-for-spot-trading-and-convert-pre-market-futures-to": {
+   "title": "OKX to list ZAMA (Zama) for spot trading and convert pre-market futures to standard perpetual futures",
+   "n": 1
   }
  },
- "generated": "2026-11-16T15:34:41Z",
+ "generated": "2026-11-16T15:47:21Z",
  "status": {
   "list_ok": true,
   "pages": 3,
   "detail_fail": 0,
-  "kline_fail": 4
+  "kline_fail": 3
  },
  "exchanges": [
-  "Binance"
+  "Binance",
+  "OKX"
  ],
  "n": {
   "events": 172,
@@ -5951,5 +6792,20 @@
   "spot": 29,
   "perp": 85
  },
- "note": "窗口参考价 = 第一根 1 分钟 K 线开盘价，是事后读数，不是可成交价；revision_utc 取不到记 null；其它交易所待接入"
+ "note": "窗口参考价 = 第一根 1 分钟 K 线开盘价，是事后读数，不是可成交价；revision_utc 取不到记 null；OKX 的 USD 对是 OKX US，不算窗口；Bitget / Kraken 只有公告层",
+ "by_exchange": {
+  "Binance": {
+   "events": 172,
+   "with_windows": 110
+  },
+  "OKX": {
+   "events": 22,
+   "with_windows": 15
+  }
+ },
+ "x_status": {
+  "okx_page_fail": 0,
+  "okx_kline_fail": 0,
+  "generated": "2026-11-16T15:47:28Z"
+ }
 }
