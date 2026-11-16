@@ -1,0 +1,25 @@
+{
+ "_说明": "Claude 在 GitHub Actions（美国机房）实测 X9 数据源的结论摘要。原始输出：工作流 probe-exchanges.yml run 43912082482 的日志与 artifact x9-probe-out（ID 14249200330）。脚本 tools/probe/x9_data.py。",
+ "checked_utc": "2026-11-16T16:53Z",
+ "tokenearly": {
+  "verdict": "未证实",
+  "detail": "首页 https://tokenearly.com/en 返回 200，但页面里找不到任何 .json 接口线索（内容由前端脚本加载）；试了 /listings.json、/api/listings.json、/en/listings.json、/data/listings.json、/api/v1/listings、/api/listings 全部 404，返回体是 {\"detail\":\"Not Found\"}（说明后端有 API，但路径不是这些）。Grok 说的「公开 listings.json」需要给出准确网址才能核实；Codex 说没有公开接口。在拿到准确网址实测通过之前，不当作可用来源。"
+ },
+ "coingecko_top": {
+  "source": "https://api.coingecko.com/api/v3/exchanges?per_page=70",
+  "note": "CoinGecko 这个接口的排序是 trust_score 优先、再看成交额，不是纯按成交额（例如 Binance 成交额最高但排第 4）。按成交额排要自己重排。70 家完整列表见 artifact。",
+  "top20_by_rank": ["Coinbase Exchange", "OKX", "Kraken", "Binance", "Bitget", "Gate", "Crypto.com Exchange", "Bitstamp", "Bitvavo", "BingX", "KuCoin", "LBank", "WEEX", "BitKan", "Toobit", "CoinW", "HashKey Exchange", "Upbit", "Bitunix", "Ourbit"]
+ },
+ "ccxt": {
+  "verdict": "K 线大部分解决：一个开源库、同一套代码能取几十家所的 K 线；上币公告它不管",
+  "kline_1m_180d_ok": ["OKX", "Bitget", "Crypto.com Exchange", "Bitstamp", "Bitvavo", "KuCoin", "LBank", "Bullish", "DigiFinex", "Bitso", "BTSE", "Binance US", "Coins.ph", "Bitfinex", "BtcTurk"],
+  "kline_1h_365d_ok_but_1m_short": {"Coinbase Exchange": "1 分钟查 180 天前无数据", "Upbit": "同上", "MEXC（已不收）": "同上", "Gate": "1 分钟报「太久以前」", "BingX": "1 分钟单次只能查 7 天范围", "One Trading": "1 分钟无数据"},
+  "recent_only": {"Kraken": "1 分钟只有最近约 12 小时、1 小时约 30 天", "Gemini": "1 分钟约 1 天、1 小时约 2 个月", "WEEX": "只回最近", "Toobit": "只回最近", "HashKey Exchange": "只回最近", "WhiteBIT": "只回最近", "P2B": "只回最近", "Bitrue": "只回最近", "Bithumb": "只回最近", "XT.COM": "只回最近", "Deepcoin": "只回最近"},
+  "blocked_in_us": {"Binance": "api.binance.com 451（已用 data-api.binance.vision 解决）", "Bybit": "CloudFront 403", "Bybit EU": "CloudFront 403"},
+  "errors": {"Luno": "要 apiKey", "Phemex": "参数报错，待查", "bitFlyer": "CCXT 不支持 K 线", "Bitbank / BitTrade": "没有 BTC/USDT 等常用交易对，待换交易对重测"},
+  "not_matched": ["BitKan", "CoinW", "Bitunix", "Ourbit", "Bitkub", "OSL Exchange", "LeveX", "Bit2Me", "Byte Exchange", "Niza.io", "Coinstore", "Bitazza", "Gate US", "Pionex", "VALR", "GMO Coin Japan", "Hotcoin", "Zoomex", "Paribu", "Biconomy.com", "Bittime", "Backpack Exchange", "Webot", "CoinTR", "XBO.com", "OKJ", "Koinpark", "Bitlo", "Max Maicoin", "KCEX"],
+  "not_matched_note": "这些是脚本按名字没对上 CCXT 的交易所 ID，不等于 CCXT 不支持（比如名字写法不同）。需要逐个核对 CCXT 的交易所列表。",
+  "listing_detection_idea": "CCXT 能列出每家所全部交易对，每天比对一次就能发现新上的交易对，再用它的 K 线找到第一根 = 实际开盘时间。这样一套代码覆盖几十家所的「上线时间 + 上线后走势」，但拿不到公告时间（提前量算不了）。"
+ },
+ "announcements_aggregator": "还没有找到实测可用的「一个接口覆盖多家所上币公告」的第三方来源。CoinMarketCal 要 API key（Grok 说付费档 49.8 美元 / 月，未核实官方价格页）。"
+}
