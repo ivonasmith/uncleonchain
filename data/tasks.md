@@ -1,8 +1,8 @@
-# 全站待办与检查（2026-11-16 14:17 UTC 自动生成，别手改）
+# 全站待办与检查（2026-11-16 15:13 UTC 自动生成，别手改）
 
 | 板块 | 待办 | 问题 |
 |---|---|---|
-| Alpha 雷达 | 20 | 2 |
+| Alpha 雷达 | 19 | 2 |
 | 发射台 | 2 | 0 |
 | AI Agent | 7 | 0 |
 | RWA | 0 | 0 |
@@ -13,7 +13,7 @@
 
 ## 待办
 
-- **P1 · Codex · alpha** 机会卡补证（队列 36 个，从上往下补，M 新参与机制优先查） → `alpha/review/codex_2026-11-16_checks.json（JSON 数组，reviewer = codex）`（参考 `data/alpha/research_queue.json（prompt / schema / items）`）
+- **P1 · Codex · alpha** 机会卡补证（队列 35 个，从上往下补，M 新参与机制优先查） → `alpha/review/codex_2026-11-16_checks.json（JSON 数组，reviewer = codex）`（参考 `data/alpha/research_queue.json（prompt / schema / items）`）
 - **P1 · Codex · alpha** 补「量从哪来」和关键事件（35 张已补证的卡还没有 flow / events，先做 Montra、Pons 当样板） → `alpha/review/codex_2026-11-16_checks.json（同 key 交新一条，带 flow / events / capture / next_review）`（参考 `data/alpha/research_queue.json 的 schema`）
 - **P2 · Codex · aiagent** A1 服务层真实性 → `aiagent/review/a1_commerce_checks.json`（参考 `aiagent/review/README.md`）
 - **P2 · Codex · aiagent** A2 x402 与 ERC-8004 的链上数据源 → `aiagent/review/a2_rails_sources.json`（参考 `aiagent/review/README.md`）
@@ -22,7 +22,6 @@
 - **P2 · Codex · aiagent** A5 时间线与 C 级证据升级 → `aiagent/review/a5_timeline.json`（参考 `aiagent/review/README.md`）
 - **P2 · Codex · aiagent** A6 框架与开发者清单 → `aiagent/review/a6_frameworks.json`（参考 `aiagent/review/README.md`）
 - **P2 · Codex · alpha** 关键人名单核对（S2） → `alpha/review/sources_people.json`（参考 `alpha/review/sources_task.md`）
-- **P2 · Codex · alpha** X1 交易所公告源验收（含第三方聚合源和交易所官方 X 账号） → `alpha/review/x1_exchange_sources.json`（参考 `alpha/review/README.md`）
 - **P2 · Codex · alpha** X2 历史 K 线源验收 → `alpha/review/x2_kline_sources.json`（参考 `alpha/review/README.md`）
 - **P2 · Codex · alpha** X3 报价币换算日源 → `alpha/review/x3_quote_fx.json`（参考 `alpha/review/README.md`）
 - **P2 · Codex · alpha** X4 上市事件样本库（过去 12 个月，≥100 条） → `alpha/review/x4_listing_events.json`（参考 `alpha/review/README.md`）
