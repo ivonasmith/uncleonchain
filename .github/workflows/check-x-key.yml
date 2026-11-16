@@ -39,9 +39,9 @@ jobs:
               req = urllib.request.Request(url, headers={"Authorization": f"Bearer {tok}", "User-Agent": "uncleonchain-key-check"})
               try:
                   with urllib.request.urlopen(req, timeout=30) as r:
-                      return r.status, r.read(400).decode("utf-8", "ignore"), dict(r.headers)
+                      return r.status, r.read(2000).decode("utf-8", "ignore"), dict(r.headers)
               except urllib.error.HTTPError as e:
-                  return e.code, e.read(400).decode("utf-8", "ignore"), dict(e.headers)
+                  return e.code, e.read(2000).decode("utf-8", "ignore"), dict(e.headers)
           bearers, pairs = [], []
           for n in ["X_BEARER_TOKEN", "TWITTER_BEARER_TOKEN", "X_BEARER", "AXI_BEARER_TOKEN"]:
               v = os.environ.get(n, "").strip()
@@ -69,8 +69,16 @@ jobs:
               code, body, hdr = get("https://api.x.com/2/users/by/username/Binance?user.fields=public_metrics,created_at", tok)
               rl = {k: v for k, v in hdr.items() if k.lower().startswith("x-rate-limit")}
               print(f"{n}: 读取 Binance 账号 HTTP {code} · 限额头 {rl} · 返回 {mask(body, tok)[:160]}")
-              code2, body2, _ = get("https://api.x.com/2/users/by/username/OKX/tweets?max_results=5", tok)
-              print(f"{n}: 读取 OKX 最近帖子 HTTP {code2} · 返回 {mask(body2, tok)[:160]}")
+              uid = ""
+              try:
+                  uid = json.loads(body).get("data", {}).get("id", "")
+              except Exception:
+                  pass
+              if uid:
+                  code2, body2, _ = get(f"https://api.x.com/2/users/{uid}/tweets?max_results=5&tweet.fields=created_at", tok)
+                  print(f"{n}: 读取 Binance 最近帖子 HTTP {code2} · 返回 {mask(body2, tok)[:200]}")
+              else:
+                  print(f"{n}: 没拿到账号 ID，跳过读帖子")
               break
           else:
               print("没有可用的 Bearer，无法测试")
