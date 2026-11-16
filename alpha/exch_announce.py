@@ -78,7 +78,7 @@ def f_x(c):
 
 
 FETCH = {"okx": f_okx, "bitget": f_bitget, "kraken": f_kraken, "x": f_x}
-SPOT = re.compile(r"\blist(s|ing|ed)?\b|spot|market support|마켓|상장|trading (starts|opens|is live)|now available", re.I)
+SPOT = re.compile(r"\blist(s|ing|ed)?\b|spot|available for trading|market support|마켓|상장|trading (starts|opens|is live)|now available", re.I)
 PERP = re.compile(r"perp|futures|contract|swap|margin", re.I)
 DROPT = re.compile(r"delist|remov|suspend|maintenance|migration|rebrand|stock|TradFi|pre-ipo|index|copy trad|跟单|convert|earn|loan", re.I)
 
@@ -94,7 +94,7 @@ def kind(title):
 
 
 def assets(title):
-    xs = re.findall(r"\(([A-Z0-9]{2,12})\)", title) + re.findall(r"\$([A-Z0-9]{2,12})\b", title) + [m[:-4] for m in re.findall(r"\b([A-Z0-9]{2,12}USDT)\b", title)]
+    xs = [m[0] for m in re.findall(r"\b([A-Z0-9]{2,12})/(USDT|USDC|USD|EUR|KRW|BTC)\b", title)] + re.findall(r"^([A-Z0-9]{2,12}) is available", title) + re.findall(r"\(([A-Z0-9]{2,12})\)", title) + re.findall(r"\$([A-Z0-9]{2,12})\b", title) + [m[:-4] for m in re.findall(r"\b([A-Z0-9]{2,12}USDT)\b", title)]
     return sorted(set(xs))[:8]
 
 
