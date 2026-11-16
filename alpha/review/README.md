@@ -57,3 +57,19 @@
 ```
 
 `verdict` 只有三档；「优先研究」「执行评估」由 Claude 和大叔定，不在这里给。
+
+## X1 交易所公告源验收 → `alpha/review/x1_exchange_sources.json`
+## X2 历史 K 线源验收 → `alpha/review/x2_kline_sources.json`
+## X3 报价币换算日源 → `alpha/review/x3_quote_fx.json`
+## X4 上市事件样本库（过去 12 个月，≥100 条）→ `alpha/review/x4_listing_events.json`
+## X5 多所聚类规则草案 → `alpha/review/x5_cluster_draft.md`
+## M1 技术与开发者雷达来源 → `alpha/review/m1_dev_sources.json`
+## M2 链上创世动作字段 → `alpha/review/m2_genesis_fields.md`
+## M3 卡片决策条件与证据分类字段 → `alpha/review/m3_card_schema.md`
+## M4 代币研究七项数据来源 → `alpha/review/m4_token_seven.json`
+## M5 监控六个观察面的数据源 → `alpha/review/m5_monitor_sources.md`
+## M6 社交渠道与钱包标签边界 → `alpha/review/m6_social_wallet.md`
+## M7 价格路径与收益口径样例 → `alpha/review/m7_return_examples.md`
+## M8 历史对照组候选 → `alpha/review/m8_control_candidates.json`
+
+> 完整提示词见 `docs/Codex_Alpha补齐提示词.md`；缺口对照见 `docs/Alpha方法论对照缺口.md`。X 系列为交易所事件线，必须做完。

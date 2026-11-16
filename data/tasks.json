@@ -1,10 +1,10 @@
 {
- "generated": "2026-11-16T02:07:41+00:00",
+ "generated": "2026-11-16T04:16:24+00:00",
  "boards": [
   {
    "board": "alpha",
    "name": "Alpha 雷达",
-   "tasks": 7,
+   "tasks": 20,
    "issues": 2
   },
   {
@@ -534,6 +534,162 @@
    "note": null
   },
   {
+   "board": "alpha",
+   "id": "alpha:pkg:X1-交易所公告源验收",
+   "title": "X1 交易所公告源验收",
+   "who": "codex",
+   "pri": 2,
+   "deliver": "alpha/review/x1_exchange_sources.json",
+   "ref": "alpha/review/README.md",
+   "items": null,
+   "n": null,
+   "note": null
+  },
+  {
+   "board": "alpha",
+   "id": "alpha:pkg:X2-历史-K-线源验收",
+   "title": "X2 历史 K 线源验收",
+   "who": "codex",
+   "pri": 2,
+   "deliver": "alpha/review/x2_kline_sources.json",
+   "ref": "alpha/review/README.md",
+   "items": null,
+   "n": null,
+   "note": null
+  },
+  {
+   "board": "alpha",
+   "id": "alpha:pkg:X3-报价币换算日源",
+   "title": "X3 报价币换算日源",
+   "who": "codex",
+   "pri": 2,
+   "deliver": "alpha/review/x3_quote_fx.json",
+   "ref": "alpha/review/README.md",
+   "items": null,
+   "n": null,
+   "note": null
+  },
+  {
+   "board": "alpha",
+   "id": "alpha:pkg:X4-上市事件样本库-过去-12-个月-100-条-",
+   "title": "X4 上市事件样本库（过去 12 个月，≥100 条）",
+   "who": "codex",
+   "pri": 2,
+   "deliver": "alpha/review/x4_listing_events.json",
+   "ref": "alpha/review/README.md",
+   "items": null,
+   "n": null,
+   "note": null
+  },
+  {
+   "board": "alpha",
+   "id": "alpha:pkg:X5-多所聚类规则草案",
+   "title": "X5 多所聚类规则草案",
+   "who": "codex",
+   "pri": 2,
+   "deliver": "alpha/review/x5_cluster_draft.md",
+   "ref": "alpha/review/README.md",
+   "items": null,
+   "n": null,
+   "note": null
+  },
+  {
+   "board": "alpha",
+   "id": "alpha:pkg:M1-技术与开发者雷达来源",
+   "title": "M1 技术与开发者雷达来源",
+   "who": "codex",
+   "pri": 2,
+   "deliver": "alpha/review/m1_dev_sources.json",
+   "ref": "alpha/review/README.md",
+   "items": null,
+   "n": null,
+   "note": null
+  },
+  {
+   "board": "alpha",
+   "id": "alpha:pkg:M2-链上创世动作字段",
+   "title": "M2 链上创世动作字段",
+   "who": "codex",
+   "pri": 2,
+   "deliver": "alpha/review/m2_genesis_fields.md",
+   "ref": "alpha/review/README.md",
+   "items": null,
+   "n": null,
+   "note": null
+  },
+  {
+   "board": "alpha",
+   "id": "alpha:pkg:M3-卡片决策条件与证据分类字段",
+   "title": "M3 卡片决策条件与证据分类字段",
+   "who": "codex",
+   "pri": 2,
+   "deliver": "alpha/review/m3_card_schema.md",
+   "ref": "alpha/review/README.md",
+   "items": null,
+   "n": null,
+   "note": null
+  },
+  {
+   "board": "alpha",
+   "id": "alpha:pkg:M4-代币研究七项数据来源",
+   "title": "M4 代币研究七项数据来源",
+   "who": "codex",
+   "pri": 2,
+   "deliver": "alpha/review/m4_token_seven.json",
+   "ref": "alpha/review/README.md",
+   "items": null,
+   "n": null,
+   "note": null
+  },
+  {
+   "board": "alpha",
+   "id": "alpha:pkg:M5-监控六个观察面的数据源",
+   "title": "M5 监控六个观察面的数据源",
+   "who": "codex",
+   "pri": 2,
+   "deliver": "alpha/review/m5_monitor_sources.md",
+   "ref": "alpha/review/README.md",
+   "items": null,
+   "n": null,
+   "note": null
+  },
+  {
+   "board": "alpha",
+   "id": "alpha:pkg:M6-社交渠道与钱包标签边界",
+   "title": "M6 社交渠道与钱包标签边界",
+   "who": "codex",
+   "pri": 2,
+   "deliver": "alpha/review/m6_social_wallet.md",
+   "ref": "alpha/review/README.md",
+   "items": null,
+   "n": null,
+   "note": null
+  },
+  {
+   "board": "alpha",
+   "id": "alpha:pkg:M7-价格路径与收益口径样例",
+   "title": "M7 价格路径与收益口径样例",
+   "who": "codex",
+   "pri": 2,
+   "deliver": "alpha/review/m7_return_examples.md",
+   "ref": "alpha/review/README.md",
+   "items": null,
+   "n": null,
+   "note": null
+  },
+  {
+   "board": "alpha",
+   "id": "alpha:pkg:M8-历史对照组候选",
+   "title": "M8 历史对照组候选",
+   "who": "codex",
+   "pri": 2,
+   "deliver": "alpha/review/m8_control_candidates.json",
+   "ref": "alpha/review/README.md",
+   "items": null,
+   "n": null,
+   "note": null
+  },
+  {
    "board": "launchpad",
    "id": "launchpad:events",
    "title": "关键事件登记（近 7 天手续费前 25 的平台里 25 家还没有）",
@@ -989,6 +1145,31 @@
    "deliver": "alpha/review/codex_2026-11-16_checks.json"
   },
   {
+   "key": "alpha:s:7966",
+   "board": "alpha",
+   "priority": 1,
+   "task_type": "research",
+   "name": "Render Network BME",
+   "missing": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "TE"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "open",
+   "last_checked_utc": null,
+   "deliver": "alpha/review/codex_2026-11-16_checks.json"
+  },
+  {
    "key": "alpha:s:8481",
    "board": "alpha",
    "priority": 1,
@@ -1419,11 +1600,11 @@
    "deliver": "alpha/review/codex_2026-11-16_checks.json"
   },
   {
-   "key": "alpha:g:parent#azverse",
+   "key": "alpha:g:7010",
    "board": "alpha",
    "priority": 2,
    "task_type": "evidence",
-   "name": "Azverse",
+   "name": "trade[XYZ]",
    "missing": [
     "M",
     "F",
@@ -1446,11 +1627,11 @@
    "deliver": "alpha/review/codex_2026-11-16_checks.json"
   },
   {
-   "key": "alpha:g:7010",
+   "key": "alpha:g:parent#azverse",
    "board": "alpha",
    "priority": 2,
    "task_type": "evidence",
-   "name": "trade[XYZ]",
+   "name": "Azverse",
    "missing": [
     "M",
     "F",
