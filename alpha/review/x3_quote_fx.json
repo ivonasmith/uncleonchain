@@ -1,0 +1,11 @@
+{
+  "checked_utc": "2026-11-16T00:00:00Z",
+  "by": "codex",
+  "quotes": [
+    {"quote":"USDT","usd_source":"https://api.kraken.com/0/public/Ticker?pair=USDTUSD","http_status":"U","field":"result.*.c[0]","method":"Use USDT/USD spot midpoint or last price, preserve source timestamp.","source_checked_utc":"2026-11-16T00:00:00Z"},
+    {"quote":"USDC","usd_source":"https://api.exchange.coinbase.com/products/USDC-USD/ticker","http_status":"U","field":"price","method":"Use Coinbase USDC-USD last price with timestamp.","source_checked_utc":"2026-11-16T00:00:00Z"},
+    {"quote":"BTC","usd_source":"https://api.exchange.coinbase.com/products/BTC-USD/ticker","http_status":"U","field":"price","method":"Use BTC-USD last price with timestamp.","source_checked_utc":"2026-11-16T00:00:00Z"},
+    {"quote":"KRW","usd_source":"https://data-api.ecb.europa.eu/service/data/EXR/D.KRW.EUR.SP00.A?format=jsondata","http_status":"U","field":"OBS_VALUE, KRW per EUR","method":"Convert KRW to USD using ECB EUR/USD and KRW/EUR reference rates for the same UTC date. Do not mix intraday exchange ticks with a daily ECB reference without labeling.","source_checked_utc":"2026-11-16T00:00:00Z"}
+  ],
+  "not_done": ["Live values were not written. This file records official public source endpoints and conversion method only. A scheduled job should store the raw response, source timestamp and rate date before converting event prices."]
+}
