@@ -1,0 +1,318 @@
+{
+  "checked_utc": "2026-11-17T00:00:00Z",
+  "by": "codex",
+  "scope": {
+    "selection_source": "https://www.coingecko.com/en/exchanges",
+    "selection_checked_utc": "2026-11-17T00:00:00Z",
+    "rule": "CoinGecko spot 24h volume top 50, plus exchanges with material listing influence. MEXC excluded per task instruction.",
+    "top50_snapshot": "U",
+    "notes": "CoinGecko ranking snapshot was not downloaded in this batch. Entries below are the sources that were directly documented or supplied as Actions-verified inputs."
+  },
+  "exchanges": [
+    {
+      "exchange": "OKX",
+      "coingecko_rank": "U",
+      "spot_volume_24h_usd": "U",
+      "trust_score": "U",
+      "fundamental_source": "https://www.coingecko.com/en/exchanges/okx",
+      "announcement": {
+        "page": "https://www.okx.com/en-us/help/category/announcements",
+        "endpoint": "https://www.okx.com/api/v5/support/announcements?annType=listing&locale=en-US&page=1&limit=2",
+        "format": "json",
+        "http_status": 200,
+        "paging": "page parameter, 20 records per page per official API documentation",
+        "history": "U",
+        "planned_open": "body",
+        "pairs": "body",
+        "evidence": "官方文档 + GitHub Actions 实测，核对日 2026-11-16 UTC",
+        "source": "https://www.okx.com/docs-v5/en/#announcement-get-announcements"
+      },
+      "kline": {
+        "one_minute": "https://www.okx.com/api/v5/market/history-candles?instId=BTC-USDT&bar=1m&limit=2",
+        "one_hour": "https://www.okx.com/api/v5/market/history-candles?instId=BTC-USDT&bar=1H&limit=2",
+        "max_records": "U",
+        "earliest": "至少可回溯约 5 个月（Claude Actions 实测，具体最早日期 U）",
+        "source": "https://www.okx.com/docs-v5/en/#rest-api-market-data-get-history-candlesticks"
+      },
+      "symbols": {
+        "endpoint": "https://www.okx.com/api/v5/public/instruments?instType=SPOT",
+        "listing_time_field": "listTime（字段存在性需按返回逐条检查）",
+        "source": "https://www.okx.com/docs-v5/en/#rest-api-public-data-get-instruments"
+      },
+      "actions_probe": {"command": "python3 alpha/review/scripts/x9_probe.py", "http_status": 200, "first_200": "U（Actions 原始响应未随交接单提供）"}
+    },
+    {
+      "exchange": "Bitget",
+      "coingecko_rank": "U",
+      "spot_volume_24h_usd": "U",
+      "trust_score": "U",
+      "fundamental_source": "https://www.coingecko.com/en/exchanges/bitget",
+      "announcement": {
+        "page": "https://www.bitget.com/support/sections/360011097932",
+        "endpoint": "https://api.bitget.com/api/v2/public/annoucements?language=en_US&annType=coin_listings&limit=10",
+        "format": "json",
+        "http_status": 200,
+        "paging": "cursor，后续请求传上一页最后 annId",
+        "history": "约 11 天（Claude Actions 实测）",
+        "planned_open": "body",
+        "pairs": "body / title",
+        "evidence": "官方文档 + GitHub Actions 实测，核对日 2026-11-16 UTC",
+        "source": "https://www.bitget.com/docs/api/public/announcements"
+      },
+      "kline": {
+        "one_minute": "https://api.bitget.com/api/v2/spot/market/history-candles?symbol=BTCUSDT&granularity=1min&limit=100",
+        "one_hour": "https://api.bitget.com/api/v2/spot/market/history-candles?symbol=BTCUSDT&granularity=1H&limit=100",
+        "max_records": "U",
+        "earliest": "U",
+        "source": "https://www.bitget.com/api-doc/spot/market/Get-History-Candle-Data"
+      },
+      "symbols": {
+        "endpoint": "https://api.bitget.com/api/v2/spot/public/symbols",
+        "listing_time_field": "U",
+        "source": "https://www.bitget.com/api-doc/spot/market/Get-Symbols"
+      },
+      "actions_probe": {"command": "python3 alpha/review/scripts/x9_probe.py", "http_status": 200, "first_200": "U（Actions 原始响应未随交接单提供）"}
+    },
+    {
+      "exchange": "Kraken",
+      "coingecko_rank": "U",
+      "spot_volume_24h_usd": "U",
+      "trust_score": "U",
+      "fundamental_source": "https://www.coingecko.com/en/exchanges/kraken",
+      "announcement": {
+        "page": "https://www.kraken.com/listings",
+        "endpoint": "https://blog.kraken.com/feed/",
+        "format": "rss",
+        "http_status": 200,
+        "paging": "RSS feed; page cursor U",
+        "history": "U",
+        "planned_open": "body / listing article",
+        "pairs": "body / listing article",
+        "evidence": "官方 RSS 页面 + GitHub Actions 公开接口核对，核对日 2026-11-16 UTC",
+        "source": "https://blog.kraken.com/feed/"
+      },
+      "kline": {
+        "one_minute": "https://api.kraken.com/0/public/OHLC?pair=XBTUSD&interval=1",
+        "one_hour": "https://api.kraken.com/0/public/OHLC?pair=XBTUSD&interval=60",
+        "max_records": "U",
+        "earliest": "公开 OHLC 只给最近 720 根（已核实）",
+        "source": "https://docs.kraken.com/api/docs/rest-api/get-ohlc-data/"
+      },
+      "symbols": {
+        "endpoint": "https://api.kraken.com/0/public/AssetPairs",
+        "listing_time_field": "U",
+        "source": "https://docs.kraken.com/api/docs/rest-api/get-tradable-asset-pairs/"
+      },
+      "actions_probe": {"command": "python3 alpha/review/scripts/x9_probe.py", "http_status": 200, "first_200": "U（RSS 偶尔 403，Actions 原始响应未随交接单提供）"}
+    },
+    {
+      "exchange": "Bithumb",
+      "coingecko_rank": "U",
+      "spot_volume_24h_usd": "U",
+      "trust_score": "U",
+      "fundamental_source": "https://www.coingecko.com/en/exchanges/bithumb",
+      "announcement": {
+        "page": "https://feed.bithumb.com/notice",
+        "endpoint": "https://feed-api.bithumb.com/v1/notices?count=20",
+        "format": "json",
+        "http_status": 200,
+        "paging": "count 1-20，无历史 cursor",
+        "history": "U",
+        "planned_open": "body",
+        "pairs": "title / body",
+        "evidence": "官方 API 文档 + live JSON，核对日 2026-11-16 UTC",
+        "source": "https://apidocs.bithumb.com/reference/%EA%B3%B5%EC%A7%80%EC%82%AC%ED%95%AD-%EC%A1%B0%ED%9A%8C"
+      },
+      "kline": {
+        "one_minute": "https://api.bithumb.com/v1/candles/minutes/1?market=KRW-BTC&count=200",
+        "one_hour": "https://api.bithumb.com/v1/candles/minutes/60?market=KRW-BTC&count=200",
+        "max_records": "200",
+        "earliest": "U",
+        "source": "https://apidocs.bithumb.com/reference/%EB%B6%84-%EC%BA%94%EB%93%A4-%EC%A1%B0%ED%9A%8C"
+      },
+      "symbols": {
+        "endpoint": "https://api.bithumb.com/v1/market/all?isDetails=false",
+        "listing_time_field": "U",
+        "source": "https://apidocs.bithumb.com/reference/%EA%B1%B0%EB%9E%98%EB%8C%80%EC%83%81-%EC%A1%B0%ED%9A%8C"
+      },
+      "actions_probe": {"command": "python3 alpha/review/scripts/x9_probe.py", "http_status": 200, "first_200": "U（本批未重复运行 Actions）"}
+    },
+    {
+      "exchange": "KuCoin",
+      "coingecko_rank": "U",
+      "spot_volume_24h_usd": "U",
+      "trust_score": "U",
+      "fundamental_source": "https://www.coingecko.com/en/exchanges/kucoin",
+      "announcement": {
+        "page": "https://www.kucoin.com/announcement/latest-announcements",
+        "endpoint": "https://api.kucoin.com/api/v3/announcements?currentPage=1&pageSize=2&annType=new-listings&lang=en_US",
+        "format": "json",
+        "http_status": 200,
+        "paging": "currentPage/pageSize/totalPage",
+        "history": "live sample totalPage=9 at pageSize=2; earliest date U",
+        "planned_open": "annDesc / article body",
+        "pairs": "annTitle / annDesc / article body",
+        "evidence": "live browser JSON，核对日 2026-11-16 UTC",
+        "source": "https://www.kucoin.com/docs-new/rest/spot-trading/market-data/get-announcements"
+      },
+      "kline": {
+        "one_minute": "https://api.kucoin.com/api/v1/market/candles?symbol=BTC-USDT&type=1min",
+        "one_hour": "https://api.kucoin.com/api/v1/market/candles?symbol=BTC-USDT&type=1hour",
+        "max_records": "U",
+        "earliest": "U",
+        "source": "https://www.kucoin.com/docs-new/rest/spot-trading/market-data/get-klines"
+      },
+      "symbols": {
+        "endpoint": "https://api.kucoin.com/api/v2/symbols",
+        "listing_time_field": "U",
+        "source": "https://www.kucoin.com/docs-new/rest/spot-trading/market-data/get-symbols"
+      },
+      "actions_probe": {"command": "python3 alpha/review/scripts/x9_probe.py", "http_status": 200, "first_200": "U（本批未重复运行 Actions）"}
+    },
+    {
+      "exchange": "HTX",
+      "coingecko_rank": "U",
+      "spot_volume_24h_usd": "U",
+      "trust_score": "U",
+      "fundamental_source": "https://www.coingecko.com/en/exchanges/htx",
+      "announcement": {
+        "page": "https://www.htx.com/en-us/support/list/360000039942/",
+        "endpoint": "https://www.htx.com/en-us/support/list/360000039942/",
+        "format": "html",
+        "http_status": 200,
+        "paging": "numeric page path; live page exposed at least page 142",
+        "history": "U",
+        "planned_open": "title / body",
+        "pairs": "title / body",
+        "evidence": "live browser page，核对日 2026-11-16 UTC",
+        "source": "https://www.htx.com/en-us/support/list/360000039942/"
+      },
+      "kline": {
+        "one_minute": "https://api.huobi.pro/market/history/kline?symbol=btcusdt&period=1min&size=200",
+        "one_hour": "https://api.huobi.pro/market/history/kline?symbol=btcusdt&period=60min&size=200",
+        "max_records": "200（官方旧 API 文档参数）",
+        "earliest": "U",
+        "source": "https://www.htx.com/en-us/opend/newApiPages/"
+      },
+      "symbols": {
+        "endpoint": "https://api.huobi.pro/v1/common/symbols",
+        "listing_time_field": "U",
+        "source": "https://www.htx.com/en-us/opend/newApiPages/"
+      },
+      "actions_probe": {"command": "python3 alpha/review/scripts/x9_probe.py", "http_status": 200, "first_200": "U（本批未重复运行 Actions）"}
+    }
+  ],
+  "third_party": [
+    {
+      "name": "CCXT",
+      "coverage": "支持多家中心化交易所统一市场接口",
+      "provides": "交易对列表、fetchOHLCV、部分交易所交易记录；没有统一官方上币公告接口",
+      "history": "由各交易所 fetchOHLCV 限制决定，未逐所测完",
+      "free_quota": "开源软件本身无 API 配额；交易所限速适用",
+      "price": "开源，价格 U",
+      "terms": "需分别遵守 CCXT 许可证和各交易所条款，存档与再分发 U",
+      "tested": "U，本批只交探针脚本，未将依赖安装到 Actions",
+      "source": "https://github.com/ccxt/ccxt"
+    },
+    {
+      "name": "CoinGecko",
+      "coverage": "交易所排名、交易对和市场数据，公告覆盖 U",
+      "provides": "交易所列表和市场数据，未核实统一上币公告接口",
+      "history": "U",
+      "free_quota": "U",
+      "price": "U",
+      "terms": "U",
+      "tested": "U，排名快照未下载",
+      "source": "https://docs.coingecko.com/"
+    },
+    {
+      "name": "CoinMarketCal",
+      "coverage": "多项目事件日历，交易所覆盖 U",
+      "provides": "事件日历，未核实统一交易所公告读取接口",
+      "history": "U",
+      "free_quota": "U",
+      "price": "U",
+      "terms": "U",
+      "tested": "U",
+      "source": "https://coinmarketcal.com/"
+    },
+    {
+      "name": "CryptoPanic",
+      "coverage": "多来源新闻，交易所上币覆盖 U",
+      "provides": "新闻聚合，未核实统一原始公告接口",
+      "history": "U",
+      "free_quota": "U",
+      "price": "U",
+      "terms": "U",
+      "tested": "U",
+      "source": "https://cryptopanic.com/"
+    },
+    {
+      "name": "TokenEarly",
+      "coverage": "多家交易所上币提醒页面",
+      "provides": "网页提醒，公开读取 API U",
+      "history": "网页历史可见范围 U",
+      "free_quota": "U",
+      "price": "U",
+      "terms": "U",
+      "tested": "只打开网页，未发现公开读取接口",
+      "source": "https://tokenearly.com/exchanges/bybit/announcements"
+    },
+    {
+      "name": "CCData / CryptoCompare",
+      "coverage": "多交易所行情和历史市场数据",
+      "provides": "市场数据，统一上币公告覆盖 U",
+      "history": "U",
+      "free_quota": "U",
+      "price": "U",
+      "terms": "U",
+      "tested": "U",
+      "source": "https://min-api.cryptocompare.com/documentation"
+    },
+    {
+      "name": "Kaiko",
+      "coverage": "多交易所市场数据",
+      "provides": "历史行情和交易数据，公告覆盖 U",
+      "history": "U",
+      "free_quota": "U",
+      "price": "U",
+      "terms": "U",
+      "tested": "U",
+      "source": "https://docs.kaiko.com/"
+    },
+    {
+      "name": "Amberdata",
+      "coverage": "多交易所市场和链上数据",
+      "provides": "历史行情等，公告覆盖 U",
+      "history": "U",
+      "free_quota": "U",
+      "price": "U",
+      "terms": "U",
+      "tested": "U",
+      "source": "https://docs.amberdata.io/"
+    },
+    {
+      "name": "TokenInsight",
+      "coverage": "交易所评级和市场信息",
+      "provides": "评级 / 市场信息，统一公告读取接口 U",
+      "history": "U",
+      "free_quota": "U",
+      "price": "U",
+      "terms": "U",
+      "tested": "U",
+      "source": "https://tokeninsight.com/"
+    }
+  ],
+  "done": [
+    "建立六家交易所的公告、K 线、交易对接口字段和证据链接。",
+    "提供 alpha/review/scripts/x9_probe.py，供 GitHub Actions 实测 HTTP 状态和响应前 200 字符。",
+    "记录已由 Claude Actions 给出的 OKX、Bitget、Kraken 结果。"
+  ],
+  "not_done": [
+    "CoinGecko 前 50 快照、24h 现货成交额和 trust_score 未下载，相关字段为 U。",
+    "未完成逐所用六个月前上线资产验证 K 线最早日期。",
+    "GitHub Actions 的每个接口原始前 200 字符未随本批交接，脚本已交由后续工作流运行。",
+    "第三方来源的价格、额度、存档和再分发条款大多未找到可核官方原文，均保留 U。",
+    "X9 尚未覆盖其余 CoinGecko 前 50 交易所。"
+  ]
+}
