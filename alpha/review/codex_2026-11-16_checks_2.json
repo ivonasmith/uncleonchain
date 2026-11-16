@@ -1,0 +1,130 @@
+[
+  {
+    "key": "m:pons",
+    "name": "Pons",
+    "one_liner": "Robinhood Chain 上非托管 meme 币 launchpad，用 bonding curve 发币，毕业进锁仓 Uniswap v4 池，协议费部分买回烧 PONS。",
+    "checked_utc": "2026-11-16T06:00:00Z",
+    "token_stance": "有代币，已在运行并有买回烧机制",
+    "token_stance_src": "https://ponsfamily.com/analytics",
+    "token_stance_date": "2026-07",
+    "revenue_who": "官网当前说明协议收入中 80% 用于自动 TWAP 买回 PONS，20% 用于基础设施和团队扩展。页面同时显示当前累计 PONS burned 为 0，因此不能写成已完成销毁。",
+    "revenue_method": "官方分析页按发币费、V1 池交易量、曲线费、creator tax 和毕业池 sweep 统计费用。该页面显示累计协议收入和分配，但未在本批次独立重放链上金额。",
+    "wash_or_subsidy": "U",
+    "user_role": "普通人可作为 creator 发币，或 trader 在 curve/池买卖。",
+    "entry": [
+      "use"
+    ],
+    "entry_why": "参与方式为支付 gas + ETH 在 https://www.ponsfamily.com/launchpad/create 发币，或直接买卖已发 token，无 points 计划证据。",
+    "scores": {
+      "M": {
+        "v": 3,
+        "why": "V2 新增 bonding curve 定价 + 毕业进永久锁 Uniswap v4 自定义 hook，支持 pair tokenized stocks/ETFs 等新资产，区别于 V1 即时池。",
+        "src": "https://docs.ponsfamily.com/v2"
+      },
+      "A": {
+        "v": 3,
+        "why": "官网两步操作：上传图文选 pair 签名即可发币，Robinhood Chain gas 低，普通人钱包即可完成。",
+        "src": "https://ponsfamily.com/launchpad/create"
+      },
+      "F": {
+        "v": 3,
+        "why": "非 custodial，任何地址可发币，creator 获70-90% 费，无明显预留或 VC 分配记录。",
+        "src": "https://docs.ponsfamily.com/llms.txt"
+      },
+      "E": {
+        "v": 2,
+        "why": "V2 hook 和 factory 被外部 token 使用（>100万 launches），但独立团队付费使用或复用未在一手证据中明确核实。",
+        "src": "https://ponsfamily.com/analytics"
+      },
+      "V": {
+        "v": 1,
+        "why": "官方 V2 文档明确，买回的代币进入买回金库并按五年线性释放，官方分析页当前显示 PONS burned 为 0。现有证据支持“买回并锁定/释放”，不支持“已销毁”。",
+        "src": "https://docs.ponsfamily.com/v2"
+      },
+      "G": {
+        "v": 1,
+        "why": "9月高峰后 10-11 月 fees/revenue 显著下降（从月 1.2 亿+ 降至百万级），无清晰 D30 非单一簇增长证据。",
+        "src": "https://defillama.com/protocol/pons-v2"
+      },
+      "D": {
+        "v": 1,
+        "why": "主要由 launch/trade 参与者支付费用，外部客户（如 stock token 真实使用）有报道但账单未在一手合约中完全核对分离。",
+        "src": "https://defillama.com/protocol/pons"
+      },
+      "T": {
+        "v": 2,
+        "why": "当前仍开放 launch（每天 5k+），但高峰已过，gas waiver 等早期优势已结束，规则稳定可核。",
+        "src": "https://ponsfamily.com/analytics"
+      },
+      "TM": {
+        "v": 1,
+        "why": "Pons Labs, LLC 运营，pseudonymous Ozzy (@MEADGod) 领导，有公开合约交付和产品迭代记录，无不良记录证据。",
+        "src": "https://candydrops.xyz/en/projects/pons"
+      },
+      "TE": {
+        "v": 2,
+        "why": "官方文档称买回代币进入五年线性释放金库，且 vestingStart 会随新买回调整。未来 90 天净新增可售数量未核验。",
+        "src": "https://docs.ponsfamily.com/v2"
+      }
+    },
+    "counter": "交易和协议收入在历史高峰后下降，且买回代币进入五年释放金库，当前页面显示 PONS burned 为 0。",
+    "verdict": "研究观察",
+    "verdict_reason": "对象与 V2 机制有官方文档，M/A/F 部分事实可核，但 Grok 将买回锁仓误写成已买回销毁，价值捕获结论需要按锁仓与实际 burn 分开记录。",
+    "missing": [
+      "官方团队实名身份和历史交付细节",
+      "外部付费客户与补贴分离的链上证据",
+      "未来 90 天可释放买回代币数量",
+      "官方分析页当前买回余额与链上事件的独立重放"
+    ],
+    "evidence": [
+      {
+        "url": "https://docs.ponsfamily.com/v2",
+        "fields": [
+          "M",
+          "fees",
+          "buyback vesting",
+          "contracts"
+        ]
+      },
+      {
+        "url": "https://ponsfamily.com/analytics",
+        "fields": [
+          "fee distribution",
+          "PONS burned currently 0",
+          "protocol revenue"
+        ]
+      },
+      {
+        "url": "https://docs.ponsfamily.com/",
+        "fields": [
+          "current fee split",
+          "protocol buyback description"
+        ]
+      },
+      {
+        "url": "https://ponsfamily.com/launchpad/0x85889c4aa1e79d055cf69cc7eb4431c2801daee3",
+        "fields": [
+          "PONS V2 示例上线日期",
+          "实际 launch 页面"
+        ]
+      }
+    ],
+    "official_x": "@ponsdotfamily",
+    "reviewer": "codex",
+    "events": [
+      {
+        "date": "2026-09-28",
+        "what": "Pons launchpad 页面显示 PONS V2 示例已上线，页面标注 Launched Sep 28, 2026。",
+        "src": "https://ponsfamily.com/launchpad/0x85889c4aa1e79d055cf69cc7eb4431c2801daee3"
+      }
+    ],
+    "flow": {
+      "积分空投": "待验证",
+      "新链首发": "低",
+      "补贴": "待验证",
+      "自然需求": "待验证",
+      "evidence": "https://ponsfamily.com/analytics"
+    },
+    "next_review": "2026-11-22"
+  }
+]
