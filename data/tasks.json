@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-16T01:14:53+00:00",
+ "generated": "2026-11-16T02:07:41+00:00",
  "boards": [
   {
    "board": "alpha",
@@ -54,7 +54,7 @@
   {
    "board": "alpha",
    "id": "alpha:research",
-   "title": "机会卡补证（队列 37 个，从上往下补，M 新参与机制优先查）",
+   "title": "机会卡补证（队列 36 个，从上往下补，M 新参与机制优先查）",
    "who": "codex",
    "pri": 1,
    "deliver": "alpha/review/codex_2026-11-16_checks.json（JSON 数组，reviewer = codex）",
@@ -98,13 +98,6 @@
     {
      "key": "s:8884",
      "name": "Nullmask",
-     "status": "原始线索",
-     "fresh": true,
-     "kind": "surge"
-    },
-    {
-     "key": "s:7966",
-     "name": "Render Network BME",
      "status": "原始线索",
      "fresh": true,
      "kind": "surge"
@@ -166,11 +159,11 @@
      "kind": "surge"
     },
     {
-     "key": "s:9187",
-     "name": "Stockereum",
+     "key": "g:9367",
+     "name": "MING",
      "status": "原始线索",
      "fresh": true,
-     "kind": "surge"
+     "kind": "tokenless"
     },
     {
      "key": "g:8144",
@@ -229,15 +222,15 @@
      "kind": "tokenless"
     },
     {
-     "key": "g:7010",
-     "name": "trade[XYZ]",
+     "key": "g:parent#azverse",
+     "name": "Azverse",
      "status": "待核验",
      "fresh": false,
      "kind": "tokenless"
     },
     {
-     "key": "g:parent#azverse",
-     "name": "Azverse",
+     "key": "g:7010",
+     "name": "trade[XYZ]",
      "status": "待核验",
      "fresh": false,
      "kind": "tokenless"
@@ -320,7 +313,7 @@
      "kind": "tokenless"
     }
    ],
-   "n": 37,
+   "n": 36,
    "note": "排序：手动线索 / 本站板块 ★ → 新发现 → 有参与入口 → 收入高。同一天多批追加进同一个文件。"
   },
   {
@@ -562,12 +555,12 @@
      "name": "Montra"
     },
     {
-     "slug": "launchlab",
-     "name": "LaunchLab"
-    },
-    {
      "slug": "pons-v2",
      "name": "Pons V2"
+    },
+    {
+     "slug": "launchlab",
+     "name": "LaunchLab"
     },
     {
      "slug": "bonk.fun-launchpad",
@@ -586,28 +579,32 @@
      "name": "Graphite Protocol"
     },
     {
-     "slug": "volta",
-     "name": "Volta"
+     "slug": "binance-alpha",
+     "name": "Binance Alpha"
     },
     {
      "slug": "meteora-dynamic-bonding-curve",
      "name": "Meteora Dynamic Bonding Curve"
     },
     {
-     "slug": "binance-alpha",
-     "name": "Binance Alpha"
-    },
-    {
-     "slug": "boxa-v1",
-     "name": "Boxa V1"
+     "slug": "volta",
+     "name": "Volta"
     },
     {
      "slug": "clanker",
      "name": "clanker"
     },
     {
+     "slug": "boxa-v1",
+     "name": "Boxa V1"
+    },
+    {
      "slug": "bags",
      "name": "Bags"
+    },
+    {
+     "slug": "four.meme",
+     "name": "four.meme"
     },
     {
      "slug": "otc",
@@ -616,10 +613,6 @@
     {
      "slug": "pons-v1",
      "name": "Pons V1"
-    },
-    {
-     "slug": "four.meme",
-     "name": "four.meme"
     },
     {
      "slug": "noxa-fun",
@@ -634,20 +627,20 @@
      "name": "ElysPump V2"
     },
     {
-     "slug": "metaplex",
-     "name": "Metaplex"
+     "slug": "pools",
+     "name": "Pools"
     },
     {
      "slug": "rise.rich",
      "name": "Rise.rich"
     },
     {
-     "slug": "pools",
-     "name": "Pools"
+     "slug": "metaplex",
+     "name": "Metaplex"
     },
     {
-     "slug": "genius.fun",
-     "name": "Genius.fun"
+     "slug": "o1-launchpad",
+     "name": "o1 Launchpad"
     }
    ],
    "n": 25,
@@ -675,7 +668,7 @@
   {
    "board": "alpha",
    "id": "alpha:cmc",
-   "title": "CMC 页面地址核对登记（12 个币）",
+   "title": "CMC 页面地址核对登记（11 个币）",
    "who": "codex",
    "pri": 3,
    "deliver": "alpha/cmc_slugs.json",
@@ -689,12 +682,11 @@
     "peapods-finance",
     "pons",
     "sapling",
-    "stockereum-fun",
     "thor-wallet",
     "veil-2",
     "vesper-finance"
    ],
-   "n": 12,
+   "n": 11,
    "note": null
   },
   {
@@ -997,31 +989,6 @@
    "deliver": "alpha/review/codex_2026-11-16_checks.json"
   },
   {
-   "key": "alpha:s:7966",
-   "board": "alpha",
-   "priority": 1,
-   "task_type": "research",
-   "name": "Render Network BME",
-   "missing": [
-    "M",
-    "A",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM",
-    "TE"
-   ],
-   "source_refs": [
-    "data/alpha/research_queue.json"
-   ],
-   "status": "open",
-   "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-16_checks.json"
-  },
-  {
    "key": "alpha:s:8481",
    "board": "alpha",
    "priority": 1,
@@ -1099,7 +1066,7 @@
   {
    "key": "alpha:s:7655",
    "board": "alpha",
-   "priority": 2,
+   "priority": 1,
    "task_type": "research",
    "name": "THORWallet",
    "missing": [
@@ -1222,11 +1189,11 @@
    "deliver": "alpha/review/codex_2026-11-16_checks.json"
   },
   {
-   "key": "alpha:s:9187",
+   "key": "alpha:g:9367",
    "board": "alpha",
    "priority": 2,
    "task_type": "research",
-   "name": "Stockereum",
+   "name": "MING",
    "missing": [
     "M",
     "A",
@@ -1236,8 +1203,7 @@
     "G",
     "D",
     "T",
-    "TM",
-    "TE"
+    "TM"
    ],
    "source_refs": [
     "data/alpha/research_queue.json"
@@ -1453,11 +1419,11 @@
    "deliver": "alpha/review/codex_2026-11-16_checks.json"
   },
   {
-   "key": "alpha:g:7010",
+   "key": "alpha:g:parent#azverse",
    "board": "alpha",
    "priority": 2,
    "task_type": "evidence",
-   "name": "trade[XYZ]",
+   "name": "Azverse",
    "missing": [
     "M",
     "F",
@@ -1480,11 +1446,11 @@
    "deliver": "alpha/review/codex_2026-11-16_checks.json"
   },
   {
-   "key": "alpha:g:parent#azverse",
+   "key": "alpha:g:7010",
    "board": "alpha",
    "priority": 2,
    "task_type": "evidence",
-   "name": "Azverse",
+   "name": "trade[XYZ]",
    "missing": [
     "M",
     "F",

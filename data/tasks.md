@@ -1,4 +1,4 @@
-# 全站待办与检查（2026-11-16 01:14 UTC 自动生成，别手改）
+# 全站待办与检查（2026-11-16 02:07 UTC 自动生成，别手改）
 
 | 板块 | 待办 | 问题 |
 |---|---|---|
@@ -13,7 +13,7 @@
 
 ## 待办
 
-- **P1 · Codex · alpha** 机会卡补证（队列 37 个，从上往下补，M 新参与机制优先查） → `alpha/review/codex_2026-11-16_checks.json（JSON 数组，reviewer = codex）`（参考 `data/alpha/research_queue.json（prompt / schema / items）`）
+- **P1 · Codex · alpha** 机会卡补证（队列 36 个，从上往下补，M 新参与机制优先查） → `alpha/review/codex_2026-11-16_checks.json（JSON 数组，reviewer = codex）`（参考 `data/alpha/research_queue.json（prompt / schema / items）`）
 - **P1 · Codex · alpha** 补「量从哪来」和关键事件（35 张已补证的卡还没有 flow / events，先做 Montra、Pons 当样板） → `alpha/review/codex_2026-11-16_checks.json（同 key 交新一条，带 flow / events / capture / next_review）`（参考 `data/alpha/research_queue.json 的 schema`）
 - **P2 · Codex · aiagent** A1 服务层真实性 → `aiagent/review/a1_commerce_checks.json`（参考 `aiagent/review/README.md`）
 - **P2 · Codex · aiagent** A2 x402 与 ERC-8004 的链上数据源 → `aiagent/review/a2_rails_sources.json`（参考 `aiagent/review/README.md`）
@@ -24,7 +24,7 @@
 - **P2 · Codex · alpha** 关键人名单核对（S2） → `alpha/review/sources_people.json`（参考 `alpha/review/sources_task.md`）
 - **P2 · Codex · launchpad** 关键事件登记（近 7 天手续费前 25 的平台里 25 家还没有） → `config/launchpad_events.json（每条 日期 / 事 / 出处，必须官方出处）`（参考 `docs/接口_发射台给Alpha.md`）
 - **P3 · Codex · aiagent** 监控地图待核事项（6 条） → `aiagent/aiagent_registry.json`
-- **P3 · Codex · alpha** CMC 页面地址核对登记（12 个币） → `alpha/cmc_slugs.json`（参考 `AGENTS.md 第 4 节 3b`）
+- **P3 · Codex · alpha** CMC 页面地址核对登记（11 个币） → `alpha/cmc_slugs.json`（参考 `AGENTS.md 第 4 节 3b`）
 - **P3 · Codex · alpha** 历史案例峰值日流通量登记（21 个，估值改流通口径用） → `alpha/cases.json 每个 tokens[] 加 circ_peak {数量, 日期, 出处}`（参考 `alpha/review/fable_findings_20261115.md 第 12 条`）
 - **P3 · Codex · alpha** 补失败样本 / 同期对照组（现在 3 个，目标 ≥ 10） → `alpha/review/cases_control_<日期>.json（格式同 alpha/cases.json 的 cases[]，带 why_control 和出处）`（参考 `alpha/cases.json`）
 - **P3 · Codex · alpha** 英文稿（3 篇研究文档；英文站现在只有导航是英文） → `alpha/research/<同名>.en.md（Claude 接进网站）`
