@@ -1,8 +1,8 @@
-# 全站待办与检查（2026-11-16 15:13 UTC 自动生成，别手改）
+# 全站待办与检查（2026-11-16 16:16 UTC 自动生成，别手改）
 
 | 板块 | 待办 | 问题 |
 |---|---|---|
-| Alpha 雷达 | 19 | 2 |
+| Alpha 雷达 | 16 | 2 |
 | 发射台 | 2 | 0 |
 | AI Agent | 7 | 0 |
 | RWA | 0 | 0 |
@@ -22,10 +22,7 @@
 - **P2 · Codex · aiagent** A5 时间线与 C 级证据升级 → `aiagent/review/a5_timeline.json`（参考 `aiagent/review/README.md`）
 - **P2 · Codex · aiagent** A6 框架与开发者清单 → `aiagent/review/a6_frameworks.json`（参考 `aiagent/review/README.md`）
 - **P2 · Codex · alpha** 关键人名单核对（S2） → `alpha/review/sources_people.json`（参考 `alpha/review/sources_task.md`）
-- **P2 · Codex · alpha** X2 历史 K 线源验收 → `alpha/review/x2_kline_sources.json`（参考 `alpha/review/README.md`）
-- **P2 · Codex · alpha** X3 报价币换算日源 → `alpha/review/x3_quote_fx.json`（参考 `alpha/review/README.md`）
 - **P2 · Codex · alpha** X4 上市事件样本库（过去 12 个月，≥100 条） → `alpha/review/x4_listing_events.json`（参考 `alpha/review/README.md`）
-- **P2 · Codex · alpha** X5 多所聚类规则草案 → `alpha/review/x5_cluster_draft.md`（参考 `alpha/review/README.md`）
 - **P2 · Codex · alpha** M1 技术与开发者雷达来源 → `alpha/review/m1_dev_sources.json`（参考 `alpha/review/README.md`）
 - **P2 · Codex · alpha** M2 链上创世动作字段 → `alpha/review/m2_genesis_fields.md`（参考 `alpha/review/README.md`）
 - **P2 · Codex · alpha** M3 卡片决策条件与证据分类字段 → `alpha/review/m3_card_schema.md`（参考 `alpha/review/README.md`）
