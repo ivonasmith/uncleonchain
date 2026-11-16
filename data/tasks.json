@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-16T05:31:30+00:00",
+ "generated": "2026-11-16T05:33:04+00:00",
  "boards": [
   {
    "board": "alpha",
@@ -535,8 +535,8 @@
   },
   {
    "board": "alpha",
-   "id": "alpha:pkg:X1-交易所公告源验收-含第三方聚合源-Tokenearly-Listing-R",
-   "title": "X1 交易所公告源验收（含第三方聚合源：Tokenearly、Listing Radar、Sharpe、CryptoListingWS 等）",
+   "id": "alpha:pkg:X1-交易所公告源验收-含第三方聚合源和交易所官方-X-账号-",
+   "title": "X1 交易所公告源验收（含第三方聚合源和交易所官方 X 账号）",
    "who": "codex",
    "pri": 2,
    "deliver": "alpha/review/x1_exchange_sources.json",
@@ -900,9 +900,9 @@
    "deliver": "alpha/research/<同名>.en.md（Claude 接进网站）",
    "ref": null,
    "items": [
-    "Alpha标的筛选研究体系.md",
     "案例库.md",
-    "研究进度.md"
+    "研究进度.md",
+    "Alpha标的筛选研究体系.md"
    ],
    "n": 3,
    "note": null

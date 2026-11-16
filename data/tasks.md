@@ -1,4 +1,4 @@
-# 全站待办与检查（2026-11-16 05:31 UTC 自动生成，别手改）
+# 全站待办与检查（2026-11-16 05:33 UTC 自动生成，别手改）
 
 | 板块 | 待办 | 问题 |
 |---|---|---|
@@ -22,7 +22,7 @@
 - **P2 · Codex · aiagent** A5 时间线与 C 级证据升级 → `aiagent/review/a5_timeline.json`（参考 `aiagent/review/README.md`）
 - **P2 · Codex · aiagent** A6 框架与开发者清单 → `aiagent/review/a6_frameworks.json`（参考 `aiagent/review/README.md`）
 - **P2 · Codex · alpha** 关键人名单核对（S2） → `alpha/review/sources_people.json`（参考 `alpha/review/sources_task.md`）
-- **P2 · Codex · alpha** X1 交易所公告源验收（含第三方聚合源：Tokenearly、Listing Radar、Sharpe、CryptoListingWS 等） → `alpha/review/x1_exchange_sources.json`（参考 `alpha/review/README.md`）
+- **P2 · Codex · alpha** X1 交易所公告源验收（含第三方聚合源和交易所官方 X 账号） → `alpha/review/x1_exchange_sources.json`（参考 `alpha/review/README.md`）
 - **P2 · Codex · alpha** X2 历史 K 线源验收 → `alpha/review/x2_kline_sources.json`（参考 `alpha/review/README.md`）
 - **P2 · Codex · alpha** X3 报价币换算日源 → `alpha/review/x3_quote_fx.json`（参考 `alpha/review/README.md`）
 - **P2 · Codex · alpha** X4 上市事件样本库（过去 12 个月，≥100 条） → `alpha/review/x4_listing_events.json`（参考 `alpha/review/README.md`）
