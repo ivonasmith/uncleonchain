@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-16T06:22:59+00:00",
+ "generated": "2026-11-16T06:56:50+00:00",
  "asof": "2026-11-15",
  "stale": false,
  "baseline_day": "2026-11-14",
@@ -2591,7 +2591,7 @@
    "chains": [
     "Stellar"
    ],
-   "tvl": 274244,
+   "tvl": 272551,
    "listed": "2026-11-15",
    "token": true,
    "parent": null
@@ -2607,7 +2607,7 @@
    "chains": [
     "Robinhood Chain"
    ],
-   "tvl": 15764,
+   "tvl": 15174,
    "listed": "2026-11-15",
    "token": true,
    "parent": null
@@ -2623,7 +2623,7 @@
    "chains": [
     "Flare"
    ],
-   "tvl": 1035,
+   "tvl": 1057,
    "listed": "2026-11-15",
    "token": false,
    "parent": null
@@ -2667,7 +2667,7 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 1861026,
+   "tvl": 1857694,
    "listed": "2026-11-14",
    "token": true,
    "parent": "parent#nest"
@@ -2699,7 +2699,7 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 40443,
+   "tvl": 40873,
    "listed": "2026-11-14",
    "token": true,
    "parent": "parent#kleos"
@@ -2715,7 +2715,7 @@
    "chains": [
     "Robinhood Chain"
    ],
-   "tvl": 4866,
+   "tvl": 4867,
    "listed": "2026-11-14",
    "token": false,
    "parent": null
@@ -2887,7 +2887,7 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 6819,
+   "tvl": 6770,
    "listed": "2026-11-13",
    "token": false,
    "parent": null
@@ -2975,7 +2975,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 6807877,
+   "tvl": 6811656,
    "listed": "2026-11-12",
    "token": false,
    "parent": null
@@ -2993,26 +2993,10 @@
     "Base",
     "Berachain"
    ],
-   "tvl": 198770,
+   "tvl": 197539,
    "listed": "2026-11-12",
    "token": false,
    "parent": null
-  },
-  {
-   "key": "p:9421",
-   "name": "Boxa V1",
-   "slug": "boxa-v1",
-   "category": "Launchpad",
-   "url": "",
-   "logo": "https://icons.llamao.fi/icons/protocols/boxa-v1",
-   "twitter": "Boxa_Elysium",
-   "chains": [
-    "Elysium Kinetiq"
-   ],
-   "tvl": 64353,
-   "listed": "2026-11-12",
-   "token": false,
-   "parent": "parent#boxa"
   },
   {
    "key": "p:9414",
@@ -3029,6 +3013,22 @@
    "listed": "2026-11-12",
    "token": false,
    "parent": null
+  },
+  {
+   "key": "p:9421",
+   "name": "Boxa V1",
+   "slug": "boxa-v1",
+   "category": "Launchpad",
+   "url": "",
+   "logo": "https://icons.llamao.fi/icons/protocols/boxa-v1",
+   "twitter": "Boxa_Elysium",
+   "chains": [
+    "Elysium Kinetiq"
+   ],
+   "tvl": 63622,
+   "listed": "2026-11-12",
+   "token": false,
+   "parent": "parent#boxa"
   },
   {
    "key": "p:9424",
@@ -3176,7 +3176,7 @@
     "Monad",
     "Base"
    ],
-   "tvl": 34208709,
+   "tvl": 34164814,
    "listed": "2026-11-11",
    "token": true,
    "parent": "parent#pendle"
@@ -3192,7 +3192,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 3396133,
+   "tvl": 3397975,
    "listed": "2026-11-11",
    "token": false,
    "parent": null
@@ -3257,7 +3257,7 @@
     "Base",
     "Robinhood Chain"
    ],
-   "tvl": 6682,
+   "tvl": 6651,
    "listed": "2026-11-11",
    "token": false,
    "parent": null
@@ -3337,7 +3337,7 @@
    "chains": [
     "Robinhood Chain"
    ],
-   "tvl": 54,
+   "tvl": 53,
    "listed": "2026-11-11",
    "token": true,
    "parent": "parent#hedgehood"
@@ -3513,7 +3513,7 @@
    "chains": [
     "Soneium"
    ],
-   "tvl": 624880,
+   "tvl": 625153,
    "listed": "2026-11-10",
    "token": false,
    "parent": null
@@ -3529,7 +3529,23 @@
    "chains": [
     "Hyperliquid L1"
    ],
-   "tvl": 139936,
+   "tvl": 145472,
+   "listed": "2026-11-10",
+   "token": false,
+   "parent": null
+  },
+  {
+   "key": "p:9387",
+   "name": "Aurumlend",
+   "slug": "aurumlend",
+   "category": "Lending",
+   "url": "",
+   "logo": "https://icons.llamao.fi/icons/protocols/aurumlend",
+   "twitter": "Aurumlend",
+   "chains": [
+    "Arc"
+   ],
+   "tvl": 14855,
    "listed": "2026-11-10",
    "token": false,
    "parent": null
@@ -3545,26 +3561,10 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 15392,
+   "tvl": 9126,
    "listed": "2026-11-10",
    "token": false,
    "parent": "parent#kalos"
-  },
-  {
-   "key": "p:9387",
-   "name": "Aurumlend",
-   "slug": "aurumlend",
-   "category": "Lending",
-   "url": "",
-   "logo": "https://icons.llamao.fi/icons/protocols/aurumlend",
-   "twitter": "Aurumlend",
-   "chains": [
-    "Arc"
-   ],
-   "tvl": 14925,
-   "listed": "2026-11-10",
-   "token": false,
-   "parent": null
   },
   {
    "key": "p:9384",
@@ -3711,7 +3711,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 8799,
+   "tvl": 8759,
    "listed": "2026-11-09",
    "token": true,
    "parent": null
@@ -3889,7 +3889,7 @@
     "Arbitrum",
     "Base"
    ],
-   "tvl": 118137,
+   "tvl": 117718,
    "listed": "2026-11-08",
    "token": false,
    "parent": "parent#bitty"
@@ -3921,7 +3921,7 @@
    "chains": [
     "Anubis"
    ],
-   "tvl": 401149,
+   "tvl": 401150,
    "listed": "2026-11-07",
    "token": false,
    "parent": "parent#rocketswap-anubis"
@@ -4161,7 +4161,7 @@
    "chains": [
     "Base"
    ],
-   "tvl": 3584,
+   "tvl": 3581,
    "listed": "2026-11-05",
    "token": false,
    "parent": null
@@ -4241,7 +4241,7 @@
     "Avalanche",
     "Arbitrum"
    ],
-   "tvl": 1744808,
+   "tvl": 1736728,
    "listed": "2026-11-04",
    "token": true,
    "parent": "parent#dexalot"
@@ -4259,7 +4259,7 @@
     "Base",
     "Arbitrum"
    ],
-   "tvl": 739912,
+   "tvl": 740061,
    "listed": "2026-11-04",
    "token": false,
    "parent": "parent#privacy-pools"
@@ -4308,7 +4308,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 14499,
+   "tvl": 14498,
    "listed": "2026-11-04",
    "token": false,
    "parent": null
@@ -4516,7 +4516,7 @@
    "chains": [
     "Sui"
    ],
-   "tvl": 4190,
+   "tvl": 4215,
    "listed": "2026-11-03",
    "token": false,
    "parent": null
@@ -4637,7 +4637,7 @@
    "chains": [
     "Solana"
    ],
-   "tvl": 95469,
+   "tvl": 95229,
    "listed": "2026-11-02",
    "token": false,
    "parent": "parent#exceed-finance"
