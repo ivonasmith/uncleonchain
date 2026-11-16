@@ -1,0 +1,77 @@
+name: 检查 X 密钥（手动）
+
+# 只报告候选 Secret 名字有没有配、能不能调通 X 的读取接口，不打印任何值。用自己的并发组。
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: check-x-key
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: 检查
+        env:
+          X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
+          TWITTER_BEARER_TOKEN: ${{ secrets.TWITTER_BEARER_TOKEN }}
+          X_BEARER: ${{ secrets.X_BEARER }}
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_API_KEY_SECRET: ${{ secrets.X_API_KEY_SECRET }}
+          X_CONSUMER_KEY: ${{ secrets.X_CONSUMER_KEY }}
+          X_CONSUMER_SECRET: ${{ secrets.X_CONSUMER_SECRET }}
+          TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
+          TWITTER_API_SECRET: ${{ secrets.TWITTER_API_SECRET }}
+          AXI_API_KEY: ${{ secrets.AXI_API_KEY }}
+          AXI_API_SECRET: ${{ secrets.AXI_API_SECRET }}
+          AXI_BEARER_TOKEN: ${{ secrets.AXI_BEARER_TOKEN }}
+        run: |
+          python3 - <<'EOF'
+          import os, json, base64, urllib.request, urllib.error
+          def mask(s, v): return s.replace(v, "***") if v else s
+          def get(url, tok):
+              req = urllib.request.Request(url, headers={"Authorization": f"Bearer {tok}", "User-Agent": "uncleonchain-key-check"})
+              try:
+                  with urllib.request.urlopen(req, timeout=30) as r:
+                      return r.status, r.read(400).decode("utf-8", "ignore"), dict(r.headers)
+              except urllib.error.HTTPError as e:
+                  return e.code, e.read(400).decode("utf-8", "ignore"), dict(e.headers)
+          bearers, pairs = [], []
+          for n in ["X_BEARER_TOKEN", "TWITTER_BEARER_TOKEN", "X_BEARER", "AXI_BEARER_TOKEN"]:
+              v = os.environ.get(n, "").strip()
+              print(f"{n}: {'已配（长度 %d）' % len(v) if v else '没配'}")
+              if v: bearers.append((n, v))
+          for kn, sn in [("X_API_KEY", "X_API_SECRET"), ("X_API_KEY", "X_API_KEY_SECRET"), ("X_CONSUMER_KEY", "X_CONSUMER_SECRET"), ("TWITTER_API_KEY", "TWITTER_API_SECRET"), ("AXI_API_KEY", "AXI_API_SECRET")]:
+              k, s = os.environ.get(kn, "").strip(), os.environ.get(sn, "").strip()
+              if k and s:
+                  pairs.append((kn, k, s)); print(f"{kn}+{sn}: 两个都配了")
+              elif k or s:
+                  print(f"{kn}/{sn}: 只配了一个")
+          for kn, k, s in pairs:
+              basic = base64.b64encode(f"{k}:{s}".encode()).decode()
+              req = urllib.request.Request("https://api.x.com/oauth2/token", data=b"grant_type=client_credentials", method="POST",
+                                           headers={"Authorization": f"Basic {basic}", "Content-Type": "application/x-www-form-urlencoded"})
+              try:
+                  with urllib.request.urlopen(req, timeout=30) as r:
+                      t = json.load(r).get("access_token", "")
+                  print(f"{kn}: 换取 Bearer 成功"); bearers.append((kn, t))
+              except urllib.error.HTTPError as e:
+                  print(f"{kn}: 换取 Bearer 失败 HTTP {e.code} {mask(e.read(200).decode('utf-8','ignore'), k)}")
+          for n, tok in bearers:
+              if not tok:
+                  continue
+              code, body, hdr = get("https://api.x.com/2/users/by/username/Binance?user.fields=public_metrics,created_at", tok)
+              rl = {k: v for k, v in hdr.items() if k.lower().startswith("x-rate-limit")}
+              print(f"{n}: 读取 Binance 账号 HTTP {code} · 限额头 {rl} · 返回 {mask(body, tok)[:160]}")
+              code2, body2, _ = get("https://api.x.com/2/users/by/username/OKX/tweets?max_results=5", tok)
+              print(f"{n}: 读取 OKX 最近帖子 HTTP {code2} · 返回 {mask(body2, tok)[:160]}")
+              break
+          else:
+              print("没有可用的 Bearer，无法测试")
+          EOF
