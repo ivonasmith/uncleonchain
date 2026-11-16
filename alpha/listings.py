@@ -258,12 +258,16 @@ def main():
     # 3) 首笔成交与窗口（没算完的都重试；现货每个币只算 USDT 对，没有就算公告里的第一个对）
     by_art = {}
     for k, e in E.items():
+        if e.get("exchange", "Binance") != "Binance":   # 其它所的事件由 listings_x.py 处理，这里只管 Binance
+            continue
         by_art.setdefault(k.rsplit(":", 1)[0] + ":" + e["asset"], []).append(k)
     for grp in by_art.values():
         main_k = next((k for k in grp if E[k]["quote"] == "USDT"), grp[0])
         for k in grp:
             E[k]["primary"] = k == main_k
     for k, e in E.items():
+        if e.get("exchange", "Binance") != "Binance":
+            continue
         if not e.get("primary") or (e.get("w") or {}).get("complete") or not e.get("planned_open_utc"):
             continue
         t = int(dt.datetime.strptime(e["planned_open_utc"], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=dt.timezone.utc).timestamp() * 1000)
@@ -282,9 +286,10 @@ def main():
         else:
             status["kline_fail"] += 1
         time.sleep(0.2)
-    prim = [e for e in E.values() if e.get("primary")]
-    store.update(generated=now.strftime("%Y-%m-%dT%H:%M:%SZ"), status=status, exchanges=["Binance"],
-                 n={"events": len(E), "primary": len(prim), "with_windows": sum(1 for e in prim if (e.get("w") or {}).get("complete")),
+    BE = {k: e for k, e in E.items() if e.get("exchange", "Binance") == "Binance"}
+    prim = [e for e in BE.values() if e.get("primary")]
+    store.update(generated=now.strftime("%Y-%m-%dT%H:%M:%SZ"), status=status, exchanges=sorted({"Binance"} | {e.get("exchange") for e in E.values() if e.get("exchange")}),
+                 n={"events": len(BE), "primary": len(prim), "with_windows": sum(1 for e in prim if (e.get("w") or {}).get("complete")),
                     "spot": sum(1 for e in prim if e["market"] == "现货"), "perp": sum(1 for e in prim if e["market"] == "永续")},
                  note="窗口参考价 = 第一根 1 分钟 K 线开盘价，是事后读数，不是可成交价；revision_utc 取不到记 null；其它交易所待接入")
     json.dump(store, open(PATH, "w", encoding="utf-8"), ensure_ascii=False, indent=1)

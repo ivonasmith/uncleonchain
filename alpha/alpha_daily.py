@@ -403,3 +403,8 @@ if __name__ == "__main__":
         exch_announce.main()
     except Exception as e:
         print("交易所公告流水失败：", e)
+    try:   # 其它所（OKX）的上币事件：公告正文 → 计划开盘 → 首笔成交 → 窗口，并进 data/alpha/listings.json（Bitget / Kraken 只有公告层）
+        import listings_x
+        listings_x.main()
+    except Exception as e:
+        print("其它所上币事件失败：", e)

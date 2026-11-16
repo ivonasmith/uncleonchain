@@ -11,8 +11,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: 探测
         run: python3 tools/probe/exchange_sources.py
-      - name: 探测 OKX / Bitget 详情页正文
-        run: python3 tools/probe/exch_detail.py
+      - name: 试跑 OKX 上币事件（不提交）：开盘时间 + 真实 K 线窗口
+        run: python3 alpha/listings_x.py
       - name: 试跑交易所公告流水（不提交）
         run: |
           python3 alpha/exch_announce.py
