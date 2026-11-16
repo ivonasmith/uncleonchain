@@ -87,6 +87,16 @@ def _num(v):
         return None
 
 
+def _show(res):
+    """GeckoTerminal 一个样本币的池子都没收录 = 这家的曲线池它不收，「0 个还在交易」不能当真：页面上写 null + 原因（历史里原样留着）。"""
+    r = dict(res)
+    if not r.get("收录"):
+        r["7天后仍有交易"] = r["市值过10万美元"] = None
+        r["说明"] = "GeckoTerminal 没收录这家任何一个样本币的池子（曲线池不收），存活查不了；要换数据源或自己扫链上交易"
+        r["来源"] = "待接入（GeckoTerminal 不收这家的池子）"
+    return r
+
+
 def main():
     import importlib.util, sys
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -153,7 +163,7 @@ def main():
                                   "来源": "GeckoTerminal（链上样本 + 第三方行情）"}
             mine = batches.setdefault(slug, {})
             if mine:
-                surv.update(mine[max(mine)])
+                surv.update(_show(mine[max(mine)]))
             if dd:
                 b = shift(dd, -SURV_DAYS)
                 if b not in mine:
@@ -215,7 +225,7 @@ def main():
         if boot:
             res["说明"] = "早期批次：每个工厂每天只留了 3 个样本币，这里把 7 天的样本拼成一批，币龄 7～14 天"
         batches[slug][b] = res                     # 同一批次不再重查
-        out[slug]["存活"].update(res)
+        out[slug]["存活"].update(_show(res))
         done += 1
         save()
         print(f"  {slug} 存活 {label}：{live}/{len(sample)} 还在交易，{big} 个市值过 10 万（GeckoTerminal 累计 {calls} 次）", flush=True)

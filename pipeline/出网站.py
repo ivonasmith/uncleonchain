@@ -3532,6 +3532,8 @@ def platform_quality_html(slug):
     if sv.get("7天后仍有交易") is not None:
         s_v = f'{sv["7天后仍有交易"]} / {sv["样本"]}'
         s_s = T(f'批次 {sv["批次"]}；市值过 10 万美元 {sv["市值过10万美元"]} 个', f'batch {sv["批次"]}; {sv["市值过10万美元"]} above $100k mcap')
+    elif sv.get("批次") and sv.get("收录") == 0:
+        s_v, s_s = na, T("GeckoTerminal 不收这家的池子，查不了", "GeckoTerminal doesn’t index this platform’s pools")
     else:
         s_v, s_s = na, T("攒样本中：某天发的币 7 天后才查", "collecting: checked 7 days after launch")
     k = (tpl(T("近 7 日发币", "Tokens launched (7d)"), n(fb.get("7d")) + est, T(f'最近一天 {n(fb.get("1d"))} · {esc(q.get("数据日") or "")}', f'last day {n(fb.get("1d"))} · {esc(q.get("数据日") or "")}'))
