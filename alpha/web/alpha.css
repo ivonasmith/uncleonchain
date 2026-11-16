@@ -242,3 +242,11 @@
 .ax-rsec>summary{cursor:pointer;list-style:none;margin:18px 0 6px}.ax-rsec>summary::-webkit-details-marker{display:none}
 .ax-rsec>summary h2::before{content:"▸ ";color:var(--muted)}.ax-rsec[open]>summary h2::before{content:"▾ "}
 .tw.scroll{max-height:560px;overflow:auto}.tw.scroll thead th{position:sticky;top:0;background:var(--card);z-index:1}
+
+/* 看板二级分类（11-16）：来源 / 类型 多选 */
+.kfilt{margin:8px 0 10px;display:flex;flex-direction:column;gap:6px}
+.krow{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.klab{font-size:12px;color:var(--muted);min-width:34px}
+.kchip{font:inherit;font-size:12px;padding:3px 9px;border-radius:999px;border:1px solid var(--line2);background:transparent;color:var(--ink2);cursor:pointer}
+.kchip.on{border-color:var(--lime-ink);color:var(--lime-ink);background:var(--up-bg, transparent)}
+.kchip.all{align-self:flex-start;color:var(--muted)}

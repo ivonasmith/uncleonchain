@@ -451,13 +451,19 @@
 
   /* ====================================================================== 机会看板：左列表 + 右详情 */
   let BF = 'invest', SELID = null, OPPS = null;
+  // 二级分类（11-16 大叔定）：来源类型、业务类型，可多选，默认全选；只过滤列表，KPI 仍按全量算
+  const SRC_NAME = { tokenless: [T('无币收入榜', 'Tokenless'), 'Tokenless'], surge: [T('有币 · 收入新起量', 'Revenue ramp'), 'Revenue ramp'], listing: [T('新上架', 'New listing'), 'New listing'], manual: [T('手动线索', 'Manual'), 'Manual'], site: [T('本站板块', 'Site board'), 'Site board'] };
+  let KSRC = null, KBIZ = null;
+  const kindSet = () => KSRC || (KSRC = new Set(Object.keys(SRC_NAME)));
+  const bizSet = () => KBIZ || (KBIZ = new Set(Object.keys(BIZ()).concat(['U'])));
+  const passK = o => kindSet().has(o.kind) && bizSet().has(o.classes.business.v || 'U');
   const DONE = ['研究观察', '优先研究'];
   function oneLiner(o) {
     return o.one_liner || [BIZ()[o.classes.business.v], o.data.category, (o.data.chains || []).slice(0, 2).join(' · ')].filter(Boolean).join(' · ');
   }
   function boardList() {
     const os = OPPS.opps;
-    const pool = BF === 'all' ? os.filter(o => o.bucket !== 'reject') : os.filter(o => o.bucket === BF);
+    const pool = (BF === 'all' ? os.filter(o => o.bucket !== 'reject') : os.filter(o => o.bucket === BF)).filter(passK);
     const fresh = pool.filter(o => o.fresh), rest = pool.filter(o => !o.fresh);
     const groups = [[T('新发现 · 3 天内', 'New · last 3 days'), fresh], [T('研究观察', 'Under research'), rest.filter(o => DONE.includes(o.status))], [T('待核验 / 未补证', 'Checking / raw'), rest.filter(o => !DONE.includes(o.status))]];
     const row = o => { const d = o.data; const v = d.rev30 != null ? d.rev30 : d.tvl;
@@ -466,8 +472,14 @@
         <span class="r2"><span>${d.rev30 != null ? usd(v) : d.fees7 != null ? T('7 天费 ', '7d fees ') + usd(d.fees7) : (v ? 'TVL ' + usd(v) : '—')} ${pct(d.chg30)}</span>${sparkSvg(o.spark, (d.chg30 || 0) >= 0 ? 'up' : 'dn', 64, 18)}</span>
         <span class="r4">${d.tok && d.tok.snap && d.tok.snap.mcap != null ? `<em class="agetag tok">${esc(d.tok.sym || '')} ${T('市值', 'MC')} ${usd(d.tok.snap.mcap)}</em>` : ''}</span>
         <span class="r3">${(d.sources || []).some(x => x.startsWith('site_') || x === 'manual') ? `<em class="mtag own" title="${T('本站板块或手动线索筛到', 'site board or manual lead')}">★</em>` : ''}<em class="mtag${known((o.scores.M || {}).v) ? ' k' : ''}">M${known((o.scores.M || {}).v) ? o.scores.M.v : '?'}</em>${o.entry.filter(e => e !== 'none').map(e => esc(ENTRY()[e])).join(' · ') || `<span class="muted">${T('暂无资金入口', 'No entry yet')}</span>`}</span></button>`; };
+    const bizN = o => BIZ()[o.classes.business.v] || T('未判明', 'Unknown');
+    const chip = (grp, k, lab, on) => `<button type="button" class="kchip${on ? ' on' : ''}" data-kf="${grp}|${esc(k)}">${esc(lab)}</button>`;
+    const srcAll = kindSet().size === Object.keys(SRC_NAME).length, bizAll = bizSet().size === Object.keys(BIZ()).length + 1;
     return `<div class="fg md-filter">${[['invest', T('有参与入口', 'Has entry')], ['watch', T('预警观察', 'Watchlist')], ['all', T('全部', 'All')], ['reject', T('已拒绝', 'Rejected')]]
         .map(([k, l]) => `<button type="button" class="pill${BF === k ? ' on' : ''}" data-bf="${k}">${l}<small>${k === 'all' ? os.filter(o => o.bucket !== 'reject').length : os.filter(o => o.bucket === k).length}</small></button>`).join('')}</div>
+      <div class="kfilt"><div class="krow"><span class="klab">${T('来源', 'Source')}</span>${Object.keys(SRC_NAME).map(k => chip('src', k, SRC_NAME[k][0], kindSet().has(k))).join('')}</div>
+        <div class="krow"><span class="klab">${T('类型', 'Type')}</span>${Object.keys(BIZ()).concat(['U']).map(k => chip('biz', k, k === 'U' ? T('未判明', 'Unknown') : BIZ()[k], bizSet().has(k))).join('')}</div>
+        ${(!srcAll || !bizAll) ? `<button type="button" class="kchip all" data-kf="all|all">${T('全选', 'Select all')}</button>` : ''}</div>
       ${groups.filter(g => g[1].length).map(([t, xs]) => `<div class="md-grp">${t}<span>${xs.length}</span></div>${xs.map(row).join('')}`).join('') || `<p class="muted small" style="padding:12px">${T('这一栏暂时没有。', 'Nothing here yet.')}</p>`}`;
   }
   function boardDetail(o) {
@@ -526,7 +538,7 @@
     const os = OPPS.opps, act = os.filter(o => o.bucket !== 'reject');
     const doneN = act.filter(o => DONE.includes(o.status)).length;
     const freshN = act.filter(o => o.fresh).length;
-    const list = () => BF === 'all' ? act : os.filter(o => o.bucket === BF);
+    const list = () => (BF === 'all' ? act : os.filter(o => o.bucket === BF)).filter(passK);
     if (!SELID || !os.some(o => o.id === SELID)) SELID = (list()[0] || {}).id;
     const ord = () => { const l = list(); const g = [l.filter(o => o.fresh), l.filter(o => !o.fresh && DONE.includes(o.status)), l.filter(o => !o.fresh && !DONE.includes(o.status))]; return [].concat(...g); };
     app.innerHTML = `<details class="card ax-guide"${(() => { try { return localStorage.getItem('alpha-guide-closed') ? '' : ' open'; } catch (e) { return ' open'; } })()}><summary>${T('怎么读这个看板', 'How to read this board')}</summary>
@@ -559,6 +571,13 @@
     app.onclick = e => {
       const f = e.target.closest('[data-bf]');
       if (f) { BF = f.dataset.bf; SELID = (list()[0] || {}).id; renderBoard(); return; }
+      const kf = e.target.closest('[data-kf]');
+      if (kf) {
+        const [grp, key] = kf.dataset.kf.split('|');
+        if (grp === 'all') { KSRC = null; KBIZ = null; }
+        else { const set = grp === 'src' ? kindSet() : bizSet(); set.has(key) ? set.delete(key) : set.add(key); }
+        SELID = null; renderBoard(); return;
+      }
       const r = e.target.closest('.md-row');
       if (r) { sel(r.dataset.id); if (window.innerWidth < 900) window.scrollTo({ top: app.offsetTop - 60 }); return; }
       const n = e.target.closest('[data-nav]');
