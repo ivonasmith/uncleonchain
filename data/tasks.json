@@ -1,10 +1,10 @@
 {
- "generated": "2026-11-16T16:15:54+00:00",
+ "generated": "2026-11-16T16:27:04+00:00",
  "boards": [
   {
    "board": "alpha",
    "name": "Alpha 雷达",
-   "tasks": 16,
+   "tasks": 18,
    "issues": 2
   },
   {
@@ -540,6 +540,30 @@
   },
   {
    "board": "alpha",
+   "id": "alpha:pkg:X6-交易所全景表-前几十名-供按质量准入-",
+   "title": "X6 交易所全景表（前几十名，供按质量准入）",
+   "who": "codex",
+   "pri": 2,
+   "deliver": "alpha/review/x6_exchange_universe.json",
+   "ref": "alpha/review/README.md",
+   "items": null,
+   "n": null,
+   "note": null
+  },
+  {
+   "board": "alpha",
+   "id": "alpha:pkg:X7-上所路径样本-30-个币-各所首次上线时间-",
+   "title": "X7 上所路径样本（30 个币 × 各所首次上线时间）",
+   "who": "codex",
+   "pri": 2,
+   "deliver": "alpha/review/x7_listing_paths.json",
+   "ref": "alpha/review/README.md",
+   "items": null,
+   "n": null,
+   "note": null
+  },
+  {
+   "board": "alpha",
    "id": "alpha:pkg:M1-技术与开发者雷达来源",
    "title": "M1 技术与开发者雷达来源",
    "who": "codex",
@@ -839,17 +863,18 @@
   {
    "board": "alpha",
    "id": "alpha:en",
-   "title": "英文稿（3 篇研究文档；英文站现在只有导航是英文）",
+   "title": "英文稿（4 篇研究文档；英文站现在只有导航是英文）",
    "who": "codex",
    "pri": 3,
    "deliver": "alpha/research/<同名>.en.md（Claude 接进网站）",
    "ref": null,
    "items": [
     "Alpha标的筛选研究体系.md",
-    "研究进度.md",
-    "案例库.md"
+    "案例库.md",
+    "交易所上币回报研究.md",
+    "研究进度.md"
    ],
-   "n": 3,
+   "n": 4,
    "note": null
   },
   {

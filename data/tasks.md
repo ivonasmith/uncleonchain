@@ -1,8 +1,8 @@
-# 全站待办与检查（2026-11-16 16:15 UTC 自动生成，别手改）
+# 全站待办与检查（2026-11-16 16:27 UTC 自动生成，别手改）
 
 | 板块 | 待办 | 问题 |
 |---|---|---|
-| Alpha 雷达 | 16 | 2 |
+| Alpha 雷达 | 18 | 2 |
 | 发射台 | 2 | 0 |
 | AI Agent | 7 | 0 |
 | RWA | 0 | 0 |
@@ -23,6 +23,8 @@
 - **P2 · Codex · aiagent** A6 框架与开发者清单 → `aiagent/review/a6_frameworks.json`（参考 `aiagent/review/README.md`）
 - **P2 · Codex · alpha** 关键人名单核对（S2） → `alpha/review/sources_people.json`（参考 `alpha/review/sources_task.md`）
 - **P2 · Codex · alpha** X4 上市事件样本库（过去 12 个月，≥100 条） → `alpha/review/x4_listing_events.json`（参考 `alpha/review/README.md`）
+- **P2 · Codex · alpha** X6 交易所全景表（前几十名，供按质量准入） → `alpha/review/x6_exchange_universe.json`（参考 `alpha/review/README.md`）
+- **P2 · Codex · alpha** X7 上所路径样本（30 个币 × 各所首次上线时间） → `alpha/review/x7_listing_paths.json`（参考 `alpha/review/README.md`）
 - **P2 · Codex · alpha** M1 技术与开发者雷达来源 → `alpha/review/m1_dev_sources.json`（参考 `alpha/review/README.md`）
 - **P2 · Codex · alpha** M2 链上创世动作字段 → `alpha/review/m2_genesis_fields.md`（参考 `alpha/review/README.md`）
 - **P2 · Codex · alpha** M3 卡片决策条件与证据分类字段 → `alpha/review/m3_card_schema.md`（参考 `alpha/review/README.md`）
@@ -36,7 +38,7 @@
 - **P3 · Codex · alpha** CMC 页面地址核对登记（11 个币） → `alpha/cmc_slugs.json`（参考 `AGENTS.md 第 4 节 3b`）
 - **P3 · Codex · alpha** 历史案例峰值日流通量登记（21 个，估值改流通口径用） → `alpha/cases.json 每个 tokens[] 加 circ_peak {数量, 日期, 出处}`（参考 `alpha/review/fable_findings_20261115.md 第 12 条`）
 - **P3 · Codex · alpha** 补失败样本 / 同期对照组（现在 3 个，目标 ≥ 10） → `alpha/review/cases_control_<日期>.json（格式同 alpha/cases.json 的 cases[]，带 why_control 和出处）`（参考 `alpha/cases.json`）
-- **P3 · Codex · alpha** 英文稿（3 篇研究文档；英文站现在只有导航是英文） → `alpha/research/<同名>.en.md（Claude 接进网站）`
+- **P3 · Codex · alpha** 英文稿（4 篇研究文档；英文站现在只有导航是英文） → `alpha/research/<同名>.en.md（Claude 接进网站）`
 - **P3 · Codex · core** 六问卡草稿（30 个币没有核对过的卡；Codex 出草稿，大叔核对后才进 cards） → `core/review/cards_draft_<日期>.json（键同 core_config.json 的 _cards_说明，每栏带出处）`（参考 `core/core_config.json _cards_说明`）
 - **P3 · 大叔 · core** 核对六问卡草稿（只有大叔核对过的才算，R1 要七栏齐）（参考 `core/review/cards_draft_*.json`）
 - **P3 · Claude · launchpad** 平台质量待接入字段：交易者、发币人（参考 `docs/接口_发射台给Alpha.md 字段优先级 4（进度见文末）`）
