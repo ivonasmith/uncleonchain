@@ -259,3 +259,12 @@
 .ktoggle button{font:inherit;font-size:11px;padding:2px 8px;border-radius:999px;border:1px solid var(--line2);background:transparent;color:var(--muted);cursor:pointer}
 .ktoggle button.on{border-color:var(--lime-ink);color:var(--lime-ink)}
 .klink{text-decoration:underline dotted;cursor:pointer}
+
+/* 待补证清单（右侧先列表，下载在底部，11-16） */
+.kqueue{font:inherit;font-size:12px;margin-top:6px;padding:0;border:0;background:none;color:var(--lime-ink);cursor:pointer;text-decoration:underline dotted}
+.kq-row{display:flex;align-items:center;gap:10px;width:100%;text-align:left;font:inherit;font-size:13px;padding:8px 6px;border:0;border-bottom:1px solid var(--line2);background:none;color:inherit;cursor:pointer}
+.kq-row:hover{background:rgba(255,255,255,.03)}
+.kq-n{width:26px;color:var(--muted);font-variant-numeric:tabular-nums}
+.kq-nm{flex:1;font-weight:600}
+.kq-st{color:var(--muted);font-size:12px;display:flex;gap:6px;align-items:center}
+.kq-st em{font-style:normal;color:var(--lime-ink);border:1px solid var(--lime-ink);border-radius:999px;padding:0 6px}
