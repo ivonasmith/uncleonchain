@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""探测 OKX / Bitget 上币公告详情页的正文结构（只读，不写数据）。
-在 Actions 上跑（沙盒连不上这些域名）。输出：每家取 2 条公告的正文里和「开盘 / 交易对 / UTC」相关的片段。
+"""探测 OKX / Bitget 上币公告详情页正文 + 历史 1 分钟 K 线接口（只读，不写数据）。
+在 Actions 上跑（沙盒连不上这些域名）。
 """
 import json, re, sys, urllib.request
 
 UA = {"User-Agent": "Mozilla/5.0", "Accept-Language": "en-US"}
-KEY = re.compile(r"(UTC|trading|open|launch|list|pair|/USDT|/USD|perpetual|spot)", re.I)
 
 
 def get(url):
@@ -14,49 +13,61 @@ def get(url):
         return r.read().decode("utf-8", "replace")
 
 
-def snippets(text, n=6, w=160):
-    out = []
-    for m in KEY.finditer(text):
-        out.append(text[max(0, m.start() - w // 2): m.end() + w // 2].replace("\n", " "))
-        if len(out) >= n:
-            break
-    return out
+def text_of(html):
+    t = re.sub(r"<script.*?</script>|<style.*?</style>", " ", html, flags=re.S | re.I)
+    return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", t))
 
 
-def show(name, url):
+def body_after_title(html, n=1800):
+    """跳过导航：从第二次出现标题（正文 h1）之后取一段。"""
+    m = re.search(r"<title>(.*?)</title>", html, re.S | re.I)
+    title = (m.group(1).split("|")[0].strip() if m else "")
+    t = text_of(html)
+    idx = [x.start() for x in re.finditer(re.escape(title), t)] if title else []
+    start = idx[1] if len(idx) > 1 else (idx[0] if idx else 0)
+    return title, t[start:start + n]
+
+
+def jget(url):
     try:
-        html = get(url)
+        return json.loads(get(url))
     except Exception as e:
-        print(f"{name}: 取页失败 {url} {str(e)[:120]}")
-        return
-    body = re.sub(r"<script.*?</script>|<style.*?</style>", " ", html, flags=re.S | re.I)
-    body = re.sub(r"<[^>]+>", " ", body)
-    body = re.sub(r"\s+", " ", body)
-    print(f"{name}: {url} · 字节 {len(html)} · 正文字符 {len(body)}")
-    print("  标题线索:", re.findall(r"<title>(.*?)</title>", html, re.S | re.I)[:1])
-    print("  __NEXT_DATA__ 或 JSON 内嵌:", "__NEXT_DATA__" in html, "· application/json 脚本数:", html.count('type="application/json"'))
-    for s in snippets(body):
-        print("   ·", s[:260])
+        return {"error": str(e)[:200]}
 
 
 def main():
     d = json.load(open("data/alpha/exch_announce.json", encoding="utf-8"))
-    items = [v for v in d["items"].values() if v["exchange"] in ("OKX", "Bitget")]
-    seen = {}
-    for v in items:
-        seen.setdefault(v["exchange"], [])
-        if len(seen[v["exchange"]]) < 2 and v.get("kind") != "other":
-            seen[v["exchange"]].append(v)
-    for ex, rows in seen.items():
-        for v in rows:
-            show(f"{ex} · {v['title'][:70]}", v["url"])
-    # Bitget 详情页可能需要 API：列一条原始 JSON 字段名
-    try:
-        j = json.loads(get("https://api.bitget.com/api/v2/public/annoucements?annType=coin_listings&language=en_US"))
-        first = (j.get("data") or [{}])[0]
-        print("Bitget 列表字段:", sorted(first.keys()))
-    except Exception as e:
-        print("Bitget 列表失败", str(e)[:120])
+    # --- OKX 正文
+    okx = [v for v in d["items"].values() if v["exchange"] == "OKX" and v["kind"] == "spot"][:2]
+    for v in okx:
+        try:
+            title, body = body_after_title(get(v["url"]))
+            print("OKX 正文 ·", title, "\n   ", body[:1800])
+        except Exception as e:
+            print("OKX 取页失败", v["url"], str(e)[:120])
+    # --- OKX 历史 1 分钟 K 线：GRVT 开盘 2026-07-30 03:00 UTC（pTime 1785380409238）
+    ts = 1785380400000
+    for inst in ("GRVT-USD", "GRVT-USDT"):
+        j = jget(f"https://www.okx.com/api/v5/market/history-candles?instId={inst}&bar=1m&before={ts-1}&after={ts+100*60000}&limit=100")
+        rows = j.get("data") or []
+        print(f"OKX history-candles {inst}: code={j.get('code')} msg={j.get('msg') or j.get('error')} 条数={len(rows)}",
+              "最早", rows[-1][:6] if rows else None, "最新", rows[0][:6] if rows else None)
+    # --- Bitget：取 4 条各类公告原始字段 + 一条文章页
+    j = jget("https://api.bitget.com/api/v2/public/annoucements?annType=coin_listings&language=en_US")
+    rows = j.get("data") or []
+    print("Bitget 公告条数", len(rows), "子类型", sorted({r.get("annSubType") for r in rows}))
+    for r in rows[:1]:
+        try:
+            title, body = body_after_title(get(r["annUrl"]))
+            print("Bitget 正文 ·", r["annTitle"], "\n   ", body[:1500])
+        except Exception as e:
+            print("Bitget 取页失败", r.get("annUrl"), str(e)[:160])
+    # --- Bitget 历史 1 分钟 K 线（BTCUSDT 验证接口形态；同一时刻）
+    for path in ("spot/market/history-candles", "spot/market/candles"):
+        j = jget(f"https://api.bitget.com/api/v2/{path}?symbol=BTCUSDT&granularity=1min&startTime={ts}&endTime={ts+100*60000}&limit=100")
+        rows = j.get("data") or []
+        print(f"Bitget {path}: code={j.get('code')} msg={j.get('msg') or j.get('error')} 条数={len(rows)}",
+              "首", rows[0][:6] if rows else None, "末", rows[-1][:6] if rows else None)
 
 
 if __name__ == "__main__":
