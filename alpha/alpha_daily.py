@@ -391,3 +391,9 @@ if __name__ == "__main__":
         opps.main()
     except Exception as e:
         print("机会卡生成失败：", e)
+    try:   # 交易所上币事件库（先 Binance）：公告 → 计划开盘 → 首笔成交 → 窗口 → data/alpha/listings.json
+        import listings
+        sys.argv = sys.argv[:1]
+        listings.main()
+    except Exception as e:
+        print("上币事件库失败：", e)
