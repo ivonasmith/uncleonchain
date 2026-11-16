@@ -16,7 +16,7 @@
    "baseline": true,
    "w": null,
    "primary": true,
-   "tries": 2
+   "tries": 3
   },
   "bn:289715:TRXUSDC": {
    "exchange": "Binance",
@@ -34,7 +34,7 @@
    "baseline": true,
    "w": null,
    "primary": true,
-   "tries": 2
+   "tries": 3
   },
   "bn:288627:PREDICTUSDT": {
    "exchange": "Binance",
@@ -52,7 +52,7 @@
    "baseline": true,
    "w": null,
    "primary": true,
-   "tries": 2
+   "tries": 3
   },
   "bn:288627:PREDICTUSDC": {
    "exchange": "Binance",
@@ -4099,9 +4099,24 @@
    "planned_open_utc": "2026-09-09T14:30:00Z",
    "first_seen_utc": "2026-11-16T14:44:50Z",
    "baseline": true,
-   "w": null,
+   "w": {
+    "ref_price": 0.09636,
+    "first_trade_utc": "2026-09-09T14:30:00Z",
+    "first_trade_basis": "第一根 1 分钟 K 线的开盘时刻",
+    "m30": 0.0358,
+    "h1": -0.079,
+    "h4": -0.1196,
+    "h24": -0.1308,
+    "high24": 0.235,
+    "high24_min": 0,
+    "low24": -0.2594,
+    "low24_min": 460,
+    "quote_vol24": 40665673,
+    "complete": true,
+    "lag_min": 0
+   },
    "primary": true,
-   "tries": 1
+   "tries": 2
   },
   "bn:284193:牛来USDC": {
    "exchange": "Binance",
@@ -4134,9 +4149,24 @@
    "planned_open_utc": "2026-08-30T11:30:00Z",
    "first_seen_utc": "2026-11-16T14:44:50Z",
    "baseline": true,
-   "w": null,
+   "w": {
+    "ref_price": 0.09672,
+    "first_trade_utc": "2026-08-30T11:30:00Z",
+    "first_trade_basis": "第一根 1 分钟 K 线的开盘时刻",
+    "m30": 0.1226,
+    "h1": 0.0941,
+    "h4": 0.3867,
+    "h24": 0.1658,
+    "high24": 0.469,
+    "high24_min": 289,
+    "low24": -0.0666,
+    "low24_min": 0,
+    "quote_vol24": 475235344,
+    "complete": true,
+    "lag_min": 0
+   },
    "primary": true,
-   "tries": 1
+   "tries": 2
   },
   "bn:278732:BTCU": {
    "exchange": "Binance",
@@ -4335,9 +4365,24 @@
    "planned_open_utc": "2026-03-11T11:30:00Z",
    "first_seen_utc": "2026-11-16T14:44:50Z",
    "baseline": true,
-   "w": null,
+   "w": {
+    "ref_price": 0.022,
+    "first_trade_utc": "2026-03-11T11:30:00Z",
+    "first_trade_basis": "第一根 1 分钟 K 线的开盘时刻",
+    "m30": -0.145,
+    "h1": -0.1337,
+    "h4": -0.1612,
+    "h24": 0.1382,
+    "high24": 0.2482,
+    "high24_min": 1343,
+    "low24": -0.2562,
+    "low24_min": 150,
+    "quote_vol24": 114459083,
+    "complete": true,
+    "lag_min": 0
+   },
    "primary": true,
-   "tries": 1
+   "tries": 2
   },
   "bn:266876:OPNUSDT": {
    "exchange": "Binance",
@@ -4641,7 +4686,7 @@
    "baseline": true,
    "w": null,
    "primary": true,
-   "tries": 1
+   "tries": 2
   }
  },
  "articles": {
@@ -5889,12 +5934,12 @@
    "n": 1
   }
  },
- "generated": "2026-11-16T14:44:50Z",
+ "generated": "2026-11-16T15:01:20Z",
  "status": {
   "list_ok": true,
-  "pages": 15,
+  "pages": 3,
   "detail_fail": 0,
-  "kline_fail": 7
+  "kline_fail": 4
  },
  "exchanges": [
   "Binance"
@@ -5902,7 +5947,7 @@
  "n": {
   "events": 172,
   "primary": 114,
-  "with_windows": 107,
+  "with_windows": 110,
   "spot": 29,
   "perp": 85
  },
