@@ -1,6 +1,6 @@
 {
- "generated_utc": "2026-11-16 08:13",
- "today": "2026-11-16",
+ "generated_utc": "2026-11-17 09:29",
+ "today": "2026-11-17",
  "btc": {
   "title_zh": "比特币大事件（已单独检验）",
   "title_en": "BTC events (individually tested)",
@@ -74,12 +74,12 @@
   "impact_note_zh": "“最高价和最低价差多少”= 那段时间里 BTC 最高成交价比最低成交价高出百分之几，不分涨跌。比如 2.7% 在 BTC 8 万美元时约等于上下晃 2,000 多美元。",
   "stats_asof_zh": "检验数据截至 2026-10-12（Coinbase 小时线），每半年（1 月、7 月）用新数据重测一次，样本每半年约增加 25 次。",
   "intro_en": "Only events we have tested one by one on hourly BTC data since 2015. Fed decisions, CPI and payrolls widen the 2-hour range after release (since 2022), but direction is unpredictable and the days before are not more volatile.",
-  "next_zh": "下一个：美国非农就业，18 天后（新加坡时间 12-04 21:30）",
+  "next_zh": "下一个：美国非农就业，17 天后（新加坡时间 12-04 21:30）",
   "events": [
    {
     "type": "NFP",
     "date": "2026-12-04",
-    "days_until": 18,
+    "days_until": 17,
     "title_zh": "美国非农就业",
     "title_en": "US nonfarm payrolls",
     "time_utc": "2026-12-04 13:30",
@@ -95,7 +95,7 @@
     "impact": {
      "level_zh": "中",
      "level_en": "Medium",
-     "text_zh": "公布那两个小时，BTC 最高价和最低价一般差 2.0%（约 $1,290），平时同一时段只有 1.3%；四次里有一次超过 2.5%，十次里有一次超过 3.0%（约 $1,940），2022 年以来最大一次 4.7%。全天最高到最低一般 3.9%（平时 4.0%）。",
+     "text_zh": "公布那两个小时，BTC 最高价和最低价一般差 2.0%（约 $1,290），平时同一时段只有 1.3%；四次里有一次超过 2.5%，十次里有一次超过 3.0%（约 $1,930），2022 年以来最大一次 4.7%。全天最高到最低一般 3.9%（平时 4.0%）。",
      "text_en": "In the 2 hours after the release, BTC's high-low range is typically 2.0% (normal: 1.3%); 1 in 4 times above 2.5%, 1 in 10 above 3.0%, largest since 2022 4.7%.",
      "range_2h_typ_pct": 2.0,
      "range_2h_big_pct": 3.0,
@@ -103,9 +103,9 @@
      "range_2h_normal_pct": 1.3,
      "range_day_typ_pct": 3.9,
      "range_day_normal_pct": 4.0,
-     "usd_typ": 1293,
-     "usd_big": 1940,
-     "price_ref": 64668
+     "usd_typ": 1286,
+     "usd_big": 1928,
+     "price_ref": 64281
     },
     "stats": {
      "n": 57,
@@ -134,7 +134,7 @@
    {
     "type": "FOMC",
     "date": "2026-12-09",
-    "days_until": 23,
+    "days_until": 22,
     "title_zh": "美联储议息决议",
     "title_en": "FOMC rate decision",
     "time_utc": "2026-12-09 19:00",
@@ -150,7 +150,7 @@
     "impact": {
      "level_zh": "大",
      "level_en": "High",
-     "text_zh": "公布那两个小时，BTC 最高价和最低价一般差 2.7%（约 $1,750），平时同一时段只有 1.1%；四次里有一次超过 3.8%，十次里有一次超过 6.3%（约 $4,070），2022 年以来最大一次 10.2%。全天最高到最低一般 4.2%（平时 3.4%）。",
+     "text_zh": "公布那两个小时，BTC 最高价和最低价一般差 2.7%（约 $1,740），平时同一时段只有 1.1%；四次里有一次超过 3.8%，十次里有一次超过 6.3%（约 $4,050），2022 年以来最大一次 10.2%。全天最高到最低一般 4.2%（平时 3.4%）。",
      "text_en": "In the 2 hours after the release, BTC's high-low range is typically 2.7% (normal: 1.1%); 1 in 4 times above 3.8%, 1 in 10 above 6.3%, largest since 2022 10.2%.",
      "range_2h_typ_pct": 2.7,
      "range_2h_big_pct": 6.3,
@@ -158,9 +158,9 @@
      "range_2h_normal_pct": 1.1,
      "range_day_typ_pct": 4.2,
      "range_day_normal_pct": 3.4,
-     "usd_typ": 1746,
-     "usd_big": 4074,
-     "price_ref": 64668
+     "usd_typ": 1736,
+     "usd_big": 4050,
+     "price_ref": 64281
     },
     "stats": {
      "n": 37,
@@ -189,7 +189,7 @@
    {
     "type": "CPI",
     "date": "2026-12-10",
-    "days_until": 24,
+    "days_until": 23,
     "title_zh": "美国 CPI",
     "title_en": "US CPI",
     "time_utc": "2026-12-10 13:30",
@@ -205,7 +205,7 @@
     "impact": {
      "level_zh": "大",
      "level_en": "High",
-     "text_zh": "公布那两个小时，BTC 最高价和最低价一般差 2.5%（约 $1,620），平时同一时段只有 1.3%；四次里有一次超过 3.5%，十次里有一次超过 4.9%（约 $3,170），2022 年以来最大一次 9.0%。全天最高到最低一般 4.6%（平时 3.5%）。",
+     "text_zh": "公布那两个小时，BTC 最高价和最低价一般差 2.5%（约 $1,610），平时同一时段只有 1.3%；四次里有一次超过 3.5%，十次里有一次超过 4.9%（约 $3,150），2022 年以来最大一次 9.0%。全天最高到最低一般 4.6%（平时 3.5%）。",
      "text_en": "In the 2 hours after the release, BTC's high-low range is typically 2.5% (normal: 1.3%); 1 in 4 times above 3.5%, 1 in 10 above 4.9%, largest since 2022 9.0%.",
      "range_2h_typ_pct": 2.5,
      "range_2h_big_pct": 4.9,
@@ -213,9 +213,9 @@
      "range_2h_normal_pct": 1.3,
      "range_day_typ_pct": 4.6,
      "range_day_normal_pct": 3.5,
-     "usd_typ": 1617,
-     "usd_big": 3169,
-     "price_ref": 64668
+     "usd_typ": 1607,
+     "usd_big": 3150,
+     "price_ref": 64281
     },
     "stats": {
      "n": 56,
@@ -244,7 +244,7 @@
    {
     "type": "期权季度交割",
     "date": "2026-12-25",
-    "days_until": 39,
+    "days_until": 38,
     "title_zh": "BTC 期权季度交割",
     "title_en": "BTC quarterly options expiry",
     "time_utc": "2026-12-25 08:00",
@@ -268,9 +268,9 @@
      "range_2h_normal_pct": 0.8,
      "range_day_typ_pct": 3.8,
      "range_day_normal_pct": 4.0,
-     "usd_typ": 453,
-     "usd_big": 1099,
-     "price_ref": 64668
+     "usd_typ": 450,
+     "usd_big": 1093,
+     "price_ref": 64281
     },
     "stats": {
      "n": 19,
@@ -299,7 +299,7 @@
    {
     "type": "NFP",
     "date": "2027-01-08",
-    "days_until": 53,
+    "days_until": 52,
     "title_zh": "美国非农就业",
     "title_en": "US nonfarm payrolls",
     "time_utc": "2027-01-08 13:30",
@@ -315,7 +315,7 @@
     "impact": {
      "level_zh": "中",
      "level_en": "Medium",
-     "text_zh": "公布那两个小时，BTC 最高价和最低价一般差 2.0%（约 $1,290），平时同一时段只有 1.3%；四次里有一次超过 2.5%，十次里有一次超过 3.0%（约 $1,940），2022 年以来最大一次 4.7%。全天最高到最低一般 3.9%（平时 4.0%）。",
+     "text_zh": "公布那两个小时，BTC 最高价和最低价一般差 2.0%（约 $1,290），平时同一时段只有 1.3%；四次里有一次超过 2.5%，十次里有一次超过 3.0%（约 $1,930），2022 年以来最大一次 4.7%。全天最高到最低一般 3.9%（平时 4.0%）。",
      "text_en": "In the 2 hours after the release, BTC's high-low range is typically 2.0% (normal: 1.3%); 1 in 4 times above 2.5%, 1 in 10 above 3.0%, largest since 2022 4.7%.",
      "range_2h_typ_pct": 2.0,
      "range_2h_big_pct": 3.0,
@@ -323,9 +323,9 @@
      "range_2h_normal_pct": 1.3,
      "range_day_typ_pct": 3.9,
      "range_day_normal_pct": 4.0,
-     "usd_typ": 1293,
-     "usd_big": 1940,
-     "price_ref": 64668
+     "usd_typ": 1286,
+     "usd_big": 1928,
+     "price_ref": 64281
     },
     "stats": {
      "n": 57,
@@ -354,7 +354,7 @@
    {
     "type": "CPI",
     "date": "2027-01-13",
-    "days_until": 58,
+    "days_until": 57,
     "title_zh": "美国 CPI",
     "title_en": "US CPI",
     "time_utc": "2027-01-13 13:30",
@@ -370,7 +370,7 @@
     "impact": {
      "level_zh": "大",
      "level_en": "High",
-     "text_zh": "公布那两个小时，BTC 最高价和最低价一般差 2.5%（约 $1,620），平时同一时段只有 1.3%；四次里有一次超过 3.5%，十次里有一次超过 4.9%（约 $3,170），2022 年以来最大一次 9.0%。全天最高到最低一般 4.6%（平时 3.5%）。",
+     "text_zh": "公布那两个小时，BTC 最高价和最低价一般差 2.5%（约 $1,610），平时同一时段只有 1.3%；四次里有一次超过 3.5%，十次里有一次超过 4.9%（约 $3,150），2022 年以来最大一次 9.0%。全天最高到最低一般 4.6%（平时 3.5%）。",
      "text_en": "In the 2 hours after the release, BTC's high-low range is typically 2.5% (normal: 1.3%); 1 in 4 times above 3.5%, 1 in 10 above 4.9%, largest since 2022 9.0%.",
      "range_2h_typ_pct": 2.5,
      "range_2h_big_pct": 4.9,
@@ -378,9 +378,9 @@
      "range_2h_normal_pct": 1.3,
      "range_day_typ_pct": 4.6,
      "range_day_normal_pct": 3.5,
-     "usd_typ": 1617,
-     "usd_big": 3169,
-     "price_ref": 64668
+     "usd_typ": 1607,
+     "usd_big": 3150,
+     "price_ref": 64281
     },
     "stats": {
      "n": 56,
@@ -410,8 +410,8 @@
   "reg_checked_utc": "2026-11-16",
   "reg_status": {
    "manual_checked_utc": "2026-11-16",
-   "sec_auto_ok_utc": "2026-11-16",
-   "congress_auto_ok_utc": "2026-11-16"
+   "sec_auto_ok_utc": "2026-11-17",
+   "congress_auto_ok_utc": "2026-11-17"
   },
   "method_zh": "对照组：同一星期几、前后 9 周内、没有其他事件的日子的同一时段。振幅 = 区间最高 ÷ 最低。年代分 2015-17、2018-21、2022-26 分别看。期权交割：Deribit 每月最后一个周五 08:00 UTC。数据：Coinbase BTC-USD 小时线。"
  },
@@ -536,24 +536,6 @@
     "ongoing": true
    },
    {
-    "date_start": "2026-11-13",
-    "date_end": "2026-11-17",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Singapore Blockchain Week 2026",
-    "coins": [],
-    "city": "Johor Bahru",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/singapore-blockchain-week-26-11-13",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
     "date_start": "2026-11-15",
     "date_end": "2026-11-17",
     "category": "会议",
@@ -567,25 +549,6 @@
     "note": "",
     "sources": [
      "Luma"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-15",
-    "date_end": "2026-11-17",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Solana Breakpoint",
-    "coins": [],
-    "city": "London",
-    "importance": 3,
-    "source": "Luma",
-    "url": "https://luma.com/breakpoint",
-    "note": "",
-    "sources": [
-     "Luma",
-     "Web3Voyager"
     ],
     "days_until": 0,
     "ongoing": true
@@ -627,124 +590,16 @@
     "ongoing": true
    },
    {
-    "date_start": "2026-11-16",
-    "date_end": "2026-11-16",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "AlphaGrowth D.C. Capital & Liquidity Mixer",
-    "coins": [],
-    "city": "Washington",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/alphagrowth-d-c-capital-liquidity-mixer-16-1793614528723",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-16",
-    "date_end": "2026-11-16",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "BEYOND THE FRAME: An Immersive Art Activation by Render Network x Solana",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/beyond-frame-immersive-art-activation-render-26-11-16",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-16",
+    "date_start": "2026-11-15",
     "date_end": "2026-11-17",
     "category": "会议",
     "category_en": "Conference",
-    "title": "BING BONG AFTER DARK BREAKPOINT powered by PHANTOM",
+    "title": "Solana Breakpoint 2026",
     "coins": [],
     "city": "London",
     "importance": 1,
     "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/bing-bong-after-dark-breakpoint-powered-by-phantom",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-16",
-    "date_end": "2026-11-16",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Beyond Business: An Exclusive Dinner in Mayfair",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/beyond-business-an-exclusive-dinner-in-mayfair",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-16",
-    "date_end": "2026-11-16",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Breakpoint Coffee for DeFi Builders & Traders",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/breakpoint-coffee-for-defi-builders--traders",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-16",
-    "date_end": "2026-11-16",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Breakpoint Executive Mixer w/ Halborn & MERGE",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/breakpoint-executive-mixer-w-halborn--merge",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-16",
-    "date_end": "2026-11-16",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Breakpoint: Day Two Afterparty",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/breakpoint-day-two-afterparty",
+    "url": "https://web3voyager.com/event/solana-breakpoint-2026-eur",
     "note": "",
     "sources": [
      "Web3Voyager"
@@ -772,330 +627,6 @@
    },
    {
     "date_start": "2026-11-16",
-    "date_end": "2026-11-16",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Bullseye with Multicoin Capital",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/bullseye-with-multicoin-capital",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-16",
-    "date_end": "2026-11-16",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Capital x Counsel London",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/capital-x-counsel-london",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-16",
-    "date_end": "2026-11-16",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Cocktails with Coinbase & Harmonic",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/cocktails-with-coinbase--harmonic",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-16",
-    "date_end": "2026-11-16",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Coffee With Alpine",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/coffee-with-alpine",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-16",
-    "date_end": "2026-11-16",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "FWDI Breakpoint Happy Hour",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/fwdi-breakpoint-happy-hour",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-16",
-    "date_end": "2026-11-16",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Fenwick Presents: A Proper London Knees-Up",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/fenwick-presents-a-proper-london-knees-up",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-16",
-    "date_end": "2026-11-16",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Fintech & Data: London Executive Dinner",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/fintech--data-london-executive-dinner",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-16",
-    "date_end": "2026-11-16",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Fog & Fortune",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/fog--fortune",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-16",
-    "date_end": "2026-11-16",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "GGC: GMGN Global Championship - London Finals",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/ggc-gmgn-global-championship---london-finals",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-16",
-    "date_end": "2026-11-16",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "House of Sol: Breakpoint",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/house-of-sol-breakpoint",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-16",
-    "date_end": "2026-11-16",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Licence to Spend: an evening with Altitude and Rain",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/licence-to-spend-an-evening-with-altitude-and-rain",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-16",
-    "date_end": "2026-11-16",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Meet Your Match w/ CoW Swap",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/meet-your-match-w-cow-swap",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-16",
-    "date_end": "2026-11-16",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Money Layer London",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/money-layer-london",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-16",
-    "date_end": "2026-11-17",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "New Friendship Tech London",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/new-friendship-tech-london",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-16",
-    "date_end": "2026-11-16",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Pr1me [London Series] - Exclusive Dinner for Web3 Finance",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/pr1me-london-series-exclusive-dinner-web3-26-11-16",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-16",
-    "date_end": "2026-11-16",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Proof of Coffee: Accuracy, Auditing & Accounting",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/proof-of-coffee-accuracy-auditing--accounting",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-16",
-    "date_end": "2026-11-16",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "SOL Calling: Solana Breakpoint Happy Hour",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/sol-calling-solana-breakpoint-happy-hour",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-16",
-    "date_end": "2026-11-16",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "SPI's Legal & Policy Dinner - Breakpoint 2026",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/spis-legal--policy-dinner---breakpoint-2026",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-16",
     "date_end": "2026-11-18",
     "category": "会议",
     "category_en": "Conference",
@@ -1105,150 +636,6 @@
     "importance": 1,
     "source": "Web3Voyager",
     "url": "https://web3voyager.com/event/sol-noir-institution-dinner--socure-x-walletconnect",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-16",
-    "date_end": "2026-11-16",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Solana Breakpoint Security Drinks - by Fidesium",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/solana-breakpoint-security-drinks---by-fidesium",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-16",
-    "date_end": "2026-11-16",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Solana Fitness Zone: Group Boxing | Breakpoint 2026",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/solana-fitness-zone-group-boxing--breakpoint-2026",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-16",
-    "date_end": "2026-11-16",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Solana Fitness Zone: Rise & Shine Yoga by MonkeDAO | Breakpoint 2026",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/solana-fitness-zone-rise--shine-yoga-by-monkedao--breakpoint-2026",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-16",
-    "date_end": "2026-11-16",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Sports Meets Solana: The Future of Sports is On-chain",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/sports-meets-solana-the-future-of-sports-is-on-chain",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-16",
-    "date_end": "2026-11-16",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "The RWA Pub at Breakpoint",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/the-rwa-pub-at-breakpoint",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-16",
-    "date_end": "2026-11-17",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "VIP Crypto Casino Dinner & Party by Rugbet.gg",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/vip-crypto-casino-dinner-party-rugbet-26-11-16",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-16",
-    "date_end": "2026-11-16",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Zebu Live Arms: A Great British Pub Takeover",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/zebu-live-arms-a-great-british-pub-takeover",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-16",
-    "date_end": "2026-11-17",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "edgerunners.app networking drinks",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/edgerunnersapp-networking-drinks",
     "note": "",
     "sources": [
      "Web3Voyager"
@@ -1271,8 +658,8 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 1,
-    "ongoing": false
+    "days_until": 0,
+    "ongoing": true
    },
    {
     "date_start": "2026-11-17",
@@ -1289,8 +676,8 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 1,
-    "ongoing": false
+    "days_until": 0,
+    "ongoing": true
    },
    {
     "date_start": "2026-11-17",
@@ -1307,8 +694,8 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 1,
-    "ongoing": false
+    "days_until": 0,
+    "ongoing": true
    },
    {
     "date_start": "2026-11-17",
@@ -1325,8 +712,8 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 1,
-    "ongoing": false
+    "days_until": 0,
+    "ongoing": true
    },
    {
     "date_start": "2026-11-17",
@@ -1343,8 +730,8 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 1,
-    "ongoing": false
+    "days_until": 0,
+    "ongoing": true
    },
    {
     "date_start": "2026-11-17",
@@ -1361,8 +748,8 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 1,
-    "ongoing": false
+    "days_until": 0,
+    "ongoing": true
    },
    {
     "date_start": "2026-11-17",
@@ -1379,8 +766,8 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 1,
-    "ongoing": false
+    "days_until": 0,
+    "ongoing": true
    },
    {
     "date_start": "2026-11-17",
@@ -1397,8 +784,8 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 1,
-    "ongoing": false
+    "days_until": 0,
+    "ongoing": true
    },
    {
     "date_start": "2026-11-17",
@@ -1415,8 +802,8 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 1,
-    "ongoing": false
+    "days_until": 0,
+    "ongoing": true
    },
    {
     "date_start": "2026-11-17",
@@ -1433,8 +820,8 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 1,
-    "ongoing": false
+    "days_until": 0,
+    "ongoing": true
    },
    {
     "date_start": "2026-11-17",
@@ -1451,8 +838,8 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 1,
-    "ongoing": false
+    "days_until": 0,
+    "ongoing": true
    },
    {
     "date_start": "2026-11-17",
@@ -1469,8 +856,8 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 1,
-    "ongoing": false
+    "days_until": 0,
+    "ongoing": true
    },
    {
     "date_start": "2026-11-17",
@@ -1487,8 +874,8 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 1,
-    "ongoing": false
+    "days_until": 0,
+    "ongoing": true
    },
    {
     "date_start": "2026-11-17",
@@ -1505,8 +892,8 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 1,
-    "ongoing": false
+    "days_until": 0,
+    "ongoing": true
    },
    {
     "date_start": "2026-11-17",
@@ -1523,8 +910,8 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 1,
-    "ongoing": false
+    "days_until": 0,
+    "ongoing": true
    },
    {
     "date_start": "2026-11-17",
@@ -1541,44 +928,8 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 1,
-    "ongoing": false
-   },
-   {
-    "date_start": "2026-11-17",
-    "date_end": "2026-11-17",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Solana Fitness Zone: Dynamic Pilates | Breakpoint 2026",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/solana-fitness-zone-dynamic-pilates--breakpoint-2026-3",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 1,
-    "ongoing": false
-   },
-   {
-    "date_start": "2026-11-17",
-    "date_end": "2026-11-17",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Solana Fitness Zone: HIIT Class | Breakpoint 2026",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/solana-fitness-zone-hiit-class--breakpoint-2026-2",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 1,
-    "ongoing": false
+    "days_until": 0,
+    "ongoing": true
    },
    {
     "date_start": "2026-11-17",
@@ -1595,8 +946,8 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 1,
-    "ongoing": false
+    "days_until": 0,
+    "ongoing": true
    },
    {
     "date_start": "2026-11-17",
@@ -1613,8 +964,8 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 1,
-    "ongoing": false
+    "days_until": 0,
+    "ongoing": true
    },
    {
     "date_start": "2026-11-17",
@@ -1631,8 +982,8 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 1,
-    "ongoing": false
+    "days_until": 0,
+    "ongoing": true
    },
    {
     "date_start": "2026-11-17",
@@ -1649,8 +1000,8 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 1,
-    "ongoing": false
+    "days_until": 0,
+    "ongoing": true
    },
    {
     "date_start": "2026-11-18",
@@ -1667,7 +1018,7 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 2,
+    "days_until": 1,
     "ongoing": false
    },
    {
@@ -1686,7 +1037,7 @@
      "IndustryEvents",
      "Web3Voyager"
     ],
-    "days_until": 2,
+    "days_until": 1,
     "ongoing": false
    },
    {
@@ -1704,7 +1055,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 2,
+    "days_until": 1,
     "ongoing": false
    },
    {
@@ -1722,7 +1073,7 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 2,
+    "days_until": 1,
     "ongoing": false
    },
    {
@@ -1740,7 +1091,7 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 2,
+    "days_until": 1,
     "ongoing": false
    },
    {
@@ -1758,7 +1109,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 2,
+    "days_until": 1,
     "ongoing": false
    },
    {
@@ -1776,7 +1127,7 @@
     "sources": [
      "CryptoEvents"
     ],
-    "days_until": 2,
+    "days_until": 1,
     "ongoing": false
    },
    {
@@ -1794,7 +1145,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 2,
+    "days_until": 1,
     "ongoing": false
    },
    {
@@ -1812,7 +1163,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 2,
+    "days_until": 1,
     "ongoing": false
    },
    {
@@ -1830,7 +1181,7 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 3,
+    "days_until": 2,
     "ongoing": false
    },
    {
@@ -1848,7 +1199,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 3,
+    "days_until": 2,
     "ongoing": false
    },
    {
@@ -1866,7 +1217,7 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 3,
+    "days_until": 2,
     "ongoing": false
    },
    {
@@ -1884,7 +1235,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 3,
+    "days_until": 2,
     "ongoing": false
    },
    {
@@ -1902,7 +1253,7 @@
     "sources": [
      "CryptoEvents"
     ],
-    "days_until": 3,
+    "days_until": 2,
     "ongoing": false
    },
    {
@@ -1920,7 +1271,7 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 4,
+    "days_until": 3,
     "ongoing": false
    },
    {
@@ -1938,7 +1289,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 4,
+    "days_until": 3,
     "ongoing": false
    },
    {
@@ -1956,7 +1307,25 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 4,
+    "days_until": 3,
+    "ongoing": false
+   },
+   {
+    "date_start": "2026-11-20",
+    "date_end": "2026-11-21",
+    "category": "会议",
+    "category_en": "Conference",
+    "title": "BitBlockMine 2026 Fort Worth",
+    "coins": [],
+    "city": "Fort Worth",
+    "importance": 1,
+    "source": "Web3Voyager",
+    "url": "https://web3voyager.com/event/bitblockmine-fort-worth-26-11-20",
+    "note": "",
+    "sources": [
+     "Web3Voyager"
+    ],
+    "days_until": 3,
     "ongoing": false
    },
    {
@@ -1974,7 +1343,25 @@
     "sources": [
      "CryptoEvents"
     ],
-    "days_until": 4,
+    "days_until": 3,
+    "ongoing": false
+   },
+   {
+    "date_start": "2026-11-20",
+    "date_end": "2026-11-21",
+    "category": "会议",
+    "category_en": "Conference",
+    "title": "Crypto Fest 2026",
+    "coins": [],
+    "city": "Cape Town",
+    "importance": 1,
+    "source": "Web3Voyager",
+    "url": "https://web3voyager.com/event/crypto-fest-cape-town-2026",
+    "note": "",
+    "sources": [
+     "Web3Voyager"
+    ],
+    "days_until": 3,
     "ongoing": false
    },
    {
@@ -1992,7 +1379,79 @@
     "sources": [
      "CryptoEvents"
     ],
-    "days_until": 4,
+    "days_until": 3,
+    "ongoing": false
+   },
+   {
+    "date_start": "2026-11-20",
+    "date_end": "2026-11-21",
+    "category": "会议",
+    "category_en": "Conference",
+    "title": "UBC 2026",
+    "coins": [],
+    "city": "Austin",
+    "importance": 1,
+    "source": "Web3Voyager",
+    "url": "https://web3voyager.com/event/ubc-26-11-20",
+    "note": "",
+    "sources": [
+     "Web3Voyager"
+    ],
+    "days_until": 3,
+    "ongoing": false
+   },
+   {
+    "date_start": "2026-11-24",
+    "date_end": "2026-11-28",
+    "category": "会议",
+    "category_en": "Conference",
+    "title": "BlockCon Punta Cana 2026",
+    "coins": [],
+    "city": "Punta Cana",
+    "importance": 1,
+    "source": "Web3Voyager",
+    "url": "https://web3voyager.com/event/blockcon-punta-cana-2026",
+    "note": "",
+    "sources": [
+     "Web3Voyager"
+    ],
+    "days_until": 7,
+    "ongoing": false
+   },
+   {
+    "date_start": "2026-11-24",
+    "date_end": "2026-11-24",
+    "category": "会议",
+    "category_en": "Conference",
+    "title": "Cyber Revolution Series - Singapore",
+    "coins": [],
+    "city": "Singapore",
+    "importance": 1,
+    "source": "Web3Voyager",
+    "url": "https://web3voyager.com/event/cyber-revolution-series-singapore-3-1791869322673",
+    "note": "",
+    "sources": [
+     "Web3Voyager"
+    ],
+    "days_until": 7,
+    "ongoing": false
+   },
+   {
+    "date_start": "2026-11-24",
+    "date_end": "2026-11-25",
+    "category": "会议",
+    "category_en": "Conference",
+    "title": "Smart City Expo Dubai",
+    "coins": [],
+    "city": "Dubai",
+    "importance": 1,
+    "source": "Web3Voyager",
+    "url": "https://web3voyager.com/event/smart-city-expo-dubai-26-11",
+    "note": "",
+    "sources": [
+     "Web3Voyager"
+    ],
+    "days_until": 7,
     "ongoing": false
    },
    {
@@ -2009,6 +1468,60 @@
     "note": "",
     "sources": [
      "IndustryEvents"
+    ],
+    "days_until": 8,
+    "ongoing": false
+   },
+   {
+    "date_start": "2026-11-25",
+    "date_end": "2026-11-26",
+    "category": "会议",
+    "category_en": "Conference",
+    "title": "DeAI Summit 2026",
+    "coins": [],
+    "city": "Valletta",
+    "importance": 1,
+    "source": "Web3Voyager",
+    "url": "https://web3voyager.com/event/deai-summit-26-11-25",
+    "note": "",
+    "sources": [
+     "Web3Voyager"
+    ],
+    "days_until": 8,
+    "ongoing": false
+   },
+   {
+    "date_start": "2026-11-25",
+    "date_end": "2026-11-26",
+    "category": "会议",
+    "category_en": "Conference",
+    "title": "PlanX conference 2026",
+    "coins": [],
+    "city": "Dubai",
+    "importance": 1,
+    "source": "Web3Voyager",
+    "url": "https://web3voyager.com/event/planx-conference-26-11",
+    "note": "",
+    "sources": [
+     "Web3Voyager"
+    ],
+    "days_until": 8,
+    "ongoing": false
+   },
+   {
+    "date_start": "2026-11-26",
+    "date_end": "2026-11-28",
+    "category": "会议",
+    "category_en": "Conference",
+    "title": "Africa Prediction Markets Summit",
+    "coins": [],
+    "city": "Cape Town",
+    "importance": 1,
+    "source": "Web3Voyager",
+    "url": "https://web3voyager.com/event/africa-prediction-markets-summit",
+    "note": "",
+    "sources": [
+     "Web3Voyager"
     ],
     "days_until": 9,
     "ongoing": false
@@ -2028,7 +1541,7 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 10,
+    "days_until": 9,
     "ongoing": false
    },
    {
@@ -2046,7 +1559,43 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 11,
+    "days_until": 10,
+    "ongoing": false
+   },
+   {
+    "date_start": "2026-11-27",
+    "date_end": "2026-11-27",
+    "category": "会议",
+    "category_en": "Conference",
+    "title": "AI Revolution Summit - Philippines",
+    "coins": [],
+    "city": "Quezon City",
+    "importance": 1,
+    "source": "Web3Voyager",
+    "url": "https://web3voyager.com/event/ai-revolution-summit-philippines-1790053449456",
+    "note": "",
+    "sources": [
+     "Web3Voyager"
+    ],
+    "days_until": 10,
+    "ongoing": false
+   },
+   {
+    "date_start": "2026-11-27",
+    "date_end": "2026-11-28",
+    "category": "会议",
+    "category_en": "Conference",
+    "title": "Bitcoin Japan 2026",
+    "coins": [],
+    "city": "Chiyoda City",
+    "importance": 1,
+    "source": "Web3Voyager",
+    "url": "https://web3voyager.com/event/bitcoin-japan-26-11-27",
+    "note": "",
+    "sources": [
+     "Web3Voyager"
+    ],
+    "days_until": 10,
     "ongoing": false
    },
    {
@@ -2064,7 +1613,7 @@
     "sources": [
      "Luma"
     ],
-    "days_until": 12,
+    "days_until": 11,
     "ongoing": false
    },
    {
@@ -2082,7 +1631,25 @@
     "sources": [
      "Luma"
     ],
-    "days_until": 12,
+    "days_until": 11,
+    "ongoing": false
+   },
+   {
+    "date_start": "2026-11-28",
+    "date_end": "2026-11-30",
+    "category": "会议",
+    "category_en": "Conference",
+    "title": "Australian Crypto Convention 2026",
+    "coins": [],
+    "city": "Sydney",
+    "importance": 1,
+    "source": "Web3Voyager",
+    "url": "https://web3voyager.com/event/australian-crypto-convention-2026",
+    "note": "",
+    "sources": [
+     "Web3Voyager"
+    ],
+    "days_until": 11,
     "ongoing": false
    },
    {
@@ -2098,9 +1665,28 @@
     "url": "https://cryptoevents.global/binance-blockchain-week-bangkok-2026/",
     "note": "",
     "sources": [
-     "CryptoEvents"
+     "CryptoEvents",
+     "Web3Voyager"
     ],
-    "days_until": 12,
+    "days_until": 11,
+    "ongoing": false
+   },
+   {
+    "date_start": "2026-11-28",
+    "date_end": "2026-11-29",
+    "category": "会议",
+    "category_en": "Conference",
+    "title": "Bitcoin Thailand Conference 2026",
+    "coins": [],
+    "city": "Bangkok",
+    "importance": 1,
+    "source": "Web3Voyager",
+    "url": "https://web3voyager.com/event/bitcoin-thailand-conference-2026",
+    "note": "",
+    "sources": [
+     "Web3Voyager"
+    ],
+    "days_until": 11,
     "ongoing": false
    },
    {
@@ -2118,7 +1704,7 @@
     "sources": [
      "CryptoEvents"
     ],
-    "days_until": 12,
+    "days_until": 11,
     "ongoing": false
    },
    {
@@ -2137,7 +1723,7 @@
      "Luma",
      "IndustryEvents"
     ],
-    "days_until": 15,
+    "days_until": 14,
     "ongoing": false
    },
    {
@@ -2155,7 +1741,97 @@
     "sources": [
      "IndustryEvents"
     ],
+    "days_until": 14,
+    "ongoing": false
+   },
+   {
+    "date_start": "2026-12-01",
+    "date_end": "2026-12-03",
+    "category": "会议",
+    "category_en": "Conference",
+    "title": "AI Future Forum 2026 Dubai",
+    "coins": [],
+    "city": "Dubai",
+    "importance": 1,
+    "source": "Web3Voyager",
+    "url": "https://web3voyager.com/event/ai-future-forum-dubai-2026",
+    "note": "",
+    "sources": [
+     "Web3Voyager"
+    ],
+    "days_until": 14,
+    "ongoing": false
+   },
+   {
+    "date_start": "2026-12-01",
+    "date_end": "2026-12-03",
+    "category": "会议",
+    "category_en": "Conference",
+    "title": "Blockchain Life 2026 Dubai",
+    "coins": [],
+    "city": "Dubai",
+    "importance": 1,
+    "source": "Web3Voyager",
+    "url": "https://web3voyager.com/event/blockchain-life-2026",
+    "note": "",
+    "sources": [
+     "Web3Voyager"
+    ],
+    "days_until": 14,
+    "ongoing": false
+   },
+   {
+    "date_start": "2026-12-01",
+    "date_end": "2026-12-02",
+    "category": "会议",
+    "category_en": "Conference",
+    "title": "Fintech Connect 2026",
+    "coins": [],
+    "city": "London",
+    "importance": 1,
+    "source": "Web3Voyager",
+    "url": "https://web3voyager.com/event/fintech-connect-26-12",
+    "note": "",
+    "sources": [
+     "Web3Voyager"
+    ],
+    "days_until": 14,
+    "ongoing": false
+   },
+   {
+    "date_start": "2026-12-02",
+    "date_end": "2026-12-05",
+    "category": "会议",
+    "category_en": "Conference",
+    "title": "Africa Bitcoin Conference",
+    "coins": [],
+    "city": "Blantyre",
+    "importance": 1,
+    "source": "Web3Voyager",
+    "url": "https://web3voyager.com/event/africa-bitcoin-conference",
+    "note": "",
+    "sources": [
+     "Web3Voyager"
+    ],
     "days_until": 15,
+    "ongoing": false
+   },
+   {
+    "date_start": "2026-12-03",
+    "date_end": "2026-12-05",
+    "category": "会议",
+    "category_en": "Conference",
+    "title": "Proof of Talk Abu Dhabi",
+    "coins": [],
+    "city": "أبو ظبي",
+    "importance": 1,
+    "source": "Web3Voyager",
+    "url": "https://web3voyager.com/event/proof-of-talk-abu-dhabi",
+    "note": "",
+    "sources": [
+     "Web3Voyager"
+    ],
+    "days_until": 16,
     "ongoing": false
    },
    {
@@ -2173,7 +1849,7 @@
     "sources": [
      "Luma"
     ],
-    "days_until": 18,
+    "days_until": 17,
     "ongoing": false
    },
    {
@@ -2191,7 +1867,25 @@
     "sources": [
      "CryptoEvents"
     ],
-    "days_until": 21,
+    "days_until": 20,
+    "ongoing": false
+   },
+   {
+    "date_start": "2026-12-07",
+    "date_end": "2026-12-12",
+    "category": "会议",
+    "category_en": "Conference",
+    "title": "Gitex Global 2026 Dubai",
+    "coins": [],
+    "city": "Dubai",
+    "importance": 1,
+    "source": "Web3Voyager",
+    "url": "https://web3voyager.com/event/gitex-global-2026-dubai",
+    "note": "",
+    "sources": [
+     "Web3Voyager"
+    ],
+    "days_until": 20,
     "ongoing": false
    },
    {
@@ -2208,6 +1902,60 @@
     "note": "",
     "sources": [
      "CryptoEvents"
+    ],
+    "days_until": 21,
+    "ongoing": false
+   },
+   {
+    "date_start": "2026-12-08",
+    "date_end": "2026-12-08",
+    "category": "会议",
+    "category_en": "Conference",
+    "title": "One Dollar, Two Rails: The Capital Efficiency Case for Going Onchain",
+    "coins": [],
+    "city": "Abu Dhabi",
+    "importance": 1,
+    "source": "Web3Voyager",
+    "url": "https://web3voyager.com/event/one-dollar-two-rails-capital-efficiency-26-12-08",
+    "note": "",
+    "sources": [
+     "Web3Voyager"
+    ],
+    "days_until": 21,
+    "ongoing": false
+   },
+   {
+    "date_start": "2026-12-09",
+    "date_end": "2026-12-10",
+    "category": "会议",
+    "category_en": "Conference",
+    "title": "HSС Asset Management Abu Dhabi",
+    "coins": [],
+    "city": "Abu Dhabi",
+    "importance": 1,
+    "source": "Web3Voyager",
+    "url": "https://web3voyager.com/event/hs-asset-management-abu-dhabi-9-26-12-09",
+    "note": "",
+    "sources": [
+     "Web3Voyager"
+    ],
+    "days_until": 22,
+    "ongoing": false
+   },
+   {
+    "date_start": "2026-12-09",
+    "date_end": "2026-12-09",
+    "category": "会议",
+    "category_en": "Conference",
+    "title": "Webrazzi Fintech 2026",
+    "coins": [],
+    "city": "Şişli",
+    "importance": 1,
+    "source": "Web3Voyager",
+    "url": "https://web3voyager.com/event/webrazzi-fintech-26-12",
+    "note": "",
+    "sources": [
+     "Web3Voyager"
     ],
     "days_until": 22,
     "ongoing": false
@@ -2227,7 +1975,43 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 24,
+    "days_until": 23,
+    "ongoing": false
+   },
+   {
+    "date_start": "2026-12-10",
+    "date_end": "2026-12-11",
+    "category": "会议",
+    "category_en": "Conference",
+    "title": "Global Blockchain Show 2026 Abu Dhabi",
+    "coins": [],
+    "city": "Abu Dhabi",
+    "importance": 1,
+    "source": "Web3Voyager",
+    "url": "https://web3voyager.com/event/global-blockchain-show-2026-abu-dhabi",
+    "note": "",
+    "sources": [
+     "Web3Voyager"
+    ],
+    "days_until": 23,
+    "ongoing": false
+   },
+   {
+    "date_start": "2026-12-10",
+    "date_end": "2026-12-11",
+    "category": "会议",
+    "category_en": "Conference",
+    "title": "Global Trading Show 2026 Abu Dhabi",
+    "coins": [],
+    "city": "Abu Dhabi",
+    "importance": 1,
+    "source": "Web3Voyager",
+    "url": "https://web3voyager.com/event/global-trading-show-2026-abu-dhabi",
+    "note": "",
+    "sources": [
+     "Web3Voyager"
+    ],
+    "days_until": 23,
     "ongoing": false
    },
    {
@@ -2245,7 +2029,7 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 25,
+    "days_until": 24,
     "ongoing": false
    },
    {
@@ -2263,7 +2047,25 @@
     "sources": [
      "CryptoEvents"
     ],
-    "days_until": 29,
+    "days_until": 28,
+    "ongoing": false
+   },
+   {
+    "date_start": "2026-12-19",
+    "date_end": "2026-12-19",
+    "category": "会议",
+    "category_en": "Conference",
+    "title": "Money Alpha 360 2026",
+    "coins": [],
+    "city": "Greater Noida",
+    "importance": 1,
+    "source": "Web3Voyager",
+    "url": "https://web3voyager.com/event/money-alpha-360",
+    "note": "",
+    "sources": [
+     "Web3Voyager"
+    ],
+    "days_until": 32,
     "ongoing": false
    },
    {
@@ -2281,7 +2083,7 @@
     "sources": [
      "CryptoEvents"
     ],
-    "days_until": 34,
+    "days_until": 33,
     "ongoing": false
    },
    {
@@ -2299,7 +2101,7 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 39,
+    "days_until": 38,
     "ongoing": false
    },
    {
@@ -2317,7 +2119,25 @@
     "sources": [
      "CryptoEvents"
     ],
-    "days_until": 58,
+    "days_until": 57,
+    "ongoing": false
+   },
+   {
+    "date_start": "2027-01-16",
+    "date_end": "2027-01-16",
+    "category": "会议",
+    "category_en": "Conference",
+    "title": "Jan 16 2027 Bitcoin Day Naples 2027 10% Off Naples, FL Bitcoin Day Naples 2027 i",
+    "coins": [],
+    "city": "",
+    "importance": 1,
+    "source": "CryptoEvents",
+    "url": "https://cryptoevents.global/bitcoin-day-naples-2027/",
+    "note": "",
+    "sources": [
+     "CryptoEvents"
+    ],
+    "days_until": 60,
     "ongoing": false
    }
   ]
@@ -2333,30 +2153,19 @@
    "time_bj": "",
    "grade": "行业动向",
    "category": "会议"
-  },
-  {
-   "date": "2026-11-15",
-   "days_until": 0,
-   "tab": "web3",
-   "title_zh": "Solana Breakpoint",
-   "title_en": "Solana Breakpoint",
-   "time_utc": "",
-   "time_bj": "",
-   "grade": "行业动向",
-   "category": "会议"
   }
  ],
  "data_status": {
   "stale": false,
   "detail": {
-   "reg_sec": "ok（扫了 250 份 Federal Register 文件，窗口内最终期限 0 条）",
-   "reg_congress": "ok（扫了 171 场委员会会议，窗口内加密相关表决会 0 场、签署期限 0 条）",
+   "reg_sec": "ok（扫了 251 份 Federal Register 文件，窗口内最终期限 0 条）",
+   "reg_congress": "ok（扫了 174 场委员会会议，窗口内加密相关表决会 0 场、签署期限 0 条）",
    "reg_votes": "手工清单最后核对 2026-11-16；未来 60 天共 0 条（自动 0 条）",
    "btc_schedule": "ok（宏观日程录入到 2027-12-10）",
-   "Luma": "ok（9 条）",
+   "Luma": "ok（8 条）",
    "CryptoEvents": "ok（28 条）",
    "IndustryEvents": "ok（20 条）",
-   "Web3Voyager": "ok（72 条）",
+   "Web3Voyager": "ok（63 条）",
    "CoinMarketCal": "未接入（没有 COINMARKETCAL_KEY）",
    "Coindar": "未接入（没有 COINDAR_KEY）"
   },

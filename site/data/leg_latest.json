@@ -1,7 +1,7 @@
 {
  "schema": 4,
- "generated_at": "2026-11-16T08:13:35Z",
- "asof": "2026-11-15",
+ "generated_at": "2026-11-17T09:28:25Z",
+ "asof": "2026-11-16",
  "source": "Coin Metrics PriceUSD (2010-07-18~2017-08-16) + Binance spot BTCUSDT 1d (2017-08-17~, closed candles, UTC)",
  "btc_leg": {
   "direction": "down",
@@ -9,14 +9,14 @@
    "start_date": "2026-09-21",
    "start_close": 86620.0,
    "confirm_date": "2026-10-30",
-   "day": 55,
+   "day": 56,
    "drop_pct": 25.9,
    "low_close": 64150.0,
    "low_date": "2026-11-14",
-   "btc_close": 65351.05,
-   "from_peak_pct": -24.6,
+   "btc_close": 64882.87,
+   "from_peak_pct": -25.1,
    "reversal_line": 70565.0,
-   "to_reversal_pct": 8.0
+   "to_reversal_pct": 8.8
   },
   "badge": null,
   "prev_leg": {
@@ -33,14 +33,14 @@
    "start_date": "2026-09-27",
    "start_close": 45.66,
    "confirm_date": "2026-10-22",
-   "day": 49,
+   "day": 50,
    "drop_pct": 39.3,
    "low_close": 27.71,
    "low_date": "2026-11-14",
-   "from_peak_pct": -37.1,
+   "from_peak_pct": -37.8,
    "reversal_line": 31.87,
-   "to_reversal_pct": 11.0,
-   "idx_close": 28.7
+   "to_reversal_pct": 12.2,
+   "idx_close": 28.41
   },
   "badge": null,
   "prev_leg": {
@@ -598,16 +598,16 @@
    "coverage": {
     "universe": 706,
     "with_data": 704,
-    "from_api": 0,
+    "from_api": 501,
     "from_archive": 0,
-    "no_data": 502,
+    "no_data": 1,
     "failed": [
      "币安人生",
      "牛来"
     ]
    },
    "index_from": "2018-08-31",
-   "asof": "2026-11-15",
+   "asof": "2026-11-16",
    "note": "动态篮子：每月 1 日按 30 日成交额排名评定进出，停牌/崩盘立刻剔除；等权、每日再平衡；对 USDT。"
   }
  },
@@ -616,13 +616,13 @@
   "ignition_date": "2026-08-21",
   "d0_date": "2026-08-27",
   "d0_close": 80249.58,
-  "n": 80,
+  "n": 81,
   "days_to_clear": 0,
   "clear_date": "2026-09-26",
   "stop_line": 72224.62,
   "stopped_date": null,
-  "btc_close": 65351.05,
-  "btc_vs_stop_pct": -9.5
+  "btc_close": 64882.87,
+  "btc_vs_stop_pct": -10.2
  },
  "site_scale": {
   "phase": "bull",
