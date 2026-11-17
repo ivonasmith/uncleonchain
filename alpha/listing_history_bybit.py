@@ -3,7 +3,7 @@
 """Bybit 全历史上币复盘（只在 GitHub Actions 跑：Bybit API 在美国按国家拦，官方归档 public.bybit.com 能通）。口径同 alpha/listing_history.py / v3。
 
 数据 = Bybit 官方现货逐笔成交归档 https://public.bybit.com/spot/<交易对>/<交易对>-YYYY-MM.csv.gz（按月一个文件）。
-  上线时刻 = 第一个月文件里的第一笔成交；起点 = 上线后第 15 分钟内最后一笔成交价（≈ 第 15 分钟收盘）；日收盘 = 每个 UTC 日最后一笔。
+  上线时刻 = 第一个成交 ≥ 10 笔的分钟（跳过开盘前零星成交，原始第一笔另记 first_trade_utc）；起点 = 上线后第 15 分钟内最后一笔成交价（≈ 第 15 分钟收盘）；日收盘 = 每个 UTC 日最后一笔。
   归档从 2022-11 开始：第一个文件就是归档首月的交易对，说明它在归档开始前已上线，剔除（标「归档开始前已上线」）。
   归档目录列的是有过成交的全部交易对，含已下架的，没有幸存者偏差（以目录为准，未逐个核实）。
 只收 USDT 计价；剔除稳定币、杠杆代币、疑似代币化股票（同 listing_history_x.stock_suspect）。
@@ -18,6 +18,7 @@ import listing_history as LH
 from listing_history_x import stock_suspect
 
 BASE = "https://public.bybit.com/spot/"
+OPEN_MIN_TRADES = 10   # 一分钟内成交 ≥ 10 笔才算正式开盘（11-17 试跑发现归档里有开盘前的零星成交，比如 3P 第一笔价格 0.00000001）
 DAY = 86400000
 
 
@@ -107,14 +108,23 @@ def main():
         tr = trades(sym, months[0])
         if not tr:
             continue
-        t0 = tr[0][0]
+        # 开盘 = 第一个成交笔数 ≥ OPEN_MIN_TRADES 的那一分钟（跳过正式开盘前的零星成交：测试单、0.00000001 这类挂单）
+        cnt = {}
+        for t, p in tr:
+            cnt[t // 60000] = cnt.get(t // 60000, 0) + 1
+        om = next((m for m in sorted(cnt) if cnt[m] >= OPEN_MIN_TRADES), None)
+        if om is None:
+            continue
+        t0 = om * 60000
         d0 = LH.day(t0)
         row["listed"] = d0
         row["open_minute_utc"] = dt.datetime.fromtimestamp(t0 / 1000, dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        row["first_trade_utc"] = dt.datetime.fromtimestamp(tr[0][0] / 1000, dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        row["pre_open_trades"] = sum(1 for t, p in tr if t < t0)
         if stock_suspect(base, d0):
             row["excluded"] = "疑似代币化股票"
         else:
-            p15 = [p for t, p in tr if t < t0 + 15 * 60000]
+            p15 = [p for t, p in tr if t0 <= t < t0 + 15 * 60000]
             ref = p15[-1] if p15 else None
             # 日收盘：从上线月起最多取 4 个月文件，够 91 天
             closes = {}
