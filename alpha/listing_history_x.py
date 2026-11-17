@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """其它交易所全历史上币复盘（CCXT，只在 GitHub Actions 跑；口径同 alpha/listing_history.py 和研究文档 v3）。
 
-做法：拉该所全部现货交易对 → 每个币取它所有交易对里最早的第一根日线 = 上币日 →
+做法：拉该所全部现货交易对 → 每个币取它所有交易对里最早的第一根日线 = 上币日（两类 K 线接口都支持：一次取或二分找窗口）→
 起点 = 开盘第 15 分钟收盘价（该所 1 分钟历史够深才有；不够就用上币当天第一根 1 小时收盘价，ref_type 标 1h）→
 第 7 / 30 / 90 天日收盘回报、90 天内最高点（按日收盘、不含上币当天）、BTC 同期（币安 BTCUSDT）与超额 → 按牛熊 × 涨跌腿、当时已确认的腿、L2 状态、年份分组。
 **幸存者偏差**：CCXT 只能列出现在还在交易的交易对，已下架的币查不到，回报会偏高；和 Binance 比要用 Binance「只看现在还在交易的币」口径（listing_compare.py）。
@@ -50,9 +50,30 @@ def main():
                 return []
         return []
 
+    LIM = 100   # 每次取日线的根数（多数交易所单次上限 ≥ 100）
+
+    def first_day(sym):
+        """第一根日线的开盘时刻。两类接口：① 从 since 往后返回最早的数据（币安、Gate 式）→ 一次就拿到；
+        ② 只返回 [since, since + LIM 天] 窗口里的数据（OKX、Bitget、KuCoin 式）→ 二分找最早有数据的窗口，约 12 次请求"""
+        r = ohlcv(sym, "1d", SINCE0, LIM)
+        if r:
+            return r[0][0]
+        lo, hi = SINCE0, now - DAY
+        if not ohlcv(sym, "1d", hi - LIM * DAY, LIM):
+            return None
+        while hi - lo > DAY:
+            mid = lo + (hi - lo) // 2 // DAY * DAY
+            if ohlcv(sym, "1d", mid, LIM):
+                hi = mid
+            else:
+                lo = mid
+        r = ohlcv(sym, "1d", hi, LIM)
+        return r[0][0] if r else None
+
     # 交易所能不能按 since 回溯：BTC 第一根日线如果落在最近 30 天，说明它忽略 since，没法复盘
     btc_sym = next((s for s in ("BTC/USDT", "BTC/USD", "BTC/KRW", "BTC/EUR", "BTC/USDC") if s in mk), None)
-    b = ohlcv(btc_sym, "1d", SINCE0, 3) if btc_sym else []
+    bf = first_day(btc_sym) if btc_sym else None
+    b = [[bf]] if bf else []
     if not b or b[0][0] > now - 30 * DAY:
         json.dump({"exchange": exid, "error": "该所 K 线接口不按 since 回溯，无法复盘", "btc_first": b[0][0] if b else None},
                   open(os.path.join(LH.OUT, f"listing_history_{exid}.json"), "w"), ensure_ascii=False)
@@ -74,9 +95,9 @@ def main():
             break
         firsts = []
         for m in ms:
-            r = ohlcv(m["symbol"], "1d", SINCE0, 2)
-            if r:
-                firsts.append((r[0][0], QUOTES.index(m["quote"]), m))
+            ft0 = first_day(m["symbol"])
+            if ft0:
+                firsts.append((ft0, QUOTES.index(m["quote"]), m))
         if not firsts:
             continue
         t0, _, m = min(firsts, key=lambda x: (x[0], x[1]))
@@ -88,16 +109,17 @@ def main():
             row["excluded"] = "疑似代币化股票"
         else:
             ref, ref_type, ref_ms = None, None, None
-            mins = ohlcv(m["symbol"], "1m", t0, 120)
-            if mins and t0 <= mins[0][0] < t0 + DAY and len(mins) >= 15:
+            hrs = ohlcv(m["symbol"], "1h", t0, 24)
+            hrs = [x for x in hrs if t0 <= x[0] < t0 + DAY]
+            h0 = hrs[0][0] if hrs else t0
+            mins = ohlcv(m["symbol"], "1m", h0, 120)
+            if mins and h0 <= mins[0][0] < h0 + 3600000 and len(mins) >= 15:
                 ft = mins[0][0]
                 c15 = next((x for x in mins if x[0] >= ft + 14 * 60000), None)
                 if c15:
                     ref, ref_type, ref_ms = c15[4], "15m", c15[0]
-            if ref is None:
-                hrs = ohlcv(m["symbol"], "1h", t0, 3)
-                if hrs and t0 <= hrs[0][0] < t0 + DAY:
-                    ref, ref_type, ref_ms = hrs[0][4], "1h", hrs[0][0] + 3600000 - 60000
+            if ref is None and hrs:
+                ref, ref_type, ref_ms = hrs[0][4], "1h", hrs[0][0] + 3600000 - 60000
             days = ohlcv(m["symbol"], "1d", t0, 100)
             conv = {}
             if m["quote"] == "BTC":   # BTC 计价换成美元
