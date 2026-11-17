@@ -15,6 +15,29 @@ import listing_history as LH
 OUT = LH.OUT
 
 
+import collections, re
+
+BATCH_N = 8   # 同一家所同一天上线 ≥ 8 个币：数据起点堆积（OKX 2020-01-01）、代币化股票批量（OKX X 开头、Gate G 结尾）、补上一批老币（Crypto.com 2022-10-11），都不是新币上线
+STOCK_RULES = {"okx": r"X[A-Z]{2,6}", "gate": r"[A-Z]{2,6}G"}   # 2025-06 起上线的才套用
+INCOMPLETE = {"bitget": "没跑完（时间预算内只做了一部分币）", "gate": "1 分钟 / 1 小时历史只回溯约一年，只剩 2025 年起上线的币，起点用 1 小时价",
+              "bingx": "K 线只回溯到 2025-11，只剩近一年的币，起点用 1 小时价"}
+
+
+def clean(rows, exid):
+    """→ (保留的, 剔除计数)"""
+    day_n = collections.Counter(r["listed"] for r in rows)
+    keep, drop = [], collections.Counter()
+    pat = STOCK_RULES.get(exid)
+    for r in rows:
+        if day_n[r["listed"]] >= BATCH_N:
+            drop["批量上线日（同日 ≥ 8 个）"] += 1
+        elif pat and r["listed"] >= "2025-06-01" and re.fullmatch(pat, r["asset"]):
+            drop["代币化股票（代码规律）"] += 1
+        else:
+            keep.append(r)
+    return keep, dict(drop)
+
+
 def stats(rows):
     s = LH.summary(rows)
     r30 = [r["r30"] for r in rows if r.get("r30") is not None]
@@ -45,7 +68,8 @@ def main():
     ok = [r for r in bn["coins"] if "excluded" not in r and r.get("r7") is not None]
     info = LH.get("https://data-api.binance.vision/api/v3/exchangeInfo")
     trading = {s["baseAsset"] for s in (info or {}).get("symbols", []) if s.get("status") == "TRADING"}
-    res["Binance（全部，含已下架）"] = {"survivorship": False, **table(ok)}
+    ok, bdrop = clean(ok, "binance")
+    res["Binance（全部，含已下架）"] = {"survivorship": False, "dropped": bdrop, **table(ok)}
     if trading:
         res["Binance（只看现在还在交易的）"] = {"survivorship": True, **table([r for r in ok if r["asset"] in trading])}
     for f in sorted(glob.glob(os.path.join(OUT, "listing_history_*.json"))):
@@ -57,8 +81,10 @@ def main():
             res[exid] = {"error": d["error"]}
             continue
         rows = [r for r in d["coins"] if "excluded" not in r and r.get("r7") is not None]
-        res[exid] = {"survivorship": True, "complete": d.get("complete"), "ref_15m": d["n"]["ref_15m"], "ref_1h": d["n"]["ref_1h"],
-                     "first_day": d.get("exchange_first_day"), **table(rows)}
+        rows, drop = clean(rows, exid)
+        res[exid] = {"survivorship": exid != "bybit", "complete": d.get("complete"), "incomplete_note": INCOMPLETE.get(exid),
+                     "ref_15m": sum(1 for r in rows if str(r.get("ref_type", "")).startswith("15m")), "ref_1h": sum(1 for r in rows if r.get("ref_type") == "1h"),
+                     "first_day": d.get("exchange_first_day"), "dropped": drop, **table(rows)}
     note = ("只是历史统计，不是操作建议。起点 = 开盘第 15 分钟收盘价（没有 1 分钟历史的所用第一小时收盘，见 ref_1h）；中位数为主口径；"
             "win30 = 第 30 天收盘高于起点的比例；x30 = 30 天跑赢 BTC 多少（中位）；其它所只含现在还在交易的币，回报偏高，"
             "和 Binance 比请用「只看现在还在交易的」那一行；牛熊 × 涨跌腿是事后划分。")
@@ -70,6 +96,7 @@ def main():
             print(f"| {k} | {v['error']} |")
             continue
         a = v["全部"]
+        k = k + ("（不完整）" if v.get("incomplete_note") else "")
         print(f"| {k} | {a['n']} | {f(a['r7'])} | {f(a['r30'])} | {f(a['r90'])} | {'U' if a['win30'] is None else format(a['win30'], '.0%')} | {f(a['x30'])} | {f(a['peak90'])} |")
 
 
