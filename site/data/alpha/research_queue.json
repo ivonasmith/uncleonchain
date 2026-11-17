@@ -1,6 +1,6 @@
 {
- "generated": "2026-11-16T18:09:13+00:00",
- "n": 35,
+ "generated": "2026-11-17T07:57:04+00:00",
+ "n": 36,
  "prompt": "你在给「链上大叔研究台」Alpha 雷达补证（只研究正规项目，不写买卖建议）。对清单里每个协议，查官方网站 / 文档 / 公告、DefiLlama 方法论和可核对的链上信息，\n按下面格式交一个 JSON 数组（文件名 <日期>_checks.json）。第一项 one_liner 用一句大白话说清它是什么（给没听过的人看）。每条事实带来源链接和核对日期；查不到写 \"U\"，不要估，不要编。\n结论 verdict 只能是：研究观察（对象明确、有可证伪假设、没查到否决项）/ 待核验（关键事实缺失或冲突，写清缺什么）/ 拒绝（身份错误、已确认风险、不是对普通人开放的正规项目，写证据）。\n「已有代币」本身不是拒绝理由：清单里 kind = tokenless 的如果查到其实已经有代币，写进 token_stance 和 missing、verdict 给待核验；kind = surge / site / manual 的本来就可能有代币，照常研究它的新玩法。\n只靠搜索摘要、打不开官网和文档的，verdict 最多给待核验，不给拒绝（拒绝必须有一手证据）。\n分数按 framework.json 附录一锚点给（M A F E G T D 是 0–4；TM 是 -1–3，有已证实不良记录给 -1；TE 是 0–3；不知道写 U，没有代币时 TE 写 NA）。M（新参与机制：这个玩法新在哪）优先查，每个分数写 why 和 src。\n资金参与方式 entry 从 buy / stake / points / use / presale / mine / none 里选（none = 暂时没有资金入口），写 entry_why。\n每张卡要回答三件事：量从哪来（flow 四个标签各给 高 / 中 / 低 / 待验证 + 证据）、量是不是真的（刷量 / 补贴迹象）、激励结束后还剩多少（capture、next_review）。\n关键事件（积分开放 / 结束、主网上线、发币、费率改动）写进 events，每条要日期和官方出处。",
  "schema": {
   "key": "清单里的 key（原样）",
@@ -91,7 +91,7 @@
     "Base",
     "Arc"
    ],
-   "rev30": 1634051,
+   "rev30": 1648941,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/central-city",
    "url": null,
@@ -174,7 +174,7 @@
    "chains": [
     "Off Chain"
    ],
-   "rev30": 19953915,
+   "rev30": 19086571,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/papertrade",
    "url": "https://papertrade.xyz",
@@ -207,7 +207,7 @@
     "Hyperliquid L1",
     "Off Chain"
    ],
-   "rev30": 1242507,
+   "rev30": 1028968,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/paperstrategy-pstr",
    "url": "https://paperstrategy.xyz",
@@ -241,7 +241,7 @@
     "Ethereum",
     "BSC"
    ],
-   "rev30": 1027267,
+   "rev30": 1019109,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/nullmask",
    "url": "https://nullmask.io",
@@ -273,7 +273,7 @@
    "chains": [
     "Robinhood Chain"
    ],
-   "rev30": 533141,
+   "rev30": 539687,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/fables",
    "url": "https://www.fables.fi",
@@ -339,7 +339,7 @@
    "chains": [
     "Tron"
    ],
-   "rev30": 295095,
+   "rev30": 338640,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/justlend-v1",
    "url": "https://justlend.org",
@@ -371,7 +371,7 @@
    "chains": [
     "THORChain"
    ],
-   "rev30": 218889,
+   "rev30": 201309,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/thorwallet",
    "url": "https://www.thorwallet.org",
@@ -403,7 +403,7 @@
    "chains": [
     "Ethereum"
    ],
-   "rev30": 175495,
+   "rev30": 179589,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/liquity-v1",
    "url": "https://www.liquity.org",
@@ -435,7 +435,7 @@
    "chains": [
     "Ethereum"
    ],
-   "rev30": 147884,
+   "rev30": 151989,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/yield-basis",
    "url": "https://yieldbasis.com",
@@ -468,7 +468,7 @@
     "Solana",
     "Robinhood Chain"
    ],
-   "rev30": 119565,
+   "rev30": 119387,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/sapling",
    "url": "https://sapling.cash",
@@ -500,7 +500,7 @@
    "chains": [
     "Solana"
    ],
-   "rev30": 118498,
+   "rev30": 118701,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/veil",
    "url": "https://veilit.xyz",
@@ -521,6 +521,37 @@
    "missing_before": []
   },
   {
+   "key": "g:parent#sendfun",
+   "name": "Sendfun",
+   "status": "原始线索",
+   "kind": "tokenless",
+   "fresh": true,
+   "bucket": "watch",
+   "discovered": "2026-11-17",
+   "category": "Launchpad",
+   "chains": [
+    "Solana"
+   ],
+   "rev30": 194726,
+   "tvl": null,
+   "defillama": "https://defillama.com/protocol/sendfun-launchpad",
+   "url": "https:// ",
+   "twitter": "sendfun",
+   "manual": null,
+   "pending": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM"
+   ],
+   "missing_before": []
+  },
+  {
    "key": "g:9367",
    "name": "MING",
    "status": "原始线索",
@@ -532,7 +563,7 @@
    "chains": [
     "BSC"
    ],
-   "rev30": 100926,
+   "rev30": 106509,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/ming",
    "url": null,
@@ -563,7 +594,7 @@
    "chains": [
     "Off Chain"
    ],
-   "rev30": 613903,
+   "rev30": 620608,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/catapult-trade",
    "url": "https://catapult.trade",
@@ -598,7 +629,7 @@
     "Hyperliquid L1"
    ],
    "rev30": null,
-   "tvl": 47981910,
+   "tvl": 49183779,
    "defillama": "https://defillama.com/protocol/kinetiq-elysium-bridge",
    "url": "https://elysium.kinetiq.xyz",
    "twitter": "Enter_Elysium",
@@ -632,7 +663,7 @@
     "Base"
    ],
    "rev30": null,
-   "tvl": 34166621,
+   "tvl": 34141220,
    "defillama": "https://defillama.com/protocol/pendle-loop",
    "url": "https://app.pendle.finance",
    "twitter": "pendle_fi",
@@ -664,7 +695,7 @@
     "Ethereum"
    ],
    "rev30": null,
-   "tvl": 8336249,
+   "tvl": 8338068,
    "defillama": "https://defillama.com/protocol/vesper-v2",
    "url": "https://vesper.finance",
    "twitter": "VesperFi",
@@ -696,7 +727,7 @@
     "Ethereum"
    ],
    "rev30": null,
-   "tvl": 7191512,
+   "tvl": 7632096,
    "defillama": "https://defillama.com/protocol/swan-dao",
    "url": "https://www.swanusd.com",
    "twitter": "MonolithMarket",
@@ -728,7 +759,7 @@
     "Monad",
     "BSC"
    ],
-   "rev30": 8949798,
+   "rev30": 8755478,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/fomo-wallet",
    "url": "https://fomo.family",
@@ -765,7 +796,7 @@
     "Solana",
     "Base"
    ],
-   "rev30": 5389972,
+   "rev30": 5317326,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/gmgn",
    "url": "https://gmgn.ai",
@@ -802,7 +833,7 @@
     "X Layer",
     "Monad"
    ],
-   "rev30": 4125956,
+   "rev30": 4080334,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/flap-sh",
    "url": null,
@@ -837,7 +868,7 @@
    "chains": [
     "Off Chain"
    ],
-   "rev30": 3346200,
+   "rev30": 3544028,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/azverse-perps",
    "url": null,
@@ -873,7 +904,7 @@
    "chains": [
     "Hyperliquid L1"
    ],
-   "rev30": 3300676,
+   "rev30": 3406786,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/trade[xyz]",
    "url": "https://app.trade.xyz",
@@ -908,7 +939,7 @@
    "chains": [
     "Robinhood Chain"
    ],
-   "rev30": 2102065,
+   "rev30": 2019935,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/the-standard-reserve",
    "url": "https://www.standardreserve.xyz",
@@ -944,7 +975,7 @@
    "chains": [
     "TxFlow"
    ],
-   "rev30": 1685893,
+   "rev30": 1723026,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/txflow-perps",
    "url": "https://app.txflow.com",
@@ -980,7 +1011,7 @@
    "chains": [
     "Off Chain"
    ],
-   "rev30": 1459034,
+   "rev30": 1530804,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/antarctic",
    "url": "https://www.antarctic.exchange",
@@ -1015,7 +1046,7 @@
    "chains": [
     "Off Chain"
    ],
-   "rev30": 1412965,
+   "rev30": 1503974,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/xox-perps",
    "url": "https://www.xox.exchange",
@@ -1050,7 +1081,7 @@
    "chains": [
     "Tron"
    ],
-   "rev30": 1191894,
+   "rev30": 1174086,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/tronsave",
    "url": "https://tronsave.io",
@@ -1088,7 +1119,7 @@
     "Ethereum",
     "Sonic"
    ],
-   "rev30": 1117304,
+   "rev30": 1112388,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/veda",
    "url": "https://veda.tech",
@@ -1124,7 +1155,7 @@
    "chains": [
     "Hyperliquid L1"
    ],
-   "rev30": 873399,
+   "rev30": 890337,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/hyperdash-perps",
    "url": "https://hyperdash.com",
@@ -1161,7 +1192,7 @@
     "Ethereum",
     "BSC"
    ],
-   "rev30": 832552,
+   "rev30": 852159,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/rabby-perps",
    "url": "https://rabby.io",
@@ -1199,7 +1230,7 @@
     "Blast",
     "Sonic"
    ],
-   "rev30": 745302,
+   "rev30": 777282,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/okx-swap",
    "url": "https://www.okx.com",
@@ -1237,7 +1268,7 @@
     "XRPL",
     "Eclipse"
    ],
-   "rev30": 695656,
+   "rev30": 695037,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/relay",
    "url": "https://docs.relay.link",
@@ -1275,7 +1306,7 @@
     "BSC",
     "Solana"
    ],
-   "rev30": 633892,
+   "rev30": 632235,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/loan-meme",
    "url": null,
