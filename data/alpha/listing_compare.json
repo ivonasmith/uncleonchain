@@ -126,6 +126,131 @@
     "peak90_day": 20.0,
     "r30_mean": 0.0549
    }
+  },
+  "bingx": {
+   "error": "该所 K 线接口不按 since 回溯，无法复盘"
+  },
+  "bitfinex": {
+   "survivorship": true,
+   "complete": false,
+   "ref_15m": 27,
+   "ref_1h": 2,
+   "first_day": "2019-03-11",
+   "全部": {
+    "n": 29,
+    "level": "可看分布（n≥20）",
+    "r7": -0.0163,
+    "r30": -0.007,
+    "r90": -0.2255,
+    "x30": -0.1861,
+    "win30": 0.4615,
+    "peak90": 0.1731,
+    "peak90_day": 16.0,
+    "r30_mean": -0.063
+   },
+   "bear·down": {
+    "n": 2,
+    "level": "样本不足（n<20），只列数字",
+    "r7": -0.0982,
+    "r30": -0.0035,
+    "r90": -0.2517,
+    "x30": 0.1068,
+    "win30": 0.5,
+    "peak90": 0.1196,
+    "peak90_day": 45.0,
+    "r30_mean": -0.0035
+   },
+   "bear·up": {
+    "n": 1,
+    "level": "样本不足（n<20），只列数字",
+    "r7": -0.0909,
+    "r30": -0.5343,
+    "r90": -0.2489,
+    "x30": -0.401,
+    "win30": 0.0,
+    "peak90": -0.0309,
+    "peak90_day": 4.0,
+    "r30_mean": -0.5343
+   },
+   "bull·down": {
+    "n": 6,
+    "level": "样本不足（n<20），只列数字",
+    "r7": -0.0199,
+    "r30": 0.1134,
+    "r90": -0.1673,
+    "x30": 0.1709,
+    "win30": 0.6667,
+    "peak90": 0.6386,
+    "peak90_day": 12.5,
+    "r30_mean": 0.0769
+   },
+   "bull·up": {
+    "n": 20,
+    "level": "可看分布（n≥20）",
+    "r7": -0.0081,
+    "r30": -0.1678,
+    "r90": -0.1998,
+    "x30": -0.2431,
+    "win30": 0.4118,
+    "peak90": 0.1978,
+    "peak90_day": 16.0,
+    "r30_mean": -0.0917
+   }
+  },
+  "bitget": {
+   "error": "该所 K 线接口不按 since 回溯，无法复盘"
+  },
+  "bitstamp": {
+   "error": "该所 K 线接口不按 since 回溯，无法复盘"
+  },
+  "bitvavo": {
+   "error": "该所 K 线接口不按 since 回溯，无法复盘"
+  },
+  "btse": {
+   "error": "该所 K 线接口不按 since 回溯，无法复盘"
+  },
+  "bullish": {
+   "error": "该所 K 线接口不按 since 回溯，无法复盘"
+  },
+  "coinbaseexchange": {
+   "error": "该所 K 线接口不按 since 回溯，无法复盘"
+  },
+  "cryptocom": {
+   "error": "该所 K 线接口不按 since 回溯，无法复盘"
+  },
+  "digifinex": {
+   "error": "该所 K 线接口不按 since 回溯，无法复盘"
+  },
+  "gate": {
+   "survivorship": true,
+   "complete": false,
+   "ref_15m": 0,
+   "ref_1h": 0,
+   "first_day": "2014-01-01",
+   "全部": {
+    "n": 0,
+    "level": "样本不足（n<20），只列数字",
+    "r7": null,
+    "r30": null,
+    "r90": null,
+    "x30": null,
+    "win30": null,
+    "peak90": null,
+    "peak90_day": null,
+    "r30_mean": null
+   }
+  },
+  "htx": {
+   "error": "该所 K 线接口不按 since 回溯，无法复盘"
+  },
+  "kucoin": {
+   "error": "该所 K 线接口不按 since 回溯，无法复盘"
+  },
+  "okx": {
+   "error": "该所 K 线接口不按 since 回溯，无法复盘"
+  },
+  "upbit": {
+   "error": "该所 K 线接口不按 since 回溯，无法复盘"
   }
  }
 }

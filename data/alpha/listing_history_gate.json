@@ -1,0 +1,49 @@
+{
+"generated": "2026-11-17T08:04:22Z",
+"exchange": "gate",
+"exchange_first_day": "2014-01-01",
+"survivorship": "只含现在还在交易的币（CCXT 列不出已下架的），回报偏高",
+"complete": false,
+"n": {
+"bases": 1565,
+"coins": 2,
+"used": 0,
+"ref_15m": 0,
+"ref_1h": 0
+},
+"groups": {
+"全部": {},
+"牛熊 × 涨跌腿（事后划分）": {},
+"当时已确认的腿": {},
+"L2 状态": {},
+"年份": {}
+},
+"coins": [
+{
+"asset": "BTC",
+"pair": "BTC/USDT",
+"quote": "USDT",
+"listed": "2014-01-01",
+"excluded": "开张首批",
+"leg_dir": "up",
+"leg_regime": "bear",
+"known_leg_dir": "up",
+"known_leg_regime": "bear",
+"l2_state": "BULL_PULLBACK",
+"year": "2014"
+},
+{
+"asset": "LTC",
+"pair": "LTC/USDT",
+"quote": "USDT",
+"listed": "2014-01-01",
+"excluded": "开张首批",
+"leg_dir": "up",
+"leg_regime": "bear",
+"known_leg_dir": "up",
+"known_leg_regime": "bear",
+"l2_state": "BULL_PULLBACK",
+"year": "2014"
+}
+]
+}
