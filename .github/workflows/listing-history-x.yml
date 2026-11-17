@@ -5,7 +5,10 @@ on:
     inputs:
       exchanges:
         description: "CCXT 交易所 ID，JSON 数组（大叔 11-17 定：只要 CoinGecko 排名在 LBank（第 12）之前的，另加 Upbit、Bybit（大叔 11-17 点名）；Binance 另算，Kraken 接口只给最近数据做不了）"
-        default: '["okx","bitget","kucoin","gate","coinbaseexchange","cryptocom","bitstamp","bitvavo","bingx","upbit"]'
+        default: '["okx","bitget","kucoin","gate","coinbaseexchange","cryptocom","bitstamp","bitvavo","bingx","upbit","bybit"]'
+      limit:
+        description: "只试跑前 N 个币（留空 = 全量）"
+        default: ""
 permissions:
   contents: write
 concurrency:
@@ -24,7 +27,13 @@ jobs:
       - uses: actions/checkout@v4
       - run: pip install -q ccxt
       - name: 复盘 ${{ matrix.ex }}
-        run: python3 -u alpha/listing_history_x.py ${{ matrix.ex }} --minutes 270
+        run: |
+          L=""; [ -n "${{ github.event.inputs.limit }}" ] && L="--limit ${{ github.event.inputs.limit }}"
+          if [ "${{ matrix.ex }}" = "bybit" ]; then
+            python3 -u alpha/listing_history_bybit.py --minutes 270 $L   # Bybit API 在美国被拦，走官方逐笔成交归档
+          else
+            python3 -u alpha/listing_history_x.py ${{ matrix.ex }} --minutes 270
+          fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:
