@@ -121,7 +121,9 @@ def main():
         row["open_minute_utc"] = dt.datetime.fromtimestamp(t0 / 1000, dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
         row["first_trade_utc"] = dt.datetime.fromtimestamp(tr[0][0] / 1000, dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
         row["pre_open_trades"] = sum(1 for t, p in tr if t < t0)
-        if stock_suspect(base, d0):
+        if t0 - tr[0][0] > DAY:
+            row["excluded"] = "开盘判定不可靠（首笔成交后超过 1 天才有成交 ≥ 10 笔的分钟，成交稀疏）"
+        elif stock_suspect(base, d0):
             row["excluded"] = "疑似代币化股票"
         else:
             p15 = [p for t, p in tr if t0 <= t < t0 + 15 * 60000]
