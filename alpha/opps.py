@@ -350,6 +350,14 @@ def main():
         print("成交与变现失败：", str(e)[:160])
     for c in res["opps"]:   # 列表里的 30 天迷你走势
         c["spark"] = [v for _, v in (ser.get(c["id"]) or [])[-30:]]
+    try:   # 综合分每天一行，只追加不回改（以后检验「高分的卡后来是不是更好」用；11-17 定）
+        hp = os.path.join(OUT, "comp_history.json")
+        hist = load(hp, {}) or {}
+        day = dt.date.today().isoformat()
+        hist[day] = {c["key"]: [c["comp"]["lo"], c["comp"]["hi"], c["comp"]["cov"]] for c in res["opps"] if c["status"] != "拒绝"}
+        json.dump(hist, open(hp, "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
+    except Exception as e:
+        print("综合分历史写入失败：", str(e)[:160])
     q = queue(res["opps"])
     res["queue_n"] = q["n"]
     json.dump(res, open(os.path.join(OUT, "opps.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)

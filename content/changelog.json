@@ -1,5 +1,29 @@
 [
  {
+  "version": "2026.11.17.1",
+  "date": "2026-11-17",
+  "notify": false,
+  "title_zh": "Alpha 看板改按综合分排名；分类只留有币 / 无币两类",
+  "title_en": "Alpha board now ranked by composite score; two groups only (tokenless / has token)",
+  "items": [
+   {
+    "type": "new",
+    "zh": "综合分 v3（满分 100，各维度分值不同）：创新 0–40（非线性，开创品类最高）、资源导入 0–10、流量起势 0–15、团队 −20～15（不公开 0、不良记录 −20、实名人数越多和背景越强分越高）、真实需求 0–10、普通人可参与与分配公平 0–10、解锁抛压 −15～0。资源导入和流量起势只在创新 ≥ 15 分时全额计入，否则按一半计。排名用保守分（只加查清的项），同时显示全查清后最高可能和查清比例。研究评分，未经历史回测检验，不是买卖建议。",
+    "en": "Composite v3 (100 pts, unequal weights): innovation 0–40, resources 0–10, traction 0–15, team −20–15, real demand 0–10, access & fairness 0–10, unlock pressure −15–0. Momentum counts in full only when innovation ≥ 15. Ranked by the conservative score; max and coverage shown. Research score, not back-tested, not trade advice."
+   },
+   {
+    "type": "change",
+    "zh": "看板分类只留「无币收入榜」「有币 · 收入新起量」两类（按有没有代币分），新上架、手动线索、本站板块改成币名旁的小标签。",
+    "en": "Board groups reduced to tokenless / has token; other origins shown as tags."
+   },
+   {
+    "type": "new",
+    "zh": "综合分每天记一行到 data/alpha/comp_history.json，只追加不回改，用来以后检验分数。",
+    "en": "Daily composite scores logged append-only to data/alpha/comp_history.json."
+   }
+  ]
+ },
+ {
   "version": "2026.11.16.6",
   "date": "2026-11-16",
   "notify": false,
