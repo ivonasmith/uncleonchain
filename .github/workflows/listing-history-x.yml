@@ -1,0 +1,56 @@
+name: 各交易所全历史上币复盘（手动）
+# 每家所一个并行任务跑 alpha/listing_history_x.py（CCXT），最后汇总对比 alpha/listing_compare.py 并提交 data/alpha。
+on:
+  workflow_dispatch:
+    inputs:
+      exchanges:
+        description: "CCXT 交易所 ID，JSON 数组"
+        default: '["okx","bitget","kucoin","gate","htx","coinbaseexchange","upbit","cryptocom","bitstamp","bitvavo","lbank","bingx","bitfinex","digifinex","btse","bullish"]'
+permissions:
+  contents: write
+concurrency:
+  group: listing-history-x
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      max-parallel: 16
+      matrix:
+        ex: ${{ fromJSON(github.event.inputs.exchanges) }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install -q ccxt
+      - name: 复盘 ${{ matrix.ex }}
+        run: python3 -u alpha/listing_history_x.py ${{ matrix.ex }} --minutes 270
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: lh-${{ matrix.ex }}
+          path: data/alpha/listing_history_${{ matrix.ex }}.json
+          if-no-files-found: ignore
+  compare:
+    needs: run
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: lh-*
+          path: lh
+          merge-multiple: true
+      - name: 汇总对比
+        run: |
+          cp lh/*.json data/alpha/ 2>/dev/null || true
+          python3 alpha/listing_compare.py | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: 提交
+        run: |
+          git config user.name "uncleonchain-bot"
+          git config user.email "bot@uncleonchain.com"
+          git add data/alpha/listing_history_*.json data/alpha/listing_compare.json
+          git commit -m "各交易所全历史上币复盘 $(date -u +%F)" || exit 0
+          for i in 1 2 3 4; do git pull --rebase -X theirs origin main && git push origin HEAD:main && break; sleep $((i*5)); done
