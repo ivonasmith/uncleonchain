@@ -4,12 +4,12 @@ on:
   workflow_dispatch:
     inputs:
       exchanges:
-        description: "CCXT 交易所 ID，JSON 数组（大叔 11-17 定：只要 CoinGecko 排名在 LBank（第 12）之前的；Binance 另算，Kraken 接口只给最近数据做不了）"
-        default: '["okx","bitget","kucoin","gate","coinbaseexchange","cryptocom","bitstamp","bitvavo","bingx"]'
+        description: "CCXT 交易所 ID，JSON 数组（大叔 11-17 定：只要 CoinGecko 排名在 LBank（第 12）之前的，另加 Upbit、Bybit（大叔 11-17 点名）；Binance 另算，Kraken 接口只给最近数据做不了）"
+        default: '["okx","bitget","kucoin","gate","coinbaseexchange","cryptocom","bitstamp","bitvavo","bingx","upbit"]'
 permissions:
   contents: write
 concurrency:
-  group: listing-history-x
+  group: listing-history-x-${{ github.run_id }}   # 允许分批并行跑（各批结果最后用 listing_compare.py 统一汇总）
   cancel-in-progress: false
 jobs:
   run:

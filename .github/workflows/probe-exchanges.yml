@@ -11,6 +11,10 @@ jobs:
       - uses: actions/checkout@v4
       - name: 探测
         run: python3 tools/probe/exchange_sources.py
+      - name: Bybit 备用入口（美国机房能不能通）
+        run: |
+          for u in "https://api.bybit.com/v5/market/time" "https://api.bytick.com/v5/market/time" "https://api.bytick.com/v5/market/kline?category=spot&symbol=BTCUSDT&interval=D&start=1609459200000&limit=2" "https://public.bybit.com/spot/" "https://public.bybit.com/spot/BTCUSDT/" "https://api2.bybit.com/v5/market/time"; do
+            echo "== $u"; curl -s -m 20 -w "  HTTP %{http_code}" "$u" | head -c 400; echo; done
       - name: X9 数据源实测（TokenEarly / CoinGecko 前 70 / CCXT K 线回溯）
         run: |
           pip install -q ccxt
