@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-17T07:54:06+00:00",
+ "generated": "2026-11-17T08:22:43+00:00",
  "asof": "2026-11-16",
  "stale": false,
  "baseline_day": "2026-11-14",
  "sources": {
   "defillama_protocols": {
    "ok": true,
-   "n": 9062
+   "n": 9063
   },
   "defillama_revenue": {
    "ok": true,
@@ -1199,7 +1199,7 @@
     {
      "board": "launchpad",
      "rule": "lp_new",
-     "why": "进发射台矩阵 5 天，近 7 天手续费 419,077 美元",
+     "why": "进发射台矩阵 6 天，近 7 天手续费 231,446 美元",
      "since": "2026-11-10"
     }
    ],
@@ -1562,6 +1562,14 @@
    "rev30": 194726,
    "rev_prev30": 0,
    "chg30": null,
+   "boards": [
+    {
+     "board": "launchpad",
+     "rule": "lp_accel",
+     "why": "近 7 天手续费 191,041 美元，上 7 天没有",
+     "since": null
+    }
+   ],
    "first_seen": "2026-11-17"
   },
   {
@@ -2284,7 +2292,7 @@
     {
      "board": "launchpad",
      "rule": "lp_new",
-     "why": "进发射台矩阵 5 天，近 7 天手续费 1,141,360 美元",
+     "why": "进发射台矩阵 6 天，近 7 天手续费 916,737 美元",
      "since": "2026-11-10"
     }
    ]
@@ -2400,7 +2408,7 @@
     {
      "board": "launchpad",
      "rule": "lp_new",
-     "why": "进发射台矩阵 2 天，近 7 天手续费 163,029 美元",
+     "why": "进发射台矩阵 3 天，近 7 天手续费 88,435 美元",
      "since": "2026-11-13"
     }
    ]
@@ -2519,19 +2527,19 @@
    "logo": "https://icons.llamao.fi/icons/protocols/boxa-v1",
    "category": "Launchpad",
    "since": "2026-11-12",
-   "fees7": 136450,
-   "fees_prev7": 48419,
-   "fees30": 237681,
+   "fees7": 69041,
+   "fees_prev7": 103330,
+   "fees30": 238104,
    "parent": "parent#boxa",
-   "asof": "2026-11-15",
+   "asof": "2026-11-16",
    "rule": "lp_new",
-   "why": "进发射台矩阵 3 天，近 7 天手续费 136,450 美元",
+   "why": "进发射台矩阵 4 天，近 7 天手续费 69,041 美元",
    "key": "x:launchpad:boxa-v1",
    "boards": [
     {
      "board": "launchpad",
      "rule": "lp_new",
-     "why": "进发射台矩阵 3 天，近 7 天手续费 136,450 美元",
+     "why": "进发射台矩阵 4 天，近 7 天手续费 69,041 美元",
      "since": "2026-11-12"
     }
    ],
@@ -2552,16 +2560,16 @@
    ],
    "category": "新链生态",
    "rule": "lp_chain",
-   "fees7": 1911807,
+   "fees7": 1334816,
    "fees30": null,
-   "asof": "2026-11-15",
-   "why": "30 天内 Elysium 上新进矩阵的发射台有 11 个：Montra、Ascend Launchpad、Volta、Boxa V1、ElysPump V2、Kleos Launchpad；合计近 7 天手续费 1,911,807 美元",
+   "asof": "2026-11-16",
+   "why": "30 天内 Elysium 上新进矩阵的发射台有 11 个：Montra、Ascend Launchpad、Volta、Boxa V1、ElysPump V2、Kleos Launchpad；合计近 7 天手续费 1,334,816 美元",
    "key": "x:launchpad:chain-elysium",
    "boards": [
     {
      "board": "launchpad",
      "rule": "lp_chain",
-     "why": "30 天内 Elysium 上新进矩阵的发射台有 11 个：Montra、Ascend Launchpad、Volta、Boxa V1、ElysPump V2、Kleos Launchpad；合计近 7 天手续费 1,911,807 美元",
+     "why": "30 天内 Elysium 上新进矩阵的发射台有 11 个：Montra、Ascend Launchpad、Volta、Boxa V1、ElysPump V2、Kleos Launchpad；合计近 7 天手续费 1,334,816 美元",
      "since": null
     }
    ],
@@ -2631,6 +2639,20 @@
    "listed": "2026-11-17",
    "token": true,
    "parent": "parent#liquidium"
+  },
+  {
+   "key": "p:9462",
+   "name": "GrowStreams Spot",
+   "slug": "growstreams-spot",
+   "category": "Dexs",
+   "url": "https://growstreams.xyz",
+   "logo": "https://icons.llamao.fi/icons/protocols/growstreams",
+   "twitter": "GrowwStreams",
+   "chains": [],
+   "tvl": 0,
+   "listed": "2026-11-17",
+   "token": false,
+   "parent": "parent#growstreams"
   },
   {
    "key": "p:9458",
@@ -2719,7 +2741,7 @@
    "chains": [
     "Stellar"
    ],
-   "tvl": 278446,
+   "tvl": 276472,
    "listed": "2026-11-15",
    "token": true,
    "parent": null
@@ -2735,7 +2757,7 @@
    "chains": [
     "Robinhood Chain"
    ],
-   "tvl": 15906,
+   "tvl": 28062,
    "listed": "2026-11-15",
    "token": true,
    "parent": null
@@ -2751,7 +2773,7 @@
    "chains": [
     "Flare"
    ],
-   "tvl": 1109,
+   "tvl": 1105,
    "listed": "2026-11-15",
    "token": false,
    "parent": null
@@ -2795,7 +2817,7 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 2043599,
+   "tvl": 2031304,
    "listed": "2026-11-14",
    "token": true,
    "parent": "parent#nest"
@@ -2827,7 +2849,7 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 40347,
+   "tvl": 40833,
    "listed": "2026-11-14",
    "token": true,
    "parent": "parent#kleos"
@@ -2843,7 +2865,7 @@
    "chains": [
     "Robinhood Chain"
    ],
-   "tvl": 4860,
+   "tvl": 4847,
    "listed": "2026-11-14",
    "token": false,
    "parent": null
@@ -3031,7 +3053,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 1574,
+   "tvl": 1566,
    "listed": "2026-11-13",
    "token": false,
    "parent": null
@@ -3103,7 +3125,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 7632096,
+   "tvl": 7627217,
    "listed": "2026-11-12",
    "token": false,
    "parent": null
@@ -3121,7 +3143,7 @@
     "Base",
     "Berachain"
    ],
-   "tvl": 199206,
+   "tvl": 198540,
    "listed": "2026-11-12",
    "token": false,
    "parent": null
@@ -3137,7 +3159,7 @@
    "chains": [
     "Sui"
    ],
-   "tvl": 64015,
+   "tvl": 63795,
    "listed": "2026-11-12",
    "token": false,
    "parent": null
@@ -3185,7 +3207,7 @@
    "chains": [
     "Sonic"
    ],
-   "tvl": 2988,
+   "tvl": 2971,
    "listed": "2026-11-12",
    "token": true,
    "parent": null
@@ -3304,7 +3326,7 @@
     "Monad",
     "Base"
    ],
-   "tvl": 34141220,
+   "tvl": 34143620,
    "listed": "2026-11-11",
    "token": true,
    "parent": "parent#pendle"
@@ -3352,7 +3374,7 @@
    "chains": [
     "Strato"
    ],
-   "tvl": 623591,
+   "tvl": 621145,
    "listed": "2026-11-11",
    "token": false,
    "parent": "parent#strato"
@@ -3368,7 +3390,7 @@
    "chains": [
     "Sui"
    ],
-   "tvl": 14102,
+   "tvl": 14174,
    "listed": "2026-11-11",
    "token": false,
    "parent": null
@@ -3385,7 +3407,7 @@
     "Base",
     "Robinhood Chain"
    ],
-   "tvl": 6718,
+   "tvl": 6719,
    "listed": "2026-11-11",
    "token": false,
    "parent": null
@@ -3401,7 +3423,7 @@
    "chains": [
     "Base"
    ],
-   "tvl": 1261,
+   "tvl": 1255,
    "listed": "2026-11-11",
    "token": true,
    "parent": null
@@ -3417,7 +3439,7 @@
    "chains": [
     "Hedera"
    ],
-   "tvl": 889,
+   "tvl": 868,
    "listed": "2026-11-11",
    "token": true,
    "parent": null
@@ -3564,8 +3586,8 @@
    "key": "p:9404",
    "name": "GrowStreams Perps",
    "slug": "growstreams-perps",
-   "category": "Payments",
-   "url": "",
+   "category": "Derivatives",
+   "url": "https://growstreams.xyz",
    "logo": "https://icons.llamao.fi/icons/protocols/growstreams-perps",
    "twitter": "GrowwStreams",
    "chains": [],
@@ -3641,7 +3663,7 @@
    "chains": [
     "Soneium"
    ],
-   "tvl": 655912,
+   "tvl": 655809,
    "listed": "2026-11-10",
    "token": false,
    "parent": null
@@ -3673,7 +3695,7 @@
    "chains": [
     "Arc"
    ],
-   "tvl": 14980,
+   "tvl": 14928,
    "listed": "2026-11-10",
    "token": false,
    "parent": null
@@ -3839,7 +3861,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 8867,
+   "tvl": 8846,
    "listed": "2026-11-09",
    "token": true,
    "parent": null
@@ -3871,7 +3893,7 @@
    "chains": [
     "Binance"
    ],
-   "tvl": 2169,
+   "tvl": 1586,
    "listed": "2026-11-09",
    "token": false,
    "parent": null
@@ -4017,7 +4039,7 @@
     "Arbitrum",
     "Base"
    ],
-   "tvl": 117842,
+   "tvl": 117686,
    "listed": "2026-11-08",
    "token": false,
    "parent": "parent#bitty"
@@ -4033,7 +4055,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 8338068,
+   "tvl": 8337330,
    "listed": "2026-11-07",
    "token": true,
    "parent": "parent#vesper"
@@ -4289,7 +4311,7 @@
    "chains": [
     "Base"
    ],
-   "tvl": 3613,
+   "tvl": 3607,
    "listed": "2026-11-05",
    "token": false,
    "parent": null
@@ -4387,7 +4409,7 @@
     "Base",
     "Arbitrum"
    ],
-   "tvl": 764089,
+   "tvl": 761163,
    "listed": "2026-11-04",
    "token": false,
    "parent": "parent#privacy-pools"
@@ -4419,7 +4441,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 32219,
+   "tvl": 59755,
    "listed": "2026-11-04",
    "token": false,
    "parent": null
@@ -4644,7 +4666,7 @@
    "chains": [
     "Sui"
    ],
-   "tvl": 4184,
+   "tvl": 4218,
    "listed": "2026-11-03",
    "token": false,
    "parent": null
@@ -4727,68 +4749,12 @@
  ],
  "events": [
   {
-   "type": "new_rank",
-   "key": "g:parent#sendfun",
-   "name": "Sendfun",
-   "rev30": 194726,
-   "chg30": null,
-   "category": "Launchpad"
-  },
-  {
    "type": "new_listing",
-   "key": "p:9461",
-   "name": "EscapeHub",
-   "tvl": 1337,
-   "category": "Launchpad",
-   "listed": "2026-11-17"
-  },
-  {
-   "type": "new_listing",
-   "key": "p:9460",
-   "name": "Liquidium WTF",
+   "key": "p:9462",
+   "name": "GrowStreams Spot",
    "tvl": 0,
-   "category": "NFT Lending",
-   "listed": "2026-11-17"
-  },
-  {
-   "type": "new_listing",
-   "key": "p:9458",
-   "name": "BTR V2",
-   "tvl": 195774,
    "category": "Dexs",
-   "listed": "2026-11-16"
-  },
-  {
-   "type": "new_listing",
-   "key": "p:9456",
-   "name": "Kalos V4",
-   "tvl": 20109,
-   "category": "Dexs",
-   "listed": "2026-11-16"
-  },
-  {
-   "type": "new_listing",
-   "key": "p:9455",
-   "name": "Buttonwood Cash",
-   "tvl": 13,
-   "category": "Lending",
-   "listed": "2026-11-16"
-  },
-  {
-   "type": "new_listing",
-   "key": "p:9457",
-   "name": "Liqwall",
-   "tvl": 0,
-   "category": "Interface",
-   "listed": "2026-11-16"
-  },
-  {
-   "type": "new_listing",
-   "key": "p:9459",
-   "name": "Cool Eggs",
-   "tvl": 0,
-   "category": "Gaming",
-   "listed": "2026-11-16"
+   "listed": "2026-11-17"
   }
  ],
  "feed": [
@@ -5138,18 +5104,18 @@
   }
  ],
  "ledger": {
-  "n": 294,
+  "n": 295,
   "tokenless_rev": 107,
-  "new_listing": 167,
+  "new_listing": 168,
   "by_source": {
    "manual": 2,
-   "new_listing": 167,
+   "new_listing": 168,
    "rev_surge": 15,
    "site:aiagent": 2,
-   "site:launchpad": 5,
+   "site:launchpad": 6,
    "tokenless_rev": 107
   },
-  "multi": 4,
+  "multi": 5,
   "token_seen": 0,
   "status": {
    "待核验": 19,
