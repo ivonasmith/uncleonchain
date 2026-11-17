@@ -14,9 +14,24 @@
    "planned_open_utc": "2026-11-16T08:30:00Z",
    "first_seen_utc": "2026-11-16T14:40:02Z",
    "baseline": true,
-   "w": null,
+   "w": {
+    "ref_price": 67.174,
+    "first_trade_utc": "2026-11-16T08:31:00Z",
+    "first_trade_basis": "第一根 1 分钟 K 线的开盘时刻",
+    "m30": -0.0138,
+    "h1": -0.0099,
+    "h4": -0.0267,
+    "h24": null,
+    "high24": 0.057,
+    "high24_min": 812,
+    "low24": -0.0359,
+    "low24_min": 291,
+    "quote_vol24": 30263863,
+    "complete": false,
+    "lag_min": 1
+   },
    "primary": true,
-   "tries": 12
+   "tries": 13
   },
   "bn:289715:TRXUSDC": {
    "exchange": "Binance",
@@ -32,9 +47,24 @@
    "planned_open_utc": "2026-11-16T08:35:00Z",
    "first_seen_utc": "2026-11-16T14:40:02Z",
    "baseline": true,
-   "w": null,
+   "w": {
+    "ref_price": 0.30645,
+    "first_trade_utc": "2026-11-16T08:35:00Z",
+    "first_trade_basis": "第一根 1 分钟 K 线的开盘时刻",
+    "m30": -0.0137,
+    "h1": -0.0153,
+    "h4": -0.011,
+    "h24": null,
+    "high24": 0.0017,
+    "high24_min": 606,
+    "low24": -0.0206,
+    "low24_min": 0,
+    "quote_vol24": 642325,
+    "complete": false,
+    "lag_min": 0
+   },
    "primary": true,
-   "tries": 12
+   "tries": 13
   },
   "bn:288627:PREDICTUSDT": {
    "exchange": "Binance",
@@ -52,7 +82,7 @@
    "baseline": true,
    "w": null,
    "primary": true,
-   "tries": 12
+   "tries": 13
   },
   "bn:288627:PREDICTUSDC": {
    "exchange": "Binance",
@@ -6774,12 +6804,12 @@
    "n": 1
   }
  },
- "generated": "2026-11-17T08:30:25Z",
+ "generated": "2026-11-17T08:57:02Z",
  "status": {
   "list_ok": true,
   "pages": 3,
   "detail_fail": 0,
-  "kline_fail": 3
+  "kline_fail": 1
  },
  "exchanges": [
   "Binance",
@@ -6806,6 +6836,6 @@
  "x_status": {
   "okx_page_fail": 0,
   "okx_kline_fail": 0,
-  "generated": "2026-11-17T08:30:30Z"
+  "generated": "2026-11-17T08:57:07Z"
  }
 }
