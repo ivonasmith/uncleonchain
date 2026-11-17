@@ -8,7 +8,7 @@
 **幸存者偏差**：CCXT 只能列出现在还在交易的交易对，已下架的币查不到，回报会偏高；和 Binance 比要用 Binance「只看现在还在交易的币」口径（listing_compare.py）。
 计价：USDT / USDC / USD / EUR / KRW 按计价货币算回报（法币汇率变动相对币价很小，标注）；BTC 计价用该所 BTC 美元价换算。
 剔除：稳定币、杠杆代币、疑似代币化股票（启发式：2025-06 起上线、代码以 X / ON 结尾或 r 开头的 4～7 位代码），交易所开张头 30 天的首批币。
-用法：python3 alpha/listing_history_x.py <ccxt_id> [--minutes 270]
+用法：python3 alpha/listing_history_x.py <ccxt_id> [--minutes 270] [--shard i/n]
 输出 data/alpha/listing_history_<id>.json（逐币 + 分组统计）。
 """
 import datetime as dt, json, os, re, sys, time
@@ -89,7 +89,12 @@ def main():
         bases.setdefault(m["base"], []).append(m)
     print(exid, "现货交易对", len(spot), "币", len(bases), "开张约", ex_start)
     coins = []
-    for bi, (base, ms) in enumerate(sorted(bases.items())):
+    items = sorted(bases.items())
+    shard = sys.argv[sys.argv.index("--shard") + 1] if "--shard" in sys.argv else None
+    if shard:   # 分片跑：第 i 份 / 共 n 份（大所的币太多，一台机器 4.5 小时跑不完）
+        si, sn = (int(x) for x in shard.split("/"))
+        items = items[si - 1::sn]
+    for bi, (base, ms) in enumerate(items):
         if time.time() - t_start > budget:
             print("到时间预算，停在", bi)
             break
@@ -165,7 +170,10 @@ def main():
            "n": {"bases": len(bases), "coins": len(coins), "used": len(ok), "ref_15m": sum(1 for r in ok if r.get("ref_type") == "15m"),
                  "ref_1h": sum(1 for r in ok if r.get("ref_type") == "1h")},
            "groups": groups, "coins": coins}
-    json.dump(out, open(os.path.join(LH.OUT, f"listing_history_{exid}.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=0)
+    out["shard"] = shard
+    out["complete"] = len(coins) >= len(items) * 0.95
+    name = f"listing_history_{exid}" + (f"__{shard.replace('/', 'of')}" if shard else "")
+    json.dump(out, open(os.path.join(LH.OUT, name + ".json"), "w", encoding="utf-8"), ensure_ascii=False, indent=0)
     a = groups["全部"].get("全部") or {}
     print(exid, json.dumps(out["n"], ensure_ascii=False), "30天中位", (a.get("r30") or {}).get("p50"), "90天中位", (a.get("r90") or {}).get("p50"))
 

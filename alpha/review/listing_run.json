@@ -1,0 +1,6 @@
+{
+ "_说明": "上币复盘的运行请求（Codex 改这个文件、推到 codex/review，GitHub Actions「各交易所全历史上币复盘」就自动按 runs 跑，结果提交到 main 的 data/alpha/listing_history_*.json 和 listing_compare.json）。写法：\"okx\" = 整所；\"bitget:2/4\" = 分片第 2 份 / 共 4 份；\"bybit\" 走官方逐笔成交归档。limit 填数字 = 每份只试跑前 N 个币，留空 = 全量。交易所 ID 用 CCXT 的 ID。每次改都会触发一次，只写这次要跑的。",
+ "runs": [],
+ "limit": "",
+ "note": ""
+}

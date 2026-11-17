@@ -72,11 +72,24 @@ def main():
     res["Binance（全部，含已下架）"] = {"survivorship": False, "dropped": bdrop, **table(ok)}
     if trading:
         res["Binance（只看现在还在交易的）"] = {"survivorship": True, **table([r for r in ok if r["asset"] in trading])}
-    for f in sorted(glob.glob(os.path.join(OUT, "listing_history_*.json"))):
+    merged = {}
+    files = sorted(glob.glob(os.path.join(OUT, "listing_history_*.json")), key=lambda p: ("__" not in p, p))   # 分片文件先读
+    for f in files:
         exid = os.path.basename(f)[len("listing_history_"):-5]
         if exid == "binance":
             continue
         d = json.load(open(f, encoding="utf-8"))
+        if "__" in exid:   # 分片文件：同一所合并（有分片就不用整所的旧文件）
+            exid = exid.split("__")[0]
+            m = merged.setdefault(exid, {"coins": [], "complete": True, "exchange_first_day": d.get("exchange_first_day"), "n": {}, "_shards": 0})
+            if d.get("error"):
+                m["error"] = d["error"]
+                continue
+            m["coins"] += d["coins"]; m["complete"] = m["complete"] and d.get("complete"); m["_shards"] += 1
+            continue
+        if exid not in merged:   # 有分片就只用分片，整所的旧文件不用
+            merged[exid] = d
+    for exid, d in sorted(merged.items()):
         if d.get("error"):
             res[exid] = {"error": d["error"]}
             continue
