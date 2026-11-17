@@ -268,3 +268,11 @@
 .kq-nm{flex:1;font-weight:600}
 .kq-st{color:var(--muted);font-size:12px;display:flex;gap:6px;align-items:center}
 .kq-st em{font-style:normal;color:var(--lime-ink);border:1px solid var(--lime-ink);border-radius:999px;padding:0 6px}
+
+/* 11-17 综合分排名：来源小标签 + 分数 */
+.md-row .otag{font-style:normal;font-size:10.5px;line-height:1;padding:2px 5px;margin-left:4px;border-radius:4px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.md-row .otag.new{color:var(--up);border-color:var(--up)}
+.md-row .cscore{margin-left:auto;margin-right:6px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.md-row .cscore b{font-size:15px}
+.md-row .cscore small{color:var(--muted);font-size:10.5px}
+.md-row .nm{flex-wrap:wrap;row-gap:3px}

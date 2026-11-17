@@ -62,6 +62,73 @@ def S(v="U", src=None, why=""):
     return {"v": v, "src": src, "why": why}
 
 
+def composite(sc, c, data, has_token):
+    """综合分 v3（framework.json composite；大叔 11-17 定）。→ {lo 保守分, hi 全查清后最高, cov 覆盖率, parts}
+    lo 只加查清的项（没查的按 0）；hi = lo + 每个没查项的满分；势头（R、G）在创新 < 15 分时按一半计。"""
+    CP = FW["composite"]
+    D = {d["k"]: d for d in CP["dims"]}
+    num = lambda v: v if isinstance(v, (int, float)) and not isinstance(v, bool) else None
+    parts = {}
+    m = num(sc["M"]["v"])
+    parts["M"] = (D["M"]["points"][str(int(m))], "研究") if m is not None and 0 <= m <= 4 else None
+    rr = ((c or {}).get("scores") or {}).get("R") or {}
+    rv = num(rr.get("v"))
+    parts["R"] = (max(0, min(10, rv)), "研究") if rv is not None else None
+    g = num(sc["G"]["v"])
+    if g is not None and 0 <= g <= 4:
+        parts["G"] = (D["G"]["points"][str(int(g))], "研究")
+    elif data.get("chg30") is not None:
+        x = data["chg30"]
+        x = x / 100 if abs(x) > 5 else x   # chg30 可能是百分数
+        parts["G"] = (next(p for lo, hi, p in D["G"]["auto"] if lo <= x < hi), "系统")
+    else:
+        parts["G"] = None
+    team = (c or {}).get("team") or {}
+    tm = num(sc["TM"]["v"])
+    if tm == -1 or team.get("bad_record") is True:
+        parts["TM"] = (-20, "研究")
+    elif num(team.get("public_n")) is not None or team.get("caliber") in D["TM"]["caliber"]:
+        n = num(team.get("public_n")) or 0
+        pts = max(p for k, p in D["TM"]["public_n"] if n >= k)
+        parts["TM"] = (pts + D["TM"]["caliber"].get(team.get("caliber"), 0), "研究")
+    elif tm is not None:
+        parts["TM"] = ({0: 0, 1: 3, 2: 7, 3: 12}.get(int(tm), 0), "研究（旧分换算）")
+    else:
+        parts["TM"] = None
+    d = num(sc["D"]["v"])
+    parts["D"] = (D["D"]["points"][str(int(d))], "研究") if d is not None and 0 <= d <= 4 else None
+    a, f_ = num(sc["A"]["v"]), num(sc["F"]["v"])
+    if a is not None and f_ is not None:
+        parts["AF"] = (round((a + f_) / 8 * 10, 1), "研究")
+    elif a is not None or f_ is not None:
+        parts["AF"] = (round((a if a is not None else f_) / 8 * 10, 1), "研究（只查清一项）")   # 另一半按未知算
+    else:
+        parts["AF"] = None
+    te = sc["TE"]["v"]
+    parts["TE"] = ("NA" if not has_token or te == "NA" else (D["TE"]["points"][str(int(te))], "研究") if num(te) is not None and 0 <= te <= 3 else None)
+    full_m = parts["M"] is not None and parts["M"][0] >= CP["gate"]["M_min"]
+    fac = lambda k: 1 if k not in CP["gate"]["applies"] or full_m else CP["gate"]["factor"]
+    lo = hi = 0.0
+    known_w = total_w = 0
+    for k, dm in D.items():
+        p = parts.get(k)
+        if p == "NA":
+            continue
+        w = dm["max"] - dm.get("min", 0)
+        total_w += w
+        if p is None:
+            hi += dm["max"] * (CP["gate"]["factor"] if (k in CP["gate"]["applies"] and parts["M"] is not None and not full_m) else 1)   # 创新没查时假设它够格
+            continue
+        v = p[0] * fac(k)
+        lo += v; hi += v
+        if p[1].endswith("只查清一项）"):
+            hi += dm["max"] / 2; known_w += w / 2
+        else:
+            known_w += w
+    return {"lo": round(lo, 1), "hi": round(min(hi, CP["max"]), 1), "cov": round(known_w / total_w, 2) if total_w else 0,
+            "gated": not full_m, "parts": {k: (None if v is None else v if v == "NA" else {"v": round(v[0] * fac(k), 1), "src": v[1]}) for k, v in parts.items()}}
+
+
 def build():
     latest = load(os.path.join(OUT, "alpha_latest.json"), {})
     leads = (load(os.path.join(OUT, "alpha_leads.json"), {}) or {}).get("leads", {})
@@ -166,6 +233,7 @@ def build():
             "status": status, "status_src": f"alpha/review/{c['_file']}" if c else "auto",
             "bucket": "reject" if status == "拒绝" else ("watch" if entry == ["none"] else "invest"),
             "entry": entry, "entry_why": entry_why, "classes": cls, "scores": sc, "gates": gates,
+            "comp": composite(sc, c, {"chg30": r.get("chg30")}, has_token),
             "one_liner": (c or {}).get("one_liner") or mn.get("what"),
             "research": {x: (c or {}).get(x) for x in ("token_stance", "token_stance_src", "token_stance_date", "revenue_who", "revenue_method", "wash_or_subsidy",
                                                       "user_role", "counter", "verdict_reason", "missing", "checked_utc", "events", "flow", "next_review", "capture", "quality")} if c else None,
@@ -181,8 +249,8 @@ def build():
         for b in c["data"].get("boards") or []:
             if "site_" + b["board"] not in c["data"]["sources"]:
                 c["data"]["sources"].append("site_" + b["board"])
-    order = {"研究观察": 0, "优先研究": 0, "待核验": 1, "原始线索": 2, "拒绝": 3}
-    cards.sort(key=lambda x: (order.get(x["status"], 9), -(x["data"]["rev30"] or x["data"]["tvl"] or 0)))
+    # 11-17 大叔定：按综合分排名（保守分高的在上；同分看覆盖率、再看收入 / TVL）
+    cards.sort(key=lambda x: (x["status"] == "拒绝", -x["comp"]["lo"], -x["comp"]["cov"], -(x["data"]["rev30"] or x["data"]["tvl"] or 0)))
     return {"generated": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"), "asof": latest.get("asof"),
             "framework": FW["version"], "rules": FW["auto_rules"]["sec"],
             "counts": {b: sum(1 for x in cards if x["bucket"] == b) for b in ("invest", "watch", "reject")}, "opps": cards}
@@ -225,6 +293,8 @@ QUEUE_PROMPT = """你在给「链上大叔研究台」Alpha 雷达补证（只�
 「已有代币」本身不是拒绝理由：清单里 kind = tokenless 的如果查到其实已经有代币，写进 token_stance 和 missing、verdict 给待核验；kind = surge / site / manual 的本来就可能有代币，照常研究它的新玩法。
 只靠搜索摘要、打不开官网和文档的，verdict 最多给待核验，不给拒绝（拒绝必须有一手证据）。
 分数按 framework.json 附录一锚点给（M A F E G T D 是 0–4；TM 是 -1–3，有已证实不良记录给 -1；TE 是 0–3；不知道写 U，没有代币时 TE 写 NA）。M（新参与机制：这个玩法新在哪）优先查，每个分数写 why 和 src。
+综合分 v3（11-17）另要三项：R 资源导入 0–10（0 查不到 / 3 一般融资或小型生态资助 / 6 头部机构领投或头部交易所、公链官方扶持 / 10 多个头部资源同时导入，必须给出处）；
+team.public_n = 能查到真实身份的核心成员人数（数字，查不到写 U）；team.caliber = 普通 / 成功交付 / 头部背景（成员有可核对的成功项目 = 成功交付；有头部项目或顶级机构核心经历 = 头部背景）；有已证实的跑路、欺诈等不良记录写 team.bad_record = true 并给证据。
 资金参与方式 entry 从 buy / stake / points / use / presale / mine / none 里选（none = 暂时没有资金入口），写 entry_why。
 每张卡要回答三件事：量从哪来（flow 四个标签各给 高 / 中 / 低 / 待验证 + 证据）、量是不是真的（刷量 / 补贴迹象）、激励结束后还剩多少（capture、next_review）。
 关键事件（积分开放 / 结束、主网上线、发币、费率改动）写进 events，每条要日期和官方出处。"""
@@ -233,7 +303,8 @@ QUEUE_SCHEMA = {"key": "清单里的 key（原样）", "name": "名称", "one_li
                 "token_stance": "官方确认不发币|有积分/空投计划|官方表态会发|没有表态|U", "token_stance_src": "链接", "token_stance_date": "日期或 U",
                 "revenue_who": "收入归谁", "revenue_method": "收入口径要点", "wash_or_subsidy": "刷量 / 补贴迹象或 U", "user_role": "普通人能以什么角色参与",
                 "entry": ["points"], "entry_why": "为什么是这种资金参与方式（带来源）",
-                "scores": {"M": {"v": "0-4|U", "why": "依据", "src": "链接"}, "TM": {"v": "0-3|U", "why": "", "src": ""}},
+                "scores": {"M": {"v": "0-4|U", "why": "依据", "src": "链接"}, "TM": {"v": "0-3|U", "why": "", "src": ""}, "R": {"v": "0-10|U", "why": "资源导入依据", "src": "链接"}},
+                "team": {"public_n": "实名核心成员人数|U", "caliber": "普通|成功交付|头部背景|U", "bad_record": "true|false", "members": [{"name": "姓名", "role": "职务", "background": "过往经历", "src": "链接"}]},
                 "capture": "代币 / 参与者实际能拿到什么（回购、分红、积分兑换规则；没有就写没有），带链接",
                 "events": [{"date": "YYYY-MM-DD", "what": "积分开放 / 结束、主网上线、发币、费率改动等", "src": "官方链接"}],
                 "flow": {"airdrop": {"v": "高|中|低|待验证", "why": "积分 / 空投带来的量", "src": "链接"}, "newchain": {"v": "…", "why": "新链首发", "src": ""},
