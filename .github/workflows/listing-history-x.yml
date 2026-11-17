@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
     inputs:
       exchanges:
-        description: "CCXT 交易所 ID，JSON 数组"
-        default: '["okx","bitget","kucoin","gate","htx","coinbaseexchange","upbit","cryptocom","bitstamp","bitvavo","lbank","bingx","bitfinex","digifinex","btse","bullish"]'
+        description: "CCXT 交易所 ID，JSON 数组（大叔 11-17 定：只要 CoinGecko 排名在 LBank（第 12）之前的；Binance 另算，Kraken 接口只给最近数据做不了）"
+        default: '["okx","bitget","kucoin","gate","coinbaseexchange","cryptocom","bitstamp","bitvavo","bingx"]'
 permissions:
   contents: write
 concurrency:
