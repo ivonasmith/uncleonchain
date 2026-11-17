@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-17T10:31:44+00:00",
+ "generated": "2026-11-17T13:36:59+00:00",
  "asof": "2026-11-16",
  "stale": false,
  "baseline_day": "2026-11-14",
@@ -22,7 +22,7 @@
   },
   "snapshot": {
    "ok": true,
-   "n": 11
+   "n": 12
   },
   "binance": {
    "ok": true,
@@ -73,9 +73,9 @@
     "Monad",
     "BSC"
    ],
-   "rev30": 8755478,
+   "rev30": 8923359,
    "rev_prev30": 20529184,
-   "chg30": -57.4,
+   "chg30": -56.5,
    "first_seen": "2026-11-14"
   },
   {
@@ -95,9 +95,9 @@
     "Solana",
     "BSC"
    ],
-   "rev30": 8128757,
+   "rev30": 8381081,
    "rev_prev30": 16473620,
-   "chg30": -50.7,
+   "chg30": -49.1,
    "first_seen": "2026-11-14"
   },
   {
@@ -1367,6 +1367,25 @@
    "first_seen": "2026-11-14"
   },
   {
+   "key": "g:9102",
+   "name": "Closer",
+   "slug": "closer",
+   "url": "https://closer.market",
+   "logo": "https://icons.llamao.fi/icons/protocols/closer",
+   "twitter": "closer_xyz",
+   "children": [
+    "Closer"
+   ],
+   "category": "Prediction Market",
+   "chains": [
+    "Solana"
+   ],
+   "rev30": 222588,
+   "rev_prev30": 5077,
+   "chg30": 4284.2,
+   "first_seen": "2026-11-14"
+  },
+  {
    "key": "g:6724",
    "name": "GeckoTerminal",
    "slug": "geckoterminal",
@@ -1444,25 +1463,6 @@
    "rev30": 214536,
    "rev_prev30": 183426,
    "chg30": 17.0,
-   "first_seen": "2026-11-14"
-  },
-  {
-   "key": "g:9102",
-   "name": "Closer",
-   "slug": "closer",
-   "url": "https://closer.market",
-   "logo": "https://icons.llamao.fi/icons/protocols/closer",
-   "twitter": "closer_xyz",
-   "children": [
-    "Closer"
-   ],
-   "category": "Prediction Market",
-   "chains": [
-    "Solana"
-   ],
-   "rev30": 214120,
-   "rev_prev30": 5077,
-   "chg30": 4117.5,
    "first_seen": "2026-11-14"
   },
   {
@@ -2621,7 +2621,7 @@
     "Solana",
     "Base"
    ],
-   "tvl": 1375,
+   "tvl": 1575,
    "listed": "2026-11-17",
    "token": false,
    "parent": null
@@ -2665,7 +2665,7 @@
    "chains": [
     "Monad"
    ],
-   "tvl": 195704,
+   "tvl": 196589,
    "listed": "2026-11-16",
    "token": false,
    "parent": "parent#btr"
@@ -2681,7 +2681,7 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 20058,
+   "tvl": 20212,
    "listed": "2026-11-16",
    "token": false,
    "parent": "parent#kalos"
@@ -2741,7 +2741,7 @@
    "chains": [
     "Stellar"
    ],
-   "tvl": 276825,
+   "tvl": 290216,
    "listed": "2026-11-15",
    "token": true,
    "parent": null
@@ -2757,7 +2757,7 @@
    "chains": [
     "Robinhood Chain"
    ],
-   "tvl": 16296,
+   "tvl": 25052,
    "listed": "2026-11-15",
    "token": true,
    "parent": null
@@ -2773,7 +2773,7 @@
    "chains": [
     "Flare"
    ],
-   "tvl": 1104,
+   "tvl": 1127,
    "listed": "2026-11-15",
    "token": false,
    "parent": null
@@ -2833,7 +2833,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 562042,
+   "tvl": 562093,
    "listed": "2026-11-14",
    "token": false,
    "parent": "parent#drakewell"
@@ -2849,7 +2849,7 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 39214,
+   "tvl": 38703,
    "listed": "2026-11-14",
    "token": true,
    "parent": "parent#kleos"
@@ -2865,7 +2865,7 @@
    "chains": [
     "Robinhood Chain"
    ],
-   "tvl": 4846,
+   "tvl": 4845,
    "listed": "2026-11-14",
    "token": false,
    "parent": null
@@ -3037,7 +3037,7 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 6707,
+   "tvl": 6700,
    "listed": "2026-11-13",
    "token": false,
    "parent": null
@@ -3125,7 +3125,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 7627429,
+   "tvl": 7614631,
    "listed": "2026-11-12",
    "token": false,
    "parent": null
@@ -3143,7 +3143,7 @@
     "Base",
     "Berachain"
    ],
-   "tvl": 200749,
+   "tvl": 200577,
    "listed": "2026-11-12",
    "token": false,
    "parent": null
@@ -3159,7 +3159,7 @@
    "chains": [
     "Sui"
    ],
-   "tvl": 64179,
+   "tvl": 63385,
    "listed": "2026-11-12",
    "token": false,
    "parent": null
@@ -3175,7 +3175,7 @@
    "chains": [
     "Binance"
    ],
-   "tvl": 60897,
+   "tvl": 60910,
    "listed": "2026-11-12",
    "token": false,
    "parent": null
@@ -3191,7 +3191,7 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 55295,
+   "tvl": 56028,
    "listed": "2026-11-12",
    "token": false,
    "parent": "parent#boxa"
@@ -3207,7 +3207,7 @@
    "chains": [
     "Sonic"
    ],
-   "tvl": 2982,
+   "tvl": 2955,
    "listed": "2026-11-12",
    "token": true,
    "parent": null
@@ -3326,7 +3326,7 @@
     "Monad",
     "Base"
    ],
-   "tvl": 34096894,
+   "tvl": 34110612,
    "listed": "2026-11-11",
    "token": true,
    "parent": "parent#pendle"
@@ -3342,7 +3342,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 3494427,
+   "tvl": 3492173,
    "listed": "2026-11-11",
    "token": false,
    "parent": null
@@ -3358,7 +3358,7 @@
    "chains": [
     "Solana"
    ],
-   "tvl": 2314861,
+   "tvl": 2314883,
    "listed": "2026-11-11",
    "token": true,
    "parent": "parent#jupiter"
@@ -3374,7 +3374,7 @@
    "chains": [
     "Strato"
    ],
-   "tvl": 604929,
+   "tvl": 601639,
    "listed": "2026-11-11",
    "token": false,
    "parent": "parent#strato"
@@ -3390,7 +3390,7 @@
    "chains": [
     "Sui"
    ],
-   "tvl": 14352,
+   "tvl": 14373,
    "listed": "2026-11-11",
    "token": false,
    "parent": null
@@ -3407,7 +3407,7 @@
     "Base",
     "Robinhood Chain"
    ],
-   "tvl": 6666,
+   "tvl": 6664,
    "listed": "2026-11-11",
    "token": false,
    "parent": null
@@ -3423,7 +3423,7 @@
    "chains": [
     "Base"
    ],
-   "tvl": 1248,
+   "tvl": 1241,
    "listed": "2026-11-11",
    "token": true,
    "parent": null
@@ -3439,7 +3439,7 @@
    "chains": [
     "Hedera"
    ],
-   "tvl": 858,
+   "tvl": 875,
    "listed": "2026-11-11",
    "token": true,
    "parent": null
@@ -3663,7 +3663,7 @@
    "chains": [
     "Soneium"
    ],
-   "tvl": 666804,
+   "tvl": 664164,
    "listed": "2026-11-10",
    "token": false,
    "parent": null
@@ -3679,7 +3679,7 @@
    "chains": [
     "Hyperliquid L1"
    ],
-   "tvl": 146941,
+   "tvl": 140053,
    "listed": "2026-11-10",
    "token": false,
    "parent": null
@@ -3695,7 +3695,7 @@
    "chains": [
     "Arc"
    ],
-   "tvl": 14894,
+   "tvl": 14911,
    "listed": "2026-11-10",
    "token": false,
    "parent": null
@@ -3711,7 +3711,7 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 5604,
+   "tvl": 5583,
    "listed": "2026-11-10",
    "token": false,
    "parent": "parent#kalos"
@@ -3727,7 +3727,7 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 2098,
+   "tvl": 2101,
    "listed": "2026-11-10",
    "token": false,
    "parent": "parent#kalos"
@@ -3845,7 +3845,7 @@
    "chains": [
     "Hyperliquid L1"
    ],
-   "tvl": 41999293,
+   "tvl": 40498928,
    "listed": "2026-11-09",
    "token": true,
    "parent": "parent#kinetiq"
@@ -3861,7 +3861,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 8757,
+   "tvl": 8767,
    "listed": "2026-11-09",
    "token": true,
    "parent": null
@@ -3877,7 +3877,7 @@
    "chains": [
     "Solana"
    ],
-   "tvl": 5904,
+   "tvl": 5808,
    "listed": "2026-11-09",
    "token": true,
    "parent": null
@@ -3893,7 +3893,7 @@
    "chains": [
     "Binance"
    ],
-   "tvl": 2153,
+   "tvl": 2407,
    "listed": "2026-11-09",
    "token": false,
    "parent": null
@@ -4039,7 +4039,7 @@
     "Arbitrum",
     "Base"
    ],
-   "tvl": 116788,
+   "tvl": 117603,
    "listed": "2026-11-08",
    "token": false,
    "parent": "parent#bitty"
@@ -4055,7 +4055,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 8337798,
+   "tvl": 8336577,
    "listed": "2026-11-07",
    "token": true,
    "parent": "parent#vesper"
@@ -4071,7 +4071,7 @@
    "chains": [
     "Anubis"
    ],
-   "tvl": 686856,
+   "tvl": 685585,
    "listed": "2026-11-07",
    "token": false,
    "parent": "parent#rocketswap-anubis"
@@ -4279,7 +4279,7 @@
    "chains": [
     "Hyperliquid L1"
    ],
-   "tvl": 19497,
+   "tvl": 19513,
    "listed": "2026-11-05",
    "token": false,
    "parent": null
@@ -4295,7 +4295,7 @@
    "chains": [
     "Robinhood Chain"
    ],
-   "tvl": 14010,
+   "tvl": 14059,
    "listed": "2026-11-05",
    "token": true,
    "parent": "parent#glazecorp"
@@ -4311,7 +4311,7 @@
    "chains": [
     "Base"
    ],
-   "tvl": 3583,
+   "tvl": 3569,
    "listed": "2026-11-05",
    "token": false,
    "parent": null
@@ -4325,11 +4325,11 @@
    "logo": "https://icons.llamao.fi/icons/protocols/ignite-dex",
    "twitter": "LITHOFoundation",
    "chains": [
-    "Solana",
     "Ethereum",
+    "Solana",
     "Binance"
    ],
-   "tvl": 139,
+   "tvl": 116,
    "listed": "2026-11-05",
    "token": false,
    "parent": null
@@ -4391,7 +4391,7 @@
     "Avalanche",
     "Arbitrum"
    ],
-   "tvl": 1748000,
+   "tvl": 1744698,
    "listed": "2026-11-04",
    "token": true,
    "parent": "parent#dexalot"
@@ -4409,7 +4409,7 @@
     "Base",
     "Arbitrum"
    ],
-   "tvl": 757700,
+   "tvl": 792154,
    "listed": "2026-11-04",
    "token": false,
    "parent": "parent#privacy-pools"
@@ -4441,7 +4441,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 59755,
+   "tvl": 59757,
    "listed": "2026-11-04",
    "token": false,
    "parent": null
@@ -4528,7 +4528,7 @@
     "Solana",
     "Arc"
    ],
-   "tvl": 205,
+   "tvl": 201,
    "listed": "2026-11-04",
    "token": true,
    "parent": null
@@ -4544,7 +4544,7 @@
    "chains": [
     "Robinhood Chain"
    ],
-   "tvl": 114,
+   "tvl": 113,
    "listed": "2026-11-04",
    "token": false,
    "parent": null
@@ -4666,7 +4666,7 @@
    "chains": [
     "Sui"
    ],
-   "tvl": 4218,
+   "tvl": 4266,
    "listed": "2026-11-03",
    "token": false,
    "parent": null
@@ -4749,6 +4749,21 @@
  ],
  "events": [],
  "feed": [
+  {
+   "id": "snap:0x72b6dffd9ac6b3fbe6b3cff180e3f372d05ccfcdf1714c63fed311e000697aaf",
+   "src": "snapshot",
+   "title": "GIP-157: Should GnosisDAO withdraw assets from the legacy DAO Safe to the treasury Safe?",
+   "url": "https://snapshot.box/#/s:gnosis.eth/proposal/0x72b6dffd9ac6b3fbe6b3cff180e3f372d05ccfcdf1714c63fed311e000697aaf",
+   "created": "2026-11-17T13:17:44+00:00",
+   "extra": {
+    "space": "GnosisDAO",
+    "followers": 12261,
+    "end": "2026-11-24T13:17:44+00:00"
+   },
+   "first_seen": "2026-11-17T13:36:59+00:00",
+   "delay_h": 0.3,
+   "baseline": false
+  },
   {
    "id": "snap:0x28780882407a7a45326f0d72a036c02cb4a48591813d7847afd87e30e8e17f8c",
    "src": "snapshot",
