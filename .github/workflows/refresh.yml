@@ -223,7 +223,9 @@ jobs:
       - if: always()
         run: |
           F="data/alpha"; ls alpha/review/grok_*_checks.json >/dev/null 2>&1 && F="$F $(ls alpha/review/grok_*_checks.json | tr '\n' ' ')"
-          tar czf out-alpha.tgz $F
+          # 上币复盘文件由「各交易所全历史上币复盘」工作流和手动脚本单独负责，不打包回来（11-17 出过总调度用旧版覆盖新跑出的 Upbit 结果）
+          tar czf out-alpha.tgz --exclude='listing_history_*.json' --exclude='listing_compare.json' --exclude='listing_paths_binance.json' \
+            --exclude='listing_short_stats.json' --exclude='listing_regime_stats.json' --exclude='cache_listing_first.json' $F
       - if: always()
         uses: actions/upload-artifact@v4
         with: { name: out-alpha, path: out-alpha.tgz, retention-days: 3 }
