@@ -4395,6 +4395,21 @@ def alpha_framework_html():
          f'<a href="{U("/alpha/method/")}">{T("方法论原文", "Original text")}</a> · <a href="/data/alpha/framework.json">framework.json</a></p>'
          f'<div class="note">{e(fw["scope"])}</div>'
          '<div class="flow">' + "".join(f'<a href="#{x["k"]}"><b>{e(x["name"])}</b><span>{e(x["out"])}</span></a>' for x in fw["flow"]) + "</div>")
+    # 0 综合分（11-18：看板排名用的分数机制写在框架页最前面）
+    cp = fw.get("composite")
+    if cp:
+        rows = ""
+        for d in cp["dims"]:
+            rng = f'{d.get("min", 0)}～{d["max"]}'
+            pts = "、".join(f'{k}→{v}' for k, v in d["points"].items()) if d.get("points") else ""
+            rows += (f'<tr><td class="l"><b>{e(d["name"])}</b></td><td class="r">{e(rng)}</td><td class="l small" style="white-space:normal">{e(d.get("from", ""))}'
+                     + (f'<div class="muted">{T("原始分 → 分值", "raw → points")}：{e(pts)}</div>' if pts else "")
+                     + "".join(f'<div class="muted">· {e(a)}</div>' for a in d.get("anchors", [])) + '</td></tr>')
+        g = cp["gate"]
+        body = (f'<p class="small"><b>{e(cp["rule"])}</b></p>'
+                f'<p class="small muted">{T("门槛", "Gate")}：{T("创新", "innovation")} ≥ {g["M_min"]} {T("分时资源导入、流量起势全额计入，否则 ×", "pts → R and G full, else ×")}{g["factor"]}。{T("看板按保守分排名；分数每天随补证变化，每天的分数存进 data/alpha/comp_history.json，不回改，留作以后检验。", "")}</p>'
+                f'<div class="tw"><table><thead><tr><th class="l">{T("维度", "Dimension")}</th><th>{T("分值", "Points")}</th><th class="l">{T("怎么打 · 锚点", "How scored · anchors")}</th></tr></thead><tbody>{rows}</tbody></table></div>')
+        h += sec("composite", "0 · " + T("综合分（看板排名用）", "Composite score (board ranking)"), cp["sec"], body)
     # 1 发现
     h += sec("discover", "1 · 发现线索", "三", f'<p class="small">{T("发现层的任务是尽早保留异常，不当场完成所有判断。低门槛登记、高门槛执行分开。本站雷达现在接了：无币协议收入榜、新上架协议、研究论坛新帖、治理提案、上所公告；每条记原始发布时间和本站发现时间。", "")} <a href="{U("/alpha/radar/")}">{T("看雷达 →", "Radar →")}</a></p>')
     # 2 对象

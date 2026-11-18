@@ -415,6 +415,32 @@
       <div class="lg"><p class="small muted">${T(`八个维度，每项 0–4。实心 = 已查清的分数；虚线 = 没查清的按满分算能到哪。查清 ${nk} / ${n}。`, `Eight dimensions, 0–4. Solid = scored; dashed = unknowns at max. ${nk} / ${n} covered.`)}</p>
         ${ax.map(it => { const sc = card.scores[it.k] || {}, k = known(sc.v); return `<div class="row${k ? '' : ' u'}"><b>${it.k}</b><span>${esc(it.name)}</span><em>${k ? sc.v + '/4' : '?'}</em><i>${k ? esc(it.anchors[sc.v] || '') : esc(it.q || '')}</i></div>`; }).join('')}</div></div>`;
   }
+  // 综合分构成（11-18）：按 framework.json composite 的真实分值画，每项长度 = 它在 100 分里占多少；旧 0–4 雷达收进折叠区
+  function compAnchor(dm, v) {
+    const a = (dm.anchors || []).map(x => { const m = String(x).match(/^([−-]?\d+(?:\.\d+)?)/); return m ? [Number(m[1].replace('−', '-')), x] : null; }).filter(Boolean);
+    if (!a.length) return '';
+    if (v < 0) { const neg = a.filter(x => x[0] < 0).sort((x, y) => x[0] - y[0]); return (neg.find(x => x[0] >= v) || neg[neg.length - 1] || [0, ''])[1]; }
+    const le = a.filter(x => x[0] >= 0 && x[0] <= v + 1e-9).sort((x, y) => y[0] - x[0]); return le.length ? le[0][1] : '';
+  }
+  function compBars(o) {
+    const CP = FW.composite; if (!CP) return '';
+    const c = compOf(o), P = c.parts || {}, LO = -20, HI = 40, X = v => ((v - LO) / (HI - LO) * 100).toFixed(2) + '%';
+    const mKnown = P.M && P.M !== 'NA', half = k => CP.gate.applies.includes(k) && mKnown && P.M.v < CP.gate.M_min;
+    const rows = CP.dims.map(dm => {
+      const p = P[dm.k], mn = dm.min || 0, mx = dm.max * (half(dm.k) ? CP.gate.factor : 1);
+      const track = `<span class="cb-trk" style="left:${X(mn)};width:calc(${X(mx)} - ${X(mn)})"></span>`;
+      let bar = '', val, why;
+      if (p === 'NA') { val = `<span class="muted">${T('不适用', 'n/a')}</span>`; why = T('没发币，不扣分', 'no token'); }
+      else if (p == null) { bar = `<span class="cb-unk" style="left:${X(Math.min(0, mn))};width:calc(${X(mx)} - ${X(Math.min(0, mn))})"></span>`; val = `<span class="muted">${T('未查', 'U')}</span>`; why = `<span class="muted">${esc(dm.from || '')}</span>`; }
+      else { const v = Number(p.v), a = Math.min(0, v), b = Math.max(0, v);
+        bar = `<span class="cb-fill${v < 0 ? ' neg' : ''}" style="left:${X(a)};width:calc(${X(b)} - ${X(a)})"></span>`;
+        val = `<b class="${v < 0 ? 't-dn' : ''}">${v > 0 ? '+' : ''}${v}</b>`; why = (dm.k === 'TM' ? '' : esc(compAnchor(dm, half(dm.k) ? v / CP.gate.factor : v))) + ` <span class="muted">· ${esc(p.src === '系统' ? T('系统按数据', 'auto') : p.src)}</span>`; }
+      return `<div class="cb-row${p == null ? ' u' : ''}"><span class="cb-n">${esc(dm.name)}<small>${mn < 0 ? mn + '～' : ''}${dm.max}${half(dm.k) ? T('（减半）', ' (halved)') : ''}</small></span><span class="cb-bar"><span class="cb-zero" style="left:${X(0)}"></span>${track}${bar}</span><span class="cb-v">${val}</span><span class="cb-w small">${why}</span></div>`;
+    }).join('');
+    return `<div class="cb"><p class="small muted">${T(`综合分 = 下面各项相加，满 100。条的长度就是分值本身：创新最多 40，所以最长；团队、解锁可以扣分（红）。灰虚线 = 还没查的项全查清后最多能加多少。保守分 <b>${c.lo}</b>（只算查清的）· 最高可能 <b>${c.hi}</b> · 查清 ${Math.round(c.cov * 100)}%。`, `Composite = sum of parts, max 100. Bar length = points. Conservative ${c.lo} · max ${c.hi} · ${Math.round(c.cov * 100)}% known.`)}${c.gated && mKnown ? T(' 创新不到 15 分，资源和起势按一半计。', ' Innovation < 15: resources and momentum halved.') : ''}</p>
+      <div class="cb-scale"><span style="left:${X(-20)}">−20</span><span style="left:${X(0)}">0</span><span style="left:${X(20)}">20</span><span style="left:${X(40)}">40</span></div>${rows}
+      <p class="small muted" style="margin-top:8px">${esc(CP.rule)} <a href="${EN ? '/en' : ''}/alpha/framework/#composite">${T('完整打分规则 →', 'Full rules →')}</a></p></div>`;
+  }
   function mTile(card) {
     const it = FW.scores.mech.items.find(i => i.k === 'M'), sc = card.scores.M || {}, k = known(sc.v);
     return `<div class="glass hero"><div class="k">${T('玩法创新级别 M', 'Novelty of the play (M)')}${tip(T('这个玩法新在哪：0 只是改名 · 1 改参数 · 2 老机制新组合 · 3 有能跑的新资产 / 新生产动作 · 4 被多个独立产品验证可复用。要研究判断，系统不自动打。', 'How new the mechanism is, 0–4. Needs research; never auto-scored.'))}</div>
@@ -478,7 +504,7 @@
     const groups = [[T('按综合分排名 · 高的在上', 'Ranked by composite score'), pool.slice().sort(byComp)]];
     const row = o => { const d = o.data; const v = d.rev30 != null ? d.rev30 : d.tvl;
       return `<button type="button" class="md-row${o.id === SELID ? ' on' : ''}" data-id="${esc(o.id)}">
-        <span class="r1"><span class="nm">${logo(d.logo, o.name, 20)}<b>${esc(o.name)}</b>${tagsOf(o)}</span><span class="cscore" title="${esc(T(`综合分（保守）${compOf(o).lo}，全查清后最高 ${compOf(o).hi}，查清 ${Math.round(compOf(o).cov * 100)}%`, `score ${compOf(o).lo}, max ${compOf(o).hi}`))}"><b>${Math.round(compOf(o).lo)}</b><small>/${Math.round(compOf(o).hi)}</small></span><i class="dot t-${STC[o.status] || 'neutral'}" title="${esc(o.status)}"></i></span>
+        <span class="r1"><span class="nm">${logo(d.logo, o.name, 20)}<b>${esc(o.name)}</b>${tagsOf(o)}</span><span class="cscore" title="${esc(T(`综合分（保守）${compOf(o).lo}，全查清后最高 ${compOf(o).hi}，查清 ${Math.round(compOf(o).cov * 100)}%`, `score ${compOf(o).lo}, max ${compOf(o).hi}`))}"><small>${T('综合', 'Score')} </small><b>${Math.round(compOf(o).lo)}</b><small>/${Math.round(compOf(o).hi)}</small></span><i class="dot t-${STC[o.status] || 'neutral'}" title="${esc(o.status)}"></i></span>
         <span class="r2"><span>${d.rev30 != null ? usd(v) : d.fees7 != null ? T('7 天费 ', '7d fees ') + usd(d.fees7) : (v ? 'TVL ' + usd(v) : '—')} ${pct(d.chg30)}</span>${sparkSvg(o.spark, (d.chg30 || 0) >= 0 ? 'up' : 'dn', 64, 18)}</span>
         <span class="r4">${d.tok && d.tok.snap && d.tok.snap.mcap != null ? `<em class="agetag tok">${esc(d.tok.sym || '')} ${T('市值', 'MC')} ${usd(d.tok.snap.mcap)}</em>` : ''}</span>
         <span class="r3"><em class="mtag${known((o.scores.M || {}).v) ? ' k' : ''}">M${known((o.scores.M || {}).v) ? o.scores.M.v : '?'}</em>${o.entry.filter(e => e !== 'none').map(e => esc(ENTRY()[e])).join(' · ') || `<span class="muted">${T('暂无资金入口', 'No entry yet')}</span>`}</span></button>`; };
@@ -528,7 +554,8 @@
       ${compTile(o)}
       <div class="glass hero" style="display:none"><div class="k">${T('查清了多少', 'Coverage')}${tip(T('八个评分维度里已经有分数的个数。机制与扩张（M A F E V）、当前参与优势（G D T）的区间见下面的雷达图和「完整拆解」。', 'How many of the eight score dimensions are known.'))}</div><div class="v">${nk}<span class="muted" style="font-size:15px"> / ${ax.length}</span></div><div class="s">${T('机制', 'mech')} ${iv.mech.lo}–${iv.mech.hi} · ${T('参与', 'part')} ${iv.part.lo}–${iv.part.hi}</div>${meter({ lo: Math.round(100 * nk / ax.length), hi: Math.round(100 * nk / ax.length) })}</div>
       ${flowTile(o)}</div>
-    <div class="card ax-box" style="margin-top:12px"><h3>${T('评分雷达', 'Score radar')}${tip(T('机制与扩张：M 新参与机制、A 有效可达性、F 分配公平、E 独立扩散、V 价值归属。当前参与优势：G 有效增长、D 需求独立性、T 当前窗口。每项的打分依据在「完整拆解」。', 'Mechanism: M A F E V. Participation: G D T. Reasons in the full teardown.'))}</h3>${radar(o)}</div>`;
+    <div class="card ax-box" style="margin-top:12px"><h3>${T('综合分构成', 'Composite score breakdown')} <span class="muted" style="font-weight:400">${Math.round(compOf(o).lo)} / ${T('最高可能', 'max')} ${Math.round(compOf(o).hi)}</span></h3>${compBars(o)}
+      <details style="margin-top:10px"><summary class="small muted">${T('原始研究分（每项 0–4，换算成上面分值之前的原始分；E V T 不进综合分）', 'Raw research scores (0–4 each, before conversion)')}</summary>${radar(o)}</details></div>`;
     h += d.rev30 != null ? `<div class="card ax-chart"><h3>${T('协议收入 · 近 180 天', 'Protocol revenue · last 180 days')}</h3><div data-chart="${esc(JSON.stringify({ v2: true, src: `/data/alpha/rev/${o.id}.json`, fmt: 'usd', series: [{ k: 'rev', n: T('每日协议收入', 'Daily revenue'), c: 's1', area: true }], note: T('DefiLlama dailyRevenue（协议留存的收入，不是持有人所得）。', 'DefiLlama dailyRevenue (protocol-retained, not holder income).') }))}"></div></div>` : '';
     h += eventsBlock(o);
     h += `<div class="grid g2" style="margin-top:12px">

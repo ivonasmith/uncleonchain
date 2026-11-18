@@ -276,3 +276,18 @@
 .md-row .cscore b{font-size:15px}
 .md-row .cscore small{color:var(--muted);font-size:10.5px}
 .md-row .nm{flex-wrap:wrap;row-gap:3px}
+
+/* 综合分构成（11-18） */
+.cb-scale{position:relative;height:14px;margin-left:150px;margin-right:calc(60px + 38%);font-size:10px;color:var(--muted);font-family:var(--mono,ui-monospace,monospace)}
+.cb-scale span{position:absolute;transform:translateX(-50%)}
+.cb-row{display:grid;grid-template-columns:142px minmax(0,1fr) 52px 38%;gap:8px;align-items:center;padding:6px 0;border-top:1px solid var(--line);font-size:12.5px}
+.cb-n small{display:block;color:var(--muted);font-size:10.5px;font-family:var(--mono,ui-monospace,monospace)}
+.cb-bar{position:relative;height:14px}
+.cb-trk{position:absolute;top:5px;height:4px;background:var(--line2);border-radius:2px}
+.cb-zero{position:absolute;top:-2px;bottom:-2px;width:1px;background:var(--muted);opacity:.6}
+.cb-fill{position:absolute;top:2px;height:10px;background:var(--cool);border-radius:2px}
+.cb-fill.neg{background:var(--dn)}
+.cb-unk{position:absolute;top:2px;height:10px;border:1px dashed var(--muted);border-radius:2px;box-sizing:border-box}
+.cb-v{text-align:right;font-variant-numeric:tabular-nums}.cb-v b{font-size:14px}
+.cb-row.u .cb-n{color:var(--muted)}
+@media (max-width:760px){.cb-row{grid-template-columns:96px minmax(0,1fr) 40px}.cb-w{grid-column:1/-1}.cb-scale{margin-left:104px;margin-right:48px}}
