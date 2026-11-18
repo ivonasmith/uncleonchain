@@ -473,6 +473,39 @@ HEADERS = """/assets/*
 """
 
 
+_STRIP = None
+
+
+def status_strip():
+    """全站顶部状态条（大叔 11-18 定：写清更新到几点几分、数据截至哪天收盘）。读本次构建前写好的 data/refresh_status.json；
+    浏览器端再按当天日期判断是否落后（出网站失败时静态页不会自己变，靠这几行脚本提醒）。"""
+    global _STRIP
+    if _STRIP is not None:
+        return _STRIP
+    try:
+        st = json.load(open(os.path.join(DATA, "refresh_status.json"), encoding="utf-8"))
+    except Exception:
+        _STRIP = ""
+        return _STRIP
+    mods = st.get("modules") or {}
+    dates = [m["data_date"] for m in mods.values() if m.get("data_date")]
+    if not dates:
+        _STRIP = ""
+        return _STRIP
+    dd = max(dates)
+    lag = [(m.get("name") or k, m["data_date"]) for k, m in mods.items() if m.get("data_date") and m["data_date"] < dd]
+    slot = {"am": T("早档", "AM run"), "pm": T("午后档", "PM run"), "retry": T("补跑档", "retry")}.get(st.get("slot"), "")
+    lag_txt = (T("；落后：", "; behind: ") + "、".join(f"{esc(n)} {d[5:]}" for n, d in lag)) if lag else ""
+    _STRIP = (f'<div class="datastrip" data-dd="{esc(dd)}"><span>{T("数据截至", "Data through")} <b>{TCLOSE(dd)}</b></span>'
+              f'<span>{T("更新于", "Updated")} {TT(st.get("generated_utc"))}{(" · " + slot) if slot else ""}{lag_txt}</span>'
+              f'<span class="ds-warn" hidden></span></div>'
+              '<script>(function(){var e=document.querySelector(".datastrip");if(!e)return;var d=new Date(e.dataset.dd+"T00:00:00Z"),'
+              'n=new Date(),y=Date.UTC(n.getUTCFullYear(),n.getUTCMonth(),n.getUTCDate())-864e5,g=Math.round((y-d.getTime())/864e5);'
+              'if(g>0){e.classList.add("stale");var w=e.querySelector(".ds-warn");w.hidden=false;w.textContent='
+              f'{json.dumps(T("比应有的晚 ", "behind by "))}+g+{json.dumps(T(" 天（今天应显示到昨天收盘）", " day(s)"))};}}}})();</script>')
+    return _STRIP
+
+
 def stats_tag():
     """访问统计（Umami Cloud，无 cookie）。ID 在 config/site.json「统计」；data-domains 限定正式域名，本地预览 / 截图不计数。"""
     uid = (SITE_CFG.get("统计") or {}).get("umami_id")
@@ -591,6 +624,7 @@ def page(title, body, active="", desc="", extra_head="", narrow=False, share=Fal
 <body>
 {nav_html(active)}
 <main class="main"><div class="mi{' narrow' if narrow else ''}">
+{status_strip()}
 {body}
 </div>
 <footer class="foot"><span>{esc(T(BRAND + "（" + BRAND_EN + "）", BRAND_EN))}</span><a href="{X_URL}">{esc(TWITTER)}</a>
