@@ -1,6 +1,6 @@
 {
- "generated_utc": "2026-11-17 09:29",
- "today": "2026-11-17",
+ "generated_utc": "2026-11-18 11:31",
+ "today": "2026-11-18",
  "btc": {
   "title_zh": "比特币大事件（已单独检验）",
   "title_en": "BTC events (individually tested)",
@@ -74,12 +74,12 @@
   "impact_note_zh": "“最高价和最低价差多少”= 那段时间里 BTC 最高成交价比最低成交价高出百分之几，不分涨跌。比如 2.7% 在 BTC 8 万美元时约等于上下晃 2,000 多美元。",
   "stats_asof_zh": "检验数据截至 2026-10-12（Coinbase 小时线），每半年（1 月、7 月）用新数据重测一次，样本每半年约增加 25 次。",
   "intro_en": "Only events we have tested one by one on hourly BTC data since 2015. Fed decisions, CPI and payrolls widen the 2-hour range after release (since 2022), but direction is unpredictable and the days before are not more volatile.",
-  "next_zh": "下一个：美国非农就业，17 天后（新加坡时间 12-04 21:30）",
+  "next_zh": "下一个：美国非农就业，16 天后（新加坡时间 12-04 21:30）",
   "events": [
    {
     "type": "NFP",
     "date": "2026-12-04",
-    "days_until": 17,
+    "days_until": 16,
     "title_zh": "美国非农就业",
     "title_en": "US nonfarm payrolls",
     "time_utc": "2026-12-04 13:30",
@@ -95,7 +95,7 @@
     "impact": {
      "level_zh": "中",
      "level_en": "Medium",
-     "text_zh": "公布那两个小时，BTC 最高价和最低价一般差 2.0%（约 $1,290），平时同一时段只有 1.3%；四次里有一次超过 2.5%，十次里有一次超过 3.0%（约 $1,930），2022 年以来最大一次 4.7%。全天最高到最低一般 3.9%（平时 4.0%）。",
+     "text_zh": "公布那两个小时，BTC 最高价和最低价一般差 2.0%（约 $1,280），平时同一时段只有 1.3%；四次里有一次超过 2.5%，十次里有一次超过 3.0%（约 $1,920），2022 年以来最大一次 4.7%。全天最高到最低一般 3.9%（平时 4.0%）。",
      "text_en": "In the 2 hours after the release, BTC's high-low range is typically 2.0% (normal: 1.3%); 1 in 4 times above 2.5%, 1 in 10 above 3.0%, largest since 2022 4.7%.",
      "range_2h_typ_pct": 2.0,
      "range_2h_big_pct": 3.0,
@@ -103,9 +103,9 @@
      "range_2h_normal_pct": 1.3,
      "range_day_typ_pct": 3.9,
      "range_day_normal_pct": 4.0,
-     "usd_typ": 1286,
-     "usd_big": 1928,
-     "price_ref": 64281
+     "usd_typ": 1283,
+     "usd_big": 1924,
+     "price_ref": 64142
     },
     "stats": {
      "n": 57,
@@ -134,7 +134,7 @@
    {
     "type": "FOMC",
     "date": "2026-12-09",
-    "days_until": 22,
+    "days_until": 21,
     "title_zh": "美联储议息决议",
     "title_en": "FOMC rate decision",
     "time_utc": "2026-12-09 19:00",
@@ -150,7 +150,7 @@
     "impact": {
      "level_zh": "大",
      "level_en": "High",
-     "text_zh": "公布那两个小时，BTC 最高价和最低价一般差 2.7%（约 $1,740），平时同一时段只有 1.1%；四次里有一次超过 3.8%，十次里有一次超过 6.3%（约 $4,050），2022 年以来最大一次 10.2%。全天最高到最低一般 4.2%（平时 3.4%）。",
+     "text_zh": "公布那两个小时，BTC 最高价和最低价一般差 2.7%（约 $1,730），平时同一时段只有 1.1%；四次里有一次超过 3.8%，十次里有一次超过 6.3%（约 $4,040），2022 年以来最大一次 10.2%。全天最高到最低一般 4.2%（平时 3.4%）。",
      "text_en": "In the 2 hours after the release, BTC's high-low range is typically 2.7% (normal: 1.1%); 1 in 4 times above 3.8%, 1 in 10 above 6.3%, largest since 2022 10.2%.",
      "range_2h_typ_pct": 2.7,
      "range_2h_big_pct": 6.3,
@@ -158,9 +158,9 @@
      "range_2h_normal_pct": 1.1,
      "range_day_typ_pct": 4.2,
      "range_day_normal_pct": 3.4,
-     "usd_typ": 1736,
-     "usd_big": 4050,
-     "price_ref": 64281
+     "usd_typ": 1732,
+     "usd_big": 4041,
+     "price_ref": 64142
     },
     "stats": {
      "n": 37,
@@ -189,7 +189,7 @@
    {
     "type": "CPI",
     "date": "2026-12-10",
-    "days_until": 23,
+    "days_until": 22,
     "title_zh": "美国 CPI",
     "title_en": "US CPI",
     "time_utc": "2026-12-10 13:30",
@@ -205,7 +205,7 @@
     "impact": {
      "level_zh": "大",
      "level_en": "High",
-     "text_zh": "公布那两个小时，BTC 最高价和最低价一般差 2.5%（约 $1,610），平时同一时段只有 1.3%；四次里有一次超过 3.5%，十次里有一次超过 4.9%（约 $3,150），2022 年以来最大一次 9.0%。全天最高到最低一般 4.6%（平时 3.5%）。",
+     "text_zh": "公布那两个小时，BTC 最高价和最低价一般差 2.5%（约 $1,600），平时同一时段只有 1.3%；四次里有一次超过 3.5%，十次里有一次超过 4.9%（约 $3,140），2022 年以来最大一次 9.0%。全天最高到最低一般 4.6%（平时 3.5%）。",
      "text_en": "In the 2 hours after the release, BTC's high-low range is typically 2.5% (normal: 1.3%); 1 in 4 times above 3.5%, 1 in 10 above 4.9%, largest since 2022 9.0%.",
      "range_2h_typ_pct": 2.5,
      "range_2h_big_pct": 4.9,
@@ -213,9 +213,9 @@
      "range_2h_normal_pct": 1.3,
      "range_day_typ_pct": 4.6,
      "range_day_normal_pct": 3.5,
-     "usd_typ": 1607,
-     "usd_big": 3150,
-     "price_ref": 64281
+     "usd_typ": 1604,
+     "usd_big": 3143,
+     "price_ref": 64142
     },
     "stats": {
      "n": 56,
@@ -244,7 +244,7 @@
    {
     "type": "期权季度交割",
     "date": "2026-12-25",
-    "days_until": 38,
+    "days_until": 37,
     "title_zh": "BTC 期权季度交割",
     "title_en": "BTC quarterly options expiry",
     "time_utc": "2026-12-25 08:00",
@@ -268,9 +268,9 @@
      "range_2h_normal_pct": 0.8,
      "range_day_typ_pct": 3.8,
      "range_day_normal_pct": 4.0,
-     "usd_typ": 450,
-     "usd_big": 1093,
-     "price_ref": 64281
+     "usd_typ": 449,
+     "usd_big": 1090,
+     "price_ref": 64142
     },
     "stats": {
      "n": 19,
@@ -299,7 +299,7 @@
    {
     "type": "NFP",
     "date": "2027-01-08",
-    "days_until": 52,
+    "days_until": 51,
     "title_zh": "美国非农就业",
     "title_en": "US nonfarm payrolls",
     "time_utc": "2027-01-08 13:30",
@@ -315,7 +315,7 @@
     "impact": {
      "level_zh": "中",
      "level_en": "Medium",
-     "text_zh": "公布那两个小时，BTC 最高价和最低价一般差 2.0%（约 $1,290），平时同一时段只有 1.3%；四次里有一次超过 2.5%，十次里有一次超过 3.0%（约 $1,930），2022 年以来最大一次 4.7%。全天最高到最低一般 3.9%（平时 4.0%）。",
+     "text_zh": "公布那两个小时，BTC 最高价和最低价一般差 2.0%（约 $1,280），平时同一时段只有 1.3%；四次里有一次超过 2.5%，十次里有一次超过 3.0%（约 $1,920），2022 年以来最大一次 4.7%。全天最高到最低一般 3.9%（平时 4.0%）。",
      "text_en": "In the 2 hours after the release, BTC's high-low range is typically 2.0% (normal: 1.3%); 1 in 4 times above 2.5%, 1 in 10 above 3.0%, largest since 2022 4.7%.",
      "range_2h_typ_pct": 2.0,
      "range_2h_big_pct": 3.0,
@@ -323,9 +323,9 @@
      "range_2h_normal_pct": 1.3,
      "range_day_typ_pct": 3.9,
      "range_day_normal_pct": 4.0,
-     "usd_typ": 1286,
-     "usd_big": 1928,
-     "price_ref": 64281
+     "usd_typ": 1283,
+     "usd_big": 1924,
+     "price_ref": 64142
     },
     "stats": {
      "n": 57,
@@ -354,7 +354,7 @@
    {
     "type": "CPI",
     "date": "2027-01-13",
-    "days_until": 57,
+    "days_until": 56,
     "title_zh": "美国 CPI",
     "title_en": "US CPI",
     "time_utc": "2027-01-13 13:30",
@@ -370,7 +370,7 @@
     "impact": {
      "level_zh": "大",
      "level_en": "High",
-     "text_zh": "公布那两个小时，BTC 最高价和最低价一般差 2.5%（约 $1,610），平时同一时段只有 1.3%；四次里有一次超过 3.5%，十次里有一次超过 4.9%（约 $3,150），2022 年以来最大一次 9.0%。全天最高到最低一般 4.6%（平时 3.5%）。",
+     "text_zh": "公布那两个小时，BTC 最高价和最低价一般差 2.5%（约 $1,600），平时同一时段只有 1.3%；四次里有一次超过 3.5%，十次里有一次超过 4.9%（约 $3,140），2022 年以来最大一次 9.0%。全天最高到最低一般 4.6%（平时 3.5%）。",
      "text_en": "In the 2 hours after the release, BTC's high-low range is typically 2.5% (normal: 1.3%); 1 in 4 times above 3.5%, 1 in 10 above 4.9%, largest since 2022 9.0%.",
      "range_2h_typ_pct": 2.5,
      "range_2h_big_pct": 4.9,
@@ -378,9 +378,9 @@
      "range_2h_normal_pct": 1.3,
      "range_day_typ_pct": 4.6,
      "range_day_normal_pct": 3.5,
-     "usd_typ": 1607,
-     "usd_big": 3150,
-     "price_ref": 64281
+     "usd_typ": 1604,
+     "usd_big": 3143,
+     "price_ref": 64142
     },
     "stats": {
      "n": 56,
@@ -410,8 +410,8 @@
   "reg_checked_utc": "2026-11-16",
   "reg_status": {
    "manual_checked_utc": "2026-11-16",
-   "sec_auto_ok_utc": "2026-11-17",
-   "congress_auto_ok_utc": "2026-11-17"
+   "sec_auto_ok_utc": "2026-11-18",
+   "congress_auto_ok_utc": "2026-11-18"
   },
   "method_zh": "对照组：同一星期几、前后 9 周内、没有其他事件的日子的同一时段。振幅 = 区间最高 ÷ 最低。年代分 2015-17、2018-21、2022-26 分别看。期权交割：Deribit 每月最后一个周五 08:00 UTC。数据：Coinbase BTC-USD 小时线。"
  },
@@ -484,9 +484,9 @@
    {
     "date_start": "2026-11-01",
     "date_end": "2026-12-01",
-    "category": "黑客松",
-    "category_en": "Hackathon",
-    "title": "W3 Node Nov 1 – Dec 1, 2026 • South Africa SSA Hackathon Multichain Live",
+    "category": "会议",
+    "category_en": "Conference",
+    "title": "W3 Node Nov 1 – Dec 1, 2026 • South Africa SSA",
     "coins": [],
     "city": "",
     "importance": 1,
@@ -536,96 +536,6 @@
     "ongoing": true
    },
    {
-    "date_start": "2026-11-15",
-    "date_end": "2026-11-17",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Breakpoint 2026 Community Events",
-    "coins": [],
-    "city": "London",
-    "importance": 3,
-    "source": "Luma",
-    "url": "https://luma.com/BP-SideEvents",
-    "note": "",
-    "sources": [
-     "Luma"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-15",
-    "date_end": "2026-11-17",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Breakpoint Trading Battle",
-    "coins": [],
-    "city": "Online",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/breakpoint-trading-battle-26-11-15",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-15",
-    "date_end": "2026-11-17",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Nov 15-17 2026 Solana Breakpoint 2026 London London Join Solana Breakpoint 2026",
-    "coins": [],
-    "city": "",
-    "importance": 1,
-    "source": "CryptoEvents",
-    "url": "https://cryptoevents.global/solana-breakpoint-2026-london/",
-    "note": "",
-    "sources": [
-     "CryptoEvents"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-15",
-    "date_end": "2026-11-17",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Solana Breakpoint 2026",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/solana-breakpoint-2026-eur",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-16",
-    "date_end": "2026-11-17",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Builder Zone @ Breakpoint",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/builder-zone--breakpoint",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
     "date_start": "2026-11-16",
     "date_end": "2026-11-18",
     "category": "会议",
@@ -666,210 +576,12 @@
     "date_end": "2026-11-18",
     "category": "会议",
     "category_en": "Conference",
-    "title": "Blockchain.com: TYB Party",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/blockchaincom-tyb-party",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-17",
-    "date_end": "2026-11-17",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Breakpoint Pub Quiz",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/breakpoint-pub-quiz",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-17",
-    "date_end": "2026-11-17",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Coffee and Chill with True Markets",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/coffee-and-chill-with-true-markets",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-17",
-    "date_end": "2026-11-17",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Dev3pack Meetup - The Bridge Accelerator",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/dev3pack-meetup---the-bridge-accelerator",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-17",
-    "date_end": "2026-11-18",
-    "category": "会议",
-    "category_en": "Conference",
     "title": "ETHWomen Florida",
     "coins": [],
     "city": "Davie",
     "importance": 1,
     "source": "Web3Voyager",
     "url": "https://web3voyager.com/event/ethwomen-florida-26-11",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-17",
-    "date_end": "2026-11-18",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "European Automotive Intelligent Cockpit and Smart Driving Summit 2026",
-    "coins": [],
-    "city": "",
-    "importance": 1,
-    "source": "IndustryEvents",
-    "url": "https://www.industryevents.com/events/european-automotive-intelligent-cockpit-and-smart-driving-summit-2026",
-    "note": "",
-    "sources": [
-     "IndustryEvents"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-17",
-    "date_end": "2026-11-17",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Head Down 5K × Solana | 445 CREW",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/head-down-5k--solana--445-crew",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-17",
-    "date_end": "2026-11-17",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Housewarming! A Breakpoint Closing Party with Akash",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/housewarming-a-breakpoint-closing-party-with-akash",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-17",
-    "date_end": "2026-11-17",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Institutional Mixer with Blockaid",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/institutional-mixer-with-blockaid",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-17",
-    "date_end": "2026-11-18",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "LO:LIMIT Hold'em (Break Point Edition)",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/lolimit-holdem-break-point-edition",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-17",
-    "date_end": "2026-11-17",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "London Happy Hour",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/london-happy-hour",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-17",
-    "date_end": "2026-11-18",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "NO MORE PITCHES",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/no-more-pitches",
     "note": "",
     "sources": [
      "Web3Voyager"
@@ -896,114 +608,6 @@
     "ongoing": true
    },
    {
-    "date_start": "2026-11-17",
-    "date_end": "2026-11-17",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Privy Home: IRL London",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/privy-home-irl-london",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-17",
-    "date_end": "2026-11-17",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Solana Fitness Zone: Aerial Yoga | Breakpoint 2026",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/solana-fitness-zone-aerial-yoga--breakpoint-2026",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-17",
-    "date_end": "2026-11-17",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Solana Fitness Zone: Sound Healing & Breathwork | Breakpoint 2026",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/solana-fitness-zone-sound-healing--breathwork--breakpoint-2026",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-17",
-    "date_end": "2026-11-17",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "StartingPoint: BP Scholar Mixer",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/startingpoint-bp-scholar-mixer",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-17",
-    "date_end": "2026-11-18",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "Unofficial Official After Party to Breakpoint 2026: The Great British Pub Crawl",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/unofficial-official-after-party-to-breakpoint-2026-the-great-british-pub-crawl",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
-    "date_start": "2026-11-17",
-    "date_end": "2026-11-17",
-    "category": "会议",
-    "category_en": "Conference",
-    "title": "W3 Playbook Podcast Launch Party | Official Breakpoint 2026 Afterparty*",
-    "coins": [],
-    "city": "London",
-    "importance": 1,
-    "source": "Web3Voyager",
-    "url": "https://web3voyager.com/event/w3-playbook-podcast-launch-party--official-breakpoint-2026-afterparty",
-    "note": "",
-    "sources": [
-     "Web3Voyager"
-    ],
-    "days_until": 0,
-    "ongoing": true
-   },
-   {
     "date_start": "2026-11-18",
     "date_end": "2026-11-20",
     "category": "会议",
@@ -1018,8 +622,8 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 1,
-    "ongoing": false
+    "days_until": 0,
+    "ongoing": true
    },
    {
     "date_start": "2026-11-18",
@@ -1037,8 +641,8 @@
      "IndustryEvents",
      "Web3Voyager"
     ],
-    "days_until": 1,
-    "ongoing": false
+    "days_until": 0,
+    "ongoing": true
    },
    {
     "date_start": "2026-11-18",
@@ -1055,8 +659,8 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 1,
-    "ongoing": false
+    "days_until": 0,
+    "ongoing": true
    },
    {
     "date_start": "2026-11-18",
@@ -1073,8 +677,8 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 1,
-    "ongoing": false
+    "days_until": 0,
+    "ongoing": true
    },
    {
     "date_start": "2026-11-18",
@@ -1091,8 +695,8 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 1,
-    "ongoing": false
+    "days_until": 0,
+    "ongoing": true
    },
    {
     "date_start": "2026-11-18",
@@ -1109,8 +713,8 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 1,
-    "ongoing": false
+    "days_until": 0,
+    "ongoing": true
    },
    {
     "date_start": "2026-11-18",
@@ -1127,8 +731,8 @@
     "sources": [
      "CryptoEvents"
     ],
-    "days_until": 1,
-    "ongoing": false
+    "days_until": 0,
+    "ongoing": true
    },
    {
     "date_start": "2026-11-18",
@@ -1145,8 +749,8 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 1,
-    "ongoing": false
+    "days_until": 0,
+    "ongoing": true
    },
    {
     "date_start": "2026-11-18",
@@ -1163,8 +767,8 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 1,
-    "ongoing": false
+    "days_until": 0,
+    "ongoing": true
    },
    {
     "date_start": "2026-11-19",
@@ -1181,7 +785,7 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 2,
+    "days_until": 1,
     "ongoing": false
    },
    {
@@ -1199,7 +803,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 2,
+    "days_until": 1,
     "ongoing": false
    },
    {
@@ -1217,7 +821,7 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 2,
+    "days_until": 1,
     "ongoing": false
    },
    {
@@ -1235,7 +839,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 2,
+    "days_until": 1,
     "ongoing": false
    },
    {
@@ -1253,7 +857,7 @@
     "sources": [
      "CryptoEvents"
     ],
-    "days_until": 2,
+    "days_until": 1,
     "ongoing": false
    },
    {
@@ -1271,7 +875,25 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 3,
+    "days_until": 2,
+    "ongoing": false
+   },
+   {
+    "date_start": "2026-11-20",
+    "date_end": "2026-11-22",
+    "category": "会议",
+    "category_en": "Conference",
+    "title": "2026 International Conference on Artificial Intelligence for Business Management (ICAI4BM 2026)",
+    "coins": [],
+    "city": "Lampang",
+    "importance": 1,
+    "source": "IndustryEvents",
+    "url": "https://www.industryevents.com/events/2026-international-conference-on-artificial-intelligence-for-business-management-icai4bm-2026",
+    "note": "",
+    "sources": [
+     "IndustryEvents"
+    ],
+    "days_until": 2,
     "ongoing": false
    },
    {
@@ -1289,7 +911,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 3,
+    "days_until": 2,
     "ongoing": false
    },
    {
@@ -1307,7 +929,7 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 3,
+    "days_until": 2,
     "ongoing": false
    },
    {
@@ -1325,7 +947,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 3,
+    "days_until": 2,
     "ongoing": false
    },
    {
@@ -1343,7 +965,7 @@
     "sources": [
      "CryptoEvents"
     ],
-    "days_until": 3,
+    "days_until": 2,
     "ongoing": false
    },
    {
@@ -1361,7 +983,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 3,
+    "days_until": 2,
     "ongoing": false
    },
    {
@@ -1379,7 +1001,7 @@
     "sources": [
      "CryptoEvents"
     ],
-    "days_until": 3,
+    "days_until": 2,
     "ongoing": false
    },
    {
@@ -1397,7 +1019,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 3,
+    "days_until": 2,
     "ongoing": false
    },
    {
@@ -1415,7 +1037,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 7,
+    "days_until": 6,
     "ongoing": false
    },
    {
@@ -1433,7 +1055,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 7,
+    "days_until": 6,
     "ongoing": false
    },
    {
@@ -1451,7 +1073,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 7,
+    "days_until": 6,
     "ongoing": false
    },
    {
@@ -1469,7 +1091,7 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 8,
+    "days_until": 7,
     "ongoing": false
    },
    {
@@ -1487,7 +1109,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 8,
+    "days_until": 7,
     "ongoing": false
    },
    {
@@ -1505,7 +1127,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 8,
+    "days_until": 7,
     "ongoing": false
    },
    {
@@ -1523,7 +1145,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 9,
+    "days_until": 8,
     "ongoing": false
    },
    {
@@ -1541,7 +1163,7 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 9,
+    "days_until": 8,
     "ongoing": false
    },
    {
@@ -1559,7 +1181,7 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 10,
+    "days_until": 9,
     "ongoing": false
    },
    {
@@ -1577,7 +1199,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 10,
+    "days_until": 9,
     "ongoing": false
    },
    {
@@ -1595,7 +1217,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 10,
+    "days_until": 9,
     "ongoing": false
    },
    {
@@ -1613,7 +1235,7 @@
     "sources": [
      "Luma"
     ],
-    "days_until": 11,
+    "days_until": 10,
     "ongoing": false
    },
    {
@@ -1631,7 +1253,7 @@
     "sources": [
      "Luma"
     ],
-    "days_until": 11,
+    "days_until": 10,
     "ongoing": false
    },
    {
@@ -1649,7 +1271,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 11,
+    "days_until": 10,
     "ongoing": false
    },
    {
@@ -1668,7 +1290,7 @@
      "CryptoEvents",
      "Web3Voyager"
     ],
-    "days_until": 11,
+    "days_until": 10,
     "ongoing": false
    },
    {
@@ -1686,7 +1308,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 11,
+    "days_until": 10,
     "ongoing": false
    },
    {
@@ -1704,7 +1326,7 @@
     "sources": [
      "CryptoEvents"
     ],
-    "days_until": 11,
+    "days_until": 10,
     "ongoing": false
    },
    {
@@ -1723,7 +1345,7 @@
      "Luma",
      "IndustryEvents"
     ],
-    "days_until": 14,
+    "days_until": 13,
     "ongoing": false
    },
    {
@@ -1741,7 +1363,7 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 14,
+    "days_until": 13,
     "ongoing": false
    },
    {
@@ -1759,7 +1381,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 14,
+    "days_until": 13,
     "ongoing": false
    },
    {
@@ -1777,7 +1399,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 14,
+    "days_until": 13,
     "ongoing": false
    },
    {
@@ -1795,7 +1417,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 14,
+    "days_until": 13,
     "ongoing": false
    },
    {
@@ -1813,7 +1435,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 15,
+    "days_until": 14,
     "ongoing": false
    },
    {
@@ -1831,7 +1453,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 16,
+    "days_until": 15,
     "ongoing": false
    },
    {
@@ -1849,7 +1471,7 @@
     "sources": [
      "Luma"
     ],
-    "days_until": 17,
+    "days_until": 16,
     "ongoing": false
    },
    {
@@ -1867,7 +1489,7 @@
     "sources": [
      "CryptoEvents"
     ],
-    "days_until": 20,
+    "days_until": 19,
     "ongoing": false
    },
    {
@@ -1885,7 +1507,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 20,
+    "days_until": 19,
     "ongoing": false
    },
    {
@@ -1903,7 +1525,7 @@
     "sources": [
      "CryptoEvents"
     ],
-    "days_until": 21,
+    "days_until": 20,
     "ongoing": false
    },
    {
@@ -1921,7 +1543,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 21,
+    "days_until": 20,
     "ongoing": false
    },
    {
@@ -1939,7 +1561,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 22,
+    "days_until": 21,
     "ongoing": false
    },
    {
@@ -1957,7 +1579,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 22,
+    "days_until": 21,
     "ongoing": false
    },
    {
@@ -1975,7 +1597,7 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 23,
+    "days_until": 22,
     "ongoing": false
    },
    {
@@ -1993,7 +1615,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 23,
+    "days_until": 22,
     "ongoing": false
    },
    {
@@ -2011,7 +1633,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 23,
+    "days_until": 22,
     "ongoing": false
    },
    {
@@ -2029,7 +1651,7 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 24,
+    "days_until": 23,
     "ongoing": false
    },
    {
@@ -2047,7 +1669,7 @@
     "sources": [
      "CryptoEvents"
     ],
-    "days_until": 28,
+    "days_until": 27,
     "ongoing": false
    },
    {
@@ -2065,7 +1687,7 @@
     "sources": [
      "Web3Voyager"
     ],
-    "days_until": 32,
+    "days_until": 31,
     "ongoing": false
    },
    {
@@ -2083,7 +1705,7 @@
     "sources": [
      "CryptoEvents"
     ],
-    "days_until": 33,
+    "days_until": 32,
     "ongoing": false
    },
    {
@@ -2101,7 +1723,7 @@
     "sources": [
      "IndustryEvents"
     ],
-    "days_until": 38,
+    "days_until": 37,
     "ongoing": false
    },
    {
@@ -2119,7 +1741,7 @@
     "sources": [
      "CryptoEvents"
     ],
-    "days_until": 57,
+    "days_until": 56,
     "ongoing": false
    },
    {
@@ -2137,35 +1759,23 @@
     "sources": [
      "CryptoEvents"
     ],
-    "days_until": 60,
+    "days_until": 59,
     "ongoing": false
    }
   ]
  },
- "next7": [
-  {
-   "date": "2026-11-15",
-   "days_until": 0,
-   "tab": "web3",
-   "title_zh": "Breakpoint 2026 Community Events",
-   "title_en": "Breakpoint 2026 Community Events",
-   "time_utc": "",
-   "time_bj": "",
-   "grade": "行业动向",
-   "category": "会议"
-  }
- ],
+ "next7": [],
  "data_status": {
   "stale": false,
   "detail": {
-   "reg_sec": "ok（扫了 251 份 Federal Register 文件，窗口内最终期限 0 条）",
-   "reg_congress": "ok（扫了 174 场委员会会议，窗口内加密相关表决会 0 场、签署期限 0 条）",
+   "reg_sec": "ok（扫了 252 份 Federal Register 文件，窗口内最终期限 0 条）",
+   "reg_congress": "ok（扫了 177 场委员会会议，窗口内加密相关表决会 0 场、签署期限 0 条）",
    "reg_votes": "手工清单最后核对 2026-11-16；未来 60 天共 0 条（自动 0 条）",
    "btc_schedule": "ok（宏观日程录入到 2027-12-10）",
    "Luma": "ok（8 条）",
    "CryptoEvents": "ok（28 条）",
    "IndustryEvents": "ok（20 条）",
-   "Web3Voyager": "ok（63 条）",
+   "Web3Voyager": "ok（54 条）",
    "CoinMarketCal": "未接入（没有 COINMARKETCAL_KEY）",
    "Coindar": "未接入（没有 COINDAR_KEY）"
   },

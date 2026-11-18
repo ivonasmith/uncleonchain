@@ -850,6 +850,87 @@
    "baseline": false,
    "kind": "other",
    "assets": []
+  },
+  "Bitget:12560603900875": {
+   "exchange": "Bitget",
+   "via": "bitget",
+   "title": "Bitget spot copy trade now supports rNWPX/USDT",
+   "url": "https://www.bitget.com/en/support/articles/12560603900875",
+   "announce_utc": "2026-11-18T06:36:00Z",
+   "first_seen_utc": "2026-11-18T11:33:16Z",
+   "baseline": false,
+   "kind": "other",
+   "assets": []
+  },
+  "Bitget:12560603900854": {
+   "exchange": "Bitget",
+   "via": "bitget",
+   "title": "Bitget spot copy trading now supports 2 trading pairs",
+   "url": "https://www.bitget.com/en/support/articles/12560603900854",
+   "announce_utc": "2026-11-18T03:36:00Z",
+   "first_seen_utc": "2026-11-18T11:33:16Z",
+   "baseline": false,
+   "kind": "other",
+   "assets": []
+  },
+  "Bitget:12560603900849": {
+   "exchange": "Bitget",
+   "via": "bitget",
+   "title": "Bitget spot copy trade now supports rGFF/USDT",
+   "url": "https://www.bitget.com/en/support/articles/12560603900849",
+   "announce_utc": "2026-11-18T02:36:00Z",
+   "first_seen_utc": "2026-11-18T11:33:16Z",
+   "baseline": false,
+   "kind": "other",
+   "assets": []
+  },
+  "Bitget:12560603900839": {
+   "exchange": "Bitget",
+   "via": "bitget",
+   "title": "Bitget spot copy trade now supports rIOSP/USDT",
+   "url": "https://www.bitget.com/en/support/articles/12560603900839",
+   "announce_utc": "2026-11-17T17:36:00Z",
+   "first_seen_utc": "2026-11-18T11:33:16Z",
+   "baseline": false,
+   "kind": "other",
+   "assets": []
+  },
+  "Bitget:12560603900825": {
+   "exchange": "Bitget",
+   "via": "bitget",
+   "title": "Bitget spot copy trade now supports rCBRG/USDT",
+   "url": "https://www.bitget.com/en/support/articles/12560603900825",
+   "announce_utc": "2026-11-17T14:36:00Z",
+   "first_seen_utc": "2026-11-18T11:33:16Z",
+   "baseline": false,
+   "kind": "other",
+   "assets": []
+  },
+  "Kraken:infi-is-available-for-trading": {
+   "exchange": "Kraken",
+   "via": "kraken",
+   "title": "INFI is available for trading!",
+   "url": "https://blog.kraken.com/product/asset-listings/infi-is-available-for-trading",
+   "announce_utc": "2026-11-17T17:18:21Z",
+   "first_seen_utc": "2026-11-18T11:33:16Z",
+   "baseline": false,
+   "kind": "spot",
+   "assets": [
+    "INFI"
+   ]
+  },
+  "Kraken:xla-is-available-for-trading": {
+   "exchange": "Kraken",
+   "via": "kraken",
+   "title": "XLA is available for trading!",
+   "url": "https://blog.kraken.com/product/asset-listings/xla-is-available-for-trading",
+   "announce_utc": "2026-11-17T16:45:45Z",
+   "first_seen_utc": "2026-11-18T11:33:16Z",
+   "baseline": false,
+   "kind": "spot",
+   "assets": [
+    "XLA"
+   ]
   }
  },
  "sources": {
@@ -870,7 +951,7 @@
    "page": "https://www.okx.com/help/section/announcements-new-listings",
    "x_handle": "待核实",
    "note": "官网接口通（/api/v5/support/announcements）",
-   "last_ok_utc": "2026-11-17T13:39:39Z",
+   "last_ok_utc": "2026-11-18T11:33:16Z",
    "n_total": 40,
    "err": null
   },
@@ -881,8 +962,8 @@
    "page": "https://www.bitget.com/support/categories/11865590960081",
    "x_handle": "待核实",
    "note": "官网接口通（/api/v2/public/annoucements）",
-   "last_ok_utc": "2026-11-17T13:39:39Z",
-   "n_total": 21,
+   "last_ok_utc": "2026-11-18T11:33:16Z",
+   "n_total": 26,
    "err": null
   },
   "Kraken": {
@@ -892,8 +973,8 @@
    "page": "https://blog.kraken.com/category/product/asset-listings",
    "x_handle": "待核实",
    "note": "博客 RSS 通",
-   "last_ok_utc": "2026-11-17T13:39:39Z",
-   "n_total": 10,
+   "last_ok_utc": "2026-11-18T11:33:16Z",
+   "n_total": 12,
    "err": null
   },
   "Bybit": {
@@ -967,6 +1048,6 @@
    "n_total": 0
   }
  },
- "generated": "2026-11-17T13:39:39Z",
+ "generated": "2026-11-18T11:33:16Z",
  "note": "公告时间原样记录；计划开盘 / 首笔成交 / 窗口目前只有 Binance（alpha/listings.py）"
 }

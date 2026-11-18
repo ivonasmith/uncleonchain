@@ -21,17 +21,17 @@
     "m30": -0.0138,
     "h1": -0.0099,
     "h4": -0.0267,
-    "h24": null,
+    "h24": 0.0311,
     "high24": 0.057,
     "high24_min": 812,
     "low24": -0.0359,
     "low24_min": 291,
-    "quote_vol24": 30263863,
-    "complete": false,
+    "quote_vol24": 40443283,
+    "complete": true,
     "lag_min": 1
    },
    "primary": true,
-   "tries": 17
+   "tries": 18
   },
   "bn:289715:TRXUSDC": {
    "exchange": "Binance",
@@ -54,17 +54,17 @@
     "m30": -0.0137,
     "h1": -0.0153,
     "h4": -0.011,
-    "h24": null,
+    "h24": -0.0046,
     "high24": 0.0017,
     "high24_min": 606,
     "low24": -0.0206,
     "low24_min": 0,
-    "quote_vol24": 642325,
-    "complete": false,
+    "quote_vol24": 766661,
+    "complete": true,
     "lag_min": 0
    },
    "primary": true,
-   "tries": 17
+   "tries": 18
   },
   "bn:288627:PREDICTUSDT": {
    "exchange": "Binance",
@@ -82,7 +82,7 @@
    "baseline": true,
    "w": null,
    "primary": true,
-   "tries": 17
+   "tries": 18
   },
   "bn:288627:PREDICTUSDC": {
    "exchange": "Binance",
@@ -6802,9 +6802,21 @@
   "okx:okx-to-list-zama-zama-for-spot-trading-and-convert-pre-market-futures-to": {
    "title": "OKX to list ZAMA (Zama) for spot trading and convert pre-market futures to standard perpetual futures",
    "n": 1
+  },
+  "290480": {
+   "title": "Binance Futures Will Launch Multiple TradFi USDⓈ-Margined Perpetual Contracts (2026-11-18)",
+   "kind": null
+  },
+  "290440": {
+   "title": "Binance Will Add 7 bStocks Tokenized Securities as Collateral Asset - 2026-11-18",
+   "kind": null
+  },
+  "290432": {
+   "title": "Binance Exchange Adds New bStocks Trading Pairs on Binance Spot/Convert - 2026-11-18",
+   "kind": null
   }
  },
- "generated": "2026-11-17T13:39:35Z",
+ "generated": "2026-11-18T11:33:10Z",
  "status": {
   "list_ok": true,
   "pages": 3,
@@ -6818,7 +6830,7 @@
  "n": {
   "events": 172,
   "primary": 114,
-  "with_windows": 110,
+  "with_windows": 112,
   "spot": 29,
   "perp": 85
  },
@@ -6826,7 +6838,7 @@
  "by_exchange": {
   "Binance": {
    "events": 172,
-   "with_windows": 110
+   "with_windows": 112
   },
   "OKX": {
    "events": 22,
@@ -6836,6 +6848,6 @@
  "x_status": {
   "okx_page_fail": 0,
   "okx_kline_fail": 0,
-  "generated": "2026-11-17T13:39:40Z"
+  "generated": "2026-11-18T11:33:18Z"
  }
 }

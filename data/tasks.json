@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-18T11:31:28+00:00",
+ "generated": "2026-11-18T12:02:26+00:00",
  "boards": [
   {
    "board": "alpha",
@@ -54,7 +54,7 @@
   {
    "board": "alpha",
    "id": "alpha:research",
-   "title": "机会卡补证（队列 36 个，从上往下补，M 新参与机制优先查）",
+   "title": "机会卡补证（队列 38 个，从上往下补，M 新参与机制优先查）",
    "who": "codex",
    "pri": 1,
    "deliver": "alpha/review/codex_2026-11-18_checks.json（JSON 数组，reviewer = codex）",
@@ -89,15 +89,15 @@
      "kind": "surge"
     },
     {
-     "key": "s:parent#paperstrategy",
-     "name": "Paperstrategy",
+     "key": "s:8884",
+     "name": "Nullmask",
      "status": "原始线索",
      "fresh": true,
      "kind": "surge"
     },
     {
-     "key": "s:8884",
-     "name": "Nullmask",
+     "key": "s:parent#paperstrategy",
+     "name": "Paperstrategy",
      "status": "原始线索",
      "fresh": true,
      "kind": "surge"
@@ -110,15 +110,15 @@
      "kind": "surge"
     },
     {
-     "key": "s:4063",
-     "name": "Peapods Finance",
+     "key": "s:parent#justlend",
+     "name": "JustLend V1",
      "status": "原始线索",
      "fresh": true,
      "kind": "surge"
     },
     {
-     "key": "s:parent#justlend",
-     "name": "JustLend V1",
+     "key": "s:4063",
+     "name": "Peapods Finance",
      "status": "原始线索",
      "fresh": true,
      "kind": "surge"
@@ -145,13 +145,6 @@
      "kind": "surge"
     },
     {
-     "key": "s:9169",
-     "name": "Sapling",
-     "status": "原始线索",
-     "fresh": true,
-     "kind": "surge"
-    },
-    {
      "key": "s:9182",
      "name": "Veil",
      "status": "原始线索",
@@ -159,8 +152,29 @@
      "kind": "surge"
     },
     {
+     "key": "s:9169",
+     "name": "Sapling",
+     "status": "原始线索",
+     "fresh": true,
+     "kind": "surge"
+    },
+    {
+     "key": "g:7978",
+     "name": "Propr",
+     "status": "原始线索",
+     "fresh": true,
+     "kind": "tokenless"
+    },
+    {
      "key": "g:9367",
      "name": "MING",
+     "status": "原始线索",
+     "fresh": true,
+     "kind": "tokenless"
+    },
+    {
+     "key": "g:parent#blockchain-wallet",
+     "name": "Blockchain Wallet",
      "status": "原始线索",
      "fresh": true,
      "kind": "tokenless"
@@ -313,7 +327,7 @@
      "kind": "tokenless"
     }
    ],
-   "n": 36,
+   "n": 38,
    "note": "排序：手动线索 / 本站板块 ★ → 新发现 → 有参与入口 → 收入高。同一天多批追加进同一个文件。"
   },
   {
@@ -659,12 +673,12 @@
      "name": "Flap sh"
     },
     {
-     "slug": "montra",
-     "name": "Montra"
-    },
-    {
      "slug": "pons-v2",
      "name": "Pons V2"
+    },
+    {
+     "slug": "montra",
+     "name": "Montra"
     },
     {
      "slug": "launchlab",
@@ -679,44 +693,40 @@
      "name": "StonkFun"
     },
     {
-     "slug": "ascend-launchpad",
-     "name": "Ascend Launchpad"
+     "slug": "sendfun-launchpad",
+     "name": "sendfun Launchpad"
     },
     {
      "slug": "meteora-dynamic-bonding-curve",
      "name": "Meteora Dynamic Bonding Curve"
     },
     {
-     "slug": "sendfun-launchpad",
-     "name": "sendfun Launchpad"
-    },
-    {
      "slug": "binance-alpha",
      "name": "Binance Alpha"
     },
     {
-     "slug": "graphite-protocol",
-     "name": "Graphite Protocol"
+     "slug": "ascend-launchpad",
+     "name": "Ascend Launchpad"
     },
     {
      "slug": "clanker",
      "name": "clanker"
     },
     {
-     "slug": "volta",
-     "name": "Volta"
+     "slug": "graphite-protocol",
+     "name": "Graphite Protocol"
     },
     {
      "slug": "bags",
      "name": "Bags"
     },
     {
-     "slug": "boxa-v1",
-     "name": "Boxa V1"
-    },
-    {
      "slug": "four.meme",
      "name": "four.meme"
+    },
+    {
+     "slug": "volta",
+     "name": "Volta"
     },
     {
      "slug": "pons-v1",
@@ -731,24 +741,28 @@
      "name": "OTC"
     },
     {
+     "slug": "o1-launchpad",
+     "name": "o1 Launchpad"
+    },
+    {
      "slug": "stockereum",
      "name": "Stockereum"
+    },
+    {
+     "slug": "argus-world",
+     "name": "Argus World"
+    },
+    {
+     "slug": "boxa-v1",
+     "name": "Boxa V1"
     },
     {
      "slug": "pools",
      "name": "Pools"
     },
     {
-     "slug": "rise.rich",
-     "name": "Rise.rich"
-    },
-    {
      "slug": "metaplex",
      "name": "Metaplex"
-    },
-    {
-     "slug": "o1-launchpad",
-     "name": "o1 Launchpad"
     }
    ],
    "n": 25,
@@ -1084,11 +1098,11 @@
    "deliver": "alpha/review/codex_2026-11-18_checks.json"
   },
   {
-   "key": "alpha:s:parent#paperstrategy",
+   "key": "alpha:s:8884",
    "board": "alpha",
    "priority": 1,
    "task_type": "research",
-   "name": "Paperstrategy",
+   "name": "Nullmask",
    "missing": [
     "M",
     "A",
@@ -1109,11 +1123,11 @@
    "deliver": "alpha/review/codex_2026-11-18_checks.json"
   },
   {
-   "key": "alpha:s:8884",
+   "key": "alpha:s:parent#paperstrategy",
    "board": "alpha",
    "priority": 1,
    "task_type": "research",
-   "name": "Nullmask",
+   "name": "Paperstrategy",
    "missing": [
     "M",
     "A",
@@ -1159,11 +1173,11 @@
    "deliver": "alpha/review/codex_2026-11-18_checks.json"
   },
   {
-   "key": "alpha:s:4063",
+   "key": "alpha:s:parent#justlend",
    "board": "alpha",
    "priority": 1,
    "task_type": "research",
-   "name": "Peapods Finance",
+   "name": "JustLend V1",
    "missing": [
     "M",
     "A",
@@ -1184,11 +1198,11 @@
    "deliver": "alpha/review/codex_2026-11-18_checks.json"
   },
   {
-   "key": "alpha:s:parent#justlend",
+   "key": "alpha:s:4063",
    "board": "alpha",
    "priority": 1,
    "task_type": "research",
-   "name": "JustLend V1",
+   "name": "Peapods Finance",
    "missing": [
     "M",
     "A",
@@ -1284,31 +1298,6 @@
    "deliver": "alpha/review/codex_2026-11-18_checks.json"
   },
   {
-   "key": "alpha:s:9169",
-   "board": "alpha",
-   "priority": 2,
-   "task_type": "research",
-   "name": "Sapling",
-   "missing": [
-    "M",
-    "A",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM",
-    "TE"
-   ],
-   "source_refs": [
-    "data/alpha/research_queue.json"
-   ],
-   "status": "open",
-   "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-18_checks.json"
-  },
-  {
    "key": "alpha:s:9182",
    "board": "alpha",
    "priority": 2,
@@ -1334,11 +1323,84 @@
    "deliver": "alpha/review/codex_2026-11-18_checks.json"
   },
   {
+   "key": "alpha:s:9169",
+   "board": "alpha",
+   "priority": 2,
+   "task_type": "research",
+   "name": "Sapling",
+   "missing": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "TE"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "open",
+   "last_checked_utc": null,
+   "deliver": "alpha/review/codex_2026-11-18_checks.json"
+  },
+  {
+   "key": "alpha:g:7978",
+   "board": "alpha",
+   "priority": 2,
+   "task_type": "research",
+   "name": "Propr",
+   "missing": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "open",
+   "last_checked_utc": null,
+   "deliver": "alpha/review/codex_2026-11-18_checks.json"
+  },
+  {
    "key": "alpha:g:9367",
    "board": "alpha",
    "priority": 2,
    "task_type": "research",
    "name": "MING",
+   "missing": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "open",
+   "last_checked_utc": null,
+   "deliver": "alpha/review/codex_2026-11-18_checks.json"
+  },
+  {
+   "key": "alpha:g:parent#blockchain-wallet",
+   "board": "alpha",
+   "priority": 2,
+   "task_type": "research",
+   "name": "Blockchain Wallet",
    "missing": [
     "M",
     "A",

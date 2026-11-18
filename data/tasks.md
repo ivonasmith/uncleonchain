@@ -1,4 +1,4 @@
-# 全站待办与检查（2026-11-18 11:31 UTC 自动生成，别手改）
+# 全站待办与检查（2026-11-18 12:02 UTC 自动生成，别手改）
 
 | 板块 | 待办 | 问题 |
 |---|---|---|
@@ -13,7 +13,7 @@
 
 ## 待办
 
-- **P1 · Codex · alpha** 机会卡补证（队列 36 个，从上往下补，M 新参与机制优先查） → `alpha/review/codex_2026-11-18_checks.json（JSON 数组，reviewer = codex）`（参考 `data/alpha/research_queue.json（prompt / schema / items）`）
+- **P1 · Codex · alpha** 机会卡补证（队列 38 个，从上往下补，M 新参与机制优先查） → `alpha/review/codex_2026-11-18_checks.json（JSON 数组，reviewer = codex）`（参考 `data/alpha/research_queue.json（prompt / schema / items）`）
 - **P1 · Codex · alpha** 补「量从哪来」和关键事件（35 张已补证的卡还没有 flow / events，先做 Montra、Pons 当样板） → `alpha/review/codex_2026-11-18_checks.json（同 key 交新一条，带 flow / events / capture / next_review）`（参考 `data/alpha/research_queue.json 的 schema`）
 - **P2 · Codex · aiagent** A1 服务层真实性 → `aiagent/review/a1_commerce_checks.json`（参考 `aiagent/review/README.md`）
 - **P2 · Codex · aiagent** A2 x402 与 ERC-8004 的链上数据源 → `aiagent/review/a2_rails_sources.json`（参考 `aiagent/review/README.md`）
