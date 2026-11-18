@@ -17,6 +17,33 @@
       "type": "ticker_rename_after_Terra_2.0",
       "announcement_url": "https://www.binance.com/en/support/announcement/detail/d044a6742e484b77a170111460b0eed3",
       "evidence": "Binance 公告标题和正文注明 LUNA (old) 改名为 LUNC，并说明 Terra 2.0 的 LUNA。独立交易对切换时刻 U。"
+    },
+    {
+      "old_code": "GAL",
+      "new_code": "G",
+      "effective_utc": "2024-07-19T08:00:00Z",
+      "type": "token_swap_redenomination_rebranding",
+      "announcement_url": "https://www.binance.com/en/support/announcement/detail/6df074e0264648448c260b1430240e2f",
+      "evidence": "Binance 公告写明 1 GAL = 60 G，并于 2024-07-19 08:00 UTC 开放 G/USDT、G/TRY。",
+      "checked_utc": "2026-11-18T00:00:00Z"
+    },
+    {
+      "old_code": "PLA",
+      "new_code": "PDA",
+      "effective_utc": "2024-02-26T03:00:00Z",
+      "type": "token_swap_and_ticker_change",
+      "announcement_url": "https://www.binance.com/en/support/announcement/detail/f0fafa66fedf4e058aaacb57c206c597",
+      "evidence": "Binance 公告写明 1 PLA = 1 PDA，并于 2024-02-26 03:00 UTC 下架 PLA 现货交易对。",
+      "checked_utc": "2026-11-18T00:00:00Z"
+    },
+    {
+      "old_code": "EPS",
+      "new_code": "EPX",
+      "effective_utc": "U",
+      "type": "token_migration_redenomination_ticker_change",
+      "announcement_url": "https://www.binance.com/en/support/announcement/detail/bab533fdba1e4b2ba21053a7668c2865",
+      "evidence": "Binance 官方完成公告确认 EPS → EPX 的迁移、重定面值和代码变更，页面摘要未核得独立生效时刻，记 U。",
+      "checked_utc": "2026-11-18T00:00:00Z"
     }
   ],
   "not_done": [
