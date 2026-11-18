@@ -1,0 +1,25 @@
+{
+  "checked_utc": "2026-11-18T00:00:00Z",
+  "by": "codex",
+  "entries": [
+    {
+      "old_code": "MATIC",
+      "new_code": "POL",
+      "effective_utc": "2024-09-13T10:00:00Z",
+      "type": "token_swap_and_ticker_change",
+      "announcement_url": "https://www.binance.com/en/support/announcement/detail/6a6de383727f4659a3050f7982e1620f",
+      "evidence": "Binance 公告写明 1 MATIC = 1 POL，2024-09-10 03:00 UTC 停止 MATIC 现货交易，2024-09-13 10:00 UTC 开放 POL 交易对。"
+    },
+    {
+      "old_code": "LUNA (old)",
+      "new_code": "LUNC",
+      "effective_utc": "2022-05-31T00:00:00Z",
+      "type": "ticker_rename_after_Terra_2.0",
+      "announcement_url": "https://www.binance.com/en/support/announcement/detail/d044a6742e484b77a170111460b0eed3",
+      "evidence": "Binance 公告标题和正文注明 LUNA (old) 改名为 LUNC，并说明 Terra 2.0 的 LUNA。独立交易对切换时刻 U。"
+    }
+  ],
+  "not_done": [
+    "未逐条覆盖 2017 年至今全部改名、迁移、拆分、合并公告，其余字段保持 U。"
+  ]
+}
