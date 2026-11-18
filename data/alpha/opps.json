@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-18T11:29:52+00:00",
+ "generated": "2026-11-18T12:06:19+00:00",
  "asof": "2026-11-17",
  "framework": "v1",
  "rules": "v2（2026-11-15）",
@@ -318,23 +318,23 @@
       "url": "https://dexscreener.com/robinhood/0x10cc6bd38112cac182db90b6a71d8bb5939526ba"
      },
      "snap": {
-      "mcap": 77951877,
-      "fdv": 77943962,
-      "vol24": 4242930.72,
-      "liq": 1319058.02,
-      "chg24": -1.27,
+      "mcap": 78621937,
+      "fdv": 78613779,
+      "vol24": 4070121.7800000003,
+      "liq": 1325862.36,
+      "chg24": -0.55,
       "pairs": 30,
       "dex": "uniswap",
       "chain": "robinhood",
-      "at": "2026-11-18T11:30+00:00",
+      "at": "2026-11-18T12:06+00:00",
       "src": "DexScreener"
      }
     },
     "lpq": {
-     "数据日": "2026-11-16",
+     "数据日": "2026-11-17",
      "发币": {
-      "1d": 750,
-      "7d": 4767,
+      "1d": 781,
+      "7d": 4852,
       "估算": false,
       "工厂": [
        "robinhood:0xe33e9e479df8802cb0866d5d05258bec4cf62948",
@@ -720,7 +720,7 @@
      {
       "board": "launchpad",
       "rule": "lp_new",
-      "why": "进发射台矩阵 6 天，近 7 天手续费 916,737 美元",
+      "why": "进发射台矩阵 7 天，近 7 天手续费 366,348 美元",
       "since": "2026-11-10"
      }
     ],
@@ -769,23 +769,23 @@
       "url": "https://dexscreener.com/elysium/0x3e373dfe40db272433dca58527abac38dbd7acb0b6c92090c202a1eac7272a1d"
      },
      "snap": {
-      "mcap": 4234848,
-      "fdv": 4234848,
-      "vol24": 136945.45,
-      "liq": 372860.7,
-      "chg24": 9.74,
+      "mcap": 4208695,
+      "fdv": 4208695,
+      "vol24": 138045.77,
+      "liq": 371702.02,
+      "chg24": 7.24,
       "pairs": 14,
       "dex": "uniswap",
       "chain": "elysium",
-      "at": "2026-11-18T11:30+00:00",
+      "at": "2026-11-18T12:06+00:00",
       "src": "DexScreener"
      }
     },
     "lpq": {
-     "数据日": "2026-11-16",
+     "数据日": "2026-11-17",
      "发币": {
-      "1d": 386,
-      "7d": 28545,
+      "1d": 352,
+      "7d": 8736,
       "估算": false,
       "工厂": [
        "elysium:0x38d3ef3a06d18fa3286fb5deafe611be725fcd15"
@@ -1058,7 +1058,7 @@
      {
       "board": "aiagent",
       "rule": "ai_new",
-      "why": "AI Agent 板块：手续费从 2026-10-15 才开始，近 7 天 182,089 美元；板块备注：2026-10 才收录，30 天手续费很快冲到第一，真实需求还是自付刷量待 Codex 核",
+      "why": "AI Agent 板块：手续费从 2026-10-15 才开始，近 7 天 164,569 美元；板块备注：2026-10 才收录，30 天手续费很快冲到第一，真实需求还是自付刷量待 Codex 核",
       "since": "2026-10-15"
      }
     ],
@@ -1103,17 +1103,17 @@
     "tok": null,
     "money": {
      "vol": {
-      "total24h": 185059,
+      "total24h": 142417,
       "total7d": 1645697,
       "total30d": 16609126
      },
      "fees": {
-      "total24h": 18506,
+      "total24h": 14244,
       "total7d": 164569,
       "total30d": 1660884
      },
      "rev": {
-      "total24h": 18506,
+      "total24h": 14244,
       "total7d": 164569,
       "total30d": 1660884
      },
@@ -1403,15 +1403,15 @@
       "url": "https://dexscreener.com/base/0xaec085e5a5ce8d96a7bdd3eb3a62445d4f6ce703"
      },
      "snap": {
-      "mcap": 21098706,
-      "fdv": 21098706,
-      "vol24": 140804.08,
-      "liq": 1355022.19,
-      "chg24": -3.31,
-      "pairs": 20,
+      "mcap": 21116142,
+      "fdv": 21116142,
+      "vol24": 141332.45,
+      "liq": 1356158.22,
+      "chg24": -1.49,
+      "pairs": 19,
       "dex": "uniswap",
       "chain": "base",
-      "at": "2026-11-18T11:30+00:00",
+      "at": "2026-11-18T12:06+00:00",
       "src": "DexScreener"
      }
     },
@@ -1447,7 +1447,7 @@
    "key": "x:launchpad:boxa-v1",
    "name": "Boxa V1",
    "kind": "site",
-   "why_here": "进发射台矩阵 4 天，近 7 天手续费 69,041 美元",
+   "why_here": null,
    "manual": null,
    "discovered": "2026-11-15",
    "baseline": false,
@@ -1621,32 +1621,23 @@
    ],
    "data": {
     "category": "Launchpad",
-    "chains": [
-     "Elysium"
-    ],
+    "chains": null,
     "rev30": null,
     "chg30": null,
     "rev_all": null,
     "llama": null,
-    "fees7": 69041,
-    "fees30": 238104,
+    "fees7": null,
+    "fees30": null,
     "sources": [
      "site_launchpad"
     ],
-    "boards": [
-     {
-      "board": "launchpad",
-      "rule": "lp_new",
-      "why": "进发射台矩阵 4 天，近 7 天手续费 69,041 美元",
-      "since": "2026-11-12"
-     }
-    ],
+    "boards": null,
     "tvl": null,
     "listed": null,
     "slug": "boxa-v1",
     "url": null,
-    "logo": "https://icons.llamao.fi/icons/protocols/boxa-v1",
-    "twitter": "Boxa_Elysium",
+    "logo": null,
+    "twitter": null,
     "children": null,
     "token": false,
     "token_seen": null,
@@ -1664,12 +1655,12 @@
       "total30d": 1466281
      },
      "fees": {
-      "total24h": 425,
+      "total24h": 480,
       "total7d": 24825,
       "total30d": 238688
      },
      "rev": {
-      "total24h": 126,
+      "total24h": 143,
       "total7d": 7440,
       "total30d": 71606
      },
@@ -1689,7 +1680,7 @@
    "key": "x:launchpad:chain-elysium",
    "name": "Elysium 生态（新发射台聚集）",
    "kind": "site",
-   "why_here": "30 天内 Elysium 上新进矩阵的发射台有 11 个：Montra、Ascend Launchpad、Volta、Boxa V1、ElysPump V2、Kleos Launchpad；合计近 7 天手续费 1,334,816 美元",
+   "why_here": "30 天内 Elysium 上新进矩阵的发射台有 11 个：Montra、Ascend Launchpad、Volta、Boxa V1、ElysPump V2、Kleos Launchpad；合计近 7 天手续费 618,775 美元",
    "manual": null,
    "discovered": "2026-11-15",
    "baseline": false,
@@ -1906,7 +1897,7 @@
     "chg30": null,
     "rev_all": null,
     "llama": null,
-    "fees7": 1334816,
+    "fees7": 618775,
     "fees30": null,
     "sources": [
      "site_launchpad"
@@ -1915,7 +1906,7 @@
      {
       "board": "launchpad",
       "rule": "lp_chain",
-      "why": "30 天内 Elysium 上新进矩阵的发射台有 11 个：Montra、Ascend Launchpad、Volta、Boxa V1、ElysPump V2、Kleos Launchpad；合计近 7 天手续费 1,334,816 美元",
+      "why": "30 天内 Elysium 上新进矩阵的发射台有 11 个：Montra、Ascend Launchpad、Volta、Boxa V1、ElysPump V2、Kleos Launchpad；合计近 7 天手续费 618,775 美元",
       "since": null
      }
     ],
@@ -2136,7 +2127,7 @@
      {
       "board": "launchpad",
       "rule": "lp_new",
-      "why": "进发射台矩阵 3 天，近 7 天手续费 88,435 美元",
+      "why": "进发射台矩阵 4 天，近 7 天手续费 60,232 美元",
       "since": "2026-11-13"
      }
     ],
@@ -2185,15 +2176,15 @@
       "url": "https://dexscreener.com/elysium/0x7b182abb748bae25e2c73abd8b4cf3157d8d35a47e4b36d1ee5565ade94c3c27"
      },
      "snap": {
-      "mcap": 484433,
-      "fdv": 484433,
-      "vol24": 54680.87,
-      "liq": 73653.54,
-      "chg24": -23.36,
+      "mcap": 483598,
+      "fdv": 483598,
+      "vol24": 56662.61,
+      "liq": 73639.15,
+      "chg24": -23.08,
       "pairs": 5,
       "dex": "uniswap",
       "chain": "elysium",
-      "at": "2026-11-18T11:30+00:00",
+      "at": "2026-11-18T12:06+00:00",
       "src": "DexScreener"
      }
     },
@@ -2432,7 +2423,7 @@
      {
       "board": "launchpad",
       "rule": "lp_new",
-      "why": "进发射台矩阵 6 天，近 7 天手续费 231,446 美元",
+      "why": "进发射台矩阵 7 天，近 7 天手续费 151,568 美元",
       "since": "2026-11-10"
      }
     ],
@@ -2476,10 +2467,10 @@
     },
     "tok": null,
     "lpq": {
-     "数据日": "2026-11-16",
+     "数据日": "2026-11-17",
      "发币": {
-      "1d": 14,
-      "7d": 873,
+      "1d": 25,
+      "7d": 408,
       "估算": false,
       "工厂": [
        "elysium:0x63f6a8a8d0257c0363251a50cde8a8b1046e4d19"
@@ -6878,15 +6869,15 @@
       "url_en": "https://www.binance.com/en/trade/JST_USDT?type=spot"
      },
      "snap": {
-      "mcap": 1413640323,
-      "fdv": 1413640323,
-      "vol24": 120544.39000000001,
-      "liq": 14411650.06,
-      "chg24": 1.44,
+      "mcap": 1413643332,
+      "fdv": 1413643332,
+      "vol24": 118455.33,
+      "liq": 14411665.42,
+      "chg24": 1.38,
       "pairs": 2,
       "dex": "sunswap",
       "chain": "tron",
-      "at": "2026-11-18T11:30+00:00",
+      "at": "2026-11-18T12:06+00:00",
       "src": "DexScreener"
      }
     },
@@ -7155,13 +7146,13 @@
      "snap": {
       "mcap": 8957847,
       "fdv": 8957847,
-      "vol24": 98069.77,
+      "vol24": 98070.77,
       "liq": 947914.77,
       "chg24": -5.85,
       "pairs": 17,
       "dex": "uniswap",
       "chain": "ethereum",
-      "at": "2026-11-18T11:30+00:00",
+      "at": "2026-11-18T12:06+00:00",
       "src": "DexScreener"
      }
     },
@@ -7428,15 +7419,15 @@
       "url_en": "https://www.binance.com/en/trade/LQTY_USDT?type=spot"
      },
      "snap": {
-      "mcap": 14195215,
-      "fdv": 14195215,
-      "vol24": 41197.63,
-      "liq": 362361.3,
-      "chg24": -1.89,
+      "mcap": 14214116,
+      "fdv": 14214116,
+      "vol24": 37747.729999999996,
+      "liq": 362769.56,
+      "chg24": -1.36,
       "pairs": 9,
       "dex": "uniswap",
       "chain": "ethereum",
-      "at": "2026-11-18T11:30+00:00",
+      "at": "2026-11-18T12:06+00:00",
       "src": "DexScreener"
      }
     },
@@ -7702,15 +7693,15 @@
       "url_en": "https://www.binance.com/en/trade/YB_USDT?type=spot"
      },
      "snap": {
-      "mcap": 12238553,
-      "fdv": 34711092,
-      "vol24": 88237.14,
-      "liq": 376506.37,
-      "chg24": 3.2,
+      "mcap": 12374075,
+      "fdv": 35095461,
+      "vol24": 78440.71,
+      "liq": 378569.22,
+      "chg24": 5.42,
       "pairs": 3,
       "dex": "curve",
       "chain": "ethereum",
-      "at": "2026-11-18T11:30+00:00",
+      "at": "2026-11-18T12:06+00:00",
       "src": "DexScreener"
      }
     },
@@ -7979,15 +7970,15 @@
       "url": "https://dexscreener.com/solana/4mwjp1abqqe9y6ic5cd3nrvvwwchsn2lgpjwymdk7u7e"
      },
      "snap": {
-      "mcap": 245302,
-      "fdv": 245302,
-      "vol24": 21124.4,
-      "liq": 44711.82,
-      "chg24": 19.55,
+      "mcap": 244411,
+      "fdv": 244411,
+      "vol24": 21090.98,
+      "liq": 44555.47,
+      "chg24": 18.23,
       "pairs": 3,
       "dex": "pumpswap",
       "chain": "solana",
-      "at": "2026-11-18T11:30+00:00",
+      "at": "2026-11-18T12:06+00:00",
       "src": "DexScreener"
      }
     },
@@ -10163,7 +10154,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 8,706,436 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 8,898,586 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -10316,8 +10307,8 @@
      "Monad",
      "BSC"
     ],
-    "rev30": 8706436,
-    "chg30": -56.2,
+    "rev30": 8898586,
+    "chg30": -55.2,
     "rev_all": null,
     "llama": null,
     "fees7": null,
@@ -10359,7 +10350,7 @@
      ],
      [
       "2026-11-18",
-      8706436
+      8898586
      ]
     ],
     "age": {
@@ -10375,17 +10366,17 @@
       "total30d": 1167786485
      },
      "fees": {
-      "total24h": 87381,
-      "total7d": 1803088.01,
-      "total30d": 8855242.12
+      "total24h": 280854,
+      "total7d": 1996561.01,
+      "total30d": 9048715.12
      },
      "rev": {
-      "total24h": 87381,
-      "total7d": 1788128.01,
-      "total30d": 8706436.12
+      "total24h": 279531,
+      "total7d": 1980278.01,
+      "total30d": 8898586.12
      },
      "hold": null,
-     "take": 0.00746,
+     "take": 0.00762,
      "share7": 0.236,
      "src": "DefiLlama",
      "short_history": null
@@ -10421,7 +10412,7 @@
     260022,
     230737,
     270723,
-    87381
+    279531
    ]
   },
   {
@@ -10503,7 +10494,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 8,040,823 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 8,237,967 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -10644,8 +10635,8 @@
      "Solana",
      "BSC"
     ],
-    "rev30": 8040823,
-    "chg30": -49.7,
+    "rev30": 8237967,
+    "chg30": -48.5,
     "rev_all": null,
     "llama": null,
     "fees7": null,
@@ -10685,7 +10676,7 @@
      ],
      [
       "2026-11-18",
-      8040823
+      8237967
      ]
     ],
     "age": {
@@ -10701,24 +10692,23 @@
       "total30d": 1256765854
      },
      "fees": {
-      "total24h": 484555,
-      "total7d": 2849832,
-      "total30d": 17576791
+      "total24h": 440955,
+      "total7d": 3290787,
+      "total30d": 18017746
      },
      "rev": {
-      "total24h": 252324,
-      "total7d": 1336099,
-      "total30d": 7998960
+      "total24h": 197144,
+      "total7d": 1533243,
+      "total30d": 8196104
      },
      "hold": null,
-     "take": 0.00636,
+     "take": 0.00652,
      "share7": 0.155,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    341620,
     403656,
     325946,
     445586,
@@ -10747,7 +10737,8 @@
     223233,
     179368,
     119241,
-    252324
+    252324,
+    197144
    ]
   },
   {
@@ -11656,10 +11647,10 @@
     },
     "tok": null,
     "lpq": {
-     "数据日": "2026-11-16",
+     "数据日": "2026-11-17",
      "发币": {
-      "1d": 5723,
-      "7d": 24213,
+      "1d": 12,
+      "7d": 24188,
       "估算": false,
       "工厂": [
        "bsc:0xe2ce6ab80874fa9fa2aae65d277dd6b8e65c9de0",
@@ -11671,10 +11662,10 @@
      },
      "发币人": {
       "7d": null,
-      "1d": 793,
-      "数据日": "2026-11-15",
+      "1d": 786,
+      "数据日": "2026-11-17",
       "来源": "链上（BSC 公共节点）",
-      "口径": "BSC Portal 0xe2cE…9De0 的内盘买卖和 TokenCreated；Flap 另一个 BSC 工厂和 Robinhood 链没扫。创建事件里不同的发币钱包（合约发起的换成交易发起钱包）；7d = 最近 7 天去重，攒满 7 天才出（现在 0 天）"
+      "口径": "BSC Portal 0xe2cE…9De0 的内盘买卖和 TokenCreated；Flap 另一个 BSC 工厂和 Robinhood 链没扫。创建事件里不同的发币钱包（合约发起的换成交易发起钱包）；7d = 最近 7 天去重，攒满 7 天才出（现在 1 天）"
      },
      "存活": {
       "批次": "2026-11-03～2026-11-09",
@@ -11689,13 +11680,13 @@
       "说明": "GeckoTerminal 没收录这家任何一个样本币的池子（曲线池不收），存活查不了；要换数据源或自己扫链上交易"
      },
      "交易者": {
-      "1d": 11624,
+      "1d": 12448,
       "7d": null,
       "前10地址成交占比": null,
-      "前10地址笔数占比": 0.1524,
-      "数据日": "2026-11-15",
-      "覆盖天数": 0,
-      "口径": "BSC Portal 0xe2cE…9De0 的内盘买卖和 TokenCreated；Flap 另一个 BSC 工厂和 Robinhood 链没扫。当天内盘买卖的不同钱包（经机器人 / 路由合约下单的换成交易发起钱包），毕业后 DEX 成交不算，下限；7d = 最近 7 天去重，攒满 7 天才出（现在 0 天）；前10 按笔数算，成交额口径要统一计价币，待接入",
+      "前10地址笔数占比": 0.1037,
+      "数据日": "2026-11-17",
+      "覆盖天数": 1,
+      "口径": "BSC Portal 0xe2cE…9De0 的内盘买卖和 TokenCreated；Flap 另一个 BSC 工厂和 Robinhood 链没扫。当天内盘买卖的不同钱包（经机器人 / 路由合约下单的换成交易发起钱包），毕业后 DEX 成交不算，下限；7d = 最近 7 天去重，攒满 7 天才出（现在 1 天）；前10 按笔数算，成交额口径要统一计价币，待接入",
       "来源": "链上（BSC 公共节点）"
      },
      "事件": []
@@ -13794,15 +13785,15 @@
       "url": "https://dexscreener.com/solana/4gwh5sakgzoukhhj4rh3p5fmpu6ypuaexv6fah5jqyfm"
      },
      "snap": {
-      "mcap": 9849679,
-      "fdv": 17303823,
-      "vol24": 416355.87,
-      "liq": 517027.32,
-      "chg24": -16.02,
+      "mcap": 9895081,
+      "fdv": 17383585,
+      "vol24": 424379.46,
+      "liq": 518155.5,
+      "chg24": -16.04,
       "pairs": 17,
       "dex": "raydium",
       "chain": "solana",
-      "at": "2026-11-18T11:30+00:00",
+      "at": "2026-11-18T12:06+00:00",
       "src": "DexScreener"
      }
     },
@@ -14067,17 +14058,17 @@
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 42878,
+      "total24h": 42349,
       "total7d": 1972544,
       "total30d": 16793528
      },
      "rev": {
-      "total24h": 42878,
+      "total24h": 42349,
       "total7d": 1972544,
       "total30d": 16793528
      },
      "hold": {
-      "total24h": 22130,
+      "total24h": 21867,
       "total7d": 1758398,
       "total30d": 15426283
      },
@@ -14322,15 +14313,15 @@
       "url": "https://dexscreener.com/hyperevm/0xf01e7b40b9da303a0a097b69cd81c06c2c06b658"
      },
      "snap": {
-      "mcap": 2295538,
-      "fdv": 2295538,
-      "vol24": 4154.61,
-      "liq": 426130.46,
-      "chg24": 0.86,
+      "mcap": 2275703,
+      "fdv": 2275703,
+      "vol24": 3691.34,
+      "liq": 422656.39,
+      "chg24": -0.01,
       "pairs": 1,
       "dex": "hyperswap",
       "chain": "hyperevm",
-      "at": "2026-11-18T11:30+00:00",
+      "at": "2026-11-18T12:06+00:00",
       "src": "DexScreener"
      }
     },
@@ -14595,15 +14586,15 @@
       "url": "https://dexscreener.com/base/0x8a8277fa0624a2112d6a049647d432ef9a9e75e2"
      },
      "snap": {
-      "mcap": 518708,
-      "fdv": 10775537,
-      "vol24": 2252.19,
-      "liq": 226002.72,
+      "mcap": 518743,
+      "fdv": 10776258,
+      "vol24": 2282.1,
+      "liq": 226010.24,
       "chg24": 1.12,
       "pairs": 5,
       "dex": "aero",
       "chain": "base",
-      "at": "2026-11-18T11:30+00:00",
+      "at": "2026-11-18T12:06+00:00",
       "src": "DexScreener"
      }
     },
@@ -14614,17 +14605,17 @@
       "total30d": 28371659
      },
      "fees": {
-      "total24h": 13238,
+      "total24h": 14266,
       "total7d": 58798,
       "total30d": 200255
      },
      "rev": {
-      "total24h": 13238,
+      "total24h": 14266,
       "total7d": 58798,
       "total30d": 200255
      },
      "hold": {
-      "total24h": 7237,
+      "total24h": 7815,
       "total7d": 29040,
       "total30d": 98075
      },
@@ -14873,15 +14864,15 @@
       "url": "https://dexscreener.com/solana/6ejg4ayjm3mk1t2zbkjbj43df3s7rbmpc9mgo526k51g"
      },
      "snap": {
-      "mcap": 878707,
-      "fdv": 890119,
-      "vol24": 100329.98999999999,
-      "liq": 179392.02,
-      "chg24": -4.21,
+      "mcap": 883383,
+      "fdv": 894852,
+      "vol24": 99872.83,
+      "liq": 180391.78,
+      "chg24": -0.29,
       "pairs": 5,
       "dex": "pumpswap",
       "chain": "solana",
-      "at": "2026-11-18T11:30+00:00",
+      "at": "2026-11-18T12:06+00:00",
       "src": "DexScreener"
      }
     },
@@ -15093,7 +15084,7 @@
      "llama_listing"
     ],
     "boards": null,
-    "tvl": 39696290,
+    "tvl": 39438661,
     "listed": "2026-11-09",
     "slug": "kinetiq-elysium-bridge",
     "url": "https://elysium.kinetiq.xyz",
@@ -15141,15 +15132,15 @@
       "url": "https://dexscreener.com/hyperevm/0xc8e5ee73b80bb3f6c9b5348771de8217abd412e7"
      },
      "snap": {
-      "mcap": 72417152,
-      "fdv": 223493417,
-      "vol24": 241801.28999999998,
-      "liq": 845808.21,
-      "chg24": 0.33,
+      "mcap": 72522807,
+      "fdv": 223819488,
+      "vol24": 237415.41,
+      "liq": 904867.21,
+      "chg24": 0.48,
       "pairs": 15,
       "dex": "nest",
       "chain": "hyperevm",
-      "at": "2026-11-18T11:30+00:00",
+      "at": "2026-11-18T12:06+00:00",
       "src": "DexScreener"
      }
     }
@@ -15310,7 +15301,7 @@
      "llama_listing"
     ],
     "boards": null,
-    "tvl": 33845292,
+    "tvl": 33829927,
     "listed": "2026-11-11",
     "slug": "pendle-loop",
     "url": "https://app.pendle.finance",
@@ -15359,15 +15350,15 @@
       "url_en": "https://www.binance.com/en/trade/PENDLE_USDT?type=spot"
      },
      "snap": {
-      "mcap": 246152705,
-      "fdv": 397893688,
-      "vol24": 134066.31,
-      "liq": 470267.99,
-      "chg24": -1.89,
+      "mcap": 246394349,
+      "fdv": 398291649,
+      "vol24": 134312.19,
+      "liq": 470572.95,
+      "chg24": -2,
       "pairs": 12,
       "dex": "uniswap",
       "chain": "ethereum",
-      "at": "2026-11-18T11:30+00:00",
+      "at": "2026-11-18T12:06+00:00",
       "src": "DexScreener"
      }
     }
@@ -15582,7 +15573,7 @@
       "pairs": 2,
       "dex": "curve",
       "chain": "ethereum",
-      "at": "2026-11-18T11:30+00:00",
+      "at": "2026-11-18T12:06+00:00",
       "src": "DexScreener"
      }
     },
@@ -16006,15 +15997,15 @@
       "url": "https://dexscreener.com/robinhood/0xcce8dcf7c4dcfee6b6588db724240d9d6a22ee456f9387bb831c8fcea970869e"
      },
      "snap": {
-      "mcap": 594288,
-      "fdv": 3526236,
-      "vol24": 115205.16,
-      "liq": 241339.98,
-      "chg24": -8.59,
+      "mcap": 583895,
+      "fdv": 3468751,
+      "vol24": 114062.71,
+      "liq": 237971.95,
+      "chg24": -13.61,
       "pairs": 17,
       "dex": "uniswap",
       "chain": "robinhood",
-      "at": "2026-11-18T11:30+00:00",
+      "at": "2026-11-18T12:06+00:00",
       "src": "DexScreener"
      }
     },
@@ -16025,17 +16016,17 @@
       "total30d": 674522431
      },
      "fees": {
-      "total24h": 16655,
+      "total24h": 16189,
       "total7d": 139889,
       "total30d": 1267109
      },
      "rev": {
-      "total24h": 7850,
+      "total24h": 7578,
       "total7d": 84533,
       "total30d": 548873
      },
      "hold": {
-      "total24h": 7850,
+      "total24h": 7578,
       "total7d": 86030,
       "total30d": 592542
      },
@@ -16234,7 +16225,7 @@
      {
       "board": "launchpad",
       "rule": "lp_accel",
-      "why": "近 7 天手续费 191,041 美元，上 7 天没有",
+      "why": "近 7 天手续费 191,050 美元，上 7 天没有",
       "since": null
      }
     ],
@@ -16512,17 +16503,17 @@
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 6042,
+      "total24h": 5965,
       "total7d": 58903,
       "total30d": 135920
      },
      "rev": {
-      "total24h": 4956,
+      "total24h": 4893,
       "total7d": 48606,
       "total30d": 112066
      },
      "hold": {
-      "total24h": 4346,
+      "total24h": 4296,
       "total7d": 42215,
       "total30d": 97058
      },
@@ -16787,15 +16778,15 @@
       "url": "https://dexscreener.com/bsc/0x3098d7a051045000d68ec0360753a40c8cabea31"
      },
      "snap": {
-      "mcap": 7425737,
-      "fdv": 7425737,
-      "vol24": 590691.21,
-      "liq": 175668.52,
-      "chg24": 44.5,
+      "mcap": 7899893,
+      "fdv": 7899893,
+      "vol24": 650587.6799999999,
+      "liq": 183507.99,
+      "chg24": 61.11,
       "pairs": 17,
       "dex": "pancakeswap",
       "chain": "bsc",
-      "at": "2026-11-18T11:30+00:00",
+      "at": "2026-11-18T12:06+00:00",
       "src": "DexScreener"
      }
     }

@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-18T11:29:50+00:00",
+ "generated": "2026-11-18T12:03:06+00:00",
  "asof": "2026-11-17",
  "stale": false,
  "baseline_day": "2026-11-14",
@@ -14,7 +14,7 @@
   },
   "site_sources": {
    "ok": true,
-   "n": 3
+   "n": 2
   },
   "ethresearch": {
    "ok": true,
@@ -73,9 +73,9 @@
     "Monad",
     "BSC"
    ],
-   "rev30": 8706436,
+   "rev30": 8898586,
    "rev_prev30": 19884046,
-   "chg30": -56.2,
+   "chg30": -55.2,
    "first_seen": "2026-11-14"
   },
   {
@@ -95,9 +95,9 @@
     "Solana",
     "BSC"
    ],
-   "rev30": 8040823,
+   "rev30": 8237967,
    "rev_prev30": 15983698,
-   "chg30": -49.7,
+   "chg30": -48.5,
    "first_seen": "2026-11-14"
   },
   {
@@ -366,7 +366,7 @@
     {
      "board": "aiagent",
      "rule": "ai_new",
-     "why": "AI Agent 板块：手续费从 2026-10-15 才开始，近 7 天 182,089 美元；板块备注：2026-10 才收录，30 天手续费很快冲到第一，真实需求还是自付刷量待 Codex 核",
+     "why": "AI Agent 板块：手续费从 2026-10-15 才开始，近 7 天 164,569 美元；板块备注：2026-10 才收录，30 天手续费很快冲到第一，真实需求还是自付刷量待 Codex 核",
      "since": "2026-10-15"
     }
    ],
@@ -1221,7 +1221,7 @@
     {
      "board": "launchpad",
      "rule": "lp_new",
-     "why": "进发射台矩阵 6 天，近 7 天手续费 231,446 美元",
+     "why": "进发射台矩阵 7 天，近 7 天手续费 151,568 美元",
      "since": "2026-11-10"
     }
    ],
@@ -1547,7 +1547,7 @@
     {
      "board": "launchpad",
      "rule": "lp_accel",
-     "why": "近 7 天手续费 191,041 美元，上 7 天没有",
+     "why": "近 7 天手续费 191,050 美元，上 7 天没有",
      "since": null
     }
    ],
@@ -2353,7 +2353,7 @@
     {
      "board": "launchpad",
      "rule": "lp_new",
-     "why": "进发射台矩阵 6 天，近 7 天手续费 916,737 美元",
+     "why": "进发射台矩阵 7 天，近 7 天手续费 366,348 美元",
      "since": "2026-11-10"
     }
    ]
@@ -2469,7 +2469,7 @@
     {
      "board": "launchpad",
      "rule": "lp_new",
-     "why": "进发射台矩阵 3 天，近 7 天手续费 88,435 美元",
+     "why": "进发射台矩阵 4 天，近 7 天手续费 60,232 美元",
      "since": "2026-11-13"
     }
    ]
@@ -2580,39 +2580,6 @@
  "site": [
   {
    "board": "launchpad",
-   "slug": "boxa-v1",
-   "name": "Boxa V1",
-   "chains": [
-    "Elysium"
-   ],
-   "logo": "https://icons.llamao.fi/icons/protocols/boxa-v1",
-   "category": "Launchpad",
-   "since": "2026-11-12",
-   "fees7": 69041,
-   "fees_prev7": 103330,
-   "fees30": 238104,
-   "parent": "parent#boxa",
-   "asof": "2026-11-16",
-   "rule": "lp_new",
-   "why": "进发射台矩阵 4 天，近 7 天手续费 69,041 美元",
-   "key": "x:launchpad:boxa-v1",
-   "boards": [
-    {
-     "board": "launchpad",
-     "rule": "lp_new",
-     "why": "进发射台矩阵 4 天，近 7 天手续费 69,041 美元",
-     "since": "2026-11-12"
-    }
-   ],
-   "token": false,
-   "rev30": null,
-   "chg30": null,
-   "children": null,
-   "url": "",
-   "twitter": "Boxa_Elysium"
-  },
-  {
-   "board": "launchpad",
    "slug": null,
    "id": "chain-elysium",
    "name": "Elysium 生态（新发射台聚集）",
@@ -2621,16 +2588,16 @@
    ],
    "category": "新链生态",
    "rule": "lp_chain",
-   "fees7": 1334816,
+   "fees7": 618775,
    "fees30": null,
-   "asof": "2026-11-16",
-   "why": "30 天内 Elysium 上新进矩阵的发射台有 11 个：Montra、Ascend Launchpad、Volta、Boxa V1、ElysPump V2、Kleos Launchpad；合计近 7 天手续费 1,334,816 美元",
+   "asof": "2026-11-17",
+   "why": "30 天内 Elysium 上新进矩阵的发射台有 11 个：Montra、Ascend Launchpad、Volta、Boxa V1、ElysPump V2、Kleos Launchpad；合计近 7 天手续费 618,775 美元",
    "key": "x:launchpad:chain-elysium",
    "boards": [
     {
      "board": "launchpad",
      "rule": "lp_chain",
-     "why": "30 天内 Elysium 上新进矩阵的发射台有 11 个：Montra、Ascend Launchpad、Volta、Boxa V1、ElysPump V2、Kleos Launchpad；合计近 7 天手续费 1,334,816 美元",
+     "why": "30 天内 Elysium 上新进矩阵的发射台有 11 个：Montra、Ascend Launchpad、Volta、Boxa V1、ElysPump V2、Kleos Launchpad；合计近 7 天手续费 618,775 美元",
      "since": null
     }
    ],
@@ -2648,7 +2615,7 @@
    "rule": "ai_spike",
    "fees7": null,
    "fees30": null,
-   "asof": "2026-11-16",
+   "asof": "2026-11-17",
    "why": "AI Agent 板块标了异常：单日手续费占近 30 天的 52%",
    "key": "x:aiagent:bankr",
    "boards": [
@@ -2686,6 +2653,22 @@
    "parent": null
   },
   {
+   "key": "p:9464",
+   "name": "CipherTrade DEX",
+   "slug": "ciphertrade-dex",
+   "category": "Dexs",
+   "url": "https://app.ciphertrade.org/",
+   "logo": "https://icons.llamao.fi/icons/protocols/ciphertrade-dex",
+   "twitter": "CipherTradeApp",
+   "chains": [
+    "Coti"
+   ],
+   "tvl": 9874,
+   "listed": "2026-11-17",
+   "token": false,
+   "parent": null
+  },
+  {
    "key": "p:9469",
    "name": "Trestly",
    "slug": "trestly",
@@ -2697,23 +2680,7 @@
     "Ethereum",
     "Binance"
    ],
-   "tvl": 9265,
-   "listed": "2026-11-17",
-   "token": false,
-   "parent": null
-  },
-  {
-   "key": "p:9464",
-   "name": "CipherTrade DEX",
-   "slug": "ciphertrade-dex",
-   "category": "Dexs",
-   "url": "https://app.ciphertrade.org/",
-   "logo": "https://icons.llamao.fi/icons/protocols/ciphertrade-dex",
-   "twitter": "CipherTradeApp",
-   "chains": [
-    "Coti"
-   ],
-   "tvl": 3564,
+   "tvl": 9276,
    "listed": "2026-11-17",
    "token": false,
    "parent": null
@@ -2847,7 +2814,7 @@
    "chains": [
     "Monad"
    ],
-   "tvl": 195871,
+   "tvl": 195564,
    "listed": "2026-11-16",
    "token": false,
    "parent": "parent#btr"
@@ -2863,7 +2830,7 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 21201,
+   "tvl": 21153,
    "listed": "2026-11-16",
    "token": false,
    "parent": "parent#kalos"
@@ -2955,7 +2922,7 @@
    "chains": [
     "Flare"
    ],
-   "tvl": 1149,
+   "tvl": 1154,
    "listed": "2026-11-15",
    "token": false,
    "parent": null
@@ -3015,7 +2982,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 562241,
+   "tvl": 562281,
    "listed": "2026-11-14",
    "token": false,
    "parent": "parent#drakewell"
@@ -3031,7 +2998,7 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 38429,
+   "tvl": 38295,
    "listed": "2026-11-14",
    "token": true,
    "parent": "parent#kleos"
@@ -3219,7 +3186,7 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 6685,
+   "tvl": 6681,
    "listed": "2026-11-13",
    "token": false,
    "parent": null
@@ -3325,7 +3292,7 @@
     "Base",
     "Berachain"
    ],
-   "tvl": 193820,
+   "tvl": 194313,
    "listed": "2026-11-12",
    "token": false,
    "parent": null
@@ -3373,7 +3340,7 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 53752,
+   "tvl": 53732,
    "listed": "2026-11-12",
    "token": false,
    "parent": "parent#boxa"
@@ -3508,7 +3475,7 @@
     "Monad",
     "Base"
    ],
-   "tvl": 33845292,
+   "tvl": 33829927,
    "listed": "2026-11-11",
    "token": true,
    "parent": "parent#pendle"
@@ -3540,7 +3507,7 @@
    "chains": [
     "Solana"
    ],
-   "tvl": 2344592,
+   "tvl": 2152128,
    "listed": "2026-11-11",
    "token": true,
    "parent": "parent#jupiter"
@@ -3589,7 +3556,7 @@
     "Base",
     "Robinhood Chain"
    ],
-   "tvl": 6636,
+   "tvl": 6623,
    "listed": "2026-11-11",
    "token": false,
    "parent": null
@@ -3845,7 +3812,7 @@
    "chains": [
     "Soneium"
    ],
-   "tvl": 667294,
+   "tvl": 667476,
    "listed": "2026-11-10",
    "token": false,
    "parent": null
@@ -3861,7 +3828,7 @@
    "chains": [
     "Hyperliquid L1"
    ],
-   "tvl": 142531,
+   "tvl": 147930,
    "listed": "2026-11-10",
    "token": false,
    "parent": null
@@ -3893,7 +3860,7 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 4650,
+   "tvl": 4637,
    "listed": "2026-11-10",
    "token": false,
    "parent": "parent#kalos"
@@ -3909,7 +3876,7 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 2083,
+   "tvl": 2079,
    "listed": "2026-11-10",
    "token": false,
    "parent": "parent#kalos"
@@ -4027,7 +3994,7 @@
    "chains": [
     "Hyperliquid L1"
    ],
-   "tvl": 39696290,
+   "tvl": 39438661,
    "listed": "2026-11-09",
    "token": true,
    "parent": "parent#kinetiq"
@@ -4591,7 +4558,7 @@
     "Base",
     "Arbitrum"
    ],
-   "tvl": 818559,
+   "tvl": 826356,
    "listed": "2026-11-04",
    "token": false,
    "parent": "parent#privacy-pools"
@@ -4623,7 +4590,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 66507,
+   "tvl": 66511,
    "listed": "2026-11-04",
    "token": false,
    "parent": null
@@ -4822,88 +4789,7 @@
    "parent": "parent#liq.fun"
   }
  ],
- "events": [
-  {
-   "type": "new_rank",
-   "key": "g:7978",
-   "name": "Propr",
-   "rev30": 122838,
-   "chg30": 37.1,
-   "category": "Trading App"
-  },
-  {
-   "type": "new_rank",
-   "key": "g:parent#blockchain-wallet",
-   "name": "Blockchain Wallet",
-   "rev30": 108596,
-   "chg30": 77.3,
-   "category": "Interface"
-  },
-  {
-   "type": "new_listing",
-   "key": "p:9470",
-   "name": "Coffer Protocol",
-   "tvl": 57997,
-   "category": "Lending",
-   "listed": "2026-11-18"
-  },
-  {
-   "type": "new_listing",
-   "key": "p:9469",
-   "name": "Trestly",
-   "tvl": 9265,
-   "category": "Bridge",
-   "listed": "2026-11-17"
-  },
-  {
-   "type": "new_listing",
-   "key": "p:9464",
-   "name": "CipherTrade DEX",
-   "tvl": 3564,
-   "category": "Dexs",
-   "listed": "2026-11-17"
-  },
-  {
-   "type": "new_listing",
-   "key": "p:9468",
-   "name": "Polydash",
-   "tvl": 22,
-   "category": "Launchpad",
-   "listed": "2026-11-17"
-  },
-  {
-   "type": "new_listing",
-   "key": "p:9463",
-   "name": "Nyraa",
-   "tvl": 0,
-   "category": "Launchpad",
-   "listed": "2026-11-17"
-  },
-  {
-   "type": "new_listing",
-   "key": "p:9465",
-   "name": "EscapeSwap",
-   "tvl": 0,
-   "category": "Dexs",
-   "listed": "2026-11-17"
-  },
-  {
-   "type": "new_listing",
-   "key": "p:9466",
-   "name": "dreamDEX Perps",
-   "tvl": 0,
-   "category": "Derivatives",
-   "listed": "2026-11-17"
-  },
-  {
-   "type": "new_listing",
-   "key": "p:9467",
-   "name": "Marg",
-   "tvl": 0,
-   "category": "Dexs",
-   "listed": "2026-11-17"
-  }
- ],
+ "events": [],
  "feed": [
   {
    "id": "ethr:26263",
