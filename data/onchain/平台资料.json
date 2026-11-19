@@ -90,11 +90,12 @@
 "审计数": "0",
 "审计链接": [],
 "市值": null,
-"日期": "2026-11-11",
+"日期": "2026-11-19",
 "母协议": null,
 "融资": [],
+"进门槛": "2026-11-19",
 "链": [
-"Elysium Kinetiq"
+"Elysium"
 ]
 },
 "bags": {
@@ -155,7 +156,7 @@
 "审计数": "0",
 "审计链接": [],
 "市值": null,
-"日期": "2026-11-18",
+"日期": "2026-11-19",
 "母协议": null,
 "融资": [],
 "进门槛": "2026-11-13",
@@ -192,9 +193,10 @@
 "审计数": "0",
 "审计链接": [],
 "市值": null,
-"日期": "2026-11-11",
+"日期": "2026-11-19",
 "母协议": "bonk.fun",
 "融资": [],
+"进门槛": "2026-11-19",
 "链": [
 "Solana"
 ]
@@ -257,9 +259,10 @@
 "审计数": "0",
 "审计链接": [],
 "市值": null,
-"日期": "2026-11-11",
+"日期": "2026-11-19",
 "母协议": "bordrless",
 "融资": [],
+"进门槛": "2026-11-19",
 "链": [
 "Solana"
 ]
@@ -383,9 +386,10 @@
 "审计数": "0",
 "审计链接": [],
 "市值": null,
-"日期": "2026-11-11",
+"日期": "2026-11-19",
 "母协议": null,
 "融资": [],
+"进门槛": "2026-11-19",
 "链": [
 "Monad",
 "Robinhood Chain",
@@ -573,8 +577,8 @@
 "官网简介": null,
 "审计数": "0",
 "审计链接": [],
-"市值": 8583229.16773736,
-"日期": "2026-11-18",
+"市值": 8582299.929972116,
+"日期": "2026-11-19",
 "母协议": null,
 "融资": [],
 "进门槛": "2026-11-13",
@@ -1414,10 +1418,11 @@
 "官网": null,
 "审计数": "0",
 "审计链接": [],
-"市值": 586267.1871555487,
-"日期": "2026-11-11",
+"市值": 445574.68923067726,
+"日期": "2026-11-19",
 "母协议": null,
 "融资": [],
+"进门槛": "2026-11-19",
 "链": [
 "Ethereum"
 ]
@@ -1467,8 +1472,8 @@
 "口径": {
 "Fees": "Trading fees StonkFun collects, measured when it claims them: the 1% platform fee on its Raydium LaunchLab bonding curves (every platform config whose fees it claims), the creator fee on the Raydium CPMM pools those launches graduate into, and the quote side of fees harvested from the permanently locked liquidity behind pre-LaunchLab launches. Raydium's own fee shares are excluded. Each token is valued with Dune trade prices at the hour it was received, ignoring trades priced more than 10x away from that day's median.",
 "HoldersRevenue": "Quote assets spent buying STONK on Jupiter, identified on-chain as swaps that returned STONK to the operator wallet, at the net amount each swap spent.",
-"ProtocolRevenue": "Fees StonkFun keeps after paying the creator share of standard launches and the flywheel share of reward launches, minus the quote assets spent buying STONK on Jupiter. From 2026-08-28, fees paid in STONK and fees from STONK's own pool are excluded. Buybacks spend income claimed on earlier days, so this is negative when a buyback is larger than the day's retained fees.",
-"Revenue": "Fees less the creator share of standard launches and the flywheel share of reward launches, as paid out on-chain. From 2026-08-28, fees paid in STONK and fees from STONK's own pool are excluded: they cannot fund a STONK buyback.",
+"ProtocolRevenue": "Fees StonkFun keeps after paying the creator share of standard launches and the flywheel share of reward launches, minus the quote assets spent buying STONK on Jupiter. Buybacks spend income claimed on earlier days, so this is negative when a buyback is larger than the day's retained fees.",
+"Revenue": "Fees less the creator share of standard launches and the flywheel share of reward launches, as paid out on-chain.",
 "SupplySideRevenue": "Creator and flywheel shares of fees, measured when they are paid out."
 },
 "口径代码": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/stonkfun.ts",
@@ -1479,10 +1484,11 @@
 "官网": null,
 "审计数": "0",
 "审计链接": [],
-"市值": 38838671.85575492,
-"日期": "2026-11-11",
+"市值": 32151801.816544846,
+"日期": "2026-11-19",
 "母协议": null,
 "融资": [],
+"进门槛": "2026-11-19",
 "链": [
 "Solana"
 ]

@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-18T12:06:19+00:00",
+ "generated": "2026-11-19T08:59:37+00:00",
  "note": "Alpha 雷达来源台账（大叔 2026-11-15 定：维护一份自己的来源，以关键人 / 关键信息和本站板块为主，数据榜单兜底）。每个来源记为什么收；战绩（带来几张卡、几张进了研究观察、几张被拒）由 opps.py 每天算到 data/alpha/sources_stats.json。连续三个月没有有效发现的降级为 paused，不删。",
  "sources": [
   {
@@ -13,31 +13,11 @@
    "href": "/launchpad/",
    "stats": {
     "cards": 6,
-    "fresh": 6,
+    "fresh": 1,
     "watching": 5,
     "rejected": 0,
     "pending": 1,
     "names": [
-     {
-      "id": "9388",
-      "name": "Montra"
-     },
-     {
-      "id": "x-launchpad-boxa-v1",
-      "name": "Boxa V1"
-     },
-     {
-      "id": "x-launchpad-chain-elysium",
-      "name": "Elysium 生态（新发射台聚集）"
-     },
-     {
-      "id": "9427",
-      "name": "Volta"
-     },
-     {
-      "id": "9381",
-      "name": "Ascend Launchpad"
-     },
      {
       "id": "sendfun",
       "name": "Sendfun"
@@ -56,20 +36,11 @@
    "href": "/ai-agent/",
    "stats": {
     "cards": 2,
-    "fresh": 2,
+    "fresh": 0,
     "watching": 1,
     "rejected": 0,
     "pending": 1,
-    "names": [
-     {
-      "id": "9146",
-      "name": "Central City"
-     },
-     {
-      "id": "x-aiagent-bankr",
-      "name": "Bankr"
-     }
-    ]
+    "names": []
    }
   },
   {
@@ -119,20 +90,11 @@
    "href": null,
    "stats": {
     "cards": 2,
-    "fresh": 2,
+    "fresh": 0,
     "watching": 1,
     "rejected": 0,
     "pending": 1,
-    "names": [
-     {
-      "id": "m-pons",
-      "name": "Pons"
-     },
-     {
-      "id": "m-bem-tapeout",
-      "name": "TapeOut / BEM"
-     }
-    ]
+    "names": []
    }
   },
   {
@@ -164,34 +126,14 @@
    "href": null,
    "stats": {
     "cards": 13,
-    "fresh": 13,
+    "fresh": 1,
     "watching": 2,
     "rejected": 0,
     "pending": 11,
     "names": [
      {
-      "id": "9388",
-      "name": "Montra"
-     },
-     {
-      "id": "9427",
-      "name": "Volta"
-     },
-     {
-      "id": "justlend",
-      "name": "JustLend V1"
-     },
-     {
-      "id": "4063",
-      "name": "Peapods Finance"
-     },
-     {
-      "id": "liquity",
-      "name": "Liquity"
-     },
-     {
-      "id": "6771",
-      "name": "Yield Basis"
+      "id": "spark",
+      "name": "Spark"
      }
     ]
    }
@@ -207,19 +149,11 @@
    "href": null,
    "stats": {
     "cards": 35,
-    "fresh": 6,
+    "fresh": 4,
     "watching": 13,
     "rejected": 0,
     "pending": 22,
     "names": [
-     {
-      "id": "9146",
-      "name": "Central City"
-     },
-     {
-      "id": "9381",
-      "name": "Ascend Launchpad"
-     },
      {
       "id": "7978",
       "name": "Propr"

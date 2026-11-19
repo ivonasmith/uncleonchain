@@ -1,7 +1,7 @@
 {
   "schema": 4,
-  "generated_at": "2026-11-18T11:31:23Z",
-  "asof": "2026-11-17",
+  "generated_at": "2026-11-19T09:01:04Z",
+  "asof": "2026-11-18",
   "source": "Coin Metrics PriceUSD (2010-07-18~2017-08-16) + Binance spot BTCUSDT 1d (2017-08-17~, closed candles, UTC)",
   "btc_leg": {
     "direction": "down",
@@ -9,14 +9,14 @@
       "start_date": "2026-09-21",
       "start_close": 86620.0,
       "confirm_date": "2026-10-30",
-      "day": 57,
-      "drop_pct": 25.9,
-      "low_close": 64150.0,
-      "low_date": "2026-11-14",
-      "btc_close": 64947.35,
-      "from_peak_pct": -25.0,
-      "reversal_line": 70565.0,
-      "to_reversal_pct": 8.6
+      "day": 58,
+      "drop_pct": 27.2,
+      "low_close": 63068.22,
+      "low_date": "2026-11-18",
+      "btc_close": 63068.22,
+      "from_peak_pct": -27.2,
+      "reversal_line": 69375.04,
+      "to_reversal_pct": 10.0
     },
     "badge": null,
     "prev_leg": {
@@ -33,14 +33,14 @@
       "start_date": "2026-09-27",
       "start_close": 45.66,
       "confirm_date": "2026-10-22",
-      "day": 51,
+      "day": 52,
       "drop_pct": 39.3,
       "low_close": 27.71,
       "low_date": "2026-11-14",
-      "from_peak_pct": -36.4,
+      "from_peak_pct": -38.6,
       "reversal_line": 31.87,
-      "to_reversal_pct": 9.7,
-      "idx_close": 29.04
+      "to_reversal_pct": 13.6,
+      "idx_close": 28.05
     },
     "badge": null,
     "prev_leg": {
@@ -596,18 +596,18 @@
         }
       ],
       "coverage": {
-        "universe": 706,
-        "with_data": 704,
-        "from_api": 0,
+        "universe": 713,
+        "with_data": 711,
+        "from_api": 508,
         "from_archive": 0,
-        "no_data": 501,
+        "no_data": 0,
         "failed": [
           "币安人生",
           "牛来"
         ]
       },
       "index_from": "2018-08-31",
-      "asof": "2026-11-17",
+      "asof": "2026-11-18",
       "note": "动态篮子：每月 1 日按 30 日成交额排名评定进出，停牌/崩盘立刻剔除；等权、每日再平衡；对 USDT。"
     }
   },
@@ -616,12 +616,12 @@
     "ignition_date": "2026-08-21",
     "d0_date": "2026-08-27",
     "d0_close": 80249.58,
-    "n": 82,
+    "n": 83,
     "days_to_clear": 0,
     "clear_date": "2026-09-26",
     "stop_line": 72224.62,
     "stopped_date": null,
-    "btc_close": 64947.35,
-    "btc_vs_stop_pct": -10.1
+    "btc_close": 63068.22,
+    "btc_vs_stop_pct": -12.7
   }
 }

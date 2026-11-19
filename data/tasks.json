@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-18T12:02:26+00:00",
+ "generated": "2026-11-19T09:33:23+00:00",
  "boards": [
   {
    "board": "alpha",
@@ -57,23 +57,9 @@
    "title": "机会卡补证（队列 38 个，从上往下补，M 新参与机制优先查）",
    "who": "codex",
    "pri": 1,
-   "deliver": "alpha/review/codex_2026-11-18_checks.json（JSON 数组，reviewer = codex）",
+   "deliver": "alpha/review/codex_2026-11-19_checks.json（JSON 数组，reviewer = codex）",
    "ref": "data/alpha/research_queue.json（prompt / schema / items）",
    "items": [
-    {
-     "key": "g:9146",
-     "name": "Central City",
-     "status": "待核验",
-     "fresh": true,
-     "kind": "tokenless"
-    },
-    {
-     "key": "m:bem-tapeout",
-     "name": "TapeOut / BEM",
-     "status": "待核验",
-     "fresh": true,
-     "kind": "manual"
-    },
     {
      "key": "g:parent#sendfun",
      "name": "Sendfun",
@@ -82,78 +68,22 @@
      "kind": "tokenless"
     },
     {
-     "key": "s:9065",
-     "name": "Papertrade",
-     "status": "原始线索",
-     "fresh": true,
-     "kind": "surge"
+     "key": "g:9146",
+     "name": "Central City",
+     "status": "待核验",
+     "fresh": false,
+     "kind": "tokenless"
     },
     {
-     "key": "s:8884",
-     "name": "Nullmask",
-     "status": "原始线索",
-     "fresh": true,
-     "kind": "surge"
+     "key": "m:bem-tapeout",
+     "name": "TapeOut / BEM",
+     "status": "待核验",
+     "fresh": false,
+     "kind": "manual"
     },
     {
-     "key": "s:parent#paperstrategy",
-     "name": "Paperstrategy",
-     "status": "原始线索",
-     "fresh": true,
-     "kind": "surge"
-    },
-    {
-     "key": "s:8481",
-     "name": "Fables",
-     "status": "原始线索",
-     "fresh": true,
-     "kind": "surge"
-    },
-    {
-     "key": "s:parent#justlend",
-     "name": "JustLend V1",
-     "status": "原始线索",
-     "fresh": true,
-     "kind": "surge"
-    },
-    {
-     "key": "s:4063",
-     "name": "Peapods Finance",
-     "status": "原始线索",
-     "fresh": true,
-     "kind": "surge"
-    },
-    {
-     "key": "s:7655",
-     "name": "THORWallet",
-     "status": "原始线索",
-     "fresh": true,
-     "kind": "surge"
-    },
-    {
-     "key": "s:parent#liquity",
-     "name": "Liquity",
-     "status": "原始线索",
-     "fresh": true,
-     "kind": "surge"
-    },
-    {
-     "key": "s:6771",
-     "name": "Yield Basis",
-     "status": "原始线索",
-     "fresh": true,
-     "kind": "surge"
-    },
-    {
-     "key": "s:9182",
-     "name": "Veil",
-     "status": "原始线索",
-     "fresh": true,
-     "kind": "surge"
-    },
-    {
-     "key": "s:9169",
-     "name": "Sapling",
+     "key": "s:parent#spark",
+     "name": "Spark",
      "status": "原始线索",
      "fresh": true,
      "kind": "surge"
@@ -166,6 +96,13 @@
      "kind": "tokenless"
     },
     {
+     "key": "g:parent#blockchain-wallet",
+     "name": "Blockchain Wallet",
+     "status": "原始线索",
+     "fresh": true,
+     "kind": "tokenless"
+    },
+    {
      "key": "g:9367",
      "name": "MING",
      "status": "原始线索",
@@ -173,11 +110,74 @@
      "kind": "tokenless"
     },
     {
-     "key": "g:parent#blockchain-wallet",
-     "name": "Blockchain Wallet",
+     "key": "s:9065",
+     "name": "Papertrade",
      "status": "原始线索",
-     "fresh": true,
-     "kind": "tokenless"
+     "fresh": false,
+     "kind": "surge"
+    },
+    {
+     "key": "s:8884",
+     "name": "Nullmask",
+     "status": "原始线索",
+     "fresh": false,
+     "kind": "surge"
+    },
+    {
+     "key": "s:parent#paperstrategy",
+     "name": "Paperstrategy",
+     "status": "原始线索",
+     "fresh": false,
+     "kind": "surge"
+    },
+    {
+     "key": "s:8481",
+     "name": "Fables",
+     "status": "原始线索",
+     "fresh": false,
+     "kind": "surge"
+    },
+    {
+     "key": "s:parent#justlend",
+     "name": "JustLend V1",
+     "status": "原始线索",
+     "fresh": false,
+     "kind": "surge"
+    },
+    {
+     "key": "s:4063",
+     "name": "Peapods Finance",
+     "status": "原始线索",
+     "fresh": false,
+     "kind": "surge"
+    },
+    {
+     "key": "s:7655",
+     "name": "THORWallet",
+     "status": "原始线索",
+     "fresh": false,
+     "kind": "surge"
+    },
+    {
+     "key": "s:parent#liquity",
+     "name": "Liquity",
+     "status": "原始线索",
+     "fresh": false,
+     "kind": "surge"
+    },
+    {
+     "key": "s:6771",
+     "name": "Yield Basis",
+     "status": "原始线索",
+     "fresh": false,
+     "kind": "surge"
+    },
+    {
+     "key": "s:9182",
+     "name": "Veil",
+     "status": "原始线索",
+     "fresh": false,
+     "kind": "surge"
     },
     {
      "key": "g:8144",
@@ -336,7 +336,7 @@
    "title": "补「量从哪来」和关键事件（35 张已补证的卡还没有 flow / events，先做 Montra、Pons 当样板）",
    "who": "codex",
    "pri": 1,
-   "deliver": "alpha/review/codex_2026-11-18_checks.json（同 key 交新一条，带 flow / events / capture / next_review）",
+   "deliver": "alpha/review/codex_2026-11-19_checks.json（同 key 交新一条，带 flow / events / capture / next_review）",
    "ref": "data/alpha/research_queue.json 的 schema",
    "items": [
     {
@@ -677,10 +677,6 @@
      "name": "Pons V2"
     },
     {
-     "slug": "montra",
-     "name": "Montra"
-    },
-    {
      "slug": "launchlab",
      "name": "LaunchLab"
     },
@@ -691,6 +687,10 @@
     {
      "slug": "stonkfun",
      "name": "StonkFun"
+    },
+    {
+     "slug": "montra",
+     "name": "Montra"
     },
     {
      "slug": "sendfun-launchpad",
@@ -705,10 +705,6 @@
      "name": "Binance Alpha"
     },
     {
-     "slug": "ascend-launchpad",
-     "name": "Ascend Launchpad"
-    },
-    {
      "slug": "clanker",
      "name": "clanker"
     },
@@ -717,20 +713,24 @@
      "name": "Graphite Protocol"
     },
     {
-     "slug": "bags",
-     "name": "Bags"
+     "slug": "ascend-launchpad",
+     "name": "Ascend Launchpad"
     },
     {
      "slug": "four.meme",
      "name": "four.meme"
     },
     {
-     "slug": "volta",
-     "name": "Volta"
+     "slug": "bags",
+     "name": "Bags"
     },
     {
      "slug": "pons-v1",
      "name": "Pons V1"
+    },
+    {
+     "slug": "o1-launchpad",
+     "name": "o1 Launchpad"
     },
     {
      "slug": "noxa-fun",
@@ -741,24 +741,24 @@
      "name": "OTC"
     },
     {
-     "slug": "o1-launchpad",
-     "name": "o1 Launchpad"
+     "slug": "argus-world",
+     "name": "Argus World"
+    },
+    {
+     "slug": "volta",
+     "name": "Volta"
+    },
+    {
+     "slug": "pools",
+     "name": "Pools"
     },
     {
      "slug": "stockereum",
      "name": "Stockereum"
     },
     {
-     "slug": "argus-world",
-     "name": "Argus World"
-    },
-    {
-     "slug": "boxa-v1",
-     "name": "Boxa V1"
-    },
-    {
-     "slug": "pools",
-     "name": "Pools"
+     "slug": "rapid-launch",
+     "name": "Rapid Launch"
     },
     {
      "slug": "metaplex",
@@ -790,7 +790,7 @@
   {
    "board": "alpha",
    "id": "alpha:cmc",
-   "title": "CMC 页面地址核对登记（11 个币）",
+   "title": "CMC 页面地址核对登记（10 个币）",
    "who": "codex",
    "pri": 3,
    "deliver": "alpha/cmc_slugs.json",
@@ -803,12 +803,11 @@
     "nullmask",
     "peapods-finance",
     "pons",
-    "sapling",
     "thor-wallet",
     "veil-2",
     "vesper-finance"
    ],
-   "n": 11,
+   "n": 10,
    "note": null
   },
   {
@@ -970,7 +969,8 @@
      "字段": "发币人",
      "待接入平台": [
       "clanker",
-      "montra"
+      "montra",
+      "sentry"
      ]
     }
    ],
@@ -991,6 +991,30 @@
   }
  ],
  "queue": [
+  {
+   "key": "alpha:g:parent#sendfun",
+   "board": "alpha",
+   "priority": 1,
+   "task_type": "research",
+   "name": "Sendfun",
+   "missing": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "open",
+   "last_checked_utc": null,
+   "deliver": "alpha/review/codex_2026-11-19_checks.json"
+  },
   {
    "key": "alpha:g:9146",
    "board": "alpha",
@@ -1017,7 +1041,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-15T12:35:00Z",
-   "deliver": "alpha/review/codex_2026-11-18_checks.json"
+   "deliver": "alpha/review/codex_2026-11-19_checks.json"
   },
   {
    "key": "alpha:m:bem-tapeout",
@@ -1046,14 +1070,39 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-15T12:27:58Z",
-   "deliver": "alpha/review/codex_2026-11-18_checks.json"
+   "deliver": "alpha/review/codex_2026-11-19_checks.json"
   },
   {
-   "key": "alpha:g:parent#sendfun",
+   "key": "alpha:s:parent#spark",
    "board": "alpha",
    "priority": 1,
    "task_type": "research",
-   "name": "Sendfun",
+   "name": "Spark",
+   "missing": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "TE"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "open",
+   "last_checked_utc": null,
+   "deliver": "alpha/review/codex_2026-11-19_checks.json"
+  },
+  {
+   "key": "alpha:g:7978",
+   "board": "alpha",
+   "priority": 1,
+   "task_type": "research",
+   "name": "Propr",
    "missing": [
     "M",
     "A",
@@ -1070,7 +1119,55 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-18_checks.json"
+   "deliver": "alpha/review/codex_2026-11-19_checks.json"
+  },
+  {
+   "key": "alpha:g:parent#blockchain-wallet",
+   "board": "alpha",
+   "priority": 1,
+   "task_type": "research",
+   "name": "Blockchain Wallet",
+   "missing": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "open",
+   "last_checked_utc": null,
+   "deliver": "alpha/review/codex_2026-11-19_checks.json"
+  },
+  {
+   "key": "alpha:g:9367",
+   "board": "alpha",
+   "priority": 1,
+   "task_type": "research",
+   "name": "MING",
+   "missing": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "open",
+   "last_checked_utc": null,
+   "deliver": "alpha/review/codex_2026-11-19_checks.json"
   },
   {
    "key": "alpha:s:9065",
@@ -1095,7 +1192,7 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-18_checks.json"
+   "deliver": "alpha/review/codex_2026-11-19_checks.json"
   },
   {
    "key": "alpha:s:8884",
@@ -1120,7 +1217,7 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-18_checks.json"
+   "deliver": "alpha/review/codex_2026-11-19_checks.json"
   },
   {
    "key": "alpha:s:parent#paperstrategy",
@@ -1145,12 +1242,12 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-18_checks.json"
+   "deliver": "alpha/review/codex_2026-11-19_checks.json"
   },
   {
    "key": "alpha:s:8481",
    "board": "alpha",
-   "priority": 1,
+   "priority": 2,
    "task_type": "research",
    "name": "Fables",
    "missing": [
@@ -1170,12 +1267,12 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-18_checks.json"
+   "deliver": "alpha/review/codex_2026-11-19_checks.json"
   },
   {
    "key": "alpha:s:parent#justlend",
    "board": "alpha",
-   "priority": 1,
+   "priority": 2,
    "task_type": "research",
    "name": "JustLend V1",
    "missing": [
@@ -1195,12 +1292,12 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-18_checks.json"
+   "deliver": "alpha/review/codex_2026-11-19_checks.json"
   },
   {
    "key": "alpha:s:4063",
    "board": "alpha",
-   "priority": 1,
+   "priority": 2,
    "task_type": "research",
    "name": "Peapods Finance",
    "missing": [
@@ -1220,12 +1317,12 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-18_checks.json"
+   "deliver": "alpha/review/codex_2026-11-19_checks.json"
   },
   {
    "key": "alpha:s:7655",
    "board": "alpha",
-   "priority": 1,
+   "priority": 2,
    "task_type": "research",
    "name": "THORWallet",
    "missing": [
@@ -1245,7 +1342,7 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-18_checks.json"
+   "deliver": "alpha/review/codex_2026-11-19_checks.json"
   },
   {
    "key": "alpha:s:parent#liquity",
@@ -1270,7 +1367,7 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-18_checks.json"
+   "deliver": "alpha/review/codex_2026-11-19_checks.json"
   },
   {
    "key": "alpha:s:6771",
@@ -1295,7 +1392,7 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-18_checks.json"
+   "deliver": "alpha/review/codex_2026-11-19_checks.json"
   },
   {
    "key": "alpha:s:9182",
@@ -1320,104 +1417,7 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-18_checks.json"
-  },
-  {
-   "key": "alpha:s:9169",
-   "board": "alpha",
-   "priority": 2,
-   "task_type": "research",
-   "name": "Sapling",
-   "missing": [
-    "M",
-    "A",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM",
-    "TE"
-   ],
-   "source_refs": [
-    "data/alpha/research_queue.json"
-   ],
-   "status": "open",
-   "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-18_checks.json"
-  },
-  {
-   "key": "alpha:g:7978",
-   "board": "alpha",
-   "priority": 2,
-   "task_type": "research",
-   "name": "Propr",
-   "missing": [
-    "M",
-    "A",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM"
-   ],
-   "source_refs": [
-    "data/alpha/research_queue.json"
-   ],
-   "status": "open",
-   "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-18_checks.json"
-  },
-  {
-   "key": "alpha:g:9367",
-   "board": "alpha",
-   "priority": 2,
-   "task_type": "research",
-   "name": "MING",
-   "missing": [
-    "M",
-    "A",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM"
-   ],
-   "source_refs": [
-    "data/alpha/research_queue.json"
-   ],
-   "status": "open",
-   "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-18_checks.json"
-  },
-  {
-   "key": "alpha:g:parent#blockchain-wallet",
-   "board": "alpha",
-   "priority": 2,
-   "task_type": "research",
-   "name": "Blockchain Wallet",
-   "missing": [
-    "M",
-    "A",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM"
-   ],
-   "source_refs": [
-    "data/alpha/research_queue.json"
-   ],
-   "status": "open",
-   "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-18_checks.json"
+   "deliver": "alpha/review/codex_2026-11-19_checks.json"
   },
   {
    "key": "alpha:g:8144",
@@ -1443,7 +1443,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-18_checks.json"
+   "deliver": "alpha/review/codex_2026-11-19_checks.json"
   },
   {
    "key": "alpha:p:9380",
@@ -1468,7 +1468,7 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-18_checks.json"
+   "deliver": "alpha/review/codex_2026-11-19_checks.json"
   },
   {
    "key": "alpha:p:9393",
@@ -1493,7 +1493,7 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-18_checks.json"
+   "deliver": "alpha/review/codex_2026-11-19_checks.json"
   },
   {
    "key": "alpha:p:9353",
@@ -1518,7 +1518,7 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-18_checks.json"
+   "deliver": "alpha/review/codex_2026-11-19_checks.json"
   },
   {
    "key": "alpha:p:9415",
@@ -1542,7 +1542,7 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-18_checks.json"
+   "deliver": "alpha/review/codex_2026-11-19_checks.json"
   },
   {
    "key": "alpha:g:parent#fomo",
@@ -1569,7 +1569,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-18_checks.json"
+   "deliver": "alpha/review/codex_2026-11-19_checks.json"
   },
   {
    "key": "alpha:g:5408",
@@ -1596,7 +1596,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-18_checks.json"
+   "deliver": "alpha/review/codex_2026-11-19_checks.json"
   },
   {
    "key": "alpha:g:4983",
@@ -1623,7 +1623,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-18_checks.json"
+   "deliver": "alpha/review/codex_2026-11-19_checks.json"
   },
   {
    "key": "alpha:g:parent#azverse",
@@ -1650,7 +1650,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-18_checks.json"
+   "deliver": "alpha/review/codex_2026-11-19_checks.json"
   },
   {
    "key": "alpha:g:7010",
@@ -1677,7 +1677,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-18_checks.json"
+   "deliver": "alpha/review/codex_2026-11-19_checks.json"
   },
   {
    "key": "alpha:g:9296",
@@ -1704,7 +1704,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-18_checks.json"
+   "deliver": "alpha/review/codex_2026-11-19_checks.json"
   },
   {
    "key": "alpha:g:parent#txflow",
@@ -1731,7 +1731,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-18_checks.json"
+   "deliver": "alpha/review/codex_2026-11-19_checks.json"
   },
   {
    "key": "alpha:g:7016",
@@ -1758,7 +1758,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-18_checks.json"
+   "deliver": "alpha/review/codex_2026-11-19_checks.json"
   },
   {
    "key": "alpha:g:8415",
@@ -1785,7 +1785,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-18_checks.json"
+   "deliver": "alpha/review/codex_2026-11-19_checks.json"
   },
   {
    "key": "alpha:g:5864",
@@ -1812,7 +1812,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-18_checks.json"
+   "deliver": "alpha/review/codex_2026-11-19_checks.json"
   },
   {
    "key": "alpha:g:5825",
@@ -1839,7 +1839,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-18_checks.json"
+   "deliver": "alpha/review/codex_2026-11-19_checks.json"
   },
   {
    "key": "alpha:g:parent#hyperdash",
@@ -1866,7 +1866,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-18_checks.json"
+   "deliver": "alpha/review/codex_2026-11-19_checks.json"
   },
   {
    "key": "alpha:g:parent#rabby",
@@ -1893,7 +1893,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-18_checks.json"
+   "deliver": "alpha/review/codex_2026-11-19_checks.json"
   },
   {
    "key": "alpha:g:parent#okx-dex",
@@ -1920,7 +1920,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-18_checks.json"
+   "deliver": "alpha/review/codex_2026-11-19_checks.json"
   },
   {
    "key": "alpha:g:8916",
@@ -1947,7 +1947,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-18_checks.json"
+   "deliver": "alpha/review/codex_2026-11-19_checks.json"
   },
   {
    "key": "alpha:g:8866",
@@ -1974,7 +1974,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-18_checks.json"
+   "deliver": "alpha/review/codex_2026-11-19_checks.json"
   }
  ],
  "how": "Codex 每天：先改 check_report.json 里 who=codex 的问题，再按 tasks 从上往下做 who=codex 的；交付文件推 main。who=claude 的攒给 Claude 每周处理，who=大叔 的等大叔。"

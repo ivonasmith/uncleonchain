@@ -931,6 +931,77 @@
    "assets": [
     "XLA"
    ]
+  },
+  "Bitget:12560603901016": {
+   "exchange": "Bitget",
+   "via": "bitget",
+   "title": "Bitget to list spot stock asset rANT",
+   "url": "https://www.bitget.com/en/support/articles/12560603901016",
+   "announce_utc": "2026-11-19T06:59:14Z",
+   "first_seen_utc": "2026-11-19T09:03:20Z",
+   "baseline": false,
+   "kind": "other",
+   "assets": []
+  },
+  "Bitget:12560603900967": {
+   "exchange": "Bitget",
+   "via": "bitget",
+   "title": "Bitget spot copy trading now supports 2 trading pairs",
+   "url": "https://www.bitget.com/en/support/articles/12560603900967",
+   "announce_utc": "2026-11-19T04:36:00Z",
+   "first_seen_utc": "2026-11-19T09:03:20Z",
+   "baseline": false,
+   "kind": "other",
+   "assets": []
+  },
+  "Bitget:12560603900946": {
+   "exchange": "Bitget",
+   "via": "bitget",
+   "title": "Bitget spot copy trading now supports 3 trading pairs",
+   "url": "https://www.bitget.com/en/support/articles/12560603900946",
+   "announce_utc": "2026-11-19T03:36:00Z",
+   "first_seen_utc": "2026-11-19T09:03:20Z",
+   "baseline": false,
+   "kind": "other",
+   "assets": []
+  },
+  "Bitget:12560603900933": {
+   "exchange": "Bitget",
+   "via": "bitget",
+   "title": "Bitget spot copy trade now supports rESTA/USDT",
+   "url": "https://www.bitget.com/en/support/articles/12560603900933",
+   "announce_utc": "2026-11-18T19:36:00Z",
+   "first_seen_utc": "2026-11-19T09:03:20Z",
+   "baseline": false,
+   "kind": "other",
+   "assets": []
+  },
+  "Bitget:12560603900923": {
+   "exchange": "Bitget",
+   "via": "bitget",
+   "title": "Bitget Announces Listing of IGVUSDT, ARTYUSDT, CCJUSDT and NEMUSDT Stock Perps",
+   "url": "https://www.bitget.com/en/support/articles/12560603900923",
+   "announce_utc": "2026-11-18T14:52:14Z",
+   "first_seen_utc": "2026-11-19T09:03:20Z",
+   "baseline": false,
+   "kind": "other",
+   "assets": [
+    "ARTY",
+    "CCJ",
+    "IGV",
+    "NEM"
+   ]
+  },
+  "Bitget:12560603900922": {
+   "exchange": "Bitget",
+   "via": "bitget",
+   "title": "Bitget spot copy trade now supports rNPO/USDT",
+   "url": "https://www.bitget.com/en/support/articles/12560603900922",
+   "announce_utc": "2026-11-18T14:36:00Z",
+   "first_seen_utc": "2026-11-19T09:03:20Z",
+   "baseline": false,
+   "kind": "other",
+   "assets": []
   }
  },
  "sources": {
@@ -951,7 +1022,7 @@
    "page": "https://www.okx.com/help/section/announcements-new-listings",
    "x_handle": "待核实",
    "note": "官网接口通（/api/v5/support/announcements）",
-   "last_ok_utc": "2026-11-18T12:06:17Z",
+   "last_ok_utc": "2026-11-19T09:03:20Z",
    "n_total": 40,
    "err": null
   },
@@ -962,8 +1033,8 @@
    "page": "https://www.bitget.com/support/categories/11865590960081",
    "x_handle": "待核实",
    "note": "官网接口通（/api/v2/public/annoucements）",
-   "last_ok_utc": "2026-11-18T12:06:17Z",
-   "n_total": 26,
+   "last_ok_utc": "2026-11-19T09:03:20Z",
+   "n_total": 32,
    "err": null
   },
   "Kraken": {
@@ -973,7 +1044,7 @@
    "page": "https://blog.kraken.com/category/product/asset-listings",
    "x_handle": "待核实",
    "note": "博客 RSS 通",
-   "last_ok_utc": "2026-11-18T12:06:17Z",
+   "last_ok_utc": "2026-11-19T09:03:20Z",
    "n_total": 12,
    "err": null
   },
@@ -1048,6 +1119,6 @@
    "n_total": 0
   }
  },
- "generated": "2026-11-18T12:06:17Z",
+ "generated": "2026-11-19T09:03:20Z",
  "note": "公告时间原样记录；计划开盘 / 首笔成交 / 窗口目前只有 Binance（alpha/listings.py）"
 }
