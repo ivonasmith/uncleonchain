@@ -1057,6 +1057,66 @@
    "baseline": false,
    "kind": "other",
    "assets": []
+  },
+  "Bitget:12560603901234": {
+   "exchange": "Bitget",
+   "via": "bitget",
+   "title": "Bitget spot copy trade now supports rUFPI/USDT",
+   "url": "https://www.bitget.com/en/support/articles/12560603901234",
+   "announce_utc": "2026-11-21T05:36:00Z",
+   "first_seen_utc": "2026-11-21T08:31:38Z",
+   "baseline": false,
+   "kind": "other",
+   "assets": []
+  },
+  "Bitget:12560603901214": {
+   "exchange": "Bitget",
+   "via": "bitget",
+   "title": "Bitget spot copy trade now supports rHESAY/USDT",
+   "url": "https://www.bitget.com/en/support/articles/12560603901214",
+   "announce_utc": "2026-11-20T13:41:00Z",
+   "first_seen_utc": "2026-11-21T08:31:38Z",
+   "baseline": false,
+   "kind": "other",
+   "assets": []
+  },
+  "Bitget:12560603901213": {
+   "exchange": "Bitget",
+   "via": "bitget",
+   "title": "Bitget Announcement on the Listing of JNJUSDT and AMDLUSDT Stock Perps",
+   "url": "https://www.bitget.com/en/support/articles/12560603901213",
+   "announce_utc": "2026-11-20T13:47:15Z",
+   "first_seen_utc": "2026-11-21T08:31:38Z",
+   "baseline": false,
+   "kind": "other",
+   "assets": [
+    "AMDL",
+    "JNJ"
+   ]
+  },
+  "Bitget:12560603901204": {
+   "exchange": "Bitget",
+   "via": "bitget",
+   "title": "Bitget spot copy trade now supports rSNDK/USDT",
+   "url": "https://www.bitget.com/en/support/articles/12560603901204",
+   "announce_utc": "2026-11-20T11:36:01Z",
+   "first_seen_utc": "2026-11-21T08:31:38Z",
+   "baseline": false,
+   "kind": "other",
+   "assets": []
+  },
+  "Kraken:bfi-is-available-for-trading": {
+   "exchange": "Kraken",
+   "via": "kraken",
+   "title": "BFI is available for trading!",
+   "url": "https://blog.kraken.com/product/asset-listings/bfi-is-available-for-trading",
+   "announce_utc": "2026-11-20T17:22:13Z",
+   "first_seen_utc": "2026-11-21T08:31:38Z",
+   "baseline": false,
+   "kind": "spot",
+   "assets": [
+    "BFI"
+   ]
   }
  },
  "sources": {
@@ -1077,7 +1137,7 @@
    "page": "https://www.okx.com/help/section/announcements-new-listings",
    "x_handle": "待核实",
    "note": "官网接口通（/api/v5/support/announcements）",
-   "last_ok_utc": "2026-11-20T08:50:10Z",
+   "last_ok_utc": "2026-11-21T08:31:38Z",
    "n_total": 40,
    "err": null
   },
@@ -1088,8 +1148,8 @@
    "page": "https://www.bitget.com/support/categories/11865590960081",
    "x_handle": "待核实",
    "note": "官网接口通（/api/v2/public/annoucements）",
-   "last_ok_utc": "2026-11-20T08:50:10Z",
-   "n_total": 37,
+   "last_ok_utc": "2026-11-21T08:31:38Z",
+   "n_total": 41,
    "err": null
   },
   "Kraken": {
@@ -1099,8 +1159,8 @@
    "page": "https://blog.kraken.com/category/product/asset-listings",
    "x_handle": "待核实",
    "note": "博客 RSS 通",
-   "last_ok_utc": "2026-11-20T08:50:10Z",
-   "n_total": 12,
+   "last_ok_utc": "2026-11-21T08:31:38Z",
+   "n_total": 13,
    "err": null
   },
   "Bybit": {
@@ -1174,6 +1234,6 @@
    "n_total": 0
   }
  },
- "generated": "2026-11-20T08:50:10Z",
+ "generated": "2026-11-21T08:31:38Z",
  "note": "公告时间原样记录；计划开盘 / 首笔成交 / 窗口目前只有 Binance（alpha/listings.py）"
 }
