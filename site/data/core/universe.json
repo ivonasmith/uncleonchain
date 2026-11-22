@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-22 08:29 UTC",
+ "generated": "2026-11-22 13:10 UTC",
  "data_day": "2026-11-21",
  "rules": "core/research/选币规则_v1.md",
  "liquidity_med_max": 100,
@@ -178,9 +178,43 @@
    "fact_rank": 26
   },
   {
+   "sym": "XRP",
+   "med": 5.0,
+   "cur": 5,
+   "qv30": 1010080000.0,
+   "fut_share": 80.9883,
+   "vtags": [
+    "regular"
+   ],
+   "rev30": 0,
+   "rev_prev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": null,
+   "llama_names": null,
+   "tags": [
+    "ETF"
+   ],
+   "liquid": true,
+   "class": "共识储备型",
+   "sub": null,
+   "why": "有美国现货 ETF，协议收入相对市值很小",
+   "cond": {
+    "liq": true,
+    "rev": false,
+    "grow": false,
+    "hold": false,
+    "cap": false
+   },
+   "fact": 1,
+   "pick": "共识储备型全列",
+   "in": true,
+   "fact_rank": 27
+  },
+  {
    "sym": "DOGE",
-   "med": 9.0,
-   "cur": 8,
+   "med": 10.0,
+   "cur": 9,
    "qv30": 397535000.0,
    "fut_share": 89.6783,
    "vtags": [
@@ -211,48 +245,14 @@
    "fact": 1,
    "pick": "共识储备型全列",
    "in": true,
-   "fact_rank": 27
-  },
-  {
-   "sym": "XRP",
-   "med": 11.5,
-   "cur": 9,
-   "qv30": 318098000.0,
-   "fut_share": 39.6305,
-   "vtags": [
-    "regular"
-   ],
-   "rev30": 0,
-   "rev_prev30": 0,
-   "hold30": 0,
-   "hold1y": 0,
-   "llama_cat": null,
-   "llama_names": null,
-   "tags": [
-    "ETF"
-   ],
-   "liquid": true,
-   "class": "共识储备型",
-   "sub": null,
-   "why": "有美国现货 ETF，协议收入相对市值很小",
-   "cond": {
-    "liq": true,
-    "rev": false,
-    "grow": false,
-    "hold": false,
-    "cap": false
-   },
-   "fact": 1,
-   "pick": "共识储备型全列",
-   "in": true,
    "fact_rank": 28
   },
   {
    "sym": "SUI",
    "med": 13.0,
-   "cur": 13,
-   "qv30": 205548000.0,
-   "fut_share": 82.238,
+   "cur": 12,
+   "qv30": 216915000.0,
+   "fut_share": 83.1689,
    "vtags": [
     "regular"
    ],
@@ -322,7 +322,7 @@
   },
   {
    "sym": "LTC",
-   "med": 29.0,
+   "med": 30.0,
    "cur": 23,
    "qv30": 86512500.0,
    "fut_share": 81.8764,
@@ -356,8 +356,8 @@
   },
   {
    "sym": "DOT",
-   "med": 39.5,
-   "cur": 36,
+   "med": 40.5,
+   "cur": 37,
    "qv30": 49786400.0,
    "fut_share": 89.5162,
    "vtags": [],
@@ -392,8 +392,8 @@
   },
   {
    "sym": "HBAR",
-   "med": 45.0,
-   "cur": 43,
+   "med": 46.5,
+   "cur": 44,
    "qv30": 42244300.0,
    "fut_share": 81.1066,
    "vtags": [],
@@ -427,7 +427,7 @@
   {
    "sym": "ADA",
    "med": 18.0,
-   "cur": 12,
+   "cur": 13,
    "qv30": 174523000.0,
    "fut_share": 88.0786,
    "vtags": [
@@ -460,7 +460,7 @@
   },
   {
    "sym": "FIL",
-   "med": 27.0,
+   "med": 27.5,
    "cur": 24,
    "qv30": 89670700.0,
    "fut_share": 92.6994,
@@ -528,8 +528,8 @@
   },
   {
    "sym": "VIRTUAL",
-   "med": 71.0,
-   "cur": 75,
+   "med": 72.0,
+   "cur": 76,
    "qv30": 15631400.0,
    "fut_share": 85.9729,
    "vtags": [],
@@ -565,8 +565,8 @@
   },
   {
    "sym": "RENDER",
-   "med": 71.5,
-   "cur": 58,
+   "med": 73.0,
+   "cur": 59,
    "qv30": 18741500.0,
    "fut_share": 81.2177,
    "vtags": [],
@@ -600,8 +600,8 @@
   },
   {
    "sym": "BNB",
-   "med": 8.0,
-   "cur": 5,
+   "med": 8.5,
+   "cur": 6,
    "qv30": 705767000.0,
    "fut_share": 75.5194,
    "vtags": [
@@ -680,8 +680,8 @@
   },
   {
    "sym": "CRV",
-   "med": 57.5,
-   "cur": 50,
+   "med": 59.0,
+   "cur": 51,
    "qv30": 26961800.0,
    "fut_share": 89.6714,
    "vtags": [],
@@ -717,8 +717,8 @@
   },
   {
    "sym": "AERO",
-   "med": 63.0,
-   "cur": 70,
+   "med": 64.5,
+   "cur": 71,
    "qv30": 23960500.0,
    "fut_share": 87.4747,
    "vtags": [],
@@ -755,8 +755,8 @@
   },
   {
    "sym": "CAKE",
-   "med": 94.5,
-   "cur": 95,
+   "med": 95.5,
+   "cur": 96,
    "qv30": 10167300.0,
    "fut_share": 72.234,
    "vtags": [],
@@ -793,8 +793,8 @@
   },
   {
    "sym": "RAY",
-   "med": 170.0,
-   "cur": 149,
+   "med": 173.0,
+   "cur": 152,
    "qv30": 2998660.0,
    "fut_share": 0.0,
    "vtags": [],
@@ -869,8 +869,8 @@
   },
   {
    "sym": "LDO",
-   "med": 76.0,
-   "cur": 78,
+   "med": 77.0,
+   "cur": 79,
    "qv30": 14260300.0,
    "fut_share": 86.4438,
    "vtags": [],
@@ -904,8 +904,8 @@
   },
   {
    "sym": "PENDLE",
-   "med": 77.0,
-   "cur": 90,
+   "med": 79.0,
+   "cur": 91,
    "qv30": 14760300.0,
    "fut_share": 81.4586,
    "vtags": [],
@@ -940,8 +940,8 @@
   },
   {
    "sym": "MORPHO",
-   "med": 99.0,
-   "cur": 107,
+   "med": 100.0,
+   "cur": 109,
    "qv30": 10184400.0,
    "fut_share": 81.4989,
    "vtags": [],
@@ -981,8 +981,8 @@
   },
   {
    "sym": "SKY",
-   "med": 126.0,
-   "cur": 79,
+   "med": 127.5,
+   "cur": 80,
    "qv30": 12511700.0,
    "fut_share": 78.8034,
    "vtags": [],
@@ -1020,8 +1020,8 @@
   },
   {
    "sym": "NEAR",
-   "med": 7.0,
-   "cur": 7,
+   "med": 7.5,
+   "cur": 8,
    "qv30": 588620000.0,
    "fut_share": 81.2559,
    "vtags": [
@@ -1102,8 +1102,8 @@
   },
   {
    "sym": "PYTH",
-   "med": 78.0,
-   "cur": 87,
+   "med": 79.5,
+   "cur": 88,
    "qv30": 18658000.0,
    "fut_share": 80.8345,
    "vtags": [],
@@ -1262,8 +1262,8 @@
   },
   {
    "sym": "ETHFI",
-   "med": 57.0,
-   "cur": 52,
+   "med": 58.5,
+   "cur": 53,
    "qv30": 29547200.0,
    "fut_share": 84.7544,
    "vtags": [],
@@ -1304,8 +1304,8 @@
   },
   {
    "sym": "HYPE",
-   "med": 7.0,
-   "cur": 6,
+   "med": 8.0,
+   "cur": 7,
    "qv30": 769632000.0,
    "fut_share": 93.4014,
    "vtags": [
@@ -1345,7 +1345,7 @@
   },
   {
    "sym": "ASTER",
-   "med": 42.0,
+   "med": 43.0,
    "cur": 30,
    "qv30": 76397600.0,
    "fut_share": 83.1463,
@@ -1382,8 +1382,8 @@
   },
   {
    "sym": "JUP",
-   "med": 68.0,
-   "cur": 62,
+   "med": 69.5,
+   "cur": 63,
    "qv30": 20827500.0,
    "fut_share": 84.9445,
    "vtags": [],
@@ -1421,8 +1421,8 @@
   },
   {
    "sym": "GMX",
-   "med": 247.5,
-   "cur": 237,
+   "med": 252.0,
+   "cur": 243,
    "qv30": 2902460.0,
    "fut_share": 86.8625,
    "vtags": [],
@@ -1535,7 +1535,7 @@
   {
    "sym": "ONDO",
    "med": 31.0,
-   "cur": 35,
+   "cur": 36,
    "qv30": 68113000.0,
    "fut_share": 85.0028,
    "vtags": [],
@@ -1570,8 +1570,8 @@
   },
   {
    "sym": "QNT",
-   "med": 34.5,
-   "cur": 37,
+   "med": 35.0,
+   "cur": 38,
    "qv30": 75269400.0,
    "fut_share": 85.685,
    "vtags": [],
@@ -1602,8 +1602,8 @@
   },
   {
    "sym": "FET",
-   "med": 42.0,
-   "cur": 38,
+   "med": 43.0,
+   "cur": 39,
    "qv30": 43092600.0,
    "fut_share": 75.995,
    "vtags": [],
@@ -1666,7 +1666,7 @@
   },
   {
    "sym": "TRUMP",
-   "med": 28.5,
+   "med": 29.0,
    "cur": 27,
    "qv30": 104672000.0,
    "fut_share": 89.0093,
@@ -1698,8 +1698,8 @@
   },
   {
    "sym": "PENGU",
-   "med": 39.0,
-   "cur": 47,
+   "med": 40.0,
+   "cur": 48,
    "qv30": 52332700.0,
    "fut_share": 87.6546,
    "vtags": [],
@@ -1730,7 +1730,7 @@
   },
   {
    "sym": "BCH",
-   "med": 31.0,
+   "med": 32.0,
    "cur": 28,
    "qv30": 90781400.0,
    "fut_share": 90.3716,
@@ -1793,9 +1793,40 @@
    "in": false
   },
   {
+   "sym": "XLM",
+   "med": 38.5,
+   "cur": 35,
+   "qv30": 52597800.0,
+   "fut_share": 82.5072,
+   "vtags": [],
+   "rev30": 0,
+   "rev_prev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": null,
+   "llama_names": null,
+   "tags": [
+    "ETF 申请中"
+   ],
+   "liquid": true,
+   "class": "主流公链型",
+   "sub": null,
+   "why": "主流公链原生币，没有美国现货 ETF",
+   "cond": {
+    "liq": true,
+    "rev": false,
+    "grow": false,
+    "hold": false,
+    "cap": false
+   },
+   "fact": 1,
+   "miss": "主流公链型第 6，只取前 3",
+   "in": false
+  },
+  {
    "sym": "APT",
-   "med": 45.0,
-   "cur": 40,
+   "med": 46.5,
+   "cur": 41,
    "qv30": 38726700.0,
    "fut_share": 86.2116,
    "vtags": [],
@@ -1823,13 +1854,13 @@
     "cap": false
    },
    "fact": 2,
-   "miss": "主流公链型第 6，只取前 3",
+   "miss": "主流公链型第 7，只取前 3",
    "in": false
   },
   {
    "sym": "DASH",
-   "med": 46.0,
-   "cur": 56,
+   "med": 47.0,
+   "cur": 57,
    "qv30": 33164400.0,
    "fut_share": 84.4696,
    "vtags": [],
@@ -1852,13 +1883,13 @@
     "cap": false
    },
    "fact": 1,
-   "miss": "主流公链型第 7，只取前 3",
+   "miss": "主流公链型第 8，只取前 3",
    "in": false
   },
   {
    "sym": "XPL",
-   "med": 47.0,
-   "cur": 49,
+   "med": 48.0,
+   "cur": 50,
    "qv30": 43077600.0,
    "fut_share": 81.3572,
    "vtags": [],
@@ -1883,13 +1914,13 @@
     "cap": false
    },
    "fact": 2,
-   "miss": "主流公链型第 8，只取前 3",
+   "miss": "主流公链型第 9，只取前 3",
    "in": false
   },
   {
    "sym": "OP",
-   "med": 52.0,
-   "cur": 57,
+   "med": 53.0,
+   "cur": 58,
    "qv30": 31503200.0,
    "fut_share": 88.879,
    "vtags": [],
@@ -1915,13 +1946,13 @@
     "cap": false
    },
    "fact": 0,
-   "miss": "主流公链型第 9，只取前 3",
+   "miss": "主流公链型第 10，只取前 3",
    "in": false
   },
   {
    "sym": "STRK",
-   "med": 57.0,
-   "cur": 60,
+   "med": 58.0,
+   "cur": 61,
    "qv30": 38468200.0,
    "fut_share": 84.2413,
    "vtags": [],
@@ -1947,13 +1978,13 @@
     "cap": false
    },
    "fact": 0,
-   "miss": "主流公链型第 10，只取前 3",
+   "miss": "主流公链型第 11，只取前 3",
    "in": false
   },
   {
    "sym": "ICP",
-   "med": 58.0,
-   "cur": 46,
+   "med": 59.0,
+   "cur": 47,
    "qv30": 30384300.0,
    "fut_share": 80.1008,
    "vtags": [],
@@ -1978,44 +2009,15 @@
     "cap": false
    },
    "fact": 0,
-   "miss": "主流公链型第 11，只取前 3",
-   "in": false
-  },
-  {
-   "sym": "ETC",
-   "med": 64.0,
-   "cur": 64,
-   "qv30": 22230600.0,
-   "fut_share": 91.8524,
-   "vtags": [],
-   "rev30": 0,
-   "rev_prev30": 0,
-   "hold30": 0,
-   "hold1y": 0,
-   "llama_cat": null,
-   "llama_names": null,
-   "tags": [],
-   "liquid": true,
-   "class": "主流公链型",
-   "sub": null,
-   "why": "主流公链原生币，没有美国现货 ETF",
-   "cond": {
-    "liq": false,
-    "rev": false,
-    "grow": false,
-    "hold": false,
-    "cap": false
-   },
-   "fact": 0,
    "miss": "主流公链型第 12，只取前 3",
    "in": false
   },
   {
-   "sym": "ATOM",
-   "med": 72.0,
-   "cur": 69,
-   "qv30": 18144900.0,
-   "fut_share": 88.9636,
+   "sym": "ETC",
+   "med": 65.0,
+   "cur": 65,
+   "qv30": 22230600.0,
+   "fut_share": 91.8524,
    "vtags": [],
    "rev30": 0,
    "rev_prev30": 0,
@@ -2040,9 +2042,38 @@
    "in": false
   },
   {
+   "sym": "ATOM",
+   "med": 73.0,
+   "cur": 70,
+   "qv30": 18144900.0,
+   "fut_share": 88.9636,
+   "vtags": [],
+   "rev30": 0,
+   "rev_prev30": 0,
+   "hold30": 0,
+   "hold1y": 0,
+   "llama_cat": null,
+   "llama_names": null,
+   "tags": [],
+   "liquid": true,
+   "class": "主流公链型",
+   "sub": null,
+   "why": "主流公链原生币，没有美国现货 ETF",
+   "cond": {
+    "liq": false,
+    "rev": false,
+    "grow": false,
+    "hold": false,
+    "cap": false
+   },
+   "fact": 0,
+   "miss": "主流公链型第 14，只取前 3",
+   "in": false
+  },
+  {
    "sym": "GRAM",
-   "med": 75.5,
-   "cur": 48,
+   "med": 78.0,
+   "cur": 49,
    "qv30": 32533900.0,
    "fut_share": 67.73,
    "vtags": [],
@@ -2067,13 +2098,13 @@
     "cap": false
    },
    "fact": 1,
-   "miss": "主流公链型第 14，只取前 3",
+   "miss": "主流公链型第 15，只取前 3",
    "in": false
   },
   {
    "sym": "SEI",
-   "med": 76.5,
-   "cur": 76,
+   "med": 78.0,
+   "cur": 77,
    "qv30": 14633400.0,
    "fut_share": 81.5149,
    "vtags": [],
@@ -2098,13 +2129,13 @@
     "cap": false
    },
    "fact": 0,
-   "miss": "主流公链型第 15，只取前 3",
+   "miss": "主流公链型第 16，只取前 3",
    "in": false
   },
   {
    "sym": "POL",
-   "med": 76.5,
-   "cur": 89,
+   "med": 78.0,
+   "cur": 90,
    "qv30": 14438500.0,
    "fut_share": 74.709,
    "vtags": [],
@@ -2129,13 +2160,13 @@
     "cap": false
    },
    "fact": 0,
-   "miss": "主流公链型第 16，只取前 3",
+   "miss": "主流公链型第 17，只取前 3",
    "in": false
   },
   {
    "sym": "STX",
-   "med": 86.5,
-   "cur": 100,
+   "med": 88.0,
+   "cur": 101,
    "qv30": 15734400.0,
    "fut_share": 84.0302,
    "vtags": [],
@@ -2160,44 +2191,15 @@
     "cap": false
    },
    "fact": 0,
-   "miss": "主流公链型第 17，只取前 3",
-   "in": false
-  },
-  {
-   "sym": "LSK",
-   "med": 88.0,
-   "cur": 113,
-   "qv30": 43141000.0,
-   "fut_share": 91.9895,
-   "vtags": [],
-   "rev30": 0,
-   "rev_prev30": 0,
-   "hold30": 0,
-   "hold1y": 0,
-   "llama_cat": null,
-   "llama_names": null,
-   "tags": [],
-   "liquid": true,
-   "class": "主流公链型",
-   "sub": null,
-   "why": "主流公链原生币，没有美国现货 ETF",
-   "cond": {
-    "liq": false,
-    "rev": false,
-    "grow": false,
-    "hold": false,
-    "cap": false
-   },
-   "fact": 0,
    "miss": "主流公链型第 18，只取前 3",
    "in": false
   },
   {
-   "sym": "PROM",
-   "med": 92.0,
-   "cur": 73,
-   "qv30": 14805400.0,
-   "fut_share": 80.5511,
+   "sym": "LSK",
+   "med": 90.0,
+   "cur": 115,
+   "qv30": 43141000.0,
+   "fut_share": 91.9895,
    "vtags": [],
    "rev30": 0,
    "rev_prev30": 0,
@@ -2222,11 +2224,11 @@
    "in": false
   },
   {
-   "sym": "ALGO",
-   "med": 92.0,
-   "cur": 92,
-   "qv30": 10740800.0,
-   "fut_share": 83.8554,
+   "sym": "PROM",
+   "med": 92.5,
+   "cur": 74,
+   "qv30": 14805400.0,
+   "fut_share": 80.5511,
    "vtags": [],
    "rev30": 0,
    "rev_prev30": 0,
@@ -2251,11 +2253,11 @@
    "in": false
   },
   {
-   "sym": "XLM",
-   "med": 93.5,
-   "cur": 86,
-   "qv30": 10130600.0,
-   "fut_share": 9.17793,
+   "sym": "ALGO",
+   "med": 93.0,
+   "cur": 93,
+   "qv30": 10740800.0,
+   "fut_share": 83.8554,
    "vtags": [],
    "rev30": 0,
    "rev_prev30": 0,
@@ -2263,9 +2265,7 @@
    "hold1y": 0,
    "llama_cat": null,
    "llama_names": null,
-   "tags": [
-    "ETF 申请中"
-   ],
+   "tags": [],
    "liquid": true,
    "class": "主流公链型",
    "sub": null,
@@ -2283,8 +2283,8 @@
   },
   {
    "sym": "ZEN",
-   "med": 98.0,
-   "cur": 105,
+   "med": 98.5,
+   "cur": 106,
    "qv30": 8563830.0,
    "fut_share": 80.8087,
    "vtags": [],
@@ -2315,8 +2315,8 @@
   },
   {
    "sym": "JTO",
-   "med": 86.5,
-   "cur": 88,
+   "med": 88.0,
+   "cur": 89,
    "qv30": 10842600.0,
    "fut_share": 85.8614,
    "vtags": [],
@@ -2351,8 +2351,8 @@
   },
   {
    "sym": "WLFI",
-   "med": 64.0,
-   "cur": 51,
+   "med": 65.0,
+   "cur": 52,
    "qv30": 34091600.0,
    "fut_share": 83.1444,
    "vtags": [],
@@ -2387,8 +2387,8 @@
   },
   {
    "sym": "CHIP",
-   "med": 80.5,
-   "cur": 108,
+   "med": 81.0,
+   "cur": 110,
    "qv30": 18117900.0,
    "fut_share": 78.4014,
    "vtags": [],
@@ -2421,8 +2421,8 @@
   },
   {
    "sym": "ZRO",
-   "med": 42.5,
-   "cur": 41,
+   "med": 43.5,
+   "cur": 42,
    "qv30": 51431100.0,
    "fut_share": 81.6859,
    "vtags": [],
@@ -2455,8 +2455,8 @@
   },
   {
    "sym": "TIA",
-   "med": 48.0,
-   "cur": 53,
+   "med": 49.5,
+   "cur": 54,
    "qv30": 47442800.0,
    "fut_share": 85.7878,
    "vtags": [],
@@ -2488,8 +2488,8 @@
   },
   {
    "sym": "SAND",
-   "med": 84.0,
-   "cur": 93,
+   "med": 85.5,
+   "cur": 94,
    "qv30": 16329200.0,
    "fut_share": 91.5722,
    "vtags": [],
@@ -2521,8 +2521,8 @@
   },
   {
    "sym": "ZAMA",
-   "med": 87.0,
-   "cur": 97,
+   "med": 88.5,
+   "cur": 98,
    "qv30": 14417300.0,
    "fut_share": 72.6263,
    "vtags": [],
@@ -2554,8 +2554,8 @@
   },
   {
    "sym": "EIGEN",
-   "med": 90.0,
-   "cur": 99,
+   "med": 91.0,
+   "cur": 100,
    "qv30": 12326000.0,
    "fut_share": 78.7827,
    "vtags": [],
@@ -2587,8 +2587,8 @@
   },
   {
    "sym": "SHIB",
-   "med": 52.0,
-   "cur": 44,
+   "med": 53.0,
+   "cur": 45,
    "qv30": 32896200.0,
    "fut_share": 89.7778,
    "vtags": [],
@@ -2618,8 +2618,8 @@
   },
   {
    "sym": "MARSCOIN",
-   "med": 54.5,
-   "cur": 77,
+   "med": 56.0,
+   "cur": 78,
    "qv30": 18725100.0,
    "fut_share": 64.4294,
    "vtags": [
@@ -2649,8 +2649,8 @@
   },
   {
    "sym": "牛来",
-   "med": 60.0,
-   "cur": 66,
+   "med": 60.5,
+   "cur": 67,
    "qv30": 24357900.0,
    "fut_share": 78.6931,
    "vtags": [
@@ -2680,8 +2680,8 @@
   },
   {
    "sym": "BONK",
-   "med": 66.0,
-   "cur": 59,
+   "med": 67.0,
+   "cur": 60,
    "qv30": 22464600.0,
    "fut_share": 85.0845,
    "vtags": [],
@@ -2715,8 +2715,8 @@
   },
   {
    "sym": "WIF",
-   "med": 77.0,
-   "cur": 68,
+   "med": 78.5,
+   "cur": 69,
    "qv30": 15512000.0,
    "fut_share": 91.285,
    "vtags": [],
@@ -2746,8 +2746,8 @@
   },
   {
    "sym": "MUBARAK",
-   "med": 86.0,
-   "cur": 114,
+   "med": 88.5,
+   "cur": 116,
    "qv30": 9557440.0,
    "fut_share": 72.1203,
    "vtags": [],
@@ -2775,8 +2775,8 @@
   },
   {
    "sym": "BOME",
-   "med": 92.5,
-   "cur": 104,
+   "med": 95.0,
+   "cur": 105,
    "qv30": 11054500.0,
    "fut_share": 88.7855,
    "vtags": [],
