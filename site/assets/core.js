@@ -148,7 +148,7 @@ const ENM={'交易所和DEX':'Exchanges & DEX','借贷与抵押':'Lending & coll
 const tr=x=>EN&&ENM[x]?ENM[x]:x;
 const fmtN=x=>!nz(x)?'—':Math.abs(x)>=1e9?(x/1e9).toFixed(2)+'B':Math.abs(x)>=1e6?(x/1e6).toFixed(2)+'M':Math.abs(x)>=1e3?(x/1e3).toFixed(1)+'K':x.toFixed(0);
 // 链上 12 个月回购 / 销毁（tools/core_mech/buyback.py）：候选地址、只有诊断数据的不展示；没拉全的写覆盖起点
-const BB_HOLD={UNI:1,CAKE:1,ASTER:1,LDO:1};   // ASTER 销毁地址只是候选；LDO 另有 2,541 万枚流入来源未归因，只显示 CoW 部分会被当成全部   // 11-22：v2 数据 UNI 漏算经路由的释放、CAKE 超出总供给量级；规则已改，新数据核对后再放开
+const BB_HOLD={CAKE:1,ASTER:1,LDO:1};   // ASTER 销毁地址只是候选；LDO 另有 2,541 万枚流入来源未归因，只显示 CoW 部分会被当成全部   // CAKE 超出总供给量级待核对（UNI 11-22 v3 按回执认 Firepit 释放后核对通过：1,598 笔 × 4,000 枚）
 const bbRows=s=>BB&&BB.rows?BB.rows.filter(r=>r.sym===s&&!r.diag_only&&!r.candidate&&!r.review&&!BB_HOLD[r.sym]&&nz(r.qty)&&(r.qty>0||!r.partial)):[];
 const bbLine=s=>bbRows(s).map(r=>{const k=r.kind==='burn'?L('销毁','burned'):L('回购','bought back');
   const cov=r.partial?(r.seen_from?L(`，只覆盖 ${r.seen_from} 起`,`, covers from ${r.seen_from} only`):L('，没取全','; incomplete')):'';
