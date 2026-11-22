@@ -33,14 +33,18 @@ TOK = {"UNI": ("eth", "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984", 18), "LDO": 
 # EVM：to = 官方地址集合，src = 只数这些对手方转来的（None = 全部流入都列进 diag，但 qty 只认 src）
 MEASURES = [
     # 11-15 改：Firepit 的 release 是调用者自己把 UNI 送去销毁（发送方 = 调用者），所以按「交易调用的合约 = Firepit」认，不按发送方
-    {"sym": "UNI", "kind": "burn", "label": "以太坊 Firepit 交易里送去销毁的 UNI", "to": DEAD, "via_tx_to": ["0x0d5cd355e2abeb8fb1552f56c965b867346d6721"], "diag_all_to_dead": True},
+    # 11-22 再改：多数 Firepit 释放是经路由 / 机器人合约调用的，交易 to 不是 Firepit（v2 只认到 2 笔）。改按交易回执认：回执里有 Firepit 发出的日志，或有 TokenJar 转出资产
+    {"sym": "UNI", "kind": "burn", "label": "以太坊 Firepit 释放交易里送去销毁的 UNI", "to": DEAD, "via_tx_to": ["0x0d5cd355e2abeb8fb1552f56c965b867346d6721"],
+     "via_from": ["0xf38521f130fccf29db1961597bc5d2b60f995f85"], "diag_all_to_dead": True},
     {"sym": "LDO", "kind": "buyback", "label": "CoW 成交转入回购 Safe / Aragon Agent 的 LDO", "to": ["0xf6f0732c1e9971497342c295141566e6f1a31e96", "0x3e40d73eb977dc6a537af587d48316fee66e9c8c"], "src": [COW]},
     {"sym": "AAVE", "kind": "buyback", "label": "CoW 成交转入 AFC / Collector / Swap Steward 的 AAVE",
      "to": ["0x22740deba78d5a0c24c58c740e3715ec29de1bfa", "0x464c71f6c2f760dda6093dcb91c24c39e5d6e18c", "0xb7d402138cb01bfe97d95181c849379d6ad14d19"], "src": [COW]},
     {"sym": "ETHFI", "kind": "buyback", "label": "CoW 成交转入基金会钱包 / 回购 Safe / 回购合约的 ETHFI",
      "to": ["0x2f5301a3d59388c509c65f8698f521377d41fd0f", "0x43f4ca92f7f378bcdcf1508b866b5b6c47d6408c", "0xa7b1d3a045fe9566513f3ecc858469640c88be29"], "src": [COW]},
     {"sym": "SKY", "kind": "buyback", "label": "（诊断）MCD_FLAP 相关的 SKY 流动", "to": ["0x374d9c3d5134052bc558f432afa1df6575f07407"], "src": [], "diag_only": True},
-    {"sym": "CAKE", "kind": "burn", "label": "费用归集多签转去销毁地址的 CAKE", "to": DEAD, "frm": ["0xceba60280fb0ecd9a5a26a1552b90944770a4a0e"], "diag_all_to_dead": False},
+    # 11-22：首跑每周约 6,000 万枚、12 个月 28.9 亿枚，超出 CAKE 总供给量级，数量待人工核对（largest 里有交易哈希），核对前页面不展示
+    {"sym": "CAKE", "kind": "burn", "label": "费用归集多签转去销毁地址的 CAKE", "to": DEAD, "frm": ["0xceba60280fb0ecd9a5a26a1552b90944770a4a0e"], "diag_all_to_dead": False,
+     "review": "数量超出总供给量级，待核对"},
     {"sym": "ASTER", "kind": "burn", "label": "buybackWalletToBurn 转去销毁地址的 ASTER（BNB Chain，候选地址）", "to": DEAD, "frm": ["0x5e4969c41ca9f9831468b98328a370b7abd5a397"]},
     {"sym": "ASTER", "kind": "buyback", "label": "（诊断）转入公开 buyback 钱包的 ASTER（BNB Chain；链归属未独立确认）", "to": ["0xa0edbabcb48034e368de286b49f9603c7afa1b60"], "src": [], "diag_only": True},
     {"sym": "GMX", "kind": "buyback", "label": "（诊断）进出 Arbitrum FeeHandler 的 GMX", "to": ["0x7eb417637a3e6d1c19e6d69158c47610b7a5d9b3"], "src": [], "diag_only": True},
@@ -121,10 +125,12 @@ def evm(m):
             v, f = int(l["data"], 16) / 10 ** dec, "0x" + l["topics"][1][-40:]
             by[f] = by.get(f, 0) + v
             big.append((v, l["transactionHash"]))
-            tx, e = rpc(chain, "eth_getTransactionByHash", [l["transactionHash"]])
-            if e or not tx:
+            rc, e = rpc(chain, "eth_getTransactionReceipt", [l["transactionHash"]])
+            if e or not rc:
                 partial = True; continue
-            if (tx.get("to") or "").lower() in via:
+            vf = {"0x" + "0" * 24 + a[2:] for a in m.get("via_from") or []}
+            hit = any(x["address"].lower() in via or (x["topics"] and x["topics"][0] == TRANSFER and len(x["topics"]) > 1 and x["topics"][1].lower() in vf) for x in rc["logs"])
+            if hit:
                 qty += v; n += 1; bn = int(l["blockNumber"], 16)
                 if not last or bn > last:
                     last, last_tx = bn, l["transactionHash"]
@@ -301,7 +307,7 @@ def main():
             r = sol(m) if TOK[m["sym"]][0] == "sol" else evm(m)
         except Exception as e:  # noqa
             ERR.append(f"{m['sym']}: {e}"); r = {"partial": True}
-        r.update({k: m[k] for k in ("sym", "kind", "label") if k in m}, candidate=m.get("candidate", False), diag_only=m.get("diag_only", False))
+        r.update({k: m[k] for k in ("sym", "kind", "label", "review") if k in m}, candidate=m.get("candidate", False), diag_only=m.get("diag_only", False))
         rows.append(r)
         print(f"{m['sym']:7s} {m['kind']:8s} qty={r.get('qty')} n={r.get('n')} last={r.get('last')} partial={r.get('partial')} {time.time()-t:.0f}s", flush=True)
     if not only or "HYPE" in only:

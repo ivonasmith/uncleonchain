@@ -1,4 +1,4 @@
-# 回购 / 销毁 12 个月链上数量（tools/core_mech/buyback.py，Alchemy）。会话分支推送时试跑并把结果提交回该分支；上线后由 core-daily 每周跑。
+# 回购 / 销毁 12 个月链上数量（tools/core_mech/buyback.py，Alchemy）。main 上每周一跑一次（约 30–60 分钟，单独 concurrency 组，只提交 data/core/buyback.json，下一次出网站带上）；会话分支推送时试跑。
 name: 回购销毁链上统计
 
 on:
@@ -7,6 +7,8 @@ on:
     paths:
       - "tools/core_mech/buyback.py"
       - ".github/workflows/core-buyback.yml"
+  schedule:
+    - cron: "29 6 * * 1"
   workflow_dispatch: {}
 
 concurrency:
@@ -29,12 +31,11 @@ jobs:
         env:
           ALCHEMY_KEY: ${{ secrets.ALCHEMY_KEY }}
         run: python3 tools/core_mech/buyback.py | tail -c 3000
-      - name: 提交结果回会话分支
-        if: github.ref_name == 'claude/stoic-gates-xxol8a'
+      - name: 提交结果
         run: |
           git config user.name "uncleonchain-bot"
           git config user.email "bot@uncleonchain.com"
           git add data/core/buyback.json
           git diff --cached --quiet && exit 0
-          git commit -m "回购销毁统计（试跑）"
-          git pull --rebase -X theirs origin claude/stoic-gates-xxol8a && git push origin HEAD:claude/stoic-gates-xxol8a
+          git commit -m "回购销毁统计 $(date -u +%Y-%m-%d)"
+          git pull --rebase -X theirs origin "${{ github.ref_name }}" && git push origin HEAD:"${{ github.ref_name }}"
