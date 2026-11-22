@@ -1,6 +1,6 @@
 {
- "generated": "2026-11-21T08:31:15+00:00",
- "asof_llama": "2026-11-20",
+ "generated": "2026-11-22T08:25:20+00:00",
+ "asof_llama": "2026-11-21",
  "categories": [
   {
    "id": "tokenized-treasuries",
@@ -1251,10 +1251,10 @@
    "chains": [],
    "category": "RWA",
    "tvl": null,
-   "fees30": 15698008,
-   "rev30": 15698008,
+   "fees30": 15495224,
+   "rev30": 15495224,
    "hrev30": 0,
-   "chg30": -13.2,
+   "chg30": -14.1,
    "token_status": "tradfi",
    "token": null
   },
@@ -1275,10 +1275,10 @@
    "chains": [],
    "category": "RWA",
    "tvl": null,
-   "fees30": 10648994,
-   "rev30": 2556174,
+   "fees30": 10394851,
+   "rev30": 2552035,
    "hrev30": 0,
-   "chg30": 3.1,
+   "chg30": -0.0,
    "token_status": "tradfi",
    "token": {
     "symbol": "MI4",
@@ -1300,11 +1300,11 @@
     "Ripple"
    ],
    "category": "Lending",
-   "tvl": 1965955771,
-   "fees30": 9628924,
-   "rev30": 1461183,
-   "hrev30": 217541,
-   "chg30": -1.3,
+   "tvl": 1991568403,
+   "fees30": 9412135,
+   "rev30": 1424308,
+   "hrev30": 213853,
+   "chg30": -4.9,
    "token_status": "registered",
    "token": {
     "symbol": "SYRUP",
@@ -1322,10 +1322,10 @@
    "chains": [],
    "category": "RWA",
    "tvl": null,
-   "fees30": 8067192,
-   "rev30": 592404,
+   "fees30": 7848043,
+   "rev30": 594239,
    "hrev30": 0,
-   "chg30": -24.8,
+   "chg30": -27.5,
    "token_status": "not_registered",
    "token": null
   },
@@ -1341,10 +1341,10 @@
    "chains": [],
    "category": "RWA",
    "tvl": null,
-   "fees30": 7699422,
+   "fees30": 7678762,
    "rev30": 0,
    "hrev30": 0,
-   "chg30": 26.9,
+   "chg30": 27.5,
    "token_status": "registered",
    "token": {
     "symbol": "ONDO",
@@ -1362,34 +1362,12 @@
    "chains": [],
    "category": "RWA",
    "tvl": null,
-   "fees30": 6907931,
-   "rev30": 690794,
+   "fees30": 6662207,
+   "rev30": 666222,
    "hrev30": 0,
-   "chg30": -7.1,
+   "chg30": -10.3,
    "token_status": "not_registered",
    "token": null
-  },
-  {
-   "key": "parent#centrifuge",
-   "name": "Centrifuge",
-   "slug": "centrifuge-protocol",
-   "kind": "onchain",
-   "children": [
-    "Centrifuge Protocol",
-    "Tinlake"
-   ],
-   "chains": [],
-   "category": "RWA",
-   "tvl": null,
-   "fees30": 3257245,
-   "rev30": 273883,
-   "hrev30": 0,
-   "chg30": 28.9,
-   "token_status": "registered",
-   "token": {
-    "symbol": "CFG",
-    "gecko_id": null
-   }
   },
   {
    "key": "6190",
@@ -1403,15 +1381,37 @@
     "Arbitrum"
    ],
    "category": "RWA",
-   "tvl": 159204672,
-   "fees30": 3024066,
-   "rev30": 302409,
+   "tvl": 159174293,
+   "fees30": 3114479,
+   "rev30": 311457,
    "hrev30": 0,
-   "chg30": -32.6,
+   "chg30": -30.6,
    "token_status": "registered",
    "token": {
     "symbol": "CHIP",
     "gecko_id": "chip-2"
+   }
+  },
+  {
+   "key": "parent#centrifuge",
+   "name": "Centrifuge",
+   "slug": "centrifuge-protocol",
+   "kind": "onchain",
+   "children": [
+    "Centrifuge Protocol",
+    "Tinlake"
+   ],
+   "chains": [],
+   "category": "RWA",
+   "tvl": null,
+   "fees30": 2993428,
+   "rev30": 271848,
+   "hrev30": 0,
+   "chg30": 11.9,
+   "token_status": "registered",
+   "token": {
+    "symbol": "CFG",
+    "gecko_id": null
    }
   },
   {
@@ -1428,11 +1428,11 @@
     "Stellar"
    ],
    "category": "RWA",
-   "tvl": 346885448,
-   "fees30": 2856711,
+   "tvl": 345225225,
+   "fees30": 2863879,
    "rev30": 0,
    "hrev30": 0,
-   "chg30": -2.9,
+   "chg30": -2.6,
    "token_status": "registered",
    "token": {
     "symbol": "HUMA",
@@ -1450,10 +1450,10 @@
    "chains": [],
    "category": "RWA",
    "tvl": null,
-   "fees30": 2710579,
+   "fees30": 2707713,
    "rev30": 0,
    "hrev30": 0,
-   "chg30": -4.7,
+   "chg30": -4.9,
    "token_status": "not_registered",
    "token": null
   },
@@ -1469,11 +1469,11 @@
     "Solana"
    ],
    "category": "RWA",
-   "tvl": 288141262,
-   "fees30": 2480664,
-   "rev30": 62643,
+   "tvl": 287498626,
+   "fees30": 2478202,
+   "rev30": 67408,
    "hrev30": 0,
-   "chg30": -1.5,
+   "chg30": -1.4,
    "token_status": "not_registered",
    "token": null
   },
@@ -1488,10 +1488,10 @@
    "chains": [],
    "category": "RWA",
    "tvl": null,
-   "fees30": 2349323,
-   "rev30": 174268,
+   "fees30": 2340460,
+   "rev30": 173272,
    "hrev30": 0,
-   "chg30": -40.4,
+   "chg30": -39.9,
    "token_status": "tradfi",
    "token": null
   },
@@ -1509,11 +1509,11 @@
     "Arbitrum"
    ],
    "category": "RWA",
-   "tvl": 450579516,
-   "fees30": 2309532,
-   "rev30": 22064,
+   "tvl": 445543093,
+   "fees30": 2314978,
+   "rev30": 27841,
    "hrev30": 0,
-   "chg30": 22.2,
+   "chg30": 21.6,
    "token_status": "registered",
    "token": {
     "symbol": "RE",
@@ -1531,10 +1531,10 @@
    "chains": [],
    "category": "RWA",
    "tvl": null,
-   "fees30": 1928330,
-   "rev30": 6642,
+   "fees30": 1899086,
+   "rev30": 6455,
    "hrev30": 0,
-   "chg30": -0.1,
+   "chg30": -0.5,
    "token_status": "not_registered",
    "token": null
   },
@@ -1549,7 +1549,7 @@
    "chains": [],
    "category": "RWA",
    "tvl": null,
-   "fees30": 1576318,
+   "fees30": 1570512,
    "rev30": 0,
    "hrev30": 0,
    "chg30": -10.1,
@@ -1567,10 +1567,10 @@
    "chains": [],
    "category": "RWA",
    "tvl": null,
-   "fees30": 1441484,
-   "rev30": 57458,
+   "fees30": 1431247,
+   "rev30": 57011,
    "hrev30": 0,
-   "chg30": -19.2,
+   "chg30": -20.3,
    "token_status": "not_registered",
    "token": null
   },
@@ -1585,10 +1585,10 @@
    "chains": [],
    "category": "RWA",
    "tvl": null,
-   "fees30": 1048719,
+   "fees30": 1050683,
    "rev30": 0,
    "hrev30": 0,
-   "chg30": 4.2,
+   "chg30": 4.1,
    "token_status": "not_registered",
    "token": null
   },
@@ -1606,11 +1606,11 @@
     "Base"
    ],
    "category": "RWA",
-   "tvl": 84415963,
-   "fees30": 865368,
-   "rev30": 1942,
+   "tvl": 84784419,
+   "fees30": 857964,
+   "rev30": 1890,
    "hrev30": 0,
-   "chg30": 31.9,
+   "chg30": 31.2,
    "token_status": "not_registered",
    "token": null
   },
@@ -1627,11 +1627,11 @@
     "Ethereum"
    ],
    "category": "RWA",
-   "tvl": 44842492,
-   "fees30": 536906,
-   "rev30": 530946,
-   "hrev30": 374427,
-   "chg30": 84.7,
+   "tvl": 44842493,
+   "fees30": 535453,
+   "rev30": 529473,
+   "hrev30": 374772,
+   "chg30": 94.1,
    "token_status": "registered",
    "token": {
     "symbol": "USUAL",
@@ -1650,11 +1650,11 @@
     "Ethereum"
    ],
    "category": "RWA",
-   "tvl": 89436125,
-   "fees30": 301392,
+   "tvl": 89494078,
+   "fees30": 300238,
    "rev30": 0,
    "hrev30": 0,
-   "chg30": -8.9,
+   "chg30": -9.3,
    "token_status": "registered",
    "token": {
     "symbol": "FRAX",
@@ -1672,10 +1672,10 @@
    "chains": [],
    "category": "RWA",
    "tvl": null,
-   "fees30": 214144,
-   "rev30": 15717,
+   "fees30": 245687,
+   "rev30": 18899,
    "hrev30": 0,
-   "chg30": 1270.5,
+   "chg30": 1494.4,
    "token_status": "not_registered",
    "token": null
   },
@@ -1711,10 +1711,10 @@
    "chains": [],
    "category": "RWA",
    "tvl": null,
-   "fees30": 162864,
-   "rev30": 32548,
+   "fees30": 163071,
+   "rev30": 32585,
    "hrev30": 0,
-   "chg30": -3.3,
+   "chg30": -2.9,
    "token_status": "registered",
    "token": {
     "symbol": "GAIB",
@@ -1734,11 +1734,11 @@
     "Ethereum"
    ],
    "category": "RWA",
-   "tvl": 7820781,
-   "fees30": 141760,
+   "tvl": 7815293,
+   "fees30": 136219,
    "rev30": 9071,
    "hrev30": 0,
-   "chg30": -14.5,
+   "chg30": -18.1,
    "token_status": "asset_token",
    "token": {
     "symbol": "STUSDT",
@@ -1759,10 +1759,10 @@
    "chains": [],
    "category": "RWA",
    "tvl": null,
-   "fees30": 117643,
-   "rev30": 78009,
+   "fees30": 117477,
+   "rev30": 78007,
    "hrev30": 0,
-   "chg30": -2.1,
+   "chg30": -0.7,
    "token_status": "asset_token",
    "token": {
     "symbol": "PRISM",
@@ -1780,10 +1780,10 @@
    "chains": [],
    "category": "RWA",
    "tvl": null,
-   "fees30": 99916,
+   "fees30": 98421,
    "rev30": 0,
    "hrev30": 0,
-   "chg30": -15.5,
+   "chg30": -16.7,
    "token_status": "not_registered",
    "token": null
   },
@@ -1798,33 +1798,15 @@
    "chains": [],
    "category": "RWA",
    "tvl": null,
-   "fees30": 84601,
-   "rev30": 4222,
+   "fees30": 81827,
+   "rev30": 4082,
    "hrev30": 0,
-   "chg30": 7.7,
+   "chg30": 4.9,
    "token_status": "registered",
    "token": {
     "symbol": "FDIT",
     "gecko_id": "fidelity-digital-interest-token"
    }
-  },
-  {
-   "key": "7967",
-   "name": "Brix",
-   "slug": "brix",
-   "kind": "onchain",
-   "children": [
-    "Brix"
-   ],
-   "chains": [],
-   "category": "RWA",
-   "tvl": null,
-   "fees30": 81912,
-   "rev30": 0,
-   "hrev30": 0,
-   "chg30": -47.9,
-   "token_status": "not_registered",
-   "token": null
   },
   {
    "key": "parent#matrixdock",
@@ -1839,10 +1821,28 @@
    "chains": [],
    "category": "RWA",
    "tvl": null,
-   "fees30": 78560,
+   "fees30": 78622,
    "rev30": 6889,
    "hrev30": 0,
-   "chg30": 7.4,
+   "chg30": 7.3,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "7967",
+   "name": "Brix",
+   "slug": "brix",
+   "kind": "onchain",
+   "children": [
+    "Brix"
+   ],
+   "chains": [],
+   "category": "RWA",
+   "tvl": null,
+   "fees30": 75673,
+   "rev30": 0,
+   "hrev30": 0,
+   "chg30": -51.9,
    "token_status": "not_registered",
    "token": null
   },
@@ -1860,39 +1860,16 @@
     "Aptos"
    ],
    "category": "RWA",
-   "tvl": 34665752,
-   "fees30": 38603,
-   "rev30": 38603,
+   "tvl": 34660848,
+   "fees30": 39040,
+   "rev30": 39040,
    "hrev30": 0,
-   "chg30": -10.2,
+   "chg30": -9.3,
    "token_status": "registered",
    "token": {
     "symbol": "KAIO",
     "gecko_id": "kaio"
    }
-  },
-  {
-   "key": "parent#theo",
-   "name": "Theo",
-   "slug": "theo-network-thbill",
-   "kind": "onchain",
-   "children": [
-    "Theo Network thBill",
-    "Theo Network thUSD"
-   ],
-   "chains": [
-    "Ethereum",
-    "Stable",
-    "Arbitrum"
-   ],
-   "category": "RWA",
-   "tvl": 150421437,
-   "fees30": 33781,
-   "rev30": 0,
-   "hrev30": 0,
-   "chg30": -66.9,
-   "token_status": "not_registered",
-   "token": null
   },
   {
    "key": "8875",
@@ -1924,11 +1901,54 @@
     "Polygon"
    ],
    "category": "RWA",
-   "tvl": 8991696,
-   "fees30": 32626,
-   "rev30": 1117,
-   "hrev30": 785,
-   "chg30": -14.8,
+   "tvl": 8987125,
+   "fees30": 32213,
+   "rev30": 986,
+   "hrev30": 693,
+   "chg30": -16.0,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "parent#theo",
+   "name": "Theo",
+   "slug": "theo-network-thbill",
+   "kind": "onchain",
+   "children": [
+    "Theo Network thBill",
+    "Theo Network thUSD"
+   ],
+   "chains": [
+    "Ethereum",
+    "Stable",
+    "Arbitrum"
+   ],
+   "category": "RWA",
+   "tvl": 150414941,
+   "fees30": 31447,
+   "rev30": 0,
+   "hrev30": 0,
+   "chg30": -68.7,
+   "token_status": "not_registered",
+   "token": null
+  },
+  {
+   "key": "7751",
+   "name": "eva Markets",
+   "slug": "eva-markets",
+   "kind": "onchain",
+   "children": [
+    "eva Markets"
+   ],
+   "chains": [
+    "Ethereum"
+   ],
+   "category": "RWA",
+   "tvl": 4778555,
+   "fees30": 31025,
+   "rev30": 0,
+   "hrev30": 0,
+   "chg30": -17.7,
    "token_status": "not_registered",
    "token": null
   },
@@ -1945,36 +1965,16 @@
     "Ethereum"
    ],
    "category": "RWA",
-   "tvl": 14100732,
-   "fees30": 28728,
+   "tvl": 13817005,
+   "fees30": 28218,
    "rev30": 0,
    "hrev30": 0,
-   "chg30": -34.1,
+   "chg30": -34.8,
    "token_status": "registered",
    "token": {
     "symbol": "CPOOL",
     "gecko_id": null
    }
-  },
-  {
-   "key": "7751",
-   "name": "eva Markets",
-   "slug": "eva-markets",
-   "kind": "onchain",
-   "children": [
-    "eva Markets"
-   ],
-   "chains": [
-    "Ethereum"
-   ],
-   "category": "RWA",
-   "tvl": 4849635,
-   "fees30": 27491,
-   "rev30": 0,
-   "hrev30": 0,
-   "chg30": -29.8,
-   "token_status": "not_registered",
-   "token": null
   },
   {
    "key": "7943",
@@ -1987,10 +1987,10 @@
    "chains": [],
    "category": "RWA",
    "tvl": null,
-   "fees30": 10673,
-   "rev30": 10673,
+   "fees30": 10306,
+   "rev30": 10306,
    "hrev30": 0,
-   "chg30": -4.6,
+   "chg30": -7.6,
    "token_status": "not_registered",
    "token": null
   },
@@ -2005,10 +2005,10 @@
    "chains": [],
    "category": "RWA",
    "tvl": null,
-   "fees30": 5841,
+   "fees30": 5699,
    "rev30": 233,
    "hrev30": 0,
-   "chg30": -3.2,
+   "chg30": -4.6,
    "token_status": "not_registered",
    "token": null
   },
@@ -2025,11 +2025,11 @@
     "Ethereum"
    ],
    "category": "RWA",
-   "tvl": 3025188,
-   "fees30": 3681,
-   "rev30": 613,
+   "tvl": 3024079,
+   "fees30": 3597,
+   "rev30": 609,
    "hrev30": 0,
-   "chg30": 28.0,
+   "chg30": 26.0,
    "token_status": "registered",
    "token": {
     "symbol": "LISTA",
@@ -2049,11 +2049,11 @@
     "Provenance"
    ],
    "category": "OTC Marketplace",
-   "tvl": 209351343,
-   "fees30": 2357,
-   "rev30": 2357,
+   "tvl": 218661404,
+   "fees30": 2571,
+   "rev30": 2571,
    "hrev30": 0,
-   "chg30": -8.7,
+   "chg30": 37.3,
    "token_status": "not_registered",
    "token": null
   },
@@ -2068,10 +2068,10 @@
    "chains": [],
    "category": "RWA",
    "tvl": null,
-   "fees30": 1718,
-   "rev30": 1718,
+   "fees30": 1654,
+   "rev30": 1654,
    "hrev30": 0,
-   "chg30": 3.6,
+   "chg30": 2.0,
    "token_status": "not_registered",
    "token": null
   },
@@ -2086,10 +2086,10 @@
    "chains": [],
    "category": "RWA",
    "tvl": null,
-   "fees30": 4,
-   "rev30": 2,
+   "fees30": 13,
+   "rev30": 6,
    "hrev30": 0,
-   "chg30": -99.0,
+   "chg30": -96.7,
    "token_status": "not_registered",
    "token": null
   },
@@ -2105,7 +2105,7 @@
     "Ethereum"
    ],
    "category": "RWA",
-   "tvl": 314237185,
+   "tvl": 314499271,
    "fees30": null,
    "rev30": null,
    "hrev30": null,
@@ -2129,7 +2129,7 @@
     "Sui"
    ],
    "category": "RWA",
-   "tvl": 194682520,
+   "tvl": 194686146,
    "fees30": null,
    "rev30": null,
    "hrev30": null,
@@ -2149,7 +2149,7 @@
     "xDai"
    ],
    "category": "RWA",
-   "tvl": 155029427,
+   "tvl": 154990454,
    "fees30": null,
    "rev30": null,
    "hrev30": null,
@@ -2172,7 +2172,7 @@
     "Monad"
    ],
    "category": "RWA",
-   "tvl": 106368451,
+   "tvl": 106435504,
    "fees30": null,
    "rev30": null,
    "hrev30": null,
@@ -2192,7 +2192,7 @@
     "Algorand"
    ],
    "category": "RWA",
-   "tvl": 101074163,
+   "tvl": 101031627,
    "fees30": null,
    "rev30": null,
    "hrev30": null,
@@ -2212,7 +2212,7 @@
     "Ethereum"
    ],
    "category": "RWA",
-   "tvl": 62806887,
+   "tvl": 62811467,
    "fees30": null,
    "rev30": null,
    "hrev30": null,
@@ -2237,7 +2237,7 @@
     "Base"
    ],
    "category": "RWA",
-   "tvl": 42527722,
+   "tvl": 42516445,
    "fees30": null,
    "rev30": null,
    "hrev30": null,
@@ -2263,7 +2263,7 @@
     "Arbitrum"
    ],
    "category": "RWA",
-   "tvl": 41094771,
+   "tvl": 41097802,
    "fees30": 0,
    "rev30": 0,
    "hrev30": 0,
@@ -2288,7 +2288,7 @@
     "Celo"
    ],
    "category": "RWA",
-   "tvl": 30545262,
+   "tvl": 30545205,
    "fees30": null,
    "rev30": null,
    "hrev30": null,
@@ -2308,7 +2308,7 @@
     "Binance"
    ],
    "category": "RWA",
-   "tvl": 23523883,
+   "tvl": 23516344,
    "fees30": null,
    "rev30": null,
    "hrev30": null,
@@ -2331,7 +2331,7 @@
     "Binance"
    ],
    "category": "RWA",
-   "tvl": 14119160,
+   "tvl": 14115142,
    "fees30": null,
    "rev30": null,
    "hrev30": null,
@@ -2353,7 +2353,7 @@
     "Starknet"
    ],
    "category": "RWA",
-   "tvl": 7190404,
+   "tvl": 7190248,
    "fees30": null,
    "rev30": null,
    "hrev30": null,
@@ -2376,7 +2376,7 @@
     "Ethereum"
    ],
    "category": "RWA",
-   "tvl": 6932097,
+   "tvl": 7023016,
    "fees30": null,
    "rev30": null,
    "hrev30": null,
@@ -2400,7 +2400,7 @@
     "Solana"
    ],
    "category": "RWA",
-   "tvl": 4788158,
+   "tvl": 4918483,
    "fees30": null,
    "rev30": null,
    "hrev30": null,
@@ -2423,7 +2423,7 @@
     "Ethereum"
    ],
    "category": "RWA",
-   "tvl": 4236867,
+   "tvl": 4237213,
    "fees30": null,
    "rev30": null,
    "hrev30": null,
@@ -2445,7 +2445,7 @@
     "CORE"
    ],
    "category": "RWA",
-   "tvl": 3964392,
+   "tvl": 3965419,
    "fees30": null,
    "rev30": null,
    "hrev30": null,
@@ -2465,7 +2465,7 @@
     "Algorand"
    ],
    "category": "RWA",
-   "tvl": 3418064,
+   "tvl": 3412778,
    "fees30": null,
    "rev30": null,
    "hrev30": null,
@@ -2485,7 +2485,7 @@
     "Ethereum"
    ],
    "category": "RWA",
-   "tvl": 3341372,
+   "tvl": 3340766,
    "fees30": null,
    "rev30": null,
    "hrev30": null,
@@ -2507,7 +2507,7 @@
     "Polygon"
    ],
    "category": "RWA",
-   "tvl": 3021960,
+   "tvl": 3026499,
    "fees30": null,
    "rev30": null,
    "hrev30": null,
@@ -2547,7 +2547,7 @@
     "Solana"
    ],
    "category": "RWA",
-   "tvl": 2395309,
+   "tvl": 2407631,
    "fees30": null,
    "rev30": null,
    "hrev30": null,
@@ -2568,7 +2568,7 @@
     "Ethereum"
    ],
    "category": "RWA",
-   "tvl": 2197619,
+   "tvl": 2196886,
    "fees30": null,
    "rev30": null,
    "hrev30": null,
@@ -2593,7 +2593,7 @@
     "Ethereum"
    ],
    "category": "RWA",
-   "tvl": 2163267,
+   "tvl": 2163244,
    "fees30": null,
    "rev30": null,
    "hrev30": null,
@@ -2617,7 +2617,7 @@
     "Canto"
    ],
    "category": "RWA",
-   "tvl": 1728387,
+   "tvl": 1728526,
    "fees30": null,
    "rev30": null,
    "hrev30": null,
@@ -2637,7 +2637,7 @@
     "Ethereum"
    ],
    "category": "RWA",
-   "tvl": 1573428,
+   "tvl": 1573482,
    "fees30": null,
    "rev30": null,
    "hrev30": null,
@@ -2662,7 +2662,7 @@
     "Polygon"
    ],
    "category": "RWA",
-   "tvl": 1434429,
+   "tvl": 1434631,
    "fees30": null,
    "rev30": null,
    "hrev30": null,
@@ -2684,7 +2684,7 @@
     "Arbitrum"
    ],
    "category": "RWA",
-   "tvl": 1400564,
+   "tvl": 1402067,
    "fees30": null,
    "rev30": null,
    "hrev30": null,
@@ -2707,7 +2707,7 @@
     "Aptos"
    ],
    "category": "RWA",
-   "tvl": 1379523,
+   "tvl": 1381603,
    "fees30": null,
    "rev30": null,
    "hrev30": null,
@@ -2730,7 +2730,7 @@
     "Solana"
    ],
    "category": "RWA",
-   "tvl": 1341583,
+   "tvl": 1342062,
    "fees30": null,
    "rev30": null,
    "hrev30": null,
@@ -2750,7 +2750,7 @@
     "Plasma"
    ],
    "category": "RWA",
-   "tvl": 1024756,
+   "tvl": 1024611,
    "fees30": null,
    "rev30": null,
    "hrev30": null,
@@ -2771,7 +2771,7 @@
     "Plume Mainnet"
    ],
    "category": "RWA",
-   "tvl": 1024014,
+   "tvl": 1023635,
    "fees30": null,
    "rev30": null,
    "hrev30": null,
@@ -2793,7 +2793,7 @@
     "Base"
    ],
    "category": "RWA",
-   "tvl": 228694,
+   "tvl": 228677,
    "fees30": 0,
    "rev30": 0,
    "hrev30": 0,
@@ -2972,11 +2972,11 @@
   "n_seen": 168,
   "n_onchain": 78,
   "n_tradfi": 3,
-  "fees30_onchain": 58036736,
-  "rev30_onchain": 4405541,
-  "hrev30_onchain": 592753,
-  "fees30_tradfi": 28696325,
-  "rev30_tradfi": 18428450,
+  "fees30_onchain": 57130839,
+  "rev30_onchain": 4364491,
+  "hrev30_onchain": 589318,
+  "fees30_tradfi": 28230535,
+  "rev30_tradfi": 18220531,
   "n_registered": 32,
   "n_asset_token": 3,
   "n_not_registered": 43,
@@ -2988,11 +2988,11 @@
    "last_ok": "2026-11-14T14:50:03+00:00",
    "n": 13,
    "err": "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&category=us-treasury-backed-stablecoin&per_page=250&order=market_cap_desc: HTTP Error 429: Too Many Requests",
-   "failed_at": "2026-11-21T08:31:15+00:00"
+   "failed_at": "2026-11-22T08:25:20+00:00"
   },
   "defillama": {
    "ok": true,
-   "last_ok": "2026-11-21T08:31:15+00:00",
+   "last_ok": "2026-11-22T08:25:20+00:00",
    "n": 81
   }
  },
