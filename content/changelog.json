@@ -1,5 +1,19 @@
 [
  {
+  "version": "2026.11.22",
+  "date": "2026-11-22",
+  "notify": false,
+  "title_zh": "周期图：标明牛熊分段是滞后的",
+  "title_en": "Cycle chart: the bull/bear shading is marked as lagging",
+  "items": [
+   {
+    "type": "improve",
+    "zh": "宏观页「周期里的涨跌腿」图下面加一段提示：牛熊分段要等收盘和链上条件确认才变色，是每天当时的判定、不是预测；处在「熊末→牛初」时写出本轮最低收盘和离它多远——只有日线收盘跌破才退回熊市，盘中跌破不算。",
+    "en": "A note under the \"legs inside the cycle\" chart: the bull/bear shading changes only after closes and on-chain conditions confirm it, so it lags; in \"late bear → early bull\" it shows the cycle's lowest close and the distance to it — only a daily close below it sends the state back to bear."
+   }
+  ]
+ },
+ {
   "version": "2026.11.17.1",
   "date": "2026-11-17",
   "notify": false,

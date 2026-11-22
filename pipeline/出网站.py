@@ -5023,7 +5023,28 @@ def leg_cycle_chart():
                        "lastPct": lastpct if bl.get("direction") == "up" else None, "segPct": segpct["up"]},
                       {"k": "dn", "n": T("跌腿", "Down-leg"), "lab": T("跌腿", "Down"), "c": "dn", "w": 1.8,
                        "lastPct": lastpct if bl.get("direction") == "down" else None, "segPct": segpct["down"]}]}
-    return (f'<div class="card chartcard legcyc"><div class="l2leg">{T("背景色 = 周期状态（L2）：", "Background = cycle state (L2): ")}{leg}</div>' + chart_div(cfg) + '</div>')
+    return (f'<div class="card chartcard legcyc"><div class="l2leg">{T("背景色 = 周期状态（L2）：", "Background = cycle state (L2): ")}{leg}</div>' + chart_div(cfg)
+            + l2_lag_note() + '</div>')
+
+
+def l2_lag_note():
+    """周期图下面的「牛熊分段是滞后的」提示（大叔 11-22 定）：分段要等条件确认才变色，不是预测；熊末→牛初时再说清楚退回熊市的那条收盘线。
+    条件原文在 l2/l2_signals.run_states，这里只复述，不改规则。"""
+    l2 = G.get("L2") or {}
+    code, cyc = (l2.get("state") or {}).get("code"), l2.get("cycle") or {}
+    zh = ("牛熊分段是<b>滞后</b>的：每一段都要等收盘和链上条件确认了才变色——见底要等反弹走出来才认，"
+          "退回熊市要等收盘跌破本轮最低收盘才认。图上的颜色是每天当时的判定，不是预测，所以转折处总会晚一段。")
+    en = ("The bull/bear shading <b>lags</b>: each phase changes colour only after closes and on-chain conditions confirm it — a bottom is recognised only after the rebound, "
+          "a return to bear only after a close below the cycle's lowest close. Colours are what the model said on each day, not forecasts, so turns always show up late.")
+    low, px, ld = cyc.get("cycle_low"), l2.get("price"), None
+    if code == "RECOVERY" and low and px and l2.get("data_date") and cyc.get("days_since_low") is not None:
+        ld = (dt.date.fromisoformat(l2["data_date"]) - dt.timedelta(days=cyc["days_since_low"])).isoformat()
+        gap = (px / low - 1) * 100
+        zh += (f"<br>现在是「熊末→牛初」：本轮最低收盘 <b>{low:,.0f}</b>（{ld}），日线<b>收盘</b>跌破它才会退回熊市，盘中跌破不算；"
+               f"最近收盘 {px:,.0f}，离这条线 {gap:+.1f}%。")
+        en += (f"<br>Now \"late bear → early bull\": the cycle's lowest close is <b>{low:,.0f}</b> ({ld}); only a daily <b>close</b> below it sends the state back to bear, "
+               f"intraday breaks do not count. Latest close {px:,.0f}, {gap:+.1f}% above it.")
+    return f'<div class="l2lag">{T(zh, en)}</div>'
 
 
 L2_BULLISH = {"BULL", "BULL_RISK", "BULL_PULLBACK", "RECOVERY", "BEAR_ZONE"}   # 说明句用：L2 状态偏多 / 偏空（只决定拿哪一组历史腿来比）
