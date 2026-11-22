@@ -1,24 +1,24 @@
 {
- "generated": "2026-11-15 07:34 UTC",
+ "generated": "2026-11-22 13:12 UTC",
  "window": [
-  "2025-11-15",
-  "2026-11-15"
+  "2025-11-22",
+  "2026-11-22"
  ],
  "rules": "tools/core_mech/buyback.py 文件头",
  "rows": [
   {
    "chain": "eth",
    "blocks": [
-    23800871,
-    26416670
+    23850796,
+    26466925
    ],
-   "qty": 8000.0,
-   "n": 2,
+   "qty": 6392000.0,
+   "n": 1598,
    "partial": false,
-   "last": "2025-12-29",
-   "last_tx": "0x103e62cd94fc5ea4ad2923a806c7ca6c898bc96460b94d875e1deca96460b576",
+   "last": "2026-11-21",
+   "last_tx": "0xdbaf75e20c0691828c47eb307075f250a1886c86d918d35e0612f2f6b035d180",
    "diag": {
-    "all_to_burn_total": 114066004.5928092,
+    "all_to_burn_total": 114384004.5928092,
     "by_sender_top": [
      [
       "0x1a9c8182c09f50c8318d769245bea52c32be35bc",
@@ -26,11 +26,11 @@
      ],
      [
       "0x3154cf16ccdb4c6d922629664174b904d80f2c35",
-      3210000.0
+      3302000.0
      ],
      [
       "0x85001cc4867c5e1c22da4b79bb8852b9e2a06da0",
-      2736000.0
+      2774000.0
      ],
      [
       "0x331a51565b7d7a048aa88b0a9f9c3e7ae07be1bc",
@@ -38,11 +38,11 @@
      ],
      [
       "0xa3a7b6f88361f48403514059f1f16c8e78d60eec",
-      1124000.0
+      1144000.0
      ],
      [
       "0x6569925aac77d6b8bb085f31f9828ff80d5a0c44",
-      620000.0
+      650000.0
      ],
      [
       "0x1f2f10d1c40777ae1da742455c65828ff36df387",
@@ -53,12 +53,12 @@
       384000.0
      ],
      [
-      "0x7969d11d6f9f7ee9a839948a7387d40b27911201",
-      324000.0
+      "0x396a940e37c486c5c3e612d49be89b762ea1b1a5",
+      344000.0
      ],
      [
-      "0xffb4008dee363b9a837b513f419c3ac822acd05d",
-      320000.0
+      "0x7969d11d6f9f7ee9a839948a7387d40b27911201",
+      324000.0
      ]
     ],
     "largest": [
@@ -86,27 +86,27 @@
    },
    "sym": "UNI",
    "kind": "burn",
-   "label": "以太坊 Firepit 交易里送去销毁的 UNI",
+   "label": "以太坊 Firepit 释放交易里送去销毁的 UNI",
    "candidate": false,
    "diag_only": false
   },
   {
    "chain": "eth",
    "blocks": [
-    23800871,
-    26416670
+    23850796,
+    26466925
    ],
    "partial": false,
    "diag": {
-    "inflow_total": 45763278.005350165,
+    "inflow_total": 52351897.395350166,
     "inflow_by_sender_top": [
+     [
+      "0xf6f0732c1e9971497342c295141566e6f1a31e96",
+      26009944.42560043
+     ],
      [
       "0x2bd06ccbbf36973447bedc14149c47a13e466ca9",
       25409828.459338002
-     ],
-     [
-      "0xf6f0732c1e9971497342c295141566e6f1a31e96",
-      19421325.03560043
      ],
      [
       "0x9008d19f58aabd9ed0d60971565aa8510560ab41",
@@ -133,11 +133,11 @@
       28319.59563069356
      ]
     ],
-    "outflow_total": 27082591.635600433,
+    "outflow_total": 33671211.02560043,
     "outflow_by_receiver_top": [
      [
       "0x3e40d73eb977dc6a537af587d48316fee66e9c8c",
-      19421325.03560043
+      26009944.42560043
      ],
      [
       "0x834560f580764bc2e0b16925f8bf229bb00cb759",
@@ -161,16 +161,16 @@
   {
    "chain": "eth",
    "blocks": [
-    23800871,
-    26416670
+    23850796,
+    26466925
    ],
    "partial": false,
    "diag": {
-    "inflow_total": 321716.2901491229,
+    "inflow_total": 315048.1362420984,
     "inflow_by_sender_top": [
      [
       "0x9008d19f58aabd9ed0d60971565aa8510560ab41",
-      127563.18349380813
+      121808.42622556133
      ],
      [
       "0x464c71f6c2f760dda6093dcb91c24c39e5d6e18c",
@@ -178,7 +178,7 @@
      ],
      [
       "0xa700b4eb416be35b2911fd5dee80678ff64ff6c9",
-      54207.702643378936
+      53294.702643378936
      ],
      [
       "0x22740deba78d5a0c24c58c740e3715ec29de1bfa",
@@ -233,8 +233,8 @@
      ]
     ]
    },
-   "qty": 127563.18349380813,
-   "n": 546,
+   "qty": 121808.42622556133,
+   "n": 515,
    "last": "2026-04-19",
    "sym": "AAVE",
    "kind": "buyback",
@@ -245,16 +245,16 @@
   {
    "chain": "eth",
    "blocks": [
-    23800871,
-    26416670
+    23850796,
+    26466925
    ],
    "partial": false,
    "diag": {
-    "inflow_total": 15090921.107575292,
+    "inflow_total": 15055065.947600488,
     "inflow_by_sender_top": [
      [
       "0x9008d19f58aabd9ed0d60971565aa8510560ab41",
-      13918293.565490762
+      13882438.405515958
      ],
      [
       "0x01e42ad3acd58584ffc1d1982ecbbe758996d601",
@@ -269,7 +269,7 @@
       6.90148346473e-07
      ]
     ],
-    "outflow_total": 15720771.400337052,
+    "outflow_total": 16130380.251498096,
     "outflow_by_receiver_top": [
      [
       "0x01e42ad3acd58584ffc1d1982ecbbe758996d601",
@@ -281,25 +281,21 @@
      ],
      [
       "0x9eac7114d1a1eabc4732a886795cfd9e6e35843f",
-      1841355.764422983
+      2314019.739781027
+     ],
+     [
+      "0xe0080d2f853ecddbd81a643dc10da075df26fd3f",
+      1026398.0148179999
      ],
      [
       "0xacddac6c77318b615f7f6fb9bb67c6833e9c05f1",
       994449.8068990699
-     ],
-     [
-      "0xe0080d2f853ecddbd81a643dc10da075df26fd3f",
-      789453.139015
-     ],
-     [
-      "0x3fb6784e263643656f386a0371644931133d7b78",
-      300000.0
      ]
     ]
    },
-   "qty": 13918293.565490762,
-   "n": 1714,
-   "last": "2026-11-14",
+   "qty": 13882438.405515958,
+   "n": 1824,
+   "last": "2026-11-21",
    "sym": "ETHFI",
    "kind": "buyback",
    "label": "CoW 成交转入基金会钱包 / 回购 Safe / 回购合约的 ETHFI",
@@ -309,8 +305,8 @@
   {
    "chain": "eth",
    "blocks": [
-    23800871,
-    26416670
+    23850796,
+    26466925
    ],
    "partial": false,
    "diag": {
@@ -328,8 +324,8 @@
   {
    "chain": "bnb",
    "blocks": [
-    68218281,
-    133635907
+    69024372,
+    134979354
    ],
    "largest": [
     [
@@ -358,22 +354,23 @@
      "0x000000000000000000000000000000000000dead"
     ]
    ],
-   "qty": 2887323557.0,
+   "qty": 2899530948.0,
    "n": 53,
    "partial": false,
-   "last": "2026-11-10",
-   "last_tx": "0x310866450a63be210134762523f13231b5cc2182918345a92b048b28df8e181a",
+   "last": "2026-11-16",
+   "last_tx": "0x7d24a9f828e90cf95e8395235d29f31776e3124b164f61b7efdd302c06f87fe2",
    "sym": "CAKE",
    "kind": "burn",
    "label": "费用归集多签转去销毁地址的 CAKE",
+   "review": "数量超出总供给量级，待核对",
    "candidate": false,
    "diag_only": false
   },
   {
    "chain": "bnb",
    "blocks": [
-    68218281,
-    133635907
+    69024372,
+    134979354
    ],
    "largest": [
     [
@@ -390,14 +387,14 @@
    "sym": "ASTER",
    "kind": "burn",
    "label": "buybackWalletToBurn 转去销毁地址的 ASTER（BNB Chain，候选地址）",
-   "candidate": false,
+   "candidate": true,
    "diag_only": false
   },
   {
    "chain": "bnb",
    "blocks": [
-    68218281,
-    133635907
+    69024372,
+    134979354
    ],
    "partial": false,
    "diag": {
@@ -436,28 +433,28 @@
   {
    "chain": "arb",
    "blocks": [
-    400333080,
-    524304925
+    402752730,
+    526369655
    ],
    "partial": false,
    "diag": {
-    "inflow_total": 462470.66355072113,
+    "inflow_total": 420070.66355072113,
     "inflow_by_sender_top": [
      [
       "0x000000000007ac11dd46240b1e4e26c70d46ecd0",
       310000.0
      ],
      [
-      "0x00000000000da8f6d08d3848ce21e5c44538f036",
-      68600.0
+      "0x86fe53a6d47d9a0fdea4c5ac3d80e0e6cc3354cc",
+      43800.0
      ],
      [
-      "0x86fe53a6d47d9a0fdea4c5ac3d80e0e6cc3354cc",
-      52200.0
+      "0x00000000000da8f6d08d3848ce21e5c44538f036",
+      39800.0
      ],
      [
       "0x415411c44f27d8d7ea0d4dc14c0e2c2eeb049740",
-      27000.0
+      22600.0
      ],
      [
       "0x55391d178ce46e7ac8eaaea50a72d1a5a8a622da",
@@ -468,19 +465,15 @@
       1553.0231848969609
      ],
      [
-      "0x9f9f0152f3e101becb65c4aa1d4ba79e178e5415",
-      800.0
-     ],
-     [
       "0x0538cc18ce7f903b69331cd7e5360e5086d6bb0d",
       200.0
      ]
     ],
-    "outflow_total": 478084.4294755848,
+    "outflow_total": 437884.4294755848,
     "outflow_by_receiver_top": [
      [
       "0x43ce1d475e06c65dd879f4ec644b8e0e10ff2b6d",
-      475701.4806082073
+      435501.4806082073
      ],
      [
       "0x86fe53a6d47d9a0fdea4c5ac3d80e0e6cc3354cc",
@@ -504,7 +497,7 @@
     "DpVH8xQZ4aapxwZ6KW9nuEUs9zEePa8HQvXny9Ajj93T"
    ],
    "tx_scanned": 40000,
-   "seen_from": "2026-04-02",
+   "seen_from": "2026-04-14",
    "partial": true,
    "burn_qty": 0,
    "burn_n": 0,
@@ -512,11 +505,11 @@
     "inflow_by_fee_payer_top": [
      [
       "7JQeyNK55fkUPUmEotupBFpiBGpgEQYLe8Ht1VdSfxcP",
-      52483482.95282793
+      51001430.39101282
      ],
      [
       "3rA996DAZe5G67HWbC4jdyYPLeNptLXuybtLnx6dvkxn",
-      31118226.515156105
+      32369196.48595822
      ],
      [
       "71WDyyCsZwyEYDV91Qrb212rdg6woCHYQhFnmZUBxiJ6",
@@ -532,9 +525,9 @@
      ]
     ]
    },
-   "qty": 83625012.07144001,
+   "qty": 83393929.48042701,
    "n": 39999,
-   "last": "2026-11-14",
+   "last": "2026-11-21",
    "sym": "JUP",
    "kind": "buyback",
    "label": "Litterbox 的 JUP 流入（回购持有）",
@@ -551,8 +544,8 @@
     "G7rxL8ySm5qPbtTus9FhAn2nEAZn8DDsUEeHGXgWTP1x",
     "GX4HMQz73cHETFMMW4SsCG5dYnWG8DYZYLhMMzV6ZfuC"
    ],
-   "tx_scanned": 26134,
-   "seen_from": "2025-11-15",
+   "tx_scanned": 26253,
+   "seen_from": "2025-11-22",
    "partial": false,
    "burn_qty": 0,
    "burn_n": 0,
@@ -560,15 +553,15 @@
     "inflow_by_fee_payer_top": [
      [
       "projjosVCPQH49d5em7VYS7fJZzaqKixqKtus7yk416",
-      6980512.911729999
+      7002034.525825998
      ],
      [
       "PNLCQcVCD26aC7ZWgRyr5ptfaR7bBrWdTFgRWwu2tvF",
-      4708585.383244999
+      4640956.806717001
      ],
      [
       "ProCXqRcXJjoUd1RNoo28bSizAA6EEqt9wURZYPDc5u",
-      2693641.9779709997
+      2666110.5016220007
      ],
      [
       "PNLJ777mhif3oiBPPTsHriajdshfpGDNT3r8dXHJZeK",
@@ -600,9 +593,9 @@
      ]
     ]
    },
-   "qty": 14382847.789921092,
-   "n": 26130,
-   "last": "2026-11-14",
+   "qty": 14309209.36412408,
+   "n": 26249,
+   "last": "2026-11-21",
    "sym": "RAY",
    "kind": "buyback",
    "label": "回购持仓地址的 RAY 流入",
@@ -615,16 +608,16 @@
     "GqE7wcwRw86xxMz4pNq5cV3BkM64h3bvajQRQbigYqTX"
    ],
    "tx_scanned": 40000,
-   "seen_from": "2025-12-15",
+   "seen_from": "2025-12-18",
    "partial": true,
-   "burn_qty": 1284030.2188789032,
+   "burn_qty": 1343945.8941066975,
    "burn_n": 39995,
    "diag": {
     "inflow_by_fee_payer_top": []
    },
-   "qty": 1284030.2188789032,
+   "qty": 1343945.8941066975,
    "n": 39995,
-   "last": "2026-11-14",
+   "last": "2026-11-21",
    "sym": "RENDER",
    "kind": "burn",
    "label": "BME 销毁钱包名下 RENDER 账户的 Burn 指令",
@@ -643,11 +636,11 @@
     "78TsNCAkm7iZvsjN3Df1pevrkymCGbP8xeMsVrPHJK4Z",
     "HdtUyEC7TeLGrA7ddRRJWM6nUYk5UZsL9pJuWnXAFQ32"
    ],
-   "tx_scanned": 141637,
+   "tx_scanned": 154711,
    "seen_from": "2026-04-08",
    "partial": true,
-   "burn_qty": 126059506635.77002,
-   "burn_n": 41232,
+   "burn_qty": 127537306535.31334,
+   "burn_n": 42036,
    "diag": {
     "inflow_by_fee_payer_top": [
      [
@@ -656,15 +649,15 @@
      ],
      [
       "2ifjKjqtETDeHXKsrRxeKWUuwUtXxNS4HepT6eftj6Qz",
-      1490801785.6408498
+      2904707490.821559
      ],
      [
       "4zmJQ6KQXftutXjLAHJFmgANchhPD98Tm9vpNe3zogGP",
-      64564733.116392985
+      97025069.19723509
      ],
      [
       "78hoB7emUo7zF5kdNf9TFxzpLRKCy8Jgft5cu69Byuax",
-      50649671.47206204
+      90228043.03272195
      ],
      [
       "9jHrTCwpDANHLNQz5cem6XLUBM8KiTWKe766Br6KVCXM",
@@ -692,9 +685,9 @@
      ]
     ]
    },
-   "qty": 12178001693.886515,
-   "n": 100373,
-   "last": "2026-11-14",
+   "qty": 13663946177.015976,
+   "n": 112643,
+   "last": "2026-11-21",
    "sym": "PUMP",
    "kind": "buyback",
    "label": "（候选地址）8 个回购执行钱包的 PUMP 流入与 Burn",
@@ -706,11 +699,11 @@
    "kind": "burn",
    "label": "Assistance Fund 持有的 HYPE（官方认定为已销毁）",
    "chain": "hypercore",
-   "balance_now": 48975902.03473923,
-   "fills": 10115,
-   "buy_qty_seen": 512533.71,
+   "balance_now": 49219746.41473923,
+   "fills": 10593,
+   "buy_qty_seen": 672591.68,
    "seen_from": "2026-11-03",
-   "last": "2026-11-14",
+   "last": "2026-11-21",
    "partial": true
   }
  ],
