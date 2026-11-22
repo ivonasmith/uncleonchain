@@ -1,5 +1,218 @@
 [
  {
+  "version": "2026.11.17.1",
+  "date": "2026-11-17",
+  "notify": false,
+  "title_zh": "Alpha 看板改按综合分排名；分类只留有币 / 无币两类",
+  "title_en": "Alpha board now ranked by composite score; two groups only (tokenless / has token)",
+  "items": [
+   {
+    "type": "new",
+    "zh": "综合分 v3（满分 100，各维度分值不同）：创新 0–40（非线性，开创品类最高）、资源导入 0–10、流量起势 0–15、团队 −20～15（不公开 0、不良记录 −20、实名人数越多和背景越强分越高）、真实需求 0–10、普通人可参与与分配公平 0–10、解锁抛压 −15～0。资源导入和流量起势只在创新 ≥ 15 分时全额计入，否则按一半计。排名用保守分（只加查清的项），同时显示全查清后最高可能和查清比例。研究评分，未经历史回测检验，不是买卖建议。",
+    "en": "Composite v3 (100 pts, unequal weights): innovation 0–40, resources 0–10, traction 0–15, team −20–15, real demand 0–10, access & fairness 0–10, unlock pressure −15–0. Momentum counts in full only when innovation ≥ 15. Ranked by the conservative score; max and coverage shown. Research score, not back-tested, not trade advice."
+   },
+   {
+    "type": "improve",
+    "zh": "看板分类只留「无币收入榜」「有币 · 收入新起量」两类（按有没有代币分），新上架、手动线索、本站板块改成币名旁的小标签。",
+    "en": "Board groups reduced to tokenless / has token; other origins shown as tags."
+   },
+   {
+    "type": "new",
+    "zh": "综合分每天记一行到 data/alpha/comp_history.json，只追加不回改，用来以后检验分数。",
+    "en": "Daily composite scores logged append-only to data/alpha/comp_history.json."
+   }
+  ]
+ },
+ {
+  "version": "2026.11.16.6",
+  "date": "2026-11-16",
+  "notify": false,
+  "title_zh": "发射台量的质量：Four.meme、Flap 接上交易者和发币人（试点）",
+  "title_en": "Launchpad quality: traders and creators for Four.meme and Flap (pilot)",
+  "items": [
+   {
+    "type": "new",
+    "zh": "Four.meme 和 Flap（BSC）开始按 UTC 完整日读平台合约自己的买卖和创建事件：交易者 = 当天内盘买卖的不同钱包，经交易机器人 / 路由合约下单的换成发起交易的钱包；发币人 = 创建事件里不同的发币钱包。毕业后在 DEX 上的成交不算，都是下限；7 天去重要攒满 7 天才显示；前 10 个钱包按笔数算，按成交额算还要统一计价币，待接入。其它平台仍是「待接入」。",
+    "en": "Four.meme and Flap (BSC) now read the platforms' own buy/sell and create events per full UTC day: traders = distinct wallets trading on the bonding curve that day (trades routed through bot/router contracts are attributed to the wallet that sent the transaction); creators = distinct wallets in create events. Post-graduation DEX trades are excluded, so both are floors. 7-day unique counts appear once 7 days are collected; the top-10 share is by trade count. Other platforms remain pending."
+   }
+  ]
+ },
+ {
+  "version": "2026.11.16.5",
+  "date": "2026-11-16",
+  "notify": false,
+  "title_zh": "Alpha 雷达：新发现卡定稿",
+  "title_en": "Alpha Radar: the New card, final version",
+  "items": [
+   {
+    "type": "improve",
+    "zh": "顶部第四张卡定为「新发现」：数字是 3 天内新进的机会数，下面一行是这些机会的补证进度（研究观察 / 待核验 / 未补证）；点卡片左侧只列新发现。撤掉上一版的新发现 / 补证切换和右侧待补证清单，完整清单仍在页面底部的折叠区。",
+    "en": "The fourth top card is now New: cards added in the last 3 days, with their research progress below. Clicking it lists only those. The earlier switch and queue panel are removed; the full queue stays in the collapsed section at the bottom."
+   }
+  ]
+ },
+ {
+  "version": "2026.11.16.4",
+  "date": "2026-11-16",
+  "notify": false,
+  "title_zh": "Alpha 雷达：补证卡片改为先看待补证清单",
+  "title_en": "Alpha Radar: the research card opens the queue list first",
+  "items": [
+   {
+    "type": "improve",
+    "zh": "补证状态卡去掉下载链接，改为「看待补证清单」：右侧先列出全部待补证的机会（新发现排最前，点名字进详情），清单底部再给完整 JSON 下载。",
+    "en": "The research card no longer links straight to the download. It opens the queue list first; the full JSON download is at the bottom of the list."
+   }
+  ]
+ },
+ {
+  "version": "2026.11.16.3",
+  "date": "2026-11-16",
+  "notify": false,
+  "title_zh": "Alpha 雷达：看板顶部数字卡即页签",
+  "title_en": "Alpha Radar: the top cards are now the board tabs",
+  "items": [
+   {
+    "type": "improve",
+    "zh": "看板的一级页签移到顶部数字卡：点「有参与入口 / 预警观察 / 全部」直接切换；新发现与补证状态合成一张卡，卡内切换，默认看新发现。左侧列表不再重复一排页签。",
+    "en": "The first-level tabs moved up into the top cards. The new-discoveries and research-status cards are merged into one with a switch, defaulting to new discoveries."
+   }
+  ]
+ },
+ {
+  "version": "2026.11.16.2",
+  "date": "2026-11-16",
+  "notify": false,
+  "title_zh": "Alpha 雷达：看板可按来源和类型多选",
+  "title_en": "Alpha Radar: filter the board by source and type",
+  "items": [
+   {
+    "type": "new",
+    "zh": "看板在有参与入口 / 预警观察 / 全部等一级页签下加两行二级筛选：来源（无币收入榜、收入新起量、新上架、手动线索、本站板块）和类型（交易与投机基础设施、现实摩擦解决等）。默认全选，可单选、多选；KPI 数字仍按全量统计。",
+    "en": "Under the first-level tabs, the board now has two multi-select rows: source (tokenless revenue, revenue ramp, new listing, manual, site board) and business type. All are selected by default; the KPI counts still cover the full set."
+   }
+  ]
+ },
+ {
+  "version": "2026.11.16.1",
+  "date": "2026-11-16",
+  "notify": false,
+  "title_zh": "Alpha 雷达：每个协议有了独立页面",
+  "title_en": "Alpha Radar: a standalone page per protocol",
+  "items": [
+   {
+    "type": "new",
+    "zh": "有实质读数的机会卡各出一个独立页面（如 /alpha/montra/）：成交、费用、协议收入、协议抽成、上线天数、代币、资金参与方式、量从哪来、发射台质量、研究记录和证据链接全部直接写在页面上，方便转发和搜索；交互机会卡的链接排里加「单页」。",
+    "en": "Each card with real readings now has its own static page (e.g. /alpha/montra/) with all readings in the HTML; the interactive card links to it."
+   }
+  ]
+ },
+ {
+  "version": "2026.11.15.9",
+  "date": "2026-11-15",
+  "notify": false,
+  "title_zh": "全站结论只说状态，不给动作",
+  "title_en": "Summaries state conditions, not actions",
+  "items": [
+   {
+    "type": "data",
+    "corrections_anchor": "#rc-2026-11-15-expr",
+    "zh": "首页 / 宏观页综合研判的一句话不再带「风险预算照常 / 打七折 / 不追高」，L4 资金费率信号改为写出历史次数和上涨比例。判定规则不变，旧日志保持原样。",
+    "en": "The overall line no longer appends 'risk budget' or 'no chasing' clauses; the L4 funding signal now shows its historical count and hit rate. Verdict rules unchanged; past logs untouched."
+   },
+   {
+    "type": "improve",
+    "zh": "同一规则推到宏观页各层和龙头选币：L2 防顶说明改成回放统计、L3 压力区和大波动预警改成状态描述、L4 页签写出历史次数、流动性闸门去掉「只打折不加仓」；口径页引用的研究框架原文标「作者自用规则」。",
+    "en": "The same rule now covers the macro layers and core picks: the L2 top-risk note shows replay statistics, L3 notes describe conditions, the L4 tab shows its track record, the liquidity gate drops 'discount only, no adds'; verbatim framework rules on the methodology page are labelled as the author's own."
+   }
+  ]
+ },
+ {
+  "version": "2026.11.15.8",
+  "date": "2026-11-15",
+  "notify": true,
+  "title_zh": "Alpha 雷达改版：每张卡回答「量从哪来、量是不是真的、激励后还剩多少」",
+  "title_en": "Alpha Radar: every card now asks where volume comes from, whether it is real, and what is left after incentives",
+  "items": [
+   {
+    "type": "improve",
+    "zh": "「可投资机会」改名「有参与入口」：只说明有资金参与的方式，不代表研究过、更不代表可以执行。看板顶部加「怎么读」和状态流转（原始线索 → 待核验 → 研究观察，任何一步都可能拒绝），各个计数都写清分母和口径。",
+    "en": "“Investable” renamed “Has entry”: it only means capital can take part. Added a how-to-read note, the status flow, and definitions for every count."
+   },
+   {
+    "type": "new",
+    "zh": "每张卡新增「成交与变现」：成交 24 小时 / 7 天 / 30 天、近 7 天占 30 天的比例、30 天费用 / 协议收入 / 持币人收入、协议抽成；上线不满 30 天的标「实际历史只有 N 天」。例：Montra 近 7 天占 30 天 79%，协议抽成 0.40%，实际历史 10 天。",
+    "en": "New “Volume & monetisation” block: 24h/7d/30d volume, 7d share, fees vs revenue vs holder revenue, take rate, and a short-history flag."
+   },
+   {
+    "type": "new",
+    "zh": "新增「量从哪来 · 量的质量」：积分空投 / 新链首发 / 补贴 / 自然需求各标 高 / 中 / 低 / 待验证（研究补证给）；发射台类平台接发射台板块的发币数、7 天存活、交易者。关键事件（积分开放 / 结束、主网上线、发币）列在走势图下面。「为什么在看」改为「核心判断」，加参与者实际能拿到什么、下次复核日。",
+    "en": "New volume-source & quality section, launchpad quality from the launchpad board, key-event timeline, and a core-read box with what participants actually get and the next review date."
+   },
+   {
+    "type": "improve",
+    "zh": "历史对照（估值峰值区间）默认收起，避免被当成目标价；证据列表写明每条链接支持哪些结论。雷达页加搜索、「只看已出机会卡的」、表格折叠和固定表头，线索台账写清和两张表的数为什么对不上。",
+    "en": "Historical analogs collapsed by default; evidence lists show which claims each link supports. Radar page gets search, a card-only filter, collapsible tables and sticky headers."
+   }
+  ]
+ },
+ {
+  "version": "2026.11.15.7",
+  "date": "2026-11-15",
+  "notify": false,
+  "title_zh": "全站数据补全：待办总表与每日检查",
+  "title_en": "Site-wide data backlog and daily checks",
+  "items": [
+   {
+    "type": "improve",
+    "zh": "每天两档总调度顺带生成全站待办（各板块要补什么、谁来补、交到哪）和检查报告（已交的补证、登记文件逐条检查格式、来源和过期）。研究协作方按这份清单每天补数据，网站自动并入。",
+    "en": "Each refresh now builds a site-wide backlog (what each board still needs, who does it, where it goes) and a check report on submitted research and registrations."
+   }
+  ]
+ },
+ {
+  "version": "2026.11.15.5",
+  "date": "2026-11-15",
+  "notify": false,
+  "title_zh": "左侧菜单调整，板块轮动并入「聪明钱」",
+  "title_en": "Menu reordered; Rotation moved into Smart Money",
+  "items": [
+   {
+    "type": "improve",
+    "zh": "菜单顺序改为：终端总览、事件日历、聪明钱、宏观仪表盘、发射台矩阵、AI Agent、RWA、龙头选币、Alpha 雷达、分析报告、解读日志。新增「聪明钱」板块，先放原来的板块轮动（CoinGecko 类目轮动），旧地址 /rotation/ 自动跳过去。",
+    "en": "New menu order: Overview, Calendar, Smart Money, Macro, Launchpads, AI Agent, RWA, Leader Picks, Alpha Radar, Reports, Journal. The new Smart Money board starts with the former Sector Rotation (CoinGecko categories); /rotation/ redirects there."
+   }
+  ]
+ },
+ {
+  "version": "2026.11.15.4",
+  "date": "2026-11-15",
+  "notify": true,
+  "title_zh": "数据更新改成一天两档、准点",
+  "title_en": "Data now updates twice a day, on time",
+  "items": [
+   {
+    "type": "improve",
+    "zh": "原来十几个板块各自定时，GitHub 实测每天晚 6～10 小时，偶尔还互相挤掉。现在一天两档统一跑：新加坡 08:05 先出一版（昨天收盘价、涨跌腿、日历等），16:30 出完整版（L2 / L3 链上数据此时才出齐）；交易用的数据还没到昨天时 17:50 再补一次。各板块数据截至哪天公开在 /data/status.json。",
+    "en": "Each board used to run on its own GitHub schedule, which in practice ran 6–10 hours late and sometimes got dropped. Now everything runs twice a day on time: an early run at 19:05 ET (previous day's close, legs, calendar) and the full run at 03:30 ET once on-chain data (L2 / L3) is published, with a catch-up at 04:50 ET if trading inputs are still behind. Each board's data date is public at /data/status.json."
+   }
+  ]
+ },
+ {
+  "version": "2026.11.15.3",
+  "date": "2026-11-15",
+  "notify": false,
+  "title_zh": "Alpha 雷达：每日自动补证改用 Grok API",
+  "title_en": "Alpha Radar: daily research now runs on the Grok API",
+  "items": [
+   {
+    "type": "improve",
+    "zh": "每日自动补证改在 GitHub 上用 Grok API 跑（能查网页和 X），排在日更里，按实际花费记账，每月有上限。补证结果标「Grok 自动（未人工核对）」；机器会检查：结论只能三种，拒绝必须有一手证据，分数必须有来源。原来的定时会话推不上仓库，停用。",
+    "en": "Daily auto-research now runs on GitHub with the Grok API (web + X search), inside the daily job, with spend tracked and capped monthly. Results are labelled “Grok auto, unreviewed”; rejections need first-hand evidence and every score needs a source."
+   }
+  ]
+ },
+ {
   "version": "2026.11.15.3",
   "date": "2026-11-15",
   "notify": true,

@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """综合研判 · L1~L4 四层合成（纯函数，不联网）
 
-分工沿用研究里定下的：L2 给方向的底色；L1 管节奏和风险预算、不管方向；L3 只描述价格离筹码压力区多远、波动会不会放大（不给方向）；L4 只描述短期温度、不改变动作。
-一句话 =「{方向句}；{但}{节奏句}，{动作}。{筹码提示}{短期提示}」，四段固定顺序：方向 · L2 → 节奏 · L1 → 筹码 · L3 → 短期 · L4。
-所有短句、动作、逆风触发原因都在 config/composite.json（附录 D 定稿），改措辞只改配置，不改代码。
+分工沿用研究里定下的：L2 给方向的底色；L1 说宏观在推还是在拖、不管方向；L3 只描述价格离筹码压力区多远、波动会不会放大（不给方向）；L4 只描述短期温度。
+一句话 =「{方向句}；{但}{节奏句}。{筹码提示}{短期提示}」，四段固定顺序：方向 · L2 → 节奏 · L1 → 筹码 · L3 → 短期 · L4。
+2026-11-15 起按 docs/表达规范.md 只说状态和历史、不给动作（原「风险预算照常 / 打七折 / 不追高」去掉；研究框架的档位仍可由 方向 + L1档 推出）。
+所有短句、逆风触发原因都在 config/composite.json，改措辞只改配置，不改代码。
 """
 import json
 import os
@@ -78,7 +79,6 @@ def compose(vs, rs, l2, l3=None, l4=None):
     real = next((x for x in rs if x and x["key"] == "real13"), None)
     r13 = f"{real['值']:+.2f}".replace("-", "\u2212") if real else ""
     num1 = ((f"实际利率 {real['显示']}，13 周 {r13}pp", f"real yield {real['显示']}, 13w {r13}pp") if real else ("", ""))
-    act = C["动作"].get(direction, C["动作"]["待确认"]).get(tier) if tier else None
     # ---- 筹码 · L3（只描述位置和幅度）
     C3 = C["L3"]
     code3 = ((l3 or {}).get("position") or {}).get("code")
@@ -105,17 +105,11 @@ def compose(vs, rs, l2, l3=None, l4=None):
              "value": "—" if v4 is None else f"{v4:+.1f}%".replace("-", "\u2212"), "days": sg4.get("days_on", "—")}
     seg4 = (d4["分段"].format(**fill4), d4["分段EN"].format(**fill4))
     num4 = ((f"资金费率 30 日均 {fill4['value']}", f"funding 30d avg {fill4['value']}") if v4 is not None else ("", ""))
-    if k4 == "信号" and act:                     # 信号亮：动作追加「不开新空」；L2 不在熊市时再追加「允许在 L1 预算内分批加」
-        a4 = C["L4"]["动作"]["信号"]
-        if code != "BEAR":
-            a4 = [a4[0] + C["L4"]["动作"]["信号非熊市"][0], a4[1] + C["L4"]["动作"]["信号非熊市"][1]]
-        act = [act[0] + a4[0], act[1] + a4[1]]
     # ---- 一句话（确定性拼接）
     but = (direction == "偏多" and tier in ("中性偏谨慎", "逆风")) or (direction in ("偏空", "防顶") and tier == "顺风")
-    if act:
-        head = f"{d2['一句话']}；{'但' if but else ''}{d1['一句话']}，{act[0]}。"
-        but_en = but and not act[1].startswith("but ")          # 动作本身以 but 开头时不再重复
-        head_en = f"{d2['一句话EN']}; {'but ' if but_en else ''}{d1['一句话EN']}—{act[1]}."
+    if tier:
+        head = f"{d2['一句话']}；{'但' if but else ''}{d1['一句话']}。"
+        head_en = f"{d2['一句话EN']}; {'but ' if but else ''}{d1['一句话EN']}."
     else:
         head = f"{d2['一句话']}；{d1['一句话']}。"
         head_en = f"{d2['一句话EN']}; {d1['一句话EN']}."

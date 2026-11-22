@@ -1,0 +1,38 @@
+# 手动试跑 Alpha 自动补证（Grok）：只打印、不写文件、不记账。看单次花费和结果质量用。
+name: 试跑 Alpha 补证（手动）
+
+on:
+  workflow_dispatch:
+    inputs:
+      n:
+        description: "补几个（按队列顺序）"
+        required: false
+        default: "1"
+      model:
+        description: "模型（空 = 用 alpha_config.json 里的）"
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+concurrency:
+  group: alpha-research-try
+  cancel-in-progress: false
+
+jobs:
+  try:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: 试跑
+        env:
+          XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
+          XAI_MODEL: ${{ inputs.model }}
+        run: python3 -u alpha/grok_research.py --dry --n "${{ inputs.n }}"

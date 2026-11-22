@@ -26,7 +26,7 @@ INFRA_NAMES = {"entrypoint", "uniswapv2router02", "multicall3", "hyperproxy", "t
 GENERIC_NAMES = {"tokenfactory", "factory", "launchpad", "launchpadfactory", "portal", "standardlaunchfactory", "erc20factory"}
 FACILITY = {"meteora-dbc": "Meteora DBC", "raydium-launchlab": "Raydium LaunchLab"}
 OWN = "自有合约"
-SKIP_FILES = ("solana.json", "线索.json", "ai_agent.json", "档案.json", "llama_meta.json", "平台资料.json")
+SKIP_FILES = ("solana.json", "线索.json", "ai_agent.json", "档案.json", "llama_meta.json", "平台资料.json", "平台AI介绍.json", "平台质量.json", "平台质量_history.json")
 
 # 叙事标签：中文名 → (英文名, 正则)。英文自述 / 介绍里命中就打上
 TAGS = {

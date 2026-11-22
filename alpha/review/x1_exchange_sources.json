@@ -1,0 +1,548 @@
+{
+  "checked_utc": "2026-11-16T15:07:57Z",
+  "by": "codex",
+  "exchanges": [
+    {
+      "exchange": "OKX",
+      "page_url": "https://www.okx.com/en-us/help/category/announcements",
+      "list_endpoint": "https://www.okx.com/api/v5/support/announcements?annType=listing&locale=en-US&page=1&limit=2",
+      "http_status": 200,
+      "needs_key": false,
+      "format": "json",
+      "time_field": "pTime / businessPTime, Unix milliseconds, UTC interpretation required",
+      "planned_open_in": "body",
+      "pairs_in": "body",
+      "paging": "Official API documentation states 20 records per page and page parameter. Earliest history not verified in this run.",
+      "blocked_from_us": "U",
+      "alt_endpoint": "https://www.okx.com/en-us/help/category/announcements",
+      "sample": [],
+      "x_handle": "@okx",
+      "x_samples": [
+        {
+          "tweet_url": "U",
+          "tweet_utc": "U",
+          "site_announce_utc": "U",
+          "asset": "U"
+        },
+        {
+          "tweet_url": "U",
+          "tweet_utc": "U",
+          "site_announce_utc": "U",
+          "asset": "U"
+        },
+        {
+          "tweet_url": "U",
+          "tweet_utc": "U",
+          "site_announce_utc": "U",
+          "asset": "U"
+        }
+      ],
+      "kline_endpoint": "https://www.okx.com/api/v5/market/candles?instId=BTC-USDT&bar=1m&limit=2",
+      "kline_earliest": "U",
+      "notes": "Official API documentation endpoint was found, but the live JSON request returned a web-tool internal access error without an HTTP status. No live sample is claimed. Sources checked 2026-11-16 UTC: https://www.okx.com/docs-v5/en/#announcement-get-announcements and https://www.okx.com/en-us/help/category/announcements X handle checked 2026-11-16 UTC via official source: https://www.okx.com/en-us/help/category/announcements. Three recent listing posts were not independently readable in this run, so each sample remains U.",
+      "x_handle_source": "https://www.okx.com/en-us/help/category/announcements",
+      "x_checked_utc": "2026-11-16T00:00:00Z"
+    },
+    {
+      "exchange": "Bybit",
+      "page_url": "https://announcements.bybit.com/en/?category=new_crypto",
+      "list_endpoint": "https://api.bybit.com/v5/announcements/index?locale=en-US&limit=2&type=new_crypto",
+      "http_status": "U",
+      "needs_key": false,
+      "format": "json",
+      "time_field": "publishTime and dateTimestamp, Unix milliseconds",
+      "planned_open_in": "body or dateTimestamp",
+      "pairs_in": "title / description",
+      "paging": "page and limit are documented. Earliest history not verified in this run.",
+      "blocked_from_us": "是（browser request displayed CloudFront message: The Amazon CloudFront distribution is configured to block access from your country）",
+      "alt_endpoint": "https://announcements.bybit.com/en/?category=new_crypto",
+      "sample": [],
+      "x_handle": "@Bybit_Official",
+      "x_samples": [
+        {
+          "tweet_url": "U",
+          "tweet_utc": "U",
+          "site_announce_utc": "U",
+          "asset": "U"
+        },
+        {
+          "tweet_url": "U",
+          "tweet_utc": "U",
+          "site_announce_utc": "U",
+          "asset": "U"
+        },
+        {
+          "tweet_url": "U",
+          "tweet_utc": "U",
+          "site_announce_utc": "U",
+          "asset": "U"
+        }
+      ],
+      "kline_endpoint": "https://api.bybit.com/v5/market/kline?category=spot&symbol=BTCUSDT&interval=1&limit=2",
+      "kline_earliest": "U",
+      "notes": "Official docs were opened and confirm GET /v5/announcements/index, title, description, url, publishTime, dateTimestamp and page/limit. The live API request was blocked by CloudFront from this environment. Source checked 2026-11-16 UTC: https://bybit-exchange.github.io/docs/v5/announcement X handle checked 2026-11-16 UTC via official source: https://announcements.bybit.com/en/. Three recent listing posts were not independently readable in this run, so each sample remains U.",
+      "x_handle_source": "https://announcements.bybit.com/en/",
+      "x_checked_utc": "2026-11-16T00:00:00Z"
+    },
+    {
+      "exchange": "Bitget",
+      "page_url": "https://www.bitget.com/support/sections/360011097932",
+      "list_endpoint": "https://api.bitget.com/api/v2/public/annoucements?language=en_US&annType=coin_listings&limit=2",
+      "http_status": 200,
+      "needs_key": false,
+      "format": "json",
+      "time_field": "createdTime, Unix milliseconds",
+      "planned_open_in": "body",
+      "pairs_in": "body / title",
+      "paging": "cursor uses the last annId. limit max 10. History range not verified.",
+      "blocked_from_us": "U",
+      "alt_endpoint": "https://www.bitget.com/support/sections/360011097932",
+      "sample": [],
+      "x_handle": "@bitget",
+      "x_samples": [
+        {
+          "tweet_url": "U",
+          "tweet_utc": "U",
+          "site_announce_utc": "U",
+          "asset": "U"
+        },
+        {
+          "tweet_url": "U",
+          "tweet_utc": "U",
+          "site_announce_utc": "U",
+          "asset": "U"
+        },
+        {
+          "tweet_url": "U",
+          "tweet_utc": "U",
+          "site_announce_utc": "U",
+          "asset": "U"
+        }
+      ],
+      "kline_endpoint": "https://api.bitget.com/api/v3/market/candles?category=SPOT&symbol=BTCUSDT&interval=1min&limit=2",
+      "kline_earliest": "U",
+      "notes": "Official Bitget docs confirm the public announcement endpoint, coin_listings filter, cursor, annId, annTitle, annUrl and createdTime. The live JSON request was not accessible through the web request tool. Source checked 2026-11-16 UTC: https://www.bitget.com/docs/catalog/market/market-data X handle checked 2026-11-16 UTC via official source: https://www.bitget.com/support/sections/360011097932. Three recent listing posts were not independently readable in this run, so each sample remains U.",
+      "x_handle_source": "https://www.bitget.com/support/sections/360011097932",
+      "x_checked_utc": "2026-11-16T00:00:00Z"
+    },
+    {
+      "exchange": "Coinbase",
+      "page_url": "https://www.coinbase.com/blog/update-to-asset-listing-announcements",
+      "list_endpoint": "U",
+      "http_status": "U",
+      "needs_key": false,
+      "format": "html",
+      "time_field": "U",
+      "planned_open_in": "U",
+      "pairs_in": "U",
+      "paging": "U",
+      "blocked_from_us": "U",
+      "alt_endpoint": "https://x.com/CoinbaseAssets",
+      "sample": [],
+      "x_handle": "@CoinbaseAssets",
+      "x_samples": [
+        {
+          "tweet_url": "U",
+          "tweet_utc": "U",
+          "site_announce_utc": "U",
+          "asset": "U"
+        },
+        {
+          "tweet_url": "U",
+          "tweet_utc": "U",
+          "site_announce_utc": "U",
+          "asset": "U"
+        },
+        {
+          "tweet_url": "U",
+          "tweet_utc": "U",
+          "site_announce_utc": "U",
+          "asset": "U"
+        }
+      ],
+      "kline_endpoint": "https://api.exchange.coinbase.com/products/BTC-USD/candles?granularity=60",
+      "kline_earliest": "U",
+      "notes": "Coinbase official announcement says individual listing blog posts were discontinued and directs asset announcements to @CoinbaseAssets. A 2026-10-14 official update confirms @CoinbaseAssets is the dedicated source for spot, futures, options, perpetuals, delistings and network updates. Source checked 2026-11-16 UTC: https://www.coinbase.com/en-ca/blog/update-to-our-asset-listings-announcements X handle checked 2026-11-16 UTC via official source: https://www.coinbase.com/en-ca/blog/update-to-our-asset-listings-announcements. Three recent listing posts were not independently readable in this run, so each sample remains U.",
+      "x_handle_source": "https://www.coinbase.com/en-ca/blog/update-to-our-asset-listings-announcements",
+      "x_checked_utc": "2026-11-16T00:00:00Z"
+    },
+    {
+      "exchange": "Upbit",
+      "page_url": "https://upbit.com/service_center/notice",
+      "list_endpoint": "U",
+      "http_status": "U",
+      "needs_key": false,
+      "format": "html",
+      "time_field": "U",
+      "planned_open_in": "title / body",
+      "pairs_in": "title / body",
+      "paging": "U",
+      "blocked_from_us": "U",
+      "alt_endpoint": "https://global-docs.upbit.com/reference/api-overview",
+      "sample": [],
+      "x_handle": "@upbitglobal",
+      "x_samples": [
+        {
+          "tweet_url": "U",
+          "tweet_utc": "U",
+          "site_announce_utc": "U",
+          "asset": "U"
+        },
+        {
+          "tweet_url": "U",
+          "tweet_utc": "U",
+          "site_announce_utc": "U",
+          "asset": "U"
+        },
+        {
+          "tweet_url": "U",
+          "tweet_utc": "U",
+          "site_announce_utc": "U",
+          "asset": "U"
+        }
+      ],
+      "kline_endpoint": "https://sg-api.upbit.com/v1/candles/minutes/1?market=SGD-BTC&count=2",
+      "kline_earliest": "U",
+      "notes": "Upbit Global docs confirm public quotation APIs and regional endpoints, but the real-time announcement WebSocket is private and requires authentication. Korean notice endpoint and live sample were not verified in this run. Sources checked 2026-11-16 UTC: https://global-docs.upbit.com/reference/api-overview and https://global-docs.upbit.com/reference/auth X handle checked 2026-11-16 UTC via official source: https://upbit.com/service_center/notice. Three recent listing posts were not independently readable in this run, so each sample remains U.",
+      "x_handle_source": "https://upbit.com/service_center/notice",
+      "x_checked_utc": "2026-11-16T00:00:00Z"
+    },
+    {
+      "exchange": "Bithumb",
+      "page_url": "https://feed.bithumb.com/notice",
+      "list_endpoint": "https://feed-api.bithumb.com/v1/notices?count=2",
+      "http_status": 200,
+      "needs_key": false,
+      "format": "json",
+      "time_field": "published_at and modified_at, yyyy-MM-dd HH:mm:ss, timezone not stated by official docs",
+      "planned_open_in": "body",
+      "pairs_in": "title / body",
+      "paging": "count only, min 1 and max 20. Historical cursor not documented.",
+      "blocked_from_us": "U",
+      "alt_endpoint": "https://apidocs.bithumb.com/reference/%EA%B3%B5%EC%A7%80%EC%82%AC%ED%95%AD-%EC%A1%B0%ED%9A%8C",
+      "sample": [
+        {
+          "title": "라이터(LIT) 유의촉구 안내",
+          "url": "https://feed.bithumb.com/notice/1655679",
+          "published_utc": "U",
+          "planned_open_utc": "U",
+          "pairs": [],
+          "published_raw": "2026-11-16 20:30:00"
+        },
+        {
+          "title": "라이터(LIT) 입출금 일시 중지 안내",
+          "url": "https://feed.bithumb.com/notice/1655678",
+          "published_utc": "U",
+          "planned_open_utc": "U",
+          "pairs": [],
+          "published_raw": "2026-11-16 20:10:41"
+        }
+      ],
+      "x_handle": "@BithumbOfficial",
+      "x_samples": [
+        {
+          "tweet_url": "U",
+          "tweet_utc": "U",
+          "site_announce_utc": "U",
+          "asset": "U"
+        },
+        {
+          "tweet_url": "U",
+          "tweet_utc": "U",
+          "site_announce_utc": "U",
+          "asset": "U"
+        },
+        {
+          "tweet_url": "U",
+          "tweet_utc": "U",
+          "site_announce_utc": "U",
+          "asset": "U"
+        }
+      ],
+      "kline_endpoint": "https://api.bithumb.com/v1/candles/minutes/1?market=KRW-BTC&count=2",
+      "kline_earliest": "U",
+      "notes": "Live browser request returned HTTP JSON with two records. The official docs state an IP rate limit of 1 request/sec and count max 20. The docs do not state the timezone for published_at, so raw strings are retained and published_utc is U. Source checked 2026-11-16 UTC: https://apidocs.bithumb.com/reference/%EA%B3%B5%EC%A7%80%EC%82%AC%ED%95%AD-%EC%A1%B0%ED%9A%8C X handle checked 2026-11-16 UTC via official source: https://www.bithumb.com. Three recent listing posts were not independently readable in this run, so each sample remains U. Official notice pages show KST in body text, but the API field itself does not declare timezone. Keep timezone U.",
+      "x_handle_source": "https://www.bithumb.com",
+      "x_checked_utc": "2026-11-16T00:00:00Z"
+    },
+    {
+      "exchange": "Gate",
+      "page_url": "https://www.gate.com/announcements",
+      "list_endpoint": "wss://api.gateio.ws/ws/v4/ann",
+      "http_status": 200,
+      "needs_key": false,
+      "format": "json",
+      "time_field": "published_at, Unix seconds UTC",
+      "planned_open_in": "brief / title",
+      "pairs_in": "brief / title",
+      "paging": "WebSocket is push plus one latest cached update, no historical pagination.",
+      "blocked_from_us": "U",
+      "alt_endpoint": "https://www.gate.com/docs/developers/announcements/ws/en/",
+      "sample": [
+        {
+          "title": "Gate will commence Worldcoin(WLD) Trading at 7:30am UTC 24th July 2023 test",
+          "url": "https://www.gate.com/article/228103",
+          "published_utc": "2023-07-26T08:45:13Z",
+          "planned_open_utc": "2023-07-24T07:30:00Z",
+          "pairs": [
+            "WLD_USDT"
+          ]
+        }
+      ],
+      "x_handle": "@gate_io",
+      "x_samples": [
+        {
+          "tweet_url": "U",
+          "tweet_utc": "U",
+          "site_announce_utc": "U",
+          "asset": "U"
+        },
+        {
+          "tweet_url": "U",
+          "tweet_utc": "U",
+          "site_announce_utc": "U",
+          "asset": "U"
+        },
+        {
+          "tweet_url": "U",
+          "tweet_utc": "U",
+          "site_announce_utc": "U",
+          "asset": "U"
+        }
+      ],
+      "kline_endpoint": "https://api.gateio.ws/api/v4/spot/candlesticks?currency_pair=BTC_USDT&interval=1m&limit=2",
+      "kline_earliest": "U",
+      "notes": "Gate official announcement WebSocket docs provide the public base URL, listing channel and response fields origin_url, title, brief and published_at. The documented sample is one live-format response, not a second live request from this environment. Source checked 2026-11-16 UTC: https://www.gate.com/docs/developers/announcements/ws/en/ X handle checked 2026-11-16 UTC via official source: https://www.gate.com/announcements. Three recent listing posts were not independently readable in this run, so each sample remains U.",
+      "x_handle_source": "https://www.gate.com/announcements",
+      "x_checked_utc": "2026-11-16T00:00:00Z"
+    },
+    {
+      "exchange": "MEXC",
+      "page_url": "https://www.mexc.com/announcements",
+      "list_endpoint": "U",
+      "http_status": "U",
+      "needs_key": false,
+      "format": "html",
+      "time_field": "U",
+      "planned_open_in": "title / body",
+      "pairs_in": "title / body",
+      "paging": "U",
+      "blocked_from_us": "U",
+      "alt_endpoint": "https://www.mexc.com/learn/article/mexc-new-listing-calendar-how-to-check-token-listing-status-upcoming-listings/1",
+      "sample": [],
+      "x_handle": "@MEXC_Official",
+      "x_samples": [
+        {
+          "tweet_url": "U",
+          "tweet_utc": "U",
+          "site_announce_utc": "U",
+          "asset": "U"
+        },
+        {
+          "tweet_url": "U",
+          "tweet_utc": "U",
+          "site_announce_utc": "U",
+          "asset": "U"
+        },
+        {
+          "tweet_url": "U",
+          "tweet_utc": "U",
+          "site_announce_utc": "U",
+          "asset": "U"
+        }
+      ],
+      "kline_endpoint": "https://api.mexc.com/api/v3/klines?symbol=BTCUSDT&interval=1m&limit=2",
+      "kline_earliest": "U",
+      "notes": "Official announcement center and official listing-calendar article were opened. A public announcement JSON endpoint and live sample were not verified in this run. Source checked 2026-11-16 UTC: https://www.mexc.com/announcements X handle checked 2026-11-16 UTC via official source: https://www.mexc.com/announcements. Three recent listing posts were not independently readable in this run, so each sample remains U.",
+      "x_handle_source": "https://www.mexc.com/announcements",
+      "x_checked_utc": "2026-11-16T00:00:00Z"
+    },
+    {
+      "exchange": "Kraken",
+      "page_url": "https://www.kraken.com/listings",
+      "list_endpoint": "https://blog.kraken.com/feed/",
+      "http_status": 200,
+      "needs_key": false,
+      "format": "rss",
+      "time_field": "pubDate, RSS date with timezone",
+      "planned_open_in": "U",
+      "pairs_in": "U",
+      "paging": "Roadmap page, historical pagination not verified.",
+      "blocked_from_us": "U",
+      "alt_endpoint": "https://www.kraken.com/listings",
+      "sample": [],
+      "x_handle": "@krakenlistings",
+      "x_samples": [
+        {
+          "tweet_url": "U",
+          "tweet_utc": "U",
+          "site_announce_utc": "U",
+          "asset": "U"
+        },
+        {
+          "tweet_url": "U",
+          "tweet_utc": "U",
+          "site_announce_utc": "U",
+          "asset": "U"
+        },
+        {
+          "tweet_url": "U",
+          "tweet_utc": "U",
+          "site_announce_utc": "U",
+          "asset": "U"
+        }
+      ],
+      "kline_endpoint": "https://api.kraken.com/0/public/OHLC?pair=XBTUSD&interval=1",
+      "kline_earliest": "U",
+      "notes": "Official listings page says roadmap inclusion is not a guarantee and trading is unsupported until an official listing announcement. The public OHLC endpoint responded as application/json in the live request, but the response body was not exposed by the request tool. Source checked 2026-11-16 UTC: https://www.kraken.com/listings X handle checked 2026-11-16 UTC via official source: https://support.kraken.com/articles/201351886-how-to-follow-kraken-on-social-media. Three recent listing posts were not independently readable in this run, so each sample remains U. Official support identifies @krakenlistings as the Kraken Listings account.",
+      "x_handle_source": "https://support.kraken.com/articles/201351886-how-to-follow-kraken-on-social-media",
+      "x_checked_utc": "2026-11-16T00:00:00Z"
+    },
+    {
+      "exchange": "KuCoin",
+      "page_url": "https://www.kucoin.com/announcement/latest-announcements",
+      "list_endpoint": "https://api.kucoin.com/api/v3/announcements?currentPage=1&pageSize=2&annType=new-listings&lang=en_US",
+      "http_status": 200,
+      "needs_key": false,
+      "format": "json",
+      "time_field": "cTime, Unix milliseconds UTC",
+      "planned_open_in": "annDesc / article body",
+      "pairs_in": "annTitle / annDesc / article body",
+      "paging": "currentPage, pageSize and totalPage returned. Live sample returned totalPage=9 for pageSize=2. Earliest available date not checked.",
+      "blocked_from_us": "U",
+      "alt_endpoint": "https://www.kucoin.com/docs-new/rest/spot-trading/market-data/get-announcements",
+      "sample": [
+        {
+          "title": "KuCoin Futures Will List Multiple Stock Index Perpetual Contracts (2026-11-13)",
+          "url": "https://www.kucoin.com/announcement/en-kucoin-futures-will-list-multiple-stock-index-perpetual-contracts-2026-11-13?lang=en_US",
+          "published_utc": "2026-11-13T07:12:00Z",
+          "planned_open_utc": "U",
+          "pairs": []
+        },
+        {
+          "title": "World Premiere: Matrix (MTX) Listed on KuCoin",
+          "url": "https://www.kucoin.com/announcement/en-world-premiere-matrix-mtx-listed-on-kucoin?lang=en_US",
+          "published_utc": "2026-11-10T07:45:00Z",
+          "planned_open_utc": "2026-11-11T11:00:00Z",
+          "pairs": [
+            "MTX/USDT"
+          ]
+        }
+      ],
+      "x_handle": "@kucoincom",
+      "x_samples": [
+        {
+          "tweet_url": "U",
+          "tweet_utc": "U",
+          "site_announce_utc": "U",
+          "asset": "U"
+        },
+        {
+          "tweet_url": "U",
+          "tweet_utc": "U",
+          "site_announce_utc": "U",
+          "asset": "U"
+        },
+        {
+          "tweet_url": "U",
+          "tweet_utc": "U",
+          "site_announce_utc": "U",
+          "asset": "U"
+        }
+      ],
+      "kline_endpoint": "https://api.kucoin.com/api/v1/market/candles?symbol=BTC-USDT&type=1min",
+      "kline_earliest": "U",
+      "notes": "Live browser request returned code 200000, totalNum=17, totalPage=9 and two records. The Matrix record's annDesc explicitly states Trading: 11:00 on November 11, 2026 (UTC). Source checked 2026-11-16 UTC: https://www.kucoin.com/docs-new/rest/spot-trading/market-data/get-announcements X handle checked 2026-11-16 UTC via official source: https://www.kucoin.com/announcement/latest-announcements. Three recent listing posts were not independently readable in this run, so each sample remains U.",
+      "x_handle_source": "https://www.kucoin.com/announcement/latest-announcements",
+      "x_checked_utc": "2026-11-16T00:00:00Z"
+    },
+    {
+      "exchange": "HTX",
+      "page_url": "https://www.htx.com/en-us/support/list/360000039942/",
+      "list_endpoint": "https://www.htx.com/en-us/support/list/360000039942/",
+      "http_status": 200,
+      "needs_key": false,
+      "format": "html",
+      "time_field": "timestamp shown in link text, UTC",
+      "planned_open_in": "title / body",
+      "pairs_in": "title / body",
+      "paging": "Numeric pages in URL. Live page exposed page 1 through page 142 and next-page links.",
+      "blocked_from_us": "U",
+      "alt_endpoint": "https://www.htx.com/en-us/opend/newApiPages/",
+      "sample": [
+        {
+          "title": "HTX to Open Trading for QQQ (Invesco QQQ), TQQQ (ProShares UltraPro QQQ) and SOXL (Direxion Semiconductor Bull 3X) from 07:00 (UTC) on November 16, 2026",
+          "url": "https://www.htx.com/en-us/support/55049116481530/",
+          "published_utc": "2026-11-16T02:46:50Z",
+          "planned_open_utc": "2026-11-16T07:00:00Z",
+          "pairs": [
+            "QQQ/USDT",
+            "TQQQ/USDT",
+            "SOXL/USDT"
+          ]
+        },
+        {
+          "title": "HTX to Open Trading for NBIS (Nebius), BE (Bloom Energy) and MRNA (Moderna) from 07:00 (UTC) on November 13, 2026",
+          "url": "https://www.htx.com/en-us/support/65048791572341/",
+          "published_utc": "2026-11-13T02:00:04Z",
+          "planned_open_utc": "2026-11-13T07:00:00Z",
+          "pairs": [
+            "NBIS/USDT",
+            "BE/USDT",
+            "MRNA/USDT"
+          ]
+        }
+      ],
+      "x_handle": "@HuobiGlobal",
+      "x_samples": [
+        {
+          "tweet_url": "U",
+          "tweet_utc": "U",
+          "site_announce_utc": "U",
+          "asset": "U"
+        },
+        {
+          "tweet_url": "U",
+          "tweet_utc": "U",
+          "site_announce_utc": "U",
+          "asset": "U"
+        },
+        {
+          "tweet_url": "U",
+          "tweet_utc": "U",
+          "site_announce_utc": "U",
+          "asset": "U"
+        }
+      ],
+      "kline_endpoint": "https://api.huobi.pro/market/history/kline?symbol=btcusdt&period=1min&size=2",
+      "kline_earliest": "U",
+      "notes": "Live browser page exposed New Coin Listing category, article links, planned UTC times, pairs and numeric pagination to page 142. No public announcement JSON endpoint was verified. Source checked 2026-11-16 UTC: https://www.htx.com/en-us/support/list/360000039942/ X handle checked 2026-11-16 UTC via official source: https://www.htx.com/en-us/support/. Three recent listing posts were not independently readable in this run, so each sample remains U.",
+      "x_handle_source": "https://www.htx.com/en-us/support/",
+      "x_checked_utc": "2026-11-16T00:00:00Z"
+    }
+  ],
+  "aggregators": [
+    {
+      "name": "TokenEarly",
+      "url": "https://tokenearly.com/exchanges/bybit/announcements",
+      "covers": [
+        "Bybit",
+        "KuCoin",
+        "other exchanges listed by the service"
+      ],
+      "has_read_api": false,
+      "history": "Page history is visible for some exchange pages, exact retention not verified.",
+      "price": "U",
+      "terms": "U",
+      "verified_how": "Official-looking exchange listing alert pages were opened through search results. No public read API was verified in this run. Checked 2026-11-16 UTC: https://github.com/tokenearly/awesome-crypto-listing-alerts"
+    }
+  ],
+  "not_done": [
+    "Binance was intentionally not rechecked because Claude marked it already connected.",
+    "Most live REST endpoints returned a web-tool access error or country block, so their HTTP status and live two-item bodies remain U. Official documentation and exact endpoint paths are recorded where verified.",
+    "Official X samples for the last three listing posts were not completed. Handles are recorded only where the official source or official announcement identified them. No tweet timestamps were guessed.",
+    "K-line earliest-history boundaries and US-country behavior were not fully verified. Endpoints are recorded only from official API documentation or official public API patterns.",
+    "Gate's documented WebSocket sample is a protocol example rather than a second live connection. The service does not expose historical pagination through this channel.",
+    "The Bithumb live sample returned 2026-11-16 local-looking clock strings. The official docs specify the format but do not state a timezone, so the sample is preserved verbatim and should be timezone-confirmed before ingestion."
+  ]
+}

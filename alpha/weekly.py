@@ -20,6 +20,9 @@ D = os.path.join(ROOT, "data", "alpha")
 W = os.path.join(D, "weekly")
 
 
+SRC_NAMES = [("tokenless_rev", "无币收入榜"), ("new_listing", "新上架"), ("rev_surge", "收入新起量"), ("manual", "手动线索"), ("site:", "站内板块")]
+
+
 def load(p, d=None):
     try:
         with open(p, encoding="utf-8") as f:
@@ -80,7 +83,7 @@ def main():
     revs = [r["rev30"] for r in latest.get("tokenless", [])]
     out = {
         "week": tag, "from": s0, "to": e0, "days_with_data": len(hw),
-        "leads": {"new": len(new), "by_source": {s: sum(1 for v in new if s in v["source"]) for s in ("tokenless_rev", "new_listing")},
+        "leads": {"new": len(new), "by_source": {s: sum(1 for v in new if s in v["source"]) for s in ("tokenless_rev", "new_listing", "rev_surge", "manual", "site:")},
                   "new_names": [v["name"] for v in new][:40], "status_changes": [{"name": n, "status": s, "date": d} for n, s, d in status], "token_launch": token, "total": len(leads)},
         "feed": {"new": len(fnew), "by_source": {s: sum(1 for x in fnew if x["src"] == s) for s in ("ethresearch", "snapshot", "binance")},
                  "delay_median_h": round(st.median(delays), 1) if delays else None},
@@ -98,7 +101,7 @@ def main():
     fm = lambda v: "—" if v is None else f"${v / 1e6:.2f}M" if v >= 1e6 else f"${v / 1e3:.0f}K"
     md = [f"# Alpha 雷达周复盘 {tag}（{s0} – {e0}，UTC）", "",
           f"有数据的天数 {len(hw)} / 7。框架 {out['framework']}。", "",
-          "## 线索", f"- 新增 {len(new)} 条（无币收入榜 {out['leads']['by_source']['tokenless_rev']}、新上架 {out['leads']['by_source']['new_listing']}），台账累计 {len(leads)}",
+          "## 线索", f"- 新增 {len(new)} 条（" + "、".join(f"{n} {out['leads']['by_source'][k]}" for k, n in SRC_NAMES if out['leads']['by_source'][k]) + f"；一条可能同时来自几个来源），台账累计 {len(leads)}",
           f"- 状态变化 {len(status)} 次" + ("：" + "；".join(f"{n} → {s}" for n, s, _ in status[:20]) if status else ""),
           f"- 发币 {len(token)} 个" + ("：" + "、".join(token) if token else ""), "",
           "## 事件流", f"- 新增 {len(fnew)} 条（论坛 {out['feed']['by_source']['ethresearch']}、治理 {out['feed']['by_source']['snapshot']}、Binance {out['feed']['by_source']['binance']}）",
@@ -110,7 +113,17 @@ def main():
           f"- {'两组都满 20 个，可以判' if out['a4']['judgeable'] else '样本不够，记录中（两组都要 ≥ 20）'}", "",
           "## 门槛复核（无币收入榜 30 天收入）", f"- {len(revs)} 个：P25 {fm(out['threshold']['p25'])} · 中位 {fm(out['threshold']['p50'])} · P75 {fm(out['threshold']['p75'])} · P90 {fm(out['threshold']['p90'])}；现行门槛 $100K（攒满 4 周再决定要不要调）", "",
           "## 本周结论 / 规则调整", "- （复盘会话填写：哪些判断被证实或推翻、要不要改规则；改规则要写进框架版本和更新日志）"]
-    open(os.path.join(W, f"{tag}.md"), "w", encoding="utf-8").write("\n".join(md) + "\n")
+    # 重跑（补数据）时保留复盘会话已经写好的结论，不拿占位行盖掉
+    mp = os.path.join(W, f"{tag}.md")
+    head = "## 本周结论 / 规则调整"
+    try:
+        old_md = open(mp, encoding="utf-8").read()
+    except OSError:
+        old_md = ""
+    kept = old_md.split(head, 1)[1].strip() if head in old_md else ""
+    if kept and not kept.startswith("- （复盘会话填写"):
+        md = md[:md.index(head) + 1] + kept.split("\n")
+    open(mp, "w", encoding="utf-8").write("\n".join(md) + "\n")
     print("\n".join(md))
 
 

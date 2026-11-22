@@ -1,0 +1,7 @@
+name = "uncleonchain-refresh"
+main = "worker.js"
+compatibility_date = "2026-10-01"
+
+[triggers]
+# UTC：am 00:05（新加坡 08:05）、pm 08:30（新加坡 16:30）、retry 09:50（新加坡 17:50，只在交易数据没齐时真跑）
+crons = ["5 0 * * *", "30 8 * * *", "50 9 * * *"]

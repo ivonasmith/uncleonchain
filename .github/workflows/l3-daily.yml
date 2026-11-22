@@ -4,8 +4,7 @@
 name: L3 筹码层日更
 
 on:
-  schedule:
-    - cron: "47 2 * * *"
+  # 定时改由总调度 refresh.yml 统一跑（2026-11-15）；这里只留手动和推送触发
   workflow_dispatch: {}
   push:                       # 改了 L3 规则，推上来立刻重跑
     branches: [main]

@@ -4,8 +4,7 @@
 name: L4 情绪衍生品层日更
 
 on:
-  schedule:
-    - cron: "17 3 * * *"
+  # 定时改由总调度 refresh.yml 统一跑（2026-11-15）；这里只留手动和推送触发
   workflow_dispatch: {}
   push:
     branches: [main]

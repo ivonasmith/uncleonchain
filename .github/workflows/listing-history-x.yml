@@ -1,0 +1,104 @@
+name: 各交易所全历史上币复盘
+# 两种触发：
+#  ① 手动（workflow_dispatch）：inputs.runs 填任务列表。
+#  ② Codex 自助（大叔 11-17 定：这条线交给 Codex）：改 alpha/review/listing_run.json 推到 codex/review 就自动跑。
+#     安全：只从 codex/review 读这个请求文件，跑的脚本永远是 main 上审核过的版本；结果由汇总任务提交到 main 的 data/alpha/。
+# 任务写法："okx"（整所）或 "bitget:2/4"（分片：第 2 份 / 共 4 份，大所币太多一台机器 4.5 小时跑不完时用）；"bybit" 走官方逐笔成交归档。
+on:
+  workflow_dispatch:
+    inputs:
+      runs:
+        description: '任务 JSON 数组，如 ["okx","bitget:1/4","bitget:2/4"]'
+        default: '["upbit","bybit"]'
+      limit:
+        description: "只试跑前 N 个币（留空 = 全量）"
+        default: ""
+  push:
+    branches: [codex/review]
+    paths: [alpha/review/listing_run.json]
+permissions:
+  contents: write
+concurrency:
+  group: listing-history-x-${{ github.run_id }}
+  cancel-in-progress: false
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      runs: ${{ steps.p.outputs.runs }}
+      limit: ${{ steps.p.outputs.limit }}
+    steps:
+      - uses: actions/checkout@v4   # push 触发时这里是 codex/review，只用来读请求文件
+      - id: p
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo 'runs=${{ github.event.inputs.runs }}' >> "$GITHUB_OUTPUT"
+            echo 'limit=${{ github.event.inputs.limit }}' >> "$GITHUB_OUTPUT"
+          else
+            python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import json, re
+          d = json.load(open("alpha/review/listing_run.json", encoding="utf-8"))
+          runs = [r for r in d.get("runs", []) if re.fullmatch(r"[a-z0-9]+(:\d+/\d+)?", r)]   # 只收合法写法
+          lim = str(d.get("limit", "") or "")
+          print("runs=" + json.dumps(runs))
+          print("limit=" + (lim if lim.isdigit() else ""))
+          PY
+          fi
+          cat "$GITHUB_OUTPUT"
+  run:
+    needs: plan
+    if: needs.plan.outputs.runs != '[]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      max-parallel: 20
+      matrix:
+        job: ${{ fromJSON(needs.plan.outputs.runs) }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main   # 脚本永远用 main 上的版本
+      - run: pip install -q ccxt
+      - name: 复盘 ${{ matrix.job }}
+        run: |
+          J="${{ matrix.job }}"; EX="${J%%:*}"; SH=""
+          [ "$J" != "$EX" ] && SH="--shard ${J#*:}"
+          L=""; [ -n "${{ needs.plan.outputs.limit }}" ] && L="--limit ${{ needs.plan.outputs.limit }}"
+          if [ "$EX" = "bybit" ]; then
+            python3 -u alpha/listing_history_bybit.py --minutes 270 $L   # Bybit API 在美国被拦，走官方逐笔成交归档
+          else
+            python3 -u alpha/listing_history_x.py "$EX" --minutes 270 $SH
+          fi
+          echo "ART=lh-$(echo "$J" | tr ':/' '__')" >> "$GITHUB_ENV"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ${{ env.ART }}
+          path: data/alpha/listing_history_*.json
+          if-no-files-found: ignore
+  compare:
+    needs: run
+    if: ${{ !cancelled() }}   # 取消的运行不提交（11-17 出过取消后仍提交半成品的事）
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: lh-*
+          path: lh
+          merge-multiple: true
+      - name: 汇总对比
+        run: |
+          for f in lh/*.json; do [ "$(basename "$f")" = "listing_history_binance.json" ] || cp "$f" data/alpha/; done
+          python3 alpha/listing_compare.py | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: 提交
+        run: |
+          git config user.name "uncleonchain-bot"
+          git config user.email "bot@uncleonchain.com"
+          git add data/alpha/listing_history_*.json data/alpha/listing_compare.json
+          git commit -m "各交易所全历史上币复盘 $(date -u +%F)" || exit 0
+          for i in 1 2 3 4; do git pull --rebase -X theirs origin main && git push origin HEAD:main && break; sleep $((i*5)); done

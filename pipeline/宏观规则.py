@@ -26,7 +26,7 @@ import math
 import 综合研判 as 综合
 
 LAYERS = {
-    1: {"名称": "宏观流动性", "EN": "Macro Liquidity", "问": "风险预算该松还是紧", "问EN": "How much risk budget",
+    1: {"名称": "宏观流动性", "EN": "Macro Liquidity", "问": "宏观在推还是在拖", "问EN": "Is macro pushing or dragging",
         "频率": "周到月", "频率EN": "weeks to months"},
     2: {"名称": "周期定位", "EN": "Cycle Position", "问": "在周期哪一段", "问EN": "Where in the cycle",
         "频率": "日更 · 周期级别", "频率EN": "daily update · cycle scale"},
@@ -35,8 +35,10 @@ LAYERS = {
     4: {"名称": "情绪衍生品", "EN": "Sentiment & Derivatives", "问": "短期会不会超调", "问EN": "Is it about to overshoot",
         "频率": "日内级别", "频率EN": "intraday"},
 }
-L1_POSITION = "L1 管周到月的波动、节奏和风险预算，不管方向——它是调速器，不是方向盘；方向先看 L2 周期层，半年尺度两者同等重要。"
-L1_POSITION_EN = ("L1 governs volatility, pacing and risk budget over weeks to months, not direction — it is the throttle, "
+L1_POSITION = "L1 说宏观在推还是在拖（周到月的波动和节奏），不管方向——它是调速器，不是方向盘；方向先看 L2 周期层，半年尺度两者同等重要。"
+# 区间改名（只改说法、边界不变）：比较昨日日志时按新名对齐，免得报出假的区间切换（2026-11-15 表达规范）
+ZONE_RENAMED = {"扩张（不加仓）": "扩张", "存量换手（背离，不加仓）": "存量换手（背离）"}
+L1_POSITION_EN = ("L1 says whether macro is pushing or dragging (volatility and pace over weeks to months), not direction — it is the throttle, "
                   "not the steering wheel. Direction comes from L2 (cycle); at a six-month horizon both matter equally.")
 
 
@@ -528,7 +530,7 @@ def relation_to_price(zone_cuts):
 
 # ---------------------------------------------------------------- 指标注册表（顺序即页面顺序）
 # 级别：核心 = 进层判定；辅助 = 展示 + 只做记录；观察 = 测过但没达到可用标准，只看不用
-# 等级（L1）：已验证 > 已验证·方向 > 描述读数 > 监控；只有「已验证」可以直接影响仓位参数
+# 等级（L1）：已验证 > 已验证·方向 > 描述读数 > 监控；只有「已验证」可以进结论句
 STABLE_CUTS = [(-1, "收缩", "Contracting", "dn", 0), (1, "持平", "Flat", "neutral", 0), (None, "扩张", "Expanding", "up", 0)]
 G_SC = ("L1-B 加密资金通道 · 稳定币（只确认、不预测）", "L1-B crypto funding channels · stablecoins (confirm, don't predict)")
 G_ETF = ("L1-B 加密资金通道 · 现货 ETF", "L1-B crypto funding channels · spot ETFs")
@@ -607,16 +609,16 @@ REGISTRY = [
      "界": ["≤ −0.40pp", "−0.40pp ~ +0.40pp（按水平 ≥ 1.0% 分高位 / 低位）", "≥ +0.40pp"],
      "界EN": ["≤ −0.40pp", "−0.40pp – +0.40pp (high/low by level ≥ 1.0%)", "≥ +0.40pp"],
      "依据": "13 周变化 + 水平", "依据EN": "13-week change + level"},
-    {"key": "netliq13", "层": 1, "组": "流动性闸门（只打折不加仓）", "组EN": "Liquidity gate (discount only)", "级别": "核心", "等级": "已验证·方向",
+    {"key": "netliq13", "层": 1, "组": "流动性闸门", "组EN": "Liquidity gate", "级别": "核心", "等级": "已验证·方向",
      "名称": "美联储净流动性 · 13 周变化", "EN": "Fed net liquidity · 13w change", "series": s_netliq13, "fmt": "pcts", "freq": "w",
      "来源": "FRED · WALCL − WTREGEN − RRPONTSYD", "滞后": 9, "raw": "netliq", "rawfmt": "usd",
      "cuts": [(-2.72 + 1e-9, "大幅收缩", "Sharp contraction", "dn", 0), (0, "小幅收缩", "Mild contraction", "neutral", 0),
-              (None, "扩张（不加仓）", "Expanding (no add)", "neutral", 0)],
+              (None, "扩张", "Expanding", "neutral", 0)],
      "界": ["≤ −2.72%", "−2.72% ~ 0", "≥ 0"], "界EN": ["≤ −2.72%", "−2.72% – 0", "≥ 0"],
-     "说明": "美联储总资产 − 财政部 TGA − 隔夜逆回购。≤ −2.72% 且美元 13 周走强 → 闸门触发（框架里名义风险预算 ×0.7）；扩张时不加仓。2024-05 后领先关系在变弱，2026 年底复核。",
-     "说明EN": "Fed assets − Treasury General Account − overnight RRP. ≤ −2.72% with a stronger dollar over 13w trips the gate (risk budget ×0.7 in the framework); expansion never adds. Weakening since 2024-05; review end-2026.",
+     "说明": "美联储总资产 − 财政部 TGA − 隔夜逆回购。≤ −2.72% 且美元 13 周走强 → 闸门触发（市场上的钱在变少、美元在走强）；扩张时闸门不起作用，不算顺风。2024-05 后领先关系在变弱，2026 年底复核。",
+     "说明EN": "Fed assets − Treasury General Account − overnight RRP. ≤ −2.72% with a stronger dollar over 13w trips the gate (money is draining while the dollar strengthens); expansion does not count as a tailwind. Weakening since 2024-05; review end-2026.",
      "依据": "13 周变化", "依据EN": "13-week change"},
-    {"key": "usd13", "层": 1, "组": "流动性闸门（只打折不加仓）", "组EN": "Liquidity gate (discount only)", "级别": "辅助", "等级": "已验证",
+    {"key": "usd13", "层": 1, "组": "流动性闸门", "组EN": "Liquidity gate", "级别": "辅助", "等级": "已验证",
      "名称": "广义美元 · 13 周变化", "EN": "Broad dollar · 13w change", "series": s_usd13, "fmt": "pcts", "freq": "w",
      "来源": "FRED · DTWEXBGS", "滞后": 10, "raw": "fred_broad_usd", "rawfmt": "idx",
      "cuts": [(0, "美元走弱", "Weaker", "up", 0), (None, "美元走强", "Stronger", "dn", 0)],
@@ -808,7 +810,7 @@ REGISTRY = [
      "界": ["< 0（线在现价下方）", "≥ 0（线在现价上方）"], "界EN": ["< 0 (line below price)", "≥ 0 (line above price)"],
      "说明": "最近约 5 个月买入、之后没动过的币的平均成本。读数 = 这条线离现价多远：负数 = 线在现价下方。",
      "说明EN": "Average cost of coins bought in roughly the last five months and not moved since. The reading is how far the line sits from price: negative = below price.",
-     "解读": "当前这条线离现价 {v}。全样本回落到这里后 30 天守住 60.5%（假线 38.5%），但效果几乎全在 2012~17 年；2018 年后 47% 对 41%，接近随机，只作背景参考，不加仓位权重。",
+     "解读": "当前这条线离现价 {v}。全样本回落到这里后 30 天守住 60.5%（假线 38.5%），但效果几乎全在 2012~17 年；2018 年后 47% 对 41%，接近随机，只作背景参考。",
      "解读EN": "The line is {v} from price. Across the full sample a pullback to it held for 30 days 60.5% of the time (placebo 38.5%), but almost all of that edge is from 2012–17; since 2018 it is 47% vs 41%, close to random — background only, no position weight.",
      "依据": "成本线离现价", "依据EN": "line vs price"},
     {"key": "l3_conc", "层": 3, "组": G_L3A[0], "组EN": G_L3A[1], "级别": "核心", "等级": "已验证·方向", "等级注": "只和低波动同时看", "等级注EN": "only together with low volatility",
@@ -970,6 +972,9 @@ BANNED = [
 
 # 规则变更留痕（更正记录页原样展示；已写入的历史日志不改）
 RULE_CHANGES = [
+    {"日期": "2026-11-15", "锚": "2026-11-15-expr", "原因": "网站只给数据和过程记录：一句话里的「风险预算照常 / 打七折 / 不追高 / 不开新空」是研究框架里作者自用的交易规则，放在结论句里读起来像给读者的指令。按 docs/表达规范.md，结论只说现在是什么状态、过去类似情况怎么样（带分母）。判定规则（方向、L1 档位、L4 信号）一条没改。", "原因EN": "The site gives data and process only. Phrases like 'risk budget at 70%', 'no chasing' or 'no new shorts' are the author's own trading rules from the research framework and read like instructions in the summary line. Per the expression guideline, the line now states the current condition and what happened in similar cases (with counts). No verdict rule (direction, L1 regime, L4 signal) changed.", "范围": "综合研判", "EN范围": "Overall read",
+     "内容": "综合研判一句话去掉动作段，L1 分段去掉风险预算句，L4 信号改成「资金费率转负，空头拥挤」并写出历史次数（31 次、之后 30 天上涨 74%）；同日把 L2 防顶说明、L3 压力区与大波动预警、L4 页签、流动性闸门组名、口径页和龙头选币闸门说明里的动作措辞一并改成状态描述，研究框架原文标「作者自用规则」。2026-11-15 及以前的日志保持原样。",
+     "EN": "The overall line drops the action clause; L1 paragraphs drop the risk-budget sentence; the L4 signal now reads 'funding has turned negative — shorts are crowded' with its track record (31 episodes, higher 30 days later 74% of the time). The same day, action wording in the L2 top-risk note, L3 pressure-zone and large-move notes, the L4 tab, the liquidity-gate group, the methodology page and the core-picks gate notes was rewritten as condition descriptions; verbatim framework rules are labelled as the author's own. Logs up to 2026-11-15 stay unchanged."},
     {"日期": "2026-10-02", "原因": "用 16 年数据逐条检验后发现，“印了多少钱”几乎不领先 BTC：14 个领先关系做样本外检验只过 1 个，M2 与 BTC 的涨跌幅相关只有 0.08。真正左右周到月节奏的，是市场的乐观度和信用的松紧。所以 L1 改以乐观度为第一指标，用实际利率和信用条件定档，流动性只保留“打折”这一项权力。", "原因EN": "Testing 16 years of data rule by rule showed that 'how much money was printed' barely leads BTC: only 1 of 14 lead relations survived out-of-sample, and M2's return correlation with BTC is just 0.08. What drives the weeks-to-months pace is market optimism and credit conditions. So L1 now puts optimism first, sets the regime with real yields and credit, and keeps liquidity only as a discount.", "范围": "L1 宏观流动性", "EN范围": "L1 Macro Liquidity",
      "内容": "按《L1 宏观层数据维度规格》重做：新增纳指 13 周、VIX、乐观度综合 z、BAA / NFCI / 高收益利差 13 周、实际利率四态与情境格、"
              "净流动性 13 周闸门、稳定币「剔除支付机构」「交易子弹」「生息/合成」、ETF 4 周、CME 升水、BTC−纳指 52 周相关、美股代币化快照；"
@@ -1267,7 +1272,7 @@ def scenario_cells(st):
 # 资金轮动矩阵（ETF 13 周 × 交易子弹 13 周）：看两条资金通道是一起进、一起撤，还是互相换手
 ROTATION = {
     ("入", "增"): ("新增资金共振（顺风确认）", "New money on both channels (tailwind confirm)", "up"),
-    ("入", "减"): ("存量换手（背离，不加仓）", "Existing money switching channels (divergence, no adds)", "warn"),
+    ("入", "减"): ("存量换手（背离）", "Existing money switching channels (divergence)", "warn"),
     ("出", "增"): ("链上资金承接（观察）", "On-chain money absorbing (watch)", "neutral"),
     ("出", "减"): ("资金双撤（逆风确认）", "Money leaving both channels (headwind confirm)", "dn"),
 }
@@ -1422,7 +1427,7 @@ def alerts(rs, prev_log, lp, l1=None, l2=None, l3=None, l4=None):
         if not x or x["过期"] or x["层"] in (2, 3, 4):  # L2 / L3 / L4 用自己的状态切换预警
             continue
         p = prev.get(x["key"])
-        if p and p.get("区间") != x["区间"] and x["级别"] == "核心" and x["区间"] not in ("—", "记录中"):
+        if p and ZONE_RENAMED.get(p.get("区间"), p.get("区间")) != x["区间"] and x["级别"] == "核心" and x["区间"] not in ("—", "记录中"):
             add("高" if x["tone"] in ("dn", "warn") else "中",
                 f"{x['名称']}从「{p['区间']}」进入「{x['区间']}」（{p['显示']} → {x['显示']}）",
                 f"{x['名称EN']} moved from '{p.get('区间EN') or p['区间']}' to '{x['区间EN']}' ({p['显示']} → {x['显示']})", x["层"], x["key"])

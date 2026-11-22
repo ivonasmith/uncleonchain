@@ -3,8 +3,7 @@
 name: Alpha 雷达日更
 
 on:
-  schedule:
-    - cron: "43 4 * * *"
+  # 定时改由总调度 refresh.yml 统一跑（2026-11-15）；这里只留手动和推送触发
   workflow_dispatch: {}
   push:
     branches: [main]
@@ -22,7 +21,7 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 75
     steps:
       - uses: actions/checkout@v4
         with:
@@ -34,6 +33,17 @@ jobs:
 
       - name: 跑 Alpha 雷达日更
         run: python3 alpha/alpha_daily.py
+
+      # 每日自动补证（Grok API，按队列：手动线索 / 本站板块 → 新发现 → 可投资 → 收入高）。预算在 alpha_config.json 的 grok，花费记 data/alpha/research_cost.json。
+      # 没配 XAI_API_KEY 就跳过；失败不影响日更
+      - name: 自动补证（Grok）
+        continue-on-error: true
+        timeout-minutes: 55
+        env:
+          XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
+        run: |
+          python3 -u alpha/grok_research.py
+          python3 alpha/opps.py --no-series
 
       # 每周一：上一个完整 UTC 周的复盘数据（复盘会话已经出过就不重出，免得盖掉它写的结论）
       - name: 周复盘数据（每周一）
@@ -52,6 +62,9 @@ jobs:
           python3 alpha/notion_sync.py opps leads
           if [ -n "$ALPHA_WEEK" ]; then python3 alpha/notion_sync.py weekly --week "$ALPHA_WEEK"; fi
 
+      - name: 全站待办与检查（Codex 推了补证后马上更新反馈）
+        run: python3 pipeline/任务清单.py || echo "待办检查失败"
+
       - name: 重出网站（看板素材 → 网站）
         env:
           LP_DATA: ${{ github.workspace }}/data
@@ -64,7 +77,7 @@ jobs:
         run: |
           git config user.name "uncleonchain-bot"
           git config user.email "bot@uncleonchain.com"
-          git add data/alpha site/
+          git add data/alpha site/ alpha/review/grok_*_checks.json 2>/dev/null || git add data/alpha site/
           git diff --cached --quiet && echo "没有变化，跳过提交" && exit 0
           git commit -m "Alpha 雷达日更 $(date -u +%Y-%m-%d)"
           BASE=$(git rev-parse HEAD~1)   # 本次出网站用的代码版本
@@ -76,3 +89,19 @@ jobs:
             git add site/ && (git diff --cached --quiet || git commit -m "重出网站（运行期间有代码更新）")
           fi
           git push
+
+      # 本月补证花费到上限：标红，GitHub 会发邮件提醒（大叔 11-15 定：超过 5 美元就告诉他）
+      - name: 补证预算提醒
+        run: |
+          python3 - <<'PY'
+          import json, datetime as dt, sys
+          try:
+              L = json.load(open("data/alpha/research_cost.json", encoding="utf-8"))
+          except Exception:
+              sys.exit(0)
+          m = dt.datetime.utcnow().strftime("%Y-%m")
+          a = L.get("alert") or {}
+          print("本月补证花费", (L.get(m) or {}).get("usd"))
+          if a.get("at", "")[:7] == m:
+              print("::error::" + a["msg"]); sys.exit(1)
+          PY

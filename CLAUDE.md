@@ -11,11 +11,20 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
 - 只给数据和过程记录，不写买卖建议。
 - **SEO（2026-11-15 起，所有会话都要遵守）**：新建 / 改页面前先读 `docs/SEO规范.md` 的「板块约定」——页面一律走 `出网站.page()`、实体要有真实路径、
   首屏数字写进 HTML 不能只有「读取中…」、description 不写操作性措辞。head / sitemap / 结构化数据的基建只在 `出网站.py` 统一做，板块里别另写一套。
+  基建 11-15 已上线（`seo_head` / `write_sitemap` / `leg_static`，`pipeline/seo_check.py` 出网站末尾自动跑，基线 0 条警告，`pipeline/indexnow.py` 在 daily.yml 定时推送）：`page()` 新参数全可不传，按路径自动推。
+- **表达（2026-11-15 大叔认可，所有会话都要遵守）**：`docs/表达规范.md`——给观点不给指令。三档：状态（每个板块第一句，大白话）/ 条件 + 历史（必须带分母和检验等级）/ 指令（不追高、加减仓、风险预算、止损止盈、抄底、不开新空——结论句、首屏、卡片、首页一律不出现；
+  方法论页引用研究框架原文要标「作者自用规则」）。下一步是战绩页（冻结结论 30 / 90 天后对账）；待改清单 E2–E8 在规范 §5。
 - **备份**：方案和恢复手册在 `docs/备份方案.md`；新增不可再生的数据（自录历史、人工登记）或新 secret / 放行域名，同步更新其中的资产清单和环境清单。
+  Notion 每个板块一个独立顶层入口页（像「Alpha 雷达」），本板块的数据库 / 复盘 / 备份附件都放自己入口页下，不挂在别的文档下；新建入口页登记到 `docs/备份方案.md` §1.1。
 
 ## 结构
 
-- `pipeline/跑日更.py --site`：GitHub Actions 每天 UTC 10:20 跑（推送 pipeline/content/assets 也会触发）。
+- **定时 = 总调度 `refresh.yml`（2026-11-15 大叔定方案 A）**：GitHub 自带 schedule 实测晚 6～10 小时，各板块 workflow 的定时已全部撤掉（只留推送 / 手动触发）。
+  Cloudflare Worker `uncleonchain-refresh`（`tools/refresh-trigger/`，secret `GH_TOKEN`）准点 dispatch：am UTC 00:05、pm 08:30、retry 09:50（只在交易数据没齐时真跑）；refresh.yml 自己的 schedule 只兜底。
+  并行 job：btc（L2→L3→L4）/ legcore（涨跌腿→核心）/ side（日历、AI Agent、RWA）/ alpha（Grok 补证只 am 档）/ launchpad（跑日更.py 不带 --site）→ publish 解包 → 出看板 → 拉宏观 → 写日志 → `pipeline/数据状态.py --write` → 出网站 → 推一次。
+  单独 concurrency 组 `refresh`（不进 daily-pipeline，免得被挤掉）；am 档顺带 dispatch agent-id-daily.yml。改钟点要同时改 wrangler.toml、worker.js 的 SLOTS、`config/site.json` 定时任务的「时间」。
+  **大叔的交易程序新加坡 19:00（UTC 11:00）取数、20:00 发推**：取数前读 `/data/status.json`（`ready_for_trading`、`not_ready`、各模块 `data_date`），pm 档要在这之前跑完，别把重活加进 pm 档。
+- `pipeline/跑日更.py --site`：日更主脚本（推送 pipeline/content/assets 时 daily.yml 也会跑）。
   拉日度 → 读销毁 → 拉估值 → 拉Arc → 出看板 → 拉宏观 → 写日志 → 出网站，结果提交回 `data/` 和 `site/`。
 - `pipeline/宏观规则.py`：四层框架（L2 除外，见 `l2/`）（流动性 / 周期 / 筹码 / 情绪）的指标注册表、区间规则、层结论、预警、日志与周月复盘生成。
   每个指标 = 一条「判定序列」（原始或派生，如 13 周变化，W-FRI 对齐）+ 一张 cuts 区间表，卡片、详情页全历史图、正常波动范围都用它。
@@ -83,7 +92,7 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
   `alpha_leads.json`（线索台账，只追加不删，首日 11-14 = 基线；每天回查发币）、`alpha_history.json`（每天一行）。参数和剔除名单 `alpha/alpha_config.json`。
   页面 `出网站.build_alpha`：/alpha/ 雷达、/alpha/cases/ 案例库、/alpha/method/ 方法论、/alpha/progress/ 研究进度，文档在 `alpha/research/*.md`（`core_md` 渲染）；首页卡片 `alpha_home_card`。
   方法论 = Codex 交付《Alpha标的筛选研究体系》全面版，网站版去掉执行纪律（执行卡 / 固定止损止盈参数）。红线：不打分排名、不公开「执行评估」档、不点名没有协议级读数的小市值币、不写买卖 / 仓位 / 止损。
-  分工（大叔 11-14 定）：代码和推送网站 Claude 做，查证和出数据交 Codex，任务包 `alpha/review/README.md`（T1 发现源验收、T2 10-16 冻结评分 D30 复查、T3 无币协议前 30 补证），结果回到 `alpha/review/*.json` 再由 Claude 并入。
+  **Codex 一律推分支 `codex/review`，Claude 审核后并进 main（大叔 11-16 定，AGENTS.md 第 2 节）**。分工（大叔 11-14 定）：代码和推送网站 Claude 做，查证和出数据交 Codex，任务包 `alpha/review/README.md`（T1 发现源验收、T2 10-16 冻结评分 D30 复查、T3 无币协议前 30 补证），结果回到 `alpha/review/*.json` 再由 Claude 并入。
   11-14 三个任务已交回并入：候选池 /alpha/pool/（`出网站.alpha_pool`，读 `alpha/review/*_checks.json`；`alpha_daily.py` 把 verdict 写进台账 `status` / `status_history`，只追加）；研究观察 12、待核验 18。
   A4 判定标准已写死在 `研究进度.md`（研究观察组 vs 对照组 90 天收入保持率，各 ≥ 20 个才判），`alpha_history.json` 每天的 `rev30` 就是它的数据，**别删这个字段**。T2 九个全部待判（原卡没冻结合约 / 发现价）。
   A2 事件流（11-14 接）：`alpha_daily.py` 的 `feed_ethresearch` / `feed_snapshot` / `feed_binance` → `data/alpha/alpha_feed.json`（只追加，记原始发布时间 + 首次抓到时间 = 发现延迟，首跑为基线），过滤词在 `alpha_config.json` 的 `feeds`；雷达页 `alpha_feed_html`。
@@ -97,6 +106,8 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
   周复盘的「结论」由复盘会话写进 `data/alpha/weekly/<周>.md` 末节，同步时只在 Notion 为空才带入（不覆盖人写的）。本仓库 NOTION_TOKEN 11-14 已配好，首跑实测：机会卡更新 34、线索更新 33（按键找到已有行就更新，不重复新建）。
   每周复盘定时任务 trig_01Us4KZPynk7ohXsPbGAoFLN（每周一新加坡 09:47，新会话）：跑 weekly.py → 写结论 → 推 main（Notion 交给 Actions；会话有 Notion 工具也可以直接写）。
   看板（大叔 11-14 定：没补证的也要马上能看到，不能藏）：最上面「新发现」（3 天内新进、不分状态）→ 已补证 → 待补证，全部展开；卡上标补证来源（Claude 自动 / Codex）。
+  **每日自动补证 11-15 起改用 Grok API**：`alpha/grok_research.py` 在 alpha-daily 里跑（alpha_daily → 补证 → opps 并入），key = repo secret `XAI_API_KEY`，预算 `alpha_config.grok`（每天 daily_usd、每月 monthly_usd = 5，大叔定超过 5 美元要告诉他：到线就停、工作流最后一步标红），花费账本 `data/alpha/research_cost.json`，结果 `alpha/review/grok_<日期>_checks.json`（reviewer = grok-auto），机器检查拒绝要一手证据、分数要来源。手动试跑 `alpha-research-try.yml`（只打印）。
+  原定时会话（下一行）挂不上仓库、推不上去（11-15 实测 403），已停用：
   每日自动补证 trig_01T8oc3EhUfm7KVqLxWzcdhM（每天新加坡 13:47，Sonnet，新会话）：按 `data/alpha/research_queue.json`（opps.py 每天生成，排序 新发现 → 可投资 → 收入高，含给 Codex 的提示词和交付格式）取前 8 个，
   交 `alpha/review/auto_<日期>_checks.json`（reviewer = claude-auto），推 main 触发 alpha-daily 重算。研究文件可直接带 `scores`（M A F E G T TM TE，每个带 why / src）和 `entry`，opps.py 优先采用。
   想加快就把 research_queue.json 交给 Codex，交回 `<日期>_checks.json` 放 alpha/review/ 即可（同一格式）。
@@ -111,12 +122,38 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
   战绩 `opps.py` 每天算到 `data/alpha/sources_stats.json`，雷达页最上面 `出网站.alpha_sources_html`。站内板块 `alpha/site_sources.py`（发射台矩阵 lp_new / lp_accel / lp_chain、AI Agent ai_new / ai_spike，参数 `alpha_config.site_sources`；key `x:<板块>:<slug>`，卡片 id `x-…`）；
   和已有行同一协议时不另开卡，行上记 `boards`，台账记 `board_seen`，基线日就在榜的也出卡。RWA、聪明钱板块上线后在 site_sources.py 各加一个函数并把 sources.json 的状态改 on。
   关键人名单任务包 `alpha/review/sources_task.md`（S1 Grok 查 X 原帖 → S2 Codex 核对 → 交 `alpha/review/sources_people.json`；入选 = 2 个以上案例有已核实的早期实质帖），并入后每人在 sources.json 单列一行。
+  上线天数与看盘（大叔 11-15 定）：`alpha/tokens.py`（opps.py 调用）写卡片 `data.age`（最早的 DefiLlama 收录 / 协议收入首日 `data/alpha/rev_first.json` / 板块 since / 手动 launched，注明 basis）和 `data.tok`（gecko / sym / address，本协议 + 母协议 lite/protocols2 + 同组合并；首个价格日缓存 `data/alpha/token_meta.json`，CoinGecko 优先、llama 兜底每周重试；links = CoinGecko / DexScreener 按地址搜索 / DefiLlama）。看板静态兜底 `出网站.alpha_board_static`。
+  看 K 线（大叔 11-15 定：按交易思路先引到第三方看走势 / 市值 / 成交量）：`tokens.market` 写 `tok.chart`（币安现货——CoinGecko tickers 核对是同一个币，每周查一次缓存在 token_meta——优先，其次 DexScreener 流动性最大的对，再 CoinGecko，只有代码就 DexScreener 搜索）和 `tok.snap`（DexScreener 市值 / FDV / 24h DEX 成交 / 24h 涨跌，日更快照）。
+  卡片头部（大叔 11-15 定：常规信息最小展示，数字下划线、悬停解释）：`factLine`（上线 / 币天数 / 市值 / 24h 量 / 涨跌，用站点 `.term` 悬停）、参与方式依据和来源 / 补证都进悬停；K 线链接 `klineLink` 放在官网 / X 那排，顺序 币安 → CMC（`alpha/cmc_slugs.json`，Codex 核对后登记，不猜）→ DexScreener → CoinGecko。
+  **11-15 卡片改版（Codex 审阅 + 大叔点头）**：每张卡回答 量从哪来 / 量是不是真的 / 激励后还剩多少。`alpha/money.py`（opps 调用）写 `data.money`（DefiLlama summary dexs→derivatives 成交、fees / revenue / holders、take、share7、上线 < 30 天 short_history）和 `data.lpq`（发射台板块 `data/onchain/平台质量.json`）；
+  前端 `moneyBlock` / `flowTile` / `qualityBox` / `eventsBlock`，研究字段 `flow`（airdrop / newchain / subsidy / organic）、`events`、`capture`、`next_review`（补证格式已加）。分栏 invest 显示名「有参与入口」（不代表研究过）；历史对照默认收起；雷达页搜索 / 只看出卡 / 折叠，台账 `by_source` 写口径。
+  **综合分 v3（11-17 大叔定：按综合分排名，改掉原「不打分排名」红线）**：`framework.json` 的 `composite`（创新 0–40 非线性 / 资源导入 0–10 / 流量起势 0–15 系统按收入环比自动 / 团队 −20～15 按实名人数 + 成员水平、不良记录 −20 / 真实需求 0–10 / 可参与与公平 0–10 / 解锁抛压 −15～0；资源和起势只在创新 ≥ 15 时全额计入），`opps.composite` 算卡片 `comp`（lo 保守分 / hi 最高可能 / cov / parts），看板按 lo 排名；每天追加 `data/alpha/comp_history.json`（不回改，留作检验）。看板分类只留无币 / 有币两类（`alpha.js` `grpOf`），其它来源是币名旁标签。补证新字段：`scores.R`、`team.public_n / caliber / bad_record`。页面写明「研究评分，未经历史回测检验」。
+  协议独立页（11-16，SEO 规范实体路径）：`出网站.alpha_entity_pages` 给有 money 或 research 的卡出 `/alpha/<slug>/`（`alpha_entity_slug`：DefiLlama slug 优先，否则卡片 id；kind=dataset，读数全写进 HTML）；看板静态兜底的链接指向它，交互卡链接排有「单页」。
+  **补证主力 = Codex（大叔 11-15 定，Grok 贵）**：`alpha_config.grok.enabled = false`，Codex 每天按 research_queue 交 `alpha/review/codex_<日期>_checks.json`（AGENTS.md 第 4 节任务 1）。
+  补证合并顺序：`grok_*` 先读，Codex / 人工的盖过它（opps / alpha_daily / 出网站三处同一规则）；Grok 跳过 Codex 30 天内核过的。Codex 协作说明在根目录 `AGENTS.md`，需要配合的事记 `docs/协作记录.md`。
   数据管理：原始层（data/alpha 接口原样）→ 清洗层（线索台账、案例指标）→ 应用层（机会卡、周复盘）。每周复盘 `alpha/weekly.py` → `data/alpha/weekly/<周>.json/.md`；Notion 单独的「Alpha 雷达」入口页（大叔：每个板块各自一个入口，不和别的板块混放）。
+  **交易所上币线（11-16，大叔要求必须做完）**：Binance 完整事件 `alpha/listings.py` → `data/alpha/listings.json`（公告 / 修订 / 计划开盘 / 首笔成交各一个字段，首笔 = 第一根 1 分钟 K 线；窗口 30m / 1h / 4h / 24h + 24h 高低，参考价 = 第一根开盘价，是事后读数不是可成交价；满 24 小时冻结；只追加；12 个月回填 114 个、107 个有窗口；`--recheck` 重看规则改动后被跳过的公告）。
+  其它所 `alpha/exch_announce.py` → `data/alpha/exch_announce.json`（公告层：标题 / 链接 / 公告时间 / 首次抓到 / 粗分类 / 代码），来源台账 `alpha/exch_sources.json`（**不限数量，按质量准入**，标准写在文件的 `_准入`；大叔 11-16 定去掉 MEXC：上币太多、全是噪音；KuCoin / HTX 是候选，state = candidate 不抓取）：
+  OKX / Bitget / Kraken（RSS）官网通 = on；Bybit / Coinbase / Upbit / Bithumb / Gate 在 Actions 被拦 = blocked，走官方 X 账号（`X_BEARER_TOKEN` 已验通，按次付费），等 Codex / Grok 按 `docs/提示词_交易所公告源.md` 交 `alpha/review/x1_exchange_sources.json` 核实用户名后填 `x_user_id` 再开。两者都在 alpha_daily.py 末尾调用。探测工作流 `probe-exchanges.yml`（手动）。KuCoin、HTX 官网接口也通，没接。页面还没做（大叔要先看本地截图再上线）。
+  **OKX 事件库（11-16）**：`alpha/listings_x.py`（alpha_daily 在 exch_announce 之后调用）把 OKX 公告正文（`alpha/okx_parse.py`，三种写法，自测 `python3 alpha/okx_parse.py`）解析成开盘时间 + 交易对，用官方 `/api/v5/market/history-candles` 1 分钟 K 线（每次 100 根、降序、至少回溯 5 个月）算窗口，复用 `listings.windows`，并进同一个 `listings.json`（key `okx:<slug>:<BASE><QUOTE>`，`by_exchange` 分所计数）。
+  **OKX 公告 pTime 是发布时间，不是开盘时间**（GRVT：pTime 03:00，正文开盘 15:00 UTC），只能解析正文；第一根 1 分钟 K 线就是开盘那一分钟。「OKX will launch X/USD」是 OKX US 的 USD 对，全球站接口没有（51001），只记公告（`venue=okx_us`，`w_note` 说明），不算窗口。`listings.py` 的窗口与统计已改为只处理 Binance。
+  **Bitget 暂不收事件**：公告接口每页最多 10 条（`limit` > 10 返回 400），只有 `cursor=<上一页最后一个 annId>` 能翻页（`pageNo`、`beforeId` 无效），10 条只覆盖约 12 小时，近期全是跟单和 TradFi 永续，没有现货上币；日更一两次会漏掉大部分。要接得换思路（比如每天比对 `/api/v2/spot/public/symbols` 发现新交易对，那样没有计划开盘时间，只有首次发现时间）。Bitget 现货 K 线用 `/api/v2/spot/market/history-candles`（startTime / endTime，升序，`/candles` 取不到旧数据）。
+  **Kraken 只有公告层**：博客「X is available for trading!」是上线后发的，没有计划开盘时间，公开 OHLC 只给最近 720 根，窗口算不了；RSS 偶尔 403（Cloudflare），失败沿用上次并标 stale。
   云端环境 uncleonchain 11-14 已放行 ethresear.ch、hub.snapshot.org、www.binance.com、api.bybit.com、api-manager.upbit.com；Bybit（CloudFront 按国家拦）、Upbit（Cloudflare 人机验证）实测不通，没接。Binance pageSize 超过 20 会 400。
+- 左侧菜单（大叔 11-15 定，`出网站.NAV_MAIN`）：终端总览 / 事件日历 / 聪明钱 / 宏观仪表盘 / 发射台矩阵 / AI Agent / RWA / 龙头选币 / Alpha 雷达 / 分析报告 / 解读日志。
+  聪明钱 /smart-money/ 先放原板块轮动（`build_rotation` 输出到这里，/rotation/ 留 meta refresh 跳转页，轮动文章面包屑指向聪明钱）；聪明钱自己的数据源上线后加在同一页。
+- `smartmoney/`：聪明钱板块（2026-11-15 立项，**大叔定先立项做框架、暂不开发网站**）。立项书 `smartmoney/research/立项书.md`（S0 待大叔确认）：定位 = 可核验地址组的链上行为追踪，不是钱包榜；
+  不叫任何地址「聪明」（H1 样本外检验通过前不出「信号」、不排序），个人钱包只收本人公开认领的，第三方标签只作线索（E3 只进候选）。S0 定稿前不写采集代码、不出本板块页面（/smart-money/ 目前放原板块轮动，见上条），`alpha/sources.json` 的 `site_smartmoney` 保持 planned。
 - 发射台活动温度（`pipeline/周期观察.py` 数据与热潮识别、`周期仪表盘.py` 展示）：每日更新。序列 = 研究快照 `content/cycle/snapshot.json`（截至 2026-10-17，sha256 在 manifest）+ 之后接 `发射台矩阵.json`「历史」的类目合计；热潮规则重算快照区间 27 轮逐字段对上（对不上会打 ⚠️）。
   仪表盘 `周期仪表盘.hero` 放在矩阵页最上面（先看温度再看细节），周期页 /launchpad/cycle/ 看这一轮、各阶段时长、历史；全站统一叫「发射台活动温度」，颜色用 `--cyc-*` 变量，文案要大白话。「钱在哪」= `出网站.money_where`。
 - 发射台长周期（2026-10-29）：`周期观察.long_view` / `coverage`。全部历史 2021-09-18 起只作背景，比高低只用可比段（`COMPARABLE_FROM` = 2024-03-01，pump.fun 开始报数；之前只有 1–6 家融资型平台报数）；
   长周期读数只作描述（距最高、常态下沿 Q05 的倍数、可比段最低），不合成分数、不贴季节。近期温度仍是 730 天 Q05–Q95（≥365 天）。覆盖 < 95% 时第一屏提示。
+- 发射台「量的质量」（2026-11-15，发射台板块 → Alpha 接口，约定见大叔给的《接口约定：发射台板块 → Alpha 雷达》）：`pipeline/平台质量.py`（日更，名录之后）→ `data/onchain/平台质量.json`（按 DefiLlama slug：发币 / 发币人 / 存活 / 交易者 / 事件，拿不到 null）
+  + `平台质量_history.json`（存活批次查过不再查，只追加）。工厂 → slug 用 `发射台名录.collect()` 的合并结果；存活 = `拉链上新台.py` 每工厂每天留的 30 个 `存活样本`（11-15 起，之前用 3 个样本拼 7 天），
+  7 天后逐个币查 GeckoTerminal `/tokens/{a}/pools`（批量接口和 DexScreener 都看不到 Four.meme 曲线池）。GeckoTerminal 限速狠：日更里只给 2 分钟（`SURV_TIME`），
+  总调度 refresh.yml 另开 `lpquality` job 新机器跑 20 分钟，publish 里 `SURV_TIME=0` 用本次链上数据重算发币数；最久没查的平台先查，查完一个落盘一次。事件人工登记 `config/launchpad_events.json`（必须带官方出处）。平台页 `出网站.platform_quality_html`；交易者 / 刷量待接入。
+  交易者 / 发币人试点（11-16）：`pipeline/平台交易者.py`（总调度 lpquality job，先于存活查询，限 8 分钟）读 Four.meme TokenManager2 / Flap BSC Portal 的买卖 + 创建事件（BSC 公共节点 publicnode，一天 ~19 万块），合约下单的换成 tx.from（7702 委托钱包算钱包）→ `data/onchain/平台交易者.json`（逐日只追加），逐日地址集合在 `pipeline/cache/traders/`（actions/cache）算 7 天去重，攒满 7 天才出 7d。
+  **公共节点只留约 2 天日志、更早的块静默返回空**：任何一段 5000 块没日志就整天不记（11-16 首跑 11-14 就是半天数据被拦下）。只算内盘，毕业后 DEX 成交不算；前 10 按笔数，成交额口径待接入。
 - `aiagent/`：AI Agent 赛道监控（2026-11-14 大叔定为重点赛道：全面监控发展情况和机会，现有东西保留）。/ai-agent/ 四个页签（`出网站.build_ai_agent`，`aia_head`）：
   赛道总览 `aia_overview`（读 `data/aiagent/`）/ 币安 Agent ID /ai-agent/agent-id/（`agent_id_body`，就是原来的 /ai-agent/ 内容）/ 发射台功能卡 /ai-agent/launchpads/（Codex v2 的 18 张卡 + 功能矩阵，
   `aiagent/research/launchpad_cards_v2.json` 写入即冻结；BNB 门禁平台卡片附本站链上读数 `aia_card_live`）/ 研究进度 /ai-agent/research/（`aiagent/research/研究进度.md`，缺口 G1–G10）。首页卡片 `aia_home_card`。
@@ -142,6 +179,10 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
 - 时间口径（2026-11-06 定）：后端统计一律 UTC+0，数据按 UTC 完整日（UTC 0 点收盘）对齐，价格用收盘价（L2 / L3 只取 < 今天的日子）；
   前端显示按语言区域换算：中文站新加坡时间（UTC+8，`SG_TZ`），英文站美东时间。钟点用 `出网站.TT`，收盘 `TCLOSE`，UTC 日截止 `TDAY`，日历列表 `TLOC`。别写裸「UTC hh:mm」或「北京时间」。
 - 交易所 + ETF 持币：`拉宏观.fetch_etf_hold`（TFTC data.json，`totalNetAssetsUsd / btcCloseUsd`）→ `etf_btc`；注册表 `etf_hold` / `exetf_sum` 在 L3「交易所与现货 ETF 持币」组，只作描述。
+- **全站协作闭环（大叔 11-15 定：一边一个定时任务）**：`pipeline/任务清单.py`（总调度 publish、alpha-daily 里跑）→ `data/tasks.json`（全站待办：各板块 `BOARDS` 函数出，标 who = codex / claude / 大叔、deliver、ref、items、P1–P3）、
+  `data/check_report.json`（已交补证 / 登记文件的机器检查）、`data/tasks.md`（人读版）。Codex 定时任务（提示词在 `AGENTS.md` 第 4 节）每天先修检查问题、再做 who=codex 的待办、推 main；
+  who=claude 的由 Claude 每周会话处理：专用会话 session_01C74RrhK6YMDJjQGM6VVKh4（挂了仓库，能推），定时任务 trig_01K7j1VLXJoeurE6WEtvNvCX 每周一新加坡 17:23 唤醒，顺带写 Alpha 周复盘结论（原周复盘定时 trig_01Us4KZPynk7ohXsPbGAoFLN 挂不上仓库，已停用）。
+  推送补证后「补证检查」工作流（review-validation.yml，单独并发组，只提交 tasks / check_report 三个文件）马上重算；check_report 的 summary 区分 已查证 / 证据不足 / 缺来源 / 格式错 / 过期。新板块接入 = 在 BOARDS 加函数；任务包 README 里 `## 标题 → \`交付文件\`` 自动进待办、文件出现即完成。
 - **所有 workflow 共用 concurrency 组 `daily-pipeline`**：排队中的会被新排进来的取消，手动触发一次只排一个。
   提交步骤在 `pull --rebase -X theirs` 之后会比对：运行期间 main 上 pipeline / leg / config / content / assets 有改动，就用最新代码重出一次网站再推（2026-11-10 出过旧代码出的页面盖掉新版的事）。本地出网站会删掉 `site/data/launchpad/*`，提交前 `git checkout -- site/data/launchpad`。别用 git stash（出过丢改动的事）。
 - **指标注册表**（M12）= `宏观规则.REGISTRY`：每条带 层 / 组 / 序 / 状态（live · pending · retired；自录的满 90 天前自动「记录中」）/ cuts（tone 即 bias：up 顺风 · neutral · dn 逆风 · warn 留意）/

@@ -1,0 +1,50 @@
+# 补证 / 登记文件推上来后马上检查（Codex 11-15 建议：检查和日更分开，避免互相触发）。
+# 只跑 pipeline/任务清单.py，只提交 data/tasks.json、data/check_report.json、data/tasks.md 三个文件；不出网站、不碰别的数据。
+# 用 GITHUB_TOKEN 提交不会再触发任何工作流，不会循环。网站合并照旧：Alpha 由 alpha-daily（推送触发），其余板块由总调度下一档并入。
+name: 补证检查（推送触发）
+
+on:
+  push:
+    branches: [main, codex/review]
+    paths:
+      - "*/review/**"
+      - "alpha/manual_leads.json"
+      - "alpha/cmc_slugs.json"
+      - "alpha/sources.json"
+      - "alpha/cases.json"
+      - "config/launchpad_events.json"
+      - "cal/reg_events.json"
+      - "core/core_config.json"
+      - "aiagent/aiagent_registry.json"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: review-validation
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name == 'codex/review' && 'codex/review' || 'main' }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: 全站待办与检查
+        run: python3 pipeline/任务清单.py --print | tail -40
+      - name: 提交检查结果（只这三个文件；codex/review 分支只看日志不提交）
+        if: github.ref_name != 'codex/review'
+        run: |
+          git config user.name "uncleonchain-bot"
+          git config user.email "bot@uncleonchain.com"
+          git add data/tasks.json data/check_report.json data/tasks.md
+          git diff --cached --quiet && echo "没有变化" && exit 0
+          git commit -q -m "补证检查 $(date -u +%Y-%m-%dT%H:%MZ)"
+          for i in 1 2 3 4; do git pull -q --rebase -X theirs origin main && git push && exit 0; sleep $((i * 10)); done
+          exit 1

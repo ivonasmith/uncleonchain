@@ -1,0 +1,112 @@
+{
+ "schema": 1,
+ "note": "UTC。expected_data_date = 昨天（UTC 0 点收盘的完整日）。ready_for_trading = 交易用模块（trading=true）全部到 expected_data_date。",
+ "generated_utc": "2026-11-22T08:45:58Z",
+ "slot": "pm",
+ "started_utc": "2026-11-22T08:22:17Z",
+ "run_url": "https://github.com/ivonasmith/uncleonchain/actions/runs/45002482794",
+ "expected_data_date": "2026-11-21",
+ "ready_for_trading": true,
+ "not_ready": [],
+ "modules": {
+  "l2": {
+   "name": "L2 周期",
+   "data_date": "2026-11-21",
+   "updated_utc": "2026-11-22 08:23",
+   "trading": true,
+   "fresh": true
+  },
+  "l3": {
+   "name": "L3 筹码",
+   "data_date": "2026-11-21",
+   "updated_utc": "2026-11-22 08:23",
+   "trading": true,
+   "fresh": true
+  },
+  "l4": {
+   "name": "L4 情绪",
+   "data_date": "2026-11-21",
+   "updated_utc": "2026-11-22 08:24",
+   "trading": true,
+   "stale_source": false,
+   "fresh": true
+  },
+  "leg": {
+   "name": "涨跌腿",
+   "data_date": "2026-11-21",
+   "trading": true,
+   "fresh": true
+  },
+  "macro": {
+   "name": "宏观 L1 + 解读日志",
+   "data_date": "2026-11-21",
+   "trading": true,
+   "fresh": true
+  },
+  "cal": {
+   "name": "事件日历",
+   "data_date": null,
+   "updated_utc": "2026-11-22 08:24",
+   "trading": true,
+   "fresh": true
+  },
+  "core": {
+   "name": "核心选币",
+   "data_date": "2026-11-21",
+   "updated_utc": "2026-11-22 08:29 UTC",
+   "fresh": true
+  },
+  "alpha": {
+   "name": "Alpha 雷达",
+   "data_date": "2026-11-21",
+   "updated_utc": "2026-11-22T08:22:27+00:00",
+   "fresh": true
+  },
+  "aiagent": {
+   "name": "AI Agent",
+   "data_date": "2026-11-21",
+   "updated_utc": "2026-11-22T08:24:42Z",
+   "fresh": true
+  },
+  "rwa": {
+   "name": "RWA",
+   "data_date": "2026-11-21",
+   "updated_utc": "2026-11-22T08:25:20+00:00",
+   "fresh": true
+  }
+ },
+ "steps": {
+  "btc": "success",
+  "legcore": "success",
+  "side": "success",
+  "alpha": "success",
+  "launchpad": "success"
+ },
+ "done": {
+  "2026-11-15": [
+   "pm"
+  ],
+  "2026-11-16": [
+   "am",
+   "pm"
+  ],
+  "2026-11-17": [
+   "pm"
+  ],
+  "2026-11-18": [
+   "pm"
+  ],
+  "2026-11-19": [
+   "pm"
+  ],
+  "2026-11-20": [
+   "pm"
+  ],
+  "2026-11-21": [
+   "pm"
+  ],
+  "2026-11-22": [
+   "pm"
+  ]
+ }
+}

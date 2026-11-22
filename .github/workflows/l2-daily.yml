@@ -4,8 +4,7 @@
 name: L2 周期状态机日更
 
 on:
-  schedule:
-    - cron: "17 2 * * *"
+  # 定时改由总调度 refresh.yml 统一跑（2026-11-15）；这里只留手动和推送触发
   workflow_dispatch: {}
   push:                       # 改了 L2 规则，推上来立刻重跑
     branches: [main]

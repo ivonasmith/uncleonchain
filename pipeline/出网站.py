@@ -168,7 +168,7 @@ PILLARS = [
      "descEN": "Four layers: macro liquidity → cycle → coin flows → sentiment. Every indicator with its reading, zones and full history."},
     {"slug": "rotation", "nav": "板块轮动", "en": "Rotation", "desc": "CoinGecko 类目逐日快照看资金在哪些赛道之间流动，加手写的轮动交易复盘。",
      "descEN": "Daily CoinGecko category snapshots showing where money rotates, plus hand-written rotation reviews."},
-    {"slug": "narrative", "nav": "叙事埋伏", "en": "Narratives", "desc": "低位叙事币的观察笔记：为什么进、仓位怎么摆、后续怎么跟踪——过程记录，不是喊单。",
+    {"slug": "narrative", "nav": "叙事埋伏", "en": "Narratives", "desc": "低位叙事币的观察笔记：为什么关注、后续怎么跟踪——过程记录，不是喊单。",
      "descEN": "Notes on early-stage narratives: why, how it is sized, how it is tracked — a process log, not calls."},
 ]
 
@@ -183,6 +183,7 @@ ICON = {
     "core": '<path d="M8 1.8l1.9 3.9 4.3.6-3.1 3 .7 4.3L8 11.6l-3.8 2 .7-4.3-3.1-3 4.3-.6z"/>',
     "narrative": '<circle cx="8" cy="8" r="6"/><circle cx="8" cy="8" r="2.4"/><path d="M8 8l4.2-4.2"/>',
     "alpha": '<circle cx="8" cy="8" r="6"/><circle cx="8" cy="8" r="2.4"/><path d="M8 8l4.2-4.2"/>',
+    "smart": '<circle cx="6" cy="6.5" r="3.5"/><path d="M8.6 9.1 13.5 14M4.6 6.5h2.8"/>',
     "rwa": '<rect x="2.5" y="6.5" width="11" height="7.5" rx="1"/><path d="M1.5 6.5 8 2l6.5 4.5M5.5 9v2.5M8 9v2.5M10.5 9v2.5"/>',
     "reports": '<path d="M3 1.8h7l3 3v9.4H3z"/><path d="M10 1.8v3h3M5.5 11.5V9.5M8 11.5V7.5M10.5 11.5V8.5"/>',
     "journal": '<path d="M3.5 1.8h9v12.4h-9z"/><path d="M6 5h4M6 8h4M6 11h2.5"/>',
@@ -190,12 +191,12 @@ ICON = {
     "corrections": '<path d="M2.5 8.5l3.5 3.5 7.5-8"/>',
     "about": '<circle cx="8" cy="5.2" r="2.8"/><path d="M2.5 14c.9-2.9 2.9-4.2 5.5-4.2s4.6 1.3 5.5 4.2"/>',
 }
-NAV_MAIN = [("home", "/", "终端总览", "Overview"), ("macro", "/macro/", "宏观仪表盘", "Macro"),
-            ("calendar", "/calendar/", "事件日历", "Calendar"), ("launchpad", "/launchpad/", "发射台矩阵", "Launchpads"), ("aiagent", "/ai-agent/", "AI Agent", "AI Agent"), ("rotation", "/rotation/", "板块轮动", "Rotation"),
-            ("core", "/core/", "龙头选币", "Leader Picks"), ("alpha", "/alpha/", "Alpha 雷达", "Alpha Radar"), ("rwa", "/rwa/", "RWA", "RWA"), ("reports", "/reports/", "分析报告", "Reports"),
-            ("journal", "/journal/", "解读日志", "Journal")]
-NAV_MORE = [("methodology", "/methodology/", "口径与规则", "Methodology"), ("corrections", "/corrections/", "更正记录", "Corrections"),
-            ("about", "/about/", "关于", "About")]
+NAV_MAIN = [("home", "/", "终端总览", "Overview"), ("calendar", "/calendar/", "事件日历", "Calendar"), ("smart", "/smart-money/", "聪明钱", "Smart Money"),
+            ("macro", "/macro/", "宏观仪表盘", "Macro"), ("launchpad", "/launchpad/", "发射台矩阵", "Launchpads"), ("aiagent", "/ai-agent/", "AI Agent", "AI Agent"),
+            ("rwa", "/rwa/", "RWA", "RWA"), ("core", "/core/", "龙头选币", "Leader Picks"), ("alpha", "/alpha/", "Alpha 雷达", "Alpha Radar"),
+            ("reports", "/reports/", "分析报告", "Reports"), ("journal", "/journal/", "解读日志", "Journal")]   # 顺序大叔 11-15 定
+NAV_MORE = [("methodology", "/methodology/", "口径与规则", "Methodology"),
+            ("corrections", "/corrections/", "更正记录", "Corrections"), ("about", "/about/", "关于", "About")]
 
 G = {"更新": None, "url": "/"}      # 侧边栏「数据更新」时间；当前页面路径（语言切换用）
 
@@ -478,10 +479,95 @@ def stats_tag():
     return f'\n<script defer src="https://cloud.umami.is/script.js" data-website-id="{esc(uid)}" data-domains="{DOMAIN}"></script>' if uid else ""
 
 
-def page(title, body, active="", desc="", extra_head="", narrow=False, share=False, scripts="", chart=False):
-    d = esc(desc or T(SLOGAN, SLOGAN_EN))
+# ---- SEO 基建（docs/SEO规范.md，2026-11-15）：canonical / hreflang / robots / JSON-LD / lastmod 全在这里统一出，板块里别另写
+SEO = {"pages": {}, "state": None, "new": {}}
+SEO_STATE = os.path.join(SITE, "seo_lastmod.json")   # 放 site/：每个 workflow 都提交 site/。每页正文指纹 + 最后变化日（UTC）：sitemap lastmod / JSON-LD dateModified 用
+
+
+def seo_kind(path):
+    """按路径推页面类型（调用方不用改）：article = 日志 / 周月复盘 / 报告 / 文章；dataset = 指标详情页；其余 page。"""
+    if path == "/":
+        return "home"
+    if re.match(r"^/(journal/(\d{4}-\d{2}-\d{2}|week/[^/]+|month/[^/]+)|reports/[^/]+|(rotation|narrative)/[^/]+)/$", path):
+        return "article"
+    if re.match(r"^/macro/[^/]+/$", path):
+        return "dataset"
+    return "page"
+
+
+def seo_lastmod(key, body):
+    """正文指纹没变 → 沿用上次的日期；变了 → 今天（UTC）。"""
+    import hashlib
+    if SEO["state"] is None:
+        SEO["state"] = load(SEO_STATE, {}) or {}
+    norm = re.sub(r"\bg\d{5,}\b", "g", body)   # 迷你走势图的渐变 id 每次随机，不算正文变化
+    h = hashlib.sha1(norm.encode("utf-8")).hexdigest()[:16]
+    old = SEO["state"].get(key) or {}
+    today = G.get("今天") or dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d")
+    d = old.get("d") if old.get("h") == h and old.get("d") else today
+    SEO["new"][key] = {"h": h, "d": d}
+    return d
+
+
+def seo_desc(desc):
+    """meta description 超长时在句号处截断（中文 ≤150 字、英文 ≤220 字符），截不到句号就硬截加省略号。"""
+    lim = 220 if LANG["v"] == "en" else 150
+    desc = re.sub(r"\s+", " ", desc or "").strip()
+    if len(desc) <= lim:
+        return desc
+    cut = desc[:lim]
+    k = max(cut.rfind(c) for c in ("。", "；", ". ", "; ", "！", "？"))
+    return cut[:k + 1].strip() if k >= lim * 0.4 else cut[:lim - 1].rstrip("，,、 ") + "…"
+
+
+def seo_head(title, desc, path, body, kind=None, updated=None, published=None, noindex=False, extra_head="", canonical=None):
+    """<head> 里的 SEO 段 + 登记到 sitemap。"""
+    en = LANG["v"] == "en"
+    if "http-equiv=\"refresh\"" in extra_head or path == "/404.html":
+        noindex = True
+    if en and ZH_ONLY in body:          # 英文站没翻译的页（正文是中文）不进索引
+        noindex = True
+    kind = kind or seo_kind(path)
+    zh_u, en_u = f"https://{DOMAIN}{path}", f"https://{DOMAIN}/en{path}"
+    me = en_u if en else zh_u
+    canon = f"https://{DOMAIN}{'/en' if en else ''}{canonical}" if canonical else me
+    mod = updated or seo_lastmod(("en" if en else "zh") + path, body)
+    if not published:
+        m = re.search(r"(\d{4}-\d{2}-\d{2})", path)
+        published = m.group(1) if m and kind == "article" else None
+    SEO["pages"][(LANG["v"], path)] = {"noindex": noindex, "lastmod": mod, "kind": kind, "alias": bool(canonical)}
+    org = {"@type": "Organization", "name": T(BRAND, BRAND_EN), "url": f"https://{DOMAIN}/", "logo": f"https://{DOMAIN}/assets/favicon-192.png", "sameAs": [X_URL]}
+    name = re.sub(r"\s*·\s*(链上大叔研究台|Uncle Onchain)$", "", title).strip()
+    lang = "zh-CN" if not en else "en"
+    if kind == "home":
+        ld = {"@context": "https://schema.org", "@type": "WebSite", "name": T(BRAND, BRAND_EN), "url": me, "inLanguage": lang, "description": desc, "publisher": org}
+    elif kind == "article":
+        ld = {"@context": "https://schema.org", "@type": "Article", "headline": name[:110], "description": desc, "url": me, "mainEntityOfPage": me, "inLanguage": lang,
+              "dateModified": mod, "author": org, "publisher": org, "image": f"https://{DOMAIN}/assets/og.png"}
+        if published:
+            ld["datePublished"] = published
+    elif kind == "dataset":
+        ld = {"@context": "https://schema.org", "@type": "Dataset", "name": name, "description": desc if len(desc) >= 50 else (desc + T(" · 全历史走势、区间规则与数据来源见本页。", " · Full history, zone rules and data sources on this page.")),
+              "url": me, "inLanguage": lang, "dateModified": mod, "creator": org, "isAccessibleForFree": True}
+    else:
+        ld = {"@context": "https://schema.org", "@type": "WebPage", "name": name, "description": desc, "url": me, "inLanguage": lang, "dateModified": mod,
+              "isPartOf": {"@type": "WebSite", "name": T(BRAND, BRAND_EN), "url": f"https://{DOMAIN}/"}}
+    ldj = json.dumps(ld, ensure_ascii=False).replace("</", "<\\/")
+    return (f'<link rel="canonical" href="{canon}">'
+            + ('<meta name="robots" content="noindex,follow">' if noindex else "")
+            + f'\n<link rel="alternate" hreflang="zh-CN" href="{zh_u}"><link rel="alternate" hreflang="en" href="{en_u}"><link rel="alternate" hreflang="x-default" href="{zh_u}">'
+            + f'\n<meta property="og:url" content="{me}"><meta property="og:locale" content="{"en_US" if en else "zh_CN"}">'
+            + f'\n<script type="application/ld+json">{ldj}</script>')
+
+
+def page(title, body, active="", desc="", extra_head="", narrow=False, share=False, scripts="", chart=False,
+         kind=None, updated=None, published=None, noindex=False, canonical=None):
+    """kind / updated / published / noindex / canonical 都可不传（按路径自动推），见 docs/SEO规范.md。"""
+    desc = seo_desc(desc or T(SLOGAN, SLOGAN_EN))
+    d = esc(desc)
     t = esc(title)
     path = G["url"]
+    seo = seo_head(title, desc, path, body, kind, updated, published, noindex, extra_head, canonical)
     return f"""<!DOCTYPE html>
 <html lang="{T('zh-CN', 'en')}" data-theme="dark">
 <head>
@@ -491,9 +577,9 @@ def page(title, body, active="", desc="", extra_head="", narrow=False, share=Fal
 <script>{ST.HEAD_JS}</script>
 <meta name="description" content="{d}">
 <meta name="theme-color" content="#05070c">
-<link rel="alternate" hreflang="zh-CN" href="https://{DOMAIN}{path}"><link rel="alternate" hreflang="en" href="https://{DOMAIN}/en{path}">
+{seo}
 <meta property="og:title" content="{t}"><meta property="og:description" content="{d}">
-<meta property="og:type" content="website"><meta property="og:site_name" content="{esc(T(BRAND, BRAND_EN))}">
+<meta property="og:type" content="{"article" if seo_kind(path) == "article" else "website"}"><meta property="og:site_name" content="{esc(T(BRAND, BRAND_EN))}">
 <meta property="og:image" content="https://{DOMAIN}/assets/og.png">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="{TWITTER}">
 <meta name="twitter:image" content="https://{DOMAIN}/assets/og.png">
@@ -539,7 +625,7 @@ def guide_templates():
     cur = CHANGELOG[0]["version"]
     t = sched_text()
     welcome = T(f"""<h2 id="ucg-t">欢迎来到链上大叔研究台</h2><p>这里每天自动更新一套 BTC 自上而下的四层框架数据：</p>
-<ul><li><b>L1 宏观流动性</b>：风险预算该松还是紧</li><li><b>L2 周期定位</b>：处在四年周期的哪一段</li><li><b>L3 筹码结构</b>：哪些价位真的有人在守、接下来波动会不会放大</li><li><b>L4 情绪衍生品</b>：短期会不会过热超调</li></ul>
+<ul><li><b>L1 宏观流动性</b>：宏观在推还是在拖</li><li><b>L2 周期定位</b>：处在四年周期的哪一段</li><li><b>L3 筹码结构</b>：哪些价位真的有人在守、接下来波动会不会放大</li><li><b>L4 情绪衍生品</b>：短期会不会过热超调</li></ul>
 <p>每层给一个结论，最后汇总成「综合研判」。</p>
 <p><b>怎么看</b>：先看顶部的综合研判 → 切换 L1~L4 看每层结论和依据 → 点任意指标卡，看它的全部历史、区间规则和历史上落在每个区间的比例。</p>
 <p>数据每天 {esc(t)} 自动更新，解读日志写入即冻结、公开可查。每个指标都标了<a href="{U('/methodology/')}#legend">证据等级</a>；拿不到真实数据的标「待接入」，不用近似值顶替。</p>
@@ -718,13 +804,13 @@ def schedules():
         p = os.path.join(ROOT, ".github", "workflows", t["文件"])
         txt = open(p, encoding="utf-8").read() if os.path.exists(p) else ""
         m = re.search(r'cron:\s*"(\d+)\s+(\d+)\s', txt)
-        out.append({**t, "时间": f"{int(m.group(2)):02d}:{int(m.group(1)):02d}" if m else "—"})
+        out.append({**t, "时间": t.get("时间") or (f"{int(m.group(2)):02d}:{int(m.group(1)):02d}" if m else "—")})
     return out
 
 
 SCHED = schedules()
 MAIN_TIME = next((x["时间"] for x in SCHED if x.get("主")), "—")
-L2_TIME = next((x["时间"] for x in SCHED if x["文件"] == "l2-daily.yml"), "—")
+L2_TIME = next((x["时间"] for x in SCHED if x["文件"] == "l2-daily.yml"), MAIN_TIME)
 
 
 def sched_text():
@@ -1139,7 +1225,7 @@ def build_home(sd, S, logs, weeks, months, rot, matrix):
 {cal_home_card(G.get("CAL"))}
 <div class="grid g2" style="margin-top:22px;align-items:start">
 <div><h2 style="margin-top:12px">{T("发射台矩阵 · 当日 Top6", "Launchpads · top 6 today")} {cycle_tag()} <a class="sub" href="{U("/launchpad/")}">{T("全部", "All")} {len((matrix or {}).get("协议", []))} {T("个协议 →", "protocols →")}</a></h2>{lp_tbl}</div>
-<div><h2 style="margin-top:12px">{T("板块轮动 · 24h 领涨", "Rotation · 24h leaders")} <a class="sub" href="{U("/rotation/")}">{T("看全部 →", "See all →")}</a></h2>{cats}</div>
+<div><h2 style="margin-top:12px">{T("板块轮动 · 24h 领涨", "Rotation · 24h leaders")} <a class="sub" href="{U("/smart-money/")}">{T("看全部 →", "See all →")}</a></h2>{cats}</div>
 </div>
 {reports_block}
 <h2>{T("解读日志", "Journal")} <a class="sub" href="{U("/journal/")}">{T("全部日志与复盘 →", "All logs and reviews →")}</a></h2>
@@ -1147,7 +1233,8 @@ def build_home(sd, S, logs, weeks, months, rot, matrix):
     js = f"<script>function shareHome(){{ucShare({json.dumps(share_obj, ensure_ascii=False)})}}</script>"
     emit("index.html", T(f"{BRAND} · 链上数据情报终端", f"{BRAND_EN} · Onchain research terminal"), body, active="home", share=True,
          scripts=js + leg_assets()[1], extra_head=leg_assets()[0] + f'<link rel="stylesheet" href="{ASSET_URL["core.css"]}">',
-         desc=LF(comp or {}, "一句话") or T(SLOGAN, SLOGAN_EN))
+         desc=T("每天自动更新的链上数据研究台：BTC 四层框架（宏观流动性、周期、筹码、情绪）、涨跌腿、发射台、核心选币、Alpha 雷达、AI Agent 与 RWA 赛道，附写入即冻结的解读日志。",
+                "A daily-updated onchain research terminal: a four-layer BTC framework (macro liquidity, cycle, supply, sentiment), leg tracker, launchpads, core coins, Alpha radar, AI agents and RWA, with frozen daily research logs."))
 
 
 def ind_card(ind, j, as_of, extra=""):
@@ -1391,45 +1478,54 @@ def l2_signals(l2):
     return f'<div class="grid g3 sigs">{out}</div>'
 
 
-def ruler_svg(price, levels, h=460, w=440, date=None):
-    """M6：竖向对数价格轴，每条价位按真实距离摆放；现价醒目横线，现价到上下最近价位铺色带。"""
+def ruler_svg(price, levels, h=460, w=600, date=None):
+    """M6：竖向对数价格轴，每条价位按真实距离摆放；现价醒目横线，现价到上下最近价位铺色带。
+    标签全部在右侧：太挤就上下推开（避开收盘价那一行），用折线连回刻度（11-15：原来换到左侧会被裁掉、压到收盘价线）。"""
     if not levels or not price:
         return ""
     vals = [x["value"] for x in levels] + [price]
     lo, hi = math.log10(min(vals) * 0.96), math.log10(max(vals) * 1.04)
     top, bot = 22, h - 22
     Y = lambda v: top + (bot - top) * (1 - (math.log10(v) - lo) / (hi - lo))
-    ax = 150
+    ax = 180
     out = [f'<line x1="{ax}" x2="{ax}" y1="{top}" y2="{bot}" class="rax"/>']
     above = sorted([x for x in levels if x["value"] > price], key=lambda x: x["value"])
     below = sorted([x for x in levels if x["value"] <= price], key=lambda x: -x["value"])
     yp = Y(price)
-    if below:
-        yb = Y(below[0]["value"])
-        out.append(f'<rect x="{ax - 40}" y="{yp:.1f}" width="80" height="{yb - yp:.1f}" class="rsafe"/>')
-        out.append(f'<text x="{ax - 46}" y="{(yp + yb) / 2 + 4:.1f}" text-anchor="end" class="rbt up">{T("安全垫", "cushion")} {below[0]["pct_from_price"]:+.1f}%</text>')
+    # 左侧三行：上方压力 / 收盘价 / 安全垫，贴着收盘价线叠放，不和色带中点挂钩（色带很窄时会挤成一团）
     if above:
         ya = Y(above[0]["value"])
         out.append(f'<rect x="{ax - 40}" y="{ya:.1f}" width="80" height="{yp - ya:.1f}" class="rres"/>')
-        out.append(f'<text x="{ax - 46}" y="{(yp + ya) / 2 + 4:.1f}" text-anchor="end" class="rbt dn">{T("上方压力", "resistance")} {above[0]["pct_from_price"]:+.1f}%</text>')
-    # 价位标签：按高度排，离上一个标签太近就换到另一侧
-    placed = {"r": [], "l": []}
-    for x in sorted(levels, key=lambda x: -x["value"]):
-        y = Y(x["value"])
-        side = "r"
-        if any(abs(y - q) < 15 for q in placed["r"]):
-            side = "l" if not any(abs(y - q) < 15 for q in placed["l"]) else "r"
-        placed[side].append(y)
+        out.append(f'<text x="{ax - 46}" y="{yp - 22:.1f}" text-anchor="end" class="rbt dn">{T("上方压力", "resistance")} {above[0]["pct_from_price"]:+.1f}%</text>')
+    if below:
+        yb = Y(below[0]["value"])
+        out.append(f'<rect x="{ax - 40}" y="{yp:.1f}" width="80" height="{yb - yp:.1f}" class="rsafe"/>')
+        out.append(f'<text x="{ax - 46}" y="{yp + 17:.1f}" text-anchor="end" class="rbt up">{T("安全垫", "cushion")} {below[0]["pct_from_price"]:+.1f}%</text>')
+    out.append(f'<line x1="{ax - 170}" x2="{ax + 10}" y1="{yp:.1f}" y2="{yp:.1f}" class="rnow"/>')
+    out.append(f'<text x="{ax - 46}" y="{yp - 5:.1f}" text-anchor="end" class="rnl">{T("收盘价", "Close")} ${price:,.0f}</text>')
+    # 右侧标签：按高度排，间距不足 GAP 就往下推，越界再整体往上收；收盘价占一个空位
+    GAP = 16
+    items = sorted(levels, key=lambda x: -x["value"])
+    ys = [Y(x["value"]) for x in items]
+    slots = sorted([(y, i) for i, y in enumerate(ys)] + [(yp, -1)])
+    pos = [y for y, _ in slots]
+    for k in range(1, len(pos)):
+        pos[k] = max(pos[k], pos[k - 1] + GAP)
+    if pos and pos[-1] > bot:
+        pos[-1] = bot
+        for k in range(len(pos) - 2, -1, -1):
+            pos[k] = min(pos[k], pos[k + 1] - GAP)
+    lab_y = {i: pos[k] for k, (_, i) in enumerate(slots)}
+    lx = ax + 34
+    for i, x in enumerate(items):
+        y, ly = ys[i], lab_y[i]
         cls = "up" if x["value"] <= price else "dn"
         lab = f'{esc(T(x["name_zh"], x["name_en"]))} ${x["value"]:,.0f} ({x["pct_from_price"]:+.1f}%)'
         out.append(f'<line x1="{ax - 10}" x2="{ax + 10}" y1="{y:.1f}" y2="{y:.1f}" class="rtk {cls}"/>')
-        if side == "r":
-            out.append(f'<text x="{ax + 16}" y="{y + 4:.1f}" class="rlb">{lab}</text>')
-        else:
-            out.append(f'<text x="{ax - 16}" y="{y + 4:.1f}" text-anchor="end" class="rlb">{lab}</text>')
-    out.append(f'<line x1="{ax - 60}" x2="{w - 6}" y1="{yp:.1f}" y2="{yp:.1f}" class="rnow"/>')
-    out.append(f'<text x="{w - 6}" y="{yp - 6:.1f}" text-anchor="end" class="rnl">{T("收盘价", "Close")} ${price:,.0f}</text>')
+        out.append(f'<polyline points="{ax + 10},{y:.1f} {ax + 18},{y:.1f} {lx - 6},{ly:.1f} {lx - 2},{ly:.1f}" class="rld {cls}"/>')
+        out.append(f'<text x="{lx}" y="{ly + 4:.1f}" class="rlb">{lab}</text>')
     return f'<svg viewBox="0 0 {w} {h}" class="ruler-svg" role="img" aria-label="{T("关键价位刻度尺", "Key level ruler")}">{"".join(out)}</svg>'
+
 
 
 def l2_levels(l2):
@@ -1503,8 +1599,8 @@ def l2_tab(l2, as_of):
 
 
 # ---------------------------------------------------------------- L3 筹码层（只读 data/l3/*.json 展示，规则和计算都在 l3/l3_daily.py）
-L3_TIME = next((x["时间"] for x in SCHED if x["文件"] == "l3-daily.yml"), "02:47")
-L4_TIME = next((x["时间"] for x in SCHED if x["文件"] == "l4-daily.yml"), "03:17")
+L3_TIME = next((x["时间"] for x in SCHED if x["文件"] == "l3-daily.yml"), MAIN_TIME)
+L4_TIME = next((x["时间"] for x in SCHED if x["文件"] == "l4-daily.yml"), MAIN_TIME)
 L3_RES = {"held": ("守住", "Held", "up"), "broken": ("被突破", "Broken", "dn"), "open": ("进行中", "Ongoing", "neutral")}
 L3_NOT_SHOWN = [
     ("「筹码墙 = 强支撑 / 强压力」", "'Supply wall = strong support / resistance'", "同距离比较，筹码墙守住率和真空区的差在各年代正负相反，2022 年后筹码墙更容易被穿过", "At equal distance the wall-vs-gap hold-rate difference flips sign across eras; since 2022 walls are crossed more easily", "§4.3"),
@@ -1579,7 +1675,7 @@ def l3_main_cards(l3):
     left = (f'<div class="card l3main"><div class="top"><span class="nm">{T("上方压力区 · STH 成本 +1σ", "Pressure zone above · STH cost +1σ")}</span>{grade_chip("已验证·方向")}</div>'
             f'<div class="v">{_m0(a["value"])} <span class="sub">{T("离收盘价", "vs close")} {_pc(a["pct_from_price"])}</span></div>'
             f'<div class="b">{T("压力区", "Zone")} {_m0(a["lo"])} ~ {_m0(a["hi"])} · {tone_chip(T(a["status_zh"], a["status_en"]), st_tone)}</div>'
-            f'<p class="tnote">{esc(T(a["hold_rate_zh"], a["hold_rate_en"]))}{T("。用法：多单止盈参考、追高提醒；不当挂单位；冲过去站上 STH-MVRV 1.3 不据此做空。", ". Use: a take-profit reference and a no-chasing reminder; not an order level; no shorting once price breaks through and holds STH-MVRV 1.3.")}</p>'
+            f'<p class="tnote">{esc(T(a["hold_rate_zh"], a["hold_rate_en"]))}{T("。它是一段区间、不是一个价位；冲过去并站上 STH-MVRV 1.3 后，历史上多是一段延续（假设，2018 年后 14 次）。", ". It is a band, not a price level; once price breaks through and holds STH-MVRV 1.3, history mostly shows a continuing move (a hypothesis; 14 cases since 2018).")}</p>'
             f'<div class="sub2">{T("最近 5 次碰线（从下方碰到压力区）", "Last 5 touches (from below)")}</div>{l3_touch_rows(a.get("touches") or [])}</div>')
     on = bool(w.get("on"))
     vol, conc = w.get("vol30"), w.get("conc")
@@ -1594,7 +1690,7 @@ def l3_main_cards(l3):
              f'<div class="mb"><span style="width:{vb:.1f}%" class="{"ok" if vol is not None and vol < 40 else ""}"></span><i style="left:40%"></i></div></div>'
              f'<div class="meter"><div class="ml"><span>{T("筹码集中度（现价 ±5%）", "Concentration (price ±5%)")}</span><b>{"—" if conc is None else f"{conc:.1f}%"}</b><em>{T("不低于 12% 才算", "counts at 12%+")}</em></div>'
              f'<div class="mb"><span style="width:{cb:.1f}%" class="{"ok" if conc is not None and conc >= 12 else ""}"></span><i style="left:48%"></i></div></div>'
-             f'<p class="tnote">{T("只说幅度，不说方向：亮灯后顺着 MA200 趋势做并不更准，所以只用于「该做的风控照做」——逐笔确认止损、盯衰竭信号。", "Magnitude only, not direction: following the MA200 trend after the light is no more accurate, so it only means doing the risk control you should — confirm every stop, watch for exhaustion.")}'
+             f'<p class="tnote">{T("只说幅度，不说方向：亮灯后顺着 MA200 趋势去猜方向并不更准。它说的是接下来 30 天波动大概率变大。", "Magnitude only, not direction: guessing the direction from the MA200 trend after the light is no more accurate. It only says moves over the next 30 days are likely to get bigger.")}'
              f'{T("集中度数据日 ", " Concentration as of ")}{esc(w.get("conc_date") or "—")}{rk}{T("。", ".")}</p></div>')
     return f'<div class="grid g2 l3mains">{left}{right}</div>'
 
@@ -1766,8 +1862,8 @@ L4_WATCH_EN = {
     "elr_low": "Aggregated OI ÷ exchange balance bottom 10%: 10 cases, up 80% (control 58%), only since 2022",
     "lev_drop": "Net position 4-week change bottom 10%: 13 cases, up 31% (control 52%); may mostly reflect basis-trade flows",
 }
-L4_NOTE = ("只有「资金费率 30 日均转负」一条通过了历史检验，会改变动作；其余读数只描述温度。费率高要回调、恐慌是买点、OI 堆积会瀑布、低波动是大行情前夜，这些常见说法用我们的口径检验都不成立。分位 = 今天的值在过去两年里排第几。样本有限，最高到「已验证·方向」，不构成投资建议。",
-           "Only '30-day average funding below zero' passed historical testing and changes the action; every other reading only describes temperature. 'High funding means a pullback', 'fear is a buy', 'OI build-ups cause cascades', 'low volatility precedes big moves' — common claims that did not hold in our tests. Percentile = where today's value ranks over the past two years. Samples are limited; the highest grade is 'validated · direction'. Not investment advice.")
+L4_NOTE = ("只有「资金费率 30 日均转负」一条通过了历史检验，会进结论句；其余读数只描述温度。费率高要回调、恐慌是买点、OI 堆积会瀑布、低波动是大行情前夜，这些常见说法用我们的口径检验都不成立。分位 = 今天的值在过去两年里排第几。样本有限，最高到「已验证·方向」，不构成投资建议。",
+           "Only '30-day average funding below zero' passed historical testing and goes into the summary line; every other reading only describes temperature. 'High funding means a pullback', 'fear is a buy', 'OI build-ups cause cascades', 'low volatility precedes big moves' — common claims that did not hold in our tests. Percentile = where today's value ranks over the past two years. Samples are limited; the highest grade is 'validated · direction'. Not investment advice.")
 L4_BAND_TONE = {"过热": "warn", "偏热": "warn", "中性": "neutral", "偏冷": "cool", "极冷": "cool"}
 
 
@@ -1799,11 +1895,11 @@ def l4_signal_card(l4):
         state = f'<div class="lamp"><i></i><b>{T("今天不判断", "No call today")}</b></div><p class="big quiet0">{T("资金费率数据延迟，今天不判断，不拿旧值顶替。", "Funding data is delayed; no call today and no stale value substituted.")}</p>'
     elif on:
         state = (f'<div class="lamp"><i></i><b>{T("亮", "ON")}</b><span class="dd">{T("已连续", "for")} {sg.get("days_on")} {T("天", "days")}{T("（自 ", " (since ")}{esc(sg.get("since") or "—")}{T("）", ")")}</span></div>'
-                 f'<p class="big">{esc(T(sg.get("use_zh") or "", "No new shorts; when L2 is not in a bear market, scaling in within the L1 budget is allowed. The risk budget does not grow."))}</p>')
+                 f'<p class="big">{esc(T("过去 31 次，之后 30 天上涨 74%（同年代同周期状态对照 58%）；熊市里偏弱，历史 8 次只有一半上涨。", "Of 31 past episodes, price was higher 30 days later 74% of the time (58% for comparable controls); weaker in bear markets (8 episodes, 50%)."))}</p>')
     else:
         ln = l4_last_neg()
         state = (f'<div class="lamp"><i></i><b>{T("不亮", "Off")}</b><span class="dd">{T("最近一次为负：", "Last negative: ")}{esc(ln or T("近 400 天没有", "none in 400 days"))}</span></div>'
-                 f'<p class="big quiet0">{T("资金费率 30 日均在 0 以上，不改动作。", "The 30-day average is above zero; no change to the action.")}</p>')
+                 f'<p class="big quiet0">{T("资金费率 30 日均在 0 以上，信号不亮。", "The 30-day average is above zero; the signal is off.")}</p>')
     bar = ""
     if pos is not None:
         bar = (f'<div class="zbar"><span class="neg" style="width:{zero}%"></span><i class="z" style="left:{zero}%"></i><b class="pt" style="left:{pos:.1f}%"></b></div>'
@@ -1861,7 +1957,7 @@ def l4_tab(l4, as_of):
     ws = sorted(l4.get("watch") or [], key=lambda x: not x.get("on"))
     watch = "".join(f'<li class="{"on" if x.get("on") else ""}"><b>{esc(T(x["name_zh"], x.get("name_en") or x["name_zh"]))}</b>'
                     f'<span class="chip{" t-warn" if x.get("on") else ""}"><i></i>{T("亮", "on") if x.get("on") else T("未亮", "off")}</span>'
-                    f'<em>{T("假设 · 不改动作", "hypothesis · no action")}</em><span class="s">{esc(T(x.get("stat_zh") or "", L4_WATCH_EN.get(x["key"], "")))}</span></li>' for x in ws)
+                    f'<em>{T("假设 · 只作描述", "hypothesis · description only")}</em><span class="s">{esc(T(x.get("stat_zh") or "", L4_WATCH_EN.get(x["key"], "")))}</span></li>' for x in ws)
     n_on = sum(1 for x in ws if x.get("on"))
     head = (f'<div class="card l3pos l4head"><div class="eb">L4 {T("BTC 短期杠杆与情绪温度", "BTC short-term leverage & sentiment temperature")} · {T("数据日", "data date")} {esc(l4.get("data_date") or "—")}'
             f' · {T("运行", "run")} {TT(l4.get("updated_utc"))}'
@@ -1879,7 +1975,7 @@ def l4_tab(l4, as_of):
             f'<p class="tnote">{esc(T(c.get("key_reading_zh") or "", ""))}</p></div></div>'
             + f'<h3 id="grp-4-0">{T("温度计 · 杠杆（只作描述）", "Thermometer · leverage (descriptive)")}</h3><div class="grid g3">{lev}</div>'
             + f'<h3 id="grp-4-1">{T("温度计 · 情绪（只作描述）", "Thermometer · sentiment (descriptive)")}</h3><div class="grid g3">{sen}</div>'
-            + f'<details class="raw l3d l4watch"><summary>{T(f"观察项（假设，不改动作）· 亮 {n_on}/{len(ws)}", f"Watch items (hypotheses, no action) · {n_on}/{len(ws)} on")}</summary><ul>{watch}</ul></details>'
+            + f'<details class="raw l3d l4watch"><summary>{T(f"观察项（假设，只作描述）· 亮 {n_on}/{len(ws)}", f"Watch items (hypotheses, description only) · {n_on}/{len(ws)} on")}</summary><ul>{watch}</ul></details>'
             + l4_chart()
             + f'<details class="raw l3d"><summary>{T("方法与 FAQ", "Method & FAQ")}</summary><div class="faqs" style="margin-top:8px">{faq_h}</div></details>'
             + f'<p class="l2disc">{esc(T(*L4_NOTE))}</p>')
@@ -1912,7 +2008,7 @@ def switch_text(i, lay, l2):
                  "大波动预警：30 天波动低于 40% 且筹码集中度不低于 12% 时亮。线每天随 STH 成本移动。",
                  f"A close above the zone top ({_m0(a.get('hi'))}) = through the zone; inside {_m0(a.get('lo'))}–{_m0(a.get('hi'))} = in the zone; below the STH cost ({_m0(s_.get('value'))}) = below STH cost. "
                  "Large-move warning: on when 30-day volatility is below 40% and supply concentration is at least 12%. The lines move daily with the STH cost.")
-    return T("资金费率 30 日均跌破 0 = 信号（空头拥挤，唯一会改动作的一条）；否则按杠杆分位（费率 30 日均、OI ÷ 市值的平均）和情绪分位（恐慌贪婪）再平均：≥ 85 过热、65~85 偏热、≤ 35 偏冷、其余中性。分档是描述，不是检验出来的。",
+    return T("资金费率 30 日均跌破 0 = 信号（空头拥挤，唯一通过检验的一条）；否则按杠杆分位（费率 30 日均、OI ÷ 市值的平均）和情绪分位（恐慌贪婪）再平均：≥ 85 过热、65~85 偏热、≤ 35 偏冷、其余中性。分档是描述，不是检验出来的。",
              "30-day average funding below zero = signal (crowded shorts — the only action-changing rule); otherwise the leverage percentile (funding 30-day avg and OI ÷ market cap) and the sentiment percentile (Fear & Greed) are averaged: ≥ 85 hot, 65–85 warm, ≤ 35 cool, otherwise normal. The bands describe; they were not tested.")
 
 
@@ -1999,7 +2095,7 @@ def l1_table(rs, v1, rot):
 
 
 L1_ANCHOR = {"乐观度 · 美股腿": ("乐观度", "Optimism"), "乐观度 · 信用腿": ("信用", "Credit"), "实际利率（状态变量）": ("实际利率", "Real yield"),
-             "流动性闸门（只打折不加仓）": ("流动性闸门", "Liquidity gate"), R.G_SC[0]: ("稳定币", "Stablecoins"), R.G_ETF[0]: ("ETF", "ETF"),
+             "流动性闸门": ("流动性闸门", "Liquidity gate"), R.G_SC[0]: ("稳定币", "Stablecoins"), R.G_ETF[0]: ("ETF", "ETF"),
              R.G_FUT[0]: ("期货升水", "Basis"), R.G_SEP[0]: ("单列观察", "Watched"), "联动与监控": ("联动", "Linkage"), "观察项（测过，未达可用标准）": ("观察项", "Watch-only")}
 
 
@@ -2124,7 +2220,7 @@ def build_macro(L, S, logs):
 <p class="lede">{T("综合研判把四层合成一句话：周期定方向，宏观管节奏，筹码和情绪用来确认和提醒。下面按层切换，每张指标卡都能点开看全部历史、区间规则和「正常波动范围」。拿不到真实数据的标「待接入」，不拿近似值冒充。",
                    "The overall read rolls four layers into one line: the cycle sets direction, macro sets pace, flows and sentiment confirm and caution. Switch layers below; every card opens its full history, zone rules and normal range. Anything without real data is marked pending.")}</p></div></div>
 {leg_macro_card()}
-<div class="hzrow"><span class="hz">{T("长期 · 周期", "Long term · cycle")}</span>{T("按月看：处在四年周期的哪一段、风险预算该松还是紧", "In months: where we are in the four-year cycle, and how loose or tight the risk budget should be")}</div>
+<div class="hzrow"><span class="hz">{T("长期 · 周期", "Long term · cycle")}</span>{T("按月看：处在四年周期的哪一段、宏观在推还是在拖", "In months: where we are in the four-year cycle, and whether macro is pushing or dragging")}</div>
 {comp_block(comp, prev_comp, tlog, full=True)}
 {leg_short_context()}
 {cal_next_line(G.get("CAL"))}
@@ -2135,7 +2231,7 @@ def build_macro(L, S, logs):
 {deep}"""
     emit("macro/index.html", T(f"宏观四层仪表盘 · {BRAND}", f"Macro dashboard · {BRAND_EN}"), body, active="macro", chart=True,
          extra_head=leg_assets()[0], scripts=leg_assets()[1],
-         desc=LF(comp or {}, "一句话") or T(PILLARS[0]["desc"], PILLARS[0]["descEN"]))
+         desc=T(PILLARS[0]["desc"], PILLARS[0]["descEN"]))
 
 
 def write_indicator_data(S):
@@ -2620,7 +2716,7 @@ def oc_chain_list():
     out = []
     d = os.path.join(DATA, "onchain")
     for f in sorted(os.listdir(d)) if os.path.isdir(d) else []:
-        if not f.endswith(".json") or f in ("solana.json", "线索.json", "ai_agent.json", "档案.json", "llama_meta.json", "平台资料.json"):
+        if not f.endswith(".json") or f in ("solana.json", "线索.json", "ai_agent.json", "档案.json", "llama_meta.json", "平台资料.json", "平台AI介绍.json", "平台质量.json", "平台质量_history.json"):
             continue
         db = load(os.path.join(d, f)) or {}
         days = db.get("逐日") or {}
@@ -3422,6 +3518,46 @@ def platform_page_slugs(matrix):
         return set()
 
 
+def platform_quality_html(slug):
+    """量的质量（data/onchain/平台质量.json，发射台板块 → Alpha 接口 2026-11-15）：发币、发币人、存活、交易者；拿不到写「待接入」。"""
+    q = ((load(os.path.join(DATA, "onchain", "平台质量.json")) or {}).get("平台") or {}).get(slug)
+    na = f'<span class="muted">{T("待接入", "pending")}</span>'
+    tpl = lambda k, v, s="": f'<div class="glass hero"><div class="k">{k}</div><div class="v" style="font-size:19px">{v}</div><div class="s">{s}</div></div>'  # noqa: E731
+    head = f'<h3>{T("量的质量", "Quality of volume")}</h3>'
+    if not q:
+        return head + f'<p class="tnote">{T("本站链上扫描还没对上这个平台的发币合约（Solana 平台、或工厂合约还没认出来），这一块暂时没有。", "Our on-chain scan has not matched this platform’s token factory yet (Solana platforms, or factory not identified), so nothing here yet.")}</p>'
+    fb, fr, sv, tr = q.get("发币") or {}, q.get("发币人") or {}, q.get("存活") or {}, q.get("交易者") or {}
+    est = T("（估算）", " (est.)") if fb.get("估算") else ""
+    n = lambda v: f"{v:,}" if isinstance(v, (int, float)) else na  # noqa: E731
+    if sv.get("7天后仍有交易") is not None:
+        s_v = f'{sv["7天后仍有交易"]} / {sv["样本"]}'
+        s_s = T(f'批次 {sv["批次"]}；市值过 10 万美元 {sv["市值过10万美元"]} 个', f'batch {sv["批次"]}; {sv["市值过10万美元"]} above $100k mcap')
+    elif sv.get("批次") and sv.get("收录") == 0:
+        s_v, s_s = na, T("GeckoTerminal 不收这家的池子，查不了", "GeckoTerminal doesn’t index this platform’s pools")
+    else:
+        s_v, s_s = na, T("攒样本中：某天发的币 7 天后才查", "collecting: checked 7 days after launch")
+    k = (tpl(T("近 7 日发币", "Tokens launched (7d)"), n(fb.get("7d")) + est, T(f'最近一天 {n(fb.get("1d"))} · {esc(q.get("数据日") or "")}', f'last day {n(fb.get("1d"))} · {esc(q.get("数据日") or "")}'))
+         + (tpl(T("发币人（下限）", "Creators (floor)"), n(fr["7d"] if fr.get("7d") is not None else fr["1d"]),
+                (T("近 7 天去重 · 平台合约创建事件", "unique in 7d · platform create events") if fr.get("7d") is not None
+                 else T(f'最近一天 {esc(fr.get("数据日") or "")} · 平台合约创建事件；7 天去重攒满才出', f'last day {esc(fr.get("数据日") or "")} · create events; 7d unique once 7 days are in')))
+            if fr.get("1d") is not None else
+            tpl(T("发币人（下限）", "Creators (floor)"), n(fr.get("7d")), T("7 天里单日最多的一天", "busiest day in 7d") if fr.get("7d") is not None
+               else T("币都铸给同一个合约，抽样数不出来", "all tokens minted via one contract; sampling can’t count creators")))
+         + tpl(T("7 天后还在交易", "Still trading after 7d"), s_v, s_s)
+         + (tpl(T("交易者（下限）", "Traders (floor)"), n(tr["7d"] if tr.get("7d") is not None else tr["1d"]),
+                T(f'{"近 7 天去重" if tr.get("7d") is not None else "最近一天 " + esc(tr.get("数据日") or "")} · 前 10 个钱包占 {tr["前10地址笔数占比"] * 100:.0f}% 笔数；刷量待接入',
+                  f'{"unique in 7d" if tr.get("7d") is not None else "last day " + esc(tr.get("数据日") or "")} · top 10 wallets = {tr["前10地址笔数占比"] * 100:.0f}% of trades; wash pending'))
+            if tr.get("1d") is not None else tpl(T("交易者 / 刷量", "Traders / wash"), na, T("要逐笔扫交易，还没接", "needs per-trade scan"))))
+    ev = q.get("事件") or []
+    evh = ""
+    if ev:
+        evh = '<ul class="pm">' + "".join(f'<li><b>{esc(e.get("日期") or "")}</b> {esc(e.get("事") or "")} <a href="{esc(e.get("出处") or "")}" target="_blank" rel="noopener">{T("出处", "source")}</a></li>' for e in ev) + "</ul>"
+    note = T(f'口径：发币 = {esc(fb.get("口径") or "")}；存活 = {esc(sv.get("口径") or "")}'
+             + (f'；交易者 = {esc(tr.get("口径") or "")}' if tr.get("1d") is not None else "") + '。数据同时供 Alpha 雷达读取。',
+             f'Method: launches = factory mints of round-supply tokens on our own node scan (floor{", sampled and scaled" if fb.get("估算") else ""}); survival = sampled tokens checked on GeckoTerminal 7–8 days later (floor). Also read by Alpha Radar.')
+    return head + f'<div class="grid g4">{k}</div>{evh}<p class="tnote">{note}</p>'
+
+
 def platform_links_html(p, info):
     url = info.get("官网") or None
     x = info.get("X") or info.get("官网X")
@@ -3590,10 +3726,12 @@ def build_platform_pages(matrix, deep_slugs):
 {platform_links_html(p, info)}
 <div class="grid g5">{k}</div>
 {chart}{cb}
+{platform_quality_html(slug)}
 {platform_profile_html(p)}"""
         emit(f'launchpad/platforms/{slug}/index.html', f'{p["名称"]} · {T("发射台", "Launchpad")} · {T(BRAND, BRAND_EN)}', body,
-             active="launchpad", chart=True, desc=T(f'{p["名称"]}：近 7 日手续费 {f_usd(p.get("7日"))}，产品介绍、收费分账、融资与官网入口。',
-                                                   f'{p["名称"]}: 7-day fees {f_usd(p.get("7日"))}; product, fee split, raises and official links.'))
+             active="launchpad", chart=True, updated=p.get("数据日"),
+             desc=T(f'{p["名称"]}：近 7 日手续费 {f_usd(p.get("7日"))}（截至 {p.get("数据日") or ""}），每日手续费走势、发币数与 7 天存活、产品介绍、收费分账、融资与官网入口。',
+                    f'{p["名称"]}: 7-day fees {f_usd(p.get("7日"))} (as of {p.get("数据日") or ""}); daily fees, tokens launched and 7-day survival, product, fee split, raises and official links.'))
 
 
 def _deep_profile(x, matrix):
@@ -3649,7 +3787,7 @@ def build_launchpad_platforms(sd, matrix=None):
 {_deep_links(x, matrix)}
 <div class="grid g5">{k}</div>
 <div class="card" style="padding:14px 18px;margin-top:14px"><h3 style="margin-top:0">{T("手续费 / 协议收入", "Fees / revenue")}</h3>{chart}</div>
-{vb}{_deep_profile(x, matrix)}"""
+{vb}{platform_quality_html(x["slug"])}{_deep_profile(x, matrix)}"""
         emit(f'launchpad/platforms/{x["slug"]}/index.html', f'{x["名称"]} · {T("发射台", "Launchpad")} · {T(BRAND, BRAND_EN)}', body,
              active="launchpad", chart=True)
     for z in (sd.get("Arc") or {}).get("发射台", []):
@@ -3682,7 +3820,8 @@ def build_launchpad_report(sd):
         body = (crumbs([(T("发射台矩阵", "Launchpads"), "/launchpad/"), (T("文字解读", "Narrative"), "/launchpad/report/archive/"), (cur, None)])
                 + note_en + f'<div class="rpt">{sd["正文"]}{links}</div>')
         emit(rel, f'{T("发射台日更 · 文字解读", "Launchpad daily narrative")} · {sd["日期"]} · {T(BRAND, BRAND_EN)}', body, active="launchpad",
-             extra_head=extra, desc=sd["一句话"], scripts=scripts)
+             extra_head=extra, desc=sd["一句话"], scripts=scripts, noindex=LANG["v"] == "en",
+             canonical=None if sd["日期"] in rel else f'/launchpad/report/{sd["日期"]}/')
     ds = sorted([d for d in os.listdir(rd) if re.match(r"^\d{4}-\d{2}-\d{2}$", d)], reverse=True)
     for base in (rd, os.path.join(SITE, "en", "launchpad", "report")):
         for d in (os.listdir(base) if os.path.isdir(base) else []):
@@ -3741,13 +3880,19 @@ def build_rotation(rot):
                  + (" · 疑似成分调整、未进排行：" + "、".join(f"{c['名称']} {c['24h']:+.0f}%" for c in odd[:6]) if odd else ""),
                  f'Snapshot {dates[-1]} · {len(last)} categories (cap ≥ $50M); showing {len(big)} with cap ≥ $300M · {len(dates)} days of history'
                  + (" · likely constituent changes excluded: " + ", ".join(f"{c['名称']} {c['24h']:+.0f}%" for c in odd[:6]) if odd else ""))
-    body = f"""<div class="ph"><div><div class="eyebrow">Sector Rotation</div><h1>{T("板块轮动", "Sector rotation")}</h1>
+    body = f"""<div class="ph"><div><div class="eyebrow">Smart Money</div><h1>{T("聪明钱", "Smart Money")}</h1>
 <p class="lede">{esc(T(PILLARS[1]["desc"], PILLARS[1]["descEN"]))} {T("类目口径来自 CoinGecko，一个币可以同时属于多个类目，看相对强弱，不要把类目市值加总。", "Categories overlap (a coin can be in several), so compare relative strength; don't sum category caps.")}</p></div></div>
+<h2>{T("板块轮动", "Sector rotation")}</h2>
 {f'<p class="tnote">{esc(meta)}</p>' if meta else ''}
-<h2>{T("24h 领涨赛道", "24h leaders")}</h2>{f'<div class="grid g4">{grid}</div>' if grid else '<div class="empty">' + T("板块快照待生成。", "Snapshot pending.") + '</div>'}
-<h2>{T("24h 领跌赛道", "24h laggards")}</h2>{f'<div class="grid g4">{lose}</div>' if lose else ''}
-<h2>{T("轮动复盘", "Rotation reviews")}</h2>{post_list("rotation")}"""
-    emit("rotation/index.html", T(f"板块轮动 · {BRAND}", f"Sector rotation · {BRAND_EN}"), body, active="rotation", desc=T(PILLARS[1]["desc"], PILLARS[1]["descEN"]))
+<h3>{T("24h 领涨赛道", "24h leaders")}</h3>{f'<div class="grid g4">{grid}</div>' if grid else '<div class="empty">' + T("板块快照待生成。", "Snapshot pending.") + '</div>'}
+<h3>{T("24h 领跌赛道", "24h laggards")}</h3>{f'<div class="grid g4">{lose}</div>' if lose else ''}
+<h3>{T("轮动复盘", "Rotation reviews")}</h3>{post_list("rotation")}"""
+    # 大叔 11-15 定：板块轮动并进「聪明钱」（聪明钱自己的数据源还在准备），旧地址 /rotation/ 留一页跳转
+    emit("smart-money/index.html", T(f"聪明钱 · {BRAND}", f"Smart Money · {BRAND_EN}"), body, active="smart",
+         desc=T("聪明钱：先放板块轮动——" + PILLARS[1]["desc"], "Smart money, starting with sector rotation: " + PILLARS[1]["descEN"]))
+    emit("rotation/index.html", T(f"聪明钱 · {BRAND}", f"Smart Money · {BRAND_EN}"),
+         f'<div class="ph"><div><h1>{T("板块轮动已并入聪明钱", "Rotation moved to Smart Money")}</h1></div></div><p><a href="{U("/smart-money/")}">{T("去聪明钱 →", "Go to Smart Money →")}</a></p>',
+         active="smart", extra_head=f'<meta http-equiv="refresh" content="0; url={U("/smart-money/")}"><link rel="canonical" href="https://{DOMAIN}{U("/smart-money/")}">')
 
 
 RADAR = [
@@ -3941,7 +4086,7 @@ def build_core():
 
 
 # ---------------------------------------------------------------- Alpha 雷达（alpha/：雷达读 data/alpha/alpha_latest.json；方法论 / 案例库 / 进度读 alpha/research/*.md）
-ALPHA_TABS = [("", "机会看板", "Board", "可投资机会 · 预警观察", "Investable · watchlist"),
+ALPHA_TABS = [("", "机会看板", "Board", "有参与入口 · 预警观察", "Has entry · watchlist"),
               ("radar/", "雷达", "Radar", "数据从哪来", "Where leads come from"),
               ("cases/", "案例库", "Cases", "历史对照", "Historical reference")]
 ALPHA_FW = [("framework/", "框架", "Framework"), ("eval/", "评估器", "Evaluator"), ("progress/", "检验与进度", "Validation & progress"), ("method/", "方法论原文", "Original text")]
@@ -3978,11 +4123,9 @@ ALPHA_ST = {"研究观察": ("t-up", "Watching"), "待核验": ("t-warn", "To ve
 def alpha_checks():
     """外部补证（alpha/review/*_checks.json）：key → 最新一条。"""
     if "ALPHA_CHK" not in G:
-        out, rd = {}, os.path.join(ROOT, "alpha", "review")
-        for fn in sorted(os.listdir(rd)) if os.path.isdir(rd) else []:
-            if fn.endswith("_checks.json"):
-                for c in load(os.path.join(rd, fn), []) or []:
-                    out[c["key"]] = c
+        sys.path.insert(0, os.path.join(ROOT, "alpha"))
+        import checks_util
+        out = checks_util.merged()
         G["ALPHA_CHK"] = out
     return G["ALPHA_CHK"]
 
@@ -4081,6 +4224,107 @@ def alpha_feed_html(d):
             + f'<p class="tnote">{T("来源状态", "Source status")}：{health}</p>')
 
 
+ALPHA_RESERVED = {"radar", "cases", "framework", "eval", "progress", "method", "pool", "opp"}
+
+
+def alpha_entity_slug(c):
+    """机会卡的独立页面路径 /alpha/<slug>/（SEO 规范：实体要有真实路径）。只有有实质读数的才出页（成交 / 收入读数或研究补证），薄页不出。"""
+    d = c["data"]
+    if c.get("bucket") == "reject" or not (d.get("money") or c.get("research")):
+        return None
+    sl = re.sub(r"[^a-z0-9.-]+", "-", str(d.get("slug") or c["id"]).lower()).strip("-")
+    return None if not sl or sl in ALPHA_RESERVED else sl
+
+
+def alpha_entity_pages(css):
+    """每张有实质读数的机会卡出一个静态页：读数全部写进 HTML（不靠 JS），交互版链回看板。只摆状态和读数，不写动作（docs/表达规范.md）。"""
+    O = G.get("OPPS") or {}
+    FWj = load(os.path.join(ROOT, "alpha", "framework.json")) or {}
+    EN_ = {o["k"]: o["name"] for o in FWj.get("entry", {}).get("opts", [])}
+    FLOW = [("airdrop", T("积分 / 空投", "Points / airdrop")), ("newchain", T("新链首发", "New-chain launch")), ("subsidy", T("返佣 / 补贴", "Rebates / subsidy")), ("organic", T("自然需求", "Organic demand"))]
+    seen, n = set(), 0
+    for c in O.get("opps") or []:
+        sl = alpha_entity_slug(c)
+        if not sl or sl in seen:
+            continue
+        seen.add(sl)
+        d, R, m, t = c["data"], c.get("research") or {}, c["data"].get("money") or {}, c["data"].get("tok") or {}
+        asof = (O.get("asof") or "")
+        u = lambda v: a_usd(v) if v is not None else "—"
+        rows = []
+        if (m.get("vol") or {}).get("total30d") is not None:
+            v = m["vol"]
+            rows.append((T("成交 24 小时 / 7 天 / 30 天", "Volume 24h / 7d / 30d"), f'{u(v.get("total24h"))} · {u(v.get("total7d"))} · {u(v.get("total30d"))}'))
+        if m.get("share7") is not None:
+            rows.append((T("近 7 天占 30 天", "7d share of 30d"), f'{round(m["share7"] * 100)}%'))
+        if m:
+            rows.append((T("30 天费用 / 协议收入 / 持币人收入", "30d fees / revenue / holder revenue"), f'{u((m.get("fees") or {}).get("total30d"))} · {u((m.get("rev") or {}).get("total30d"))} · {u((m.get("hold") or {}).get("total30d"))}'))
+        if m.get("take") is not None:
+            rows.append((T("协议抽成（30 天收入 ÷ 成交）", "Take rate (30d revenue ÷ volume)"), f'{m["take"] * 100:.2f}%'))
+        if d.get("age"):
+            rows.append((T("项目上线", "Project age"), T(f'约 {d["age"]["days"]} 天（从 {d["age"]["since"]}，以{d["age"]["basis"]}为准）', f'~{d["age"]["days"]} days (since {d["age"]["since"]})')))
+        if t:
+            sn = t.get("snap") or {}
+            rows.append((T("代币", "Token"), esc(t.get("sym") or "") + (T(f' · 上线约 {t["days"]} 天', f' · ~{t["days"]}d') if t.get("days") is not None else "")
+                         + (T(f' · 市值 {u(sn.get("mcap"))}（DexScreener 日更快照）', f' · mcap {u(sn.get("mcap"))}') if sn.get("mcap") is not None else "")))
+        ent = "、".join(EN_.get(e, e) for e in c.get("entry") or [])
+        rows.append((T("资金参与方式", "How capital takes part"), esc(ent) + (f' <span class="muted">（{esc(c.get("entry_why") or "")}）</span>' if c.get("entry_why") else "")))
+        tb = "".join(f'<tr><td class="l" style="white-space:nowrap">{k}</td><td class="l" style="white-space:normal">{v}</td></tr>' for k, v in rows)
+        fl = R.get("flow") or {}
+        flh = ("<h2>" + T("量从哪来", "Where volume comes from") + '</h2><div class="tw"><table><tbody>' + "".join(
+            f'<tr><td class="l">{nm}</td><td class="l"><b>{esc((fl.get(k) or {}).get("v") or T("待验证", "unverified"))}</b></td><td class="l">{esc((fl.get(k) or {}).get("why") or "")}</td></tr>' for k, nm in FLOW) + "</tbody></table></div>") if fl else ""
+        q = d.get("lpq") or {}
+        sv = q.get("存活") or {}
+        qh = ("<h2>" + T("发射台质量", "Launchpad quality") + '</h2><div class="tw"><table><tbody>'
+              + f'<tr><td class="l">{T("7 天发币", "7d launches")}</td><td class="l">{(q.get("发币") or {}).get("7d") if (q.get("发币") or {}).get("7d") is not None else T("待接入", "n/a")}</td></tr>'
+              + (f'<tr><td class="l">{T("7 天后仍有交易", "Still trading after 7d")}</td><td class="l">{sv.get("7天后仍有交易")} / {sv.get("样本")} {T("个样本", "sampled")}</td></tr>' if sv.get("样本") else "")
+              + "</tbody></table></div>") if q else ""
+        evs = [e for e in (R.get("events") or []) if isinstance(e, dict) and e.get("date")]
+        evh = ("<h2>" + T("关键事件", "Key events") + "</h2><ul>" + "".join(f'<li>{esc(e["date"])} · {esc(e.get("what") or "")}</li>' for e in evs) + "</ul>") if evs else ""
+        txt = lambda k, lab: f"<p><b>{lab}</b>：{esc(R[k])}</p>" if R.get(k) and R[k] != "U" else ""
+        evd = [e for e in c.get("evidence") or [] if e.get("url")]
+        body = (f'<p class="lede keep">{esc(c.get("one_liner") or (str(d.get("category") or "") + " · " + " · ".join(d.get("chains") or [])))}</p>'
+                f'<p><span class="chip t-neutral"><i></i>{esc(c.get("status") or "")}</span> <span class="muted small">{T("数据日", "Data day")} {esc(asof)} · {T("补证", "Research")}：{esc(c.get("reviewer") or T("还没补证", "none yet"))}</span></p>'
+                f'<div class="tw"><table><tbody>{tb}</tbody></table></div>'
+                + flh + qh + evh
+                + ("<h2>" + T("研究记录", "Research notes") + "</h2>" + txt("verdict_reason", T("核心判断", "Core read")) + txt("capture", T("参与者实际能拿到", "What participants get"))
+                   + txt("wash_or_subsidy", T("刷量 / 补贴迹象", "Wash / subsidy")) + txt("counter", T("最大的风险", "Biggest risk")) if R else "")
+                + ("<h2>" + T("证据", "Evidence") + "</h2><ul>" + "".join(f'<li><a href="{esc(e["url"])}" target="_blank" rel="noopener nofollow">{esc(e["url"][:90])}</a></li>' for e in evd[:10]) + "</ul>" if evd else "")
+                + f'<p><a class="pill" href="{U("/alpha/")}#{esc(c["id"])}">{T("打开交互机会卡（评分雷达、走势图、完整拆解）→", "Open the interactive card →")}</a></p>'
+                + f'<p class="tnote">{T("只摆读数和研究过程，不是买卖建议。成交和收入是协议的读数，不等于代币有价值。来源 DefiLlama、DexScreener 和各条证据链接。", "Readings and research notes only, not advice. Sources: DefiLlama, DexScreener and the evidence links.")}</p>')
+        r30 = (m.get("rev") or {}).get("total30d")
+        head = T(f'{c["name"]} 协议读数（30 天协议收入 {u(r30)}，截至 {asof[5:]}）', f'{c["name"]} readings (30d revenue {u(r30)}, as of {asof[5:]})') if r30 is not None else T(f'{c["name"]} 机会卡', f'{c["name"]} card')
+        zh_only = ZH_ONLY if LANG["v"] == "en" else ""
+        emit(f"alpha/{sl}/index.html", f'{head} · {T("Alpha 雷达", "Alpha Radar")} · {T(BRAND, BRAND_EN)}',
+             crumbs([(T("Alpha 雷达", "Alpha Radar"), U("/alpha/")), (c["name"], None)]) + zh_only + f'<h1>{esc(c["name"])}</h1>' + body,
+             active="alpha", desc=T(f'{c["name"]}：成交、费用、协议收入、上线天数、资金参与方式和研究补证记录，每天更新。', f'{c["name"]}: volume, fees, protocol revenue, age, entry routes and research notes, updated daily.'),
+             extra_head=css, kind="dataset")
+        n += 1
+    return n
+
+
+def alpha_board_static():
+    """机会看板的静态兜底（SEO 规范 S3）：出网站时把全部机会卡的关键读数写进 HTML，alpha.js 加载后整块换成交互看板。只摆读数，不加判断。"""
+    O = G.get("OPPS") or {}
+    cs = [c for c in O.get("opps") or [] if c.get("bucket") != "reject"]
+    if not cs:
+        return f'<p class="muted">{T("加载中…", "Loading…")}</p>'
+    EN_ = {o["k"]: o["name"] for o in (load(os.path.join(ROOT, "alpha", "framework.json")) or {}).get("entry", {}).get("opts", [])}
+    rows = ""
+    for c in cs:
+        d = c["data"]
+        val = a_usd(d["rev30"]) + T(" · 30 天收入", " · 30d revenue") if d.get("rev30") is not None else (a_usd(d["fees7"]) + T(" · 7 天手续费", " · 7d fees") if d.get("fees7") is not None else "—")
+        age = T(f'约 {d["age"]["days"]} 天', f'~{d["age"]["days"]}d') if d.get("age") else "—"
+        t = d.get("tok") or {}
+        tok = (esc(t.get("sym") or "") + (T(f' · {t["days"]} 天', f' · {t["days"]}d') if t.get("days") is not None else "")) if t else T("无币", "none")
+        ent = "、".join(EN_.get(e, e) for e in c.get("entry") or [] if e != "none") or T("暂无", "none yet")
+        rows += (f'<tr><td class="l"><a href="{U("/alpha/" + alpha_entity_slug(c) + "/") if alpha_entity_slug(c) else U("/alpha/") + "#" + esc(c["id"])}">{esc(c["name"])}</a></td><td class="l">{esc(c.get("status") or "")}</td><td>{val}</td>'
+                 f'<td>{age}</td><td>{tok}</td><td class="l">{esc(ent)}</td></tr>')
+    return (f'<p class="muted small">{T("数据日", "Data day")} {esc(O.get("asof") or "")} · {T("有参与入口", "Has entry")} {(O.get("counts") or {}).get("invest", 0)} · {T("预警观察", "Watchlist")} {(O.get("counts") or {}).get("watch", 0)}</p>'
+            f'<div class="tw"><table><thead><tr><th class="l">{T("机会", "Opportunity")}</th><th class="l">{T("状态", "Status")}</th><th>{T("读数", "Reading")}</th>'
+            f'<th>{T("项目上线", "Project age")}</th><th>{T("代币", "Token")}</th><th class="l">{T("资金参与方式", "How capital takes part")}</th></tr></thead><tbody>{rows}</tbody></table></div>')
+
+
 def a_usd(v):
     if v is None:
         return "—"
@@ -4099,7 +4343,7 @@ def alpha_head(cur):
     if fw:
         sub = '<div class="ax-sub">' + "".join(f'<a href="{U("/alpha/" + p)}" class="{"on" if p == cur else ""}">{T(zh, en)}</a>' for p, zh, en in ALPHA_FW) + "</div>"
     return (f'{cr}<div class="ph"><div><div class="eyebrow">Alpha Radar</div><h1>{T("Alpha 雷达", "Alpha radar")}</h1>'
-            f'<p class="lede">{T("新协议、新产品、新机制、没发币但有真实收入的协议：每挖到一个，按同一套框架拆解打分（系统按数据打能打的，研究补其余的，未知记 U）。资金能参与的进「可投资机会」，暂时不能的进「预警观察」。只研究正规项目，不按分数排名，不是买卖建议。", "New protocols, products and mechanisms, plus tokenless protocols with real revenue, each scored on one framework (system rules + research; unknowns stay U). Capital-accessible ones are Investable, the rest Watchlist. Established projects only; no rankings; not trade advice.")}</p></div></div>'
+            f'<p class="lede">{T("新协议、新产品、新机制、没发币但有真实收入的协议：每挖到一个，按同一套框架拆解打分（系统按数据打能打的，研究补其余的，未知记 U）。有资金参与方式的进「有参与入口」（只说明能参与，不代表研究过），暂时没有的进「预警观察」。只研究正规项目，不按分数排名，不是买卖建议。", "New protocols, products and mechanisms, plus tokenless protocols with real revenue, each scored on one framework (system rules + research; unknowns stay U). Capital-accessible ones are Investable, the rest Watchlist. Established projects only; no rankings; not trade advice.")}</p></div></div>'
             f'<div class="tabwrap"><nav class="tabs" role="tablist">{tabs}</nav></div>{sub}')
 
 
@@ -4224,29 +4468,47 @@ def build_alpha():
         if d.get("stale"):
             evh = f'<div class="note">{T("今天数据源没取到，下表沿用上次结果。", "Source failed today; tables carry the last result.")}</div>' + evh
         chg = lambda v: '<span class="muted">' + T("新", "new") + "</span>" if v is None else f'<span style="color:var(--{"up" if v >= 0 else "dn"})">{v:+.0f}%</span>'
+        carded = {c["key"]: c["id"] for c in (G.get("OPPS") or {}).get("opps") or []}
+        rowattr = lambda r: f' data-q="{esc((r["name"] + " " + (r.get("category") or "") + " " + " ".join(r.get("chains") or [])).lower())}"' + (f' data-card="{esc(carded[r["key"]])}"' if r["key"] in carded else "")
+        cardlink = lambda r: f' <a class="tag" href="{U("/alpha/")}#{esc(carded[r["key"]])}">{T("机会卡", "card")}</a>' if r["key"] in carded else ""
         trs = "".join(
-            f'<tr><td class="rk">{i}</td><td class="wrap" style="min-width:180px;text-align:left"><a href="https://defillama.com/protocol/{esc(r["slug"] or "")}" target="_blank" rel="noopener">{esc(r["name"])}</a>'
+            f'<tr{rowattr(r)}><td class="rk">{i}</td><td class="wrap" style="min-width:180px;text-align:left"><a href="https://defillama.com/protocol/{esc(r["slug"] or "")}" target="_blank" rel="noopener">{esc(r["name"])}</a>{cardlink(r)}'
             + (f'<div class="tnote" style="margin:2px 0 0;white-space:normal">{esc("、".join(r["children"][:3]))}{"…" if len(r["children"]) > 3 else ""}</div>' if len(r["children"]) > 1 else "")
             + f'</td><td class="l">{esc(r["category"] or "")}</td><td class="l">{esc(" · ".join(r["chains"]))}</td><td>{a_usd(r["rev30"])}</td><td>{chg(r["chg30"])}</td><td>{esc(r.get("first_seen") or "")}</td>'
             + f'<td class="l">{alpha_status_chip(r["key"])}</td></tr>'
             for i, r in enumerate(d.get("tokenless") or [], 1))
         lrs = "".join(
-            f'<tr><td>{esc(r["listed"])}</td><td class="l"><a href="https://defillama.com/protocol/{esc(r["slug"] or "")}" target="_blank" rel="noopener">{esc(r["name"])}</a></td>'
+            f'<tr{rowattr(r)}><td>{esc(r["listed"])}</td><td class="l"><a href="https://defillama.com/protocol/{esc(r["slug"] or "")}" target="_blank" rel="noopener">{esc(r["name"])}</a>{cardlink(r)}</td>'
             f'<td class="l">{esc(r["category"] or "")}</td><td class="l">{esc(" · ".join(r["chains"]))}</td><td>{a_usd(r["tvl"]) if r["tvl"] else "—"}</td><td class="l">{T("有", "yes") if r["token"] else T("无", "no")}</td></tr>'
             for r in d.get("listings") or [])
         lg = d.get("ledger") or {}
         src_ok = all(v.get("ok") for v in (d.get("sources") or {}).values())
-        radar = (alpha_sources_html() + evh
-                 + f'<h2>{T("没发币、有收入的协议", "Tokenless protocols with revenue")} <span class="sub">{T("近 30 天协议收入 ≥ 10 万美元，按母协议合并", "30d protocol revenue ≥ $100K, merged by parent")} · {len(d.get("tokenless") or [])}</span></h2>'
+        def ledger_note(lg):
+            nm = {"tokenless_rev": T("无币收入榜", "tokenless list"), "new_listing": T("新上架", "new listing"), "rev_surge": T("收入新起量", "revenue ramp"),
+                  "manual": T("手动线索", "manual"), "site:launchpad": T("发射台矩阵", "launchpad board"), "site:aiagent": T("AI Agent", "AI Agent")}
+            bs = " · ".join(f"{nm.get(k, k)} {v}" for k, v in (lg.get("by_source") or {}).items())
+            multi = lg.get("multi", 0)
+            return ('<p class="tnote">' + T(f"口径：累计登记 = 各来源第一次筛到的协议，只追加不删；同一个协议被几个来源筛到只记一条（{multi} 条有多个来源）。上面两张表是今天的快照（今天在榜、最近 14 天收录），所以加起来不等于累计。",
+                                            f"Cumulative ledger, one row per protocol even when several sources flag it ({multi} do); the tables above are snapshots, so they do not add up to the total.")
+                    + (" " + T("按来源：", "By source: ") + bs if bs else "") + "</p>")
+        tool = (f'<div class="ax-rtool"><input type="search" id="rq" placeholder="{T("搜协议名 / 类目 / 链", "Search name / category / chain")}">'
+                f'<label><input type="checkbox" id="rc"> {T("只看已出机会卡的", "Only those with a card")}</label><span class="muted small" id="rn"></span></div>'
+                '<script>(function(){var q=document.getElementById("rq"),c=document.getElementById("rc"),n=document.getElementById("rn");'
+                'function f(){var t=(q.value||"").trim().toLowerCase(),k=0,a=0;document.querySelectorAll("tr[data-q]").forEach(function(r){var ok=(!t||r.dataset.q.indexOf(t)>=0)&&(!c.checked||r.dataset.card);r.style.display=ok?"":"none";a++;if(ok)k++});'
+                'if(t||c.checked){document.querySelectorAll("details.ax-rsec").forEach(function(d){d.open=true})}n.textContent=(t||c.checked)?(k+" / "+a):""}'
+                'q.addEventListener("input",f);c.addEventListener("change",f)})();</script>')
+        radar = (alpha_sources_html() + evh + tool
+                 + f'<details class="ax-rsec" open><summary><h2 style="display:inline">{T("没发币、有收入的协议", "Tokenless protocols with revenue")} <span class="sub">{T("近 30 天协议收入 ≥ 10 万美元，按母协议合并", "30d protocol revenue ≥ $100K, merged by parent")} · {len(d.get("tokenless") or [])}</span></h2></summary>'
                  + f'<p class="tnote">{T("「没发币」= DefiLlama 上本协议和母协议都没登记代币，不等于确认不发币，也不等于会空投。已剔除稳定币发行方、交易所、CeDeFi、区块构建者和传统金融产品。环比 = 近 30 天 ÷ 前 30 天 − 1。", "“Tokenless” = no token registered on DefiLlama for the protocol or its parent; not a confirmation of no token, nor of an airdrop. Stablecoin issuers, CEXs, CeDeFi, block builders and TradFi products excluded. Change = last 30d ÷ prior 30d − 1.")}</p>'
                  + f'<div class="tw scroll"><table><thead><tr><th>#</th><th style="text-align:left">{T("协议", "Protocol")}</th><th style="text-align:left">{T("类目", "Category")}</th><th style="text-align:left">{T("主要链", "Chains")}</th><th>{T("30 天收入", "30d revenue")}</th><th>{T("环比", "Change")}</th><th>{T("首次进榜", "First seen")}</th><th style="text-align:left">{T("机会卡", "Card")}</th></tr></thead><tbody>{trs}</tbody></table></div>'
-                 + f'<h2>{T("新上架协议", "Newly listed protocols")} <span class="sub">{T("DefiLlama 最近 14 天收录", "Added to DefiLlama in the last 14 days")} · {len(d.get("listings") or [])}</span></h2>'
+                 + f'</details><details class="ax-rsec"><summary><h2 style="display:inline">{T("新上架协议", "Newly listed protocols")} <span class="sub">{T("DefiLlama 最近 14 天收录", "Added to DefiLlama in the last 14 days")} · {len(d.get("listings") or [])}</span></h2></summary>'
                  + f'<p class="tnote">{T("收录日不是部署日，更不是能参与的日子；TVL 是存量，不是收入。", "Listing date is not deployment date or participation date; TVL is a stock, not revenue.")}</p>'
                  + f'<div class="tw scroll"><table><thead><tr><th>{T("收录日", "Listed")}</th><th style="text-align:left">{T("协议", "Protocol")}</th><th style="text-align:left">{T("类目", "Category")}</th><th style="text-align:left">{T("主要链", "Chains")}</th><th>TVL</th><th style="text-align:left">{T("代币", "Token")}</th></tr></thead><tbody>{lrs}</tbody></table></div>'
-                 + alpha_feed_html(d)
+                 + '</details><details class="ax-rsec"><summary><h2 style="display:inline">' + T("事件流", "Event feed") + '</h2></summary>' + alpha_feed_html(d) + '</details>'
                  + f'<h2>{T("线索台账", "Lead ledger")} <span class="sub">{T("保留全部分母：只追加，不删除", "All denominators kept: append-only")}</span></h2>'
                  + f'<div class="card" style="padding:12px 16px;font-size:13px">{T("累计登记", "Logged")} <b>{lg.get("n", 0)}</b> · {T("来自无币收入榜", "from revenue board")} <b>{lg.get("tokenless_rev", 0)}</b> · {T("来自新上架", "from new listings")} <b>{lg.get("new_listing", 0)}</b> · {T("之后发币", "later launched a token")} <b>{lg.get("token_seen", 0)}</b>'
                  + f' · <a href="/data/alpha/alpha_leads.json">{T("下载台账 JSON", "Ledger JSON")}</a></div>'
+                 + ledger_note(lg)
                  + f'<p class="tnote">{T("数据日", "Data day")} {esc(d.get("asof") or "")} · {T("生成于", "Generated")} {TT(d.get("generated"))} · {T("来源 DefiLlama（协议列表、协议收入）", "Source: DefiLlama (protocols, revenue)")}{"" if src_ok else " · " + T("有数据源失败", "a source failed")}</p>')
     else:
         radar = f'<div class="note">{T("雷达数据还没生成。", "Radar data not generated yet.")}</div>'
@@ -4254,9 +4516,13 @@ def build_alpha():
     css = f'<link rel="stylesheet" href="{ASSET_URL["alpha.css"]}">'
     js = f'<script src="{ASSET_URL["alpha.js"]}" defer></script>'
     zh_only = ZH_ONLY if LANG["v"] == "en" else ""
-    app = lambda mode: f'{zh_only}<div class="ax" id="alpha-app" data-mode="{mode}" data-v="{ver}"><p class="muted">{T("加载中…", "Loading…")}</p></div><noscript><p class="muted">{T("这一页需要开启 JavaScript。", "This page needs JavaScript.")}</p></noscript>'
+    app = lambda mode: f'{zh_only}<div class="ax" id="alpha-app" data-mode="{mode}" data-v="{ver}">{alpha_board_static() if mode == "board" else "<p class=muted>" + T("加载中…", "Loading…") + "</p>"}</div><noscript><p class="muted">{T("这一页需要开启 JavaScript。", "This page needs JavaScript.")}</p></noscript>'
     page_ = lambda rel, p, title, body: emit(rel, T(f"{title} · Alpha 雷达 · {BRAND}", f"{title} · Alpha Radar · {BRAND_EN}"), alpha_head(p) + body, active="alpha", desc=desc, extra_head=css, scripts=js, chart=True)
     page_("alpha/index.html", "", T("机会看板", "Board"), app("board"))
+    try:
+        print(f"  Alpha 协议独立页：{alpha_entity_pages(css)} 个")
+    except Exception as ex:
+        print("  ⚠️ Alpha 协议独立页失败：", str(ex)[:200])
     emit("alpha/opp/index.html", T(f"Alpha 雷达 · {BRAND}", f"Alpha Radar · {BRAND_EN}"),   # 旧的单张机会卡链接 → 看板同一张卡
          f'<p><a href="{U("/alpha/")}">{T("机会卡已并入机会看板 →", "Cards now live on the board →")}</a></p><script>location.replace("{U("/alpha/")}"+location.hash)</script>', active="alpha")
     page_("alpha/radar/index.html", "radar/", T("雷达", "Radar"), radar)
@@ -4687,10 +4953,32 @@ def leg_assets():
     return (f'<link rel="stylesheet" href="{ASSET_URL["leg.css"]}">', f'<script src="{ASSET_URL["leg.js"]}" defer></script>')
 
 
+def leg_static():
+    """涨跌腿卡片的静态兜底（SEO 规范 S3）：出网站时把当前读数写进 HTML，leg.js 加载后整块换成交互卡片。只摆读数，不加判断。"""
+    lg = G.get("LEG") or {}
+
+    def one(name, x):
+        L = (x or {}).get("leg") or {}
+        if not x or not L.get("day"):
+            return ""
+        if x.get("direction") == "up":
+            txt = T(f"涨腿第 {L['day']} 天，自 {L.get('start_date', '—')} 起涨 {L.get('gain_pct', 0):+.1f}%",
+                    f"day {L['day']} of an up-leg, {L.get('gain_pct', 0):+.1f}% since {L.get('start_date', '—')}")
+        else:
+            txt = T(f"跌腿第 {L['day']} 天，自 {L.get('start_date', '—')} 起最深 −{L.get('drop_pct', 0):.1f}%",
+                    f"day {L['day']} of a down-leg, at most −{L.get('drop_pct', 0):.1f}% since {L.get('start_date', '—')}")
+        return f"<li><b>{name}</b>{CN}{esc(txt)}</li>"
+    items = one("BTC", lg.get("btc_leg")) + one(T("山寨整体", "Altcoins"), lg.get("alt_leg"))
+    if not items:
+        return f'<div class="card"><div class="empty">{T("读取中…", "Loading…")}</div></div>'
+    return (f'<div class="card"><ul class="small" style="margin:0;padding-left:18px">{items}</ul>'
+            f'<p class="tnote">{T("数据截至", "As of")} {esc(lg.get("asof") or "—")} {T("（UTC 收盘）", "(UTC close)")}</p></div>')
+
+
 def leg_home_card():
     return (f'<h2>{T("涨跌腿追踪 · BTC 与山寨整体", "Leg tracker · BTC & altcoins")} <a class="sub" href="{U("/leg-tracker/")}">{T("看规律说明 →", "How it works →")}</a></h2>'
             f'<div class="lg legh"><div id="leg-card" data-src="{leg_src()}" data-href="{U("/leg-tracker/")}">'
-            f'<div class="card"><div class="empty">{T("读取中…", "Loading…")}</div></div></div></div>')
+            f'{leg_static()}</div></div>')
 
 
 def leg_cycle_chart():
@@ -4809,7 +5097,7 @@ def leg_macro_card():
             + leg_cycle_chart()
             + f'<div class="hzrow"><span class="hz">{T("短期 · 波段", "Short term · swings")}</span>{T("按天看：BTC 和山寨整体这一波在涨还是在跌、走了多久，一条腿通常一到两周", "In days: whether BTC and altcoins are in an up- or down-leg and for how long; a leg usually lasts one to two weeks")}</div>'
             f'<div id="leg-card" data-src="{leg_src()}" data-href="{U("/leg-tracker/")}">'
-            f'<div class="card"><div class="empty">{T("读取中…", "Loading…")}</div></div></div></div>')
+            f'{leg_static()}</div></div>')
 
 
 def build_leg_tracker():
@@ -5384,7 +5672,8 @@ ZH_ONLY = '<div class="note">This piece is written in Chinese.</div>'
 def build_posts():
     for p in PILLARS:
         for x in ALL_POSTS[p["slug"]]:
-            cr = crumbs([(T(p["nav"], p["en"]), f'/{p["slug"]}/'), (x["标题"], None)])
+            up = ((T("聪明钱", "Smart Money"), "/smart-money/") if p["slug"] == "rotation" else (T(p["nav"], p["en"]), f'/{p["slug"]}/'))   # 板块轮动 11-15 并进聪明钱
+            cr = crumbs([up, (x["标题"], None)])
             note = ZH_ONLY if LANG["v"] == "en" else ""
             if x["kind"] == "html":
                 body, extra = cr + note + x["html"], (f"<style>{x['css']}</style>" if x["css"] else "")
@@ -5392,7 +5681,7 @@ def build_posts():
                 body = (cr + note + f'<div class="eyebrow">{esc(T(p["nav"], p["en"]))}</div><h1>{esc(x["标题"])}</h1><p class="stamp" style="text-align:left">{esc(x["日期"])}</p>'
                         f'<div class="article" style="margin-top:18px">{x["html"]}</div>')
                 extra = ""
-            emit(f'{p["slug"]}/{x["slug"]}/index.html', f'{x["标题"]} · {T(BRAND, BRAND_EN)}', body, active=p["slug"], desc=x["摘要"],
+            emit(f'{p["slug"]}/{x["slug"]}/index.html', f'{x["标题"]} · {T(BRAND, BRAND_EN)}', body, active="smart" if p["slug"] == "rotation" else p["slug"], desc=x["摘要"],
                  extra_head=extra, narrow=x["kind"] == "md")
 
 
@@ -5638,7 +5927,8 @@ def build_journal(S, logs, weeks, months, sd):
 <div class="pager">{pager_prev}<a href="{U("/journal/")}">{T("全部日志", "All logs")}</a>{pager_next}</div>"""
         js = f"<script>function shareLog(){{ucShare({json.dumps(share_obj, ensure_ascii=False)})}}</script>"
         emit(f'journal/{lg["日期"]}/index.html', f'{lg["日期"]} {T("解读日志", "log")} · {T(BRAND, BRAND_EN)}', body, active="journal", share=True,
-             scripts=js, desc=LF(lg["综合"], "一句话"))
+             scripts=js, desc=T(f'{lg["日期"]} 解读日志：BTC 四层框架当天的读数、各层结论、预警和数据源状态，写入即冻结。',
+                                f'Research log for {lg["日期"]}: that day\'s readings, layer verdicts, alerts and data-source status for the four-layer BTC framework, frozen once written.'))
 
     def review_note(rv):
         hits = [(d, zh, en) for d, zh, en in RULE_SEP if rv["起"] <= d <= rv["止"]]
@@ -5677,10 +5967,12 @@ def build_journal(S, logs, weeks, months, sd):
 
     for wk in weeks:
         t_ = T(f'{wk["标签"]} 周复盘', f'{wk["标签"]} weekly review')
-        emit(f'journal/week/{wk["标签"]}/index.html', f'{t_} · {T(BRAND, BRAND_EN)}', review_page(wk, "week", t_), active="journal", desc=LF(wk, "一句话"))
+        emit(f'journal/week/{wk["标签"]}/index.html', f'{t_} · {T(BRAND, BRAND_EN)}', review_page(wk, "week", t_), active="journal",
+             desc=T(f'{t_}：这一周 BTC 四层框架的层结论变化、指标区间切换和预警回顾。', f'{t_}: how the four-layer BTC framework\'s verdicts, metric zones and alerts changed over the week.'))
     for mo in months:
         t_ = T(f'{mo["标签"]} 月复盘', f'{mo["标签"]} monthly review')
-        emit(f'journal/month/{mo["标签"]}/index.html', f'{t_} · {T(BRAND, BRAND_EN)}', review_page(mo, "month", t_), active="journal", desc=LF(mo, "一句话"))
+        emit(f'journal/month/{mo["标签"]}/index.html', f'{t_} · {T(BRAND, BRAND_EN)}', review_page(mo, "month", t_), active="journal",
+             desc=T(f'{t_}：这个月 BTC 四层框架的层结论变化、指标区间切换和预警回顾。', f'{t_}: how the four-layer BTC framework\'s verdicts, metric zones and alerts changed over the month.'))
 
     # ---- 日志列表（P4）：按月分组；规则变更那天插分隔行；和前一天不同的层高亮；标题和前一天相同时变浅
     by_month = {}
@@ -5727,7 +6019,7 @@ def build_journal(S, logs, weeks, months, sd):
 
 
 # ---------------------------------------------------------------- 口径 / 更正 / 关于
-L1_RULES_ZH = """<p style="margin:0 0 8px"><b style="color:var(--ink)">L1 宏观流动性</b>（2026-10-02 起，依据《BTC 全周期宏观相关性与归因研究》）：L1 管周到月的波动、节奏和风险预算，不管方向。</p>
+L1_RULES_ZH = """<p style="margin:0 0 8px"><b style="color:var(--ink)">L1 宏观流动性</b>（2026-10-02 起，依据《BTC 全周期宏观相关性与归因研究》）：L1 说宏观在推还是在拖（周到月的波动和节奏），不管方向。下面「框架里……」是研究框架原文 · 作者自用规则，不是给读者的建议。</p>
 <ul style="margin:0 0 10px;padding-left:20px"><li><b>顺风</b>：乐观度 z &gt; 0 且 BAA 信用利差 13 周收窄，实际利率没有急升。</li>
 <li><b>中性偏谨慎</b>：实际利率急升（13 周 ≥ +0.40pp）单独出现——框架里风险预算降一档、不加仓。</li>
 <li><b>逆风</b>：实际利率急升 且（BAA / NFCI 13 周转紧 或 乐观度 z &lt; 0），或流动性闸门触发（净流动性 13 周 ≤ −2.72% 且美元 13 周走强）——框架里名义风险预算 ×0.7，两项不叠乘。</li>
@@ -5776,20 +6068,17 @@ def comp_rules_html():
     rows1 = "".join(f"<tr><td class='l'>{esc(T(k, TIER_EN.get(k, k)))}</td><td class='l wrap'>{esc(T(v.get('一句话') or '（不进一句话）', v.get('一句话EN') or '(not in the line)'))}</td><td class='l wrap'>{esc(T(v['分段'], v['分段EN']))}</td></tr>"
                     for k, v in C["L1"].items() if not k.startswith("_"))
     tiers = ("顺风", "中性", "中性偏谨慎", "逆风")
-    rows3 = "".join(f"<tr><td class='l'>{esc(T(d, DIR_EN.get(d, d)))}</td>" + "".join(f"<td class='l wrap'>{esc(T(*C['动作'][d][t]))}</td>" for t in tiers) + "</tr>" for d in ("偏多", "防顶", "待确认", "偏空"))
     trig = "".join(f"<li>{esc(T(r['条件'], r.get('条件EN', r['条件'])))} → {esc(T(r['中文'], r['英文']))}</li>" for r in C["逆风原因"])
-    p1 = T("综合研判按研究里定下的分工四层合成：<b>L2 给方向的底色</b>；<b>L1 管节奏和风险预算</b>，不管方向；<b>L3 只描述价格离筹码压力区多远、波动会不会放大</b>，不给方向；<b>L4 只描述短期温度</b>，不改变动作（L4 还没完成研究）。",
-           "The overall read combines four layers along the study's division of labour: <b>L2 sets the direction</b>; <b>L1 sets pace and risk budget</b>, not direction; <b>L3 only describes how far price is from the supply pressure zone and whether moves may get bigger</b>, never direction; <b>L4 only describes short-term temperature</b> and never changes the action (its research is not finished).")
-    p2 = T("一句话 =「{方向句}；{但}{节奏句}，{动作}。{筹码提示}{短期提示}」：方向偏多而 L1 是中性偏谨慎 / 逆风，或方向偏空 / 防顶而 L1 是顺风时加「但」；动作只来自 L1 的风险预算规则和 L2 研究写定的交接原则「方向上不急于看空，节奏上不追高、按 L1 的风险预算分批」；价格在 +1σ 压力区里或大波动预警亮时追加筹码提示（2026-10-11 起；之前是「筹码和周期方向背离」提示）；L4 不是中性时追加短期温度。一句话超过 60 字先去掉短期提示，再去掉筹码提示（四段里仍然完整显示）。",
-           "One line = '{direction}; {but} {pace} — {action}. {supply note} {short term}': 'but' is added when the direction leans up while L1 is cautious/headwind, or leans down / top-risk while L1 is a tailwind; actions come only from L1's risk-budget rules and the L2 hand-over principle ('no rush to turn bearish on direction; no chasing on pace, scale in per L1's budget'); a supply note is added when price is inside the +1σ pressure zone or the large-move warning is on (since 2026-10-11; before that it was a 'flows diverge from the cycle' note); L4 adds its temperature when not neutral. Lines over 60 characters drop the short-term note first, then the supply note (both stay in the paragraphs).")
-    p3 = T("「节奏上不追高」只出现在「方向偏多 + L1 偏紧」的组合里（L2 研究 §4 交接原则）；「可它改变不了熊市的深度」出自宏观总文档：熊市跌多深按周期成熟度排序、和利率冲击无关。短句全文见 config/composite.json。",
-           "“No chasing” only appears when the direction leans up and L1 is tight (L2 study §4 hand-over principle); “it won't change how deep a bear market goes” comes from the macro study: bear depth ranks with cycle maturity, not rate shocks. Full phrases are in config/composite.json.")
-    th = "".join(f"<th class='l'>{esc(T(t, TIER_EN.get(t, t)))}</th>" for t in tiers)
+    p1 = T("综合研判按研究里定下的分工四层合成：<b>L2 给方向的底色</b>；<b>L1 说宏观在推还是在拖</b>，不管方向；<b>L3 只描述价格离筹码压力区多远、波动会不会放大</b>，不给方向；<b>L4 只描述短期温度</b>（只有「资金费率转负」一条通过检验）。",
+           "The overall read combines four layers along the study's division of labour: <b>L2 sets the direction</b>; <b>L1 says whether macro is pushing or dragging</b>, not direction; <b>L3 only describes how far price is from the supply pressure zone and whether moves may get bigger</b>, never direction; <b>L4 only describes short-term temperature</b> (only the negative-funding signal has passed testing).")
+    p2 = T("一句话 =「{方向句}；{但}{节奏句}。{筹码提示}{短期提示}」：方向偏多而 L1 是中性偏谨慎 / 逆风，或方向偏空 / 防顶而 L1 是顺风时加「但」；价格在 +1σ 压力区里或大波动预警亮时追加筹码提示（2026-10-11 起）；L4 不是中性时追加短期温度。一句话超过 60 字先去掉短期提示，再去掉筹码提示（四段里仍然完整显示）。2026-11-15 起按《表达规范》只说状态和历史，不再拼「风险预算照常 / 打七折 / 不追高」这类动作。",
+           "One line = '{direction}; {but} {pace}. {supply note} {short term}': 'but' is added when the direction leans up while L1 is cautious/headwind, or leans down / top-risk while L1 is a tailwind; a supply note is added when price is inside the +1σ pressure zone or the large-move warning is on (since 2026-10-11); L4 adds its temperature when not neutral. Over 60 characters, the short-term note goes first, then the supply note (all four paragraphs still show in full). Since 2026-11-15 the line only states conditions and history; it no longer appends actions such as 'risk budget at 70%' or 'no chasing'.")
+    p3 = T("研究框架（宏观总文档、L2 研究 §4）里另有一套按方向 × L1 档位调风险预算的规则，那是作者自用的交易规则，不是给读者的建议，不进一句话。短句全文见 config/composite.json。",
+           "The research framework (macro study, L2 study §4) also has rules that size the risk budget by direction × L1 regime. Those are the author's own trading rules, not advice to readers, and are not part of the line. Full phrases are in config/composite.json.")
     return (f'<div class="card mcard"><p>{p1}</p><p>{p2}</p>'
             f'<h4>{T("表 1 · L2 方向", "Table 1 · L2 direction")}</h4><div class="tw"><table><thead><tr><th class="l">{T("L2 状态", "L2 state")}</th><th class="l">{T("方向", "Direction")}</th><th class="l">{T("一句话用", "Line phrase")}</th></tr></thead><tbody>{rows2}</tbody></table></div>'
             f'<h4>{T("表 2 · L1 节奏", "Table 2 · L1 pace")}</h4><div class="tw"><table><thead><tr><th class="l">{T("档位", "Regime")}</th><th class="l">{T("一句话用", "Line phrase")}</th><th class="l">{T("分段用", "Paragraph")}</th></tr></thead><tbody>{rows1}</tbody></table></div>'
             f'<p class="tnote">{T("逆风的触发原因（多个同时成立只取最前面一条）：", "Headwind triggers (first match wins):")}</p><ul class="tnote">{trig}</ul>'
-            f'<h4>{T("表 3 · 动作（方向 × L1 档位）", "Table 3 · Action (direction × L1 regime)")}</h4><div class="tw"><table><thead><tr><th class="l">{T("方向", "Direction")}</th>{th}</tr></thead><tbody>{rows3}</tbody></table></div>'
             f'<p class="tnote">{p3}</p></div>')
 
 
@@ -5850,8 +6139,8 @@ def build_methodology():
 <p style="margin:0 0 8px"><b style="color:var(--ink)">L3 {T("筹码", "Supply")}</b>{CN}{T("按价格相对短期持有者成本 +1σ 压力区（上下 2%）的位置：收盘站上上沿 = 冲过压力区，进入 ±2% = 在压力区，压力区下方到 STH 成本之间 = 压力区下方，跌破 STH 成本 = STH 成本下方；30 天波动 < 40% 且筹码集中度 ≥ 12% 时追加「大波动预警」（2026-10-11 起，此前以交易所 7 日净流量为准）。交易所流量、大户 / 散户持币只作描述。", "By price position relative to the STH cost +1σ pressure zone (±2%): a close above the top = through the zone, inside ±2% = in the zone, between the zone and the STH cost = below the zone, under the STH cost = below STH cost; a 'large-move warning' is added when 30-day volatility < 40% and supply concentration ≥ 12% (since 2026-10-11; previously the 7-day exchange net flow). Exchange flows and whale/retail holdings are descriptive only.")}</p>
 <p style="margin:0"><b style="color:var(--ink)">L4 {T("情绪", "Sentiment")}</b>{CN}{T("读 l4/l4_daily.py 的结论档：资金费率 30 日均跌破 0 = 信号（空头拥挤，唯一会改动作的规则，已验证·方向）；否则按杠杆和情绪的过去 730 天分位分为过热 / 偏热 / 中性 / 偏冷，只作描述（2026-10-22 起，此前是恐慌贪婪 + 资金费率 + 未平仓三项打分）。", "Reads the level from l4/l4_daily.py: 30-day average funding below zero = signal (crowded shorts, the only action-changing rule, validated · direction); otherwise leverage and sentiment 730-day percentiles band it as hot / warm / normal / cool, descriptive only (since 2026-10-22; previously a Fear & Greed + funding + OI score).")}</p></div>
 <h2 id="comp">{T("综合研判怎么来", "How the overall read is made")}</h2>{comp_rules_html()}
-<h2 id="l1rules">{T("L1 规则清单（宏观总文档 §10.2，逐条照抄）", "L1 rule list (macro study §10.2, copied rule by rule)")}</h2>
-<div class="card mcard"><p>{T("「能否改交易参数」分四种：", "“May it change trading parameters” has four values:")}</p><ul>{pdef}</ul></div>
+<h2 id="l1rules">{T("L1 规则清单（宏观总文档 §10.2，逐条照抄 · 作者自用）", "L1 rule list (macro study §10.2, verbatim · author’s own rules)")}</h2>
+<div class="card mcard"><p><b>{T("研究框架原文 · 作者自用规则，不是给读者的建议。", "Research framework, copied verbatim — the author’s own trading rules, not advice to readers.")}</b>{T("这里照抄是为了让网站上每个读数怎么来、能不能用都可以核对；网站结论句只说状态和历史，不用这些动作。", " It is copied here so every reading on the site can be traced and checked; the site’s summary lines only state conditions and history and never use these actions.")}</p><p>{T("「能否改交易参数」分四种：", "“May it change trading parameters” has four values:")}</p><ul>{pdef}</ul></div>
 <div class="tw" style="margin-top:10px"><table><thead><tr><th>#</th><th class="l">{T("规则", "Rule")}</th><th class="l">{T("怎么用", "How to use")}</th><th class="l">{T("可靠程度", "Reliability")}</th><th class="l">{T("能否改交易参数", "Trading parameters")}</th></tr></thead><tbody>{rrows}</tbody></table></div>
 <h2 id="legend">{T("标签说明", "What the tags mean")}</h2><p class="tnote">{T("「级别」和「证据等级」是两个维度：级别说这个指标在本层判定里起什么作用，证据等级说它在研究里被检验到什么程度。", "Level and evidence grade are two separate dimensions: level is the gauge's role in the layer verdict, evidence grade is how well the research has tested it.")}</p>{tag_legend()}
 <h2 id="delayed">{T("延迟平台（发射台矩阵）", "Delayed platforms (launchpad matrix)")}</h2>
@@ -5933,7 +6222,7 @@ def build_corrections(sd, fixes):
 
 def build_about():
     txt = T(f"""<p>写这个站的人在 web3 做了快十年，做过项目运营、产品设计，也做过 AMM DEX。现在把自己的研究方式搬到台面上：
-先看宏观环境给多少风险预算，再看周期位置（贵不贵），再看筹码结构（哪些价位有人在守、波动会不会放大），再看情绪（会不会超调），最后落到发射台一级市场——每天赚多少钱、钱从哪来。</p>
+先看宏观在推还是在拖，再看周期位置（贵不贵），再看筹码结构（哪些价位有人在守、波动会不会放大），再看情绪（会不会超调），最后落到发射台一级市场——每天赚多少钱、钱从哪来。</p>
 <p>所有判断都按公开规则自动生成，每天一篇解读日志，写入即冻结；每周、每月再复盘一次；系统性的研究整理成分析报告。对了错了都留在这里，不做事后诸葛亮。</p>
 <p>{esc(DISCLAIMER)}</p>
 <p class="muted">访问统计：本站用 Umami 统计访问量和少量点击（生成长图、语言切换、报告是否读完等），只为了解哪些内容有人看。不用 cookie，不收集个人信息，不跨站追踪。</p>""", f"""<p>The author has spent close to ten years in web3 — operations, product design and an AMM DEX. This site puts the research process in public:
@@ -5971,6 +6260,60 @@ def build_404():
          f'<h1>{T("页面不存在", "Page not found")}</h1><p class="lede keep">{T("链接可能过期了，回", "The link may be outdated. Back to the ")}<a href="{U("/")}">{T("终端总览", "overview")}</a>{T("看看。", ".")}</p>')
 
 
+INDEXNOW_KEY = "6f1c2a9e4b7d48e3a05c9d2f7b18e6a4"   # IndexNow 公钥（按协议本来就公开，放在站点根目录 /<key>.txt）
+
+
+def write_sitemap():
+    """sitemap 从 page() 的登记自动生成（不再手写清单）：noindex 的不进；带 lastmod。
+    往期发射台日报等不是每次都重出的页面，按目录补进来。顺带：英文版 noindex 的页，中文版去掉指向它的 hreflang。"""
+    pages = dict(SEO["pages"])
+    for sub in ("launchpad/report", "launchpad/platforms"):
+        d0 = os.path.join(SITE, sub)
+        if os.path.isdir(d0):
+            for x in os.listdir(d0):
+                pth = f"/{sub}/{x}/"
+                if os.path.exists(os.path.join(SITE, sub, x, "index.html")):
+                    for lg in ("zh", "en"):
+                        if (lg, pth) not in pages and os.path.exists(os.path.join(SITE, *(["en"] if lg == "en" else []), sub, x, "index.html")):
+                            m = re.match(r"^\d{4}-\d{2}-\d{2}$", x)
+                            fp = os.path.join(SITE, *(["en"] if lg == "en" else []), sub, x, "index.html")
+                            h = open(fp, encoding="utf-8").read()
+                            ni = lg == "en" and "in Chinese only" in h     # 往期英文版正文是中文
+                            if 'rel="canonical"' not in h:              # 以前出的旧页补上 canonical / noindex
+                                me = f"https://{DOMAIN}{'/en' if lg == 'en' else ''}{pth}"
+                                tag = f'<link rel="canonical" href="{me}">' + ('<meta name="robots" content="noindex,follow">' if ni else "")
+                                with open(fp, "w", encoding="utf-8") as fh:
+                                    fh.write(h.replace("</title>", "</title>\n" + tag, 1))
+                            pages[(lg, pth)] = {"noindex": ni, "lastmod": x if m else None}
+    rows = []
+    for (lg, pth), v in sorted(pages.items(), key=lambda kv: (kv[0][1], kv[0][0])):
+        if v.get("noindex") or v.get("alias") or not pth.endswith("/"):
+            continue
+        loc = f"https://{DOMAIN}{'/en' if lg == 'en' else ''}{pth}"
+        rows.append(f"<url><loc>{loc}</loc>" + (f"<lastmod>{v['lastmod']}</lastmod>" if v.get("lastmod") else "") + "</url>\n")
+    xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(rows) + "</urlset>\n"
+    write("sitemap.xml", xml)
+    # 英文版不进索引（或没有英文版）的页：中文页里去掉 hreflang=en
+    for (lg, pth), v in SEO["pages"].items():
+        if lg != "zh" or not pth.endswith("/"):
+            continue
+        e = SEO["pages"].get(("en", pth))
+        if e and not e.get("noindex"):
+            continue
+        fp = os.path.join(SITE, pth.strip("/"), "index.html") if pth != "/" else os.path.join(SITE, "index.html")
+        if os.path.exists(fp):
+            h = open(fp, encoding="utf-8").read()
+            h2 = h.replace(f'<link rel="alternate" hreflang="en" href="https://{DOMAIN}/en{pth}">', "")
+            if h2 != h:
+                with open(fp, "w", encoding="utf-8") as fh:
+                    fh.write(h2)
+    if SEO["new"]:   # 只保留本次出过的页，删掉已下线的
+        with open(SEO_STATE, "w", encoding="utf-8") as fh:
+            json.dump(dict(sorted(SEO["new"].items())), fh, ensure_ascii=False, indent=0)
+    write(f"{INDEXNOW_KEY}.txt", INDEXNOW_KEY)
+    print(f"sitemap：{len(rows)} 个 URL（noindex {sum(1 for v in pages.values() if v.get('noindex'))} 个不进）")
+
+
 def build_misc(logs, weeks, months):
     os.makedirs(os.path.join(SITE, "assets"), exist_ok=True)
     for k, v in ASSET_SRC.items():
@@ -5982,23 +6325,7 @@ def build_misc(logs, weeks, months):
     if os.path.exists(rd):
         os.remove(rd)
     write("robots.txt", f"User-agent: *\nAllow: /\nSitemap: https://{DOMAIN}/sitemap.xml\n")
-    urls = ["/", "/macro/", "/leg-tracker/", "/calendar/", "/launchpad/", "/ai-agent/", "/rotation/", "/alpha/", "/alpha/radar/", "/alpha/cases/", "/alpha/framework/", "/alpha/eval/", "/alpha/method/", "/alpha/progress/", "/reports/", "/journal/", "/methodology/", "/corrections/", "/about/",
-            "/launchpad/report/", "/launchpad/report/archive/"]
-    urls += [f"/macro/{x['key']}/" for x in R.INDICATORS + R.RETIRED] + ["/changelog/"]
-    for p in PILLARS:
-        urls += [f'/{p["slug"]}/{x["slug"]}/' for x in ALL_POSTS[p["slug"]]]
-    urls += [f'/reports/{r["slug"]}/' for r in ALL_REPORTS]
-    rd = os.path.join(SITE, "launchpad", "report")
-    if os.path.isdir(rd):
-        urls += [f"/launchpad/report/{d}/" for d in os.listdir(rd) if re.match(r"^\d{4}-\d{2}-\d{2}$", d)]
-    pd_ = os.path.join(SITE, "launchpad", "platforms")
-    if os.path.isdir(pd_):
-        urls += [f"/launchpad/platforms/{d}/" for d in os.listdir(pd_)]
-    urls += [f'/journal/{x["日期"]}/' for x in logs] + [f'/journal/week/{x["标签"]}/' for x in weeks] + [f'/journal/month/{x["标签"]}/' for x in months]
-    allu = sorted(set(urls))
-    xml = ('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-           + "".join(f"<url><loc>https://{DOMAIN}{u}</loc></url>\n<url><loc>https://{DOMAIN}/en{u}</loc></url>\n" for u in allu) + "</urlset>\n")
-    write("sitemap.xml", xml)
+    write_sitemap()
     os.makedirs(os.path.join(SITE, "assets"), exist_ok=True)
     for f in ("favicon.ico", "favicon-32.png", "favicon-192.png", "apple-touch-icon.png", "avatar-96.png", "og.png"):
         src = os.path.join(ASSETS, f)
@@ -6102,6 +6429,9 @@ def main():
     G["FILES"] = files
     write_latest(S, rs)
     os.makedirs(os.path.join(SITE, "data", "l2"), exist_ok=True)
+    # 数据新鲜度（总调度 refresh.yml 写；大叔的交易程序取数前先读 /data/status.json）
+    if os.path.exists(os.path.join(DATA, "refresh_status.json")):
+        shutil.copyfile(os.path.join(DATA, "refresh_status.json"), os.path.join(SITE, "data", "status.json"))
     for sub, fns in (("l4", ("l4_latest.json", "l4_history.json")), ("cal", ("cal_latest.json",))):
         os.makedirs(os.path.join(SITE, "data", sub), exist_ok=True)
         for fn in fns:
@@ -6158,6 +6488,11 @@ def main():
     build_misc(logs, weeks, months)
     n = sum(1 for _, _, fs in os.walk(SITE) for f in fs if f == "index.html")
     print(f"网站已生成到 {SITE}（{n} 个页面，中英各一套；日志 {len(logs)} 篇、周复盘 {len(weeks)}、月复盘 {len(months)}、报告 {len(ALL_REPORTS)}）")
+    try:   # SEO 检查只报警告，不拦构建（docs/SEO规范.md）
+        import seo_check
+        seo_check.run(SITE)
+    except Exception as e:  # noqa
+        print("SEO 检查失败：", e)
 
 
 if __name__ == "__main__":

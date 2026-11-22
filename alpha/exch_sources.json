@@ -1,0 +1,103 @@
+{
+ "_说明": "交易所上币公告来源台账。**不限数量，按质量准入**（准入标准见 `_准入`）；名单由 Claude 按标准维护，大叔可随时加减。state: on = 在跑；blocked = 官网被拦、等官方 X 账号核实后改 via=x 并填 x_user_id 再开；candidate = 接口通、待按准入标准评估后再开；Binance 的完整事件库在 alpha/listings.py。x_handle 标「待核实」的不启用——由 Codex / Grok 按 docs/提示词_交易所公告源.md 核对后填。实测日 2026-11-16（GitHub Actions 美国机房）。大叔 11-16 定去掉 MEXC：上币太多、全是噪音。",
+ "exchanges": [
+  {
+   "exchange": "Binance",
+   "state": "on",
+   "via": "listings",
+   "page": "https://www.binance.com/en/support/announcement/list/48",
+   "x_handle": "@binance",
+   "x_user_id": "877807935493033984",
+   "note": "官网接口通；公告 → 计划开盘 → 首笔成交 → 窗口都有（alpha/listings.py）"
+  },
+  {
+   "exchange": "OKX",
+   "state": "on",
+   "via": "okx",
+   "pages": 2,
+   "page": "https://www.okx.com/help/section/announcements-new-listings",
+   "x_handle": "待核实",
+   "note": "官网接口通（/api/v5/support/announcements）"
+  },
+  {
+   "exchange": "Bitget",
+   "state": "on",
+   "via": "bitget",
+   "page": "https://www.bitget.com/support/categories/11865590960081",
+   "x_handle": "待核实",
+   "note": "官网接口通（/api/v2/public/annoucements）"
+  },
+  {
+   "exchange": "Kraken",
+   "state": "on",
+   "via": "kraken",
+   "page": "https://blog.kraken.com/category/product/asset-listings",
+   "x_handle": "待核实",
+   "note": "博客 RSS 通"
+  },
+  {
+   "exchange": "Bybit",
+   "state": "blocked",
+   "via": "x",
+   "page": "https://announcements.bybit.com/en/?category=new_crypto",
+   "x_handle": "待核实",
+   "note": "官网接口按国家拦（CloudFront，美国机房 403）；等官方 X 账号核实"
+  },
+  {
+   "exchange": "Coinbase",
+   "state": "blocked",
+   "via": "x",
+   "page": "https://www.coinbase.com/blog/landing/product",
+   "x_handle": "待核实",
+   "note": "没有结构化公告接口，网页有人机验证；上币历来在官方 X 账号发，等账号核实"
+  },
+  {
+   "exchange": "Upbit",
+   "state": "blocked",
+   "via": "x",
+   "page": "https://upbit.com/service_center/notice",
+   "x_handle": "待核实",
+   "note": "Cloudflare 人机验证（403）；等官方 X 账号核实或替代入口"
+  },
+  {
+   "exchange": "Bithumb",
+   "state": "blocked",
+   "via": "x",
+   "page": "https://feed.bithumb.com/notice",
+   "x_handle": "待核实",
+   "note": "Cloudflare 人机验证（403）；等官方 X 账号核实或替代入口"
+  },
+  {
+   "exchange": "Gate",
+   "state": "blocked",
+   "via": "x",
+   "page": "https://www.gate.com/announcements/newlisted",
+   "x_handle": "待核实",
+   "note": "Access Denied（403）；等官方 X 账号核实或替代入口"
+  },
+  {
+   "exchange": "KuCoin",
+   "state": "candidate",
+   "via": "kucoin",
+   "page": "https://www.kucoin.com/announcement/latest-announcements",
+   "x_handle": "@kucoincom",
+   "note": "官网接口通（/api/v3/announcements?annType=new-listings，公告描述里直接写交易对和开盘时间，如 Trading: 11:00 on November 11, 2026 (UTC)）；待按准入标准评估"
+  },
+  {
+   "exchange": "HTX",
+   "state": "candidate",
+   "via": "htx",
+   "page": "https://www.htx.com/en-us/support/list/360000039942/",
+   "x_handle": "@HuobiGlobal",
+   "note": "官网接口通（getList/v2，带 dealPair 字段）；近期公告多为代币化股票 / 股票永续，噪音比例待评估"
+  }
+ ],
+ "_准入": [
+  "① 有官方公告源，能稳定读取（接口或官方 X 账号）",
+  "② 公告能给出新币现货（或永续）的交易对，最好有计划开盘时间；没有计划开盘时间的，至少能用官方 K 线反推首笔成交",
+  "③ 官方公开 K 线能取到（算上线后窗口要用）",
+  "④ 噪音比例低：新币上线公告占全部「上币」公告的比例要够高，代币化股票 / ETF / 跟单 / 活动类不算新币；MEXC 因为上币太多、几乎全是噪音被去掉",
+  "⑤ 上线后的币有可核对的流动性（不是挂了没人交易）。具体阈值待研究（见 alpha/research/交易所上币回报研究.md），定之前不据此剔除",
+  "⑥ 大叔 11-17 定：只收 CoinGecko 交易所排名在 LBank（第 12 位，2026-11-16 取数）之前的；LBank 及之后的不要；另加 Upbit、Bybit（大叔 11-17 点名，排名靠后但成交额大）"
+ ]
+}

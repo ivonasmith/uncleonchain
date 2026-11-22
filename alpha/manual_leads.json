@@ -1,5 +1,5 @@
 {
- "_说明": "手动线索：推特 / 社群里看到、数据源还没收录或漏掉的新玩法。写进来当天就上机会看板最上面（新发现），并排到补证队列最前。只登记事实和出处，不写结论；结论等研究补证。llama = DefiLlama 协议组（parent#xxx 或协议 id），有就带收入读数。 entry / entry_why 可选（buy / stake / points / use / presale / mine）。",
+ "_说明": "手动线索：推特 / 社群里看到、数据源还没收录或漏掉的新玩法。写进来当天就上机会看板最上面（新发现），并排到补证队列最前。只登记事实和出处，不写结论；结论等研究补证。llama = DefiLlama 协议组（parent#xxx 或协议 id），有就带收入读数。 entry / entry_why 可选（buy / stake / points / use / presale / mine）。 可选 gecko / sym / address / chain（代币身份，CoinGecko id 要核对官网对得上）、launched + launched_src（官方上线日和出处）。",
  "leads": [
   {
    "id": "bem-tapeout",
@@ -19,7 +19,13 @@
     "mine",
     "buy"
    ],
-   "entry_why": "按设计效率挖矿拿 BEM，也可以二级买入（出处是交易所博客，待补证）"
+   "entry_why": "按设计效率挖矿拿 BEM，也可以二级买入（出处是交易所博客，待补证）",
+   "gecko": "bem-2",
+   "sym": "BEM",
+   "address": "0x5ce033b2bfca3af30b3e8c8457deaf776a8b695a",
+   "chain": "bsc",
+   "launched": "2026-08-21",
+   "launched_src": "https://www.binance.com/square/hashtag/bem"
   },
   {
    "id": "pons",
@@ -32,7 +38,9 @@
    "sources": [
     "https://www.theblock.co/news/ecosystems/2026-09-08-pons-propels-robinhood-chain-fees-record-6-million-daily-fees-doubles-413852",
     "https://decrypt.co/377349/pons-robinhood-chain-meme-coin-token-factory"
-   ]
+   ],
+   "launched": "2026-07-13",
+   "launched_src": "https://decrypt.co/377349/pons-robinhood-chain-meme-coin-token-factory"
   }
  ]
 }

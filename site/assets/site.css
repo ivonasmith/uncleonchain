@@ -391,6 +391,8 @@ font:italic 700 11px/1 Georgia,serif;cursor:help;position:relative;vertical-alig
 padding:10px 12px;border-radius:10px;background:var(--toast);border:1px solid var(--line2);color:var(--ink2);font:400 12.5px/1.65 var(--sans);text-align:left;white-space:normal;box-shadow:0 8px 24px rgba(0,0,0,.25)}
 h1 .info{width:20px;height:20px;font-size:12px;margin-left:10px}
 h1 .info:hover::after,h1 .info:focus::after{left:0;transform:none;font-weight:400}
+.uc-jt .info:hover::after,.uc-jt .info:focus::after{display:none}
+.uc-ipop{max-width:420px;padding:10px 12px;border-radius:10px;color:var(--ink2);white-space:pre-line}
 .uc-bar .uc-info{margin-left:auto}
 .uc-bar .uc-info:hover::after,.uc-bar .uc-info:focus::after{left:auto;right:0;transform:none}
 .srcd{margin:-2px 0 12px}.srcd>summary{list-style:none;cursor:pointer;display:inline-block}.srcd>summary::-webkit-details-marker{display:none}.srcd .src{margin-top:8px}
@@ -538,13 +540,14 @@ table.l3t .d{font-family:var(--mono);font-size:11px;color:var(--muted);margin-le
 .ruler .b,.ruler .r13{display:none}
 .ruler .rtg:checked~label .a{display:none}.ruler .rtg:checked~label .b{display:inline}
 .ruler .rtg:checked~.r6{display:none}.ruler .rtg:checked~.r13{display:block}
-.ruler-svg{display:block;width:100%;max-width:620px;height:auto;min-height:360px;margin:0 auto}
+.ruler-svg{display:block;width:100%;max-width:700px;height:auto;min-height:360px;margin:0 auto}
 .ruler-svg .rax{stroke:var(--line2);stroke-width:2}
 .ruler-svg .rsafe{fill:var(--up);opacity:.14}.ruler-svg .rres{fill:var(--dn);opacity:.12}
 .ruler-svg .rbt{font-size:11px;font-family:var(--sans)}.ruler-svg .rbt.up{fill:var(--up)}.ruler-svg .rbt.dn{fill:var(--dn)}
 .ruler-svg .rtk{stroke-width:2}.ruler-svg .rtk.up{stroke:var(--up)}.ruler-svg .rtk.dn{stroke:var(--dn)}
 .ruler-svg .rlb{font-size:11.5px;fill:var(--ink2);font-family:var(--sans)}
 .ruler-svg .rnow{stroke:var(--lime-ink);stroke-width:2.5}
+.ruler-svg .rld{fill:none;stroke-width:1;opacity:.55}.ruler-svg .rld.up{stroke:var(--up)}.ruler-svg .rld.dn{stroke:var(--dn)}
 .ruler-svg .rnl{font-size:12.5px;font-weight:700;fill:var(--lime-ink);font-family:var(--mono)}
 /* ---- 空状态（G5） ---- */
 .es{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border:1px dashed var(--line2);border-radius:12px;background:var(--wash);color:var(--ink2);font-size:13px}

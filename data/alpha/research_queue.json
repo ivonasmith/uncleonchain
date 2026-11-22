@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-15T06:04:12+00:00",
- "n": 43,
- "prompt": "你在给「链上大叔研究台」Alpha 雷达补证（只研究正规项目，不写买卖建议）。对清单里每个协议，查官方网站 / 文档 / 公告、DefiLlama 方法论和可核对的链上信息，\n按下面格式交一个 JSON 数组（文件名 <日期>_checks.json）。第一项 one_liner 用一句大白话说清它是什么（给没听过的人看）。每条事实带来源链接和核对日期；查不到写 \"U\"，不要估，不要编。\n结论 verdict 只能是：研究观察（对象明确、有可证伪假设、没查到否决项）/ 待核验（关键事实缺失或冲突，写清缺什么）/ 拒绝（身份错误、已确认风险、其实已有代币、不是对普通人开放的正规项目，写证据）。\n分数按 framework.json 附录一锚点给（M A F E G T D 是 0–4；TM 是 -1–3，有已证实不良记录给 -1；TE 是 0–3；不知道写 U，没有代币时 TE 写 NA）。M（新参与机制：这个玩法新在哪）优先查，每个分数写 why 和 src。\n资金参与方式 entry 从 buy / stake / points / use / presale / mine / none 里选（none = 暂时没有资金入口），写 entry_why。",
+ "generated": "2026-11-22T08:25:48+00:00",
+ "n": 36,
+ "prompt": "你在给「链上大叔研究台」Alpha 雷达补证（只研究正规项目，不写买卖建议）。对清单里每个协议，查官方网站 / 文档 / 公告、DefiLlama 方法论和可核对的链上信息，\n按下面格式交一个 JSON 数组（文件名 <日期>_checks.json）。第一项 one_liner 用一句大白话说清它是什么（给没听过的人看）。每条事实带来源链接和核对日期；查不到写 \"U\"，不要估，不要编。\n结论 verdict 只能是：研究观察（对象明确、有可证伪假设、没查到否决项）/ 待核验（关键事实缺失或冲突，写清缺什么）/ 拒绝（身份错误、已确认风险、不是对普通人开放的正规项目，写证据）。\n「已有代币」本身不是拒绝理由：清单里 kind = tokenless 的如果查到其实已经有代币，写进 token_stance 和 missing、verdict 给待核验；kind = surge / site / manual 的本来就可能有代币，照常研究它的新玩法。\n只靠搜索摘要、打不开官网和文档的，verdict 最多给待核验，不给拒绝（拒绝必须有一手证据）。\n分数按 framework.json 附录一锚点给（M A F E G T D 是 0–4；TM 是 -1–3，有已证实不良记录给 -1；TE 是 0–3；不知道写 U，没有代币时 TE 写 NA）。M（新参与机制：这个玩法新在哪）优先查，每个分数写 why 和 src。\n综合分 v3（11-17）另要三项：R 资源导入 0–10（0 查不到 / 3 一般融资或小型生态资助 / 6 头部机构领投或头部交易所、公链官方扶持 / 10 多个头部资源同时导入，必须给出处）；\nteam.public_n = 能查到真实身份的核心成员人数（数字，查不到写 U）；team.caliber = 普通 / 成功交付 / 头部背景（成员有可核对的成功项目 = 成功交付；有头部项目或顶级机构核心经历 = 头部背景）；有已证实的跑路、欺诈等不良记录写 team.bad_record = true 并给证据。\n资金参与方式 entry 从 buy / stake / points / use / presale / mine / none 里选（none = 暂时没有资金入口），写 entry_why。\n每张卡要回答三件事：量从哪来（flow 四个标签各给 高 / 中 / 低 / 待验证 + 证据）、量是不是真的（刷量 / 补贴迹象）、激励结束后还剩多少（capture、next_review）。\n关键事件（积分开放 / 结束、主网上线、发币、费率改动）写进 events，每条要日期和官方出处。",
  "schema": {
   "key": "清单里的 key（原样）",
   "name": "名称",
   "one_liner": "一句话介绍：它是什么、给谁用、靠什么收钱（30 字内，大白话）",
-  "reviewer": "claude-auto 或 codex",
+  "reviewer": "grok-auto / claude-auto / codex",
   "checked_utc": "核对时间 ISO",
   "token_stance": "官方确认不发币|有积分/空投计划|官方表态会发|没有表态|U",
   "token_stance_src": "链接",
@@ -29,8 +29,57 @@
     "v": "0-3|U",
     "why": "",
     "src": ""
+   },
+   "R": {
+    "v": "0-10|U",
+    "why": "资源导入依据",
+    "src": "链接"
    }
   },
+  "team": {
+   "public_n": "实名核心成员人数|U",
+   "caliber": "普通|成功交付|头部背景|U",
+   "bad_record": "true|false",
+   "members": [
+    {
+     "name": "姓名",
+     "role": "职务",
+     "background": "过往经历",
+     "src": "链接"
+    }
+   ]
+  },
+  "capture": "代币 / 参与者实际能拿到什么（回购、分红、积分兑换规则；没有就写没有），带链接",
+  "events": [
+   {
+    "date": "YYYY-MM-DD",
+    "what": "积分开放 / 结束、主网上线、发币、费率改动等",
+    "src": "官方链接"
+   }
+  ],
+  "flow": {
+   "airdrop": {
+    "v": "高|中|低|待验证",
+    "why": "积分 / 空投带来的量",
+    "src": "链接"
+   },
+   "newchain": {
+    "v": "…",
+    "why": "新链首发",
+    "src": ""
+   },
+   "subsidy": {
+    "v": "…",
+    "why": "返佣 / 补贴",
+    "src": ""
+   },
+   "organic": {
+    "v": "…",
+    "why": "去掉激励后的自然需求",
+    "src": ""
+   }
+  },
+  "next_review": "YYYY-MM-DD（比如积分结束后 7 天 / 30 天）",
   "counter": "最强反方一句话",
   "verdict": "研究观察|待核验|拒绝",
   "verdict_reason": "为什么",
@@ -48,23 +97,25 @@
  },
  "items": [
   {
-   "key": "s:9065",
-   "name": "Papertrade",
-   "status": "原始线索",
-   "kind": "surge",
-   "fresh": true,
+   "key": "g:9146",
+   "name": "Central City",
+   "status": "待核验",
+   "kind": "tokenless",
+   "fresh": false,
    "bucket": "invest",
    "discovered": "2026-11-15",
-   "category": "Derivatives",
+   "category": "AI Agents",
    "chains": [
-    "Off Chain"
+    "Base",
+    "Arc"
    ],
-   "rev30": 25350155,
+   "rev30": 1678736,
    "tvl": null,
-   "defillama": "https://defillama.com/protocol/papertrade",
+   "defillama": "https://defillama.com/protocol/central-city",
+   "url": null,
+   "twitter": "centralcityai",
    "manual": null,
    "pending": [
-    "M",
     "A",
     "F",
     "E",
@@ -75,477 +126,20 @@
     "TM",
     "TE"
    ],
-   "missing_before": []
-  },
-  {
-   "key": "s:parent#paperstrategy",
-   "name": "Paperstrategy",
-   "status": "原始线索",
-   "kind": "surge",
-   "fresh": true,
-   "bucket": "invest",
-   "discovered": "2026-11-15",
-   "category": "Onchain Capital Allocator",
-   "chains": [
-    "Hyperliquid L1",
-    "Off Chain"
-   ],
-   "rev30": 1404757,
-   "tvl": null,
-   "defillama": "https://defillama.com/protocol/paperstrategy-pstr",
-   "manual": null,
-   "pending": [
-    "M",
-    "A",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM",
-    "TE"
-   ],
-   "missing_before": []
-  },
-  {
-   "key": "m:pons",
-   "name": "Pons",
-   "status": "原始线索",
-   "kind": "manual",
-   "fresh": true,
-   "bucket": "invest",
-   "discovered": "2026-11-15",
-   "category": "Launchpad",
-   "chains": [
-    "Robinhood Chain"
-   ],
-   "rev30": 1265294,
-   "tvl": null,
-   "defillama": "https://defillama.com/protocol/pons-v2",
-   "manual": {
-    "what": "Robinhood Chain 上的发币平台，2026-07 上线、08 月出 V2；协议费用于回购销毁 PONS（媒体口径，未核对合约）。收入高峰在 9 月，系统 11-14 才开始记录，所以没赶上。",
-    "by": "大叔",
-    "sources": [
-     "https://www.theblock.co/news/ecosystems/2026-09-08-pons-propels-robinhood-chain-fees-record-6-million-daily-fees-doubles-413852",
-     "https://decrypt.co/377349/pons-robinhood-chain-meme-coin-token-factory"
-    ]
-   },
-   "pending": [
-    "M",
-    "A",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM",
-    "TE"
-   ],
-   "missing_before": []
-  },
-  {
-   "key": "s:8884",
-   "name": "Nullmask",
-   "status": "原始线索",
-   "kind": "surge",
-   "fresh": true,
-   "bucket": "invest",
-   "discovered": "2026-11-15",
-   "category": "Privacy",
-   "chains": [
-    "Solana",
-    "Ethereum",
-    "BSC"
-   ],
-   "rev30": 1076757,
-   "tvl": null,
-   "defillama": "https://defillama.com/protocol/nullmask",
-   "manual": null,
-   "pending": [
-    "M",
-    "A",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM",
-    "TE"
-   ],
-   "missing_before": []
-  },
-  {
-   "key": "s:7966",
-   "name": "Render Network BME",
-   "status": "原始线索",
-   "kind": "surge",
-   "fresh": true,
-   "bucket": "invest",
-   "discovered": "2026-11-15",
-   "category": "DePIN",
-   "chains": [
-    "Solana"
-   ],
-   "rev30": 775576,
-   "tvl": null,
-   "defillama": "https://defillama.com/protocol/render-network-bme",
-   "manual": null,
-   "pending": [
-    "M",
-    "A",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM",
-    "TE"
-   ],
-   "missing_before": []
-  },
-  {
-   "key": "s:8481",
-   "name": "Fables",
-   "status": "原始线索",
-   "kind": "surge",
-   "fresh": true,
-   "bucket": "invest",
-   "discovered": "2026-11-15",
-   "category": "Dexs",
-   "chains": [
-    "Robinhood Chain"
-   ],
-   "rev30": 525716,
-   "tvl": null,
-   "defillama": "https://defillama.com/protocol/fables",
-   "manual": null,
-   "pending": [
-    "M",
-    "A",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM",
-    "TE"
-   ],
-   "missing_before": []
-  },
-  {
-   "key": "s:9388",
-   "name": "Montra",
-   "status": "原始线索",
-   "kind": "surge",
-   "fresh": true,
-   "bucket": "invest",
-   "discovered": "2026-11-15",
-   "category": "Launchpad",
-   "chains": [
-    "Elysium"
-   ],
-   "rev30": 372370,
-   "tvl": null,
-   "defillama": "https://defillama.com/protocol/montra",
-   "manual": null,
-   "pending": [
-    "M",
-    "A",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM",
-    "TE"
-   ],
-   "missing_before": []
-  },
-  {
-   "key": "s:4063",
-   "name": "Peapods Finance",
-   "status": "原始线索",
-   "kind": "surge",
-   "fresh": true,
-   "bucket": "invest",
-   "discovered": "2026-11-15",
-   "category": "Yield",
-   "chains": [
-    "Berachain",
-    "Arbitrum",
-    "Sonic"
-   ],
-   "rev30": 356069,
-   "tvl": null,
-   "defillama": "https://defillama.com/protocol/peapods-finance",
-   "manual": null,
-   "pending": [
-    "M",
-    "A",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM",
-    "TE"
-   ],
-   "missing_before": []
-  },
-  {
-   "key": "s:parent#justlend",
-   "name": "JustLend V1",
-   "status": "原始线索",
-   "kind": "surge",
-   "fresh": true,
-   "bucket": "invest",
-   "discovered": "2026-11-15",
-   "category": "Lending",
-   "chains": [
-    "Tron"
-   ],
-   "rev30": 275632,
-   "tvl": null,
-   "defillama": "https://defillama.com/protocol/justlend-v1",
-   "manual": null,
-   "pending": [
-    "M",
-    "A",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM",
-    "TE"
-   ],
-   "missing_before": []
-  },
-  {
-   "key": "s:7655",
-   "name": "THORWallet",
-   "status": "原始线索",
-   "kind": "surge",
-   "fresh": true,
-   "bucket": "invest",
-   "discovered": "2026-11-15",
-   "category": "DEX Aggregator",
-   "chains": [
-    "THORChain"
-   ],
-   "rev30": 211924,
-   "tvl": null,
-   "defillama": "https://defillama.com/protocol/thorwallet",
-   "manual": null,
-   "pending": [
-    "M",
-    "A",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM",
-    "TE"
-   ],
-   "missing_before": []
-  },
-  {
-   "key": "s:parent#liquity",
-   "name": "Liquity",
-   "status": "原始线索",
-   "kind": "surge",
-   "fresh": true,
-   "bucket": "invest",
-   "discovered": "2026-11-15",
-   "category": "CDP",
-   "chains": [
-    "Ethereum"
-   ],
-   "rev30": 175053,
-   "tvl": null,
-   "defillama": "https://defillama.com/protocol/liquity-v1",
-   "manual": null,
-   "pending": [
-    "M",
-    "A",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM",
-    "TE"
-   ],
-   "missing_before": []
-  },
-  {
-   "key": "s:9427",
-   "name": "Volta",
-   "status": "原始线索",
-   "kind": "surge",
-   "fresh": true,
-   "bucket": "invest",
-   "discovered": "2026-11-15",
-   "category": "Launchpad",
-   "chains": [
-    "Elysium"
-   ],
-   "rev30": 170172,
-   "tvl": null,
-   "defillama": "https://defillama.com/protocol/volta",
-   "manual": null,
-   "pending": [
-    "M",
-    "A",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM",
-    "TE"
-   ],
-   "missing_before": []
-  },
-  {
-   "key": "s:6771",
-   "name": "Yield Basis",
-   "status": "原始线索",
-   "kind": "surge",
-   "fresh": true,
-   "bucket": "invest",
-   "discovered": "2026-11-15",
-   "category": "Leveraged Farming",
-   "chains": [
-    "Ethereum"
-   ],
-   "rev30": 147539,
-   "tvl": null,
-   "defillama": "https://defillama.com/protocol/yield-basis",
-   "manual": null,
-   "pending": [
-    "M",
-    "A",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM",
-    "TE"
-   ],
-   "missing_before": []
-  },
-  {
-   "key": "s:9169",
-   "name": "Sapling",
-   "status": "原始线索",
-   "kind": "surge",
-   "fresh": true,
-   "bucket": "invest",
-   "discovered": "2026-11-15",
-   "category": "Launchpad",
-   "chains": [
-    "Solana",
-    "Robinhood Chain"
-   ],
-   "rev30": 119661,
-   "tvl": null,
-   "defillama": "https://defillama.com/protocol/sapling",
-   "manual": null,
-   "pending": [
-    "M",
-    "A",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM",
-    "TE"
-   ],
-   "missing_before": []
-  },
-  {
-   "key": "s:9182",
-   "name": "Veil",
-   "status": "原始线索",
-   "kind": "surge",
-   "fresh": true,
-   "bucket": "invest",
-   "discovered": "2026-11-15",
-   "category": "Privacy",
-   "chains": [
-    "Solana"
-   ],
-   "rev30": 118675,
-   "tvl": null,
-   "defillama": "https://defillama.com/protocol/veil",
-   "manual": null,
-   "pending": [
-    "M",
-    "A",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM",
-    "TE"
-   ],
-   "missing_before": []
-  },
-  {
-   "key": "s:9187",
-   "name": "Stockereum",
-   "status": "原始线索",
-   "kind": "surge",
-   "fresh": true,
-   "bucket": "invest",
-   "discovered": "2026-11-15",
-   "category": "Launchpad",
-   "chains": [
-    "Ethereum"
-   ],
-   "rev30": 109271,
-   "tvl": null,
-   "defillama": "https://defillama.com/protocol/stockereum",
-   "manual": null,
-   "pending": [
-    "M",
-    "A",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM",
-    "TE"
-   ],
-   "missing_before": []
+   "missing_before": [
+    "ERC-8004注册和身份合约",
+    "x402付款交易样本",
+    "实际付费调用和收入归属",
+    "官方 token/积分立场",
+    "房间和 Agent 权限控制"
+   ]
   },
   {
    "key": "m:bem-tapeout",
    "name": "TapeOut / BEM",
-   "status": "原始线索",
+   "status": "待核验",
    "kind": "manual",
-   "fresh": true,
+   "fresh": false,
    "bucket": "invest",
    "discovered": "2026-11-15",
    "category": null,
@@ -555,6 +149,8 @@
    "rev30": null,
    "tvl": null,
    "defillama": null,
+   "url": null,
+   "twitter": null,
    "manual": {
     "what": "BNB Chain 上的「设计证明」挖矿：用户用虚拟晶体管搭数字电路，按设计效率在链上验证后拿 BEM 奖励；总量 2,100 万、约四年减半（交易所博客口径，未核对合约）。",
     "by": "大叔（推特看到有人挖矿赚钱）",
@@ -575,21 +171,64 @@
     "TM",
     "TE"
    ],
+   "missing_before": [
+    "官方主页和文档",
+    "BEM合约地址与链",
+    "设计验证算法",
+    "奖励分配和总量",
+    "普通用户参与流程与成本",
+    "团队及安全信息"
+   ]
+  },
+  {
+   "key": "g:parent#sendfun",
+   "name": "Sendfun",
+   "status": "原始线索",
+   "kind": "tokenless",
+   "fresh": false,
+   "bucket": "watch",
+   "discovered": "2026-11-17",
+   "category": "Launchpad",
+   "chains": [
+    "Solana"
+   ],
+   "rev30": 195713,
+   "tvl": null,
+   "defillama": "https://defillama.com/protocol/sendfun-launchpad",
+   "url": "https:// ",
+   "twitter": "sendfun",
+   "manual": null,
+   "pending": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM"
+   ],
    "missing_before": []
   },
   {
-   "key": "x:aiagent:bankr",
-   "name": "Bankr",
+   "key": "s:parent#spark",
+   "name": "Spark",
    "status": "原始线索",
-   "kind": "site",
+   "kind": "surge",
    "fresh": true,
    "bucket": "invest",
-   "discovered": "2026-11-15",
-   "category": "AI Agents · launch",
-   "chains": null,
-   "rev30": null,
+   "discovered": "2026-11-19",
+   "category": "Onchain Capital Allocator",
+   "chains": [
+    "Ethereum",
+    "Gnosis"
+   ],
+   "rev30": 1574029,
    "tvl": null,
-   "defillama": "https://defillama.com/protocol/bankr",
+   "defillama": "https://defillama.com/protocol/spark-liquidity-layer",
+   "url": "https://spark.finance",
+   "twitter": "sparkfinance",
    "manual": null,
    "pending": [
     "M",
@@ -606,20 +245,22 @@
    "missing_before": []
   },
   {
-   "key": "g:9381",
-   "name": "Ascend Launchpad",
+   "key": "s:parent#threshold-network",
+   "name": "Threshold Network",
    "status": "原始线索",
-   "kind": "tokenless",
+   "kind": "surge",
    "fresh": true,
-   "bucket": "watch",
-   "discovered": "2026-11-15",
-   "category": "Launchpad",
+   "bucket": "invest",
+   "discovered": "2026-11-20",
+   "category": "Decentralized BTC",
    "chains": [
-    "Elysium"
+    "Ethereum"
    ],
-   "rev30": 234440,
+   "rev30": 129900,
    "tvl": null,
-   "defillama": "https://defillama.com/protocol/ascend-launchpad",
+   "defillama": "https://defillama.com/protocol/tbtc",
+   "url": "https://threshold.network",
+   "twitter": "TheTNetwork",
    "manual": null,
    "pending": [
     "M",
@@ -630,25 +271,28 @@
     "G",
     "D",
     "T",
-    "TM"
+    "TM",
+    "TE"
    ],
    "missing_before": []
   },
   {
-   "key": "x:launchpad:boxa-v1",
-   "name": "Boxa V1",
+   "key": "s:9065",
+   "name": "Papertrade",
    "status": "原始线索",
-   "kind": "site",
-   "fresh": true,
-   "bucket": "watch",
+   "kind": "surge",
+   "fresh": false,
+   "bucket": "invest",
    "discovered": "2026-11-15",
-   "category": "Launchpad",
+   "category": "Derivatives",
    "chains": [
-    "Elysium"
+    "Off Chain"
    ],
-   "rev30": null,
+   "rev30": 14504669,
    "tvl": null,
-   "defillama": "https://defillama.com/protocol/boxa-v1",
+   "defillama": "https://defillama.com/protocol/papertrade",
+   "url": "https://papertrade.xyz",
+   "twitter": "papertrade_xyz",
    "manual": null,
    "pending": [
     "M",
@@ -659,25 +303,30 @@
     "G",
     "D",
     "T",
-    "TM"
+    "TM",
+    "TE"
    ],
    "missing_before": []
   },
   {
-   "key": "x:launchpad:chain-elysium",
-   "name": "Elysium 生态（新发射台聚集）",
+   "key": "s:8884",
+   "name": "Nullmask",
    "status": "原始线索",
-   "kind": "site",
-   "fresh": true,
-   "bucket": "watch",
+   "kind": "surge",
+   "fresh": false,
+   "bucket": "invest",
    "discovered": "2026-11-15",
-   "category": "新链生态",
+   "category": "Privacy",
    "chains": [
-    "Elysium"
+    "Solana",
+    "Ethereum",
+    "BSC"
    ],
-   "rev30": null,
+   "rev30": 904620,
    "tvl": null,
-   "defillama": null,
+   "defillama": "https://defillama.com/protocol/nullmask",
+   "url": "https://nullmask.io",
+   "twitter": "NullMaskio",
    "manual": null,
    "pending": [
     "M",
@@ -688,43 +337,237 @@
     "G",
     "D",
     "T",
-    "TM"
+    "TM",
+    "TE"
    ],
    "missing_before": []
   },
   {
-   "key": "g:9146",
-   "name": "Central City",
-   "status": "待核验",
-   "kind": "tokenless",
-   "fresh": true,
-   "bucket": "watch",
+   "key": "s:parent#justlend",
+   "name": "JustLend V1",
+   "status": "原始线索",
+   "kind": "surge",
+   "fresh": false,
+   "bucket": "invest",
    "discovered": "2026-11-15",
-   "category": "AI Agents",
+   "category": "Lending",
    "chains": [
-    "Base",
-    "Arc"
+    "Tron"
    ],
-   "rev30": 1608735,
+   "rev30": 503799,
    "tvl": null,
-   "defillama": "https://defillama.com/protocol/central-city",
+   "defillama": "https://defillama.com/protocol/justlend-v1",
+   "url": "https://justlend.org",
+   "twitter": "DeFi_JUST",
    "manual": null,
    "pending": [
     "M",
+    "A",
     "F",
     "E",
     "V",
     "G",
     "D",
     "T",
-    "TM"
+    "TM",
+    "TE"
    ],
-   "missing_before": [
-    "独立关联地址/自成交及去补贴留存审计未完成。",
-    "未独立重放全部费用与支付，适配器方法可能更新。",
-    "当前官方自身 token/积分/空投立场及适用日期 U。",
-    "官方原始表态日期 U，不用页面读取日期代替。"
-   ]
+   "missing_before": []
+  },
+  {
+   "key": "s:8481",
+   "name": "Fables",
+   "status": "原始线索",
+   "kind": "surge",
+   "fresh": false,
+   "bucket": "invest",
+   "discovered": "2026-11-15",
+   "category": "Dexs",
+   "chains": [
+    "Robinhood Chain"
+   ],
+   "rev30": 476355,
+   "tvl": null,
+   "defillama": "https://defillama.com/protocol/fables",
+   "url": "https://www.fables.fi",
+   "twitter": "fablesfi",
+   "manual": null,
+   "pending": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "TE"
+   ],
+   "missing_before": []
+  },
+  {
+   "key": "s:parent#paperstrategy",
+   "name": "Paperstrategy",
+   "status": "原始线索",
+   "kind": "surge",
+   "fresh": false,
+   "bucket": "invest",
+   "discovered": "2026-11-15",
+   "category": "Onchain Capital Allocator",
+   "chains": [
+    "Hyperliquid L1",
+    "Off Chain"
+   ],
+   "rev30": 447442,
+   "tvl": null,
+   "defillama": "https://defillama.com/protocol/paperstrategy-pstr",
+   "url": "https://paperstrategy.xyz",
+   "twitter": "paperstrategy_",
+   "manual": null,
+   "pending": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "TE"
+   ],
+   "missing_before": []
+  },
+  {
+   "key": "s:4063",
+   "name": "Peapods Finance",
+   "status": "原始线索",
+   "kind": "surge",
+   "fresh": false,
+   "bucket": "invest",
+   "discovered": "2026-11-15",
+   "category": "Yield",
+   "chains": [
+    "Berachain",
+    "Arbitrum",
+    "Sonic"
+   ],
+   "rev30": 339720,
+   "tvl": null,
+   "defillama": "https://defillama.com/protocol/peapods-finance",
+   "url": "https://peapods.finance",
+   "twitter": "PeapodsFinance",
+   "manual": null,
+   "pending": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "TE"
+   ],
+   "missing_before": []
+  },
+  {
+   "key": "s:7655",
+   "name": "THORWallet",
+   "status": "原始线索",
+   "kind": "surge",
+   "fresh": false,
+   "bucket": "invest",
+   "discovered": "2026-11-15",
+   "category": "DEX Aggregator",
+   "chains": [
+    "THORChain"
+   ],
+   "rev30": 243371,
+   "tvl": null,
+   "defillama": "https://defillama.com/protocol/thorwallet",
+   "url": "https://www.thorwallet.org",
+   "twitter": "thorwallet",
+   "manual": null,
+   "pending": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "TE"
+   ],
+   "missing_before": []
+  },
+  {
+   "key": "s:parent#liquity",
+   "name": "Liquity",
+   "status": "原始线索",
+   "kind": "surge",
+   "fresh": false,
+   "bucket": "invest",
+   "discovered": "2026-11-15",
+   "category": "CDP",
+   "chains": [
+    "Ethereum"
+   ],
+   "rev30": 224360,
+   "tvl": null,
+   "defillama": "https://defillama.com/protocol/liquity-v1",
+   "url": "https://www.liquity.org",
+   "twitter": "LiquityProtocol",
+   "manual": null,
+   "pending": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "TE"
+   ],
+   "missing_before": []
+  },
+  {
+   "key": "s:6771",
+   "name": "Yield Basis",
+   "status": "原始线索",
+   "kind": "surge",
+   "fresh": false,
+   "bucket": "invest",
+   "discovered": "2026-11-15",
+   "category": "Leveraged Farming",
+   "chains": [
+    "Ethereum"
+   ],
+   "rev30": 161544,
+   "tvl": null,
+   "defillama": "https://defillama.com/protocol/yield-basis",
+   "url": "https://yieldbasis.com",
+   "twitter": "yieldbasis",
+   "manual": null,
+   "pending": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "TE"
+   ],
+   "missing_before": []
   },
   {
    "key": "g:8144",
@@ -738,9 +581,11 @@
    "chains": [
     "Off Chain"
    ],
-   "rev30": 609531,
+   "rev30": 629971,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/catapult-trade",
+   "url": "https://catapult.trade",
+   "twitter": "letsCatapult",
    "manual": null,
    "pending": [
     "M",
@@ -771,8 +616,10 @@
     "Hyperliquid L1"
    ],
    "rev30": null,
-   "tvl": 49054831,
+   "tvl": 30541003,
    "defillama": "https://defillama.com/protocol/kinetiq-elysium-bridge",
+   "url": "https://elysium.kinetiq.xyz",
+   "twitter": "Enter_Elysium",
    "manual": null,
    "pending": [
     "M",
@@ -803,38 +650,10 @@
     "Base"
    ],
    "rev30": null,
-   "tvl": 38646172,
+   "tvl": 30194773,
    "defillama": "https://defillama.com/protocol/pendle-loop",
-   "manual": null,
-   "pending": [
-    "M",
-    "A",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM",
-    "TE"
-   ],
-   "missing_before": []
-  },
-  {
-   "key": "p:9353",
-   "name": "Vesper V2",
-   "status": "原始线索",
-   "kind": "listing",
-   "fresh": false,
-   "bucket": "watch",
-   "discovered": "2026-11-14",
-   "category": "Yield Aggregator",
-   "chains": [
-    "Ethereum"
-   ],
-   "rev30": null,
-   "tvl": 8334703,
-   "defillama": "https://defillama.com/protocol/vesper-v2",
+   "url": "https://app.pendle.finance",
+   "twitter": "pendle_fi",
    "manual": null,
    "pending": [
     "M",
@@ -863,8 +682,72 @@
     "Ethereum"
    ],
    "rev30": null,
-   "tvl": 6704947,
+   "tvl": 6809010,
    "defillama": "https://defillama.com/protocol/swan-dao",
+   "url": "https://www.swanusd.com",
+   "twitter": "MonolithMarket",
+   "manual": null,
+   "pending": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM"
+   ],
+   "missing_before": []
+  },
+  {
+   "key": "g:parent#blockchain-wallet",
+   "name": "Blockchain Wallet",
+   "status": "原始线索",
+   "kind": "tokenless",
+   "fresh": false,
+   "bucket": "watch",
+   "discovered": "2026-11-18",
+   "category": "Interface",
+   "chains": [
+    "Hyperliquid L1"
+   ],
+   "rev30": 132734,
+   "tvl": null,
+   "defillama": "https://defillama.com/protocol/blockchain-wallet-perps",
+   "url": "https://www.blockchain.com",
+   "twitter": "blockchain",
+   "manual": null,
+   "pending": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM"
+   ],
+   "missing_before": []
+  },
+  {
+   "key": "g:9367",
+   "name": "MING",
+   "status": "原始线索",
+   "kind": "tokenless",
+   "fresh": false,
+   "bucket": "watch",
+   "discovered": "2026-11-16",
+   "category": "Gamified Mining",
+   "chains": [
+    "BSC"
+   ],
+   "rev30": 125885,
+   "tvl": null,
+   "defillama": "https://defillama.com/protocol/ming",
+   "url": null,
+   "twitter": "mingbnb",
    "manual": null,
    "pending": [
     "M",
@@ -893,9 +776,11 @@
     "Monad",
     "BSC"
    ],
-   "rev30": 8972040,
+   "rev30": 8700152,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/fomo-wallet",
+   "url": "https://fomo.family",
+   "twitter": "fomo",
    "manual": null,
    "pending": [
     "M",
@@ -928,9 +813,82 @@
     "Solana",
     "Base"
    ],
-   "rev30": 5533401,
+   "rev30": 4752441,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/gmgn",
+   "url": "https://gmgn.ai",
+   "twitter": "gmgnai",
+   "manual": null,
+   "pending": [
+    "M",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM"
+   ],
+   "missing_before": [
+    "独立关联地址/自成交及去补贴留存审计未完成。",
+    "未独立重放全部费用与支付，适配器方法可能更新。",
+    "当前官方自身 token/积分/空投立场及适用日期 U。",
+    "官方原始表态日期 U，不用页面读取日期代替。"
+   ]
+  },
+  {
+   "key": "g:parent#azverse",
+   "name": "Azverse",
+   "status": "待核验",
+   "kind": "tokenless",
+   "fresh": false,
+   "bucket": "watch",
+   "discovered": "2026-11-14",
+   "category": "Derivatives",
+   "chains": [
+    "Off Chain"
+   ],
+   "rev30": 3937076,
+   "tvl": null,
+   "defillama": "https://defillama.com/protocol/azverse-perps",
+   "url": null,
+   "twitter": "AZverse_Global",
+   "manual": null,
+   "pending": [
+    "M",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM"
+   ],
+   "missing_before": [
+    "独立关联地址/自成交及去补贴留存审计未完成。",
+    "未独立重放全部费用与支付，适配器方法可能更新。",
+    "当前官方自身 token/积分/空投立场及适用日期 U。",
+    "官方原始表态日期 U，不用页面读取日期代替。",
+    "收入方法存在，但 API 元数据缺官网，当前无法完成一手身份/发行补证。"
+   ]
+  },
+  {
+   "key": "g:7010",
+   "name": "trade[XYZ]",
+   "status": "待核验",
+   "kind": "tokenless",
+   "fresh": false,
+   "bucket": "watch",
+   "discovered": "2026-11-14",
+   "category": "Interface",
+   "chains": [
+    "Hyperliquid L1"
+   ],
+   "rev30": 3749838,
+   "tvl": null,
+   "defillama": "https://defillama.com/protocol/trade[xyz]",
+   "url": "https://app.trade.xyz",
+   "twitter": "tradexyz",
    "manual": null,
    "pending": [
     "M",
@@ -963,9 +921,11 @@
     "X Layer",
     "Monad"
    ],
-   "rev30": 4247922,
+   "rev30": 3718246,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/flap-sh",
+   "url": null,
+   "twitter": "flapdotsh",
    "manual": null,
    "pending": [
     "M",
@@ -982,107 +942,6 @@
     "未独立重放全部费用与支付，适配器方法可能更新。",
     "当前官方自身 token/积分/空投立场及适用日期 U。",
     "官方原始表态日期 U，不用页面读取日期代替。"
-   ]
-  },
-  {
-   "key": "g:7010",
-   "name": "trade[XYZ]",
-   "status": "待核验",
-   "kind": "tokenless",
-   "fresh": false,
-   "bucket": "watch",
-   "discovered": "2026-11-14",
-   "category": "Interface",
-   "chains": [
-    "Hyperliquid L1"
-   ],
-   "rev30": 3344611,
-   "tvl": null,
-   "defillama": "https://defillama.com/protocol/trade[xyz]",
-   "manual": null,
-   "pending": [
-    "M",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM"
-   ],
-   "missing_before": [
-    "独立关联地址/自成交及去补贴留存审计未完成。",
-    "未独立重放全部费用与支付，适配器方法可能更新。",
-    "当前官方自身 token/积分/空投立场及适用日期 U。",
-    "官方原始表态日期 U，不用页面读取日期代替。"
-   ]
-  },
-  {
-   "key": "g:parent#azverse",
-   "name": "Azverse",
-   "status": "待核验",
-   "kind": "tokenless",
-   "fresh": false,
-   "bucket": "watch",
-   "discovered": "2026-11-14",
-   "category": "Derivatives",
-   "chains": [
-    "Off Chain"
-   ],
-   "rev30": 3146443,
-   "tvl": null,
-   "defillama": "https://defillama.com/protocol/azverse-perps",
-   "manual": null,
-   "pending": [
-    "M",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM"
-   ],
-   "missing_before": [
-    "独立关联地址/自成交及去补贴留存审计未完成。",
-    "未独立重放全部费用与支付，适配器方法可能更新。",
-    "当前官方自身 token/积分/空投立场及适用日期 U。",
-    "官方原始表态日期 U，不用页面读取日期代替。",
-    "收入方法存在，但 API 元数据缺官网，当前无法完成一手身份/发行补证。"
-   ]
-  },
-  {
-   "key": "g:9296",
-   "name": "The Standard Reserve",
-   "status": "待核验",
-   "kind": "tokenless",
-   "fresh": false,
-   "bucket": "watch",
-   "discovered": "2026-11-14",
-   "category": "Reserve Currency",
-   "chains": [
-    "Robinhood Chain"
-   ],
-   "rev30": 2243559,
-   "tvl": null,
-   "defillama": "https://defillama.com/protocol/the-standard-reserve",
-   "manual": null,
-   "pending": [
-    "M",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM"
-   ],
-   "missing_before": [
-    "独立关联地址/自成交及去补贴留存审计未完成。",
-    "未独立重放全部费用与支付，适配器方法可能更新。",
-    "当前官方自身 token/积分/空投立场及适用日期 U。",
-    "官方原始表态日期 U，不用页面读取日期代替。",
-    "symbol 为横杠不能证明无币；先核 STANDARD 的唯一资产、官方身份和无币归类，暂不按无币机会推进。"
    ]
   },
   {
@@ -1097,9 +956,11 @@
    "chains": [
     "TxFlow"
    ],
-   "rev30": 1633847,
+   "rev30": 1988937,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/txflow-perps",
+   "url": "https://app.txflow.com",
+   "twitter": "TxFlow_L1",
    "manual": null,
    "pending": [
     "M",
@@ -1131,9 +992,11 @@
    "chains": [
     "Off Chain"
    ],
-   "rev30": 1462807,
+   "rev30": 1776788,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/antarctic",
+   "url": "https://www.antarctic.exchange",
+   "twitter": "Antarctic_EX",
    "manual": null,
    "pending": [
     "M",
@@ -1164,9 +1027,11 @@
    "chains": [
     "Off Chain"
    ],
-   "rev30": 1327301,
+   "rev30": 1683885,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/xox-perps",
+   "url": "https://www.xox.exchange",
+   "twitter": "xox_DEX",
    "manual": null,
    "pending": [
     "M",
@@ -1186,6 +1051,42 @@
    ]
   },
   {
+   "key": "g:9296",
+   "name": "The Standard Reserve",
+   "status": "待核验",
+   "kind": "tokenless",
+   "fresh": false,
+   "bucket": "watch",
+   "discovered": "2026-11-14",
+   "category": "Reserve Currency",
+   "chains": [
+    "Robinhood Chain"
+   ],
+   "rev30": 1559170,
+   "tvl": null,
+   "defillama": "https://defillama.com/protocol/the-standard-reserve",
+   "url": "https://www.standardreserve.xyz",
+   "twitter": "standard_rsv",
+   "manual": null,
+   "pending": [
+    "M",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM"
+   ],
+   "missing_before": [
+    "独立关联地址/自成交及去补贴留存审计未完成。",
+    "未独立重放全部费用与支付，适配器方法可能更新。",
+    "当前官方自身 token/积分/空投立场及适用日期 U。",
+    "官方原始表态日期 U，不用页面读取日期代替。",
+    "symbol 为横杠不能证明无币；先核 STANDARD 的唯一资产、官方身份和无币归类，暂不按无币机会推进。"
+   ]
+  },
+  {
    "key": "g:5864",
    "name": "TRONSAVE",
    "status": "待核验",
@@ -1197,9 +1098,11 @@
    "chains": [
     "Tron"
    ],
-   "rev30": 1203549,
+   "rev30": 1452412,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/tronsave",
+   "url": "https://tronsave.io",
+   "twitter": "tronsave_io",
    "manual": null,
    "pending": [
     "M",
@@ -1233,9 +1136,11 @@
     "Ethereum",
     "Sonic"
    ],
-   "rev30": 1121560,
+   "rev30": 1088052,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/veda",
+   "url": "https://veda.tech",
+   "twitter": "veda_labs",
    "manual": null,
    "pending": [
     "M",
@@ -1256,75 +1161,6 @@
    ]
   },
   {
-   "key": "g:parent#hyperdash",
-   "name": "Hyperdash",
-   "status": "待核验",
-   "kind": "tokenless",
-   "fresh": false,
-   "bucket": "watch",
-   "discovered": "2026-11-14",
-   "category": "Interface",
-   "chains": [
-    "Hyperliquid L1"
-   ],
-   "rev30": 900490,
-   "tvl": null,
-   "defillama": "https://defillama.com/protocol/hyperdash-perps",
-   "manual": null,
-   "pending": [
-    "M",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM"
-   ],
-   "missing_before": [
-    "独立关联地址/自成交及去补贴留存审计未完成。",
-    "未独立重放全部费用与支付，适配器方法可能更新。",
-    "当前官方自身 token/积分/空投立场及适用日期 U。",
-    "官方原始表态日期 U，不用页面读取日期代替。"
-   ]
-  },
-  {
-   "key": "g:parent#rabby",
-   "name": "Rabby",
-   "status": "待核验",
-   "kind": "tokenless",
-   "fresh": false,
-   "bucket": "watch",
-   "discovered": "2026-11-14",
-   "category": "Interface",
-   "chains": [
-    "Hyperliquid L1",
-    "Ethereum",
-    "BSC"
-   ],
-   "rev30": 820734,
-   "tvl": null,
-   "defillama": "https://defillama.com/protocol/rabby-perps",
-   "manual": null,
-   "pending": [
-    "M",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM"
-   ],
-   "missing_before": [
-    "独立关联地址/自成交及去补贴留存审计未完成。",
-    "未独立重放全部费用与支付，适配器方法可能更新。",
-    "当前官方自身 token/积分/空投立场及适用日期 U。",
-    "官方原始表态日期 U，不用页面读取日期代替。",
-    "确认官方积分页面存在；详细规则与代币计划未读取到，不据标题升级发行结论。"
-   ]
-  },
-  {
    "key": "g:parent#okx-dex",
    "name": "OKX Swap",
    "status": "待核验",
@@ -1338,9 +1174,11 @@
     "Blast",
     "Sonic"
    ],
-   "rev30": 719297,
+   "rev30": 970499,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/okx-swap",
+   "url": "https://www.okx.com",
+   "twitter": "okx",
    "manual": null,
    "pending": [
     "M",
@@ -1361,6 +1199,79 @@
    ]
   },
   {
+   "key": "g:parent#rabby",
+   "name": "Rabby",
+   "status": "待核验",
+   "kind": "tokenless",
+   "fresh": false,
+   "bucket": "watch",
+   "discovered": "2026-11-14",
+   "category": "Interface",
+   "chains": [
+    "Hyperliquid L1",
+    "Ethereum",
+    "BSC"
+   ],
+   "rev30": 906102,
+   "tvl": null,
+   "defillama": "https://defillama.com/protocol/rabby-perps",
+   "url": "https://rabby.io",
+   "twitter": "Rabby_io",
+   "manual": null,
+   "pending": [
+    "M",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM"
+   ],
+   "missing_before": [
+    "独立关联地址/自成交及去补贴留存审计未完成。",
+    "未独立重放全部费用与支付，适配器方法可能更新。",
+    "当前官方自身 token/积分/空投立场及适用日期 U。",
+    "官方原始表态日期 U，不用页面读取日期代替。",
+    "确认官方积分页面存在；详细规则与代币计划未读取到，不据标题升级发行结论。"
+   ]
+  },
+  {
+   "key": "g:parent#hyperdash",
+   "name": "Hyperdash",
+   "status": "待核验",
+   "kind": "tokenless",
+   "fresh": false,
+   "bucket": "watch",
+   "discovered": "2026-11-14",
+   "category": "Interface",
+   "chains": [
+    "Hyperliquid L1"
+   ],
+   "rev30": 826709,
+   "tvl": null,
+   "defillama": "https://defillama.com/protocol/hyperdash-perps",
+   "url": "https://hyperdash.com",
+   "twitter": "hypurrdash",
+   "manual": null,
+   "pending": [
+    "M",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM"
+   ],
+   "missing_before": [
+    "独立关联地址/自成交及去补贴留存审计未完成。",
+    "未独立重放全部费用与支付，适配器方法可能更新。",
+    "当前官方自身 token/积分/空投立场及适用日期 U。",
+    "官方原始表态日期 U，不用页面读取日期代替。"
+   ]
+  },
+  {
    "key": "g:8916",
    "name": "Relay",
    "status": "待核验",
@@ -1374,9 +1285,11 @@
     "XRPL",
     "Eclipse"
    ],
-   "rev30": 696287,
+   "rev30": 687329,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/relay",
+   "url": "https://docs.relay.link",
+   "twitter": "RelayProtocol",
    "manual": null,
    "pending": [
     "M",
@@ -1410,9 +1323,11 @@
     "BSC",
     "Solana"
    ],
-   "rev30": 647158,
+   "rev30": 590462,
    "tvl": null,
    "defillama": "https://defillama.com/protocol/loan-meme",
+   "url": null,
+   "twitter": "loanmeme",
    "manual": null,
    "pending": [
     "M",

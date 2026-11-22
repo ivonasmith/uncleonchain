@@ -1,0 +1,307 @@
+[
+ {
+  "key": "m:pons",
+  "name": "Pons",
+  "one_liner": "Robinhood Chain 上非托管 meme 币 launchpad，用 bonding curve 发币，毕业进锁仓 Uniswap v4 池，协议费部分买回烧 PONS。",
+  "checked_utc": "2026-11-15T11:27:08+00:00",
+  "token_stance": "有代币，已在运行并有买回烧机制",
+  "token_stance_src": "https://ponsfamily.com/analytics",
+  "token_stance_date": "2026-07",
+  "revenue_who": "协议收入部分（当前约30%费率中的80%）用于买回烧 PONS，其余覆盖团队/基础设施，84% 费给创作者。",
+  "revenue_method": "0.0005 ETH 发币费 + 1% 交易费（V2 curve 和毕业后 Uniswap v4 hook 扫费），DefiLlama 统计 launch/curve/swept 费。",
+  "wash_or_subsidy": "U",
+  "user_role": "普通人可作为 creator 发币，或 trader 在 curve/池买卖。",
+  "entry": [
+   "use"
+  ],
+  "entry_why": "参与方式为支付 gas + ETH 在 https://www.ponsfamily.com/launchpad/create 发币，或直接买卖已发 token，无 points 计划证据。",
+  "scores": {
+   "M": {
+    "v": 3,
+    "why": "V2 新增 bonding curve 定价 + 毕业进永久锁 Uniswap v4 自定义 hook，支持 pair tokenized stocks/ETFs 等新资产，区别于 V1 即时池。",
+    "src": "https://docs.ponsfamily.com/v2"
+   },
+   "A": {
+    "v": 3,
+    "why": "官网两步操作：上传图文选 pair 签名即可发币，Robinhood Chain gas 低，普通人钱包即可完成。",
+    "src": "https://ponsfamily.com/launchpad/create"
+   },
+   "F": {
+    "v": 3,
+    "why": "非 custodial，任何地址可发币，creator 获70-90% 费，无明显预留或 VC 分配记录。",
+    "src": "https://docs.ponsfamily.com/llms.txt"
+   },
+   "E": {
+    "v": 2,
+    "why": "V2 hook 和 factory 被外部 token 使用（>100万 launches），但独立团队付费使用或复用未在一手证据中明确核实。",
+    "src": "https://ponsfamily.com/analytics"
+   },
+   "V": {
+    "v": 3,
+    "why": "持有 PONS 间接获协议收入 80% 用于买回烧，analytics 和 Dune 链上可核对 buyback/burn 流向。",
+    "src": "https://ponsfamily.com/analytics"
+   },
+   "G": {
+    "v": 1,
+    "why": "9月高峰后 10-11 月 fees/revenue 显著下降（从月 1.2 亿+ 降至百万级），无清晰 D30 非单一簇增长证据。",
+    "src": "https://defillama.com/protocol/pons-v2"
+   },
+   "D": {
+    "v": 1,
+    "why": "主要由 launch/trade 参与者支付费用，外部客户（如 stock token 真实使用）有报道但账单未在一手合约中完全核对分离。",
+    "src": "https://defillama.com/protocol/pons"
+   },
+   "T": {
+    "v": 2,
+    "why": "当前仍开放 launch（每天 5k+），但高峰已过，gas waiver 等早期优势已结束，规则稳定可核。",
+    "src": "https://ponsfamily.com/analytics"
+   },
+   "TM": {
+    "v": 1,
+    "why": "Pons Labs, LLC 运营，pseudonymous Ozzy (@MEADGod) 领导，有公开合约交付和产品迭代记录，无不良记录证据。",
+    "src": "https://candydrops.xyz/en/projects/pons"
+   },
+   "TE": {
+    "v": 2,
+    "why": "固定 10 亿 supply，已烧 330M（33%），剩余流通约 67%，买回烧持续进行，日历透明但未来 90 天新增可售未明确披露。",
+    "src": "https://ponsfamily.com/analytics"
+   }
+  },
+  "counter": "高峰期已过，月收入从 2300 万降至 40 万，竞争加剧。",
+  "verdict": "研究观察",
+  "verdict_reason": "对象明确为 Robinhood Chain launchpad V2 机制，M/A/F/V/TM 有明确一手合约/官网/Dune/DefiLlama 证据，无否决项。",
+  "missing": [
+   "官方团队实名身份和历史交付细节",
+   "积分或空投的任何官方表态",
+   "未来 90 天精确解锁/买回日历",
+   "外部付费客户与补贴分离的链上可验证据"
+  ],
+  "evidence": [
+   {
+    "url": "https://docs.ponsfamily.com/llms.txt",
+    "fields": [
+     "M",
+     "F",
+     "A",
+     "user_role"
+    ]
+   },
+   {
+    "url": "https://docs.ponsfamily.com/v2",
+    "fields": [
+     "M",
+     "revenue_method",
+     "V"
+    ]
+   },
+   {
+    "url": "https://ponsfamily.com/analytics",
+    "fields": [
+     "revenue_who",
+     "TE",
+     "token_stance",
+     "T",
+     "G",
+     "D"
+    ]
+   },
+   {
+    "url": "https://defillama.com/protocol/pons-v2",
+    "fields": [
+     "revenue_method",
+     "G",
+     "D",
+     "T"
+    ]
+   },
+   {
+    "url": "https://x.com/ponsdotfamily",
+    "fields": [
+     "official_x",
+     "token_stance"
+    ]
+   },
+   {
+    "url": "https://defillama.com/protocol/pons",
+    "fields": [
+     "revenue_who",
+     "G"
+    ]
+   }
+  ],
+  "official_x": "@ponsdotfamily",
+  "reviewer": "grok-auto",
+  "_usage": {
+   "model": "grok-4.20-0309-non-reasoning",
+   "in": 53536,
+   "out": 1826,
+   "x_posts": 10,
+   "searches": 10,
+   "usd": 0.1643362
+  }
+ },
+ {
+  "key": "s:9388",
+  "name": "Montra",
+  "one_liner": "Elysium上的Uniswap v4 launchpad，一键发币+锁流动性+交易，协议费0.4%用于国库和MONTRA回购燃烧。",
+  "checked_utc": "2026-11-15T11:27:08+00:00",
+  "token_stance": "有积分/空投计划",
+  "token_stance_src": "https://montramarkets.xyz/docs/montra",
+  "token_stance_date": "2026-11",
+  "revenue_who": "协议国库和MONTRA回购燃烧",
+  "revenue_method": "每笔交易0.4%协议费，先全进国库，后70%买MONTRA烧掉、30%国库",
+  "wash_or_subsidy": "U",
+  "user_role": "普通人可一键发币、交易、提供流动性、参与积分计划",
+  "entry": [
+   "points",
+   "use"
+  ],
+  "entry_why": "通过交易、发币、持仓、内容贡献赚积分（https://montramarkets.xyz/ 和 https://montramarkets.xyz/docs）；同时直接用HYPE在Uniswap v4池交易/提供LP（https://montramarkets.xyz/docs/launching）",
+  "scores": {
+   "M": {
+    "v": 3,
+    "why": "一键创建token+pool+100%锁流动性+从第一块交易，无bonding curve、无迁移；协议费直接支持MONTRA回购烧；已上线可运行（不同于仅参数改动）",
+    "src": "https://montramarkets.xyz/docs/launching"
+   },
+   "A": {
+    "v": 3,
+    "why": "桥接HYPE到Elysium、加RPC、发币/交易全在钱包完成；文档有明确步骤，gas成本可控但未实测具体预算",
+    "src": "https://montramarkets.xyz/docs/elysium"
+   },
+   "F": {
+    "v": 3,
+    "why": "任何人都可一键launch，100%供应进池无预挖、无税、无owner；积分计划分5组（用户/交易者/LP/创建者/内容），25% MONTRA用于空投并锁仓",
+    "src": "https://montramarkets.xyz/docs/launching 和 https://defillama.com/protocol/montra"
+   },
+   "E": {
+    "v": 1,
+    "why": "当前主要是Montra自己的launchpad和Uniswap v4集成，Partner和Listings仍“coming soon”；未找到3个以上独立团队付费使用证据",
+    "src": "https://montramarkets.xyz/docs"
+   },
+   "V": {
+    "v": 2,
+    "why": "文档明确协议费0.4%先国库后70%买MONTRA烧；MONTRA无owner、无铸造、供应只减；但未核对多期实际资金流净收益",
+    "src": "https://montramarkets.xyz/docs/protocol 和 https://montramarkets.xyz/docs/montra"
+   },
+   "G": {
+    "v": "U",
+    "why": "上线不足一周（Elysium主网11月左右），无足够D7/D30留存数据可核",
+    "src": "https://defillama.com/protocol/montra"
+   },
+   "D": {
+    "v": 1,
+    "why": "当前收入主要来自launch和交易费（参与者交易驱动），未核查到独立外部客户持续付款与补贴分离的证据",
+    "src": "https://defillama.com/protocol/montra"
+   },
+   "T": {
+    "v": 3,
+    "why": "Elysium新链+Montra刚上线，最近批次launch仍有早期流动性优势和积分倍率（第一周2x），竞争未完全翻倍",
+    "src": "https://montramarkets.xyz/ 和 https://x.com/MontraXYZ/status/2121001477195878796"
+   },
+   "TM": {
+    "v": 2,
+    "why": "官方X @MontraXYZ、文档、合约registry公开；有交付（Uniswap v4集成、RPC、已产生372k收入）；团队未实名但有链上记录和产品上线",
+    "src": "https://montramarkets.xyz/docs/contracts 和 https://defillama.com/protocol/montra"
+   },
+   "TE": {
+    "v": 2,
+    "why": "MONTRA已上线流通约97%，FDV 3.78m，解锁/排放日历在文档中公开（买回烧+空投25%锁仓），可预算但未给精确90天净新增",
+    "src": "https://defillama.com/token/MONTRA 和 https://montramarkets.xyz/docs/protocol"
+   }
+  },
+  "counter": "上线仅一周，Partner/Listings仍coming soon，积分兑换规则未完全公布，增长留存待多期验证。",
+  "verdict": "研究观察",
+  "verdict_reason": "对象明确（Elysium Uniswap v4 launchpad+MONTRA回购），M/V/T有可证伪一手文档和链上数据支持，无明确否决项。",
+  "missing": [
+   "积分具体兑换规则和最终空投分配细节",
+   "多期D30增长留存与非单一资金簇证据",
+   "外部独立客户付款与补贴分离的链上验证",
+   "Montra Partner和Listings实际上线后的使用案例"
+  ],
+  "evidence": [
+   {
+    "url": "https://montramarkets.xyz/docs",
+    "fields": [
+     "M",
+     "A",
+     "F",
+     "V",
+     "E"
+    ]
+   },
+   {
+    "url": "https://montramarkets.xyz/docs/launching",
+    "fields": [
+     "M",
+     "F",
+     "A"
+    ]
+   },
+   {
+    "url": "https://montramarkets.xyz/docs/protocol",
+    "fields": [
+     "V",
+     "revenue_method",
+     "TE"
+    ]
+   },
+   {
+    "url": "https://montramarkets.xyz/docs/montra",
+    "fields": [
+     "token_stance",
+     "V"
+    ]
+   },
+   {
+    "url": "https://montramarkets.xyz/docs/elysium",
+    "fields": [
+     "A",
+     "user_role"
+    ]
+   },
+   {
+    "url": "https://defillama.com/protocol/montra",
+    "fields": [
+     "revenue_who",
+     "TM",
+     "G",
+     "D",
+     "T",
+     "TE"
+    ]
+   },
+   {
+    "url": "https://defillama.com/token/MONTRA",
+    "fields": [
+     "TE",
+     "token_stance"
+    ]
+   },
+   {
+    "url": "https://x.com/MontraXYZ",
+    "fields": [
+     "official_x",
+     "TM",
+     "T"
+    ]
+   },
+   {
+    "url": "https://montramarkets.xyz/docs/contracts",
+    "fields": [
+     "TM",
+     "F"
+    ]
+   }
+  ],
+  "official_x": "@MontraXYZ",
+  "reviewer": "grok-auto",
+  "_usage": {
+   "model": "grok-4.20-0309-non-reasoning",
+   "in": 25135,
+   "out": 1703,
+   "x_posts": 15,
+   "searches": 6,
+   "usd": 0.15177865
+  }
+ }
+]

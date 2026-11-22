@@ -205,3 +205,74 @@
 .srcchip{font-size:11.5px;padding:2px 8px;border:1px solid var(--line2);border-radius:999px;color:var(--ink2)}
 .srcchip.own{border-color:var(--lime-ink);color:var(--lime-ink)}
 .mtag.own{color:var(--lime-ink);border-color:var(--lime-ink)}
+
+/* 上线天数 / 代币（11-15） */
+.ax-tok{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;margin:10px 0 2px;font-size:13px}
+.ax-tok .ax-links{margin-left:0}
+.agetag{font-style:normal;font-size:10.5px;color:var(--muted);margin-right:6px}
+.agetag.tok{color:var(--warn)}
+.md-row .r4{display:block;margin-top:2px;line-height:1.3}.md-row .r4:empty{display:none}
+
+/* 看 K 线入口 + 市值快照（11-15） */
+.ax-trade{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;width:100%}
+.ax-kline{display:inline-block;padding:5px 12px;border-radius:8px;border:1px solid var(--lime-ink);color:var(--lime-ink);text-decoration:none;font-weight:600;font-size:13px}
+.ax-kline:hover{background:var(--lime-ink);color:var(--bg)}
+.ax-snap{display:inline-flex;flex-wrap:wrap;gap:4px 14px;align-items:center;font-size:12.5px}
+
+/* 精简事实行 + K 线链接（11-15 第二版） */
+.ax-facts{display:flex;flex-wrap:wrap;gap:2px 0;align-items:center;margin:8px 0 2px;color:var(--ink2)}
+.ax-facts .sep{font-style:normal;color:var(--muted);margin:0 8px}
+.ax-links a.kl{color:var(--lime-ink);border-bottom-color:var(--lime-ink)}
+.ax-entry .ent.term{cursor:help;text-decoration:none}
+.ax-who{margin-left:auto;color:var(--ink2)}.ax-who .sep{font-style:normal;color:var(--muted);margin:0 6px}
+@media (max-width:760px){.ax-who{margin-left:0;width:100%}}
+
+/* 成交与变现 / 关键事件（11-15 卡片改版） */
+.ax-money{margin-top:12px}.ax-money h3{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ax-mgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px 18px}
+.ax-mgrid>div{display:flex;flex-direction:column;gap:2px}.ax-mgrid .k{font-size:12px;color:var(--muted)}.ax-mgrid b{font-size:15px;font-family:var(--mono,ui-monospace,monospace)}
+.ax-events{display:flex;flex-wrap:wrap;gap:6px 14px;margin:8px 0 0;padding:8px 12px;border:1px dashed var(--line2);border-radius:10px}
+.ax-events .ev b{color:var(--ink2);font-weight:600;margin-right:4px}
+.ax-guide{margin-bottom:12px}.ax-guide summary{cursor:pointer;font-weight:600}.ax-guide ol{margin:8px 0 0;padding-left:20px;line-height:1.8}
+.axflow b{padding:0 4px;border-radius:4px;background:var(--line);font-weight:600}
+
+/* 雷达页：搜索 / 筛选 / 折叠 / 固定表头（11-15） */
+.ax-rtool{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;margin:14px 0 6px}
+.ax-rtool input[type=search]{flex:1 1 240px;max-width:360px;padding:7px 12px;border-radius:8px;border:1px solid var(--line2);background:var(--card);color:var(--ink)}
+.ax-rsec>summary{cursor:pointer;list-style:none;margin:18px 0 6px}.ax-rsec>summary::-webkit-details-marker{display:none}
+.ax-rsec>summary h2::before{content:"▸ ";color:var(--muted)}.ax-rsec[open]>summary h2::before{content:"▾ "}
+.tw.scroll{max-height:560px;overflow:auto}.tw.scroll thead th{position:sticky;top:0;background:var(--card);z-index:1}
+
+/* 看板二级分类（11-16）：来源 / 类型 多选 */
+.kfilt{margin:8px 0 10px;display:flex;flex-direction:column;gap:6px}
+.krow{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.klab{font-size:12px;color:var(--muted);min-width:34px}
+.kchip{font:inherit;font-size:12px;padding:3px 9px;border-radius:999px;border:1px solid var(--line2);background:transparent;color:var(--ink2);cursor:pointer}
+.kchip.on{border-color:var(--lime-ink);color:var(--lime-ink);background:var(--up-bg, transparent)}
+.kchip.all{align-self:flex-start;color:var(--muted)}
+
+/* 顶部卡片即页签（11-16）：有参与入口 / 预警观察 / 全部；第四张卡在新发现与补证之间切换 */
+.ktop{display:block;width:100%;text-align:left;font:inherit;color:inherit;cursor:pointer;border:1px solid transparent}
+.ktop.on{border-color:var(--lime-ink)}
+.ktop2{position:relative}
+.ktoggle{display:inline-flex;gap:4px;margin-left:8px;vertical-align:middle}
+.ktoggle button{font:inherit;font-size:11px;padding:2px 8px;border-radius:999px;border:1px solid var(--line2);background:transparent;color:var(--muted);cursor:pointer}
+.ktoggle button.on{border-color:var(--lime-ink);color:var(--lime-ink)}
+.klink{text-decoration:underline dotted;cursor:pointer}
+
+/* 待补证清单（右侧先列表，下载在底部，11-16） */
+.kqueue{font:inherit;font-size:12px;margin-top:6px;padding:0;border:0;background:none;color:var(--lime-ink);cursor:pointer;text-decoration:underline dotted}
+.kq-row{display:flex;align-items:center;gap:10px;width:100%;text-align:left;font:inherit;font-size:13px;padding:8px 6px;border:0;border-bottom:1px solid var(--line2);background:none;color:inherit;cursor:pointer}
+.kq-row:hover{background:rgba(255,255,255,.03)}
+.kq-n{width:26px;color:var(--muted);font-variant-numeric:tabular-nums}
+.kq-nm{flex:1;font-weight:600}
+.kq-st{color:var(--muted);font-size:12px;display:flex;gap:6px;align-items:center}
+.kq-st em{font-style:normal;color:var(--lime-ink);border:1px solid var(--lime-ink);border-radius:999px;padding:0 6px}
+
+/* 11-17 综合分排名：来源小标签 + 分数 */
+.md-row .otag{font-style:normal;font-size:10.5px;line-height:1;padding:2px 5px;margin-left:4px;border-radius:4px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.md-row .otag.new{color:var(--up);border-color:var(--up)}
+.md-row .cscore{margin-left:auto;margin-right:6px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.md-row .cscore b{font-size:15px}
+.md-row .cscore small{color:var(--muted);font-size:10.5px}
+.md-row .nm{flex-wrap:wrap;row-gap:3px}

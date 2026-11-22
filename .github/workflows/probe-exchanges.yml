@@ -1,0 +1,38 @@
+name: 探测交易所公告源（手动）
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: 探测
+        run: python3 tools/probe/exchange_sources.py
+      - name: Bybit 备用入口（美国机房能不能通）
+        run: |
+          for u in "https://api.bybit.com/v5/market/time" "https://api.bytick.com/v5/market/time" "https://api.bytick.com/v5/market/kline?category=spot&symbol=BTCUSDT&interval=D&start=1609459200000&limit=2" "https://public.bybit.com/spot/" "https://public.bybit.com/spot/BTCUSDT/" "https://api2.bybit.com/v5/market/time"; do
+            echo "== $u"; curl -s -m 20 -w "  HTTP %{http_code}" "$u" | head -c 400; echo; done
+      - name: X9 数据源实测（TokenEarly / CoinGecko 前 70 / CCXT K 线回溯）
+        run: |
+          pip install -q ccxt
+          python3 tools/probe/x9_data.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: x9-probe-out
+          path: x9_probe_out.json
+      - name: 试跑交易所公告流水（不提交）
+        run: |
+          python3 alpha/exch_announce.py
+          python3 - <<'PY'
+          import json, collections
+          d = json.load(open("data/alpha/exch_announce.json", encoding="utf-8"))
+          for n, s in d["sources"].items():
+              print(n, s["state"], s.get("via"), "累计", s.get("n_total"), "错误", s.get("err"))
+          c = collections.Counter((i["exchange"], i["kind"]) for i in d["items"].values()); print(dict(c))
+          for ex in ("OKX", "Bitget", "Kraken"):
+              for i in [i for i in d["items"].values() if i["exchange"] == ex and i["kind"] != "other"][:6]:
+                  print(" ", ex, i["announce_utc"], i["kind"], i["assets"], i["title"][:90])
+          PY

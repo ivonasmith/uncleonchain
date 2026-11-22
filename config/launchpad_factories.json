@@ -79,6 +79,16 @@
    "名称": "批量铸币（无交易池）",
    "类型": "忽略",
    "来源": "2026-11-13 核对：样本币在 DEX Screener、GeckoTerminal 都没有交易池，每天只有 1～3 个发币地址，像机器人批量铸币，不是发射台"
+  },
+  "0xbdb8d64452191041c4daa3ad0f64be4380fea0b1": {
+   "名称": "Ascend Launchpad",
+   "类型": "发射台",
+   "来源": "第三方 GitHub 仓库 daraijaola/pantheon 的 docs/ASCEND_MAINNET_PORT.md 与 script/DeployMainnet.s.sol（commit b012fe2）把 0xBDB8…A0b1 标为 SeatFactoryV5、0x63f6…4d19 标为 EscrowFactory（Ascend 合约）；本站扫描 11-08 前者发币、11-10 起后者发币，前后接上。2026-11-15 登记，非官方文档，待官方核对"
+  },
+  "0x63f6a8a8d0257c0363251a50cde8a8b1046e4d19": {
+   "名称": "Ascend Launchpad",
+   "类型": "发射台",
+   "来源": "第三方 GitHub 仓库 daraijaola/pantheon 的 docs/ASCEND_MAINNET_PORT.md 与 script/DeployMainnet.s.sol（commit b012fe2）把 0xBDB8…A0b1 标为 SeatFactoryV5、0x63f6…4d19 标为 EscrowFactory（Ascend 合约）；本站扫描 11-08 前者发币、11-10 起后者发币，前后接上。2026-11-15 登记，非官方文档，待官方核对"
   }
  }
 }

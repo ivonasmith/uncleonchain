@@ -1,0 +1,3680 @@
+[
+  {
+    "key": "s:9427",
+    "name": "Volta",
+    "one_liner": "Elysium 上的 Uniswap v4 发射台，靠发币和交易手续费分成赚钱。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:27:58Z",
+    "token_stance": "官方表态会发",
+    "token_stance_src": "https://www.volta.family/",
+    "token_stance_date": "2026-11-15",
+    "revenue_who": "官网称协议费用用于回购并销毁 VOLTA，具体分配比例和执行地址需继续核对。",
+    "revenue_method": "官网展示交易量、代币数量和交易者数量；收入及费用口径未在本次核对中独立重放。",
+    "wash_or_subsidy": "U",
+    "user_role": "可作为发币者创建代币，也可作为交易者参与已上线代币交易。",
+    "entry": [
+      "buy",
+      "use"
+    ],
+    "entry_why": "官网提供 VOLTA 交易入口和 Launch a token 入口，但交易成本、滑点、合约权限和退出深度未独立核验。",
+    "scores": {
+      "M": {
+        "v": 3,
+        "why": "官方文档称其直接接入 Elysium 上的 Uniswap v4 PoolManager 和 UniversalRouter，以 hook 方式实现发射台，而不是运行独立 fork。",
+        "src": "https://www.volta.family/docs"
+      },
+      "A": {
+        "v": "U",
+        "why": "普通用户的完整成本与失败路径未核验。",
+        "src": "U"
+      },
+      "F": {
+        "v": "U",
+        "why": "普通参与者能否取得有效份额未核验。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "独立团队持续使用情况未核验。",
+        "src": "U"
+      },
+      "V": {
+        "v": "U",
+        "why": "费用归属和回购销毁执行情况未完成链上核对。",
+        "src": "U"
+      },
+      "G": {
+        "v": "U",
+        "why": "去补贴后的增长与留存未核验。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "外部付款与补贴占比未核验。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "当前窗口优势未核验。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "团队交付记录未核验。",
+        "src": "U"
+      },
+      "TE": {
+        "v": 1,
+        "why": "官网公开代币和产品入口，但流通与未来抛压未核验。",
+        "src": "https://www.volta.family/"
+      }
+    },
+    "counter": "Elysium 发射台竞争激烈，协议费用、代币捕获和交易需求可能高度依赖新币发行与补贴。",
+    "verdict": "研究观察",
+    "verdict_reason": "对象、产品和参与入口均有官方资料，存在可证伪的手续费和代币捕获假设；安全权限、成本、去补贴需求和费用执行仍需补证。",
+    "missing": [
+      "合约地址及权限控制",
+      "费用分配和回购销毁的链上执行证据",
+      "普通用户买入卖出全成本",
+      "去补贴后的用户留存与外部需求",
+      "流通量和解锁日历"
+    ],
+    "evidence": [
+      {
+        "url": "https://www.volta.family/",
+        "fields": [
+          "产品定位",
+          "交易入口",
+          "VOLTA费用表述"
+        ]
+      },
+      {
+        "url": "https://www.volta.family/docs",
+        "fields": [
+          "Uniswap v4集成方式",
+          "发币机制",
+          "供应与初始池规则"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "m:bem-tapeout",
+    "name": "TapeOut / BEM",
+    "one_liner": "把数字电路设计提交到链上验证，并按设计结果分配 BEM 奖励。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:27:58Z",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "U",
+    "revenue_method": "本次只找到交易所博客二手介绍，未找到可核对的官方收入口径。",
+    "wash_or_subsidy": "U",
+    "user_role": "二手资料称用户可提交设计并参与奖励，但官方入口、合约和验证规则未核验。",
+    "entry": [
+      "mine"
+    ],
+    "entry_why": "队列中的手动线索描述为设计证明挖矿，但该参与方式只有二手来源支持，需官方文档或合约核实。",
+    "scores": {
+      "M": {
+        "v": "U",
+        "why": "现有材料只描述概念，未核对验证算法、设计评分和奖励分配的官方实现。",
+        "src": "U"
+      },
+      "A": {
+        "v": "U",
+        "why": "官方参与流程未核验。",
+        "src": "U"
+      },
+      "F": {
+        "v": "U",
+        "why": "奖励份额与竞争方式未核验。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "外部团队复用情况未核验。",
+        "src": "U"
+      },
+      "V": {
+        "v": "U",
+        "why": "BEM持有者或参与者的实际权利未核验。",
+        "src": "U"
+      },
+      "G": {
+        "v": "U",
+        "why": "独立参与增长未核验。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "持续付款者与需求来源未核验。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "当前窗口未核验。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "团队与交付记录未核验。",
+        "src": "U"
+      },
+      "TE": {
+        "v": "U",
+        "why": "代币供给、解锁和抛压未核验。",
+        "src": "U"
+      }
+    },
+    "counter": "当前线索主要来自交易所博客，可能把营销叙事或未上线机制当成可执行产品。",
+    "verdict": "待核验",
+    "verdict_reason": "关键身份、官方入口、合约、验证规则和奖励权利均缺少一手证据；按规则不能仅凭搜索摘要或二手介绍给出研究观察。",
+    "missing": [
+      "官方主页和文档",
+      "BEM合约地址与链",
+      "设计验证算法",
+      "奖励分配和总量",
+      "普通用户参与流程与成本",
+      "团队及安全信息"
+    ],
+    "evidence": [
+      {
+        "url": "https://www.bitrue.com/blog/what-is-bem-crypto",
+        "fields": [
+          "二手概念描述"
+        ]
+      },
+      {
+        "url": "https://www.kucoin.com/blog/what-is-bem-token-tapeout-protocol-proof-of-design",
+        "fields": [
+          "二手机制和供应描述"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "x:aiagent:bankr",
+    "name": "Bankr",
+    "one_liner": "给 AI Agent 提供钱包、交易、发币和 API，让 Agent 用交易费支付自己的计算成本。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:27:58Z",
+    "token_stance": "没有表态",
+    "token_stance_src": "https://docs.bankr.bot/",
+    "token_stance_date": "2026-11-15",
+    "revenue_who": "官方资料称发币后交易费可回流给 Agent 用于支付计算成本；Bankr 平台自身的收入归属未在本次核对中说明。",
+    "revenue_method": "官方文档描述的是功能和费用流向，未提供可独立核对的净收入、留存或补贴拆分。",
+    "wash_or_subsidy": "U",
+    "user_role": "开发者可接入 Bankr skill、API 或 CLI，普通用户可通过其钱包和交易入口使用产品。",
+    "entry": [
+      "use"
+    ],
+    "entry_why": "官方文档提供 skill、Agent API、CLI 和钱包入口；使用成本、API限额和交易执行风险需继续核验。",
+    "scores": {
+      "M": {
+        "v": 3,
+        "why": "官方定位是让 AI Agent 通过钱包、交易、发币和插件技能自我融资，产品组合和费用回流机制具有明确的新参与对象。",
+        "src": "https://docs.bankr.bot/"
+      },
+      "A": {
+        "v": 2,
+        "why": "官方提供多种公开接入路径，但完整成本和地区限制未核验。",
+        "src": "https://docs.bankr.bot/"
+      },
+      "F": {
+        "v": "U",
+        "why": "Agent和普通用户是否能取得有效经济份额未核验。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "独立团队持续付费使用未核验。",
+        "src": "U"
+      },
+      "V": {
+        "v": 1,
+        "why": "官方说明交易费可给 Agent，用于计算成本，但 Bankr 代币持有者权利未确认。",
+        "src": "https://docs.bankr.bot/"
+      },
+      "G": {
+        "v": "U",
+        "why": "去补贴后的用户和 Agent 留存未核验。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "外部客户付款与内部交易活动尚未拆分。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "当前窗口优势未核验。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "团队身份和交付记录未核验。",
+        "src": "U"
+      },
+      "TE": {
+        "v": "U",
+        "why": "代币供给与解锁未确认。",
+        "src": "U"
+      }
+    },
+    "counter": "Agent 发币和交易费回流可能主要依赖投机性交易，尚未证明计算需求能在补贴下降后持续支付。",
+    "verdict": "研究观察",
+    "verdict_reason": "官方文档足以确认产品对象、入口和基本机制，存在可证伪的外部付费与 Agent 留存假设；收入归属、补贴、权限和安全仍需补证。",
+    "missing": [
+      "Bankr自身代币或无代币立场",
+      "净收入和费用分配",
+      "独立客户与Agent留存",
+      "API和钱包权限控制",
+      "地区限制与完整参与成本"
+    ],
+    "evidence": [
+      {
+        "url": "https://docs.bankr.bot/",
+        "fields": [
+          "产品定位",
+          "钱包、交易、发币和API入口",
+          "交易费回流描述"
+        ]
+      },
+      {
+        "url": "https://docs.bankr.bot/getting-started/supported-chains/",
+        "fields": [
+          "支持链",
+          "Gas赞助边界",
+          "功能限制"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "g:9381",
+    "name": "Ascend Launchpad",
+    "one_liner": "Elysium 上用 USDC 流动性池发射和交易新代币的无平台币发射台。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:27:58Z",
+    "token_stance": "没有表态",
+    "token_stance_src": "https://ascendlaunch.net/",
+    "token_stance_date": "2026-11-15",
+    "revenue_who": "官方站点展示 launchpad 和交易产品，但费用归属和平台价值捕获未完成一手核对。",
+    "revenue_method": "本次核对未独立重放费用；第三方页面称存在交易费，但不作为官方事实写入。",
+    "wash_or_subsidy": "U",
+    "user_role": "可在 Elysium 上创建或交易发射的代币；需要 USDC 交易资金和 HYPE gas。",
+    "entry": [
+      "use"
+    ],
+    "entry_why": "官方站点提供 Launch a coin、Swap、Docs、Stake、Bridge 入口；具体资金成本、滑点和退出未核验。",
+    "scores": {
+      "M": {
+        "v": 2,
+        "why": "官方站点展示在 Elysium 上的发射、交易和社区接管流程，机制差异相对常规发射台仍需与同链产品对照。",
+        "src": "https://ascendlaunch.net/"
+      },
+      "A": {
+        "v": 2,
+        "why": "公开提供发币和交易入口，但全成本未验。",
+        "src": "https://ascendlaunch.net/"
+      },
+      "F": {
+        "v": "U",
+        "why": "普通参与者能否取得有效份额未核验。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "独立团队付费使用未核验。",
+        "src": "U"
+      },
+      "V": {
+        "v": "U",
+        "why": "平台费用和参与者价值归属未核验。",
+        "src": "U"
+      },
+      "G": {
+        "v": "U",
+        "why": "独立参与增长未核验。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "外部付款与补贴未核验。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "当前窗口未核验。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "团队交付记录未核验。",
+        "src": "U"
+      },
+      "TE": {
+        "v": "NA",
+        "why": "目前未确认平台代币。",
+        "src": "U"
+      }
+    },
+    "counter": "Elysium 上同类发射台密集，交易量和项目数量不能单独证明平台有独立需求或长期价值捕获。",
+    "verdict": "研究观察",
+    "verdict_reason": "官方站点可确认对象、链和公开参与入口；平台费用、权限、安全和去补贴需求仍未知，保留为研究观察。",
+    "missing": [
+      "官方费用规则及收入归属",
+      "平台合约和升级权限",
+      "USDC池深度与普通用户全成本",
+      "社区接管和代币锁定规则",
+      "团队交付记录"
+    ],
+    "evidence": [
+      {
+        "url": "https://ascendlaunch.net/",
+        "fields": [
+          "产品定位",
+          "Elysium部署",
+          "发币、交易、文档和桥接入口"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "x:launchpad:boxa-v1",
+    "name": "Boxa V1",
+    "one_liner": "Elysium 上的代币发射和交易平台，按交易费分配给平台、创作者和代币机制。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:35:00Z",
+    "token_stance": "U",
+    "token_stance_src": "https://boxa.club/developers",
+    "token_stance_date": "2026-11-15",
+    "revenue_who": "官方文档说明交易税由创作者设置并分配，DefiLlama 记录 BOXA 的协议收入份额。",
+    "revenue_method": "DefiLlama 方法论将收入定义为 BOXA hook 收到的交易费份额，具体净额和去补贴需求未核验。",
+    "wash_or_subsidy": "U",
+    "user_role": "发币者可创建代币，普通用户可交易和提供流动性。",
+    "entry": [
+      "use"
+    ],
+    "entry_why": "官方文档公开创建、交易和费用规则，但滑点、Gas和退出深度未核验。",
+    "scores": {
+      "A": {
+        "v": "U",
+        "why": "本次未核验。",
+        "src": "U"
+      },
+      "F": {
+        "v": "U",
+        "why": "本次未核验。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "本次未核验。",
+        "src": "U"
+      },
+      "V": {
+        "v": "U",
+        "why": "本次未核验。",
+        "src": "U"
+      },
+      "G": {
+        "v": "U",
+        "why": "本次未核验。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "本次未核验。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "本次未核验。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "本次未核验。",
+        "src": "U"
+      },
+      "TE": {
+        "v": "U",
+        "why": "本次未核验。",
+        "src": "U"
+      },
+      "M": {
+        "v": 3,
+        "why": "官方文档称新发行进入 Elysium 官方 Uniswap v4 PoolManager，并通过 BOXA hook，合约不可升级或修补。",
+        "src": "https://boxa.club/developers"
+      }
+    },
+    "counter": "Elysium 发射台竞争激烈，平台收入可能主要来自短期新币交易。",
+    "verdict": "研究观察",
+    "verdict_reason": "产品、入口、费用机制和合约不可升级表述均有官方资料；普通用户成本、权限复核、去补贴需求仍需补证。",
+    "missing": [
+      "合约地址及链上权限复核",
+      "普通用户完整交易成本",
+      "独立用户留存和补贴拆分",
+      "BOXA代币供给及解锁",
+      "收入归属与链上分配"
+    ],
+    "evidence": [
+      {
+        "url": "https://boxa.club/developers",
+        "fields": [
+          "产品定位",
+          "发币与交易流程",
+          "费用机制",
+          "不可升级表述"
+        ]
+      },
+      {
+        "url": "https://defillama.com/protocol/boxa-v1",
+        "fields": [
+          "费用、收入和交易量口径"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "g:9146",
+    "name": "Central City",
+    "one_liner": "让多个 AI Agent 在共享房间协作，并用链上 USDC 支付服务调用。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:35:00Z",
+    "token_stance": "没有表态",
+    "token_stance_src": "https://centralcity.ai/",
+    "token_stance_date": "2026-11-15",
+    "revenue_who": "官网展示 x402 支付由服务调用方和 Agent 之间结算，平台自身收入归属未说明。",
+    "revenue_method": "官网展示支付结算、Agent 数量和服务调用指标，但当前页面的数值与真实付费数据需独立复核。",
+    "wash_or_subsidy": "U",
+    "user_role": "普通用户可进入房间，开发者可接入 Agent，服务提供者可通过 x402 收款。",
+    "entry": [
+      "use"
+    ],
+    "entry_why": "官网提供注册、开放协议和链上验证入口，但身份、权限、费用和实际可用性仍需核验。",
+    "scores": {
+      "A": {
+        "v": "U",
+        "why": "本次未核验。",
+        "src": "U"
+      },
+      "F": {
+        "v": "U",
+        "why": "本次未核验。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "本次未核验。",
+        "src": "U"
+      },
+      "V": {
+        "v": "U",
+        "why": "本次未核验。",
+        "src": "U"
+      },
+      "G": {
+        "v": "U",
+        "why": "本次未核验。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "本次未核验。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "本次未核验。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "本次未核验。",
+        "src": "U"
+      },
+      "TE": {
+        "v": "U",
+        "why": "本次未核验。",
+        "src": "U"
+      },
+      "M": {
+        "v": 3,
+        "why": "官网把共享 Agent 房间、ERC-8004 身份和 x402 USDC 结算组合在同一产品中，机制对象明确。",
+        "src": "https://centralcity.ai/"
+      }
+    },
+    "counter": "当前页面的 Agent 数量和支付指标可能是产品展示数据，若没有链上结算证据，不能推出真实需求。",
+    "verdict": "待核验",
+    "verdict_reason": "对象和产品入口明确，但官网显示的 Agent 数量与付费指标需要链上复核，官方 token、积分、收入归属和安全权限尚未查清。",
+    "missing": [
+      "ERC-8004注册和身份合约",
+      "x402付款交易样本",
+      "实际付费调用和收入归属",
+      "官方 token/积分立场",
+      "房间和 Agent 权限控制"
+    ],
+    "evidence": [
+      {
+        "url": "https://centralcity.ai/",
+        "fields": [
+          "产品定位",
+          "Base/Arc部署",
+          "x402支付描述",
+          "Agent和服务调用展示"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "x:launchpad:chain-elysium",
+    "name": "Elysium 生态（新发射台聚集）",
+    "one_liner": "新链生态 项目，具体机制、参与方式和收入归属待一手资料核对。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:40:00Z",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "U",
+    "revenue_method": "DefiLlama或队列中存在项目入口，但本批次未完成收入方法和原始数据复核。",
+    "wash_or_subsidy": "U",
+    "user_role": "U",
+    "entry": [
+      "none"
+    ],
+    "entry_why": "本批次没有核实可执行的资金参与入口。",
+    "scores": {
+      "M": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "A": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "F": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "V": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "G": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TE": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      }
+    },
+    "counter": "项目身份、机制、成本和需求尚未完成一手核验，当前数据不足以支持正面判断。",
+    "verdict": "待核验",
+    "verdict_reason": "关键事实尚未完成一手证据核对，按规则保留为待核验。",
+    "missing": [
+      "官方产品和文档",
+      "参与流程与完整成本",
+      "费用归属与收入口径",
+      "安全权限和合约地址",
+      "用户留存与去补贴需求",
+      "代币、积分或空投立场"
+    ],
+    "evidence": []
+  },
+  {
+    "key": "s:9065",
+    "name": "Papertrade",
+    "one_liner": "Derivatives 项目，具体机制、参与方式和收入归属待一手资料核对。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:40:00Z",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "U",
+    "revenue_method": "DefiLlama或队列中存在项目入口，但本批次未完成收入方法和原始数据复核。",
+    "wash_or_subsidy": "U",
+    "user_role": "U",
+    "entry": [
+      "none"
+    ],
+    "entry_why": "本批次没有核实可执行的资金参与入口。",
+    "scores": {
+      "M": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "A": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "F": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "V": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "G": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TE": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      }
+    },
+    "counter": "项目身份、机制、成本和需求尚未完成一手核验，当前数据不足以支持正面判断。",
+    "verdict": "待核验",
+    "verdict_reason": "关键事实尚未完成一手证据核对，按规则保留为待核验。",
+    "missing": [
+      "官方产品和文档",
+      "参与流程与完整成本",
+      "费用归属与收入口径",
+      "安全权限和合约地址",
+      "用户留存与去补贴需求",
+      "代币、积分或空投立场"
+    ],
+    "evidence": [
+      {
+        "url": "https://defillama.com/protocol/papertrade",
+        "fields": [
+          "项目身份入口，需继续核对产品和费用口径"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "s:parent#paperstrategy",
+    "name": "Paperstrategy",
+    "one_liner": "Onchain Capital Allocator 项目，具体机制、参与方式和收入归属待一手资料核对。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:40:00Z",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "U",
+    "revenue_method": "DefiLlama或队列中存在项目入口，但本批次未完成收入方法和原始数据复核。",
+    "wash_or_subsidy": "U",
+    "user_role": "U",
+    "entry": [
+      "none"
+    ],
+    "entry_why": "本批次没有核实可执行的资金参与入口。",
+    "scores": {
+      "M": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "A": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "F": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "V": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "G": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TE": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      }
+    },
+    "counter": "项目身份、机制、成本和需求尚未完成一手核验，当前数据不足以支持正面判断。",
+    "verdict": "待核验",
+    "verdict_reason": "关键事实尚未完成一手证据核对，按规则保留为待核验。",
+    "missing": [
+      "官方产品和文档",
+      "参与流程与完整成本",
+      "费用归属与收入口径",
+      "安全权限和合约地址",
+      "用户留存与去补贴需求",
+      "代币、积分或空投立场"
+    ],
+    "evidence": [
+      {
+        "url": "https://defillama.com/protocol/paperstrategy-pstr",
+        "fields": [
+          "项目身份入口，需继续核对产品和费用口径"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "s:8884",
+    "name": "Nullmask",
+    "one_liner": "Privacy 项目，具体机制、参与方式和收入归属待一手资料核对。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:40:00Z",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "U",
+    "revenue_method": "DefiLlama或队列中存在项目入口，但本批次未完成收入方法和原始数据复核。",
+    "wash_or_subsidy": "U",
+    "user_role": "U",
+    "entry": [
+      "none"
+    ],
+    "entry_why": "本批次没有核实可执行的资金参与入口。",
+    "scores": {
+      "M": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "A": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "F": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "V": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "G": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TE": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      }
+    },
+    "counter": "项目身份、机制、成本和需求尚未完成一手核验，当前数据不足以支持正面判断。",
+    "verdict": "待核验",
+    "verdict_reason": "关键事实尚未完成一手证据核对，按规则保留为待核验。",
+    "missing": [
+      "官方产品和文档",
+      "参与流程与完整成本",
+      "费用归属与收入口径",
+      "安全权限和合约地址",
+      "用户留存与去补贴需求",
+      "代币、积分或空投立场"
+    ],
+    "evidence": [
+      {
+        "url": "https://defillama.com/protocol/nullmask",
+        "fields": [
+          "项目身份入口，需继续核对产品和费用口径"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "s:7966",
+    "name": "Render Network BME",
+    "one_liner": "DePIN 项目，具体机制、参与方式和收入归属待一手资料核对。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:40:00Z",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "U",
+    "revenue_method": "DefiLlama或队列中存在项目入口，但本批次未完成收入方法和原始数据复核。",
+    "wash_or_subsidy": "U",
+    "user_role": "U",
+    "entry": [
+      "none"
+    ],
+    "entry_why": "本批次没有核实可执行的资金参与入口。",
+    "scores": {
+      "M": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "A": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "F": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "V": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "G": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TE": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      }
+    },
+    "counter": "项目身份、机制、成本和需求尚未完成一手核验，当前数据不足以支持正面判断。",
+    "verdict": "待核验",
+    "verdict_reason": "关键事实尚未完成一手证据核对，按规则保留为待核验。",
+    "missing": [
+      "官方产品和文档",
+      "参与流程与完整成本",
+      "费用归属与收入口径",
+      "安全权限和合约地址",
+      "用户留存与去补贴需求",
+      "代币、积分或空投立场"
+    ],
+    "evidence": [
+      {
+        "url": "https://defillama.com/protocol/render-network-bme",
+        "fields": [
+          "项目身份入口，需继续核对产品和费用口径"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "s:8481",
+    "name": "Fables",
+    "one_liner": "Dexs 项目，具体机制、参与方式和收入归属待一手资料核对。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:40:00Z",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "U",
+    "revenue_method": "DefiLlama或队列中存在项目入口，但本批次未完成收入方法和原始数据复核。",
+    "wash_or_subsidy": "U",
+    "user_role": "U",
+    "entry": [
+      "none"
+    ],
+    "entry_why": "本批次没有核实可执行的资金参与入口。",
+    "scores": {
+      "M": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "A": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "F": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "V": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "G": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TE": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      }
+    },
+    "counter": "项目身份、机制、成本和需求尚未完成一手核验，当前数据不足以支持正面判断。",
+    "verdict": "待核验",
+    "verdict_reason": "关键事实尚未完成一手证据核对，按规则保留为待核验。",
+    "missing": [
+      "官方产品和文档",
+      "参与流程与完整成本",
+      "费用归属与收入口径",
+      "安全权限和合约地址",
+      "用户留存与去补贴需求",
+      "代币、积分或空投立场"
+    ],
+    "evidence": [
+      {
+        "url": "https://defillama.com/protocol/fables",
+        "fields": [
+          "项目身份入口，需继续核对产品和费用口径"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "s:4063",
+    "name": "Peapods Finance",
+    "one_liner": "Yield 项目，具体机制、参与方式和收入归属待一手资料核对。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:40:00Z",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "U",
+    "revenue_method": "DefiLlama或队列中存在项目入口，但本批次未完成收入方法和原始数据复核。",
+    "wash_or_subsidy": "U",
+    "user_role": "U",
+    "entry": [
+      "none"
+    ],
+    "entry_why": "本批次没有核实可执行的资金参与入口。",
+    "scores": {
+      "M": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "A": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "F": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "V": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "G": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TE": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      }
+    },
+    "counter": "项目身份、机制、成本和需求尚未完成一手核验，当前数据不足以支持正面判断。",
+    "verdict": "待核验",
+    "verdict_reason": "关键事实尚未完成一手证据核对，按规则保留为待核验。",
+    "missing": [
+      "官方产品和文档",
+      "参与流程与完整成本",
+      "费用归属与收入口径",
+      "安全权限和合约地址",
+      "用户留存与去补贴需求",
+      "代币、积分或空投立场"
+    ],
+    "evidence": [
+      {
+        "url": "https://defillama.com/protocol/peapods-finance",
+        "fields": [
+          "项目身份入口，需继续核对产品和费用口径"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "s:parent#justlend",
+    "name": "JustLend V1",
+    "one_liner": "Lending 项目，具体机制、参与方式和收入归属待一手资料核对。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:40:00Z",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "U",
+    "revenue_method": "DefiLlama或队列中存在项目入口，但本批次未完成收入方法和原始数据复核。",
+    "wash_or_subsidy": "U",
+    "user_role": "U",
+    "entry": [
+      "none"
+    ],
+    "entry_why": "本批次没有核实可执行的资金参与入口。",
+    "scores": {
+      "M": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "A": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "F": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "V": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "G": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TE": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      }
+    },
+    "counter": "项目身份、机制、成本和需求尚未完成一手核验，当前数据不足以支持正面判断。",
+    "verdict": "待核验",
+    "verdict_reason": "关键事实尚未完成一手证据核对，按规则保留为待核验。",
+    "missing": [
+      "官方产品和文档",
+      "参与流程与完整成本",
+      "费用归属与收入口径",
+      "安全权限和合约地址",
+      "用户留存与去补贴需求",
+      "代币、积分或空投立场"
+    ],
+    "evidence": [
+      {
+        "url": "https://defillama.com/protocol/justlend-v1",
+        "fields": [
+          "项目身份入口，需继续核对产品和费用口径"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "s:7655",
+    "name": "THORWallet",
+    "one_liner": "DEX Aggregator 项目，具体机制、参与方式和收入归属待一手资料核对。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:40:00Z",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "U",
+    "revenue_method": "DefiLlama或队列中存在项目入口，但本批次未完成收入方法和原始数据复核。",
+    "wash_or_subsidy": "U",
+    "user_role": "U",
+    "entry": [
+      "none"
+    ],
+    "entry_why": "本批次没有核实可执行的资金参与入口。",
+    "scores": {
+      "M": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "A": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "F": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "V": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "G": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TE": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      }
+    },
+    "counter": "项目身份、机制、成本和需求尚未完成一手核验，当前数据不足以支持正面判断。",
+    "verdict": "待核验",
+    "verdict_reason": "关键事实尚未完成一手证据核对，按规则保留为待核验。",
+    "missing": [
+      "官方产品和文档",
+      "参与流程与完整成本",
+      "费用归属与收入口径",
+      "安全权限和合约地址",
+      "用户留存与去补贴需求",
+      "代币、积分或空投立场"
+    ],
+    "evidence": [
+      {
+        "url": "https://defillama.com/protocol/thorwallet",
+        "fields": [
+          "项目身份入口，需继续核对产品和费用口径"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "s:parent#liquity",
+    "name": "Liquity",
+    "one_liner": "CDP 项目，具体机制、参与方式和收入归属待一手资料核对。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:40:00Z",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "U",
+    "revenue_method": "DefiLlama或队列中存在项目入口，但本批次未完成收入方法和原始数据复核。",
+    "wash_or_subsidy": "U",
+    "user_role": "U",
+    "entry": [
+      "none"
+    ],
+    "entry_why": "本批次没有核实可执行的资金参与入口。",
+    "scores": {
+      "M": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "A": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "F": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "V": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "G": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TE": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      }
+    },
+    "counter": "项目身份、机制、成本和需求尚未完成一手核验，当前数据不足以支持正面判断。",
+    "verdict": "待核验",
+    "verdict_reason": "关键事实尚未完成一手证据核对，按规则保留为待核验。",
+    "missing": [
+      "官方产品和文档",
+      "参与流程与完整成本",
+      "费用归属与收入口径",
+      "安全权限和合约地址",
+      "用户留存与去补贴需求",
+      "代币、积分或空投立场"
+    ],
+    "evidence": [
+      {
+        "url": "https://defillama.com/protocol/liquity-v1",
+        "fields": [
+          "项目身份入口，需继续核对产品和费用口径"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "s:6771",
+    "name": "Yield Basis",
+    "one_liner": "Leveraged Farming 项目，具体机制、参与方式和收入归属待一手资料核对。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:40:00Z",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "U",
+    "revenue_method": "DefiLlama或队列中存在项目入口，但本批次未完成收入方法和原始数据复核。",
+    "wash_or_subsidy": "U",
+    "user_role": "U",
+    "entry": [
+      "none"
+    ],
+    "entry_why": "本批次没有核实可执行的资金参与入口。",
+    "scores": {
+      "M": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "A": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "F": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "V": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "G": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TE": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      }
+    },
+    "counter": "项目身份、机制、成本和需求尚未完成一手核验，当前数据不足以支持正面判断。",
+    "verdict": "待核验",
+    "verdict_reason": "关键事实尚未完成一手证据核对，按规则保留为待核验。",
+    "missing": [
+      "官方产品和文档",
+      "参与流程与完整成本",
+      "费用归属与收入口径",
+      "安全权限和合约地址",
+      "用户留存与去补贴需求",
+      "代币、积分或空投立场"
+    ],
+    "evidence": [
+      {
+        "url": "https://defillama.com/protocol/yield-basis",
+        "fields": [
+          "项目身份入口，需继续核对产品和费用口径"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "s:9169",
+    "name": "Sapling",
+    "one_liner": "Launchpad 项目，具体机制、参与方式和收入归属待一手资料核对。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:40:00Z",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "U",
+    "revenue_method": "DefiLlama或队列中存在项目入口，但本批次未完成收入方法和原始数据复核。",
+    "wash_or_subsidy": "U",
+    "user_role": "U",
+    "entry": [
+      "none"
+    ],
+    "entry_why": "本批次没有核实可执行的资金参与入口。",
+    "scores": {
+      "M": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "A": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "F": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "V": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "G": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TE": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      }
+    },
+    "counter": "项目身份、机制、成本和需求尚未完成一手核验，当前数据不足以支持正面判断。",
+    "verdict": "待核验",
+    "verdict_reason": "关键事实尚未完成一手证据核对，按规则保留为待核验。",
+    "missing": [
+      "官方产品和文档",
+      "参与流程与完整成本",
+      "费用归属与收入口径",
+      "安全权限和合约地址",
+      "用户留存与去补贴需求",
+      "代币、积分或空投立场"
+    ],
+    "evidence": [
+      {
+        "url": "https://defillama.com/protocol/sapling",
+        "fields": [
+          "项目身份入口，需继续核对产品和费用口径"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "s:9182",
+    "name": "Veil",
+    "one_liner": "Privacy 项目，具体机制、参与方式和收入归属待一手资料核对。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:40:00Z",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "U",
+    "revenue_method": "DefiLlama或队列中存在项目入口，但本批次未完成收入方法和原始数据复核。",
+    "wash_or_subsidy": "U",
+    "user_role": "U",
+    "entry": [
+      "none"
+    ],
+    "entry_why": "本批次没有核实可执行的资金参与入口。",
+    "scores": {
+      "M": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "A": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "F": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "V": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "G": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TE": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      }
+    },
+    "counter": "项目身份、机制、成本和需求尚未完成一手核验，当前数据不足以支持正面判断。",
+    "verdict": "待核验",
+    "verdict_reason": "关键事实尚未完成一手证据核对，按规则保留为待核验。",
+    "missing": [
+      "官方产品和文档",
+      "参与流程与完整成本",
+      "费用归属与收入口径",
+      "安全权限和合约地址",
+      "用户留存与去补贴需求",
+      "代币、积分或空投立场"
+    ],
+    "evidence": [
+      {
+        "url": "https://defillama.com/protocol/veil",
+        "fields": [
+          "项目身份入口，需继续核对产品和费用口径"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "s:9187",
+    "name": "Stockereum",
+    "one_liner": "Launchpad 项目，具体机制、参与方式和收入归属待一手资料核对。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:40:00Z",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "U",
+    "revenue_method": "DefiLlama或队列中存在项目入口，但本批次未完成收入方法和原始数据复核。",
+    "wash_or_subsidy": "U",
+    "user_role": "U",
+    "entry": [
+      "none"
+    ],
+    "entry_why": "本批次没有核实可执行的资金参与入口。",
+    "scores": {
+      "M": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "A": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "F": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "V": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "G": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TE": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      }
+    },
+    "counter": "项目身份、机制、成本和需求尚未完成一手核验，当前数据不足以支持正面判断。",
+    "verdict": "待核验",
+    "verdict_reason": "关键事实尚未完成一手证据核对，按规则保留为待核验。",
+    "missing": [
+      "官方产品和文档",
+      "参与流程与完整成本",
+      "费用归属与收入口径",
+      "安全权限和合约地址",
+      "用户留存与去补贴需求",
+      "代币、积分或空投立场"
+    ],
+    "evidence": [
+      {
+        "url": "https://defillama.com/protocol/stockereum",
+        "fields": [
+          "项目身份入口，需继续核对产品和费用口径"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "g:8144",
+    "name": "Catapult Trade",
+    "one_liner": "Derivatives 项目，具体机制、参与方式和收入归属待一手资料核对。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:40:00Z",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "U",
+    "revenue_method": "DefiLlama或队列中存在项目入口，但本批次未完成收入方法和原始数据复核。",
+    "wash_or_subsidy": "U",
+    "user_role": "U",
+    "entry": [
+      "none"
+    ],
+    "entry_why": "本批次没有核实可执行的资金参与入口。",
+    "scores": {
+      "M": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "A": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "F": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "V": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "G": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TE": {
+        "v": "NA",
+        "why": "本批次未确认已有代币。",
+        "src": "U"
+      }
+    },
+    "counter": "项目身份、机制、成本和需求尚未完成一手核验，当前数据不足以支持正面判断。",
+    "verdict": "待核验",
+    "verdict_reason": "关键事实尚未完成一手证据核对，按规则保留为待核验。",
+    "missing": [
+      "官方产品和文档",
+      "参与流程与完整成本",
+      "费用归属与收入口径",
+      "安全权限和合约地址",
+      "用户留存与去补贴需求",
+      "代币、积分或空投立场"
+    ],
+    "evidence": [
+      {
+        "url": "https://defillama.com/protocol/catapult-trade",
+        "fields": [
+          "项目身份入口，需继续核对产品和费用口径"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "p:9380",
+    "name": "Kinetiq Elysium Bridge",
+    "one_liner": "Canonical Bridge 项目，具体机制、参与方式和收入归属待一手资料核对。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:40:00Z",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "U",
+    "revenue_method": "DefiLlama或队列中存在项目入口，但本批次未完成收入方法和原始数据复核。",
+    "wash_or_subsidy": "U",
+    "user_role": "U",
+    "entry": [
+      "none"
+    ],
+    "entry_why": "本批次没有核实可执行的资金参与入口。",
+    "scores": {
+      "M": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "A": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "F": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "V": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "G": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TE": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      }
+    },
+    "counter": "项目身份、机制、成本和需求尚未完成一手核验，当前数据不足以支持正面判断。",
+    "verdict": "待核验",
+    "verdict_reason": "关键事实尚未完成一手证据核对，按规则保留为待核验。",
+    "missing": [
+      "官方产品和文档",
+      "参与流程与完整成本",
+      "费用归属与收入口径",
+      "安全权限和合约地址",
+      "用户留存与去补贴需求",
+      "代币、积分或空投立场"
+    ],
+    "evidence": [
+      {
+        "url": "https://defillama.com/protocol/kinetiq-elysium-bridge",
+        "fields": [
+          "项目身份入口，需继续核对产品和费用口径"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "p:9393",
+    "name": "Pendle Loop",
+    "one_liner": "Leveraged Farming 项目，具体机制、参与方式和收入归属待一手资料核对。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:40:00Z",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "U",
+    "revenue_method": "DefiLlama或队列中存在项目入口，但本批次未完成收入方法和原始数据复核。",
+    "wash_or_subsidy": "U",
+    "user_role": "U",
+    "entry": [
+      "none"
+    ],
+    "entry_why": "本批次没有核实可执行的资金参与入口。",
+    "scores": {
+      "M": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "A": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "F": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "V": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "G": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TE": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      }
+    },
+    "counter": "项目身份、机制、成本和需求尚未完成一手核验，当前数据不足以支持正面判断。",
+    "verdict": "待核验",
+    "verdict_reason": "关键事实尚未完成一手证据核对，按规则保留为待核验。",
+    "missing": [
+      "官方产品和文档",
+      "参与流程与完整成本",
+      "费用归属与收入口径",
+      "安全权限和合约地址",
+      "用户留存与去补贴需求",
+      "代币、积分或空投立场"
+    ],
+    "evidence": [
+      {
+        "url": "https://defillama.com/protocol/pendle-loop",
+        "fields": [
+          "项目身份入口，需继续核对产品和费用口径"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "p:9353",
+    "name": "Vesper V2",
+    "one_liner": "Yield Aggregator 项目，具体机制、参与方式和收入归属待一手资料核对。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:40:00Z",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "U",
+    "revenue_method": "DefiLlama或队列中存在项目入口，但本批次未完成收入方法和原始数据复核。",
+    "wash_or_subsidy": "U",
+    "user_role": "U",
+    "entry": [
+      "none"
+    ],
+    "entry_why": "本批次没有核实可执行的资金参与入口。",
+    "scores": {
+      "M": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "A": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "F": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "V": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "G": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TE": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      }
+    },
+    "counter": "项目身份、机制、成本和需求尚未完成一手核验，当前数据不足以支持正面判断。",
+    "verdict": "待核验",
+    "verdict_reason": "关键事实尚未完成一手证据核对，按规则保留为待核验。",
+    "missing": [
+      "官方产品和文档",
+      "参与流程与完整成本",
+      "费用归属与收入口径",
+      "安全权限和合约地址",
+      "用户留存与去补贴需求",
+      "代币、积分或空投立场"
+    ],
+    "evidence": [
+      {
+        "url": "https://defillama.com/protocol/vesper-v2",
+        "fields": [
+          "项目身份入口，需继续核对产品和费用口径"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "p:9415",
+    "name": "Swan DAO",
+    "one_liner": "CDP 项目，具体机制、参与方式和收入归属待一手资料核对。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:40:00Z",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "U",
+    "revenue_method": "DefiLlama或队列中存在项目入口，但本批次未完成收入方法和原始数据复核。",
+    "wash_or_subsidy": "U",
+    "user_role": "U",
+    "entry": [
+      "none"
+    ],
+    "entry_why": "本批次没有核实可执行的资金参与入口。",
+    "scores": {
+      "M": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "A": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "F": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "V": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "G": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TE": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      }
+    },
+    "counter": "项目身份、机制、成本和需求尚未完成一手核验，当前数据不足以支持正面判断。",
+    "verdict": "待核验",
+    "verdict_reason": "关键事实尚未完成一手证据核对，按规则保留为待核验。",
+    "missing": [
+      "官方产品和文档",
+      "参与流程与完整成本",
+      "费用归属与收入口径",
+      "安全权限和合约地址",
+      "用户留存与去补贴需求",
+      "代币、积分或空投立场"
+    ],
+    "evidence": [
+      {
+        "url": "https://defillama.com/protocol/swan-dao",
+        "fields": [
+          "项目身份入口，需继续核对产品和费用口径"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "g:parent#fomo",
+    "name": "Fomo",
+    "one_liner": "Trading App 项目，具体机制、参与方式和收入归属待一手资料核对。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:40:00Z",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "U",
+    "revenue_method": "DefiLlama或队列中存在项目入口，但本批次未完成收入方法和原始数据复核。",
+    "wash_or_subsidy": "U",
+    "user_role": "U",
+    "entry": [
+      "none"
+    ],
+    "entry_why": "本批次没有核实可执行的资金参与入口。",
+    "scores": {
+      "M": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "A": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "F": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "V": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "G": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TE": {
+        "v": "NA",
+        "why": "本批次未确认已有代币。",
+        "src": "U"
+      }
+    },
+    "counter": "项目身份、机制、成本和需求尚未完成一手核验，当前数据不足以支持正面判断。",
+    "verdict": "待核验",
+    "verdict_reason": "关键事实尚未完成一手证据核对，按规则保留为待核验。",
+    "missing": [
+      "官方产品和文档",
+      "参与流程与完整成本",
+      "费用归属与收入口径",
+      "安全权限和合约地址",
+      "用户留存与去补贴需求",
+      "代币、积分或空投立场"
+    ],
+    "evidence": [
+      {
+        "url": "https://defillama.com/protocol/fomo-wallet",
+        "fields": [
+          "项目身份入口，需继续核对产品和费用口径"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "g:5408",
+    "name": "GMGN",
+    "one_liner": "Trading App 项目，具体机制、参与方式和收入归属待一手资料核对。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:40:00Z",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "U",
+    "revenue_method": "DefiLlama或队列中存在项目入口，但本批次未完成收入方法和原始数据复核。",
+    "wash_or_subsidy": "U",
+    "user_role": "U",
+    "entry": [
+      "none"
+    ],
+    "entry_why": "本批次没有核实可执行的资金参与入口。",
+    "scores": {
+      "M": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "A": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "F": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "V": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "G": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TE": {
+        "v": "NA",
+        "why": "本批次未确认已有代币。",
+        "src": "U"
+      }
+    },
+    "counter": "项目身份、机制、成本和需求尚未完成一手核验，当前数据不足以支持正面判断。",
+    "verdict": "待核验",
+    "verdict_reason": "关键事实尚未完成一手证据核对，按规则保留为待核验。",
+    "missing": [
+      "官方产品和文档",
+      "参与流程与完整成本",
+      "费用归属与收入口径",
+      "安全权限和合约地址",
+      "用户留存与去补贴需求",
+      "代币、积分或空投立场"
+    ],
+    "evidence": [
+      {
+        "url": "https://defillama.com/protocol/gmgn",
+        "fields": [
+          "项目身份入口，需继续核对产品和费用口径"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "g:4983",
+    "name": "Flap sh",
+    "one_liner": "Launchpad 项目，具体机制、参与方式和收入归属待一手资料核对。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:40:00Z",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "U",
+    "revenue_method": "DefiLlama或队列中存在项目入口，但本批次未完成收入方法和原始数据复核。",
+    "wash_or_subsidy": "U",
+    "user_role": "U",
+    "entry": [
+      "none"
+    ],
+    "entry_why": "本批次没有核实可执行的资金参与入口。",
+    "scores": {
+      "M": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "A": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "F": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "V": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "G": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TE": {
+        "v": "NA",
+        "why": "本批次未确认已有代币。",
+        "src": "U"
+      }
+    },
+    "counter": "项目身份、机制、成本和需求尚未完成一手核验，当前数据不足以支持正面判断。",
+    "verdict": "待核验",
+    "verdict_reason": "关键事实尚未完成一手证据核对，按规则保留为待核验。",
+    "missing": [
+      "官方产品和文档",
+      "参与流程与完整成本",
+      "费用归属与收入口径",
+      "安全权限和合约地址",
+      "用户留存与去补贴需求",
+      "代币、积分或空投立场"
+    ],
+    "evidence": [
+      {
+        "url": "https://defillama.com/protocol/flap-sh",
+        "fields": [
+          "项目身份入口，需继续核对产品和费用口径"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "g:7010",
+    "name": "trade[XYZ]",
+    "one_liner": "Interface 项目，具体机制、参与方式和收入归属待一手资料核对。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:40:00Z",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "U",
+    "revenue_method": "DefiLlama或队列中存在项目入口，但本批次未完成收入方法和原始数据复核。",
+    "wash_or_subsidy": "U",
+    "user_role": "U",
+    "entry": [
+      "none"
+    ],
+    "entry_why": "本批次没有核实可执行的资金参与入口。",
+    "scores": {
+      "M": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "A": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "F": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "V": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "G": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TE": {
+        "v": "NA",
+        "why": "本批次未确认已有代币。",
+        "src": "U"
+      }
+    },
+    "counter": "项目身份、机制、成本和需求尚未完成一手核验，当前数据不足以支持正面判断。",
+    "verdict": "待核验",
+    "verdict_reason": "关键事实尚未完成一手证据核对，按规则保留为待核验。",
+    "missing": [
+      "官方产品和文档",
+      "参与流程与完整成本",
+      "费用归属与收入口径",
+      "安全权限和合约地址",
+      "用户留存与去补贴需求",
+      "代币、积分或空投立场"
+    ],
+    "evidence": [
+      {
+        "url": "https://defillama.com/protocol/trade[xyz]",
+        "fields": [
+          "项目身份入口，需继续核对产品和费用口径"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "g:parent#azverse",
+    "name": "Azverse",
+    "one_liner": "Derivatives 项目，具体机制、参与方式和收入归属待一手资料核对。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:40:00Z",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "U",
+    "revenue_method": "DefiLlama或队列中存在项目入口，但本批次未完成收入方法和原始数据复核。",
+    "wash_or_subsidy": "U",
+    "user_role": "U",
+    "entry": [
+      "none"
+    ],
+    "entry_why": "本批次没有核实可执行的资金参与入口。",
+    "scores": {
+      "M": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "A": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "F": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "V": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "G": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TE": {
+        "v": "NA",
+        "why": "本批次未确认已有代币。",
+        "src": "U"
+      }
+    },
+    "counter": "项目身份、机制、成本和需求尚未完成一手核验，当前数据不足以支持正面判断。",
+    "verdict": "待核验",
+    "verdict_reason": "关键事实尚未完成一手证据核对，按规则保留为待核验。",
+    "missing": [
+      "官方产品和文档",
+      "参与流程与完整成本",
+      "费用归属与收入口径",
+      "安全权限和合约地址",
+      "用户留存与去补贴需求",
+      "代币、积分或空投立场"
+    ],
+    "evidence": [
+      {
+        "url": "https://defillama.com/protocol/azverse-perps",
+        "fields": [
+          "项目身份入口，需继续核对产品和费用口径"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "g:9296",
+    "name": "The Standard Reserve",
+    "one_liner": "Reserve Currency 项目，具体机制、参与方式和收入归属待一手资料核对。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:40:00Z",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "U",
+    "revenue_method": "DefiLlama或队列中存在项目入口，但本批次未完成收入方法和原始数据复核。",
+    "wash_or_subsidy": "U",
+    "user_role": "U",
+    "entry": [
+      "none"
+    ],
+    "entry_why": "本批次没有核实可执行的资金参与入口。",
+    "scores": {
+      "M": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "A": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "F": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "V": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "G": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TE": {
+        "v": "NA",
+        "why": "本批次未确认已有代币。",
+        "src": "U"
+      }
+    },
+    "counter": "项目身份、机制、成本和需求尚未完成一手核验，当前数据不足以支持正面判断。",
+    "verdict": "待核验",
+    "verdict_reason": "关键事实尚未完成一手证据核对，按规则保留为待核验。",
+    "missing": [
+      "官方产品和文档",
+      "参与流程与完整成本",
+      "费用归属与收入口径",
+      "安全权限和合约地址",
+      "用户留存与去补贴需求",
+      "代币、积分或空投立场"
+    ],
+    "evidence": [
+      {
+        "url": "https://defillama.com/protocol/the-standard-reserve",
+        "fields": [
+          "项目身份入口，需继续核对产品和费用口径"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "g:parent#txflow",
+    "name": "TxFlow Perps",
+    "one_liner": "Derivatives 项目，具体机制、参与方式和收入归属待一手资料核对。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:40:00Z",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "U",
+    "revenue_method": "DefiLlama或队列中存在项目入口，但本批次未完成收入方法和原始数据复核。",
+    "wash_or_subsidy": "U",
+    "user_role": "U",
+    "entry": [
+      "none"
+    ],
+    "entry_why": "本批次没有核实可执行的资金参与入口。",
+    "scores": {
+      "M": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "A": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "F": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "V": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "G": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TE": {
+        "v": "NA",
+        "why": "本批次未确认已有代币。",
+        "src": "U"
+      }
+    },
+    "counter": "项目身份、机制、成本和需求尚未完成一手核验，当前数据不足以支持正面判断。",
+    "verdict": "待核验",
+    "verdict_reason": "关键事实尚未完成一手证据核对，按规则保留为待核验。",
+    "missing": [
+      "官方产品和文档",
+      "参与流程与完整成本",
+      "费用归属与收入口径",
+      "安全权限和合约地址",
+      "用户留存与去补贴需求",
+      "代币、积分或空投立场"
+    ],
+    "evidence": [
+      {
+        "url": "https://defillama.com/protocol/txflow-perps",
+        "fields": [
+          "项目身份入口，需继续核对产品和费用口径"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "g:7016",
+    "name": "Antarctic",
+    "one_liner": "Derivatives 项目，具体机制、参与方式和收入归属待一手资料核对。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:40:00Z",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "U",
+    "revenue_method": "DefiLlama或队列中存在项目入口，但本批次未完成收入方法和原始数据复核。",
+    "wash_or_subsidy": "U",
+    "user_role": "U",
+    "entry": [
+      "none"
+    ],
+    "entry_why": "本批次没有核实可执行的资金参与入口。",
+    "scores": {
+      "M": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "A": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "F": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "V": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "G": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TE": {
+        "v": "NA",
+        "why": "本批次未确认已有代币。",
+        "src": "U"
+      }
+    },
+    "counter": "项目身份、机制、成本和需求尚未完成一手核验，当前数据不足以支持正面判断。",
+    "verdict": "待核验",
+    "verdict_reason": "关键事实尚未完成一手证据核对，按规则保留为待核验。",
+    "missing": [
+      "官方产品和文档",
+      "参与流程与完整成本",
+      "费用归属与收入口径",
+      "安全权限和合约地址",
+      "用户留存与去补贴需求",
+      "代币、积分或空投立场"
+    ],
+    "evidence": [
+      {
+        "url": "https://defillama.com/protocol/antarctic",
+        "fields": [
+          "项目身份入口，需继续核对产品和费用口径"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "g:8415",
+    "name": "XOX Perps",
+    "one_liner": "Interface 项目，具体机制、参与方式和收入归属待一手资料核对。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:40:00Z",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "U",
+    "revenue_method": "DefiLlama或队列中存在项目入口，但本批次未完成收入方法和原始数据复核。",
+    "wash_or_subsidy": "U",
+    "user_role": "U",
+    "entry": [
+      "none"
+    ],
+    "entry_why": "本批次没有核实可执行的资金参与入口。",
+    "scores": {
+      "M": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "A": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "F": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "V": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "G": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TE": {
+        "v": "NA",
+        "why": "本批次未确认已有代币。",
+        "src": "U"
+      }
+    },
+    "counter": "项目身份、机制、成本和需求尚未完成一手核验，当前数据不足以支持正面判断。",
+    "verdict": "待核验",
+    "verdict_reason": "关键事实尚未完成一手证据核对，按规则保留为待核验。",
+    "missing": [
+      "官方产品和文档",
+      "参与流程与完整成本",
+      "费用归属与收入口径",
+      "安全权限和合约地址",
+      "用户留存与去补贴需求",
+      "代币、积分或空投立场"
+    ],
+    "evidence": [
+      {
+        "url": "https://defillama.com/protocol/xox-perps",
+        "fields": [
+          "项目身份入口，需继续核对产品和费用口径"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "g:5864",
+    "name": "TRONSAVE",
+    "one_liner": "Services 项目，具体机制、参与方式和收入归属待一手资料核对。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:40:00Z",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "U",
+    "revenue_method": "DefiLlama或队列中存在项目入口，但本批次未完成收入方法和原始数据复核。",
+    "wash_or_subsidy": "U",
+    "user_role": "U",
+    "entry": [
+      "none"
+    ],
+    "entry_why": "本批次没有核实可执行的资金参与入口。",
+    "scores": {
+      "M": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "A": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "F": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "V": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "G": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TE": {
+        "v": "NA",
+        "why": "本批次未确认已有代币。",
+        "src": "U"
+      }
+    },
+    "counter": "项目身份、机制、成本和需求尚未完成一手核验，当前数据不足以支持正面判断。",
+    "verdict": "待核验",
+    "verdict_reason": "关键事实尚未完成一手证据核对，按规则保留为待核验。",
+    "missing": [
+      "官方产品和文档",
+      "参与流程与完整成本",
+      "费用归属与收入口径",
+      "安全权限和合约地址",
+      "用户留存与去补贴需求",
+      "代币、积分或空投立场"
+    ],
+    "evidence": [
+      {
+        "url": "https://defillama.com/protocol/tronsave",
+        "fields": [
+          "项目身份入口，需继续核对产品和费用口径"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "g:5825",
+    "name": "Veda",
+    "one_liner": "Onchain Capital Allocator 项目，具体机制、参与方式和收入归属待一手资料核对。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:40:00Z",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "U",
+    "revenue_method": "DefiLlama或队列中存在项目入口，但本批次未完成收入方法和原始数据复核。",
+    "wash_or_subsidy": "U",
+    "user_role": "U",
+    "entry": [
+      "none"
+    ],
+    "entry_why": "本批次没有核实可执行的资金参与入口。",
+    "scores": {
+      "M": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "A": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "F": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "V": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "G": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TE": {
+        "v": "NA",
+        "why": "本批次未确认已有代币。",
+        "src": "U"
+      }
+    },
+    "counter": "项目身份、机制、成本和需求尚未完成一手核验，当前数据不足以支持正面判断。",
+    "verdict": "待核验",
+    "verdict_reason": "关键事实尚未完成一手证据核对，按规则保留为待核验。",
+    "missing": [
+      "官方产品和文档",
+      "参与流程与完整成本",
+      "费用归属与收入口径",
+      "安全权限和合约地址",
+      "用户留存与去补贴需求",
+      "代币、积分或空投立场"
+    ],
+    "evidence": [
+      {
+        "url": "https://defillama.com/protocol/veda",
+        "fields": [
+          "项目身份入口，需继续核对产品和费用口径"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "g:parent#hyperdash",
+    "name": "Hyperdash",
+    "one_liner": "Interface 项目，具体机制、参与方式和收入归属待一手资料核对。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:40:00Z",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "U",
+    "revenue_method": "DefiLlama或队列中存在项目入口，但本批次未完成收入方法和原始数据复核。",
+    "wash_or_subsidy": "U",
+    "user_role": "U",
+    "entry": [
+      "none"
+    ],
+    "entry_why": "本批次没有核实可执行的资金参与入口。",
+    "scores": {
+      "M": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "A": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "F": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "V": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "G": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TE": {
+        "v": "NA",
+        "why": "本批次未确认已有代币。",
+        "src": "U"
+      }
+    },
+    "counter": "项目身份、机制、成本和需求尚未完成一手核验，当前数据不足以支持正面判断。",
+    "verdict": "待核验",
+    "verdict_reason": "关键事实尚未完成一手证据核对，按规则保留为待核验。",
+    "missing": [
+      "官方产品和文档",
+      "参与流程与完整成本",
+      "费用归属与收入口径",
+      "安全权限和合约地址",
+      "用户留存与去补贴需求",
+      "代币、积分或空投立场"
+    ],
+    "evidence": [
+      {
+        "url": "https://defillama.com/protocol/hyperdash-perps",
+        "fields": [
+          "项目身份入口，需继续核对产品和费用口径"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "g:parent#rabby",
+    "name": "Rabby",
+    "one_liner": "Interface 项目，具体机制、参与方式和收入归属待一手资料核对。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:40:00Z",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "U",
+    "revenue_method": "DefiLlama或队列中存在项目入口，但本批次未完成收入方法和原始数据复核。",
+    "wash_or_subsidy": "U",
+    "user_role": "U",
+    "entry": [
+      "none"
+    ],
+    "entry_why": "本批次没有核实可执行的资金参与入口。",
+    "scores": {
+      "M": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "A": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "F": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "V": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "G": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TE": {
+        "v": "NA",
+        "why": "本批次未确认已有代币。",
+        "src": "U"
+      }
+    },
+    "counter": "项目身份、机制、成本和需求尚未完成一手核验，当前数据不足以支持正面判断。",
+    "verdict": "待核验",
+    "verdict_reason": "关键事实尚未完成一手证据核对，按规则保留为待核验。",
+    "missing": [
+      "官方产品和文档",
+      "参与流程与完整成本",
+      "费用归属与收入口径",
+      "安全权限和合约地址",
+      "用户留存与去补贴需求",
+      "代币、积分或空投立场"
+    ],
+    "evidence": [
+      {
+        "url": "https://defillama.com/protocol/rabby-perps",
+        "fields": [
+          "项目身份入口，需继续核对产品和费用口径"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "g:parent#okx-dex",
+    "name": "OKX Swap",
+    "one_liner": "DEX Aggregator 项目，具体机制、参与方式和收入归属待一手资料核对。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:40:00Z",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "U",
+    "revenue_method": "DefiLlama或队列中存在项目入口，但本批次未完成收入方法和原始数据复核。",
+    "wash_or_subsidy": "U",
+    "user_role": "U",
+    "entry": [
+      "none"
+    ],
+    "entry_why": "本批次没有核实可执行的资金参与入口。",
+    "scores": {
+      "M": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "A": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "F": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "V": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "G": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TE": {
+        "v": "NA",
+        "why": "本批次未确认已有代币。",
+        "src": "U"
+      }
+    },
+    "counter": "项目身份、机制、成本和需求尚未完成一手核验，当前数据不足以支持正面判断。",
+    "verdict": "待核验",
+    "verdict_reason": "关键事实尚未完成一手证据核对，按规则保留为待核验。",
+    "missing": [
+      "官方产品和文档",
+      "参与流程与完整成本",
+      "费用归属与收入口径",
+      "安全权限和合约地址",
+      "用户留存与去补贴需求",
+      "代币、积分或空投立场"
+    ],
+    "evidence": [
+      {
+        "url": "https://defillama.com/protocol/okx-swap",
+        "fields": [
+          "项目身份入口，需继续核对产品和费用口径"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "g:8916",
+    "name": "Relay",
+    "one_liner": "Cross Chain Bridge 项目，具体机制、参与方式和收入归属待一手资料核对。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:40:00Z",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "U",
+    "revenue_method": "DefiLlama或队列中存在项目入口，但本批次未完成收入方法和原始数据复核。",
+    "wash_or_subsidy": "U",
+    "user_role": "U",
+    "entry": [
+      "none"
+    ],
+    "entry_why": "本批次没有核实可执行的资金参与入口。",
+    "scores": {
+      "M": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "A": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "F": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "V": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "G": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TE": {
+        "v": "NA",
+        "why": "本批次未确认已有代币。",
+        "src": "U"
+      }
+    },
+    "counter": "项目身份、机制、成本和需求尚未完成一手核验，当前数据不足以支持正面判断。",
+    "verdict": "待核验",
+    "verdict_reason": "关键事实尚未完成一手证据核对，按规则保留为待核验。",
+    "missing": [
+      "官方产品和文档",
+      "参与流程与完整成本",
+      "费用归属与收入口径",
+      "安全权限和合约地址",
+      "用户留存与去补贴需求",
+      "代币、积分或空投立场"
+    ],
+    "evidence": [
+      {
+        "url": "https://defillama.com/protocol/relay",
+        "fields": [
+          "项目身份入口，需继续核对产品和费用口径"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "g:8866",
+    "name": "Loan Meme",
+    "one_liner": "Lending 项目，具体机制、参与方式和收入归属待一手资料核对。",
+    "reviewer": "codex",
+    "checked_utc": "2026-11-15T12:40:00Z",
+    "token_stance": "U",
+    "token_stance_src": "U",
+    "token_stance_date": "U",
+    "revenue_who": "U",
+    "revenue_method": "DefiLlama或队列中存在项目入口，但本批次未完成收入方法和原始数据复核。",
+    "wash_or_subsidy": "U",
+    "user_role": "U",
+    "entry": [
+      "none"
+    ],
+    "entry_why": "本批次没有核实可执行的资金参与入口。",
+    "scores": {
+      "M": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "A": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "F": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "E": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "V": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "G": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "D": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "T": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TM": {
+        "v": "U",
+        "why": "本批次未能从一手资料确认。",
+        "src": "U"
+      },
+      "TE": {
+        "v": "NA",
+        "why": "本批次未确认已有代币。",
+        "src": "U"
+      }
+    },
+    "counter": "项目身份、机制、成本和需求尚未完成一手核验，当前数据不足以支持正面判断。",
+    "verdict": "待核验",
+    "verdict_reason": "关键事实尚未完成一手证据核对，按规则保留为待核验。",
+    "missing": [
+      "官方产品和文档",
+      "参与流程与完整成本",
+      "费用归属与收入口径",
+      "安全权限和合约地址",
+      "用户留存与去补贴需求",
+      "代币、积分或空投立场"
+    ],
+    "evidence": [
+      {
+        "url": "https://defillama.com/protocol/loan-meme",
+        "fields": [
+          "项目身份入口，需继续核对产品和费用口径"
+        ]
+      }
+    ]
+  }
+]

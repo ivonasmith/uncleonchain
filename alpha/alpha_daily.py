@@ -248,7 +248,7 @@ def main():
                 if nm:
                     idx[str(nm).lower()] = r
         for x in site_sources.collect(ROOT, CFG.get("site_sources")):
-            tag = {"board": x["board"], "rule": x["rule"], "why": x["why"]}
+            tag = {"board": x["board"], "rule": x["rule"], "why": x["why"], "since": x.get("since")}
             hit = idx.get(str(x.get("slug") or "").lower()) or idx.get(x["name"].lower())
             if hit:
                 hit.setdefault("boards", []).append(tag)
@@ -319,20 +319,18 @@ def main():
             events.append({"type": "token", "key": k, "name": v["name"]})
 
     # 候选池状态：外部补证结果（alpha/review/*_checks.json）并进台账；状态变化只追加到 status_history，不改旧记录
-    for fn in sorted(os.listdir(os.path.join(HERE, "review"))):
-        if not fn.endswith("_checks.json"):
+    import checks_util
+    for ckey, c in checks_util.merged().items():
+        v = L.get(ckey)
+        if not v or c.get("verdict") not in ("待核验", "研究观察", "拒绝", "优先研究"):
             continue
-        for c in load(os.path.join(HERE, "review", fn), []):
-            v = L.get(c.get("key"))
-            if not v or c.get("verdict") not in ("待核验", "研究观察", "拒绝", "优先研究"):
-                continue
-            day = (c.get("checked_utc") or today)[:10]
-            hs = v.setdefault("status_history", [])
-            if hs and hs[-1]["status"] == c["verdict"]:
-                continue
-            hs.append({"status": c["verdict"], "date": day, "src": f"alpha/review/{fn}"})
-            v["status"] = c["verdict"]
-            events.append({"type": "status", "key": c["key"], "name": v["name"], "status": c["verdict"]})
+        day = (c.get("checked_utc") or today)[:10]
+        hs = v.setdefault("status_history", [])
+        if hs and hs[-1]["status"] == c["verdict"]:
+            continue
+        hs.append({"status": c["verdict"], "date": day, "src": f"alpha/review/{c['_file']}"})
+        v["status"] = c["verdict"]
+        events.append({"type": "status", "key": ckey, "name": v["name"], "status": c["verdict"]})
 
     # ③ 事件流
     fc = CFG["feeds"]
@@ -367,6 +365,8 @@ def main():
            "tokenless": rows, "surge": surge, "manual": manual, "site": site, "listings": lst, "events": events, "feed": feed_recent,
            "ledger": {"n": len(L), "tokenless_rev": sum(1 for v in L.values() if "tokenless_rev" in v["source"]),
                       "new_listing": sum(1 for v in L.values() if "new_listing" in v["source"]),
+                      "by_source": {src: sum(1 for v in L.values() if src in v["source"].split("+")) for src in sorted({x for v in L.values() for x in v["source"].split("+")})},
+                      "multi": sum(1 for v in L.values() if "+" in v["source"]),
                       "token_seen": sum(1 for v in L.values() if v.get("token_seen")),
                       "status": {st: sum(1 for v in L.values() if v.get("status") == st) for st in ("待核验", "研究观察", "优先研究", "拒绝")}}}
     if rev is None and prev:       # 收入源失败：榜单沿用上次
@@ -391,3 +391,25 @@ if __name__ == "__main__":
         opps.main()
     except Exception as e:
         print("机会卡生成失败：", e)
+    try:   # 交易所上币事件库（先 Binance）：公告 → 计划开盘 → 首笔成交 → 窗口 → data/alpha/listings.json
+        import listings
+        sys.argv = sys.argv[:1]
+        listings.main()
+    except Exception as e:
+        print("上币事件库失败：", e)
+    try:   # 其它交易所的上币公告流水（OKX / Bitget / Kraken 官网；被拦的所等官方 X 账号核实）→ data/alpha/exch_announce.json
+        import exch_announce
+        sys.argv = sys.argv[:1]
+        exch_announce.main()
+    except Exception as e:
+        print("交易所公告流水失败：", e)
+    try:   # 其它所（OKX）的上币事件：公告正文 → 计划开盘 → 首笔成交 → 窗口，并进 data/alpha/listings.json（Bitget / Kraken 只有公告层）
+        import listings_x
+        listings_x.main()
+    except Exception as e:
+        print("其它所上币事件失败：", e)
+    try:   # 上币后回报统计 R0（24 小时窗口，口径见 alpha/research/交易所上币回报研究.md）→ data/alpha/listing_stats.json
+        import listing_stats
+        listing_stats.main()
+    except Exception as e:
+        print("上币回报统计失败：", e)

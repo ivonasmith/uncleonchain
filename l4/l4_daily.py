@@ -469,12 +469,14 @@ def main():
                   key=lambda x: abs(x["pct_730d"] - 50), default=None)
     key_read = f"{extreme['name_zh']} {extreme['value']}{extreme['unit']}，过去两年第 {int(extreme['pct_730d'])} 分位" if extreme else ""
     if on:
-        level, one = "信号", "资金费率转负，空头拥挤：短期不追空"
-        para = f"资金费率 30 日均 {f30:.1f}%（年化），已连续 {days_on} 天为负：空头拥挤，历史上之后一两个月偏强（已验证·方向）。用法：{use}"
+        level, one = "信号", "资金费率转负，空头拥挤"
+        # 2026-11-15 docs/表达规范.md：段落只写状态 + 历史（带分母），研究框架的用法留在 signal.use_zh / rule_zh（口径页展示，不进结论）
+        para = (f"资金费率 30 日均 {f30:.1f}%（年化），已连续 {days_on} 天为负：空头拥挤（已验证·方向）。过去 31 次，之后 30 天上涨 74%（同年代同周期状态对照 58%）"
+                + ("；但熊市里这条偏弱，历史 8 次只有一半上涨。" if l2code == "BEAR" else "。"))
     else:
         level = "过热" if (overall_p or 0) >= 85 else "偏热" if (overall_p or 0) >= 65 else "偏冷" if overall_p is not None and overall_p <= 35 else "中性"
         one = {"过热": "短期杠杆和情绪过热", "偏热": "短期杠杆和情绪偏热", "偏冷": "短期情绪偏冷", "中性": ""}[level]
-        para = (f"杠杆{lev_b or '—'}、情绪{sen_b or '—'}（{key_read}）。这是一支温度计，不是方向标：费率高、恐慌贪婪极值、OI 堆积都没有通过检验，不改动作。"
+        para = (f"杠杆{lev_b or '—'}、情绪{sen_b or '—'}（{key_read}）。这是一支温度计，不是方向标：费率高、恐慌贪婪极值、OI 堆积都没有通过检验，只作描述。"
                 if level != "中性" else f"短期温度中性：杠杆{lev_b or '—'}、情绪{sen_b or '—'}（{key_read}）。只作描述。")
 
     # ---- 观察项（假设） ----

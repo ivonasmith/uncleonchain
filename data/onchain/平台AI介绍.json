@@ -134,6 +134,90 @@
   "日期": "2026-11-14",
   "模型": "Grok（网页版，大叔手动问）"
  },
+ "argus-world": {
+  "内容": {
+   "differentiation_en": "Per official docs and DefiLlama, Argus is a tax-token launchpad on Circle’s Arc chain. Each token places its full supply into a single-sided permanently locked Uniswap v4 position with no bonding curve or graduation migration. Creators set buy/sell taxes and allocate them to creator funds, buyback-burn, dividends or liquidity. Per web reports, it captured a large share of launch volume on Arc mainnet day one.",
+   "differentiation_zh": "据官方文档与 DefiLlama，Argus 是 Circle 的 Arc 链上的税务代币发射台。每个代币将全部供应量放入单边永久锁定的 Uniswap v4 仓位，无 bonding curve 与毕业迁移。创建者设定买卖税后分配给创建者、回购销毁、分红或流动性。据网页报道，它在 Arc 主网上线日捕获了大量发射量。",
+   "fee_split_en": "Per official docs, Portal 8 charges the side’s tax (1-10%) plus 1% base fee on every buy and sell, taken entirely in the quote asset. 30% of the fee goes to the Argus treasury; the remaining 70% is split across the launch’s four lanes (creator funds, buyback-burn, holder dividends, liquidity). 80% of Argus revenue is used to buy $ARGUS. Older Portal 7 used a 10% platform share. Dividends are credited by balance and can be claimed or pushed.",
+   "fee_split_zh": "据官方文档，Portal 8 每笔买卖支付该侧税率（1-10%）加 1% 基础费，全部以报价资产收取。30% 费用进入 Argus 国库，70% 按发射时四路分配（创建者资金、回购销毁、持有者分红、流动性）。80% Argus 收入用于回购 $ARGUS。旧版 Portal 7 为 10% 平台份额。分红按持仓比例自动记账，可领取或推送。",
+   "one_liner_en": "Tax-token launchpad on Arc that opens permanently locked Uniswap v4 pools from the first block.",
+   "one_liner_zh": "Arc 上的税务代币发射台，直接开启永久锁定的 Uniswap v4 池。",
+   "risks_en": [
+    "New Arc chain with high early volatility and later activity cooldown",
+    "Immutable tax settings; high rates can hurt liquidity",
+    "$ARGUS price tied to platform revenue",
+    "Uncertain survival and volume for most new tokens",
+    "No detailed full audit mentioned in sources"
+   ],
+   "risks_zh": [
+    "新链 Arc 早期高波动与活动冷却",
+    "税务设置不可改，高税率影响流动性",
+    "$ARGUS 价格与平台收入挂钩",
+    "多数新币存活率与交易量不确定",
+    "资料未提及完整审计详情"
+   ],
+   "selling_points_en": [
+    "No bonding curve; permanent locked liquidity from launch",
+    "Creators set 1-10% buy/sell tax and allocate across four lanes",
+    "80% of platform revenue used to buy $ARGUS",
+    "Supports holder dividends and liquidity addition",
+    "Dominated early launch volume on Arc"
+   ],
+   "selling_points_zh": [
+    "无 bonding curve，发射即永久锁定流动性",
+    "创建者可设 1-10% 买卖税并分配四条路径",
+    "80% 平台收入用于回购 $ARGUS",
+    "支持持有者分红与流动性添加",
+    "Arc 上早期主导发射量"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "官方文档：基本机制与收入用途",
+     "url": "https://argus.world/docs"
+    },
+    {
+     "kind": "official",
+     "note": "Portal 8 费用与分配详情",
+     "url": "https://argus.world/docs/portal-8-fees"
+    },
+    {
+     "kind": "official",
+     "note": "DefiLlama 协议页",
+     "url": "https://defillama.com/protocol/argus-world"
+    },
+    {
+     "kind": "x",
+     "note": "X 帖子宣布生态基金",
+     "url": "https://x.com/Arguspad/status/2117360205570994572"
+    },
+    {
+     "kind": "web",
+     "note": "网页报道 Arc 上线日表现",
+     "url": "https://bsc.news/post/argus-arc-token-launchpad"
+    }
+   ],
+   "team_en": "Per X posts, founder is @rdbotato. Has an Argus Ecosystem Fund supporting projects. No public specific financing amount details.",
+   "team_zh": "据 X 帖子，创始人为 @rdbotato。有 Argus Ecosystem Fund 支持项目。无公开具体融资金额细节。",
+   "token_en": "Has platform token $ARGUS. Per official docs, 80% of platform revenue is used to buy it. Per X posts, there are ongoing buybacks and an ecosystem fund supporting projects.",
+   "token_zh": "有平台代币 $ARGUS。据官方文档，80% 平台收入用于回购它。据 X 帖子，有持续回购与生态基金支持项目。",
+   "unknowns_en": [
+    "Full security audit reports",
+    "Long-term stability of fee policy",
+    "Complete team members and financing details",
+    "Precise risks of non-USDC pairs"
+   ],
+   "unknowns_zh": [
+    "完整安全审计报告",
+    "长期费用政策稳定性",
+    "团队完整成员与融资细节",
+    "非 USDC 配对的精确风险"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-15",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
  "ascend-launchpad": {
   "内容": {
    "differentiation_en": "Based on Uniswap v4-style hook pools (not traditional bonding curve); creators set total fee 1%-10%, split by market-cap band into creator/protocol/coin-support. Protocol fees 90% for KNTQ and HYPE purchases. Per Ascend official docs.",
@@ -352,6 +436,159 @@
   },
   "方式": "手动",
   "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "bankr-bot": {
+  "内容": {
+   "differentiation_en": "Per official docs and site, Bankr is financial infrastructure for AI agents. Agents receive cross-chain wallets and can fair-launch fixed-supply tokens on Base, Robinhood Chain, Arbitrum, Arc and others, opening Uniswap pools immediately. Trading fees flow automatically to creators to fund LLM compute. Supports natural-language, X-tag and CLI launches, and can pair with tokenized stocks. Has $BNKR token.",
+   "differentiation_zh": "据官方文档与站点，Bankr 是 AI 代理的金融基础设施。代理获得跨链钱包，可在 Base、Robinhood Chain、Arbitrum、Arc 等公平发射固定供应代币，立即开启 Uniswap 池。交易费自动流向创建者，用于支付 LLM 计算。支持自然语言、X 标签、CLI 发射，并可与代币化股票配对。有 $BNKR 代币。",
+   "fee_split_en": "Per official docs, Doppler launches charge an all-in ~1.75% of volume: creator receives 0.665% (95% of the 0.7% pool fee), 0.285% LP fee compounds as permanently locked liquidity, 0.475% Bankr protocol, 0.2375% BNKR buyback, ~0.0875% Doppler. Supply is fixed at 100 billion, 85% to the pool, 15% creator vesting over 1 year (30-day cliff). Launches are free (gas sponsorship conditional). Older versions or Arc may differ.",
+   "fee_split_zh": "据官方文档，Doppler 发射总交换费约 1.75% 交易量：创建者获 0.665%（池 0.7% 的 95%），LP 费 0.285% 永久锁定复利，Bankr 协议 0.475%，BNKR 回购 0.2375%，Doppler ~0.0875%。供应固定 1000 亿，85% 进池，15% 创建者 1 年归属（30 天悬崖）。发射免费（gas 赞助视情况）。旧版或 Arc 等可能不同。",
+   "one_liner_en": "AI agent financial rails that fair-launch tokens on Base and other chains, with trading fees funding compute.",
+   "one_liner_zh": "AI 代理金融轨道，在 Base 等链公平发射代币，交易费资助计算。",
+   "risks_en": [
+    "Embedded wallets with non-exportable keys",
+    "Anti-snipe and balance caps in early window",
+    "High-volatility meme and agent-token risks",
+    "Fee structures vary by version",
+    "No major incidents mentioned in sources"
+   ],
+   "risks_zh": [
+    "嵌入式钱包私钥不可导出",
+    "早期有反狙击与余额上限",
+    "高波动 meme 与代理代币风险",
+    "费用结构因版本而异",
+    "资料未提及重大事故"
+   ],
+   "selling_points_en": [
+    "Free token launches via natural language or CLI",
+    "Creators receive the majority of trading fees",
+    "Supports Base, Robinhood Chain and others",
+    "Pairable with tokenized stocks",
+    "Self-funding AI agent flywheel"
+   ],
+   "selling_points_zh": [
+    "自然语言或 CLI 免费发射代币",
+    "创建者获大部分交易费",
+    "支持 Base、Robinhood Chain 等",
+    "可与代币化股票配对",
+    "自资助 AI 代理飞轮"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "官方发射概述与费用",
+     "url": "https://docs.bankr.bot/token-launching/overview"
+    },
+    {
+     "kind": "official",
+     "note": "官方网站",
+     "url": "https://bankr.bot"
+    },
+    {
+     "kind": "official",
+     "note": "DefiLlama 协议页",
+     "url": "https://defillama.com/protocol/bankr"
+    },
+    {
+     "kind": "x",
+     "note": "X 帖子部署示例",
+     "url": "https://x.com/bankrbot/status/2118312549678809413"
+    }
+   ],
+   "team_en": "Per X and site, focused on agent-economy infrastructure. Has paid tens of millions in fees to builders. No detailed public financing.",
+   "team_zh": "据 X 与站点，聚焦代理经济基础设施。已向构建者支付数千万费用。无公开详细融资。",
+   "token_en": "Has platform token $BNKR, fair-launched by the Bankr agent on Farcaster. Used for Bankr Club subscription. Per DefiLlama it has market cap and volume.",
+   "token_zh": "有平台代币 $BNKR，由 Bankr 代理在 Farcaster 公平发射。用于 Bankr Club 订阅。据 DefiLlama 有市值与交易量。",
+   "unknowns_en": [
+    "Full audit reports",
+    "Long-term stability of fee policy",
+    "Precise team and financing",
+    "Consistency of launch details across all chains"
+   ],
+   "unknowns_zh": [
+    "完整审计报告",
+    "长期费用政策稳定性",
+    "精确团队与融资",
+    "所有链发射细节一致性"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-15",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "basedbot-launchpad": {
+  "内容": {
+   "differentiation_en": "Per official docs and site, Based Bot (basedbot.app / @based_eth_bot) is a multi-chain Telegram trading bot and web terminal supporting Base, ETH, BSC, Solana and 16+ chains plus many launchpads (Pump.fun, Four.meme, Clanker etc.). Offers sniping, migration sniping, copy trading, limit orders and more. Charges 1% trading fee with cashback. The listed based.fun currently fails to load; related BasedPad is a different project.",
+   "differentiation_zh": "据官方文档与站点，Based Bot（basedbot.app / @based_eth_bot）是多链 Telegram 交易 bot 与网页终端，支持 Base、ETH、BSC、Solana 等 16+ 链及众多发射台（Pump.fun、Four.meme、Clanker 等）。提供狙击、迁移狙击、复制交易、限价单等。1% 交易费并有现金返还。列出的 based.fun 当前加载失败；相关有 BasedPad 但属不同项目。",
+   "fee_split_en": "Per third-party summaries of official info, trading fee is 1% with cashback that increases with volume. No independent launch fee of its own. Underlying launchpad fees apply separately. Referrals have rewards. No platform token confirmed.",
+   "fee_split_zh": "据第三方总结官方信息，交易费 1%，提供现金返还（随交易量提高）。无独立发射费于自身。底层发射台费用另计。推荐有奖励。无平台代币确认。",
+   "one_liner_en": "Multi-chain Telegram trading bot and web terminal supporting sniping and trading on many launchpads, focused on Base and others.",
+   "one_liner_zh": "多链 Telegram 交易 bot 与网页终端，支持众多发射台狙击与交易，基于 Base 等。",
+   "risks_en": [
+    "Bot-held private keys (partially exportable)",
+    "High volatility and slippage risks",
+    "Depends on underlying launchpads",
+    "Not independently tracked as launch volume on DefiLlama",
+    "No major incidents mentioned in sources"
+   ],
+   "risks_zh": [
+    "bot 托管私钥（部分可导出）",
+    "高波动与滑点风险",
+    "依赖底层发射台",
+    "非 DefiLlama 跟踪独立发射量",
+    "资料未提及重大事故"
+   ],
+   "selling_points_en": [
+    "Supports multiple chains and many launchpads",
+    "1% trading fee with cashback",
+    "Sniping, copy trading and automation",
+    "Unified account across web terminal and Telegram",
+    "Multi-wallet and anti-MEV"
+   ],
+   "selling_points_zh": [
+    "支持多链与大量发射台",
+    "1% 交易费并提供现金返还",
+    "狙击、复制交易与自动化",
+    "网页终端与 Telegram 统一账户",
+    "多钱包与防 MEV"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "官方文档：功能与支持网络",
+     "url": "https://docs.basedbot.app"
+    },
+    {
+     "kind": "web",
+     "note": "网页终端描述",
+     "url": "https://basedbotapp.xyz/"
+    },
+    {
+     "kind": "web",
+     "note": "第三方费用与功能总结",
+     "url": "https://degenbench.com/en/tools/based-bot"
+    }
+   ],
+   "team_en": "Per docs, provides Telegram bot and web terminal. No detailed public team or financing information.",
+   "team_zh": "据文档，提供 Telegram bot 与网页终端。无公开详细团队或融资信息。",
+   "token_en": "No confirmed official platform token.",
+   "token_zh": "无确认的官方平台代币。",
+   "unknowns_en": [
+    "Exact status of based.fun",
+    "Full audit and security reports",
+    "Precise team and financing",
+    "Independent launch-volume data"
+   ],
+   "unknowns_zh": [
+    "based.fun 确切状态",
+    "完整审计与安全报告",
+    "精确团队与融资",
+    "独立发射量数据"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-15",
   "模型": "Grok（网页版，大叔手动问）"
  },
  "binance-alpha": {
@@ -865,6 +1102,85 @@
   "日期": "2026-11-14",
   "模型": "Grok（网页版，大叔手动问）"
  },
+ "cliza": {
+  "内容": {
+   "differentiation_en": "Per official site and web reports, Cliza lets users tag @cliza_ai on X for free ERC-20 launches on Base, automatically setting single-sided permanently locked Uniswap V3 liquidity. 1% trading fee with 80% to creators and 20% to the platform. Has $CLIZA token. Per X posts, the project has announced it is wrapping up operations; legacy features remain on v1.cliza.ai and team tokens will be TWAP-sold slowly.",
+   "differentiation_zh": "据官方站点与网页报道，Cliza 允许在 X 上标签 @cliza_ai 免费在 Base 发射 ERC-20，自动设置单边 Uniswap V3 永久锁定流动性池。交易费 1%，80% 给创建者，20% 平台。有 $CLIZA 代币。据 X 帖子，项目已宣布结束运营，旧功能在 v1.cliza.ai 支持，团队代币将缓慢 TWAP。",
+   "fee_split_en": "Per official FAQ, Uniswap V3 pools charge 1% trading fee, 20% retained for operations, 80% claimable by creators. No creation fee (Base gas subsidized). Liquidity permanently locked. Optional 20% token vesting.",
+   "fee_split_zh": "据官方 FAQ，Uniswap V3 池收 1% 交易费，20% 留平台运营，80% 创建者可领取。无创建费（Base 低 gas 补贴）。流动性永久锁定。有 20% 代币归属选项。",
+   "one_liner_en": "Protocol for free token launches on Base via X tags with permanently locked liquidity; has announced it is wrapping up operations.",
+   "one_liner_zh": "通过 X 标签在 Base 上免费发射代币的协议，永久锁定流动性，已宣布结束运营。",
+   "risks_en": [
+    "Announced wrapping up operations; features only on legacy version",
+    "Team tokens to be TWAP-sold",
+    "Other risks remain after liquidity lock",
+    "Activity volume has declined sharply",
+    "No full audit mentioned in sources"
+   ],
+   "risks_zh": [
+    "已宣布结束运营，功能仅在旧版支持",
+    "团队代币将 TWAP 出售",
+    "流动性锁定后仍有其他风险",
+    "活动量已大幅下降",
+    "资料未提及完整审计"
+   ],
+   "selling_points_en": [
+    "Free launches by tagging on X",
+    "Single-sided permanently locked Uniswap V3 liquidity",
+    "Creators receive majority of LP fees",
+    "Supports smart metadata pairing",
+    "Previously paid substantial fees to creators"
+   ],
+   "selling_points_zh": [
+    "X 上标签即可免费发射",
+    "单边永久锁定 Uniswap V3 流动性",
+    "创建者获大部分 LP 费",
+    "支持智能元数据配对",
+    "曾支付创建者大量费用"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "官方网站 FAQ 与机制",
+     "url": "https://cliza.ai"
+    },
+    {
+     "kind": "x",
+     "note": "X 帖子宣布结束运营",
+     "url": "https://x.com/ClizaSystems/status/2042207270642291069"
+    },
+    {
+     "kind": "official",
+     "note": "DefiLlama 代币页",
+     "url": "https://defillama.com/token/cliza"
+    },
+    {
+     "kind": "web",
+     "note": "网页概述功能",
+     "url": "https://dappradar.com/dapp/cliza-ai"
+    }
+   ],
+   "team_en": "Per X, previously paid creators about $1.3 million. Has announced wrapping up operations. No detailed public team financing.",
+   "team_zh": "据 X，曾支付创建者约 130 万美元。已宣布结束运营。无公开详细团队融资。",
+   "token_en": "Has $CLIZA token. Per DefiLlama and market data, market cap has declined sharply.",
+   "token_zh": "有 $CLIZA 代币。据 DefiLlama 与市场数据，市值已大幅下跌。",
+   "unknowns_en": [
+    "Full support plan after wrapping up",
+    "Audit reports",
+    "Precise team and financing",
+    "Any possibility of future restart"
+   ],
+   "unknowns_zh": [
+    "结束运营后的完整支持计划",
+    "审计报告",
+    "精确团队与融资",
+    "未来任何重启可能性"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-15",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
  "cook": {
   "内容": {
    "differentiation_en": "Default 3% platform fee (all to COOK, split by recipe to holders/buyback etc.). Raydium extra 0.25%. Graduates 85 SOL to locked CPMM. Per docs.",
@@ -923,6 +1239,90 @@
   },
   "方式": "手动",
   "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "elyspump-v2": {
+  "内容": {
+   "differentiation_en": "Per DefiLlama and official X, ElysPump is an Elysium launchpad where v2/v3 let creators set custom buy/sell fees (0-10%) with the platform taking 30%; v3 deploys pools on official Uniswap v4 and supports HYPE/KNTQ pairs plus holder rewards. Versus other pads on the chain, it has its own $ELYSP token with buybacks and offers an OTC bridge plus cross-chain buys.",
+   "differentiation_zh": "据 DefiLlama 与官方 X，ElysPump 是 Elysium 上的发射台，v2/v3 允许创建者自定义买卖费（0-10%），平台抽 30% 费用；v3 将池子部署到官方 Uniswap v4，并支持 HYPE/KNTQ 配对与持有者奖励。与链上其他 pad 相比，它有自己的 $ELYSP 代币与回购机制，并提供 OTC 桥与跨链买入功能。",
+   "fee_split_en": "Per DefiLlama, V2/V3 trading fees are set by the creator at launch (0-10%, plus short-term anti-snipe premium), paid in the quote asset (HYPE or KNTQ). Platform revenue is 30% of every trading fee. Per X posts, protocol fees are used for $ELYSP buybacks. Creators can also set holder rewards. Exact splits depend on on-chain contracts.",
+   "fee_split_zh": "据 DefiLlama，V2/V3 的交易费由创建者在发射时设定（0-10%，外加发射后短期反狙击溢价），以报价资产（HYPE 或 KNTQ）支付。平台收入为每笔交易费的 30%。据 X 帖子，协议费用用于 $ELYSP 回购。创建者也可设置持有者奖励。具体分配以链上合约为准。",
+   "one_liner_en": "Memecoin launchpad on Elysium (Kinetiq's Hyperliquid L2) with custom fees and Uniswap v4 pools.",
+   "one_liner_zh": "Elysium（Kinetiq Hyperliquid L2）上的 memecoin 发射台，支持自定义费率与 Uniswap v4 池。",
+   "risks_en": [
+    "Elysium is a new chain with withdrawal challenge periods",
+    "High volatility and rug risks typical of memecoins",
+    "$ELYSP price tied to platform performance",
+    "Most new coins have low survival rates",
+    "No audit or major incident details mentioned in sources"
+   ],
+   "risks_zh": [
+    "Elysium 为新链，提款有挑战期",
+    "memecoin 高波动与 rug 风险高",
+    "$ELYSP 价格与平台表现挂钩",
+    "多数新币存活率低",
+    "资料未提及审计或重大事故详情"
+   ],
+   "selling_points_en": [
+    "Creators set 0-10% buy/sell fees plus anti-snipe premium",
+    "From v3, pools use official Uniswap v4 contracts and Universal Router",
+    "Supports HYPE or KNTQ as quote assets",
+    "Has $ELYSP token with buybacks from protocol fees",
+    "Supports one-click token buys from other chains"
+   ],
+   "selling_points_zh": [
+    "创建者可设 0-10% 买卖费与反狙击溢价",
+    "v3 起池子用官方 Uniswap v4 合约与 Universal Router",
+    "支持 HYPE 或 KNTQ 报价资产",
+    "有 $ELYSP 代币并从协议费做回购",
+    "支持跨链一键买入代币"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "DefiLlama 协议页，含 V2 费用与收入定义",
+     "url": "https://defillama.com/protocol/elyspump-v2"
+    },
+    {
+     "kind": "official",
+     "note": "官方站点，桥接与发射入口",
+     "url": "https://elysp.com"
+    },
+    {
+     "kind": "x",
+     "note": "X 帖子宣布 v3 使用官方 Uniswap v4",
+     "url": "https://x.com/ElysiumPump/status/2117521660773302498"
+    },
+    {
+     "kind": "x",
+     "note": "X 帖子介绍 v2 自定义费用与 $ELYSP",
+     "url": "https://x.com/ElysiumPump/status/2114045790511407280"
+    },
+    {
+     "kind": "web",
+     "note": "第三方指南描述 pad 与 $ELYSP",
+     "url": "https://elyscreener.com/learn/elyspump-guide/"
+    }
+   ],
+   "team_en": "No team, founder, or financing information mentioned. Official X describes it as the first token launchpad on Kinetiq's HyperEVM L2.",
+   "team_zh": "资料未提及团队、创始人或融资信息。官方 X 描述为 Kinetiq HyperEVM L2 上的首个代币发射台。",
+   "token_en": "Has platform token $ELYSP. Per X posts, buybacks from protocol fees are tracked on the token page. Third-party trackers list it among pad tokens. No public financing or allocation details.",
+   "token_zh": "有平台代币 $ELYSP。据 X 帖子，从协议费进行回购并记录在代币页面。据第三方追踪，它是 pad 上的代币之一。无公开融资或分配细节。",
+   "unknowns_en": [
+    "Exact creation fees and curve targets",
+    "Full contract audit status",
+    "Team identity and financing",
+    "Long-term fee allocation policy"
+   ],
+   "unknowns_zh": [
+    "精确创建费用与曲线目标",
+    "完整合约审计情况",
+    "团队身份与融资",
+    "长期费用分配政策"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-15",
   "模型": "Grok（网页版，大叔手动问）"
  },
  "ember": {
@@ -1213,6 +1613,341 @@
   },
   "方式": "手动",
   "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "four.meme": {
+  "内容": {
+   "differentiation_en": "Per official docs, Four.meme is an open launch ecosystem on BNB Chain centered on Classic Fair Launch (bonding curve + automatic migration to PancakeSwap), with expansions like OpenFour and tax tokens. Per web reports, it was incubated by BinaryX (later rebranded Four). Similar to pump.fun but on BSC with graduation to PancakeSwap.",
+   "differentiation_zh": "据官方文档，Four.meme 是 BNB Chain 上的开放发射生态，以 Classic Fair Launch（bonding curve + 自动迁至 PancakeSwap）为核心，并扩展出 OpenFour、税务代币等模式。据网页报道，它由 BinaryX（后更名 Four）孵化。与 pump.fun 类似但运行在 BSC，有毕业到 PancakeSwap 的机制。",
+   "fee_split_en": "Per official GitBook, launch costs only ~0.005 BNB gas; 1% trading fee on the curve (min 0.001 BNB). Graduation at ~18 BNB (or equivalent), with 20% supply plus raised funds forming a PancakeSwap pool. Per DefiLlama, platform revenue comes mainly from trade, launch, and migration fees. Tax tokens can charge extra directed to a creator-chosen wallet. Recent attacks led to a 0.01 BNB deposit requirement for new launches.",
+   "fee_split_zh": "据官方 GitBook，发射仅需约 0.005 BNB gas；curve 上交易费 1%（最低 0.001 BNB）。毕业时约筹到 18 BNB（或等值），20% 供应量与所筹资金组成 PancakeSwap 池。据 DefiLlama，平台收入主要来自交易、发射与迁移费。税务代币可额外收取并分配给创建者指定钱包。近期因攻击要求新发射缴 0.01 BNB 保证金。",
+   "one_liner_en": "Fair-launch memecoin platform on BNB Chain with bonding curve graduating to PancakeSwap.",
+   "one_liner_zh": "BNB Chain 上的公平发射 memecoin 平台，bonding curve 毕业到 PancakeSwap。",
+   "risks_en": [
+    "Multiple 2025 contract exploits caused fund losses",
+    "High rug and volatility risks typical of memecoins",
+    "Post-graduation liquidity and price-manipulation risks",
+    "Recent requirement of 0.01 BNB deposit for new launches",
+    "Platform does not endorse launched tokens"
+   ],
+   "risks_zh": [
+    "2025 年多次合约漏洞导致资金损失",
+    "memecoin 高 rug 与波动风险",
+    "毕业后流动性与价格操纵风险",
+    "近期要求新发射缴 0.01 BNB 保证金",
+    "平台不背书所发代币"
+   ],
+   "selling_points_en": [
+    "No-code token creation with fixed 1B supply",
+    "Instant bonding-curve trading, graduates to PancakeSwap",
+    "Supports tax tokens and multiple launch modes",
+    "Launch costs only gas; 1% curve trading fee",
+    "Has OpenFour and other expanded infrastructure"
+   ],
+   "selling_points_zh": [
+    "无需编码即可创建代币，固定 10 亿供应量",
+    "bonding curve 即时交易，毕业迁至 PancakeSwap",
+    "支持税务代币与多种发射模式",
+    "发射仅需 gas，curve 交易费 1%",
+    "有 OpenFour 等扩展基础设施"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "官方文档：费用、供应量、毕业机制",
+     "url": "https://four-meme.gitbook.io/four.meme/guide/how-it-works"
+    },
+    {
+     "kind": "official",
+     "note": "官方网站",
+     "url": "https://four.meme"
+    },
+    {
+     "kind": "official",
+     "note": "DefiLlama 页，含历史费用与漏洞记录",
+     "url": "https://defillama.com/protocol/four.meme"
+    },
+    {
+     "kind": "web",
+     "note": "报道 2025 年 3 月约 12 万美元 sandwich 攻击",
+     "url": "https://decrypt.co/310388/meme-coin-launchpad-four-meme-falls-victim-to-another-exploit"
+    },
+    {
+     "kind": "web",
+     "note": "2025 年 2 月约 18.3 万美元漏洞分析",
+     "url": "https://smartcontractshacking.com/hacks/four-meme-hack-2025"
+    },
+    {
+     "kind": "x",
+     "note": "X 帖子说明由 BinaryX 孵化",
+     "url": "https://x.com/Four_FORM_/status/1838136398857334881"
+    }
+   ],
+   "team_en": "Per X posts (@Four_FORM_), incubated by the BinaryX team and launched in July 2024; BinaryX later rebranded to Four. No other public financing details.",
+   "team_zh": "据 X 帖子（@Four_FORM_），由 BinaryX 团队孵化并于 2024 年 7 月上线；BinaryX 后更名为 Four。无其他公开融资细节。",
+   "token_en": "No independent platform token mentioned. Per third parties, linked to Four (formerly BinaryX), but no clear platform token allocation.",
+   "token_zh": "资料未提及独立平台代币。据第三方，与 Four（原 BinaryX）相关，但无明确平台代币分配。",
+   "unknowns_en": [
+    "Full security audit scope",
+    "Precise post-graduation fee structure",
+    "Long-term validity of deposit rules",
+    "Complete team member list"
+   ],
+   "unknowns_zh": [
+    "完整安全审计范围",
+    "毕业后精确费用结构",
+    "保证金规则长期有效性",
+    "团队完整成员名单"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-15",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "frontier": {
+  "内容": {
+   "differentiation_en": "Emphasizes modularity and programmable markets. Creators customize the full launch lifecycle (curve or direct-to-pool, dynamic fees, sniper tax). Docs state liquidity is locked forever and rules are immutable. More flexible than fixed-fee launchpads.",
+   "differentiation_zh": "强调模块化与可编程市场，创建者可自定义整个发射生命周期（曲线或直接进池、动态费、狙击税等），而非固定产品。文档明确流动性永久锁定且规则不可改。与其他固定费率发射台相比更灵活。",
+   "fee_split_en": "On curve: 1.5% per trade, split evenly between creator and protocol (official docs). In pool: 75% to creator and community. Liquidity locked forever. Docs state protocol keeps the smallest share.",
+   "fee_split_zh": "曲线阶段每笔交易 1.5%，创建者与协议平分（官方文档）。毕业后池内费用 75% 给创建者与社区，其余给协议。流动性永久锁定。文档称协议保留最小份额。",
+   "one_liner_en": "Modular programmable launch infrastructure on Robinhood Chain supporting curve or direct-to-pool launches.",
+   "one_liner_zh": "Robinhood Chain 上的模块化可编程发射基础设施，支持曲线或直接进池。",
+   "risks_en": [
+    "Official docs state no token, but X announced planned FRONT",
+    "Anonymous team (contracts owned by multisig)",
+    "No published audit",
+    "Relatively new with fluctuating activity",
+    "Fee structure depends on creator configuration"
+   ],
+   "risks_zh": [
+    "官方文档称无代币，但 X 宣布计划发行 FRONT",
+    "团队匿名（合约由多签持有）",
+    "无已发布审计",
+    "相对较新，活跃度波动大",
+    "费率结构依赖创建者配置"
+   ],
+   "selling_points_en": [
+    "Creators configure curve, fees, distribution, sniper tax and other modules",
+    "Choose bonding curve graduating to Uniswap v4 or direct-to-pool",
+    "Liquidity permanently locked; rules frozen at creation",
+    "75% of pool fees go to creator and community",
+    "Modules stack; designed for developer extensibility"
+   ],
+   "selling_points_zh": [
+    "创建者可配置曲线参数、费率、费用分配、狙击税等模块",
+    "可选择 bonding curve 毕业到 Uniswap v4 或直接进池",
+    "流动性永久锁定，规则在创建时冻结",
+    "池内费用 75% 给创建者与社区",
+    "模块可叠加，支持开发者扩展"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "官方文档：模块化、费率、无代币、锁定流动性",
+     "url": "https://docs.frontier.fun/"
+    },
+    {
+     "kind": "official",
+     "note": "官网",
+     "url": "https://frontier.fun/"
+    },
+    {
+     "kind": "web",
+     "note": "DefiLlama：费用与收入方法、Robinhood Chain",
+     "url": "https://defillama.com/protocol/frontier"
+    },
+    {
+     "kind": "x",
+     "note": "官方 X 宣布 FRONT 代币与回购计划",
+     "url": "https://x.com/FrontierLaunch/status/2103148395166642214"
+    },
+    {
+     "kind": "web",
+     "note": "第三方总结：匿名团队、无代币（当时）",
+     "url": "https://hoodscan.co/project/frontier"
+    }
+   ],
+   "team_en": "Anonymous team; protocol contracts owned by a multisig. X references background from Camelot/Cypher teams.",
+   "team_zh": "匿名团队，协议合约由多签持有。X 称来自 Camelot/Cypher 团队背景。",
+   "token_en": "Official docs explicitly state “Frontier has no token”. Official X account (@FrontierLaunch) announced planned FRONT token with buybacks and a Community Bootstrap Event.",
+   "token_zh": "官方文档明确“Frontier has no token”。X 官方账号（@FrontierLaunch）宣布计划发行 FRONT，费用将用于回购，并有社区 Bootstrap 活动。",
+   "unknowns_en": [
+    "Whether FRONT is currently live, exact buyback mechanism, and audit status not confirmed in docs."
+   ],
+   "unknowns_zh": [
+    "FRONT 代币当前是否已上线、具体回购机制与审计状态未在文档中确认。"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-15",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "genius.fun": {
+  "内容": {
+   "differentiation_en": "Per official site and docs, Genius.fun is operated by Genius Foundation as a permissionless launchpad on BNB Chain. Tokens start on a bonding curve and graduate at 15 BNB into a permanently locked PancakeSwap Infinity pool. Supports pairing with tokenized stocks (bStocks etc.), aiming to unwrap accumulated equity into an ownerless Cayman foundation for real-world governance. Per web reports, there are $GENIUS-related mechanisms.",
+   "differentiation_zh": "据官方站点与文档，Genius.fun 由 Genius Foundation 运营，是 BNB Chain 上的许可发射台。代币从 bonding curve 开始，15 BNB 后毕业到永久锁定的 PancakeSwap Infinity 池。支持与代币化股票（bStocks 等）配对，目标是将积累的股权解包到无主开曼基金会以行使现实治理权。据网页报道，有 $GENIUS 代币相关机制。",
+   "fee_split_en": "Per official about page, launch fee is 0.002 BNB. Both curve and post-graduation hook fees are 0.5%. Graduation threshold is 15 BNB, phantom reserve 6 BNB, supply 1 billion. Per X posts and third parties, default launches charge around 2% total, with Genius retaining a portion, creators receiving a share, plus buybacks and burns. Exact terms follow the deployment manifest and contracts. Contracts are a Pons v2 fork and have been audited.",
+   "fee_split_zh": "据官方 about 页，发射费 0.002 BNB。Curve 与毕业后 hook 费均为 0.5%。毕业阈值 15 BNB，虚拟储备 6 BNB，供应 10 亿。据 X 帖子与第三方，默认发射总费约 2%，Genius 保留部分，创建者可获份额，另有回购与销毁。具体以部署清单与合约为准。合约为 Pons v2 分叉并已审计。",
+   "one_liner_en": "RWA launchpad on BNB Chain with bonding curve graduating to PancakeSwap, pairable with tokenized stocks.",
+   "one_liner_zh": "BNB Chain 上的 RWA 发射台，bonding curve 毕业到 PancakeSwap，可配对代币化股票。",
+   "risks_en": [
+    "Low graduation rate; most tokens lack sustained liquidity",
+    "RWA unwrap and governance path not fully realized",
+    "High initial anti-snipe tax",
+    "Platform does not guarantee token safety or value",
+    "No major incidents mentioned in sources"
+   ],
+   "risks_zh": [
+    "毕业率低，多数代币无持续流动性",
+    "RWA 解包与治理路径未完全实现",
+    "反狙击税初期高",
+    "平台不保证代币安全或价值",
+    "资料未提及重大事故"
+   ],
+   "selling_points_en": [
+    "Fixed 1B supply, 0.002 BNB launch fee",
+    "Graduates at 15 BNB to permanently locked PancakeSwap Infinity pool",
+    "Pairable with BNB, stables or tokenized stocks",
+    "Creators can receive fee share with support for buybacks",
+    "Aims to unwrap tokenized stocks into a foundation"
+   ],
+   "selling_points_zh": [
+    "固定 10 亿供应量，发射费 0.002 BNB",
+    "15 BNB 毕业至永久锁定 PancakeSwap Infinity 池",
+    "可与 BNB、稳定币或代币化股票配对",
+    "创建者可获交易费份额并支持回购",
+    "目标将代币化股票解包至基金会"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "官方 about 页：费用、毕业与愿景",
+     "url": "https://genius.fun/about"
+    },
+    {
+     "kind": "official",
+     "note": "官方网站",
+     "url": "https://genius.fun"
+    },
+    {
+     "kind": "official",
+     "note": "DefiLlama 协议页",
+     "url": "https://defillama.com/protocol/genius.fun"
+    },
+    {
+     "kind": "web",
+     "note": "新闻稿介绍发射与愿景",
+     "url": "https://www.theblock.co/press-releases/genius-fun-launches-on-bnb-chain-to-bring-hostile-takeovers-on-chain-415455"
+    },
+    {
+     "kind": "x",
+     "note": "X 帖子介绍 V2 与费用模型",
+     "url": "https://x.com/GeniusTerminal/status/2118668596574613933"
+    }
+   ],
+   "team_en": "Operated by Genius Foundation / Shuttle Labs. Per web reports, CEO is Armaan Kalsi; received a multi-eight-figure investment from YZi Labs with CZ as advisor. Prior funding of about $7 million.",
+   "team_zh": "由 Genius Foundation / Shuttle Labs 运营。据网页报道，CEO 为 Armaan Kalsi，获得 YZi Labs 多八位数投资，CZ 任顾问。此前有约 700 万美元融资。",
+   "token_en": "Has $GENIUS token. Per X and web reports, holding unlocks verification and other benefits; part of fees supports buybacks and burns. No full allocation details.",
+   "token_zh": "有 $GENIUS 代币。据 X 与网页报道，持有可获验证等权益，部分费用用于回购销毁。无完整分配细节。",
+   "unknowns_en": [
+    "Actual progress of RWA unwrap implementation",
+    "Full audit report scope",
+    "Precise $GENIUS tokenomics",
+    "Long-term fee policy"
+   ],
+   "unknowns_zh": [
+    "RWA 解包实际落地进度",
+    "完整审计报告范围",
+    "$GENIUS 精确代币经济学",
+    "长期费用政策"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-15",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "gmgn-launchpad": {
+  "内容": {
+   "differentiation_en": "Per official site, docs and DefiLlama, GMGN.ai is a multi-chain meme trading terminal (Solana, BSC, Base, ETH etc.) offering real-time new-token monitoring, security audits, smart-money copy trading and automated orders. Its Cooking feature lets users create tokens via Pump.fun, Four.meme, Flap, Bonk and others with zero GMGN launch fee. It does not operate a standalone launchpad. Per DefiLlama, 30-day fees are in the millions of dollars.",
+   "differentiation_zh": "据官方站点、文档与 DefiLlama，GMGN.ai 是多链 meme 交易终端（Solana、BSC、Base、ETH 等），提供实时新币监控、安全审计、智能钱复制与自动化订单。Cooking 功能允许通过 Pump.fun、Four.meme、Flap、Bonk 等发射台零 GMGN 费用创建代币。自身不运营独立发射台。据 DefiLlama，30 日费用数百万美元。",
+   "fee_split_en": "Per official docs and third parties, trading fee is a flat 1% on buys and sells with no subscription. Launches via Cooking incur zero GMGN fee; underlying launchpad fees apply separately. Priority fees and tips are user-set and paid to validators. Referrals have rebates. No official token.",
+   "fee_split_zh": "据官方文档与第三方，交易费固定 1%（买卖各收），无订阅。发射通过 Cooking 零 GMGN 费，底层发射台费用另计。优先费与 tip 用户设定并支付给验证者。推荐有返利。无官方代币。",
+   "one_liner_en": "Multi-chain meme trading terminal that launches tokens via other pads through its Cooking feature with zero platform launch fee.",
+   "one_liner_zh": "多链 meme 交易终端，通过 Cooking 功能经其他发射台零平台费发射代币。",
+   "risks_en": [
+    "Custodial wallets with non-exportable private keys",
+    "High volatility meme risks and slippage",
+    "Depends on underlying launchpad mechanics",
+    "Extra costs from anti-MEV and priority fees",
+    "No major incidents mentioned in sources"
+   ],
+   "risks_zh": [
+    "托管钱包私钥不可导出",
+    "高波动 meme 风险与滑点",
+    "依赖底层发射台机制",
+    "反 MEV 与优先费额外成本",
+    "资料未提及重大事故"
+   ],
+   "selling_points_en": [
+    "Multi-chain discovery and one-click trading",
+    "Cooking with zero GMGN launch fee",
+    "Smart-money tracking and copy trading",
+    "Security checks and holder analysis",
+    "Flat 1% trading fee"
+   ],
+   "selling_points_zh": [
+    "支持多链发现与一键交易",
+    "Cooking 零 GMGN 发射费",
+    "智能钱跟踪与复制交易",
+    "安全检查与持仓分析",
+    "1% 固定交易费"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "官方网站",
+     "url": "https://gmgn.ai"
+    },
+    {
+     "kind": "official",
+     "note": "Cooking 功能文档",
+     "url": "https://docs.gmgn.ai/index/cooking"
+    },
+    {
+     "kind": "official",
+     "note": "DefiLlama 费用数据",
+     "url": "https://defillama.com/protocol/gmgn"
+    },
+    {
+     "kind": "official",
+     "note": "博客解释 Cooking",
+     "url": "https://gmgn.ai/blog/gmgn-cooking/"
+    },
+    {
+     "kind": "x",
+     "note": "X 帖子介绍 Cooking Skill",
+     "url": "https://x.com/gmgnai/status/2065255285292400756"
+    }
+   ],
+   "team_en": "Per web reports, founded around 2023-2024, providing multi-chain terminal and bots. No detailed public financing information.",
+   "team_zh": "据网页报道，成立于 2023-2024 年左右，提供多链终端与 bot。无公开详细融资信息。",
+   "token_en": "No official GMGN token. Per web reports, the team has discussed it but reached no final conclusion.",
+   "token_zh": "无官方 GMGN 代币。据网页报道，团队曾讨论但无最终结论。",
+   "unknowns_en": [
+    "Full audit reports",
+    "Long-term custodial risk assessment",
+    "Precise team and financing",
+    "Fully updated complete list of supported launchpads"
+   ],
+   "unknowns_zh": [
+    "完整审计报告",
+    "托管风险长期评估",
+    "精确团队与融资",
+    "所有支持发射台列表的完整更新"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-15",
   "模型": "Grok（网页版，大叔手动问）"
  },
  "graphite-protocol": {
@@ -1641,6 +2376,84 @@
   },
   "方式": "手动",
   "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "kleos-launchpad": {
+  "内容": {
+   "differentiation_en": "Has public founder (@Chain0xs) and emphasizes clan culture. Supports direct-to-pool launches and multiple pair assets including stocks. More identity-transparent than fully anonymous Elysium launchpads. Includes Road to Core mechanisms.",
+   "differentiation_zh": "有公开创始人（@Chain0xs），强调 clan 文化与社区。支持直接进池与多种配对资产，包括股票。与完全匿名的其他 Elysium 发射台相比身份更透明。有 Road to Core 等机制。",
+   "fee_split_en": "Creator sets 1-10% buy/sell tax (DefiLlama). Community on-chain analysis reported platform keeps ~20% of the tax, remainder to creator etc. DefiLlama kleos-launchpad page shows protocol revenue as a portion of fees. Reports of $KLEOS buybacks and burns.",
+   "fee_split_zh": "创建者设定 1-10% 买卖税（DefiLlama）。社区链上分析报告平台保留约 20% 的税，其余给创建者等。DefiLlama kleos-launchpad 页面显示平台收入约为费用的一部分。有回购销毁 $KLEOS 的报道。",
+   "one_liner_en": "Memecoin launchpad on Elysium; tokens launch straight into locked pools with configurable tax and $KLEOS token.",
+   "one_liner_zh": "Elysium 上的 memecoin 发射台，代币直接进锁定池，带可配置税与 KLEOS 代币。",
+   "risks_en": [
+    "Early third-party launchpad, not Kinetiq official",
+    "Tax and fee structure depends on creator settings",
+    "Community reports platform takes ~20% of tax",
+    "No public formal audit",
+    "Domain previously flagged by security lists"
+   ],
+   "risks_zh": [
+    "早期为第三方发射台，非 Kinetiq 官方",
+    "税与费用结构依赖创建者设置",
+    "社区报告平台收取约 20% 税",
+    "无正式审计公开",
+    "域名曾被安全列表标记"
+   ],
+   "selling_points_en": [
+    "Tokens launch straight into DEX pools with locked liquidity",
+    "Creator sets 1-10% buy/sell tax",
+    "Supports pairing with HYPE, KLEOS, KNTQ, tokenized stocks",
+    "Has $KLEOS token with buybacks and burns",
+    "Public founder account @Chain0xs"
+   ],
+   "selling_points_zh": [
+    "代币直接进入 DEX 池，流动性锁定",
+    "创建者可设 1-10% 买卖税",
+    "支持与 HYPE、KLEOS、KNTQ、代币化股票等配对",
+    "有 $KLEOS 代币与回购销毁",
+    "有公开创始人账号 @Chain0xs"
+   ],
+   "sources": [
+    {
+     "kind": "web",
+     "note": "DefiLlama：1-10% 税、平台收入、Elysium",
+     "url": "https://defillama.com/protocol/kleos-launchpad"
+    },
+    {
+     "kind": "official",
+     "note": "官网",
+     "url": "https://www.thekleos.pro/"
+    },
+    {
+     "kind": "x",
+     "note": "官方 X：功能更新、回购",
+     "url": "https://x.com/TheKleos_"
+    },
+    {
+     "kind": "x",
+     "note": "创始人账号",
+     "url": "https://x.com/Chain0xs"
+    },
+    {
+     "kind": "x",
+     "note": "社区链上分析：约 20% 平台抽成",
+     "url": "https://x.com/PunksOnElysium/status/2117284069117776305"
+    }
+   ],
+   "team_en": "Founder is @Chain0xs (0xArcum), self-described as On Chain trader since 2020 and Founder of @TheKleos_. No VCs, self-described as grassroots.",
+   "team_zh": "创始人为 @Chain0xs（0xArcum），自称 On Chain trader since 2020，Founder of @TheKleos_。无 VC，自称草根。",
+   "token_en": "Has platform token $KLEOS. Official X reported team buybacks and burns exceeding 10% of supply.",
+   "token_zh": "有平台代币 $KLEOS。官方 X 报告团队回购并销毁超过 10% 供应。",
+   "unknowns_en": [
+    "Exact official fee-split documentation, full audit, and funding details not found."
+   ],
+   "unknowns_zh": [
+    "精确的官方费用拆分文档、完整审计与融资细节未找到。"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-15",
   "模型": "Grok（网页版，大叔手动问）"
  },
  "launch-coin-on-believe": {
@@ -2302,6 +3115,90 @@
   "日期": "2026-11-14",
   "模型": "Grok（网页版，大叔手动问）"
  },
+ "o1-launchpad": {
+  "内容": {
+   "differentiation_en": "Per official docs, o1 Launchpad offers launches on Base, Robinhood, BSC, Monad, X Layer, Arc, Elysium and others. Tokens have a fixed 1B supply and open a permanently locked Uniswap v4 pool immediately, without the creator depositing the paired asset. Supports Standard (fixed fee split), Tax (custom taxes) and $O (wstO-paired with automatic burns) modes, and can pair with stock tokens. Part of the o1.exchange ecosystem.",
+   "differentiation_zh": "据官方文档，o1 Launchpad 在 Base、Robinhood、BSC、Monad、X Layer、Arc、Elysium 等链上提供发射。代币固定 10 亿供应，立即开启永久锁定的 Uniswap v4 池，无需创建者存入报价资产。支持 Standard（固定费拆分）、Tax（自定义税）与 $O（wstO 配对自动销毁）模式，并可配对股票代币。是 o1.exchange 生态的一部分。",
+   "fee_split_en": "Per official docs, Standard base swap fee is 1%, split 50% creator, 30% platform, 20% referrer. Tax mode lets the creator set buy/sell taxes and allocate the remainder. $O launches default to burning 1% of the quote-side wstO on buy and sell. Creation fees vary by chain (0.001 ETH on Base/Robinhood Standard/Tax, none for $O, etc.). Anti-snipe decays from 99% to 1% over about 20 seconds on most chains. Liquidity is permanently locked and non-removable.",
+   "fee_split_zh": "据官方文档，Standard 基础交换费 1%，拆分为 50% 创建者、30% 平台、20% 推荐人。Tax 模式创建者设定买卖税后剩余分配。$O 发射默认买卖各销毁 1% 报价侧 wstO。创建费因链而异（Base/Robinhood Standard/Tax 0.001 ETH，$O 无创建费等）。反狙击在多数链从 99% 衰减至 1% 需约 20 秒。流动性永久锁定不可撤。",
+   "one_liner_en": "Multi-chain launchpad creating permanently locked Uniswap v4 pools, supporting stock and $O pairs.",
+   "one_liner_zh": "多链发射台，直接创建永久锁定 Uniswap v4 池，支持股票与 $O 配对。",
+   "risks_en": [
+    "High anti-snipe fee that decays at open",
+    "Stock pairs depend on third-party tokenized assets",
+    "$O token price volatility",
+    "Risks from new chains and multi-chain operations",
+    "No major incidents mentioned in sources"
+   ],
+   "risks_zh": [
+    "开盘有高反狙击费衰减",
+    "股票配对依赖第三方代币化资产",
+    "$O 代币价格波动",
+    "新链与多链运维风险",
+    "资料未提及重大事故"
+   ],
+   "selling_points_en": [
+    "No bonding curve; permanent locked liquidity from launch",
+    "Fixed 1B supply with opening FDV near USD 4,000",
+    "Supports Standard, Tax and $O launch modes",
+    "Pairable with crypto or tokenized stocks",
+    "Deployed across multiple chains (Base, Robinhood etc.)"
+   ],
+   "selling_points_zh": [
+    "无 bonding curve，发射即永久锁定流动性",
+    "固定 10 亿供应，开盘 FDV 约 4000 美元",
+    "支持 Standard、Tax 与 $O 发射模式",
+    "可与加密或代币化股票配对",
+    "多链部署（Base、Robinhood 等）"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "官方文档：概述、模式与费用",
+     "url": "https://docs.o1.exchange/launchpad/introduction"
+    },
+    {
+     "kind": "official",
+     "note": "官方发射站",
+     "url": "https://launch.o1.exchange"
+    },
+    {
+     "kind": "official",
+     "note": "DefiLlama 协议页",
+     "url": "https://defillama.com/protocol/o1-launchpad"
+    },
+    {
+     "kind": "x",
+     "note": "创始人 X 帖子介绍股票目录",
+     "url": "https://x.com/stambouli_o1/status/2112045664951767157"
+    },
+    {
+     "kind": "web",
+     "note": "网页报道融资与投资者",
+     "url": "https://pitchbook.com/profiles/company/899520-67"
+    }
+   ],
+   "team_en": "Per web reports and X, founders are Jerry Pan (@stambouli_o1) and Ethan Chang. Backed by Coinbase Ventures, Alliance, a16z and others, with funding in the millions of dollars.",
+   "team_zh": "据网页报道与 X，创始人 Jerry Pan（@stambouli_o1）与 Ethan Chang。获得 Coinbase Ventures、Alliance、a16z 等支持，融资约数百万美元。",
+   "token_en": "Has platform token $O. Per DefiLlama and X, it has market cap and volume. $O launches are linked to wstO and support burn mechanics.",
+   "token_zh": "有平台代币 $O。据 DefiLlama 与 X，有市值与交易量。$O 发射与 wstO 挂钩并支持销毁机制。",
+   "unknowns_en": [
+    "Full multi-chain contract audits",
+    "Specific risks and compliance of stock tokens",
+    "Long-term fee and referrer policy",
+    "Exact total funding amount"
+   ],
+   "unknowns_zh": [
+    "完整多链合约审计",
+    "股票代币具体风险与合规",
+    "长期费用与推荐人政策",
+    "精确融资总额"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-15",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
  "otc": {
   "内容": {
    "differentiation_en": "Allocates fees via public wallets: ~67.5% to holders (buying tokenized stocks etc.), 10% OTC buyback/burn, rest to protocol and desks. Emphasizes transparency and holder value. Per OTC-related pages.",
@@ -2585,6 +3482,84 @@
   },
   "方式": "手动",
   "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "pools": {
+  "内容": {
+   "differentiation_en": "Directly operated by Uniswap Labs. One of the few Robinhood Chain launchpads using official Uniswap v4 with permanently locked liquidity and zero launch fee. Offers Crowd Launch anti-bundle mechanism. Lower fees than Pons with most fees returning to liquidity.",
+   "differentiation_zh": "由 Uniswap Labs 直接运营，是 Robinhood Chain 上少数使用官方 Uniswap v4 且流动性永久锁定、无发射费的平台。提供 Crowd Launch 防捆绑机制。与 Pons 等相比费率更低且大部分费用回流流动性。",
+   "fee_split_en": "No launch fee. 0.25% LP fee on trades (confirmed by DefiLlama and Uniswap official docs) that autocompounds into locked liquidity. Optional 0.05% creator fee (portion of the 0.25%). DefiLlama records protocol revenue as zero. Crowd Launch refunds all bids if under $10k FDV.",
+   "fee_split_zh": "无发射费。交易 0.25% LP 费（DefiLlama 与 Uniswap 官方文档确认），自动复投进锁定流动性。创建者可选开启 0.05%（占 0.25% 的部分）费用。DefiLlama 记录协议收入为 0。Crowd Launch 未达 1 万美元 FDV 则全额退款。",
+   "one_liner_en": "Uniswap Labs' token launchpad on Robinhood Chain with no launch fee and permanently locked liquidity.",
+   "one_liner_zh": "Uniswap Labs 在 Robinhood Chain 上的代币发射台，无发射费、流动性永久锁定。",
+   "risks_en": [
+    "No published audit of launch contracts",
+    "Instant Launch has no mandatory sniper protection",
+    "Intended only for memecoins that can go to zero",
+    "Uniswap Labs does not review tokens",
+    "Lower relative volume and activity versus other launchpads"
+   ],
+   "risks_zh": [
+    "无已发布的发射合约审计",
+    "Instant Launch 无强制狙击保护",
+    "仅面向 memecoin，价格可归零",
+    "Uniswap Labs 不审核代币",
+    "相对其他发射台交易量与活跃度较低"
+   ],
+   "selling_points_en": [
+    "No launch fee, only network gas",
+    "0.25% LP fee autocompounds into permanently locked liquidity",
+    "Instant Launch (immediate curve) and Crowd Launch (4-hour TWAP auction, full refund if under $10k FDV)",
+    "Fixed 1 billion supply ending in a Uniswap v4 pool",
+    "Operated by Uniswap Labs with Uniswap distribution"
+   ],
+   "selling_points_zh": [
+    "无发射费，仅网络 gas",
+    "0.25% LP 费自动复投进永久锁定流动性",
+    "支持 Instant Launch（即时曲线）与 Crowd Launch（4 小时 TWAP 竞拍，未达 1 万美元 FDV 全额退款）",
+    "固定 10 亿供应量，最终进入 Uniswap v4 池",
+    "由 Uniswap Labs 运营，接入 Uniswap 分发渠道"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "官方支持文档：发射模式、0.25% 费、锁定流动性、可选创建者费",
+     "url": "https://support.uniswap.org/hc/en-us/articles/47943121516685-Launching-and-trading-tokens-on-pools-xyz"
+    },
+    {
+     "kind": "official",
+     "note": "官网，由 Uniswap 构建",
+     "url": "https://pools.xyz/"
+    },
+    {
+     "kind": "web",
+     "note": "DefiLlama：收入为 0，无代币，0.25% 费用定义",
+     "url": "https://defillama.com/protocol/pools"
+    },
+    {
+     "kind": "x",
+     "note": "Uniswap 官方宣布 @TradePools 与功能",
+     "url": "https://x.com/Uniswap/status/2085373188003827956"
+    },
+    {
+     "kind": "web",
+     "note": "第三方总结：费率与模式与官方一致",
+     "url": "https://memecentral.fun/guides/what-is-pools-trade"
+    }
+   ],
+   "team_en": "Built and operated by Uniswap Labs.",
+   "team_zh": "由 Uniswap Labs 构建和运营。",
+   "token_en": "No platform token. DefiLlama explicitly states “There is no pools.trade token”.",
+   "token_zh": "无平台代币。DefiLlama 明确写“There is no pools.trade token”。",
+   "unknowns_en": [
+    "Specific audit status and security review details not published on official channels."
+   ],
+   "unknowns_zh": [
+    "具体审计状态与安全审查细节未在官方渠道公开。"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-15",
   "模型": "Grok（网页版，大叔手动问）"
  },
  "pump.fun": {
@@ -3227,6 +4202,90 @@
   "日期": "2026-11-14",
   "模型": "Grok（网页版，大叔手动问）"
  },
+ "stockereum": {
+  "内容": {
+   "differentiation_en": "Per official docs, Stockereum mints a fixed 1B-supply token in one transaction on Ethereum and opens a permanent Uniswap v4 pool (hook-owned, liquidity non-removable) with no bonding curve or graduation. Pairable with ETH, various crypto, or Ondo tokenized stocks; creators pick a fixed 1/2/3% fee. Per DefiLlama and the site, one of the mainnet launchpads themed around tokenized stocks.",
+   "differentiation_zh": "据官方文档，Stockereum 在以太坊上以单笔交易铸造 10 亿固定供应代币并立即开启永久 Uniswap v4 池（hook 持有且不可撤出流动性），无需 bonding curve 或毕业。可与 ETH、多种加密或 Ondo 代币化股票配对，创建者选 1/2/3% 固定费率。据 DefiLlama 与官网，是主网代币化股票主题发射台之一。",
+   "fee_split_en": "Per official docs, creators choose a fixed 1%, 2%, or 3% trading fee (denominated in the pair asset). On 1% the platform keeps 0.5% of volume and the creator gets 0.5%; on 2% or 3% the platform keeps 1% and the creator gets the rest. Creator share can go to escrow or permanently to holders. Per the site and X, 50% of platform fees on ETH pairs go to $STOCKER buyback/burn and liquidity strengthening, with additional rotation to other tokens. Launch fee ~0.001 ETH.",
+   "fee_split_zh": "据官方文档，创建者发射时选择 1%、2% 或 3% 固定交易费（以配对资产计价）。1% 费率时平台留 0.5% 成交量、创建者得 0.5%；2% 或 3% 时平台留 1%、创建者得剩余。创建者份额可进托管或永久分给持有者。据官网与 X，ETH 配对上平台费的 50% 用于回购销毁 $STOCKER 及加强流动性，另有部分轮换支持其他代币。发射费约 0.001 ETH。",
+   "one_liner_en": "Ethereum launchpad that creates permanent Uniswap v4 pools, pairable with tokenized stocks.",
+   "one_liner_zh": "以太坊上直接创建永久 Uniswap v4 池的发射台，可与代币化股票配对。",
+   "risks_en": [
+    "New pools start with high anti-snipe fee (~20 seconds)",
+    "Tokenized-stock pairs carry compliance and liquidity risks",
+    "$STOCKER platform token price volatility",
+    "Uncertain survival and volume for most launched tokens",
+    "No full audit mentioned in sources"
+   ],
+   "risks_zh": [
+    "新池开盘有高反狙击费（约 20 秒）",
+    "代币化股票配对有合规与流动性风险",
+    "平台代币 $STOCKER 价格波动",
+    "多数发射代币存活与交易量不确定",
+    "资料未提及完整审计"
+   ],
+   "selling_points_en": [
+    "No bonding curve; launches straight into permanent Uniswap v4 pool",
+    "Pairable with ETH, crypto, or Ondo tokenized stocks",
+    "Fixed 1B supply with liquidity locked by the hook",
+    "Creators choose 1/2/3% fee and receive share or route to holders",
+    "Part of platform ETH-pair fees used for $STOCKER buyback and burn"
+   ],
+   "selling_points_zh": [
+    "无 bonding curve，发射即永久 Uniswap v4 池",
+    "可与 ETH、加密或 Ondo 代币化股票配对",
+    "固定 10 亿供应量，流动性由 hook 锁定",
+    "创建者可选 1/2/3% 费率并获份额或分给持有者",
+    "平台 ETH 配对费部分用于 $STOCKER 回购销毁"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "官方文档：机制、费用分配、流动性锁定",
+     "url": "https://stockereum.com/docs"
+    },
+    {
+     "kind": "official",
+     "note": "官方网站与仪表盘",
+     "url": "https://stockereum.com"
+    },
+    {
+     "kind": "official",
+     "note": "DefiLlama 协议页",
+     "url": "https://defillama.com/protocol/stockereum"
+    },
+    {
+     "kind": "x",
+     "note": "X 帖子说明回购目标轮换",
+     "url": "https://x.com/Stockereum/status/2119446458596290657"
+    },
+    {
+     "kind": "web",
+     "note": "第三方工具描述开盘 FDV 与反狙击",
+     "url": "https://tools.smithii.io/stockereum-bundler/ethereum"
+    }
+   ],
+   "team_en": "No team, founder, or financing information mentioned. Official X and site describe it as a mainnet tokenized-stock launchpad powered by Ondo tokenized stocks.",
+   "team_zh": "资料未提及团队、创始人或融资信息。官方 X 与站点自称主网代币化股票发射台，由 Ondo 代币化股票驱动。",
+   "token_en": "Has platform token $STOCKER (Ethereum contract 0x75E2Fc69Ff2ac12aF65Ba7D321bBf4f878c535d2). Per the site and DefiLlama, there is a buyback-and-burn record funded by part of platform fees. Supply and market cap per on-chain data.",
+   "token_zh": "有平台代币 $STOCKER（以太坊合约 0x75E2Fc69Ff2ac12aF65Ba7D321bBf4f878c535d2）。据官网与 DefiLlama，有回购销毁记录，部分平台费用于此。供应与市值以链上为准。",
+   "unknowns_en": [
+    "Full security audit",
+    "Team identity",
+    "Exact use of non-ETH pair fees",
+    "Long-term buyback rotation policy"
+   ],
+   "unknowns_zh": [
+    "完整安全审计",
+    "团队身份",
+    "非 ETH 配对费用的精确用途",
+    "长期回购轮换政策"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-15",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
  "stonkbrokers-safe-launch": {
   "内容": {
    "differentiation_en": "Unlike pump.fun, offers multiple launch modes including time-decay anti-snipe tax; after graduation liquidity enters permanently locked Safety Deposit Box that cannot be withdrawn. Per official site and DefiLlama.",
@@ -3439,6 +4498,158 @@
   "日期": "2026-11-14",
   "模型": "Grok（网页版，大叔手动问）"
  },
+ "virtuals-protocol": {
+  "内容": {
+   "differentiation_en": "Per official whitepaper and DefiLlama, Virtuals Protocol is an AI agent tokenization and capital-formation layer. Agent tokens start on a bonding curve paired with $VIRTUAL and graduate at 42,000 $VIRTUAL to Uniswap V2 (Base) or Meteora (Solana) pools with LP locked for 10 years. Modular configuration supports anti-snipe, Hyperboost and more. Has extensions such as Occupy. Primarily on Base.",
+   "differentiation_zh": "据官方白皮书与 DefiLlama，Virtuals Protocol 是 AI 代理代币化与资本形成层。代理代币从与 $VIRTUAL 配对的 bonding curve 开始，达 42,000 $VIRTUAL 后毕业到 Uniswap V2（Base）或 Meteora（Solana）池，LP 锁定 10 年。模块化配置，支持反狙击、Hyperboost 等。有 Occupy 等扩展。主要在 Base。",
+   "fee_split_en": "Per whitepaper, trading fee is 1%: 70% to the creator, 30% to the Virtuals treasury. Most creations are free; some modules cost $VIRTUAL. Graduation threshold is 42,000 $VIRTUAL. Optional anti-snipe decays from 99%. LP locked for 10 years. Hyperboost provides post-graduation rewards.",
+   "fee_split_zh": "据白皮书，交易费 1%：70% 给创建者，30% 给 Virtuals 金库。创建多数免费，某些模块有 $VIRTUAL 费。毕业阈值 42,000 $VIRTUAL。反狙击可选，从 99% 衰减。LP 锁定 10 年。Hyperboost 毕业后奖励。",
+   "one_liner_en": "AI agent tokenization protocol that launches via bonding curves on Base and others, graduating to locked Uniswap pools.",
+   "one_liner_zh": "AI 代理代币化协议，在 Base 等通过 bonding curve 发射，毕业到锁定 Uniswap 池。",
+   "risks_en": [
+    "Uncertain graduation rate and sustained activity",
+    "High initial anti-snipe tax",
+    "$VIRTUAL price volatility",
+    "Uncertain agent utility and revenue",
+    "No major incidents mentioned in sources"
+   ],
+   "risks_zh": [
+    "毕业率与持续活跃不确定",
+    "反狙击税初期高",
+    "$VIRTUAL 价格波动",
+    "代理效用与收入不确定",
+    "资料未提及重大事故"
+   ],
+   "selling_points_en": [
+    "Modular launches, most free",
+    "Bonding curve graduates to 10-year locked LP",
+    "Creators receive 70% of trading fees",
+    "Supports anti-snipe and Hyperboost",
+    "Agent economy paired with $VIRTUAL"
+   ],
+   "selling_points_zh": [
+    "模块化发射，多数免费",
+    "bonding curve 毕业到 10 年锁定 LP",
+    "创建者获 70% 交易费",
+    "支持反狙击与 Hyperboost",
+    "代理经济与 $VIRTUAL 配对"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "官方白皮书发射机制",
+     "url": "https://whitepaper.virtuals.io/about-virtuals/agent-tokenization-platform-launchpad/virtuals-launch-mechanics"
+    },
+    {
+     "kind": "official",
+     "note": "官方网站",
+     "url": "https://virtuals.io"
+    },
+    {
+     "kind": "official",
+     "note": "DefiLlama 协议页",
+     "url": "https://defillama.com/protocol/virtuals-protocol"
+    },
+    {
+     "kind": "x",
+     "note": "X 帖子产品更新",
+     "url": "https://x.com/virtuals_io/status/2120532134947623174"
+    }
+   ],
+   "team_en": "Per whitepaper and web, focused on society of AI agents. Has routed tens of millions to builders. Has investment activity. No complete public financing details.",
+   "team_zh": "据白皮书与网页，聚焦 AI 代理社会。已路由数千万至构建者。有投资活动。无公开完整融资细节。",
+   "token_en": "Has platform token $VIRTUAL. Per DefiLlama it has substantial market cap and volume. Used for launches and liquidity pairing.",
+   "token_zh": "有平台代币 $VIRTUAL。据 DefiLlama 有较高市值与交易量。发射与流动性配对使用它。",
+   "unknowns_en": [
+    "Full multi-version audits",
+    "Long-term LP lock and governance details",
+    "Precise team and financing",
+    "Complete adoption data for Occupy and other extensions"
+   ],
+   "unknowns_zh": [
+    "完整多版本审计",
+    "长期 LP 锁与治理细节",
+    "精确团队与融资",
+    "Occupy 与其他扩展的完整采用数据"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-15",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "volta": {
+  "内容": {
+   "differentiation_en": "Explicitly the first on Elysium to use official Uniswap (not a fork). Highly configurable fee distribution (creator chooses buyback and holder reward shares). Most protocol fees flow to VOLTA buyback and burn. Supports stock quote assets.",
+   "differentiation_zh": "明确强调是 Elysium 上第一个使用官方 Uniswap（非分叉）的发射台。费用分配高度可配置（创建者可选择回购与持有者奖励比例），且协议费用大部分回流 VOLTA 回购销毁。支持股票等报价资产。",
+   "fee_split_en": "No launch fee. Swap fee 1-5% fixed by creator. 70% follows creator-set split at launch (to creator, buyback/burn, or holder rewards); 30% to protocol. 80% of the protocol's 30% buys and burns VOLTA (official docs). DefiLlama confirms similar split.",
+   "fee_split_zh": "无发射费。交换费 1-5% 由创建者固定。70% 按创建者在发射时设定的比例分配给创建者、回购销毁或持有者奖励；30% 给协议。协议的 30% 中 80% 用于回购销毁 VOLTA（官方文档）。DefiLlama 确认类似拆分。",
+   "one_liner_en": "First launchpad on Elysium using official Uniswap v4, with configurable fees and VOLTA buybacks.",
+   "one_liner_zh": "Elysium 上首个使用官方 Uniswap v4 的代币发射台，带可配置费用与 VOLTA 回购。",
+   "risks_en": [
+    "Contracts not yet verified on-chain (per docs)",
+    "New chain activity; liquidity and security depend on new deployments",
+    "Fees and splits set by creators, can be high",
+    "Team and founder information not public",
+    "Depends on Elysium bridge and HYPE gas"
+   ],
+   "risks_zh": [
+    "合约暂未在链上验证（文档说明）",
+    "新链上活动，流动性与安全依赖新部署",
+    "费率与分配由创建者设定，可能较高",
+    "团队与创始人信息未公开",
+    "依赖 Elysium 桥接与 HYPE gas"
+   ],
+   "selling_points_en": [
+    "Uses official Uniswap v4 PoolManager and UniversalRouter",
+    "No launch fee, fixed 1B supply all into pool, opens at ~40 HYPE market cap",
+    "Creator sets 1-5% swap fee; 70% follows creator-chosen split (creator/buyback/holders)",
+    "80% of protocol's 30% fee used to buyback and burn VOLTA",
+    "Supports anti-snipe, scheduled opening, multiple quote assets"
+   ],
+   "selling_points_zh": [
+    "使用官方 Uniswap v4 PoolManager 与 UniversalRouter",
+    "无发射费，固定 10 亿供应量全部进池，起始约 40 HYPE 市值",
+    "创建者设定 1-5% 交换费，70% 按创建者配置分配（创建者/回购/持有者）",
+    "协议 30% 费用中 80% 用于回购销毁 VOLTA",
+    "支持抗狙击、定时开放、多种报价资产"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "官方文档：Uniswap v4、费率拆分、VOLTA 回购、合约",
+     "url": "https://voltfamily.xyz/docs/"
+    },
+    {
+     "kind": "official",
+     "note": "官网",
+     "url": "https://volta.family/"
+    },
+    {
+     "kind": "web",
+     "note": "DefiLlama：费用方法、收入与持有者收入",
+     "url": "https://defillama.com/protocol/volta"
+    },
+    {
+     "kind": "x",
+     "note": "官方 X：80% 费用回购销毁 VOLTA、空投等",
+     "url": "https://x.com/VoltaFamily"
+    }
+   ],
+   "team_en": "No specific team or founder names found.",
+   "team_zh": "未查到具体团队或创始人姓名。",
+   "token_en": "Has platform token $VOLTA. Majority of protocol fees used for buyback and burn. Contract address given in docs.",
+   "token_zh": "有平台代币 $VOLTA。协议费用大部分用于回购销毁。合约地址在文档中给出。",
+   "unknowns_en": [
+    "Team identity, funding, and formal audit reports not published."
+   ],
+   "unknowns_zh": [
+    "团队身份、融资、正式审计报告均未公开。"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-15",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
  "voltpad": {
   "内容": {
    "differentiation_en": "Creator chooses 1-3% tax and circuit. Meteora takes 20%; 80% of rest to circuit (holders etc.), 20% to platform (half buys back $VOLT). Graduates to locked DAMM v2. Per docs.",
@@ -3562,6 +4773,85 @@
   },
   "方式": "手动",
   "日期": "2026-11-14",
+  "模型": "Grok（网页版，大叔手动问）"
+ },
+ "x-layer-fair-launch": {
+  "内容": {
+   "differentiation_en": "Per web reports and docs, X Layer is an EVM L2 built by OKX (migrated to OP Stack). The listed fair-launch page is currently inaccessible. Ecosystem includes tools such as XLaunch that place tokens directly into permanently locked Uniswap V3 pools with no bonding curve. Exchange OS allows deployment of spot, perpetual and outcome markets. Community-verified projects can receive incentives.",
+   "differentiation_zh": "据网页报道与文档，X Layer 是 OKX 构建的 EVM L2（已迁至 OP Stack）。列出的 fair-launch 页面当前无法访问。生态中有如 XLaunch 等发射台，将代币直接放入永久锁定的 Uniswap V3 池，无 bonding curve。另有 Exchange OS 允许部署现货、永续与结果市场。社区验证项目可获激励。",
+   "fee_split_en": "Per XLaunch docs example, no creation fee (gas only), 1% pool fee, 100% liquidity permanently locked. Specific fair-launch fees vary by implementation and must be checked on each contract and page. No unified platform fee split is public on the listed page.",
+   "fee_split_zh": "据 XLaunch 文档示例，创建费无（仅 gas），池费 1%，流动性 100% 永久锁定。具体公平发射费用因实现而异，需以各合约与页面为准。无统一平台费拆分公开于列出页面。",
+   "one_liner_en": "OKX X Layer ecosystem fair-launch and market-deployment related tools; the listed specific page is currently inaccessible.",
+   "one_liner_zh": "OKX X Layer 生态相关公平发射与市场部署工具，具体独立发射台页面当前不可访问。",
+   "risks_en": [
+    "Listed official page currently returns not found",
+    "Uncertain early liquidity and adoption on newer chain",
+    "Depends on OKX ecosystem and OKB",
+    "Fair-launch mechanics vary by specific project",
+    "No major incidents mentioned in sources"
+   ],
+   "risks_zh": [
+    "列出的官方页面当前返回无法找到",
+    "新链早期流动性与采用不确定",
+    "依赖 OKX 生态与 OKB",
+    "公平发射具体机制因项目而异",
+    "资料未提及重大事故"
+   ],
+   "selling_points_en": [
+    "X Layer as OKX L2 with low fees and high performance",
+    "Supports permanent locked-liquidity style launches",
+    "Pairable with tokenized stocks or OKB",
+    "Community verification and ecosystem incentives",
+    "Exchange OS enables market deployment"
+   ],
+   "selling_points_zh": [
+    "X Layer 作为 OKX L2 低费高性能",
+    "支持永久锁定流动性类发射模式",
+    "可与代币化股票或 OKB 配对",
+    "社区验证与生态激励",
+    "Exchange OS 支持部署市场"
+   ],
+   "sources": [
+    {
+     "kind": "official",
+     "note": "列出页面当前返回无法找到",
+     "url": "https://web3.okx.com/zh-hans/xlayer/fair-launch"
+    },
+    {
+     "kind": "web",
+     "note": "X Layer 上类似发射台文档",
+     "url": "https://xlaunch.fun/docs"
+    },
+    {
+     "kind": "official",
+     "note": "Exchange OS 介绍",
+     "url": "https://web3.okx.com/learn/exchange-os"
+    },
+    {
+     "kind": "official",
+     "note": "X Layer 官方概述",
+     "url": "https://web3.okx.com/xlayer"
+    }
+   ],
+   "team_en": "X Layer is operated by OKX. Specific fair-launch tool teams are not public on the listed page.",
+   "team_zh": "由 OKX 运营 X Layer。具体公平发射工具团队未在列出页面公开。",
+   "token_en": "X Layer native gas token is OKB. Individual launches may have their own tokens. No unified platform token confirmed on the listed page.",
+   "token_zh": "X Layer 原生 gas 代币为 OKB。各发射项目可有自身代币。无统一平台代币于列出页面确认。",
+   "unknowns_en": [
+    "Current status and content of the listed URL",
+    "Specific fair-launch contracts and audits",
+    "Precise fees and splits",
+    "Active launch volume and TVL"
+   ],
+   "unknowns_zh": [
+    "列出 URL 当前状态与内容",
+    "具体公平发射合约与审计",
+    "精确费用与分配",
+    "活跃发射量与 TVL"
+   ]
+  },
+  "方式": "手动",
+  "日期": "2026-11-15",
   "模型": "Grok（网页版，大叔手动问）"
  }
 }

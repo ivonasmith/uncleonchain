@@ -1,5 +1,5 @@
 {
- "_说明": "综合研判短句表（需求文档附录 D 定稿）。改措辞只改这里，下一次生成就生效。{} 是运行时填入的数值。方向只由 L2 给；动作只来自 L1 的风险预算规则和 L2 研究的交接原则；L3、L4 负责确认与提醒。",
+ "_说明": "综合研判短句表（需求文档附录 D 定稿；2026-11-15 按 docs/表达规范.md 改：只说状态和历史，不给动作）。改措辞只改这里，下一次生成就生效。{} 是运行时填入的数值。方向只由 L2 给；L1 说宏观在推还是在拖；L3、L4 负责确认与提醒。研究框架里的风险预算规则（作者自用）见口径页，不进一句话。",
  "L2": {
   "BULL": {
    "方向": "偏多",
@@ -55,26 +55,26 @@
   "顺风": {
    "一句话": "宏观顺风",
    "一句话EN": "macro tailwind",
-   "分段": "市场乐观、信用宽松、实际利率没有急升，宏观在推着走。风险预算照常使用。",
-   "分段EN": "Markets are optimistic, credit is easy and real yields are not surging. Macro is pushing; use the risk budget as normal."
+   "分段": "市场乐观、信用宽松、实际利率没有急升，宏观在推着走。",
+   "分段EN": "Markets are optimistic, credit is easy and real yields are not surging. Macro is pushing."
   },
   "中性": {
    "一句话": "宏观中性",
    "一句话EN": "macro neutral",
-   "分段": "宏观既不推，也不拦。风险预算照常。",
-   "分段EN": "Macro is neither pushing nor holding back. Risk budget as normal."
+   "分段": "宏观既不推，也不拦。",
+   "分段EN": "Macro is neither pushing nor holding back."
   },
   "中性偏谨慎": {
    "一句话": "实际利率急升",
    "一句话EN": "real yields surging",
-   "分段": "实际利率在一个季度内急升，这本身就是一股独立的逆风。风险预算降一档，不加仓。",
-   "分段EN": "Real yields have jumped within a quarter, a headwind in its own right. Cut the risk budget one notch; no adding."
+   "分段": "实际利率（扣掉通胀后的利率）在一个季度内急升，单独看也是一股逆风。",
+   "分段EN": "Real yields (rates after inflation) have jumped within a quarter, a headwind in its own right."
   },
   "逆风": {
    "一句话": "宏观逆风",
    "一句话EN": "macro headwind",
-   "分段": "{触发原因}，宏观在拖后腿。风险预算打七折。",
-   "分段EN": "{trigger}, so macro is a drag. Size the risk budget at 70%."
+   "分段": "{触发原因}，宏观在拖后腿。",
+   "分段EN": "{trigger}, so macro is a drag."
   },
   "警戒": {
    "分段": "另外，高收益债利差正在快速走阔；它比其他信用指标跑得快，但还没有长历史检验，先当作一声提醒。",
@@ -113,80 +113,6 @@
    "条件EN": "Liquidity gate (net liquidity 13w ≤ −2.72% and a stronger dollar over 13w)"
   }
  ],
- "动作": {
-  "偏多": {
-   "顺风": [
-    "风险预算照常",
-    "risk budget as normal"
-   ],
-   "中性": [
-    "风险预算照常",
-    "risk budget as normal"
-   ],
-   "中性偏谨慎": [
-    "节奏上不追高、不加仓",
-    "no chasing, no adding"
-   ],
-   "逆风": [
-    "节奏上不追高，风险预算打七折",
-    "no chasing, risk budget at 70%"
-   ]
-  },
-  "防顶": {
-   "顺风": [
-    "风险预算照常",
-    "risk budget as normal"
-   ],
-   "中性": [
-    "风险预算照常",
-    "risk budget as normal"
-   ],
-   "中性偏谨慎": [
-    "不加仓",
-    "no adding"
-   ],
-   "逆风": [
-    "风险预算打七折",
-    "risk budget at 70%"
-   ]
-  },
-  "待确认": {
-   "顺风": [
-    "风险预算照常",
-    "risk budget as normal"
-   ],
-   "中性": [
-    "风险预算照常",
-    "risk budget as normal"
-   ],
-   "中性偏谨慎": [
-    "不加仓",
-    "no adding"
-   ],
-   "逆风": [
-    "风险预算打七折",
-    "risk budget at 70%"
-   ]
-  },
-  "偏空": {
-   "顺风": [
-    "可它改变不了熊市的深度",
-    "but it won't change how deep a bear market goes"
-   ],
-   "中性": [
-    "宏观层不额外打折",
-    "no extra macro discount"
-   ],
-   "中性偏谨慎": [
-    "风险预算降一档",
-    "cut the risk budget one notch"
-   ],
-   "逆风": [
-    "风险预算打七折",
-    "risk budget at 70%"
-   ]
-  }
- },
  "L3": {
   "_说明": "L3 只描述价格位置和波动幅度，不给方向（《BTC筹码层L3研究》）。{压力区}{STH成本}{距离}{STH13}{波动}{集中度} 运行时填入。",
   "位置": {
@@ -231,12 +157,12 @@
   }
  },
  "L4": {
-  "_说明": "L4 依据《BTC情绪衍生品层L4研究》（规格 §5）。只有「信号」一档进动作；其余四档是温度描述。{档杠杆}{档情绪}{关键读数} 运行时填入。",
+  "_说明": "L4 依据《BTC情绪衍生品层L4研究》（规格 §5）。「信号」一档已验证（带分母），其余四档是温度描述。{档杠杆}{档情绪}{关键读数} 运行时填入。",
   "信号": {
-   "一句话": "资金费率转负，空头拥挤：短期不追空",
-   "一句话EN": "funding has turned negative — shorts are crowded; don't chase shorts",
+   "一句话": "资金费率转负，空头拥挤",
+   "一句话EN": "funding has turned negative — shorts are crowded",
    "分段": "{段落}",
-   "分段EN": "30-day average funding is {value} (annualized), negative for {days} days: shorts are crowded (validated · direction). Use: no new shorts; when L2 is not in a bear market, scaling in within the L1 budget is allowed. The risk budget does not grow."
+   "分段EN": "30-day average funding is {value} (annualized), negative for {days} days: shorts are crowded (validated · direction). Of 31 past episodes, price was higher 30 days later 74% of the time (58% for comparable controls); weaker in bear markets (8 episodes, 50%)."
   },
   "过热": {
    "一句话": "短期杠杆和情绪过热",
@@ -261,16 +187,6 @@
    "一句话EN": "short-term sentiment cool",
    "分段": "杠杆{档杠杆}、情绪{档情绪}（{关键读数}）。这是一支温度计，不是方向标。",
    "分段EN": "Short-term sentiment is cool ({reading})."
-  },
-  "动作": {
-   "信号": [
-    "，不开新空",
-    "; no new shorts"
-   ],
-   "信号非熊市": [
-    "，允许在 L1 预算内分批加",
-    "; scaling in within the L1 budget is allowed"
-   ]
   },
   "_缺": {
    "一句话": "",

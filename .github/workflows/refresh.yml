@@ -1,0 +1,382 @@
+# 总调度（2026-11-15，大叔定方案 A）：一天两档，所有板块一次跑完、只出一次网站、只推一次。
+# 为什么：GitHub 自带定时（schedule）实测每天晚 6～10 小时，十几个 workflow 共用 daily-pipeline 队列还会互相挤掉。
+# 准时靠外部叫醒：Cloudflare Worker（tools/refresh-trigger/）按钟点调 workflow_dispatch，几秒内开跑。
+#   am  UTC 00:05（新加坡 08:05）：昨天刚收盘，币安价格 / 涨跌腿 / 日历先更新；Coin Metrics、DefiLlama 可能还没出昨天的数，沿用上一天。
+#   pm  UTC 08:30（新加坡 16:30）：Coin Metrics（L2 / L3）、DefiLlama 已出齐，补成完整版。大叔的交易程序新加坡 19:00 取数，留 2 小时余量。
+#   retry UTC 09:50（新加坡 17:50）：只有交易用的数据还没到昨天才再跑一遍，否则直接结束。
+# 下面的 schedule 只是兜底（Worker 没叫到时，晚几个小时也会跑一遍）；guard 按 data/refresh_status.json 判断这一档跑过没有，不重复跑。
+# 跑完写 data/refresh_status.json → 网站 /data/status.json（ready_for_trading / 各模块数据日），交易程序取数前先读它。
+# 并发：单独一组 refresh，不进 daily-pipeline（那个队列里排队的会被后来的取消）；推送冲突靠 rebase + 重试。
+name: 总调度：一天两档全量更新
+
+on:
+  workflow_dispatch:
+    inputs:
+      slot:
+        description: "am / pm / retry / auto（auto = 按钟点）；force = 不管跑没跑过都跑"
+        default: auto
+        required: false
+  schedule:
+    - cron: "25 1 * * *"     # am 兜底
+    - cron: "40 8 * * *"     # pm 兜底
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: refresh
+  cancel-in-progress: false
+
+env:
+  PY: "3.12"
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      run: ${{ steps.g.outputs.run }}
+      slot: ${{ steps.g.outputs.slot }}
+      started: ${{ steps.t.outputs.started }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - id: t
+        run: echo "started=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_OUTPUT"
+      - id: g
+        run: |
+          S="${{ github.event.inputs.slot || 'auto' }}"
+          if [ "$S" = "force" ]; then
+            H=$(date -u +%H); [ "$H" -lt 8 ] && SL=am || SL=pm
+            echo "run=yes" >> "$GITHUB_OUTPUT"; echo "slot=$SL" >> "$GITHUB_OUTPUT"; echo "强制跑 $SL"
+          else
+            python3 pipeline/数据状态.py --guard "$S"
+          fi
+      - name: am 档顺带叫醒 Agent ID（单独一组，约 30 分钟，跑完自己 dispatch daily.yml 重出网站）
+        if: steps.g.outputs.run == 'yes' && steps.g.outputs.slot == 'am'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run agent-id-daily.yml --ref main
+
+  # ---------------- 采集：互不依赖的并行跑，各自打包产物交给 publish ----------------
+  btc:   # L2 → L3 → L4（L4 读本次的 l2_latest）
+    needs: guard
+    if: needs.guard.outputs.run == 'yes'
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+      - uses: actions/setup-python@v5
+        with: { python-version: "${{ env.PY }}" }
+      - uses: actions/cache@v4
+        with: { path: l2/cache, key: "l2-cache-${{ github.run_id }}", restore-keys: l2-cache- }
+      - uses: actions/cache@v4
+        with: { path: l3/cache, key: "l3-cache-${{ github.run_id }}", restore-keys: l3-cache- }
+      - uses: actions/cache@v4
+        with: { path: l4/cache, key: "l4-cache-${{ github.run_id }}", restore-keys: l4-cache- }
+      - run: pip install -q -r l2/requirements.txt -r l3/requirements.txt -r l4/requirements.txt
+      - name: L2
+        continue-on-error: true
+        timeout-minutes: 15
+        env: { L2_OUT_DIR: data/l2, L2_CACHE_DIR: l2/cache }
+        run: python l2/l2_daily.py
+      - name: L3
+        continue-on-error: true
+        timeout-minutes: 25
+        env: { L3_OUT_DIR: data/l3, L3_CACHE_DIR: l3/cache }
+        run: python l3/l3_daily.py
+      - name: L4
+        continue-on-error: true
+        timeout-minutes: 15
+        env:
+          L4_OUT_DIR: data/l4
+          L4_CACHE_DIR: l4/cache
+          L4_L2_JSON: data/l2/l2_latest.json
+          COINALYZE_KEY: ${{ secrets.COINALYZE_KEY || vars.COINALYZE_KEY }}
+        run: python l4/l4_daily.py
+      - if: always()
+        run: tar czf out-btc.tgz data/l2 data/l3 data/l4
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with: { name: out-btc, path: out-btc.tgz, retention-days: 3 }
+
+  legcore:   # 涨跌腿 → 核心选币（核心的等权篮子读本次的 leg_latest）
+    needs: guard
+    if: needs.guard.outputs.run == 'yes'
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+      - uses: actions/setup-python@v5
+        with: { python-version: "${{ env.PY }}" }
+      - uses: actions/cache@v4
+        with: { path: leg/leg_alt_cache.csv, key: "leg-alt-${{ github.run_id }}", restore-keys: leg-alt- }
+      - uses: actions/cache@v4
+        with: { path: core/cache, key: "core-cache-${{ github.run_id }}", restore-keys: core-cache- }
+      - name: 涨跌腿（先自测）
+        continue-on-error: true
+        timeout-minutes: 30
+        env: { LEG_OUT: data/leg/leg_latest.json, LEG_HIST_OUT: data/leg/leg_history.json }
+        run: |
+          python3 leg/leg_data.py --selftest
+          python3 leg/leg_data.py
+      - name: 核心选币
+        continue-on-error: true
+        timeout-minutes: 20
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAOSTATS_KEY: ${{ secrets.TAOSTATS_KEY }}
+          COINALYZE_KEY: ${{ secrets.COINALYZE_KEY }}
+          ETHERSCAN_KEY: ${{ secrets.ETHERSCAN_KEY }}
+        run: |
+          python3 core/core_daily.py
+          python3 core/core_universe.py || echo "名单失败，沿用上次结果"
+          python3 tools/core_mech/mech.py > /dev/null || echo "机制卡失败，沿用上次结果"
+          if [ "$(date -u +%u)" = "1" ] && [ "${{ needs.guard.outputs.slot }}" = "pm" ]; then python3 core/score_backtest.py || echo "回测失败，沿用上次结果"; fi
+      - if: always()
+        run: tar czf out-legcore.tgz data/leg data/core core/review
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with: { name: out-legcore, path: out-legcore.tgz, retention-days: 3 }
+
+  side:   # 事件日历 + AI Agent + RWA（都很快，放一起）
+    needs: guard
+    if: needs.guard.outputs.run == 'yes'
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+      - uses: actions/setup-python@v5
+        with: { python-version: "${{ env.PY }}" }
+      - uses: actions/cache@v4
+        with: { path: cal/cache, key: "cal-cache-${{ github.run_id }}", restore-keys: cal-cache- }
+      - run: pip install -q -r cal/requirements.txt
+      - name: 事件日历
+        continue-on-error: true
+        timeout-minutes: 15
+        env:
+          CAL_OUT_DIR: data/cal
+          CAL_CACHE_DIR: cal/cache
+          COINMARKETCAL_KEY: ${{ secrets.COINMARKETCAL_KEY }}
+          COINDAR_KEY: ${{ secrets.COINDAR_KEY }}
+          CONGRESS_API_KEY: ${{ secrets.CONGRESS_API_KEY }}
+        run: python cal/cal_daily.py
+      - name: AI Agent 赛道
+        continue-on-error: true
+        timeout-minutes: 15
+        run: python3 aiagent/aiagent_daily.py
+      - name: RWA
+        continue-on-error: true
+        timeout-minutes: 15
+        run: python3 rwa/rwa_daily.py
+      - if: always()
+        run: tar czf out-side.tgz data/cal data/aiagent data/rwa
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with: { name: out-side, path: out-side.tgz, retention-days: 3 }
+
+  alpha:   # Grok 自动补证最长 55 分钟，只在 am 档跑（不卡 pm 档的交易取数）
+    needs: guard
+    if: needs.guard.outputs.run == 'yes'
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+      - uses: actions/setup-python@v5
+        with: { python-version: "${{ env.PY }}" }
+      - name: Alpha 雷达
+        continue-on-error: true
+        timeout-minutes: 15
+        run: python3 alpha/alpha_daily.py
+      - name: 自动补证（Grok，只 am 档）
+        if: needs.guard.outputs.slot == 'am'
+        continue-on-error: true
+        timeout-minutes: 55
+        env:
+          XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
+        run: |
+          python3 -u alpha/grok_research.py
+          python3 alpha/opps.py --no-series
+      - name: 周复盘数据（每周一 pm 档）
+        if: needs.guard.outputs.slot == 'pm'
+        continue-on-error: true
+        run: |
+          if [ "$(date -u +%u)" = "1" ]; then
+            W=$(python3 -c "import datetime as d;t=d.date.today()-d.timedelta(days=7);y,w,_=t.isocalendar();print(f'{y}-W{w:02d}')")
+            [ -f "data/alpha/weekly/$W.json" ] || python3 alpha/weekly.py
+            echo "ALPHA_WEEK=$W" >> "$GITHUB_ENV"
+          fi
+      - name: 同步 Notion
+        continue-on-error: true
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+        run: |
+          python3 alpha/notion_sync.py opps leads
+          if [ -n "$ALPHA_WEEK" ]; then python3 alpha/notion_sync.py weekly --week "$ALPHA_WEEK"; fi
+      - if: always()
+        run: |
+          F="data/alpha"; ls alpha/review/grok_*_checks.json >/dev/null 2>&1 && F="$F $(ls alpha/review/grok_*_checks.json | tr '\n' ' ')"
+          # 上币复盘文件由「各交易所全历史上币复盘」工作流和手动脚本单独负责，不打包回来（11-17 出过总调度用旧版覆盖新跑出的 Upbit 结果）
+          tar czf out-alpha.tgz --exclude='listing_history_*.json' --exclude='listing_compare.json' --exclude='listing_paths_binance.json' \
+            --exclude='listing_short_stats.json' --exclude='listing_regime_stats.json' --exclude='cache_listing_first.json' $F
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with: { name: out-alpha, path: out-alpha.tgz, retention-days: 3 }
+
+  launchpad:   # 发射台：拉日度 → 读销毁 → 拉估值 → 拉Arc → 链上新台 → 线索 → 名录 → 出看板（不带 --site：宏观 / 日志 / 网站在 publish 里做）
+    needs: guard
+    if: needs.guard.outputs.run == 'yes'
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+      - uses: actions/setup-python@v5
+        with: { python-version: "${{ env.PY }}" }
+      - name: 安装中文字体
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk
+      - name: 发射台日更
+        continue-on-error: true
+        timeout-minutes: 70
+        env:
+          LP_DATA: ${{ github.workspace }}/data
+          LP_OUT: ${{ github.workspace }}/build
+          COINGECKO_API_KEY: ${{ secrets.COINGECKO_API_KEY }}
+          GITHUB_TOKEN: ${{ github.token }}
+          ETHERSCAN_KEY: ${{ secrets.ETHERSCAN_KEY }}
+          ALCHEMY_KEY: ${{ secrets.ALCHEMY_KEY }}
+        run: python3 pipeline/跑日更.py
+      - if: always()
+        run: |
+          # data/ 根目录的台账 + onchain；排除别的 job 负责的子目录
+          tar czf out-launchpad.tgz --exclude='data/l2' --exclude='data/l3' --exclude='data/l4' --exclude='data/leg' --exclude='data/core' \
+            --exclude='data/alpha' --exclude='data/cal' --exclude='data/aiagent' --exclude='data/rwa' --exclude='data/解读日志' data $( [ -d build ] && echo build )
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with: { name: out-launchpad, path: out-launchpad.tgz, retention-days: 3 }
+
+  lpquality:   # 发射台「量的质量」存活查询（GeckoTerminal 逐币查池子，限速狠）：单独一台机器、额度是满的，限时 20 分钟；读仓库里前几天留的存活样本
+    needs: guard
+    if: needs.guard.outputs.run == 'yes'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+      - uses: actions/setup-python@v5
+        with: { python-version: "${{ env.PY }}" }
+      # 交易者 / 发币人试点（Four.meme、Flap，BSC 公共节点）：逐日地址集合走缓存，算 7 天去重；每天只扫没扫过的完整 UTC 日（am 档扫，pm 档基本空跑）
+      - uses: actions/cache@v4
+        with: { path: pipeline/cache/traders, key: "lp-traders-${{ github.run_id }}", restore-keys: lp-traders- }
+      - name: 平台交易者（试点）
+        continue-on-error: true
+        timeout-minutes: 18
+        env:
+          LP_DATA: ${{ github.workspace }}/data
+          TRADERS_TIME: "840"
+        run: python3 pipeline/平台交易者.py
+      - name: 平台质量（存活）
+        continue-on-error: true
+        timeout-minutes: 22
+        env:
+          LP_DATA: ${{ github.workspace }}/data
+          SURV_TIME: "1200"
+        run: python3 pipeline/平台质量.py
+      - if: always()
+        run: tar czf out-lpq.tgz data/onchain/平台质量.json data/onchain/平台质量_history.json $(ls data/onchain/平台交易者.json 2>/dev/null)   # 解包排在 out-launchpad 后面，覆盖它那份
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with: { name: out-lpq, path: out-lpq.tgz, retention-days: 3 }
+
+  # ---------------- 汇总：解包 → 宏观 → 解读日志 → 状态 → 出网站 → 推送 ----------------
+  publish:
+    needs: [guard, btc, legcore, side, alpha, launchpad, lpquality]
+    if: always() && needs.guard.outputs.run == 'yes'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+      - uses: actions/setup-python@v5
+        with: { python-version: "${{ env.PY }}" }
+      - name: 安装中文字体
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk
+      - name: 自托管 html2canvas
+        run: |
+          mkdir -p assets/vendor
+          if [ ! -s assets/vendor/html2canvas.min.js ]; then
+            curl -fsSL -o assets/vendor/html2canvas.min.js https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js \
+              || curl -fsSL -o assets/vendor/html2canvas.min.js https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js || true
+          fi
+      - uses: actions/download-artifact@v4
+        with: { pattern: out-*, path: outs, merge-multiple: true }
+      - name: 解包各板块产物
+        run: |
+          for f in outs/*.tgz; do echo "解包 $f"; tar xzf "$f" || echo "⚠️ $f 解包失败，这一块沿用仓库里的上一版"; done
+      - name: 宏观 + 解读日志 + 状态 + 出网站
+        env:
+          LP_DATA: ${{ github.workspace }}/data
+          LP_OUT: ${{ github.workspace }}/build
+        run: |
+          cd pipeline
+          python3 出看板.py || echo "⚠️ 出看板失败"
+          SURV_TIME=0 python3 平台质量.py || echo "⚠️ 平台质量失败"   # 用本次链上数据重算发币数，存活沿用 lpquality 查到的
+          python3 拉宏观.py || echo "⚠️ 拉宏观有失败"
+          python3 写日志.py || echo "⚠️ 写日志有失败"
+          cd ..
+          OUT='{"btc":"${{ needs.btc.result }}","legcore":"${{ needs.legcore.result }}","side":"${{ needs.side.result }}","alpha":"${{ needs.alpha.result }}","launchpad":"${{ needs.launchpad.result }}"}'
+          python3 pipeline/数据状态.py --write "${{ needs.guard.outputs.slot }}" --outcomes "$OUT" \
+            --run-url "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" --started "${{ needs.guard.outputs.started }}"
+          python3 pipeline/任务清单.py || echo "⚠️ 全站待办 / 检查失败"   # data/tasks.json、check_report.json、tasks.md：Codex 定时任务每天读
+          python3 pipeline/出网站.py
+      - name: 提交并推送（冲突重试 4 次）
+        run: |
+          git config user.name "uncleonchain-bot"
+          git config user.email "bot@uncleonchain.com"
+          git add data/ site/ assets/vendor/ core/review alpha/review 2>/dev/null || git add data/ site/
+          git diff --cached --quiet && echo "没有变化，跳过提交" && exit 0
+          git commit -q -m "总调度 ${{ needs.guard.outputs.slot }} $(date -u +%Y-%m-%d)"
+          BASE=$(git rev-parse HEAD~1)
+          for i in 1 2 3 4; do
+            git pull -q --rebase -X theirs origin main
+            if ! git diff --quiet "$BASE" HEAD -- pipeline leg core alpha rwa aiagent config content assets; then
+              LP_DATA="$GITHUB_WORKSPACE/data" LP_OUT="$GITHUB_WORKSPACE/build" python3 pipeline/出看板.py
+              LP_DATA="$GITHUB_WORKSPACE/data" LP_OUT="$GITHUB_WORKSPACE/build" python3 pipeline/出网站.py
+              git add site/ && (git diff --cached --quiet || git commit -q -m "重出网站（运行期间有代码更新）")
+              BASE=$(git rev-parse origin/main)
+            fi
+            git push && exit 0
+            echo "推送被拒，第 $i 次重试"; sleep $((i * 15))
+          done
+          exit 1
+      - name: 状态摘要
+        if: always()
+        run: |
+          python3 pipeline/数据状态.py
+          python3 -c "import json;d=json.load(open('data/refresh_status.json'));print('ready_for_trading =',d['ready_for_trading'],'未到：',d['not_ready'])" || true
+      - name: IndexNow（pm 档；失败不影响）
+        if: needs.guard.outputs.slot == 'pm'
+        continue-on-error: true
+        run: |
+          sleep 180
+          python3 pipeline/indexnow.py
+      - name: 补证预算提醒
+        run: |
+          python3 - <<'PY'
+          import json, datetime as dt, sys
+          try:
+              L = json.load(open("data/alpha/research_cost.json", encoding="utf-8"))
+          except Exception:
+              sys.exit(0)
+          m = dt.datetime.utcnow().strftime("%Y-%m")
+          a = L.get("alert") or {}
+          if a.get("at", "")[:7] == m:
+              print("::error::" + a["msg"]); sys.exit(1)
+          PY
