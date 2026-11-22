@@ -45,7 +45,7 @@ const MOD_WHY={
 };
 const BT_LAB={'已验证·方向':L('回测：方向有效','Backtest: works (direction)'),'已证伪':L('回测：已证伪','Backtest: falsified'),'未通过':L('回测：未通过','Backtest: not significant'),'样本不足':L('回测：样本不足','Backtest: too few samples')};
 const btTag=k=>{const b=BT&&BT.modules&&BT.modules[k];if(!b)return `<span class="tg">${L('未检验','untested')}</span>`;const v=b.verdict;return `<span class="tg ${v==='已验证·方向'?'pool':''}" style="${v==='已证伪'?'border-color:var(--dn-bd);color:var(--dn)':''}">${BT_LAB[v]||esc(v)}</span>`};
-let BT=null, ROT=null, UNIV=null, MECH=null;
+let BT=null, ROT=null, UNIV=null, MECH=null, BB=null;
 /* 每条规则的证据等级（11-14 大叔：没验证的不能拿来判定）。HARD = 进判定；其余只作提示。 */
 const GRADE={g1:['已验证',L('L2 状态机历史回放：熊末→牛初之后一年中位 +152%、92% 为正；熊底区 +68%、91% 为正（《BTC周期层L2研究》§7）','L2 replay: late bear → early bull led to +152% median 1y, 92% positive')],
  g2:['已验证',L('同一套 L2 状态机：收盘跌破本轮最低点就退回熊市','Same L2 state machine: a close below the cycle low means back to bear')],
@@ -146,6 +146,15 @@ const ENM={'交易所和DEX':'Exchanges & DEX','借贷与抵押':'Lending & coll
  'ETF 申请中':'ETF filed','流动性不足':'Thin liquidity','子类待复核':'Sub-class TBC','交易所平台币':'Exchange token','公链':'Chain','预言机':'Oracle','合成美元':'Synthetic dollar','加密卡':'Crypto card','聚合器':'Aggregator','空投激励':'Airdrop incentives','解锁抛压':'Unlock overhang','AI 叙事':'AI narrative','挖矿排放':'Mining emissions','企业互操作':'Enterprise interop','再质押':'Restaking','发射台收入':'Launchpad revenue','数据可用性':'Data availability','游戏':'Gaming','稳定币 USD1':'USD1 stablecoin','跨链':'Cross-chain','隐私计算':'Privacy compute',
  '已执行·回购销毁':'Live · buyback & burn','已执行·直接销毁':'Live · direct burn','已执行·回购持有':'Live · buyback & hold','已执行·回购分给质押者':'Live · buyback to stakers','已执行·分红':'Live · dividends','已执行·储备':'Live · reserve','承诺未执行':'Promised, not live','暂停中':'Paused','DefiLlama 有记录·未核':'DefiLlama only · unchecked','无 / 未核':'None / unchecked'};
 const tr=x=>EN&&ENM[x]?ENM[x]:x;
+const fmtN=x=>!nz(x)?'—':Math.abs(x)>=1e9?(x/1e9).toFixed(2)+'B':Math.abs(x)>=1e6?(x/1e6).toFixed(2)+'M':Math.abs(x)>=1e3?(x/1e3).toFixed(1)+'K':x.toFixed(0);
+// 链上 12 个月回购 / 销毁（tools/core_mech/buyback.py）：候选地址、只有诊断数据的不展示；没拉全的写覆盖起点
+const BB_HOLD={UNI:1,CAKE:1,ASTER:1,LDO:1};   // ASTER 销毁地址只是候选；LDO 另有 2,541 万枚流入来源未归因，只显示 CoW 部分会被当成全部   // 11-22：v2 数据 UNI 漏算经路由的释放、CAKE 超出总供给量级；规则已改，新数据核对后再放开
+const bbRows=s=>BB&&BB.rows?BB.rows.filter(r=>r.sym===s&&!r.diag_only&&!r.candidate&&!r.review&&!BB_HOLD[r.sym]&&nz(r.qty)&&(r.qty>0||!r.partial)):[];
+const bbLine=s=>bbRows(s).map(r=>{const k=r.kind==='burn'?L('销毁','burned'):L('回购','bought back');
+  const cov=r.partial?(r.seen_from?L(`，只覆盖 ${r.seen_from} 起`,`, covers from ${r.seen_from} only`):L('，没取全','; incomplete')):'';
+  const tip=`${r.label}\n${L('窗口','Window')} ${BB.window[0]} → ${BB.window[1]}（UTC）· ${r.n} ${L('笔','transfers')} · ${L('最后一次','last')} ${r.last||'—'}${cov}\n${L('只数能逐笔对上的链上记录；不是全部回流。规则见 tools/core_mech/buyback.py','Only transfers that match one by one on-chain; not all value capture.')}`;
+  return `<div class="sm" data-tip="${esc(tip)}">${L('链上 12 月','On-chain 12m')} ${k} <b>${fmtN(r.qty)}</b> ${L('枚','tokens')}${r.partial?' *':''}</div>`}).join('');
+const bbHold=s=>(BB&&BB.rows||[]).filter(r=>r.sym===s&&nz(r.balance_now)).map(r=>`<div class="sm" data-tip="${esc(L('HyperCore 上 Assistance Fund 的 HYPE 余额，官方认定为已销毁。这是上线以来的累计，不是 12 个月的量；成交记录接口只给最近 1 万笔，12 个月数量没取全。','Assistance Fund HYPE balance on HyperCore, deemed burned by the docs. Cumulative since launch, not a 12-month figure.'))}">${L('累计销毁（上线以来）','Burned since launch')} <b>${fmtN(r.balance_now)}</b> ${L('枚','tokens')}</div>`).join('');
 const FACT=[['liq',L('流动性前 50','Liquidity top 50'),L('近 90 天币安全口径成交额排名的中位数 ≤ 50','90-day median Binance full-scope volume rank ≤ 50')],
  ['rev',L('月收入 ≥ 100 万美元','Revenue ≥ $1M / 30d'),L('DefiLlama 近 30 天协议收入 ≥ 100 万美元','DefiLlama protocol revenue over the last 30 days ≥ $1M')],
  ['grow',L('收入在涨','Revenue growing'),L('近 30 天协议收入 > 再往前 30 天（且至少 10 万美元，避免小基数）','Last 30 days > the 30 days before (and ≥ $100k to avoid tiny bases)')],
@@ -183,7 +192,7 @@ function home(){
   h+=`<div class="scroll"><table><thead><tr>${th('fact_rank','#',L('事实条件分排名','Fact-score rank'))}<th style="text-align:left">${L('标的','Asset')}</th><th style="text-align:left">${L('类别','Class')}</th>${th('',L('条件分','Fact score'),L('5 条事实满足几条；悬停圆点看明细','How many of 5 facts hold; hover the dots'))}${th('med',L('流动性排名','Liquidity rank'),L('近 90 天币安全口径成交额排名的中位数，越小越好','90-day median Binance volume rank; smaller is better'))}${th('qv30',L('30 日成交额','30d volume'))}${th('fut',L('合约占比','Futures share'),L('近 30 天成交额里永续 + 交割合约的占比；越高越像是合约在带价格','Share of perps + futures in 30-day volume'))}${th('rev30',L('30 日收入','Revenue 30d'),L('DefiLlama 协议收入','DefiLlama protocol revenue'))}${th('grow',L('收入环比','Rev vs prior'),L('近 30 天比再往前 30 天','Last 30d vs prior 30d'))}<th style="text-align:left">${L('价值回流','Value capture')}</th></tr></thead><tbody>`+
   rows.map(it=>{const g=goOf(it.sym),gr=USORT.grow(it);return `<tr ${g?`data-go="${g}"`:''}><td class="sm">${it.fact_rank||''}</td><td style="text-align:left"><b>${esc(it.sym)}</b>${(it.tags||[]).map(t=>`<span class="tg" data-tip="${esc(TIP[t]||'')}">${esc(tr(t))}</span>`).join('')}${g.startsWith('mech')?`<span class="tg pool">${L('机制卡','Mechanism')}</span>`:''}</td>
   <td style="text-align:left"><span class="tg">${CL_SHORT[it.class]||''}</span>${it.sub&&it.sub!=='Meme'?`<span class="tg" data-tip="${esc(TIP[it.sub]||'')}">${esc(tr(it.sub))}</span>`:''}</td><td>${dots(it)}</td><td>${nz(it.med)?it.med:'—'}</td><td>${nz(it.qv30)?'$'+fmtU(it.qv30,1):'—'}</td><td>${nz(it.fut_share)?it.fut_share.toFixed(0)+'%':'—'}</td>
-  <td>${it.rev30>0?'$'+fmtU(it.rev30,1):'—'}</td><td class="${cls(gr)}">${fmtP(gr,0)}</td><td style="text-align:left" data-tip="${esc(TIP[it.capture]||'')}">${it.capture?stat(capCls(it.capture),esc(tr(it.capture))):'<span class="sm">—</span>'}</td></tr>`}).join('')+`</tbody></table></div>
+  <td>${it.rev30>0?'$'+fmtU(it.rev30,1):'—'}</td><td class="${cls(gr)}">${fmtP(gr,0)}</td><td style="text-align:left"><span data-tip="${esc(TIP[it.capture]||'')}">${it.capture?stat(capCls(it.capture),esc(tr(it.capture))):'<span class="sm">—</span>'}</span>${bbLine(it.sym)}${bbHold(it.sym)}</td></tr>`}).join('')+`</tbody></table></div>
   <div class="sm" style="margin-top:8px">${L(`名单按《选币规则 v1》每天生成并冻结一份（数据日 ${esc(UNIV.data_day)}），事后和走势对账，错了改规则。点表头排序，点行看详情；有「机制卡」的点进去是机制拆解。只做观测，不是买卖建议。`,`Generated and frozen daily by rules v1 (data day ${esc(UNIV.data_day)}). Click headers to sort, rows for details. Observation only, not trade advice.`)}</div></div>`;
   const out=UNIV.items.filter(x=>!x.in&&x.class);
   h+=`<details class="ccard"><summary>${L(`落选的 ${out.length} 个（已归类，但排在本类前 3 之后）`,`${out.length} not picked (below the top 3 of their class)`)}</summary><div class="scroll" style="margin-top:8px"><table><tbody>${out.map(x=>`<tr><td style="text-align:left"><b>${esc(x.sym)}</b></td><td class="sm" style="text-align:left">${esc(x.class)}${x.sub?' · '+esc(x.sub):''}</td><td>${nz(x.med)?x.med:'—'}</td><td class="sm" style="text-align:left">${esc(x.miss||'')}</td></tr>`).join('')}</tbody></table></div></details>`;
@@ -609,6 +618,7 @@ fetch(src).then(r=>r.json()).then(d=>{
   D=d;C=d.coins;SYMS=Object.keys(C);MAN=d.manual||{};GT=d.gates||{};VER=String(d.generated||d.last_complete_day).replace(/\D/g,'');
   fetch(root.dataset.bt+'?v='+VER).then(r=>r.ok?r.json():null).then(x=>{BT=x;if(x)render()}).catch(()=>{});
   if(root.dataset.univ)fetch(root.dataset.univ+'?v='+VER).then(r=>r.ok?r.json():null).then(x=>{UNIV=x;if(x)render()}).catch(()=>{});
+  if(root.dataset.bb)fetch(root.dataset.bb+'?v='+VER).then(r=>r.ok?r.json():null).then(x=>{BB=x;if(x)render()}).catch(()=>{});
   if(root.dataset.mech)fetch(root.dataset.mech+'?v='+VER).then(r=>r.ok?r.json():null).then(x=>{MECH=x;if(x)render()}).catch(()=>{});
   const stale=(Date.now()-Date.parse(d.last_complete_day+'T00:00:00Z'))/864e5>3.5;
   root.innerHTML=`<div class="sm">${L('数据日','Data day')} ${d.last_complete_day}（UTC）· ${L('生成于','built')} ${esc(d.generated)}${stale?` · <b style="color:var(--warn)">${L('停更：数据超过 3 天没更新','Stale: no update for 3+ days')}</b>`:''}</div>

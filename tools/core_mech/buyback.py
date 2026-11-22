@@ -45,7 +45,7 @@ MEASURES = [
     # 11-22：首跑每周约 6,000 万枚、12 个月 28.9 亿枚，超出 CAKE 总供给量级，数量待人工核对（largest 里有交易哈希），核对前页面不展示
     {"sym": "CAKE", "kind": "burn", "label": "费用归集多签转去销毁地址的 CAKE", "to": DEAD, "frm": ["0xceba60280fb0ecd9a5a26a1552b90944770a4a0e"], "diag_all_to_dead": False,
      "review": "数量超出总供给量级，待核对"},
-    {"sym": "ASTER", "kind": "burn", "label": "buybackWalletToBurn 转去销毁地址的 ASTER（BNB Chain，候选地址）", "to": DEAD, "frm": ["0x5e4969c41ca9f9831468b98328a370b7abd5a397"]},
+    {"sym": "ASTER", "kind": "burn", "label": "buybackWalletToBurn 转去销毁地址的 ASTER（BNB Chain，候选地址）", "to": DEAD, "frm": ["0x5e4969c41ca9f9831468b98328a370b7abd5a397"], "candidate": True},
     {"sym": "ASTER", "kind": "buyback", "label": "（诊断）转入公开 buyback 钱包的 ASTER（BNB Chain；链归属未独立确认）", "to": ["0xa0edbabcb48034e368de286b49f9603c7afa1b60"], "src": [], "diag_only": True},
     {"sym": "GMX", "kind": "buyback", "label": "（诊断）进出 Arbitrum FeeHandler 的 GMX", "to": ["0x7eb417637a3e6d1c19e6d69158c47610b7a5d9b3"], "src": [], "diag_only": True},
     # Solana：owner = 官方地址，算该 owner 名下目标代币账户的流入 / Burn 指令
