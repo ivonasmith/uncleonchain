@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-23T09:21:50+00:00",
+ "generated": "2026-11-23T10:01:39+00:00",
  "asof": "2026-11-22",
  "framework": "v1",
  "rules": "v2（2026-11-15）",
@@ -318,23 +318,23 @@
       "url": "https://dexscreener.com/robinhood/0x10cc6bd38112cac182db90b6a71d8bb5939526ba"
      },
      "snap": {
-      "mcap": 65106110,
-      "fdv": 65106110,
-      "vol24": 3913427.7,
-      "liq": 1180539.13,
-      "chg24": 1.94,
+      "mcap": 64766283,
+      "fdv": 64766283,
+      "vol24": 3825255.3,
+      "liq": 1174375.1,
+      "chg24": 0.43,
       "pairs": 30,
       "dex": "uniswap",
       "chain": "robinhood",
-      "at": "2026-11-23T09:22+00:00",
+      "at": "2026-11-23T10:01+00:00",
       "src": "DexScreener"
      }
     },
     "lpq": {
-     "数据日": "2026-11-21",
+     "数据日": "2026-11-22",
      "发币": {
-      "1d": 224,
-      "7d": 4397,
+      "1d": 432,
+      "7d": 4248,
       "估算": false,
       "工厂": [
        "robinhood:0xe33e9e479df8802cb0866d5d05258bec4cf62948",
@@ -720,7 +720,7 @@
      {
       "board": "launchpad",
       "rule": "lp_new",
-      "why": "进发射台矩阵 11 天，近 7 天手续费 113,183 美元",
+      "why": "进发射台矩阵 12 天，近 7 天手续费 108,400 美元",
       "since": "2026-11-10"
      }
     ],
@@ -769,23 +769,23 @@
       "url": "https://dexscreener.com/elysium/0x3e373dfe40db272433dca58527abac38dbd7acb0b6c92090c202a1eac7272a1d"
      },
      "snap": {
-      "mcap": 4022871,
-      "fdv": 3939073,
-      "vol24": 345778.12,
-      "liq": 318857.12,
-      "chg24": 37.27,
+      "mcap": 3935778,
+      "fdv": 3853794,
+      "vol24": 349760.66,
+      "liq": 315414.17,
+      "chg24": 33.51,
       "pairs": 17,
       "dex": "uniswap",
       "chain": "elysium",
-      "at": "2026-11-23T09:22+00:00",
+      "at": "2026-11-23T10:01+00:00",
       "src": "DexScreener"
      }
     },
     "lpq": {
-     "数据日": "2026-11-21",
+     "数据日": "2026-11-22",
      "发币": {
-      "1d": 267,
-      "7d": 2418,
+      "1d": 298,
+      "7d": 2323,
       "估算": false,
       "工厂": [
        "elysium:0x38d3ef3a06d18fa3286fb5deafe611be725fcd15"
@@ -799,15 +799,15 @@
       "口径": "这家的币都铸给同一个合约，扫描每组只抽 3 笔交易认工厂，查到的发币人不到当天币数的一成，数不出来；要逐个币查创建交易才行"
      },
      "存活": {
-      "批次": "2026-11-06～2026-11-12",
-      "发出": 48903,
-      "样本": 15,
+      "批次": "2026-11-08～2026-11-14",
+      "发出": 44759,
+      "样本": 18,
       "7天后仍有交易": 0,
       "市值过10万美元": 0,
       "口径": "批次那天发的币里抽 20 个，发出后 7～8 天逐个用 GeckoTerminal 查它的全部池子（含发射台曲线池）：近 24 小时有买卖的个数、市值（没有就用 FDV）≥ 10 万美元的个数；GeckoTerminal 没收录的池子看不到，算没交易，下限",
       "来源": "GeckoTerminal（链上样本 + 第三方行情）",
-      "收录": 4,
-      "查询日": "2026-11-21",
+      "收录": 6,
+      "查询日": "2026-11-23",
       "说明": "早期批次：每个工厂每天只留了 3 个样本币，这里把 7 天的样本拼成一批，币龄 7～14 天"
      },
      "交易者": {
@@ -831,7 +831,7 @@
       "total30d": 1561930
      },
      "rev": {
-      "total24h": 1474,
+      "total24h": 1580,
       "total7d": 21677,
       "total30d": 396372
      },
@@ -1063,7 +1063,7 @@
      {
       "board": "aiagent",
       "rule": "ai_new",
-      "why": "AI Agent 板块：手续费从 2026-10-15 才开始，近 7 天 104,268 美元；板块备注：2026-10 才收录，30 天手续费很快冲到第一，真实需求还是自付刷量待 Codex 核",
+      "why": "AI Agent 板块：手续费从 2026-10-15 才开始，近 7 天 85,431 美元；板块备注：2026-10 才收录，30 天手续费很快冲到第一，真实需求还是自付刷量待 Codex 核",
       "since": "2026-10-15"
      }
     ],
@@ -1428,15 +1428,15 @@
       "url": "https://dexscreener.com/base/0xaec085e5a5ce8d96a7bdd3eb3a62445d4f6ce703"
      },
      "snap": {
-      "mcap": 20725214,
-      "fdv": 20725214,
-      "vol24": 75534.65,
-      "liq": 1318958.28,
-      "chg24": 1.66,
+      "mcap": 20827885,
+      "fdv": 20827885,
+      "vol24": 78915.2,
+      "liq": 1319916.83,
+      "chg24": 1.09,
       "pairs": 16,
       "dex": "uniswap",
       "chain": "base",
-      "at": "2026-11-23T09:23+00:00",
+      "at": "2026-11-23T10:01+00:00",
       "src": "DexScreener"
      }
     },
@@ -1705,7 +1705,7 @@
    "key": "x:launchpad:chain-elysium",
    "name": "Elysium 生态（新发射台聚集）",
    "kind": "site",
-   "why_here": "30 天内 Elysium 上新进矩阵的发射台有 10 个：Montra、Ascend Launchpad、Volta、ElysPump V2、Boxa V1、Kleos Launchpad；合计近 7 天手续费 179,278 美元",
+   "why_here": "30 天内 Elysium 上新进矩阵的发射台有 10 个：Montra、Ascend Launchpad、Volta、Boxa V1、ElysPump V2、Kleos Launchpad；合计近 7 天手续费 169,761 美元",
    "manual": null,
    "discovered": "2026-11-15",
    "baseline": false,
@@ -1922,7 +1922,7 @@
     "chg30": null,
     "rev_all": null,
     "llama": null,
-    "fees7": 179278,
+    "fees7": 169761,
     "fees30": null,
     "sources": [
      "site_launchpad"
@@ -1931,7 +1931,7 @@
      {
       "board": "launchpad",
       "rule": "lp_chain",
-      "why": "30 天内 Elysium 上新进矩阵的发射台有 10 个：Montra、Ascend Launchpad、Volta、ElysPump V2、Boxa V1、Kleos Launchpad；合计近 7 天手续费 179,278 美元",
+      "why": "30 天内 Elysium 上新进矩阵的发射台有 10 个：Montra、Ascend Launchpad、Volta、Boxa V1、ElysPump V2、Kleos Launchpad；合计近 7 天手续费 169,761 美元",
       "since": null
      }
     ],
@@ -2194,15 +2194,15 @@
       "url": "https://dexscreener.com/elysium/0x7b182abb748bae25e2c73abd8b4cf3157d8d35a47e4b36d1ee5565ade94c3c27"
      },
      "snap": {
-      "mcap": 328036,
-      "fdv": 328036,
-      "vol24": 164823.63,
-      "liq": 58605.53,
-      "chg24": 23.56,
+      "mcap": 329606,
+      "fdv": 329606,
+      "vol24": 164560.67,
+      "liq": 58638.12,
+      "chg24": 19.05,
       "pairs": 14,
       "dex": "uniswap",
       "chain": "elysium",
-      "at": "2026-11-23T09:23+00:00",
+      "at": "2026-11-23T10:01+00:00",
       "src": "DexScreener"
      }
     },
@@ -2214,12 +2214,12 @@
       "total30d": 266497
      },
      "rev": {
-      "total24h": 2168,
+      "total24h": 2238,
       "total7d": 8736,
       "total30d": 180958
      },
      "hold": {
-      "total24h": 1971,
+      "total24h": 2034,
       "total7d": 7938,
       "total30d": 164974
      },
@@ -2503,10 +2503,10 @@
     },
     "tok": null,
     "lpq": {
-     "数据日": "2026-11-21",
+     "数据日": "2026-11-22",
      "发币": {
       "1d": 0,
-      "7d": 64,
+      "7d": 56,
       "估算": false,
       "工厂": [
        "elysium:0x63f6a8a8d0257c0363251a50cde8a8b1046e4d19"
@@ -2520,15 +2520,15 @@
       "口径": "查过交易的不同发币地址；每天单独数，取 7 天里最多的一天（没记 7 天去重），下限"
      },
      "存活": {
-      "批次": "2026-11-07～2026-11-13",
-      "发出": 894,
+      "批次": "2026-11-08～2026-11-14",
+      "发出": 851,
       "样本": 15,
       "7天后仍有交易": 0,
       "市值过10万美元": 0,
       "口径": "批次那天发的币里抽 20 个，发出后 7～8 天逐个用 GeckoTerminal 查它的全部池子（含发射台曲线池）：近 24 小时有买卖的个数、市值（没有就用 FDV）≥ 10 万美元的个数；GeckoTerminal 没收录的池子看不到，算没交易，下限",
       "来源": "GeckoTerminal（链上样本 + 第三方行情）",
-      "收录": 9,
-      "查询日": "2026-11-22",
+      "收录": 10,
+      "查询日": "2026-11-23",
       "说明": "早期批次：每个工厂每天只留了 3 个样本币，这里把 7 天的样本拼成一批，币龄 7～14 天"
      },
      "交易者": {
@@ -2552,7 +2552,7 @@
       "total30d": 641069
      },
      "rev": {
-      "total24h": 414,
+      "total24h": 367,
       "total7d": 11169,
       "total30d": 247620
      },
@@ -4854,7 +4854,7 @@
       "total30d": 1491506
      },
      "rev": {
-      "total24h": 42343,
+      "total24h": 42405,
       "total7d": 532419,
       "total30d": 1491506
      },
@@ -5185,7 +5185,7 @@
       "total30d": 4962856
      },
      "rev": {
-      "total24h": 28878,
+      "total24h": 36240,
       "total7d": 237834,
       "total30d": 1081788
      },
@@ -7053,15 +7053,15 @@
       "url_en": "https://www.binance.com/en/trade/SPK_USDT?type=spot"
      },
      "snap": {
-      "mcap": 40536192,
-      "fdv": 118611954,
-      "vol24": 29811.84,
-      "liq": 30731.27,
-      "chg24": -0.95,
+      "mcap": 40705857,
+      "fdv": 119108407,
+      "vol24": 31215.649999999998,
+      "liq": 30860.52,
+      "chg24": -0.53,
       "pairs": 7,
       "dex": "uniswap",
       "chain": "ethereum",
-      "at": "2026-11-23T09:23+00:00",
+      "at": "2026-11-23T10:01+00:00",
       "src": "DexScreener"
      }
     },
@@ -7327,15 +7327,15 @@
       "url_en": "https://www.binance.com/en/trade/JST_USDT?type=spot"
      },
      "snap": {
-      "mcap": 1431859133,
-      "fdv": 1431859133,
-      "vol24": 89576.17,
-      "liq": 14508382.76,
-      "chg24": -0.44,
+      "mcap": 1435753194,
+      "fdv": 1435753194,
+      "vol24": 91834.08,
+      "liq": 14528127.38,
+      "chg24": -0.17,
       "pairs": 2,
       "dex": "sunswap",
       "chain": "tron",
-      "at": "2026-11-23T09:23+00:00",
+      "at": "2026-11-23T10:01+00:00",
       "src": "DexScreener"
      }
     },
@@ -7600,15 +7600,15 @@
       "url": "https://dexscreener.com/robinhood/0xcce8dcf7c4dcfee6b6588db724240d9d6a22ee456f9387bb831c8fcea970869e"
      },
      "snap": {
-      "mcap": 426306,
-      "fdv": 3125434,
-      "vol24": 30763.18,
-      "liq": 212402.28,
-      "chg24": -0.41,
+      "mcap": 427517,
+      "fdv": 3134325,
+      "vol24": 32131.72,
+      "liq": 212398.08,
+      "chg24": -0.1,
       "pairs": 4,
       "dex": "uniswap",
       "chain": "robinhood",
-      "at": "2026-11-23T09:23+00:00",
+      "at": "2026-11-23T10:01+00:00",
       "src": "DexScreener"
      }
     },
@@ -7619,17 +7619,17 @@
       "total30d": 495281192
      },
      "fees": {
-      "total24h": 11438,
+      "total24h": 11287,
       "total7d": 119655,
       "total30d": 888776
      },
      "rev": {
-      "total24h": 3228,
+      "total24h": 3130,
       "total7d": 48556,
       "total30d": 442647
      },
      "hold": {
-      "total24h": 3228,
+      "total24h": 3130,
       "total7d": 50055,
       "total30d": 486645
      },
@@ -7881,25 +7881,25 @@
      "snap": {
       "mcap": 3791181,
       "fdv": 3791181,
-      "vol24": 12200.1,
+      "vol24": 12133.34,
       "liq": 585612.31,
-      "chg24": -1.55,
+      "chg24": -1.02,
       "pairs": 18,
       "dex": "uniswap",
       "chain": "ethereum",
-      "at": "2026-11-23T09:23+00:00",
+      "at": "2026-11-23T10:01+00:00",
       "src": "DexScreener"
      }
     },
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 0.4,
+      "total24h": 0.44,
       "total7d": 94.69999999999999,
       "total30d": 339721.61000000004
      },
      "rev": {
-      "total24h": 0.4,
+      "total24h": 0.44,
       "total7d": 94.69999999999999,
       "total30d": 339721.61000000004
      },
@@ -8148,20 +8148,21 @@
       }
      ],
      "chart": {
-      "name": "DexScreener",
-      "name_en": "DexScreener",
-      "url": "https://dexscreener.com/ethereum/0xd1d5a4c0ea98971894772dcd6d2f1dc71083c44e"
+      "name": "币安",
+      "name_en": "Binance",
+      "url": "https://www.binance.com/zh-CN/trade/LQTY_USDT?type=spot",
+      "url_en": "https://www.binance.com/en/trade/LQTY_USDT?type=spot"
      },
      "snap": {
-      "mcap": 13173365,
-      "fdv": 13173365,
-      "vol24": 12440.58,
-      "liq": 339239.56,
-      "chg24": 0.03,
+      "mcap": 13093441,
+      "fdv": 13093441,
+      "vol24": 11893.230000000001,
+      "liq": 337246.71,
+      "chg24": -1.47,
       "pairs": 8,
       "dex": "uniswap",
       "chain": "ethereum",
-      "at": "2026-11-23T09:23+00:00",
+      "at": "2026-11-23T10:01+00:00",
       "src": "DexScreener"
      }
     },
@@ -8421,20 +8422,21 @@
       }
      ],
      "chart": {
-      "name": "DexScreener",
-      "name_en": "DexScreener",
-      "url": "https://dexscreener.com/ethereum/0xec977f46467a3021785cff88894886e617abd65b"
+      "name": "币安",
+      "name_en": "Binance",
+      "url": "https://www.binance.com/zh-CN/trade/YB_USDT?type=spot",
+      "url_en": "https://www.binance.com/en/trade/YB_USDT?type=spot"
      },
      "snap": {
-      "mcap": 14675337,
-      "fdv": 41622321,
-      "vol24": 58916.649999999994,
-      "liq": 387473.53,
-      "chg24": 2.49,
+      "mcap": 14444672,
+      "fdv": 40968107,
+      "vol24": 62965.66,
+      "liq": 384512.15,
+      "chg24": 1.11,
       "pairs": 3,
       "dex": "curve",
       "chain": "ethereum",
-      "at": "2026-11-23T09:23+00:00",
+      "at": "2026-11-23T10:01+00:00",
       "src": "DexScreener"
      }
     },
@@ -8707,13 +8709,13 @@
      "snap": {
       "mcap": 40760621,
       "fdv": 40760621,
-      "vol24": 317.42,
+      "vol24": 239.60999999999999,
       "liq": 9401.89,
-      "chg24": 0.56,
-      "pairs": 2,
+      "chg24": 0.19,
+      "pairs": 3,
       "dex": "curve",
       "chain": "ethereum",
-      "at": "2026-11-23T09:23+00:00",
+      "at": "2026-11-23T10:01+00:00",
       "src": "DexScreener"
      }
     },
@@ -10127,7 +10129,7 @@
       "total30d": 7009193
      },
      "rev": {
-      "total24h": 70781,
+      "total24h": 71668,
       "total7d": 455581,
       "total30d": 2013962
      },
@@ -10469,7 +10471,7 @@
       "total30d": 1995780
      },
      "rev": {
-      "total24h": 45076,
+      "total24h": 44009,
       "total7d": 413848,
       "total30d": 1995780
      },
@@ -12486,10 +12488,10 @@
     },
     "tok": null,
     "lpq": {
-     "数据日": "2026-11-21",
+     "数据日": "2026-11-22",
      "发币": {
-      "1d": 248,
-      "7d": 25542,
+      "1d": 5139,
+      "7d": 26523,
       "估算": false,
       "工厂": [
        "bsc:0xe2ce6ab80874fa9fa2aae65d277dd6b8e65c9de0",
@@ -12506,15 +12508,15 @@
       "口径": "BSC Portal 0xe2cE…9De0 的内盘买卖和 TokenCreated；Flap 另一个 BSC 工厂和 Robinhood 链没扫。创建事件里不同的发币钱包（合约发起的换成交易发起钱包）；7d = 最近 7 天去重，攒满 7 天才出（现在 3 天）"
      },
      "存活": {
-      "批次": "2026-11-07～2026-11-13",
-      "发出": 5990,
+      "批次": "2026-11-08～2026-11-14",
+      "发出": 9650,
       "样本": 20,
       "7天后仍有交易": null,
       "市值过10万美元": null,
       "口径": "批次那天发的币里抽 20 个，发出后 7～8 天逐个用 GeckoTerminal 查它的全部池子（含发射台曲线池）：近 24 小时有买卖的个数、市值（没有就用 FDV）≥ 10 万美元的个数；GeckoTerminal 没收录的池子看不到，算没交易，下限",
       "来源": "待接入（GeckoTerminal 不收这家的池子）",
       "收录": 0,
-      "查询日": "2026-11-22",
+      "查询日": "2026-11-23",
       "说明": "GeckoTerminal 没收录这家任何一个样本币的池子（曲线池不收），存活查不了；要换数据源或自己扫链上交易"
      },
      "交易者": {
@@ -12541,7 +12543,7 @@
       "total30d": 15415433
      },
      "rev": {
-      "total24h": 129029,
+      "total24h": 141959,
       "total7d": 691827,
       "total30d": 3641324
      },
@@ -12856,12 +12858,12 @@
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 54268,
+      "total24h": 54066,
       "total7d": 460942,
       "total30d": 2386472
      },
      "rev": {
-      "total24h": 54268,
+      "total24h": 54066,
       "total7d": 460942,
       "total30d": 2386472
      },
@@ -13180,7 +13182,7 @@
       "total30d": 1587753
      },
      "rev": {
-      "total24h": 7347,
+      "total24h": 7506,
       "total7d": 81674,
       "total30d": 1481039
      },
@@ -14179,7 +14181,7 @@
       "total30d": 10795499
      },
      "rev": {
-      "total24h": 12360,
+      "total24h": 12672,
       "total7d": 122135,
       "total30d": 680776
      },
@@ -14748,13 +14750,13 @@
      "snap": {
       "mcap": 649383,
       "fdv": 13490181,
-      "vol24": 6294.69,
+      "vol24": 5428.77,
       "liq": 252684.51,
-      "chg24": 2.33,
+      "chg24": 1.59,
       "pairs": 4,
       "dex": "aero",
       "chain": "base",
-      "at": "2026-11-23T09:23+00:00",
+      "at": "2026-11-23T10:01+00:00",
       "src": "DexScreener"
      }
     },
@@ -14770,7 +14772,7 @@
       "total30d": 260116
      },
      "rev": {
-      "total24h": 18347,
+      "total24h": 18601,
       "total7d": 76742,
       "total30d": 260116
      },
@@ -15028,12 +15030,12 @@
       "total30d": 13961718
      },
      "rev": {
-      "total24h": 35649,
+      "total24h": 35570,
       "total7d": 2503502,
       "total30d": 13961718
      },
      "hold": {
-      "total24h": 18485,
+      "total24h": 18446,
       "total7d": 2358267,
       "total30d": 13050604
      },
@@ -15283,15 +15285,15 @@
       "url": "https://dexscreener.com/solana/4gwh5sakgzoukhhj4rh3p5fmpu6ypuaexv6fah5jqyfm"
      },
      "snap": {
-      "mcap": 11155734,
-      "fdv": 19716814,
-      "vol24": 489745.98000000004,
-      "liq": 517405.31,
-      "chg24": 22.61,
+      "mcap": 10718805,
+      "fdv": 18944578,
+      "vol24": 487738.57,
+      "liq": 503473.95,
+      "chg24": 17.81,
       "pairs": 18,
       "dex": "raydium",
       "chain": "solana",
-      "at": "2026-11-23T09:23+00:00",
+      "at": "2026-11-23T10:01+00:00",
       "src": "DexScreener"
      }
     },
@@ -15303,7 +15305,7 @@
       "total30d": 882528
      },
      "rev": {
-      "total24h": 18085,
+      "total24h": 18696,
       "total7d": 158239,
       "total30d": 882528
      },
@@ -15555,13 +15557,13 @@
      "snap": {
       "mcap": 2300297,
       "fdv": 2300297,
-      "vol24": 10250.83,
+      "vol24": 10196.37,
       "liq": 411341.54,
       "chg24": -7.52,
       "pairs": 3,
       "dex": "hyperswap",
       "chain": "hyperevm",
-      "at": "2026-11-23T09:23+00:00",
+      "at": "2026-11-23T10:01+00:00",
       "src": "DexScreener"
      }
     },
@@ -15821,15 +15823,15 @@
       "url": "https://dexscreener.com/hyperevm/0xc8e5ee73b80bb3f6c9b5348771de8217abd412e7"
      },
      "snap": {
-      "mcap": 53593317,
-      "fdv": 165399400,
-      "vol24": 162303.75,
-      "liq": 798716.66,
-      "chg24": -3.41,
-      "pairs": 17,
+      "mcap": 53454740,
+      "fdv": 164971725,
+      "vol24": 160132.57,
+      "liq": 796819.44,
+      "chg24": -4.54,
+      "pairs": 18,
       "dex": "nest",
       "chain": "hyperevm",
-      "at": "2026-11-23T09:23+00:00",
+      "at": "2026-11-23T10:01+00:00",
       "src": "DexScreener"
      }
     }
@@ -16033,20 +16035,21 @@
       }
      ],
      "chart": {
-      "name": "DexScreener",
-      "name_en": "DexScreener",
-      "url": "https://dexscreener.com/ethereum/0x57af956d3e2cca3b86f3d8c6772c03ddca3eaacb"
+      "name": "币安",
+      "name_en": "Binance",
+      "url": "https://www.binance.com/zh-CN/trade/PENDLE_USDT?type=spot",
+      "url_en": "https://www.binance.com/en/trade/PENDLE_USDT?type=spot"
      },
      "snap": {
-      "mcap": 231607093,
-      "fdv": 374363289,
-      "vol24": 102655.19,
-      "liq": 451525.6,
-      "chg24": 4.48,
-      "pairs": 12,
+      "mcap": 231654129,
+      "fdv": 374439317,
+      "vol24": 93908.58,
+      "liq": 451187.69,
+      "chg24": 3.39,
+      "pairs": 11,
       "dex": "uniswap",
       "chain": "ethereum",
-      "at": "2026-11-23T09:23+00:00",
+      "at": "2026-11-23T10:02+00:00",
       "src": "DexScreener"
      }
     }
@@ -16205,7 +16208,7 @@
      "llama_listing"
     ],
     "boards": null,
-    "tvl": 6832762,
+    "tvl": 6833351,
     "listed": "2026-11-12",
     "slug": "swan-dao",
     "url": "https://www.swanusd.com",
@@ -16402,7 +16405,7 @@
      {
       "board": "launchpad",
       "rule": "lp_accel",
-      "why": "近 7 天手续费 192,006 美元，是上 7 天（9）的 21695.6 倍",
+      "why": "近 7 天手续费 192,350 美元，是上 7 天（9）的 21734.5 倍",
       "since": null
      }
     ],
@@ -16725,7 +16728,7 @@
       "total30d": 156641
      },
      "rev": {
-      "total24h": 3678,
+      "total24h": 3742,
       "total7d": 28162,
       "total30d": 129088
      },
@@ -17000,15 +17003,15 @@
       "url": "https://dexscreener.com/bsc/0x3098d7a051045000d68ec0360753a40c8cabea31"
      },
      "snap": {
-      "mcap": 5396000,
-      "fdv": 5396000,
-      "vol24": 184762.18,
-      "liq": 127694.49,
-      "chg24": -6.9,
+      "mcap": 5402652,
+      "fdv": 5402652,
+      "vol24": 183140.36,
+      "liq": 127650.64,
+      "chg24": -7.36,
       "pairs": 14,
       "dex": "pancakeswap",
       "chain": "bsc",
-      "at": "2026-11-23T09:23+00:00",
+      "at": "2026-11-23T10:02+00:00",
       "src": "DexScreener"
      }
     }
