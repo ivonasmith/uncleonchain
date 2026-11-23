@@ -8,8 +8,9 @@
   发币人  当天创建事件里不同的发币地址（同样把合约换成交易发起钱包）
   前10地址笔数占比  笔数最多的 10 个钱包占全部买卖笔数的比例。成交额口径要统一计价币（每个币报价币不同），还没做，前10地址成交占比 = null
   7d      最近 7 天去重（逐日地址集合在 pipeline/cache/traders/，走 actions/cache）；缓存里不满 7 天就是 null，「覆盖天数」写明
-节点：BSC 公共节点（publicnode 优先，env BSC_RPC 可改，逗号分隔），一天 ~19 万块，5000 块一段。
-时间预算 TRADERS_TIME 秒（默认 900；Flap 一天约 10 万笔要回查发起钱包，单天 5～8 分钟）：每天要么扫完整天要么不记，没扫完的下次接着扫；最多往回补 2 天（公共节点只留约 2 天日志，更早的块返回空，任何一段为空整天不记）。
+节点：BSC 公共节点（publicnode 优先，env BSC_RPC 可改，逗号分隔），一天 ~19 万块，5000 块一段；公共节点日志只留 25～30 小时，
+      取不到的段改走 Alchemy（env ALCHEMY_KEY，存档节点，只取日志；逐笔查发起钱包、合约代码仍走公共节点，旧交易按哈希查得到）。
+时间预算 TRADERS_TIME 秒（默认 900；Flap 一天约 10 万笔要回查发起钱包，单天 5～8 分钟）：每天要么扫完整天要么不记，没扫完的下次接着扫；新的日子先扫（保证昨天及时），再往回补（有 Alchemy 补 7 天，没有只看昨天；任何一段两边都取不到整天不记）。
 逐日结果只追加（自录数据，不可再生，见 docs/备份方案.md）。
 """
 import os, sys, json, gzip, time, datetime as dt, urllib.request
@@ -23,7 +24,9 @@ CACHE = os.environ.get("TRADERS_CACHE") or os.path.join(os.path.dirname(os.path.
 RPCS = [u for u in (os.environ.get("BSC_RPC") or "https://bsc-rpc.publicnode.com,https://bsc-dataseed.bnbchain.org").split(",") if u]
 BUDGET = int(os.environ.get("TRADERS_TIME", "900"))
 CHUNK = 5000
-BACK = int(os.environ.get("TRADERS_BACK", "2"))   # 公共节点只留约 2 天日志，往回最多补 2 天
+ALCHEMY = f"https://bnb-mainnet.g.alchemy.com/v2/{os.environ['ALCHEMY_KEY'].strip()}" if os.environ.get("ALCHEMY_KEY", "").strip() else None
+# 往回补几天：有 Alchemy（存档节点）补 7 天；只有公共节点（日志只留 25～30 小时）只看昨天
+BACK = int(os.environ.get("TRADERS_BACK") or (7 if ALCHEMY else 1))
 
 # slug = DefiLlama slug（和 平台质量.json 同一套）。字段位置 = topics[1:] + data 的 32 字节字（两家这几个事件都没有 indexed 参数）
 PLATFORMS = {
@@ -115,16 +118,46 @@ def addr(w):
     return "0x" + w[-40:].lower()
 
 
-def scan_day(rpc, cfg, a, b, kinds):
+def alchemy_logs(flt, a, b):
+    """公共节点拿不到的段（超出保留期）改走 Alchemy 存档节点取日志，每段 2000 块（和 拉链上新台.py 的 BSC 跨度一致）；没有 key 返回 None。"""
+    if not ALCHEMY:
+        return None
+    out, x = [], a
+    while x <= b:
+        y = min(b, x + 1999)
+        for t in range(4):
+            try:
+                r = urllib.request.Request(ALCHEMY, json.dumps({"jsonrpc": "2.0", "id": 1, "method": "eth_getLogs",
+                                                                "params": [dict(flt, fromBlock=hex(x), toBlock=hex(y))]}).encode(),
+                                           {"Content-Type": "application/json", "User-Agent": "uncleonchain-launchpad"})
+                j = json.load(urllib.request.urlopen(r, timeout=90))
+                if "error" in j:
+                    raise RuntimeError(j["error"])
+                out += j["result"]
+                break
+            except Exception as e:  # noqa: BLE001
+                if t == 3:
+                    raise RuntimeError(f"Alchemy 取日志失败（块 {x}–{y}）：{e}")
+                time.sleep(2 + 2 * t)
+        x = y + 1
+    return out
+
+
+def scan_day(rpc, cfg, a, b, kinds, used):
     T = cfg["topics"]
     inv = {v: k for k, v in T.items()}
+    flt = {"address": cfg["address"], "topics": [list(T.values())]}
     logs, x = [], a
     while x <= b:
         y = min(b, x + CHUNK - 1)
-        part = rpc.call("eth_getLogs", [{"address": cfg["address"], "topics": [list(T.values())], "fromBlock": hex(x), "toBlock": hex(y)}])
-        # 公共节点只留约 2 天日志，更早的块不报错、直接返回空：两家每 5000 块（约 37 分钟）都有几百上千笔，一段为空就当节点没数据，整天不记
+        part = rpc.call("eth_getLogs", [dict(flt, fromBlock=hex(x), toBlock=hex(y))])
+        # 公共节点只留约 25～30 小时日志（11-22 实测），更早的块不报错、直接返回空：两家每 5000 块（约 37 分钟）都有几百上千笔，
+        # 一段为空 → 这段改走 Alchemy；Alchemy 也空（或没有 key）就当没数据，整天不记
         if not part:
-            raise RuntimeError(f"块 {x}–{y} 没返回日志（超出节点保留范围？）")
+            part = alchemy_logs(flt, x, y)
+            if not part:
+                raise RuntimeError(f"块 {x}–{y} 没返回日志（公共节点超出保留期{'，Alchemy 也没有' if ALCHEMY else '，没配 ALCHEMY_KEY'}）")
+            used["alchemy"] = used.get("alchemy", 0) + 1
         logs += part
         x = y + 1
     trades, creates = [], []
@@ -170,7 +203,7 @@ def main():
     except Exception as e:  # noqa: BLE001
         print(f"⚠️ BSC 节点连不上，交易者这次不扫：{e}")
         return
-    days = [(today - dt.timedelta(days=i)).isoformat() for i in range(BACK, 0, -1)]
+    days = [(today - dt.timedelta(days=i)).isoformat() for i in range(1, BACK + 1)]   # 新的先扫
     bounds = {}
     for slug, cfg in PLATFORMS.items():
         p = plats.setdefault(slug, {"逐日": {}})
@@ -188,14 +221,15 @@ def main():
             s = time.time()
             rpc.deadline = t0 + BUDGET + 120   # 已开扫的一天多给 2 分钟收尾，再超就整天不记
             try:
-                r = scan_day(rpc, cfg, a, b, kinds)
+                used = {}
+                r = scan_day(rpc, cfg, a, b, kinds, used)
             except Exception as e:  # noqa: BLE001
                 print(f"  ⚠️ {slug} {d} 扫描失败，这天不记：{e}")
                 continue
             os.makedirs(os.path.dirname(cache_path(slug, d)), exist_ok=True)
             with gzip.open(cache_path(slug, d), "wt", encoding="utf-8") as f:
                 json.dump({"traders": r["traders"], "creators": r["creators"]}, f)
-            p["逐日"][d] = {"块": [a, b], "买卖笔数": r["trades"], "合约下单笔数": r["via_contract"], "未解析笔数": r["unresolved"],
+            p["逐日"][d] = {"块": [a, b], "日志段走Alchemy": used.get("alchemy", 0), "买卖笔数": r["trades"], "合约下单笔数": r["via_contract"], "未解析笔数": r["unresolved"],
                           "交易者": len(r["traders"]), "发币": r["creates"], "发币人": len(r["creators"]),
                           "前10地址笔数占比": round(r["top10"] / r["trades"], 4) if r["trades"] else None}
             print(f"  {slug} {d}：{r['trades']} 笔 · 交易者 {len(r['traders'])} · 发币 {r['creates']} / 发币人 {len(r['creators'])}"

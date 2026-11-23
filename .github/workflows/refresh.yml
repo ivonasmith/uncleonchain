@@ -281,6 +281,7 @@ jobs:
         env:
           LP_DATA: ${{ github.workspace }}/data
           TRADERS_TIME: "840"
+          ALCHEMY_KEY: ${{ secrets.ALCHEMY_KEY }}   # 公共节点日志只留 25～30 小时，取不到的段走 Alchemy（只取日志）
         run: python3 pipeline/平台交易者.py
       - name: 平台质量（存活）
         continue-on-error: true

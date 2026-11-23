@@ -1,5 +1,19 @@
 [
  {
+  "version": "2026.11.23.1",
+  "date": "2026-11-23",
+  "notify": false,
+  "title_zh": "发射台交易者 / 发币人：公共节点取不到的日志改走存档节点",
+  "title_en": "Launchpad traders / creators: archive-node fallback for logs",
+  "items": [
+   {
+    "type": "improve",
+    "zh": "BSC 公共节点的日志实测只保留 25～30 小时，每天下午那次扫「昨天」时前半天已经被清掉，11-16、11-19、11-21、11-22 四天因此没记上。现在取不到的那段改从存档节点取（只取事件日志，逐笔查发起钱包仍走公共节点），并往回补最近 7 天里缺的日子；口径不变。",
+    "en": "The BSC public node keeps only 25–30 hours of logs, so the afternoon run lost the first half of the previous day; 11-16, 11-19, 11-21 and 11-22 were not recorded. Missing log ranges now come from an archive node (logs only), and missing days in the last 7 are backfilled. Method unchanged."
+   }
+  ]
+ },
+ {
   "version": "2026.11.22",
   "date": "2026-11-22",
   "notify": false,
