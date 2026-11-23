@@ -61,6 +61,7 @@ jobs:
         run: |
           python3 alpha/notion_sync.py opps leads
           if [ -n "$ALPHA_WEEK" ]; then python3 alpha/notion_sync.py weekly --week "$ALPHA_WEEK"; fi
+          python3 alpha/notion_sync.py weekly --recent || echo "周复盘结论补同步失败"
 
       - name: 全站待办与检查（Codex 推了补证后马上更新反馈）
         run: python3 pipeline/任务清单.py || echo "待办检查失败"

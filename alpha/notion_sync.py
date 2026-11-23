@@ -121,6 +121,14 @@ def main():
         wk = args[args.index("--week") + 1] if "--week" in args else None
         if wk:
             sync("weekly", NR.weekly(wk))
+        if "--recent" in args:   # 复盘会话后写的结论（<周>.结论.md）：最近 3 周有就补同步；Notion 里已有结论不覆盖（KEEP_IF_SET）
+            import glob, datetime as _dt
+            cut = (_dt.date.today() - _dt.timedelta(days=21)).isocalendar()
+            cut = f"{cut[0]}-W{cut[1]:02d}"
+            for f in sorted(glob.glob(os.path.join(NR.D, "weekly", "*.结论.md"))):
+                tag = os.path.basename(f).split(".")[0]
+                if tag >= cut and tag != wk and os.path.exists(os.path.join(NR.D, "weekly", f"{tag}.json")):
+                    sync("weekly", NR.weekly(tag))
 
 
 if __name__ == "__main__":

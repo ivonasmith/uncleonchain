@@ -121,6 +121,10 @@ def main():
     except OSError:
         old_md = ""
     kept = old_md.split(head, 1)[1].strip() if head in old_md else ""
+    try:   # 复盘会话把结论写在单独的 <周>.结论.md（流水线从不写它，不会被总调度的产物盖掉；11-23 W47 出过这事）
+        kept = open(os.path.join(W, f"{tag}.结论.md"), encoding="utf-8").read().strip() or kept
+    except OSError:
+        pass
     if kept and not kept.startswith("- （复盘会话填写"):
         md = md[:md.index(head) + 1] + kept.split("\n")
     open(mp, "w", encoding="utf-8").write("\n".join(md) + "\n")

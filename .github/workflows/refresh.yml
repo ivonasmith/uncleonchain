@@ -220,6 +220,7 @@ jobs:
         run: |
           python3 alpha/notion_sync.py opps leads
           if [ -n "$ALPHA_WEEK" ]; then python3 alpha/notion_sync.py weekly --week "$ALPHA_WEEK"; fi
+          python3 alpha/notion_sync.py weekly --recent || echo "周复盘结论补同步失败"
       - if: always()
         run: |
           F="data/alpha"; ls alpha/review/grok_*_checks.json >/dev/null 2>&1 && F="$F $(ls alpha/review/grok_*_checks.json | tr '\n' ' ')"

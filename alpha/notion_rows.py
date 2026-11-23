@@ -112,7 +112,13 @@ def weekly(tag):
 
 
 def md_conclusion(tag):
-    """复盘会话写在 data/alpha/weekly/<周>.md「本周结论 / 规则调整」一节的内容（占位行不算）。"""
+    """复盘会话的结论：优先 data/alpha/weekly/<周>.结论.md，其次 <周>.md「本周结论 / 规则调整」一节（占位行不算）。"""
+    try:
+        sec = open(os.path.join(D, "weekly", f"{tag}.结论.md"), encoding="utf-8").read().strip()
+        if sec:
+            return {"结论": sec[:1900]}
+    except Exception:
+        pass
     try:
         md = open(os.path.join(D, "weekly", f"{tag}.md"), encoding="utf-8").read()
     except Exception:
