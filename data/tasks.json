@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-23T01:15:37+00:00",
+ "generated": "2026-11-23T09:55:19+00:00",
  "boards": [
   {
    "board": "alpha",
@@ -82,13 +82,6 @@
      "kind": "tokenless"
     },
     {
-     "key": "s:parent#spark",
-     "name": "Spark",
-     "status": "原始线索",
-     "fresh": true,
-     "kind": "surge"
-    },
-    {
      "key": "s:parent#threshold-network",
      "name": "Threshold Network",
      "status": "原始线索",
@@ -98,6 +91,13 @@
     {
      "key": "s:9065",
      "name": "Papertrade",
+     "status": "原始线索",
+     "fresh": false,
+     "kind": "surge"
+    },
+    {
+     "key": "s:parent#spark",
+     "name": "Spark",
      "status": "原始线索",
      "fresh": false,
      "kind": "surge"
@@ -138,15 +138,15 @@
      "kind": "surge"
     },
     {
-     "key": "s:7655",
-     "name": "THORWallet",
+     "key": "s:parent#liquity",
+     "name": "Liquity",
      "status": "原始线索",
      "fresh": false,
      "kind": "surge"
     },
     {
-     "key": "s:parent#liquity",
-     "name": "Liquity",
+     "key": "s:7655",
+     "name": "THORWallet",
      "status": "原始线索",
      "fresh": false,
      "kind": "surge"
@@ -257,13 +257,6 @@
      "kind": "tokenless"
     },
     {
-     "key": "g:9296",
-     "name": "The Standard Reserve",
-     "status": "待核验",
-     "fresh": false,
-     "kind": "tokenless"
-    },
-    {
      "key": "g:5864",
      "name": "TRONSAVE",
      "status": "待核验",
@@ -271,8 +264,8 @@
      "kind": "tokenless"
     },
     {
-     "key": "g:5825",
-     "name": "Veda",
+     "key": "g:9296",
+     "name": "The Standard Reserve",
      "status": "待核验",
      "fresh": false,
      "kind": "tokenless"
@@ -280,6 +273,13 @@
     {
      "key": "g:parent#okx-dex",
      "name": "OKX Swap",
+     "status": "待核验",
+     "fresh": false,
+     "kind": "tokenless"
+    },
+    {
+     "key": "g:5825",
+     "name": "Veda",
      "status": "待核验",
      "fresh": false,
      "kind": "tokenless"
@@ -695,12 +695,12 @@
      "name": "LaunchLab"
     },
     {
-     "slug": "stonkfun",
-     "name": "StonkFun"
-    },
-    {
      "slug": "bonk.fun-launchpad",
      "name": "BONK.fun Launchpad"
+    },
+    {
+     "slug": "stonkfun",
+     "name": "StonkFun"
     },
     {
      "slug": "sendfun-launchpad",
@@ -731,10 +731,6 @@
      "name": "o1 Launchpad"
     },
     {
-     "slug": "clanker",
-     "name": "clanker"
-    },
-    {
      "slug": "four.meme",
      "name": "four.meme"
     },
@@ -751,32 +747,36 @@
      "name": "Bags"
     },
     {
-     "slug": "otc",
-     "name": "OTC"
+     "slug": "clanker",
+     "name": "clanker"
     },
     {
      "slug": "argus-world",
      "name": "Argus World"
     },
     {
-     "slug": "rapid-launch",
-     "name": "Rapid Launch"
+     "slug": "otc",
+     "name": "OTC"
     },
     {
-     "slug": "pools",
-     "name": "Pools"
+     "slug": "rapid-launch",
+     "name": "Rapid Launch"
     },
     {
      "slug": "metaplex",
      "name": "Metaplex"
     },
     {
-     "slug": "stockereum",
-     "name": "Stockereum"
+     "slug": "pools",
+     "name": "Pools"
     },
     {
      "slug": "volta",
      "name": "Volta"
+    },
+    {
+     "slug": "stockereum",
+     "name": "Stockereum"
     }
    ],
    "n": 25,
@@ -804,7 +804,7 @@
   {
    "board": "alpha",
    "id": "alpha:cmc",
-   "title": "CMC 页面地址核对登记（8 个币）",
+   "title": "CMC 页面地址核对登记（11 个币）",
    "who": "codex",
    "pri": 3,
    "deliver": "alpha/cmc_slugs.json",
@@ -814,12 +814,15 @@
     "bem-2",
     "fables",
     "kinetiq",
+    "liquity",
     "nullmask",
     "peapods-finance",
+    "pendle",
     "pons",
-    "thor-wallet"
+    "thor-wallet",
+    "yield-basis"
    ],
-   "n": 8,
+   "n": 11,
    "note": null
   },
   {
@@ -877,10 +880,10 @@
    "deliver": "alpha/research/<同名>.en.md（Claude 接进网站）",
    "ref": null,
    "items": [
+    "研究进度.md",
     "Alpha标的筛选研究体系.md",
-    "案例库.md",
     "交易所上币回报研究.md",
-    "研究进度.md"
+    "案例库.md"
    ],
    "n": 4,
    "note": null
@@ -980,7 +983,8 @@
      "字段": "发币人",
      "待接入平台": [
       "clanker",
-      "montra"
+      "montra",
+      "sentry"
      ]
     }
    ],
@@ -1083,31 +1087,6 @@
    "deliver": "alpha/review/codex_2026-11-23_checks.json"
   },
   {
-   "key": "alpha:s:parent#spark",
-   "board": "alpha",
-   "priority": 1,
-   "task_type": "research",
-   "name": "Spark",
-   "missing": [
-    "M",
-    "A",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM",
-    "TE"
-   ],
-   "source_refs": [
-    "data/alpha/research_queue.json"
-   ],
-   "status": "open",
-   "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-23_checks.json"
-  },
-  {
    "key": "alpha:s:parent#threshold-network",
    "board": "alpha",
    "priority": 1,
@@ -1138,6 +1117,31 @@
    "priority": 1,
    "task_type": "research",
    "name": "Papertrade",
+   "missing": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "TE"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "open",
+   "last_checked_utc": null,
+   "deliver": "alpha/review/codex_2026-11-23_checks.json"
+  },
+  {
+   "key": "alpha:s:parent#spark",
+   "board": "alpha",
+   "priority": 1,
+   "task_type": "research",
+   "name": "Spark",
    "missing": [
     "M",
     "A",
@@ -1283,11 +1287,11 @@
    "deliver": "alpha/review/codex_2026-11-23_checks.json"
   },
   {
-   "key": "alpha:s:7655",
+   "key": "alpha:s:parent#liquity",
    "board": "alpha",
    "priority": 2,
    "task_type": "research",
-   "name": "THORWallet",
+   "name": "Liquity",
    "missing": [
     "M",
     "A",
@@ -1308,11 +1312,11 @@
    "deliver": "alpha/review/codex_2026-11-23_checks.json"
   },
   {
-   "key": "alpha:s:parent#liquity",
+   "key": "alpha:s:7655",
    "board": "alpha",
    "priority": 2,
    "task_type": "research",
-   "name": "Liquity",
+   "name": "THORWallet",
    "missing": [
     "M",
     "A",
@@ -1722,33 +1726,6 @@
    "deliver": "alpha/review/codex_2026-11-23_checks.json"
   },
   {
-   "key": "alpha:g:9296",
-   "board": "alpha",
-   "priority": 2,
-   "task_type": "evidence",
-   "name": "The Standard Reserve",
-   "missing": [
-    "M",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM",
-    "独立关联地址/自成交及去补贴留存审计未完成。",
-    "未独立重放全部费用与支付，适配器方法可能更新。",
-    "当前官方自身 token/积分/空投立场及适用日期 U。",
-    "官方原始表态日期 U，不用页面读取日期代替。"
-   ],
-   "source_refs": [
-    "data/alpha/research_queue.json"
-   ],
-   "status": "partial",
-   "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-23_checks.json"
-  },
-  {
    "key": "alpha:g:5864",
    "board": "alpha",
    "priority": 2,
@@ -1776,11 +1753,11 @@
    "deliver": "alpha/review/codex_2026-11-23_checks.json"
   },
   {
-   "key": "alpha:g:5825",
+   "key": "alpha:g:9296",
    "board": "alpha",
    "priority": 2,
    "task_type": "evidence",
-   "name": "Veda",
+   "name": "The Standard Reserve",
    "missing": [
     "M",
     "F",
@@ -1808,6 +1785,33 @@
    "priority": 2,
    "task_type": "evidence",
    "name": "OKX Swap",
+   "missing": [
+    "M",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "独立关联地址/自成交及去补贴留存审计未完成。",
+    "未独立重放全部费用与支付，适配器方法可能更新。",
+    "当前官方自身 token/积分/空投立场及适用日期 U。",
+    "官方原始表态日期 U，不用页面读取日期代替。"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "partial",
+   "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
+   "deliver": "alpha/review/codex_2026-11-23_checks.json"
+  },
+  {
+   "key": "alpha:g:5825",
+   "board": "alpha",
+   "priority": 2,
+   "task_type": "evidence",
+   "name": "Veda",
    "missing": [
     "M",
     "F",
