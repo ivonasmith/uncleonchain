@@ -1,4 +1,4 @@
-# 全站待办与检查（2026-11-22 08:45 UTC 自动生成，别手改）
+# 全站待办与检查（2026-11-23 01:15 UTC 自动生成，别手改）
 
 | 板块 | 待办 | 问题 |
 |---|---|---|
@@ -13,9 +13,9 @@
 
 ## 待办
 
-- **P1 · Codex · alpha** 机会卡补证（队列 36 个，从上往下补，M 新参与机制优先查） → `alpha/review/codex_2026-11-22_checks.json（JSON 数组，reviewer = codex）`（参考 `data/alpha/research_queue.json（prompt / schema / items）`）
-- **P1 · Codex · alpha** 到期复核（1 个，补证里写的下次复核日已到） → `alpha/review/codex_2026-11-22_checks.json`
-- **P1 · Codex · alpha** 补「量从哪来」和关键事件（35 张已补证的卡还没有 flow / events，先做 Montra、Pons 当样板） → `alpha/review/codex_2026-11-22_checks.json（同 key 交新一条，带 flow / events / capture / next_review）`（参考 `data/alpha/research_queue.json 的 schema`）
+- **P1 · Codex · alpha** 机会卡补证（队列 36 个，从上往下补，M 新参与机制优先查） → `alpha/review/codex_2026-11-23_checks.json（JSON 数组，reviewer = codex）`（参考 `data/alpha/research_queue.json（prompt / schema / items）`）
+- **P1 · Codex · alpha** 到期复核（3 个，补证里写的下次复核日已到） → `alpha/review/codex_2026-11-23_checks.json`
+- **P1 · Codex · alpha** 补「量从哪来」和关键事件（35 张已补证的卡还没有 flow / events，先做 Montra、Pons 当样板） → `alpha/review/codex_2026-11-23_checks.json（同 key 交新一条，带 flow / events / capture / next_review）`（参考 `data/alpha/research_queue.json 的 schema`）
 - **P2 · Codex · aiagent** A1 服务层真实性 → `aiagent/review/a1_commerce_checks.json`（参考 `aiagent/review/README.md`）
 - **P2 · Codex · aiagent** A2 x402 与 ERC-8004 的链上数据源 → `aiagent/review/a2_rails_sources.json`（参考 `aiagent/review/README.md`）
 - **P2 · Codex · aiagent** A3 Virtuals ACP 逐日服务收入 → `aiagent/review/a3_acp_revenue.json`（参考 `aiagent/review/README.md`）
