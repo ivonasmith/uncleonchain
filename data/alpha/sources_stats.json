@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-23T10:01:39+00:00",
+ "generated": "2026-11-24T11:16:22+00:00",
  "note": "Alpha 雷达来源台账（大叔 2026-11-15 定：维护一份自己的来源，以关键人 / 关键信息和本站板块为主，数据榜单兜底）。每个来源记为什么收；战绩（带来几张卡、几张进了研究观察、几张被拒）由 opps.py 每天算到 data/alpha/sources_stats.json。连续三个月没有有效发现的降级为 paused，不删。",
  "sources": [
   {
@@ -13,11 +13,16 @@
    "href": "/launchpad/",
    "stats": {
     "cards": 6,
-    "fresh": 0,
+    "fresh": 1,
     "watching": 5,
     "rejected": 0,
     "pending": 1,
-    "names": []
+    "names": [
+     {
+      "id": "x-launchpad-sendfun-launchpad",
+      "name": "sendfun Launchpad"
+     }
+    ]
    }
   },
   {
@@ -121,16 +126,11 @@
    "href": null,
    "stats": {
     "cards": 13,
-    "fresh": 1,
+    "fresh": 0,
     "watching": 2,
     "rejected": 0,
     "pending": 11,
-    "names": [
-     {
-      "id": "threshold-network",
-      "name": "Threshold Network"
-     }
-    ]
+    "names": []
    }
   },
   {
@@ -143,12 +143,17 @@
    "what": "兜底：没登记代币、30 天协议收入过 10 万美元",
    "href": null,
    "stats": {
-    "cards": 34,
-    "fresh": 0,
+    "cards": 35,
+    "fresh": 1,
     "watching": 13,
     "rejected": 0,
-    "pending": 21,
-    "names": []
+    "pending": 22,
+    "names": [
+     {
+      "id": "8498",
+      "name": "entropy.io"
+     }
+    ]
    }
   },
   {
@@ -161,11 +166,11 @@
    "what": "兜底：DefiLlama 近 14 天收录且 TVL ≥ 500 万美元",
    "href": null,
    "stats": {
-    "cards": 3,
+    "cards": 2,
     "fresh": 0,
     "watching": 0,
     "rejected": 0,
-    "pending": 3,
+    "pending": 2,
     "names": []
    }
   },

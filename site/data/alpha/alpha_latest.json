@@ -1,24 +1,24 @@
 {
- "generated": "2026-11-23T09:58:42+00:00",
- "asof": "2026-11-22",
+ "generated": "2026-11-24T11:16:20+00:00",
+ "asof": "2026-11-23",
  "stale": false,
  "baseline_day": "2026-11-14",
  "sources": {
   "defillama_protocols": {
    "ok": true,
-   "n": 9092
+   "n": 9100
   },
   "defillama_revenue": {
    "ok": true,
-   "n": 2918
+   "n": 2931
   },
   "site_sources": {
    "ok": true,
-   "n": 2
+   "n": 3
   },
   "ethresearch": {
    "ok": true,
-   "n": 14
+   "n": 16
   },
   "snapshot": {
    "ok": true,
@@ -26,7 +26,7 @@
   },
   "binance": {
    "ok": true,
-   "n": 4
+   "n": 3
   }
  },
  "params": {
@@ -49,9 +49,9 @@
    "chains": [
     "Polygon"
    ],
-   "rev30": 20236054,
-   "rev_prev30": 15371729,
-   "chg30": 31.6,
+   "rev30": 19571136,
+   "rev_prev30": 16022888,
+   "chg30": 22.1,
    "first_seen": "2026-11-14"
   },
   {
@@ -73,9 +73,9 @@
     "Monad",
     "BSC"
    ],
-   "rev30": 8606405,
-   "rev_prev30": 17445950,
-   "chg30": -50.7,
+   "rev30": 8719977,
+   "rev_prev30": 16957278,
+   "chg30": -48.6,
    "first_seen": "2026-11-14"
   },
   {
@@ -95,9 +95,9 @@
     "Solana",
     "BSC"
    ],
-   "rev30": 7419996,
-   "rev_prev30": 15263469,
-   "chg30": -51.4,
+   "rev30": 7525730,
+   "rev_prev30": 14981736,
+   "chg30": -49.8,
    "first_seen": "2026-11-14"
   },
   {
@@ -119,9 +119,9 @@
     "Ethereum",
     "Base"
    ],
-   "rev30": 5893256,
-   "rev_prev30": 6915655,
-   "chg30": -14.8,
+   "rev30": 5907805,
+   "rev_prev30": 6819672,
+   "chg30": -13.4,
    "first_seen": "2026-11-14"
   },
   {
@@ -140,9 +140,29 @@
     "Solana",
     "Base"
    ],
-   "rev30": 4677456,
-   "rev_prev30": 13539643,
-   "chg30": -65.5,
+   "rev30": 4682832,
+   "rev_prev30": 13022843,
+   "chg30": -64.0,
+   "first_seen": "2026-11-14"
+  },
+  {
+   "key": "g:parent#azverse",
+   "name": "Azverse",
+   "slug": "azverse-perps",
+   "url": "",
+   "logo": "https://icons.llamao.fi/icons/protocols/azverse-perps",
+   "twitter": "AZverse_Global",
+   "children": [
+    "AZverse Perps",
+    "AZverse Spot"
+   ],
+   "category": "Derivatives",
+   "chains": [
+    "Off Chain"
+   ],
+   "rev30": 3991382,
+   "rev_prev30": 2377849,
+   "chg30": 67.9,
    "first_seen": "2026-11-14"
   },
   {
@@ -163,29 +183,9 @@
     "Polygon",
     "BSC"
    ],
-   "rev30": 3963607,
-   "rev_prev30": 3491786,
-   "chg30": 13.5,
-   "first_seen": "2026-11-14"
-  },
-  {
-   "key": "g:parent#azverse",
-   "name": "Azverse",
-   "slug": "azverse-perps",
-   "url": "",
-   "logo": "https://icons.llamao.fi/icons/protocols/azverse-perps",
-   "twitter": "AZverse_Global",
-   "children": [
-    "AZverse Perps",
-    "AZverse Spot"
-   ],
-   "category": "Derivatives",
-   "chains": [
-    "Off Chain"
-   ],
-   "rev30": 3956043,
-   "rev_prev30": 2474515,
-   "chg30": 59.9,
+   "rev30": 3965487,
+   "rev_prev30": 3012069,
+   "chg30": 31.7,
    "first_seen": "2026-11-14"
   },
   {
@@ -202,9 +202,9 @@
    "chains": [
     "Hyperliquid L1"
    ],
-   "rev30": 3697462,
-   "rev_prev30": 2423080,
-   "chg30": 52.6,
+   "rev30": 3928833,
+   "rev_prev30": 2342426,
+   "chg30": 67.7,
    "first_seen": "2026-11-14"
   },
   {
@@ -223,9 +223,9 @@
     "X Layer",
     "Monad"
    ],
-   "rev30": 3641324,
-   "rev_prev30": 7549680,
-   "chg30": -51.8,
+   "rev30": 3672266,
+   "rev_prev30": 7456561,
+   "chg30": -50.8,
    "first_seen": "2026-11-14"
   },
   {
@@ -242,9 +242,9 @@
    "chains": [
     "Off Chain"
    ],
-   "rev30": 3489822,
-   "rev_prev30": 3714798,
-   "chg30": -6.1,
+   "rev30": 3545443,
+   "rev_prev30": 3679025,
+   "chg30": -3.6,
    "first_seen": "2026-11-14"
   },
   {
@@ -263,47 +263,9 @@
     "Ethereum",
     "Base"
    ],
-   "rev30": 2386472,
-   "rev_prev30": 3907154,
-   "chg30": -38.9,
-   "first_seen": "2026-11-14"
-  },
-  {
-   "key": "g:5129",
-   "name": "Predict Fun",
-   "slug": "predict-fun",
-   "url": "https://predict.fun",
-   "logo": "https://icons.llamao.fi/icons/protocols/predict-fun",
-   "twitter": "predictdotfun",
-   "children": [
-    "Predict Fun"
-   ],
-   "category": "Prediction Market",
-   "chains": [
-    "BSC"
-   ],
-   "rev30": 2013962,
-   "rev_prev30": 1795485,
-   "chg30": 12.2,
-   "first_seen": "2026-11-14"
-  },
-  {
-   "key": "g:6764",
-   "name": "Courtyard",
-   "slug": "courtyard",
-   "url": "https://courtyard.io",
-   "logo": "https://icons.llamao.fi/icons/protocols/courtyard",
-   "twitter": "Courtyard_io",
-   "children": [
-    "Courtyard"
-   ],
-   "category": "Physical TCG",
-   "chains": [
-    "Polygon"
-   ],
-   "rev30": 1995780,
-   "rev_prev30": 2243213,
-   "chg30": -11.0,
+   "rev30": 2365807,
+   "rev_prev30": 3845572,
+   "chg30": -38.5,
    "first_seen": "2026-11-14"
   },
   {
@@ -320,9 +282,47 @@
    "chains": [
     "TxFlow"
    ],
-   "rev30": 1965720,
-   "rev_prev30": 1377231,
-   "chg30": 42.7,
+   "rev30": 1993263,
+   "rev_prev30": 1389596,
+   "chg30": 43.4,
+   "first_seen": "2026-11-14"
+  },
+  {
+   "key": "g:6764",
+   "name": "Courtyard",
+   "slug": "courtyard",
+   "url": "https://courtyard.io",
+   "logo": "https://icons.llamao.fi/icons/protocols/courtyard",
+   "twitter": "Courtyard_io",
+   "children": [
+    "Courtyard"
+   ],
+   "category": "Physical TCG",
+   "chains": [
+    "Polygon"
+   ],
+   "rev30": 1965167,
+   "rev_prev30": 2251558,
+   "chg30": -12.7,
+   "first_seen": "2026-11-14"
+  },
+  {
+   "key": "g:5129",
+   "name": "Predict Fun",
+   "slug": "predict-fun",
+   "url": "https://predict.fun",
+   "logo": "https://icons.llamao.fi/icons/protocols/predict-fun",
+   "twitter": "predictdotfun",
+   "children": [
+    "Predict Fun"
+   ],
+   "category": "Prediction Market",
+   "chains": [
+    "BSC"
+   ],
+   "rev30": 1955935,
+   "rev_prev30": 1865821,
+   "chg30": 4.8,
    "first_seen": "2026-11-14"
   },
   {
@@ -339,9 +339,9 @@
    "chains": [
     "Off Chain"
    ],
-   "rev30": 1763920,
-   "rev_prev30": 1001091,
-   "chg30": 76.2,
+   "rev30": 1865077,
+   "rev_prev30": 971426,
+   "chg30": 92.0,
    "first_seen": "2026-11-14"
   },
   {
@@ -358,9 +358,9 @@
    "chains": [
     "Off Chain"
    ],
-   "rev30": 1691402,
-   "rev_prev30": 763460,
-   "chg30": 121.5,
+   "rev30": 1711129,
+   "rev_prev30": 738622,
+   "chg30": 131.7,
    "first_seen": "2026-11-14"
   },
   {
@@ -378,9 +378,9 @@
     "Base",
     "Arc"
    ],
-   "rev30": 1670612,
-   "rev_prev30": 48917,
-   "chg30": 3315.2,
+   "rev30": 1633225,
+   "rev_prev30": 90148,
+   "chg30": 1711.7,
    "boards": [
     {
      "board": "aiagent",
@@ -405,9 +405,9 @@
    "chains": [
     "Robinhood Chain"
    ],
-   "rev30": 1578723,
-   "rev_prev30": 1684025,
-   "chg30": -6.3,
+   "rev30": 1598842,
+   "rev_prev30": 1715169,
+   "chg30": -6.8,
    "first_seen": "2026-11-14"
   },
   {
@@ -424,9 +424,9 @@
    "chains": [
     "Tron"
    ],
-   "rev30": 1491506,
-   "rev_prev30": 967818,
-   "chg30": 54.1,
+   "rev30": 1461291,
+   "rev_prev30": 992415,
+   "chg30": 47.2,
    "first_seen": "2026-11-14"
   },
   {
@@ -443,9 +443,9 @@
    "chains": [
     "Robinhood Chain"
    ],
-   "rev30": 1481039,
-   "rev_prev30": 5079024,
-   "chg30": -70.8,
+   "rev30": 1402286,
+   "rev_prev30": 4927976,
+   "chg30": -71.5,
    "first_seen": "2026-11-14"
   },
   {
@@ -464,7 +464,7 @@
     "Blast",
     "Sonic"
    ],
-   "rev30": 1082782,
+   "rev30": 1124055,
    "rev_prev30": 0,
    "chg30": null,
    "first_seen": "2026-11-14"
@@ -485,31 +485,9 @@
     "Ethereum",
     "Sonic"
    ],
-   "rev30": 1081788,
-   "rev_prev30": 1072293,
-   "chg30": 0.9,
-   "first_seen": "2026-11-14"
-  },
-  {
-   "key": "g:parent#rabby",
-   "name": "Rabby",
-   "slug": "rabby-perps",
-   "url": "https://rabby.io/",
-   "logo": "https://icons.llamao.fi/icons/protocols/rabby-perps",
-   "twitter": "Rabby_io",
-   "children": [
-    "Rabby Perps",
-    "Rabby Wallet"
-   ],
-   "category": "Interface",
-   "chains": [
-    "Hyperliquid L1",
-    "Ethereum",
-    "BSC"
-   ],
-   "rev30": 904404,
-   "rev_prev30": 575720,
-   "chg30": 57.1,
+   "rev30": 1079281,
+   "rev_prev30": 1077022,
+   "chg30": 0.2,
    "first_seen": "2026-11-14"
   },
   {
@@ -529,9 +507,72 @@
     "Base",
     "Linea"
    ],
-   "rev30": 858553,
-   "rev_prev30": 938588,
-   "chg30": -8.5,
+   "rev30": 928174,
+   "rev_prev30": 910420,
+   "chg30": 2.0,
+   "first_seen": "2026-11-14"
+  },
+  {
+   "key": "g:parent#rabby",
+   "name": "Rabby",
+   "slug": "rabby-perps",
+   "url": "https://rabby.io/",
+   "logo": "https://icons.llamao.fi/icons/protocols/rabby-perps",
+   "twitter": "Rabby_io",
+   "children": [
+    "Rabby Perps",
+    "Rabby Wallet"
+   ],
+   "category": "Interface",
+   "chains": [
+    "Hyperliquid L1",
+    "Ethereum",
+    "BSC"
+   ],
+   "rev30": 919302,
+   "rev_prev30": 572835,
+   "chg30": 60.5,
+   "first_seen": "2026-11-14"
+  },
+  {
+   "key": "g:parent#nado",
+   "name": "Nado",
+   "slug": "nado-perps",
+   "url": "https://app.nado.xyz",
+   "logo": "https://icons.llamao.fi/icons/protocols/nado-perps",
+   "twitter": "nadohq",
+   "children": [
+    "Nado Perps",
+    "Nado Spot"
+   ],
+   "category": "Derivatives",
+   "chains": [
+    "Ink"
+   ],
+   "rev30": 790990,
+   "rev_prev30": 831964,
+   "chg30": -4.9,
+   "first_seen": "2026-11-14"
+  },
+  {
+   "key": "g:7626",
+   "name": "Ave.ai",
+   "slug": "ave.ai",
+   "url": "https://ave.ai/",
+   "logo": "https://icons.llamao.fi/icons/protocols/ave.ai",
+   "twitter": "AveaiGlobal",
+   "children": [
+    "Ave.ai"
+   ],
+   "category": "Trading App",
+   "chains": [
+    "Base",
+    "BSC",
+    "Ethereum"
+   ],
+   "rev30": 788434,
+   "rev_prev30": 62817,
+   "chg30": 1155.1,
    "first_seen": "2026-11-14"
   },
   {
@@ -550,29 +591,30 @@
    "chains": [
     "Hyperliquid L1"
    ],
-   "rev30": 809748,
-   "rev_prev30": 439204,
-   "chg30": 84.4,
+   "rev30": 781488,
+   "rev_prev30": 469218,
+   "chg30": 66.6,
    "first_seen": "2026-11-14"
   },
   {
-   "key": "g:parent#nado",
-   "name": "Nado",
-   "slug": "nado-perps",
-   "url": "https://app.nado.xyz",
-   "logo": "https://icons.llamao.fi/icons/protocols/nado-perps",
-   "twitter": "nadohq",
+   "key": "g:parent#uxuy",
+   "name": "Uxuy",
+   "slug": "uxuy-wallet-perps-v2",
+   "url": "https://www.uxuy.com/",
+   "logo": "https://icons.llamao.fi/icons/protocols/uxuy-wallet-perps-v2",
+   "twitter": "uxuycom",
    "children": [
-    "Nado Perps",
-    "Nado Spot"
+    "UXUY Wallet Perps V2",
+    "UXUY Wallet Perps"
    ],
    "category": "Derivatives",
    "chains": [
-    "Ink"
+    "Off Chain",
+    "Hyperliquid L1"
    ],
-   "rev30": 801782,
-   "rev_prev30": 837766,
-   "chg30": -4.3,
+   "rev30": 779849,
+   "rev_prev30": 19265,
+   "chg30": 3948.0,
    "first_seen": "2026-11-14"
   },
   {
@@ -592,51 +634,9 @@
     "Base",
     "Arbitrum"
    ],
-   "rev30": 752045,
-   "rev_prev30": 104313,
-   "chg30": 621.0,
-   "first_seen": "2026-11-14"
-  },
-  {
-   "key": "g:parent#uxuy",
-   "name": "Uxuy",
-   "slug": "uxuy-wallet-perps-v2",
-   "url": "https://www.uxuy.com/",
-   "logo": "https://icons.llamao.fi/icons/protocols/uxuy-wallet-perps-v2",
-   "twitter": "uxuycom",
-   "children": [
-    "UXUY Wallet Perps V2",
-    "UXUY Wallet Perps"
-   ],
-   "category": "Derivatives",
-   "chains": [
-    "Off Chain",
-    "Hyperliquid L1"
-   ],
-   "rev30": 750875,
-   "rev_prev30": 18961,
-   "chg30": 3860.1,
-   "first_seen": "2026-11-14"
-  },
-  {
-   "key": "g:7626",
-   "name": "Ave.ai",
-   "slug": "ave.ai",
-   "url": "https://ave.ai/",
-   "logo": "https://icons.llamao.fi/icons/protocols/ave.ai",
-   "twitter": "AveaiGlobal",
-   "children": [
-    "Ave.ai"
-   ],
-   "category": "Trading App",
-   "chains": [
-    "Base",
-    "BSC",
-    "Ethereum"
-   ],
-   "rev30": 748032,
-   "rev_prev30": 62081,
-   "chg30": 1104.9,
+   "rev30": 739393,
+   "rev_prev30": 129709,
+   "chg30": 470.0,
    "first_seen": "2026-11-14"
   },
   {
@@ -655,9 +655,9 @@
     "Ethereum",
     "Solana"
    ],
-   "rev30": 712961,
-   "rev_prev30": 746131,
-   "chg30": -4.4,
+   "rev30": 709830,
+   "rev_prev30": 744410,
+   "chg30": -4.6,
    "first_seen": "2026-11-14"
   },
   {
@@ -676,9 +676,9 @@
     "XRPL",
     "Eclipse"
    ],
-   "rev30": 680776,
-   "rev_prev30": 943796,
-   "chg30": -27.9,
+   "rev30": 681340,
+   "rev_prev30": 913180,
+   "chg30": -25.4,
    "first_seen": "2026-11-14"
   },
   {
@@ -695,9 +695,9 @@
    "chains": [
     "Hyperliquid L1"
    ],
-   "rev30": 666877,
-   "rev_prev30": 429310,
-   "chg30": 55.3,
+   "rev30": 681206,
+   "rev_prev30": 425400,
+   "chg30": 60.1,
    "first_seen": "2026-11-14"
   },
   {
@@ -714,9 +714,28 @@
    "chains": [
     "Off Chain"
    ],
-   "rev30": 629462,
-   "rev_prev30": 517367,
-   "chg30": 21.7,
+   "rev30": 632832,
+   "rev_prev30": 518791,
+   "chg30": 22.0,
+   "first_seen": "2026-11-14"
+  },
+  {
+   "key": "g:parent#popdex",
+   "name": "PopDEX Perps",
+   "slug": "popdex-perps",
+   "url": "https://popdex.xyz/",
+   "logo": "https://icons.llamao.fi/icons/protocols/popdex-perps",
+   "twitter": "popdex_",
+   "children": [
+    "PopDEX Perps"
+   ],
+   "category": "Derivatives",
+   "chains": [
+    "Morph Tachyon"
+   ],
+   "rev30": 626040,
+   "rev_prev30": 220682,
+   "chg30": 183.7,
    "first_seen": "2026-11-14"
   },
   {
@@ -735,28 +754,9 @@
     "Ethereum",
     "Corn"
    ],
-   "rev30": 601836,
-   "rev_prev30": 460124,
-   "chg30": 30.8,
-   "first_seen": "2026-11-14"
-  },
-  {
-   "key": "g:parent#popdex",
-   "name": "PopDEX Perps",
-   "slug": "popdex-perps",
-   "url": "https://popdex.xyz/",
-   "logo": "https://icons.llamao.fi/icons/protocols/popdex-perps",
-   "twitter": "popdex_",
-   "children": [
-    "PopDEX Perps"
-   ],
-   "category": "Derivatives",
-   "chains": [
-    "Morph Tachyon"
-   ],
-   "rev30": 597907,
-   "rev_prev30": 211770,
-   "chg30": 182.3,
+   "rev30": 605079,
+   "rev_prev30": 460325,
+   "chg30": 31.4,
    "first_seen": "2026-11-14"
   },
   {
@@ -775,9 +775,9 @@
     "Ethereum",
     "Arbitrum"
    ],
-   "rev30": 595934,
-   "rev_prev30": 557948,
-   "chg30": 6.8,
+   "rev30": 597590,
+   "rev_prev30": 558863,
+   "chg30": 6.9,
    "first_seen": "2026-11-14"
   },
   {
@@ -796,9 +796,9 @@
     "BSC",
     "Solana"
    ],
-   "rev30": 579048,
-   "rev_prev30": 325766,
-   "chg30": 77.7,
+   "rev30": 582057,
+   "rev_prev30": 341791,
+   "chg30": 70.3,
    "first_seen": "2026-11-14"
   },
   {
@@ -817,9 +817,9 @@
     "Arbitrum",
     "Avalanche"
    ],
-   "rev30": 556433,
-   "rev_prev30": 570421,
-   "chg30": -2.5,
+   "rev30": 563599,
+   "rev_prev30": 548348,
+   "chg30": 2.8,
    "first_seen": "2026-11-14"
   },
   {
@@ -838,9 +838,9 @@
     "Avalanche",
     "Arbitrum"
    ],
-   "rev30": 487140,
-   "rev_prev30": 2287030,
-   "chg30": -78.7,
+   "rev30": 491310,
+   "rev_prev30": 2190747,
+   "chg30": -77.6,
    "first_seen": "2026-11-14"
   },
   {
@@ -858,28 +858,9 @@
    "chains": [
     "Hyperliquid L1"
    ],
-   "rev30": 468146,
-   "rev_prev30": 208405,
-   "chg30": 124.6,
-   "first_seen": "2026-11-14"
-  },
-  {
-   "key": "g:5135",
-   "name": "Binance Staked SOL",
-   "slug": "binance-staked-sol",
-   "url": "https://www.binance.com/en/solana-staking",
-   "logo": "https://icons.llamao.fi/icons/protocols/binance-staked-sol",
-   "twitter": "binance",
-   "children": [
-    "Binance Staked SOL"
-   ],
-   "category": "Liquid Staking",
-   "chains": [
-    "Solana"
-   ],
-   "rev30": 429768,
-   "rev_prev30": 501666,
-   "chg30": -14.3,
+   "rev30": 479896,
+   "rev_prev30": 208068,
+   "chg30": 130.6,
    "first_seen": "2026-11-14"
   },
   {
@@ -896,9 +877,28 @@
    "chains": [
     "Aptos"
    ],
-   "rev30": 428536,
-   "rev_prev30": 549583,
-   "chg30": -22.0,
+   "rev30": 434193,
+   "rev_prev30": 542442,
+   "chg30": -20.0,
+   "first_seen": "2026-11-14"
+  },
+  {
+   "key": "g:5135",
+   "name": "Binance Staked SOL",
+   "slug": "binance-staked-sol",
+   "url": "https://www.binance.com/en/solana-staking",
+   "logo": "https://icons.llamao.fi/icons/protocols/binance-staked-sol",
+   "twitter": "binance",
+   "children": [
+    "Binance Staked SOL"
+   ],
+   "category": "Liquid Staking",
+   "chains": [
+    "Solana"
+   ],
+   "rev30": 425546,
+   "rev_prev30": 495766,
+   "chg30": -14.2,
    "first_seen": "2026-11-14"
   },
   {
@@ -918,9 +918,9 @@
     "Gnosis",
     "Avalanche"
    ],
-   "rev30": 400829,
-   "rev_prev30": 269603,
-   "chg30": 48.7,
+   "rev30": 401567,
+   "rev_prev30": 266364,
+   "chg30": 50.8,
    "first_seen": "2026-11-14"
   },
   {
@@ -941,9 +941,9 @@
     "Hyperliquid L1",
     "zkLighter"
    ],
-   "rev30": 379025,
-   "rev_prev30": 272186,
-   "chg30": 39.3,
+   "rev30": 389824,
+   "rev_prev30": 267098,
+   "chg30": 45.9,
    "first_seen": "2026-11-14"
   },
   {
@@ -962,28 +962,9 @@
     "Abstract",
     "Base"
    ],
-   "rev30": 348681,
-   "rev_prev30": 494105,
-   "chg30": -29.4,
-   "first_seen": "2026-11-14"
-  },
-  {
-   "key": "g:4293",
-   "name": "Trojan",
-   "slug": "trojan",
-   "url": "https://trojan.com",
-   "logo": "https://icons.llamao.fi/icons/protocols/trojan",
-   "twitter": "TrojanOnSolana",
-   "children": [
-    "Trojan"
-   ],
-   "category": "Telegram Bot",
-   "chains": [
-    "Solana"
-   ],
-   "rev30": 337048,
-   "rev_prev30": 693978,
-   "chg30": -51.4,
+   "rev30": 370896,
+   "rev_prev30": 491761,
+   "chg30": -24.6,
    "first_seen": "2026-11-14"
   },
   {
@@ -1000,9 +981,28 @@
    "chains": [
     "Avalanche"
    ],
-   "rev30": 333975,
-   "rev_prev30": 284294,
-   "chg30": 17.5,
+   "rev30": 336773,
+   "rev_prev30": 285520,
+   "chg30": 18.0,
+   "first_seen": "2026-11-14"
+  },
+  {
+   "key": "g:4293",
+   "name": "Trojan",
+   "slug": "trojan",
+   "url": "https://trojan.com",
+   "logo": "https://icons.llamao.fi/icons/protocols/trojan",
+   "twitter": "TrojanOnSolana",
+   "children": [
+    "Trojan"
+   ],
+   "category": "Telegram Bot",
+   "chains": [
+    "Solana"
+   ],
+   "rev30": 333338,
+   "rev_prev30": 678558,
+   "chg30": -50.9,
    "first_seen": "2026-11-14"
   },
   {
@@ -1019,9 +1019,9 @@
    "chains": [
     "Hyperliquid L1"
    ],
-   "rev30": 318033,
-   "rev_prev30": 254003,
-   "chg30": 25.2,
+   "rev30": 327885,
+   "rev_prev30": 248264,
+   "chg30": 32.1,
    "first_seen": "2026-11-14"
   },
   {
@@ -1039,9 +1039,9 @@
     "Base",
     "Robinhood Chain"
    ],
-   "rev30": 297754,
-   "rev_prev30": 259865,
-   "chg30": 14.6,
+   "rev30": 299335,
+   "rev_prev30": 259656,
+   "chg30": 15.3,
    "first_seen": "2026-11-14"
   },
   {
@@ -1058,9 +1058,9 @@
    "chains": [
     "TON"
    ],
-   "rev30": 282048,
-   "rev_prev30": 368465,
-   "chg30": -23.5,
+   "rev30": 287365,
+   "rev_prev30": 367950,
+   "chg30": -21.9,
    "first_seen": "2026-11-14"
   },
   {
@@ -1077,28 +1077,9 @@
    "chains": [
     "zkLighter"
    ],
-   "rev30": 262288,
-   "rev_prev30": 318468,
-   "chg30": -17.6,
-   "first_seen": "2026-11-14"
-  },
-  {
-   "key": "g:9102",
-   "name": "Closer",
-   "slug": "closer",
-   "url": "https://closer.market",
-   "logo": "https://icons.llamao.fi/icons/protocols/closer",
-   "twitter": "closer_xyz",
-   "children": [
-    "Closer"
-   ],
-   "category": "Prediction Market",
-   "chains": [
-    "Solana"
-   ],
-   "rev30": 259660,
-   "rev_prev30": 27107,
-   "chg30": 857.9,
+   "rev30": 281646,
+   "rev_prev30": 315211,
+   "chg30": -10.6,
    "first_seen": "2026-11-14"
   },
   {
@@ -1117,9 +1098,28 @@
     "Flow",
     "Solana"
    ],
-   "rev30": 258299,
-   "rev_prev30": 524551,
-   "chg30": -50.8,
+   "rev30": 270008,
+   "rev_prev30": 513562,
+   "chg30": -47.4,
+   "first_seen": "2026-11-14"
+  },
+  {
+   "key": "g:9102",
+   "name": "Closer",
+   "slug": "closer",
+   "url": "https://closer.market",
+   "logo": "https://icons.llamao.fi/icons/protocols/closer",
+   "twitter": "closer_xyz",
+   "children": [
+    "Closer"
+   ],
+   "category": "Prediction Market",
+   "chains": [
+    "Solana"
+   ],
+   "rev30": 267796,
+   "rev_prev30": 40993,
+   "chg30": 553.3,
    "first_seen": "2026-11-14"
   },
   {
@@ -1137,47 +1137,28 @@
     "Hyperliquid L1",
     "zkLighter"
    ],
-   "rev30": 254705,
-   "rev_prev30": 174857,
-   "chg30": 45.7,
+   "rev30": 263560,
+   "rev_prev30": 170520,
+   "chg30": 54.6,
    "first_seen": "2026-11-14"
   },
   {
-   "key": "g:9153",
-   "name": "Top.Market",
-   "slug": "top.market",
-   "url": "https://top.market",
-   "logo": "https://icons.llamao.fi/icons/protocols/top.market",
-   "twitter": "the_Topmarket",
+   "key": "g:parent#coindcx",
+   "name": "CoinDCX Perps",
+   "slug": "coindcx-perps",
+   "url": "https://coindcx.com",
+   "logo": "https://icons.llamao.fi/icons/protocols/coindcx-perps",
+   "twitter": "CoinDCX",
    "children": [
-    "Top.Market"
+    "CoinDCX Perps"
    ],
-   "category": "Physical TCG",
+   "category": "Interface",
    "chains": [
-    "Base"
+    "Hyperliquid L1"
    ],
-   "rev30": 249306,
-   "rev_prev30": 166113,
-   "chg30": 50.1,
-   "first_seen": "2026-11-14"
-  },
-  {
-   "key": "g:9381",
-   "name": "Ascend Launchpad",
-   "slug": "ascend-launchpad",
-   "url": "",
-   "logo": "https://icons.llamao.fi/icons/protocols/ascend-launchpad",
-   "twitter": "AscendLaunch",
-   "children": [
-    "Ascend Launchpad"
-   ],
-   "category": "Launchpad",
-   "chains": [
-    "Elysium"
-   ],
-   "rev30": 247620,
-   "rev_prev30": 0,
-   "chg30": null,
+   "rev30": 254981,
+   "rev_prev30": 115297,
+   "chg30": 121.2,
    "first_seen": "2026-11-14"
   },
   {
@@ -1194,9 +1175,106 @@
    "chains": [
     "Hyperliquid L1"
    ],
-   "rev30": 244601,
-   "rev_prev30": 199932,
-   "chg30": 22.3,
+   "rev30": 251153,
+   "rev_prev30": 190618,
+   "chg30": 31.8,
+   "first_seen": "2026-11-14"
+  },
+  {
+   "key": "g:9381",
+   "name": "Ascend Launchpad",
+   "slug": "ascend-launchpad",
+   "url": "",
+   "logo": "https://icons.llamao.fi/icons/protocols/ascend-launchpad",
+   "twitter": "AscendLaunch",
+   "children": [
+    "Ascend Launchpad"
+   ],
+   "category": "Launchpad",
+   "chains": [
+    "Elysium"
+   ],
+   "rev30": 248812,
+   "rev_prev30": 0,
+   "chg30": null,
+   "first_seen": "2026-11-14"
+  },
+  {
+   "key": "g:7555",
+   "name": "Matcha",
+   "slug": "matcha",
+   "url": "https://matcha.xyz/matcha-auto",
+   "logo": "https://icons.llamao.fi/icons/protocols/matcha",
+   "twitter": "_matchaxyz",
+   "children": [
+    "Matcha"
+   ],
+   "category": "Trading App",
+   "chains": [
+    "Polygon",
+    "Ethereum",
+    "BSC"
+   ],
+   "rev30": 248411,
+   "rev_prev30": 166052,
+   "chg30": 49.6,
+   "first_seen": "2026-11-14"
+  },
+  {
+   "key": "g:7646",
+   "name": "Saturn",
+   "slug": "saturn",
+   "url": "https://app.saturn.credit/",
+   "logo": "https://icons.llamao.fi/icons/protocols/saturn",
+   "twitter": "saturn_credit",
+   "children": [
+    "Saturn"
+   ],
+   "category": "Stablecoin Wrapper",
+   "chains": [
+    "Ethereum"
+   ],
+   "rev30": 242646,
+   "rev_prev30": 263609,
+   "chg30": -8.0,
+   "first_seen": "2026-11-14"
+  },
+  {
+   "key": "g:9153",
+   "name": "Top.Market",
+   "slug": "top.market",
+   "url": "https://top.market",
+   "logo": "https://icons.llamao.fi/icons/protocols/top.market",
+   "twitter": "the_Topmarket",
+   "children": [
+    "Top.Market"
+   ],
+   "category": "Physical TCG",
+   "chains": [
+    "Base"
+   ],
+   "rev30": 236175,
+   "rev_prev30": 180399,
+   "chg30": 30.9,
+   "first_seen": "2026-11-14"
+  },
+  {
+   "key": "g:7987",
+   "name": "BULK",
+   "slug": "bulk",
+   "url": "https://www.bulk.trade/",
+   "logo": "https://icons.llamao.fi/icons/protocols/bulk",
+   "twitter": "bulktrade",
+   "children": [
+    "BULK"
+   ],
+   "category": "Derivatives",
+   "chains": [
+    "BULK"
+   ],
+   "rev30": 234235,
+   "rev_prev30": 288338,
+   "chg30": -18.8,
    "first_seen": "2026-11-14"
   },
   {
@@ -1214,85 +1292,50 @@
    "chains": [
     "SX Rollup"
    ],
-   "rev30": 242785,
-   "rev_prev30": 91592,
-   "chg30": 165.1,
+   "rev30": 233542,
+   "rev_prev30": 106464,
+   "chg30": 119.4,
    "first_seen": "2026-11-14"
   },
   {
-   "key": "g:7646",
-   "name": "Saturn",
-   "slug": "saturn",
-   "url": "https://app.saturn.credit/",
-   "logo": "https://icons.llamao.fi/icons/protocols/saturn",
-   "twitter": "saturn_credit",
+   "key": "g:8053",
+   "name": "DYLI",
+   "slug": "dyli",
+   "url": "https://www.dyli.io/",
+   "logo": "https://icons.llamao.fi/icons/protocols/dyli",
+   "twitter": "dyli_io",
    "children": [
-    "Saturn"
-   ],
-   "category": "Stablecoin Wrapper",
-   "chains": [
-    "Ethereum"
-   ],
-   "rev30": 242649,
-   "rev_prev30": 263606,
-   "chg30": -8.0,
-   "first_seen": "2026-11-14"
-  },
-  {
-   "key": "g:parent#coindcx",
-   "name": "CoinDCX Perps",
-   "slug": "coindcx-perps",
-   "url": "https://coindcx.com",
-   "logo": "https://icons.llamao.fi/icons/protocols/coindcx-perps",
-   "twitter": "CoinDCX",
-   "children": [
-    "CoinDCX Perps"
-   ],
-   "category": "Interface",
-   "chains": [
-    "Hyperliquid L1"
-   ],
-   "rev30": 241620,
-   "rev_prev30": 113431,
-   "chg30": 113.0,
-   "first_seen": "2026-11-14"
-  },
-  {
-   "key": "g:8127",
-   "name": "Gemint",
-   "slug": "gemint",
-   "url": "https://www.gemint.io/",
-   "logo": "https://icons.llamao.fi/icons/protocols/gemint",
-   "twitter": "GEMINT",
-   "children": [
-    "Gemint"
+    "DYLI"
    ],
    "category": "Physical TCG",
    "chains": [
-    "BSC"
+    "Abstract",
+    "Base"
    ],
-   "rev30": 235127,
-   "rev_prev30": 495482,
-   "chg30": -52.5,
+   "rev30": 225808,
+   "rev_prev30": 174237,
+   "chg30": 29.6,
    "first_seen": "2026-11-14"
   },
   {
-   "key": "g:7987",
-   "name": "BULK",
-   "slug": "bulk",
-   "url": "https://www.bulk.trade/",
-   "logo": "https://icons.llamao.fi/icons/protocols/bulk",
-   "twitter": "bulktrade",
+   "key": "g:5460",
+   "name": "Upshift",
+   "slug": "upshift",
+   "url": "https://app.upshift.finance",
+   "logo": "https://icons.llamao.fi/icons/protocols/upshift",
+   "twitter": "upshift_fi",
    "children": [
-    "BULK"
+    "Upshift"
    ],
-   "category": "Derivatives",
+   "category": "Onchain Capital Allocator",
    "chains": [
-    "BULK"
+    "Ethereum",
+    "Avalanche",
+    "Base"
    ],
-   "rev30": 234761,
-   "rev_prev30": 290227,
-   "chg30": -19.1,
+   "rev30": 225654,
+   "rev_prev30": 228290,
+   "chg30": -1.2,
    "first_seen": "2026-11-14"
   },
   {
@@ -1309,9 +1352,9 @@
    "chains": [
     "Ethereum"
    ],
-   "rev30": 225769,
-   "rev_prev30": 241346,
-   "chg30": -6.5,
+   "rev30": 223965,
+   "rev_prev30": 240069,
+   "chg30": -6.7,
    "first_seen": "2026-11-14"
   },
   {
@@ -1332,71 +1375,28 @@
     "Arbitrum",
     "Avalanche"
    ],
-   "rev30": 223186,
-   "rev_prev30": 404941,
-   "chg30": -44.9,
+   "rev30": 221470,
+   "rev_prev30": 388251,
+   "chg30": -43.0,
    "first_seen": "2026-11-14"
   },
   {
-   "key": "g:5460",
-   "name": "Upshift",
-   "slug": "upshift",
-   "url": "https://app.upshift.finance",
-   "logo": "https://icons.llamao.fi/icons/protocols/upshift",
-   "twitter": "upshift_fi",
+   "key": "g:8127",
+   "name": "Gemint",
+   "slug": "gemint",
+   "url": "https://www.gemint.io/",
+   "logo": "https://icons.llamao.fi/icons/protocols/gemint",
+   "twitter": "GEMINT",
    "children": [
-    "Upshift"
-   ],
-   "category": "Onchain Capital Allocator",
-   "chains": [
-    "Ethereum",
-    "Avalanche",
-    "Base"
-   ],
-   "rev30": 222463,
-   "rev_prev30": 231077,
-   "chg30": -3.7,
-   "first_seen": "2026-11-14"
-  },
-  {
-   "key": "g:8053",
-   "name": "DYLI",
-   "slug": "dyli",
-   "url": "https://www.dyli.io/",
-   "logo": "https://icons.llamao.fi/icons/protocols/dyli",
-   "twitter": "dyli_io",
-   "children": [
-    "DYLI"
+    "Gemint"
    ],
    "category": "Physical TCG",
    "chains": [
-    "Abstract",
-    "Base"
-   ],
-   "rev30": 218317,
-   "rev_prev30": 182161,
-   "chg30": 19.8,
-   "first_seen": "2026-11-14"
-  },
-  {
-   "key": "g:7555",
-   "name": "Matcha",
-   "slug": "matcha",
-   "url": "https://matcha.xyz/matcha-auto",
-   "logo": "https://icons.llamao.fi/icons/protocols/matcha",
-   "twitter": "_matchaxyz",
-   "children": [
-    "Matcha"
-   ],
-   "category": "Trading App",
-   "chains": [
-    "Polygon",
-    "Ethereum",
     "BSC"
    ],
-   "rev30": 214776,
-   "rev_prev30": 182154,
-   "chg30": 17.9,
+   "rev30": 218715,
+   "rev_prev30": 498924,
+   "chg30": -56.2,
    "first_seen": "2026-11-14"
   },
   {
@@ -1413,9 +1413,9 @@
    "chains": [
     "Ink"
    ],
-   "rev30": 213439,
-   "rev_prev30": 187112,
-   "chg30": 14.1,
+   "rev30": 215965,
+   "rev_prev30": 186484,
+   "chg30": 15.8,
    "first_seen": "2026-11-14"
   },
   {
@@ -1432,9 +1432,9 @@
    "chains": [
     "Canton"
    ],
-   "rev30": 203275,
-   "rev_prev30": 301593,
-   "chg30": -32.6,
+   "rev30": 201867,
+   "rev_prev30": 304234,
+   "chg30": -33.6,
    "first_seen": "2026-11-14"
   },
   {
@@ -1453,30 +1453,9 @@
     "Ethereum",
     "Arbitrum"
    ],
-   "rev30": 201199,
-   "rev_prev30": 517400,
-   "chg30": -61.1,
-   "first_seen": "2026-11-14"
-  },
-  {
-   "key": "g:6724",
-   "name": "GeckoTerminal",
-   "slug": "geckoterminal",
-   "url": "https://www.geckoterminal.com/",
-   "logo": "https://icons.llamao.fi/icons/protocols/geckoterminal",
-   "twitter": "GeckoTerminal",
-   "children": [
-    "GeckoTerminal"
-   ],
-   "category": "Interface",
-   "chains": [
-    "Ethereum",
-    "Base",
-    "Polygon"
-   ],
-   "rev30": 197617,
-   "rev_prev30": 252829,
-   "chg30": -21.8,
+   "rev30": 201125,
+   "rev_prev30": 500078,
+   "chg30": -59.8,
    "first_seen": "2026-11-14"
   },
   {
@@ -1494,38 +1473,10 @@
    "chains": [
     "Robinhood Chain"
    ],
-   "rev30": 196714,
-   "rev_prev30": 703899,
-   "chg30": -72.1,
+   "rev30": 192867,
+   "rev_prev30": 677272,
+   "chg30": -71.5,
    "first_seen": "2026-11-14"
-  },
-  {
-   "key": "g:parent#sendfun",
-   "name": "Sendfun",
-   "slug": "sendfun-launchpad",
-   "url": " ",
-   "logo": "https://icons.llamao.fi/icons/protocols/sendfun-launchpad",
-   "twitter": "sendfun",
-   "children": [
-    "sendfun Launchpad",
-    "Sendfun DEX"
-   ],
-   "category": "Launchpad",
-   "chains": [
-    "Solana"
-   ],
-   "rev30": 196057,
-   "rev_prev30": 0,
-   "chg30": null,
-   "boards": [
-    {
-     "board": "launchpad",
-     "rule": "lp_accel",
-     "why": "近 7 天手续费 192,350 美元，是上 7 天（9）的 21734.5 倍",
-     "since": null
-    }
-   ],
-   "first_seen": "2026-11-17"
   },
   {
    "key": "g:6332",
@@ -1542,29 +1493,9 @@
     "Solana",
     "Robinhood Chain"
    ],
-   "rev30": 189329,
-   "rev_prev30": 165806,
-   "chg30": 14.2,
-   "first_seen": "2026-11-14"
-  },
-  {
-   "key": "g:parent#hylo",
-   "name": "Hylo",
-   "slug": "hylo-protocol",
-   "url": "https://hylo.so",
-   "logo": "https://icons.llamao.fi/icons/protocols/hylo-protocol",
-   "twitter": "hylo_so",
-   "children": [
-    "Hylo Protocol",
-    "Hylo LSTs"
-   ],
-   "category": "Dual-Token Stablecoin",
-   "chains": [
-    "Solana"
-   ],
-   "rev30": 186696,
-   "rev_prev30": 216410,
-   "chg30": -13.7,
+   "rev30": 190470,
+   "rev_prev30": 162408,
+   "chg30": 17.3,
    "first_seen": "2026-11-14"
   },
   {
@@ -1583,8 +1514,28 @@
     "WEMIX3.0"
    ],
    "rev30": 186389,
-   "rev_prev30": 131364,
-   "chg30": 41.9,
+   "rev_prev30": 129620,
+   "chg30": 43.8,
+   "first_seen": "2026-11-14"
+  },
+  {
+   "key": "g:parent#hylo",
+   "name": "Hylo",
+   "slug": "hylo-protocol",
+   "url": "https://hylo.so",
+   "logo": "https://icons.llamao.fi/icons/protocols/hylo-protocol",
+   "twitter": "hylo_so",
+   "children": [
+    "Hylo Protocol",
+    "Hylo LSTs"
+   ],
+   "category": "Dual-Token Stablecoin",
+   "chains": [
+    "Solana"
+   ],
+   "rev30": 185874,
+   "rev_prev30": 197562,
+   "chg30": -5.9,
    "first_seen": "2026-11-14"
   },
   {
@@ -1601,9 +1552,47 @@
    "chains": [
     "Hyperliquid L1"
    ],
-   "rev30": 184085,
-   "rev_prev30": 314376,
-   "chg30": -41.4,
+   "rev30": 182615,
+   "rev_prev30": 305050,
+   "chg30": -40.1,
+   "first_seen": "2026-11-14"
+  },
+  {
+   "key": "g:parent#bitget-wallet",
+   "name": "Bitget Wallet Perps",
+   "slug": "bitget-wallet-perps",
+   "url": "https://web3.bitget.com",
+   "logo": "https://icons.llamao.fi/icons/protocols/bitget-wallet-perps",
+   "twitter": "BitgetWallet",
+   "children": [
+    "Bitget Wallet Perps"
+   ],
+   "category": "Interface",
+   "chains": [
+    "Hyperliquid L1"
+   ],
+   "rev30": 180699,
+   "rev_prev30": 61425,
+   "chg30": 194.2,
+   "first_seen": "2026-11-14"
+  },
+  {
+   "key": "g:5174",
+   "name": "four.meme",
+   "slug": "four.meme",
+   "url": "https://four.meme",
+   "logo": "https://icons.llamao.fi/icons/protocols/four.meme",
+   "twitter": "four_meme_",
+   "children": [
+    "four.meme"
+   ],
+   "category": "Launchpad",
+   "chains": [
+    "BSC"
+   ],
+   "rev30": 172930,
+   "rev_prev30": 269257,
+   "chg30": -35.8,
    "first_seen": "2026-11-14"
   },
   {
@@ -1622,9 +1611,9 @@
     "Ethereum",
     "BSC"
    ],
-   "rev30": 173790,
-   "rev_prev30": 193028,
-   "chg30": -10.0,
+   "rev30": 172691,
+   "rev_prev30": 193036,
+   "chg30": -10.5,
    "first_seen": "2026-11-14"
   },
   {
@@ -1643,47 +1632,68 @@
     "Stellar",
     "Ethereum"
    ],
-   "rev30": 172322,
-   "rev_prev30": 269714,
-   "chg30": -36.1,
+   "rev30": 171396,
+   "rev_prev30": 266465,
+   "chg30": -35.7,
    "first_seen": "2026-11-14"
   },
   {
-   "key": "g:5174",
-   "name": "four.meme",
-   "slug": "four.meme",
-   "url": "https://four.meme",
-   "logo": "https://icons.llamao.fi/icons/protocols/four.meme",
-   "twitter": "four_meme_",
+   "key": "g:8314",
+   "name": "CARDZ.GAME",
+   "slug": "cardz.game",
+   "url": "https://cardz.game/",
+   "logo": "https://icons.llamao.fi/icons/protocols/cardz.game",
+   "twitter": "CardzGame",
    "children": [
-    "four.meme"
+    "CARDZ.GAME"
    ],
-   "category": "Launchpad",
+   "category": "Physical TCG",
    "chains": [
-    "BSC"
+    "Sui"
    ],
-   "rev30": 168695,
-   "rev_prev30": 273545,
-   "chg30": -38.3,
+   "rev30": 163924,
+   "rev_prev30": 325424,
+   "chg30": -49.6,
    "first_seen": "2026-11-14"
   },
   {
-   "key": "g:parent#bitget-wallet",
-   "name": "Bitget Wallet Perps",
-   "slug": "bitget-wallet-perps",
-   "url": "https://web3.bitget.com",
-   "logo": "https://icons.llamao.fi/icons/protocols/bitget-wallet-perps",
-   "twitter": "BitgetWallet",
+   "key": "g:4981",
+   "name": "Photon",
+   "slug": "photon",
+   "url": "https://photon-sol.tinyastro.io",
+   "logo": "https://icons.llamao.fi/icons/protocols/photon",
+   "twitter": "tradewithPhoton",
    "children": [
-    "Bitget Wallet Perps"
+    "Photon"
    ],
-   "category": "Interface",
+   "category": "Trading App",
    "chains": [
-    "Hyperliquid L1"
+    "Solana"
    ],
-   "rev30": 167190,
-   "rev_prev30": 59747,
-   "chg30": 179.8,
+   "rev30": 161326,
+   "rev_prev30": 346588,
+   "chg30": -53.5,
+   "first_seen": "2026-11-14"
+  },
+  {
+   "key": "g:parent#cian-protocol",
+   "name": "CIAN Yield Layer",
+   "slug": "cian-yield-layer",
+   "url": "https://yieldlayer.cian.app/vaults/0xB13aa2d0345b0439b064f26B82D8dCf3f508775d?chainId=1&utm_source=TPFDZE",
+   "logo": "https://icons.llamao.fi/icons/protocols/cian-yield-layer",
+   "twitter": "CIAN_protocol",
+   "children": [
+    "CIAN Yield Layer"
+   ],
+   "category": "Yield Aggregator",
+   "chains": [
+    "Mantle",
+    "BSC",
+    "Ethereum"
+   ],
+   "rev30": 159866,
+   "rev_prev30": 140611,
+   "chg30": 13.7,
    "first_seen": "2026-11-14"
   },
   {
@@ -1702,9 +1712,9 @@
     "Base",
     "Ethereum"
    ],
-   "rev30": 165483,
-   "rev_prev30": 248324,
-   "chg30": -33.4,
+   "rev30": 158343,
+   "rev_prev30": 253265,
+   "chg30": -37.5,
    "first_seen": "2026-11-14"
   },
   {
@@ -1724,87 +1734,9 @@
     "Base",
     "Arbitrum"
    ],
-   "rev30": 163764,
-   "rev_prev30": 206012,
-   "chg30": -20.5,
-   "first_seen": "2026-11-14"
-  },
-  {
-   "key": "g:4981",
-   "name": "Photon",
-   "slug": "photon",
-   "url": "https://photon-sol.tinyastro.io",
-   "logo": "https://icons.llamao.fi/icons/protocols/photon",
-   "twitter": "tradewithPhoton",
-   "children": [
-    "Photon"
-   ],
-   "category": "Trading App",
-   "chains": [
-    "Solana"
-   ],
-   "rev30": 163074,
-   "rev_prev30": 352653,
-   "chg30": -53.8,
-   "first_seen": "2026-11-14"
-  },
-  {
-   "key": "g:parent#cian-protocol",
-   "name": "CIAN Yield Layer",
-   "slug": "cian-yield-layer",
-   "url": "https://yieldlayer.cian.app/vaults/0xB13aa2d0345b0439b064f26B82D8dCf3f508775d?chainId=1&utm_source=TPFDZE",
-   "logo": "https://icons.llamao.fi/icons/protocols/cian-yield-layer",
-   "twitter": "CIAN_protocol",
-   "children": [
-    "CIAN Yield Layer"
-   ],
-   "category": "Yield Aggregator",
-   "chains": [
-    "Mantle",
-    "BSC",
-    "Ethereum"
-   ],
-   "rev30": 159645,
-   "rev_prev30": 139290,
-   "chg30": 14.6,
-   "first_seen": "2026-11-14"
-  },
-  {
-   "key": "g:8314",
-   "name": "CARDZ.GAME",
-   "slug": "cardz.game",
-   "url": "https://cardz.game/",
-   "logo": "https://icons.llamao.fi/icons/protocols/cardz.game",
-   "twitter": "CardzGame",
-   "children": [
-    "CARDZ.GAME"
-   ],
-   "category": "Physical TCG",
-   "chains": [
-    "Sui"
-   ],
-   "rev30": 159116,
-   "rev_prev30": 343878,
-   "chg30": -53.7,
-   "first_seen": "2026-11-14"
-  },
-  {
-   "key": "g:7532",
-   "name": "Perpl",
-   "slug": "perpl",
-   "url": "https://perpl.xyz/",
-   "logo": "https://icons.llamao.fi/icons/protocols/perpl",
-   "twitter": "perpltrade",
-   "children": [
-    "Perpl"
-   ],
-   "category": "Derivatives",
-   "chains": [
-    "Monad"
-   ],
-   "rev30": 154645,
-   "rev_prev30": 158211,
-   "chg30": -2.3,
+   "rev30": 158247,
+   "rev_prev30": 207167,
+   "chg30": -23.6,
    "first_seen": "2026-11-14"
   },
   {
@@ -1823,51 +1755,28 @@
     "Lisk",
     "Fraxtal"
    ],
-   "rev30": 150273,
-   "rev_prev30": 143365,
-   "chg30": 4.8,
+   "rev30": 154323,
+   "rev_prev30": 144368,
+   "chg30": 6.9,
    "first_seen": "2026-11-14"
   },
   {
-   "key": "g:7365",
-   "name": "Miracle",
-   "slug": "miracle",
-   "url": "https://www.miracletrade.com/",
-   "logo": "https://icons.llamao.fi/icons/protocols/miracle",
-   "twitter": "miracletrade",
+   "key": "g:7532",
+   "name": "Perpl",
+   "slug": "perpl",
+   "url": "https://perpl.xyz/",
+   "logo": "https://icons.llamao.fi/icons/protocols/perpl",
+   "twitter": "perpltrade",
    "children": [
-    "Miracle"
+    "Perpl"
    ],
-   "category": "Interface",
+   "category": "Derivatives",
    "chains": [
-    "Hyperliquid L1",
-    "Starknet",
-    "Ink"
+    "Monad"
    ],
-   "rev30": 146882,
-   "rev_prev30": 203564,
-   "chg30": -27.8,
-   "first_seen": "2026-11-14"
-  },
-  {
-   "key": "g:parent#borsa",
-   "name": "Borsa",
-   "slug": "borsa-perps",
-   "url": "https://www.borsa.cc",
-   "logo": "https://icons.llamao.fi/icons/protocols/borsa-perps",
-   "twitter": "Borsa_HL",
-   "children": [
-    "Borsa Perps",
-    "Borsa Spot",
-    "Borsa Outcome"
-   ],
-   "category": "Interface",
-   "chains": [
-    "Hyperliquid L1"
-   ],
-   "rev30": 146301,
-   "rev_prev30": 52315,
-   "chg30": 179.7,
+   "rev30": 150006,
+   "rev_prev30": 159512,
+   "chg30": -6.0,
    "first_seen": "2026-11-14"
   },
   {
@@ -1890,6 +1799,48 @@
    "first_seen": "2026-11-14"
   },
   {
+   "key": "g:7365",
+   "name": "Miracle",
+   "slug": "miracle",
+   "url": "https://www.miracletrade.com/",
+   "logo": "https://icons.llamao.fi/icons/protocols/miracle",
+   "twitter": "miracletrade",
+   "children": [
+    "Miracle"
+   ],
+   "category": "Interface",
+   "chains": [
+    "Hyperliquid L1",
+    "Starknet",
+    "Ink"
+   ],
+   "rev30": 143787,
+   "rev_prev30": 201517,
+   "chg30": -28.6,
+   "first_seen": "2026-11-14"
+  },
+  {
+   "key": "g:parent#borsa",
+   "name": "Borsa",
+   "slug": "borsa-perps",
+   "url": "https://www.borsa.cc",
+   "logo": "https://icons.llamao.fi/icons/protocols/borsa-perps",
+   "twitter": "Borsa_HL",
+   "children": [
+    "Borsa Perps",
+    "Borsa Spot",
+    "Borsa Outcome"
+   ],
+   "category": "Interface",
+   "chains": [
+    "Hyperliquid L1"
+   ],
+   "rev30": 143416,
+   "rev_prev30": 52269,
+   "chg30": 174.4,
+   "first_seen": "2026-11-14"
+  },
+  {
    "key": "g:3391",
    "name": "Liquid Collective",
    "slug": "liquid-collective",
@@ -1903,9 +1854,9 @@
    "chains": [
     "Ethereum"
    ],
-   "rev30": 144004,
-   "rev_prev30": 154445,
-   "chg30": -6.8,
+   "rev30": 142689,
+   "rev_prev30": 153952,
+   "chg30": -7.3,
    "first_seen": "2026-11-14"
   },
   {
@@ -1923,28 +1874,30 @@
    "chains": [
     "Hyperliquid L1"
    ],
-   "rev30": 136433,
-   "rev_prev30": 21333,
-   "chg30": 539.5,
+   "rev30": 137905,
+   "rev_prev30": 20501,
+   "chg30": 572.7,
    "first_seen": "2026-11-18"
   },
   {
-   "key": "g:6522",
-   "name": "Immutable Orderbook",
-   "slug": "immutable-orderbook",
-   "url": "https://docs.immutable.com/docs/products/orderbook/overview",
-   "logo": "https://icons.llamao.fi/icons/protocols/immutable-orderbook",
-   "twitter": "Immutable",
+   "key": "g:6724",
+   "name": "GeckoTerminal",
+   "slug": "geckoterminal",
+   "url": "https://www.geckoterminal.com/",
+   "logo": "https://icons.llamao.fi/icons/protocols/geckoterminal",
+   "twitter": "GeckoTerminal",
    "children": [
-    "Immutable Orderbook"
+    "GeckoTerminal"
    ],
-   "category": "NFT Marketplace",
+   "category": "Interface",
    "chains": [
-    "Immutable zkEVM"
+    "Ethereum",
+    "Base",
+    "Polygon"
    ],
-   "rev30": 133608,
-   "rev_prev30": 204695,
-   "chg30": -34.7,
+   "rev30": 133903,
+   "rev_prev30": 312980,
+   "chg30": -57.2,
    "first_seen": "2026-11-14"
   },
   {
@@ -1961,10 +1914,29 @@
    "chains": [
     "BSC"
    ],
-   "rev30": 129088,
+   "rev30": 132342,
    "rev_prev30": 0,
    "chg30": null,
    "first_seen": "2026-11-16"
+  },
+  {
+   "key": "g:6522",
+   "name": "Immutable Orderbook",
+   "slug": "immutable-orderbook",
+   "url": "https://docs.immutable.com/docs/products/orderbook/overview",
+   "logo": "https://icons.llamao.fi/icons/protocols/immutable-orderbook",
+   "twitter": "Immutable",
+   "children": [
+    "Immutable Orderbook"
+   ],
+   "category": "NFT Marketplace",
+   "chains": [
+    "Immutable zkEVM"
+   ],
+   "rev30": 131102,
+   "rev_prev30": 204404,
+   "chg30": -35.9,
+   "first_seen": "2026-11-14"
   },
   {
    "key": "g:4695",
@@ -1981,9 +1953,9 @@
     "Solana",
     "BSC"
    ],
-   "rev30": 126844,
-   "rev_prev30": 256325,
-   "chg30": -50.5,
+   "rev30": 124476,
+   "rev_prev30": 250423,
+   "chg30": -50.3,
    "first_seen": "2026-11-14"
   },
   {
@@ -2006,9 +1978,9 @@
     "Polygon",
     "Base"
    ],
-   "rev30": 125760,
-   "rev_prev30": 158589,
-   "chg30": -20.7,
+   "rev30": 123049,
+   "rev_prev30": 154080,
+   "chg30": -20.1,
    "first_seen": "2026-11-14"
   },
   {
@@ -2027,9 +1999,9 @@
     "Arbitrum",
     "Robinhood Chain"
    ],
-   "rev30": 123198,
-   "rev_prev30": 165934,
-   "chg30": -25.8,
+   "rev30": 122350,
+   "rev_prev30": 163396,
+   "chg30": -25.1,
    "first_seen": "2026-11-14"
   },
   {
@@ -2048,9 +2020,9 @@
     "Base",
     "Polygon"
    ],
-   "rev30": 110469,
-   "rev_prev30": 82727,
-   "chg30": 33.5,
+   "rev30": 114064,
+   "rev_prev30": 81525,
+   "chg30": 39.9,
    "first_seen": "2026-11-14"
   },
   {
@@ -2069,10 +2041,67 @@
     "Base",
     "Polygon"
    ],
-   "rev30": 110130,
-   "rev_prev30": 122701,
-   "chg30": -10.2,
+   "rev30": 109927,
+   "rev_prev30": 112097,
+   "chg30": -1.9,
    "first_seen": "2026-11-14"
+  },
+  {
+   "key": "g:7978",
+   "name": "Propr",
+   "slug": "propr",
+   "url": "https://app.propr.xyz",
+   "logo": "https://icons.llamao.fi/icons/protocols/propr",
+   "twitter": "ProprXYZ",
+   "children": [
+    "Propr"
+   ],
+   "category": "Trading App",
+   "chains": [
+    "Ethereum"
+   ],
+   "rev30": 108683,
+   "rev_prev30": 129075,
+   "chg30": -15.8,
+   "first_seen": "2026-11-18"
+  },
+  {
+   "key": "g:5351",
+   "name": "Mantle Restaking",
+   "slug": "mantle-restaking",
+   "url": "https://www.methprotocol.xyz/",
+   "logo": "https://icons.llamao.fi/icons/protocols/mantle-restaking",
+   "twitter": "mETHProtocol",
+   "children": [
+    "Mantle Restaking"
+   ],
+   "category": "Liquid Restaking",
+   "chains": [
+    "Ethereum"
+   ],
+   "rev30": 106982,
+   "rev_prev30": 107965,
+   "chg30": -0.9,
+   "first_seen": "2026-11-14"
+  },
+  {
+   "key": "g:8498",
+   "name": "entropy.io",
+   "slug": "entropy.io",
+   "url": "https://entropy.io/",
+   "logo": "https://icons.llamao.fi/icons/protocols/entropy.io",
+   "twitter": "entropyIO",
+   "children": [
+    "entropy.io"
+   ],
+   "category": "Interface",
+   "chains": [
+    "Hyperliquid L1"
+   ],
+   "rev30": 106907,
+   "rev_prev30": 55724,
+   "chg30": 91.9,
+   "first_seen": "2026-11-24"
   },
   {
    "key": "g:8267",
@@ -2088,9 +2117,29 @@
    "chains": [
     "Hyperliquid L1"
    ],
-   "rev30": 107299,
-   "rev_prev30": 112956,
-   "chg30": -5.0,
+   "rev30": 106800,
+   "rev_prev30": 112853,
+   "chg30": -5.4,
+   "first_seen": "2026-11-14"
+  },
+  {
+   "key": "g:parent#legend-trade",
+   "name": "Legend Trade",
+   "slug": "legend-trade-perps",
+   "url": "https://legend.trade",
+   "logo": "https://icons.llamao.fi/icons/protocols/legend-trade-perps",
+   "twitter": "legendtrade",
+   "children": [
+    "Legend Trade Perps",
+    "Legend Trade Spot"
+   ],
+   "category": "Interface",
+   "chains": [
+    "Hyperliquid L1"
+   ],
+   "rev30": 104913,
+   "rev_prev30": 125625,
+   "chg30": -16.5,
    "first_seen": "2026-11-14"
   },
   {
@@ -2110,50 +2159,9 @@
     "Plume Mainnet",
     "Solana"
    ],
-   "rev30": 104545,
-   "rev_prev30": 146770,
-   "chg30": -28.8,
-   "first_seen": "2026-11-14"
-  },
-  {
-   "key": "g:parent#legend-trade",
-   "name": "Legend Trade",
-   "slug": "legend-trade-perps",
-   "url": "https://legend.trade",
-   "logo": "https://icons.llamao.fi/icons/protocols/legend-trade-perps",
-   "twitter": "legendtrade",
-   "children": [
-    "Legend Trade Perps",
-    "Legend Trade Spot"
-   ],
-   "category": "Interface",
-   "chains": [
-    "Hyperliquid L1"
-   ],
-   "rev30": 104087,
-   "rev_prev30": 138506,
-   "chg30": -24.9,
-   "first_seen": "2026-11-14"
-  },
-  {
-   "key": "g:6567",
-   "name": "ADEN",
-   "slug": "aden",
-   "url": "https://aden.io/",
-   "logo": "https://icons.llamao.fi/icons/protocols/aden",
-   "twitter": "bugscoin_bgsc",
-   "children": [
-    "ADEN"
-   ],
-   "category": "Interface",
-   "chains": [
-    "Off Chain",
-    "Orderly Network",
-    "GateLayer"
-   ],
-   "rev30": 103270,
-   "rev_prev30": 117043,
-   "chg30": -11.8,
+   "rev30": 103074,
+   "rev_prev30": 146663,
+   "chg30": -29.7,
    "first_seen": "2026-11-14"
   }
  ],
@@ -2172,10 +2180,10 @@
    "chains": [
     "Off Chain"
    ],
-   "rev30": 13961718,
-   "rev_prev30": 63674775,
-   "rev_all": 77636493,
-   "chg30": -78.1,
+   "rev30": 12694700,
+   "rev_prev30": 65014402,
+   "rev_all": 77709102,
+   "chg30": -80.5,
    "token": true,
    "why": "young"
   },
@@ -2195,10 +2203,10 @@
     "Ethereum",
     "Gnosis"
    ],
-   "rev30": 1575046,
-   "rev_prev30": 468841,
-   "rev_all": 20934665,
-   "chg30": 235.9,
+   "rev30": 1541419,
+   "rev_prev30": 456513,
+   "rev_all": 20912671,
+   "chg30": 237.7,
    "token": true,
    "why": "accel"
   },
@@ -2218,10 +2226,10 @@
     "Ethereum",
     "BSC"
    ],
-   "rev30": 882528,
-   "rev_prev30": 1106699,
-   "rev_all": 2019491,
-   "chg30": -20.3,
+   "rev30": 861572,
+   "rev_prev30": 1122575,
+   "rev_all": 2036654,
+   "chg30": -23.3,
    "token": true,
    "why": "young"
   },
@@ -2239,10 +2247,10 @@
    "chains": [
     "Tron"
    ],
-   "rev30": 512865,
-   "rev_prev30": 47839,
-   "rev_all": 1735910,
-   "chg30": 972.1,
+   "rev30": 526046,
+   "rev_prev30": 48008,
+   "rev_all": 1750788,
+   "chg30": 995.7,
    "token": true,
    "why": "accel"
   },
@@ -2260,33 +2268,10 @@
    "chains": [
     "Robinhood Chain"
    ],
-   "rev30": 442647,
-   "rev_prev30": 139050,
-   "rev_all": 581697,
-   "chg30": 218.3,
-   "token": true,
-   "why": "young+accel"
-  },
-  {
-   "key": "s:parent#paperstrategy",
-   "name": "Paperstrategy",
-   "slug": "paperstrategy-pstr",
-   "url": "https://paperstrategy.xyz",
-   "logo": "https://icons.llamao.fi/icons/protocols/paperstrategy-pstr",
-   "twitter": "paperstrategy_",
-   "children": [
-    "PaperStrategy PSTR",
-    "PaperStrategy Papertrade"
-   ],
-   "category": "Onchain Capital Allocator",
-   "chains": [
-    "Hyperliquid L1",
-    "Off Chain"
-   ],
-   "rev30": 430476,
-   "rev_prev30": 3169883,
-   "rev_all": 3600359,
-   "chg30": -86.4,
+   "rev30": 427234,
+   "rev_prev30": 160962,
+   "rev_all": 588196,
+   "chg30": 165.4,
    "token": true,
    "why": "young"
   },
@@ -2304,9 +2289,9 @@
    "chains": [
     "Elysium"
    ],
-   "rev30": 396372,
+   "rev30": 404595,
    "rev_prev30": 0,
-   "rev_all": 396372,
+   "rev_all": 404595,
    "chg30": null,
    "token": true,
    "why": "young+accel",
@@ -2318,6 +2303,29 @@
      "since": "2026-11-10"
     }
    ]
+  },
+  {
+   "key": "s:parent#paperstrategy",
+   "name": "Paperstrategy",
+   "slug": "paperstrategy-pstr",
+   "url": "https://paperstrategy.xyz",
+   "logo": "https://icons.llamao.fi/icons/protocols/paperstrategy-pstr",
+   "twitter": "paperstrategy_",
+   "children": [
+    "PaperStrategy PSTR",
+    "PaperStrategy Papertrade"
+   ],
+   "category": "Onchain Capital Allocator",
+   "chains": [
+    "Hyperliquid L1",
+    "Off Chain"
+   ],
+   "rev30": 398404,
+   "rev_prev30": 3202587,
+   "rev_all": 3600991,
+   "chg30": -87.6,
+   "token": true,
+   "why": "young"
   },
   {
    "key": "s:4063",
@@ -2335,10 +2343,10 @@
     "Arbitrum",
     "Sonic"
    ],
-   "rev30": 339722,
-   "rev_prev30": 16457,
-   "rev_all": 2376618,
-   "chg30": 1964.3,
+   "rev30": 339733,
+   "rev_prev30": 16459,
+   "rev_all": 2376631,
+   "chg30": 1964.1,
    "token": true,
    "why": "accel"
   },
@@ -2357,10 +2365,10 @@
    "chains": [
     "Ethereum"
    ],
-   "rev30": 265874,
-   "rev_prev30": 32881,
-   "rev_all": 36306621,
-   "chg30": 708.6,
+   "rev30": 277963,
+   "rev_prev30": 32709,
+   "rev_all": 36319671,
+   "chg30": 749.8,
    "token": true,
    "why": "accel"
   },
@@ -2378,10 +2386,10 @@
    "chains": [
     "THORChain"
    ],
-   "rev30": 260116,
-   "rev_prev30": 294707,
-   "rev_all": 739029,
-   "chg30": -11.7,
+   "rev30": 270452,
+   "rev_prev30": 296419,
+   "rev_all": 752478,
+   "chg30": -8.8,
    "token": true,
    "why": "young"
   },
@@ -2399,9 +2407,9 @@
    "chains": [
     "Elysium"
    ],
-   "rev30": 180958,
+   "rev30": 182020,
    "rev_prev30": 0,
-   "rev_all": 180958,
+   "rev_all": 182020,
    "chg30": null,
    "token": true,
    "why": "young+accel"
@@ -2420,10 +2428,10 @@
    "chains": [
     "Ethereum"
    ],
-   "rev30": 161544,
+   "rev30": 173121,
    "rev_prev30": 3600,
-   "rev_all": 4309536,
-   "chg30": 4387.3,
+   "rev_all": 4321113,
+   "chg30": 4708.9,
    "token": true,
    "why": "accel"
   },
@@ -2442,10 +2450,10 @@
    "chains": [
     "Ethereum"
    ],
-   "rev30": 142375,
-   "rev_prev30": 32257,
-   "rev_all": 2984585,
-   "chg30": 341.4,
+   "rev30": 152112,
+   "rev_prev30": 33574,
+   "rev_all": 2998190,
+   "chg30": 353.1,
    "token": true,
    "why": "accel"
   }
@@ -2480,15 +2488,48 @@
    "chains": [
     "Robinhood Chain"
    ],
-   "rev30": 887375,
-   "rev_prev30": 3846188,
-   "rev_all": 37069688,
-   "chg30": -76.9,
+   "rev30": 865840,
+   "rev_prev30": 3627046,
+   "rev_all": 37085047,
+   "chg30": -76.1,
    "token": true,
    "added": "2026-11-15"
   }
  ],
  "site": [
+  {
+   "board": "launchpad",
+   "slug": "sendfun-launchpad",
+   "name": "sendfun Launchpad",
+   "chains": [
+    "Solana"
+   ],
+   "logo": "https://icons.llamao.fi/icons/protocols/sendfun-launchpad",
+   "category": "Launchpad",
+   "since": null,
+   "fees7": 192350,
+   "fees_prev7": 9,
+   "fees30": 192359,
+   "parent": "parent#sendfun",
+   "asof": "2026-11-22",
+   "rule": "lp_accel",
+   "why": "近 7 天手续费 192,350 美元，是上 7 天（9）的 21734.5 倍",
+   "key": "x:launchpad:sendfun-launchpad",
+   "boards": [
+    {
+     "board": "launchpad",
+     "rule": "lp_accel",
+     "why": "近 7 天手续费 192,350 美元，是上 7 天（9）的 21734.5 倍",
+     "since": null
+    }
+   ],
+   "token": false,
+   "rev30": null,
+   "chg30": null,
+   "children": null,
+   "url": " ",
+   "twitter": "sendfun"
+  },
   {
    "board": "launchpad",
    "slug": null,
@@ -2548,6 +2589,106 @@
  ],
  "listings": [
   {
+   "key": "p:9498",
+   "name": "Coinbase Wallet Perps",
+   "slug": "coinbase-wallet-perps",
+   "category": "Interface",
+   "url": "https://www.coinbase.com/wallet",
+   "logo": "https://icons.llamao.fi/icons/protocols/coinbase-wallet-perps",
+   "twitter": "CoinbaseWallet",
+   "chains": [],
+   "tvl": 0,
+   "listed": "2026-11-24",
+   "token": false,
+   "parent": null
+  },
+  {
+   "key": "p:9499",
+   "name": "Pocket Universe Perps",
+   "slug": "pocket-universe-perps",
+   "category": "Interface",
+   "url": "https://www.pocketuniverse.app",
+   "logo": "https://icons.llamao.fi/icons/protocols/pocket-universe-perps",
+   "twitter": "PocketUniverseZ",
+   "chains": [],
+   "tvl": 0,
+   "listed": "2026-11-24",
+   "token": false,
+   "parent": "parent#pocket-universe"
+  },
+  {
+   "key": "p:9500",
+   "name": "Pocket Universe Spot",
+   "slug": "pocket-universe-spot",
+   "category": "Interface",
+   "url": "https://www.pocketuniverse.app",
+   "logo": "https://icons.llamao.fi/icons/protocols/pocket-universe-spot",
+   "twitter": "PocketUniverseZ",
+   "chains": [],
+   "tvl": 0,
+   "listed": "2026-11-24",
+   "token": false,
+   "parent": "parent#pocket-universe"
+  },
+  {
+   "key": "p:9497",
+   "name": "NOUNY",
+   "slug": "nouny",
+   "category": "AI Agents",
+   "url": "",
+   "logo": "https://icons.llamao.fi/icons/protocols/nouny",
+   "twitter": "nounyagent",
+   "chains": [
+    "Robinhood Chain"
+   ],
+   "tvl": 20,
+   "listed": "2026-11-23",
+   "token": true,
+   "parent": null
+  },
+  {
+   "key": "p:9494",
+   "name": "XOXNO Aggregator",
+   "slug": "xoxno-aggregator",
+   "category": "DEX Aggregator",
+   "url": "https://xoxno.com",
+   "logo": "https://icons.llamao.fi/icons/protocols/xoxno-aggregator",
+   "twitter": "XoxnoNetwork",
+   "chains": [],
+   "tvl": 0,
+   "listed": "2026-11-23",
+   "token": true,
+   "parent": "parent#xoxno"
+  },
+  {
+   "key": "p:9495",
+   "name": "EasyPerp",
+   "slug": "easyperp",
+   "category": "Interface",
+   "url": "https://trade.easyperp.app",
+   "logo": "https://icons.llamao.fi/icons/protocols/easyperp",
+   "twitter": "easyperp",
+   "chains": [],
+   "tvl": 0,
+   "listed": "2026-11-23",
+   "token": false,
+   "parent": null
+  },
+  {
+   "key": "p:9496",
+   "name": "LiLLyTrade",
+   "slug": "lillytrade",
+   "category": "Interface",
+   "url": "https://lillytrade.xyz",
+   "logo": "https://icons.llamao.fi/icons/protocols/lillytrade",
+   "twitter": "LIQDLilly",
+   "chains": [],
+   "tvl": 0,
+   "listed": "2026-11-23",
+   "token": false,
+   "parent": null
+  },
+  {
    "key": "p:9489",
    "name": "Ibex Market",
    "slug": "ibex-market",
@@ -2558,7 +2699,7 @@
    "chains": [
     "Canton"
    ],
-   "tvl": 10026,
+   "tvl": 10027,
    "listed": "2026-11-22",
    "token": false,
    "parent": null
@@ -2576,7 +2717,7 @@
     "Optimism",
     "Avalanche"
    ],
-   "tvl": 14,
+   "tvl": 16,
    "listed": "2026-11-22",
    "token": true,
    "parent": null
@@ -2610,6 +2751,20 @@
    "parent": null
   },
   {
+   "key": "p:9493",
+   "name": "ATLASX Perps",
+   "slug": "atlasx-perps",
+   "category": "Interface",
+   "url": "https://atlx.ai",
+   "logo": "https://icons.llamao.fi/icons/protocols/atlasx-perps",
+   "twitter": "atlasx_ai",
+   "chains": [],
+   "tvl": 0,
+   "listed": "2026-11-22",
+   "token": false,
+   "parent": null
+  },
+  {
    "key": "p:9487",
    "name": "InoVaults",
    "slug": "inovaults",
@@ -2620,7 +2775,7 @@
    "chains": [
     "Cronos"
    ],
-   "tvl": 2539,
+   "tvl": 2514,
    "listed": "2026-11-21",
    "token": false,
    "parent": null
@@ -2664,7 +2819,7 @@
    "chains": [
     "Kaspa"
    ],
-   "tvl": 4175,
+   "tvl": 4250,
    "listed": "2026-11-20",
    "token": false,
    "parent": null
@@ -2696,7 +2851,7 @@
    "chains": [
     "Robinhood Chain"
    ],
-   "tvl": 3,
+   "tvl": 8,
    "listed": "2026-11-20",
    "token": false,
    "parent": null
@@ -2772,7 +2927,7 @@
     "Monad",
     "Ethereum"
    ],
-   "tvl": 6,
+   "tvl": 5,
    "listed": "2026-11-19",
    "token": false,
    "parent": "parent#bima"
@@ -2830,7 +2985,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 55301,
+   "tvl": 53866,
    "listed": "2026-11-18",
    "token": false,
    "parent": null
@@ -2892,22 +3047,6 @@
    "parent": "parent#rxn"
   },
   {
-   "key": "p:9464",
-   "name": "CipherTrade DEX",
-   "slug": "ciphertrade-dex",
-   "category": "Dexs",
-   "url": "https://app.ciphertrade.org/",
-   "logo": "https://icons.llamao.fi/icons/protocols/ciphertrade-dex",
-   "twitter": "CipherTradeApp",
-   "chains": [
-    "Coti"
-   ],
-   "tvl": 9676,
-   "listed": "2026-11-17",
-   "token": false,
-   "parent": null
-  },
-  {
    "key": "p:9469",
    "name": "Trestly",
    "slug": "trestly",
@@ -2919,7 +3058,23 @@
     "Binance",
     "Ethereum"
    ],
-   "tvl": 7354,
+   "tvl": 9857,
+   "listed": "2026-11-17",
+   "token": false,
+   "parent": null
+  },
+  {
+   "key": "p:9464",
+   "name": "CipherTrade DEX",
+   "slug": "ciphertrade-dex",
+   "category": "Dexs",
+   "url": "https://app.ciphertrade.org/",
+   "logo": "https://icons.llamao.fi/icons/protocols/ciphertrade-dex",
+   "twitter": "CipherTradeApp",
+   "chains": [
+    "Coti"
+   ],
+   "tvl": 9591,
    "listed": "2026-11-17",
    "token": false,
    "parent": null
@@ -2935,7 +3090,7 @@
    "chains": [
     "Solana"
    ],
-   "tvl": 7104,
+   "tvl": 8505,
    "listed": "2026-11-17",
    "token": false,
    "parent": "parent#escapehub"
@@ -2953,7 +3108,7 @@
     "Base",
     "Robinhood Chain"
    ],
-   "tvl": 2503,
+   "tvl": 6010,
    "listed": "2026-11-17",
    "token": false,
    "parent": "parent#escapehub"
@@ -2969,7 +3124,7 @@
    "chains": [
     "Robinhood Chain"
    ],
-   "tvl": 21,
+   "tvl": 20,
    "listed": "2026-11-17",
    "token": true,
    "parent": null
@@ -3055,7 +3210,7 @@
    "chains": [
     "Monad"
    ],
-   "tvl": 190682,
+   "tvl": 190319,
    "listed": "2026-11-16",
    "token": false,
    "parent": "parent#btr"
@@ -3071,7 +3226,7 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 21840,
+   "tvl": 21768,
    "listed": "2026-11-16",
    "token": false,
    "parent": "parent#kalos"
@@ -3131,7 +3286,7 @@
    "chains": [
     "Stellar"
    ],
-   "tvl": 273022,
+   "tvl": 271832,
    "listed": "2026-11-15",
    "token": true,
    "parent": null
@@ -3147,7 +3302,7 @@
    "chains": [
     "Robinhood Chain"
    ],
-   "tvl": 25353,
+   "tvl": 25594,
    "listed": "2026-11-15",
    "token": true,
    "parent": null
@@ -3163,7 +3318,7 @@
    "chains": [
     "Flare"
    ],
-   "tvl": 1206,
+   "tvl": 1195,
    "listed": "2026-11-15",
    "token": false,
    "parent": null
@@ -3207,7 +3362,7 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 1780956,
+   "tvl": 2100063,
    "listed": "2026-11-14",
    "token": true,
    "parent": "parent#nest"
@@ -3223,7 +3378,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 563120,
+   "tvl": 563348,
    "listed": "2026-11-14",
    "token": false,
    "parent": "parent#drakewell"
@@ -3239,7 +3394,7 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 39551,
+   "tvl": 43041,
    "listed": "2026-11-14",
    "token": true,
    "parent": "parent#kleos"
@@ -3255,7 +3410,7 @@
    "chains": [
     "Robinhood Chain"
    ],
-   "tvl": 4687,
+   "tvl": 4692,
    "listed": "2026-11-14",
    "token": false,
    "parent": null
@@ -3427,7 +3582,7 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 4830,
+   "tvl": 4901,
    "listed": "2026-11-13",
    "token": false,
    "parent": null
@@ -3443,7 +3598,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 1736,
+   "tvl": 1691,
    "listed": "2026-11-13",
    "token": false,
    "parent": null
@@ -3515,7 +3670,23 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 6833351,
+   "tvl": 7109283,
+   "listed": "2026-11-12",
+   "token": false,
+   "parent": null
+  },
+  {
+   "key": "p:9424",
+   "name": "NoxFund",
+   "slug": "noxfund",
+   "category": "Ponzi",
+   "url": "",
+   "logo": "https://icons.llamao.fi/icons/protocols/noxfund",
+   "twitter": "NoxFundROI",
+   "chains": [
+    "Binance"
+   ],
+   "tvl": 272435,
    "listed": "2026-11-12",
    "token": false,
    "parent": null
@@ -3533,23 +3704,7 @@
     "Base",
     "Binance"
    ],
-   "tvl": 209359,
-   "listed": "2026-11-12",
-   "token": false,
-   "parent": null
-  },
-  {
-   "key": "p:9424",
-   "name": "NoxFund",
-   "slug": "noxfund",
-   "category": "Ponzi",
-   "url": "",
-   "logo": "https://icons.llamao.fi/icons/protocols/noxfund",
-   "twitter": "NoxFundROI",
-   "chains": [
-    "Binance"
-   ],
-   "tvl": 190207,
+   "tvl": 224927,
    "listed": "2026-11-12",
    "token": false,
    "parent": null
@@ -3565,7 +3720,7 @@
    "chains": [
     "Sui"
    ],
-   "tvl": 60977,
+   "tvl": 52966,
    "listed": "2026-11-12",
    "token": false,
    "parent": null
@@ -3581,7 +3736,7 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 44626,
+   "tvl": 45219,
    "listed": "2026-11-12",
    "token": false,
    "parent": "parent#boxa"
@@ -3597,7 +3752,7 @@
    "chains": [
     "Sonic"
    ],
-   "tvl": 2505,
+   "tvl": 2522,
    "listed": "2026-11-12",
    "token": true,
    "parent": null
@@ -3716,7 +3871,7 @@
     "Monad",
     "Base"
    ],
-   "tvl": 30212703,
+   "tvl": 30154234,
    "listed": "2026-11-11",
    "token": true,
    "parent": "parent#pendle"
@@ -3732,7 +3887,7 @@
    "chains": [
     "Ethereum"
    ],
-   "tvl": 2883482,
+   "tvl": 2862754,
    "listed": "2026-11-11",
    "token": false,
    "parent": null
@@ -3748,7 +3903,7 @@
    "chains": [
     "Solana"
    ],
-   "tvl": 2719972,
+   "tvl": 2725924,
    "listed": "2026-11-11",
    "token": true,
    "parent": "parent#jupiter"
@@ -3764,7 +3919,7 @@
    "chains": [
     "Strato"
    ],
-   "tvl": 582037,
+   "tvl": 625760,
    "listed": "2026-11-11",
    "token": false,
    "parent": "parent#strato"
@@ -3780,7 +3935,7 @@
    "chains": [
     "Sui"
    ],
-   "tvl": 21769,
+   "tvl": 22502,
    "listed": "2026-11-11",
    "token": false,
    "parent": null
@@ -3797,7 +3952,7 @@
     "Base",
     "Robinhood Chain"
    ],
-   "tvl": 6382,
+   "tvl": 6225,
    "listed": "2026-11-11",
    "token": false,
    "parent": null
@@ -3813,7 +3968,7 @@
    "chains": [
     "Base"
    ],
-   "tvl": 1197,
+   "tvl": 1183,
    "listed": "2026-11-11",
    "token": true,
    "parent": null
@@ -3829,7 +3984,7 @@
    "chains": [
     "Hedera"
    ],
-   "tvl": 930,
+   "tvl": 809,
    "listed": "2026-11-11",
    "token": true,
    "parent": null
@@ -3861,7 +4016,7 @@
    "chains": [
     "Robinhood Chain"
    ],
-   "tvl": 46,
+   "tvl": 53,
    "listed": "2026-11-11",
    "token": true,
    "parent": "parent#hedgehood"
@@ -3877,7 +4032,7 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 29,
+   "tvl": 31,
    "listed": "2026-11-11",
    "token": true,
    "parent": null
@@ -4043,38 +4198,6 @@
    "parent": null
   },
   {
-   "key": "p:9378",
-   "name": "ipUSD",
-   "slug": "ipusd",
-   "category": "Stablecoin Wrapper",
-   "url": "https://ipusd.xyz/",
-   "logo": "https://icons.llamao.fi/icons/protocols/ipusd",
-   "twitter": "soneium",
-   "chains": [
-    "Soneium"
-   ],
-   "tvl": 753497,
-   "listed": "2026-11-10",
-   "token": false,
-   "parent": null
-  },
-  {
-   "key": "p:9379",
-   "name": "Hyper Tokens",
-   "slug": "hyper-tokens",
-   "category": "Derivatives",
-   "url": "",
-   "logo": "https://icons.llamao.fi/icons/protocols/hyper-tokens",
-   "twitter": "HyperTokensHQ",
-   "chains": [
-    "Hyperliquid L1"
-   ],
-   "tvl": 154479,
-   "listed": "2026-11-10",
-   "token": false,
-   "parent": null
-  },
-  {
    "key": "p:9387",
    "name": "Aurumlend",
    "slug": "aurumlend",
@@ -4085,7 +4208,7 @@
    "chains": [
     "Arc"
    ],
-   "tvl": 16096,
+   "tvl": 16552,
    "listed": "2026-11-10",
    "token": false,
    "parent": null
@@ -4101,7 +4224,7 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 4161,
+   "tvl": 4143,
    "listed": "2026-11-10",
    "token": false,
    "parent": "parent#kalos"
@@ -4117,42 +4240,10 @@
    "chains": [
     "Elysium Kinetiq"
    ],
-   "tvl": 1941,
+   "tvl": 1928,
    "listed": "2026-11-10",
    "token": false,
    "parent": "parent#kalos"
-  },
-  {
-   "key": "p:9377",
-   "name": "Kyte",
-   "slug": "kyte",
-   "category": "Options",
-   "url": "",
-   "logo": "https://icons.llamao.fi/icons/protocols/kyte",
-   "twitter": "useKyte",
-   "chains": [
-    "Robinhood Chain"
-   ],
-   "tvl": 1,
-   "listed": "2026-11-10",
-   "token": false,
-   "parent": null
-  },
-  {
-   "key": "p:9376",
-   "name": "ArkhamPad",
-   "slug": "arkhampad",
-   "category": "Launchpad",
-   "url": "",
-   "logo": "https://icons.llamao.fi/icons/protocols/arkhampad",
-   "twitter": "arkhampad",
-   "chains": [
-    "Elysium Kinetiq"
-   ],
-   "tvl": 0,
-   "listed": "2026-11-10",
-   "token": false,
-   "parent": null
   },
   {
    "key": "p:9381",
@@ -4209,216 +4300,119 @@
    "listed": "2026-11-10",
    "token": true,
    "parent": null
-  },
-  {
-   "key": "p:9395",
-   "name": "Valdora Vaults",
-   "slug": "valdora-vaults",
-   "category": "RWA",
-   "url": "https://valdora.finance/vaults",
-   "logo": "https://icons.llamao.fi/icons/protocols/valdora-finance",
-   "twitter": "Valdora_finance",
-   "chains": [],
-   "tvl": 0,
-   "listed": "2026-11-10",
-   "token": false,
-   "parent": "parent#valdora"
-  },
-  {
-   "key": "p:9380",
-   "name": "Kinetiq Elysium Bridge",
-   "slug": "kinetiq-elysium-bridge",
-   "category": "Canonical Bridge",
-   "url": "https://elysium.kinetiq.xyz",
-   "logo": "https://icons.llamao.fi/icons/protocols/kinetiq-elysium-bridge",
-   "twitter": "Enter_Elysium",
-   "chains": [
-    "Hyperliquid L1"
-   ],
-   "tvl": 31554080,
-   "listed": "2026-11-09",
-   "token": true,
-   "parent": "parent#kinetiq"
-  },
-  {
-   "key": "p:9370",
-   "name": "Hollow",
-   "slug": "hollow",
-   "category": "Reserve Currency",
-   "url": "https://hollow.cash",
-   "logo": "https://icons.llamao.fi/icons/protocols/hollow",
-   "twitter": "hollow_cash",
-   "chains": [
-    "Ethereum"
-   ],
-   "tvl": 8127,
-   "listed": "2026-11-09",
-   "token": true,
-   "parent": null
-  },
-  {
-   "key": "p:9374",
-   "name": "Roulana",
-   "slug": "roulana",
-   "category": "Luck Games",
-   "url": "",
-   "logo": "https://icons.llamao.fi/icons/protocols/roulana",
-   "twitter": "RoulanaCom",
-   "chains": [
-    "Solana"
-   ],
-   "tvl": 6172,
-   "listed": "2026-11-09",
-   "token": true,
-   "parent": null
-  },
-  {
-   "key": "p:9367",
-   "name": "MING",
-   "slug": "ming",
-   "category": "Gamified Mining",
-   "url": "",
-   "logo": "https://icons.llamao.fi/icons/protocols/ming",
-   "twitter": "mingbnb",
-   "chains": [
-    "Binance"
-   ],
-   "tvl": 1834,
-   "listed": "2026-11-09",
-   "token": false,
-   "parent": null
-  },
-  {
-   "key": "p:9364",
-   "name": "Syndicate Perps",
-   "slug": "syndicate-perps",
-   "category": "Interface",
-   "url": "https://syndicate.trade",
-   "logo": "https://icons.llamao.fi/icons/protocols/syndicate-perps",
-   "twitter": "winonsyndicate",
-   "chains": [],
-   "tvl": 0,
-   "listed": "2026-11-09",
-   "token": false,
-   "parent": "parent#syndicate"
-  },
-  {
-   "key": "p:9365",
-   "name": "Syndicate Predictions",
-   "slug": "syndicate-predictions",
-   "category": "Interface",
-   "url": "https://syndicate.trade",
-   "logo": "https://icons.llamao.fi/icons/protocols/syndicate-predictions",
-   "twitter": "winonsyndicate",
-   "chains": [],
-   "tvl": 0,
-   "listed": "2026-11-09",
-   "token": false,
-   "parent": "parent#syndicate"
-  },
-  {
-   "key": "p:9366",
-   "name": "Bridged Finance",
-   "slug": "bridged-finance",
-   "category": "Bridge Aggregator",
-   "url": "",
-   "logo": "https://icons.llamao.fi/icons/protocols/bridged-finance",
-   "twitter": "bridged_finance",
-   "chains": [],
-   "tvl": 0,
-   "listed": "2026-11-09",
-   "token": false,
-   "parent": null
-  },
-  {
-   "key": "p:9368",
-   "name": "Afterbell",
-   "slug": "afterbell",
-   "category": "Interface",
-   "url": "https://afterbell.pro",
-   "logo": "https://icons.llamao.fi/icons/protocols/afterbell",
-   "twitter": "Afterbell_pro",
-   "chains": [],
-   "tvl": 0,
-   "listed": "2026-11-09",
-   "token": false,
-   "parent": null
-  },
-  {
-   "key": "p:9369",
-   "name": "Pacifica Options",
-   "slug": "pacifica-options",
-   "category": "Options",
-   "url": "https://app.pacifica.fi",
-   "logo": "https://icons.llamao.fi/icons/protocols/pacifica-options",
-   "twitter": "pacifica_fi",
-   "chains": [],
-   "tvl": 0,
-   "listed": "2026-11-09",
-   "token": false,
-   "parent": "parent#pacifica"
-  },
-  {
-   "key": "p:9371",
-   "name": "Bitso Onchain Perps",
-   "slug": "bitso-onchain-perps",
-   "category": "Interface",
-   "url": "https://onchain.cc",
-   "logo": "https://icons.llamao.fi/icons/protocols/bitso-onchain-perps",
-   "twitter": "Onchaincc",
-   "chains": [],
-   "tvl": 0,
-   "listed": "2026-11-09",
-   "token": false,
-   "parent": "parent#bitso-onchain"
-  },
-  {
-   "key": "p:9372",
-   "name": "Bitso Onchain Spot",
-   "slug": "bitso-onchain-spot",
-   "category": "Interface",
-   "url": "https://onchain.cc",
-   "logo": "https://icons.llamao.fi/icons/protocols/bitso-onchain-spot",
-   "twitter": "Onchaincc",
-   "chains": [],
-   "tvl": 0,
-   "listed": "2026-11-09",
-   "token": false,
-   "parent": "parent#bitso-onchain"
-  },
-  {
-   "key": "p:9373",
-   "name": "GraveStake",
-   "slug": "gravestake",
-   "category": "Staking Pool",
-   "url": "",
-   "logo": "https://icons.llamao.fi/icons/protocols/gravestake",
-   "twitter": "SOLANADEADS",
-   "chains": [
-    "Solana"
-   ],
-   "tvl": 0,
-   "listed": "2026-11-09",
-   "token": true,
-   "parent": null
-  },
-  {
-   "key": "p:9375",
-   "name": "EYED",
-   "slug": "eyed",
-   "category": "Interface",
-   "url": "https://eyed.cc",
-   "logo": "https://icons.llamao.fi/icons/protocols/eyed",
-   "twitter": "EyedTrade",
-   "chains": [],
-   "tvl": 0,
-   "listed": "2026-11-09",
-   "token": false,
-   "parent": null
   }
  ],
- "events": [],
+ "events": [
+  {
+   "type": "new_rank",
+   "key": "g:8498",
+   "name": "entropy.io",
+   "rev30": 106907,
+   "chg30": 91.9,
+   "category": "Interface"
+  },
+  {
+   "type": "new_listing",
+   "key": "p:9498",
+   "name": "Coinbase Wallet Perps",
+   "tvl": 0,
+   "category": "Interface",
+   "listed": "2026-11-24"
+  },
+  {
+   "type": "new_listing",
+   "key": "p:9499",
+   "name": "Pocket Universe Perps",
+   "tvl": 0,
+   "category": "Interface",
+   "listed": "2026-11-24"
+  },
+  {
+   "type": "new_listing",
+   "key": "p:9500",
+   "name": "Pocket Universe Spot",
+   "tvl": 0,
+   "category": "Interface",
+   "listed": "2026-11-24"
+  },
+  {
+   "type": "new_listing",
+   "key": "p:9497",
+   "name": "NOUNY",
+   "tvl": 20,
+   "category": "AI Agents",
+   "listed": "2026-11-23"
+  },
+  {
+   "type": "new_listing",
+   "key": "p:9494",
+   "name": "XOXNO Aggregator",
+   "tvl": 0,
+   "category": "DEX Aggregator",
+   "listed": "2026-11-23"
+  },
+  {
+   "type": "new_listing",
+   "key": "p:9495",
+   "name": "EasyPerp",
+   "tvl": 0,
+   "category": "Interface",
+   "listed": "2026-11-23"
+  },
+  {
+   "type": "new_listing",
+   "key": "p:9496",
+   "name": "LiLLyTrade",
+   "tvl": 0,
+   "category": "Interface",
+   "listed": "2026-11-23"
+  },
+  {
+   "type": "new_listing",
+   "key": "p:9493",
+   "name": "ATLASX Perps",
+   "tvl": 0,
+   "category": "Interface",
+   "listed": "2026-11-22"
+  },
+  {
+   "type": "site",
+   "key": "x:launchpad:sendfun-launchpad",
+   "name": "sendfun Launchpad",
+   "rule": "lp_accel",
+   "fees7": 192350,
+   "category": "Launchpad"
+  }
+ ],
  "feed": [
+  {
+   "id": "ethr:26285",
+   "src": "ethresearch",
+   "title": "Post-quantum DAS with improved provable security",
+   "url": "https://ethresear.ch/t/post-quantum-das-with-improved-provable-security/26285",
+   "created": "2026-11-24T09:47:56+00:00",
+   "extra": {
+    "posts": 1,
+    "views": 27
+   },
+   "first_seen": "2026-11-24T11:16:20+00:00",
+   "delay_h": 1.5,
+   "baseline": false
+  },
+  {
+   "id": "ethr:26283",
+   "src": "ethresearch",
+   "title": "EthCLLib: a Lean 4 framework for the Ethereum consensus specs",
+   "url": "https://ethresear.ch/t/ethcllib-a-lean-4-framework-for-the-ethereum-consensus-specs/26283",
+   "created": "2026-11-23T11:17:01+00:00",
+   "extra": {
+    "posts": 3,
+    "views": 94
+   },
+   "first_seen": "2026-11-24T11:16:20+00:00",
+   "delay_h": 24.0,
+   "baseline": false
+  },
   {
    "id": "ethr:26281",
    "src": "ethresearch",
@@ -4823,16 +4817,16 @@
   }
  ],
  "ledger": {
-  "n": 329,
-  "tokenless_rev": 109,
-  "new_listing": 198,
+  "n": 339,
+  "tokenless_rev": 110,
+  "new_listing": 206,
   "by_source": {
    "manual": 2,
-   "new_listing": 198,
+   "new_listing": 206,
    "rev_surge": 17,
    "site:aiagent": 2,
-   "site:launchpad": 6,
-   "tokenless_rev": 109
+   "site:launchpad": 7,
+   "tokenless_rev": 110
   },
   "multi": 5,
   "token_seen": 0,

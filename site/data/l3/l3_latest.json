@@ -1,17 +1,17 @@
 {
- "updated_utc": "2026-11-23 09:22",
- "data_date": "2026-11-22",
- "price": 61103.71,
+ "updated_utc": "2026-11-24 11:17",
+ "data_date": "2026-11-23",
+ "price": 61253.22,
  "position": {
   "code": "below",
   "zh": "在 STH 成本下方（短期持有者整体浮亏）",
   "en": "Below the STH cost (short-term holders under water)"
  },
  "p1s": {
-  "value": 85211.27,
-  "lo": 83507.05,
-  "hi": 86915.5,
-  "pct_from_price": 39.5,
+  "value": 85062.89,
+  "lo": 83361.63,
+  "hi": 86764.15,
+  "pct_from_price": 38.9,
   "k": 1.172,
   "status_zh": "在下方",
   "status_en": "below",
@@ -58,8 +58,8 @@
   "evidence": "已验证·方向"
  },
  "sth": {
-  "value": 72728.18,
-  "pct_from_price": 19.0,
+  "value": 72600.96,
+  "pct_from_price": 18.5,
   "touches": [
    {
     "date": "2024-09-30",
@@ -102,462 +102,456 @@
   "hold_rate_en": "Held within 30 days of a pullback 60.5% (placebo 38.5%); since 2018 47% (41%) — close to random",
   "evidence": "已验证·方向（近年衰减）"
  },
- "sth_13": 94546.63,
+ "sth_13": 94381.25,
  "warning": {
   "on": false,
-  "vol30": 47.2,
+  "vol30": 47.4,
   "vol_th": 40.0,
-  "conc": 10.1,
+  "conc": 10.5,
   "conc_th": 12.0,
-  "conc_date": "2026-11-22",
-  "conc_rank_2022": 47,
+  "conc_date": "2026-11-23",
+  "conc_rank_2022": 52,
   "evidence": "已验证·方向",
   "text_zh": "接下来 30 天大概率出现 15% 左右的单边，方向不定。只说幅度，不说方向。",
   "text_en": "A one-way move of about 15% within 30 days is more likely than usual; direction unknown. Magnitude only, not direction."
  },
  "lines": {
-  "tmmp": 76326.64,
-  "rp": 53198.92,
-  "lth_rp": 48397.72
+  "tmmp": 76246.22,
+  "rp": 53149.46,
+  "lth_rp": 48349.7
  },
  "sth_state": {
-  "sth_mvrv": 0.84,
-  "sth_psip": 11.4,
-  "sth_sopr7": 0.988,
-  "sth_asopr7": 0.971,
+  "sth_mvrv": 0.844,
+  "sth_psip": 10.6,
+  "sth_sopr7": 0.99,
+  "sth_asopr7": 0.975,
   "trend_zone": false
  },
  "flows": {
-  "ex_bal": 2699121.0,
-  "ex_bal4w_pct": 0.44,
-  "ex_net4w": -91256.0,
-  "ex_date": "2026-11-22",
-  "whale": 7215042.0,
-  "whale4w": 41685.0,
-  "whale4w_pct": 0.58,
-  "retail": 1401129.0,
-  "retail4w": 9959.0,
-  "retail4w_pct": 0.72
+  "ex_bal": 2708749.0,
+  "ex_bal4w_pct": 0.55,
+  "ex_net4w": -85392.0,
+  "ex_date": "2026-11-23",
+  "whale": 7227727.0,
+  "whale4w": 55921.0,
+  "whale4w_pct": 0.78,
+  "retail": 1401822.0,
+  "retail4w": 10760.0,
+  "retail4w_pct": 0.77
  },
  "chip_map": {
-  "date": "2026-11-22",
-  "close": 60993.76,
-  "total_supply": 18459850,
+  "date": "2026-11-23",
+  "close": 61116.69,
+  "total_supply": 18460375,
   "bins": [
-   {
-    "lo": 42444.98,
-    "hi": 42848.21,
-    "supply": 39593.2,
-    "cls": "mid"
-   },
    {
     "lo": 42848.21,
     "hi": 43255.27,
-    "supply": 33960.7,
+    "supply": 33955.1,
     "cls": "mid"
    },
    {
     "lo": 43255.27,
     "hi": 43666.19,
-    "supply": 39056.8,
+    "supply": 39019.0,
     "cls": "mid"
    },
    {
     "lo": 43666.19,
     "hi": 44081.02,
-    "supply": 25502.7,
+    "supply": 25500.8,
     "cls": "mid"
    },
    {
     "lo": 44081.02,
     "hi": 44499.79,
-    "supply": 5993.1,
+    "supply": 5992.8,
     "cls": "sparse"
    },
    {
     "lo": 44499.79,
     "hi": 44922.54,
-    "supply": 10777.8,
+    "supply": 10777.4,
     "cls": "sparse"
    },
    {
     "lo": 44922.54,
     "hi": 45349.3,
-    "supply": 10095.1,
+    "supply": 10094.4,
     "cls": "sparse"
    },
    {
     "lo": 45349.3,
     "hi": 45780.12,
-    "supply": 12429.1,
+    "supply": 12421.8,
     "cls": "sparse"
    },
    {
     "lo": 45780.12,
     "hi": 46215.03,
-    "supply": 14733.8,
+    "supply": 14731.9,
     "cls": "sparse"
    },
    {
     "lo": 46215.03,
     "hi": 46654.07,
-    "supply": 11407.2,
+    "supply": 11406.8,
     "cls": "sparse"
    },
    {
     "lo": 46654.07,
     "hi": 47097.29,
-    "supply": 17093.2,
+    "supply": 17089.9,
     "cls": "mid"
    },
    {
     "lo": 47097.29,
     "hi": 47544.71,
-    "supply": 55772.6,
+    "supply": 55754.6,
     "cls": "mid"
    },
    {
     "lo": 47544.71,
     "hi": 47996.39,
-    "supply": 21120.9,
+    "supply": 21120.5,
     "cls": "mid"
    },
    {
     "lo": 47996.39,
     "hi": 48452.35,
-    "supply": 41676.8,
+    "supply": 41676.1,
     "cls": "mid"
    },
    {
     "lo": 48452.35,
     "hi": 48912.65,
-    "supply": 15807.2,
+    "supply": 15806.2,
     "cls": "mid"
    },
    {
     "lo": 48912.65,
     "hi": 49377.32,
-    "supply": 33858.4,
+    "supply": 33857.6,
     "cls": "mid"
    },
    {
     "lo": 49377.32,
     "hi": 49846.4,
-    "supply": 22147.9,
+    "supply": 22147.1,
     "cls": "mid"
    },
    {
     "lo": 49846.4,
     "hi": 50319.94,
-    "supply": 36256.7,
+    "supply": 36256.3,
     "cls": "mid"
    },
    {
     "lo": 50319.94,
     "hi": 50797.98,
-    "supply": 11318.3,
+    "supply": 11317.3,
     "cls": "sparse"
    },
    {
     "lo": 50797.98,
     "hi": 51280.57,
-    "supply": 12486.6,
+    "supply": 12480.4,
     "cls": "sparse"
    },
    {
     "lo": 51280.57,
     "hi": 51767.73,
-    "supply": 26139.5,
+    "supply": 26131.4,
     "cls": "sparse"
    },
    {
     "lo": 51767.73,
     "hi": 52259.52,
-    "supply": 8279.9,
+    "supply": 8277.8,
     "cls": "sparse"
    },
    {
     "lo": 52259.52,
     "hi": 52755.99,
-    "supply": 6447.1,
+    "supply": 6447.0,
     "cls": "sparse"
    },
    {
     "lo": 52755.99,
     "hi": 53257.17,
-    "supply": 2274.9,
+    "supply": 2273.8,
     "cls": "sparse"
    },
    {
     "lo": 53257.17,
     "hi": 53763.11,
-    "supply": 16604.7,
+    "supply": 16580.3,
     "cls": "mid"
    },
    {
     "lo": 53763.11,
     "hi": 54273.86,
-    "supply": 62814.9,
+    "supply": 62811.6,
     "cls": "mid"
    },
    {
     "lo": 54273.86,
     "hi": 54789.47,
-    "supply": 15042.2,
+    "supply": 15021.7,
     "cls": "mid"
    },
    {
     "lo": 54789.47,
     "hi": 55309.97,
-    "supply": 17663.4,
-    "cls": "mid"
+    "supply": 17663.1,
+    "cls": "sparse"
    },
    {
     "lo": 55309.97,
     "hi": 55835.41,
-    "supply": 38354.1,
+    "supply": 32550.3,
     "cls": "mid"
    },
    {
     "lo": 55835.41,
     "hi": 56365.85,
-    "supply": 39199.3,
+    "supply": 38750.3,
     "cls": "mid"
    },
    {
     "lo": 56365.85,
     "hi": 56901.32,
-    "supply": 33840.0,
+    "supply": 33178.6,
     "cls": "mid"
    },
    {
     "lo": 56901.32,
     "hi": 57441.88,
-    "supply": 38265.8,
+    "supply": 38261.6,
     "cls": "mid"
    },
    {
     "lo": 57441.88,
     "hi": 57987.58,
-    "supply": 90142.3,
+    "supply": 87994.8,
     "cls": "mid"
    },
    {
     "lo": 57987.58,
     "hi": 58538.46,
-    "supply": 81862.5,
+    "supply": 79937.0,
     "cls": "mid"
    },
    {
     "lo": 58538.46,
     "hi": 59094.58,
-    "supply": 103253.2,
+    "supply": 92068.4,
     "cls": "mid"
    },
    {
     "lo": 59094.58,
     "hi": 59655.98,
-    "supply": 94706.2,
+    "supply": 88740.6,
     "cls": "mid"
    },
    {
     "lo": 59655.98,
     "hi": 60222.71,
-    "supply": 120367.0,
+    "supply": 113838.8,
     "cls": "mid"
    },
    {
     "lo": 60222.71,
     "hi": 60794.83,
-    "supply": 96424.0,
+    "supply": 85833.6,
     "cls": "mid"
    },
    {
     "lo": 60794.83,
     "hi": 61372.38,
-    "supply": 162904.3,
+    "supply": 206416.1,
     "cls": "mid"
    },
    {
     "lo": 61372.38,
     "hi": 61955.41,
-    "supply": 220987.7,
+    "supply": 266725.2,
     "cls": "mid"
    },
    {
     "lo": 61955.41,
     "hi": 62543.99,
-    "supply": 303649.8,
-    "cls": "mid"
+    "supply": 318144.2,
+    "cls": "dense"
    },
    {
     "lo": 62543.99,
     "hi": 63138.16,
-    "supply": 252707.1,
+    "supply": 260194.7,
     "cls": "dense"
    },
    {
     "lo": 63138.16,
     "hi": 63737.97,
-    "supply": 349686.6,
+    "supply": 346660.8,
     "cls": "dense"
    },
    {
     "lo": 63737.97,
     "hi": 64343.48,
-    "supply": 257220.3,
+    "supply": 252369.5,
     "cls": "mid"
    },
    {
     "lo": 64343.48,
     "hi": 64954.75,
-    "supply": 211218.9,
+    "supply": 203432.3,
     "cls": "mid"
    },
    {
     "lo": 64954.75,
     "hi": 65571.82,
-    "supply": 126670.4,
+    "supply": 126245.4,
     "cls": "mid"
    },
    {
     "lo": 65571.82,
     "hi": 66194.75,
-    "supply": 134233.9,
+    "supply": 133773.7,
     "cls": "mid"
    },
    {
     "lo": 66194.75,
     "hi": 66823.6,
-    "supply": 172470.6,
+    "supply": 171556.2,
     "cls": "mid"
    },
    {
     "lo": 66823.6,
     "hi": 67458.42,
-    "supply": 108783.4,
+    "supply": 108677.1,
     "cls": "mid"
    },
    {
     "lo": 67458.42,
     "hi": 68099.28,
-    "supply": 118640.5,
+    "supply": 118610.7,
     "cls": "mid"
    },
    {
     "lo": 68099.28,
     "hi": 68746.22,
-    "supply": 153465.1,
+    "supply": 152279.8,
     "cls": "mid"
    },
    {
     "lo": 68746.22,
     "hi": 69399.31,
-    "supply": 117403.4,
+    "supply": 115947.0,
     "cls": "mid"
    },
    {
     "lo": 69399.31,
     "hi": 70058.6,
-    "supply": 79936.0,
+    "supply": 79907.5,
     "cls": "mid"
    },
    {
     "lo": 70058.6,
     "hi": 70724.16,
-    "supply": 61787.5,
+    "supply": 61751.0,
     "cls": "mid"
    },
    {
     "lo": 70724.16,
     "hi": 71396.04,
-    "supply": 118214.9,
+    "supply": 118116.2,
     "cls": "mid"
    },
    {
     "lo": 71396.04,
     "hi": 72074.3,
-    "supply": 128620.7,
+    "supply": 127897.5,
     "cls": "mid"
    },
    {
     "lo": 72074.3,
     "hi": 72759.01,
-    "supply": 42625.0,
+    "supply": 42579.4,
     "cls": "mid"
    },
    {
     "lo": 72759.01,
     "hi": 73450.22,
-    "supply": 122049.8,
+    "supply": 121445.5,
     "cls": "mid"
    },
    {
     "lo": 73450.22,
     "hi": 74147.99,
-    "supply": 115101.2,
+    "supply": 109995.5,
     "cls": "mid"
    },
    {
     "lo": 74147.99,
     "hi": 74852.4,
-    "supply": 92213.1,
+    "supply": 90835.6,
     "cls": "mid"
    },
    {
     "lo": 74852.4,
     "hi": 75563.5,
-    "supply": 101484.5,
+    "supply": 100684.7,
     "cls": "mid"
    },
    {
     "lo": 75563.5,
     "hi": 76281.35,
-    "supply": 152650.6,
+    "supply": 151743.3,
     "cls": "mid"
    },
    {
     "lo": 76281.35,
     "hi": 77006.02,
-    "supply": 257470.4,
+    "supply": 256254.9,
     "cls": "mid"
    },
    {
     "lo": 77006.02,
     "hi": 77737.58,
-    "supply": 323202.7,
+    "supply": 311673.9,
     "cls": "mid"
    },
    {
     "lo": 77737.58,
     "hi": 78476.09,
-    "supply": 211054.0,
+    "supply": 210722.7,
     "cls": "mid"
    },
    {
     "lo": 78476.09,
     "hi": 79221.61,
-    "supply": 101976.2,
+    "supply": 101695.0,
     "cls": "mid"
    },
    {
     "lo": 79221.61,
     "hi": 79974.22,
-    "supply": 129956.0,
+    "supply": 129225.2,
     "cls": "mid"
    }
   ],
   "dense_ranges": [
    {
-    "lo": 62543.99,
+    "lo": 61955.41,
     "hi": 63737.97,
-    "supply": 602394,
-    "share_pct": 3.26
+    "supply": 925000,
+    "share_pct": 5.01
    }
   ]
  },
- "daily_line_zh": "L3：STH 成本 72,728｜+1σ 压力区 85,211（+39.5%）｜大波动预警 不亮（波动 47%，集中度 10.1%）",
- "daily_line_en": "L3: STH cost 72,728 | +1σ pressure zone 85,211 (+39.5%) | large-move warning off (vol 47%, concentration 10.1%)",
+ "daily_line_zh": "L3：STH 成本 72,601｜+1σ 压力区 85,063（+38.9%）｜大波动预警 不亮（波动 47%，集中度 10.5%）",
+ "daily_line_en": "L3: STH cost 72,601 | +1σ pressure zone 85,063 (+38.9%) | large-move warning off (vol 47%, concentration 10.5%)",
  "data_status": {
   "stale": false,
   "detail": {

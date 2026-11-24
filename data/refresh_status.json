@@ -1,77 +1,77 @@
 {
  "schema": 1,
  "note": "UTC。expected_data_date = 昨天（UTC 0 点收盘的完整日）。ready_for_trading = 交易用模块（trading=true）全部到 expected_data_date。",
- "generated_utc": "2026-11-23T09:55:19Z",
+ "generated_utc": "2026-11-24T11:53:33Z",
  "slot": "pm",
- "started_utc": "2026-11-23T09:21:36Z",
- "run_url": "https://github.com/ivonasmith/uncleonchain/actions/runs/45146272474",
- "expected_data_date": "2026-11-22",
+ "started_utc": "2026-11-24T11:16:10Z",
+ "run_url": "https://github.com/ivonasmith/uncleonchain/actions/runs/45382595731",
+ "expected_data_date": "2026-11-23",
  "ready_for_trading": true,
  "not_ready": [],
  "modules": {
   "l2": {
    "name": "L2 周期",
-   "data_date": "2026-11-22",
-   "updated_utc": "2026-11-23 09:22",
+   "data_date": "2026-11-23",
+   "updated_utc": "2026-11-24 11:16",
    "trading": true,
    "fresh": true
   },
   "l3": {
    "name": "L3 筹码",
-   "data_date": "2026-11-22",
-   "updated_utc": "2026-11-23 09:22",
+   "data_date": "2026-11-23",
+   "updated_utc": "2026-11-24 11:17",
    "trading": true,
    "fresh": true
   },
   "l4": {
    "name": "L4 情绪",
-   "data_date": "2026-11-22",
-   "updated_utc": "2026-11-23 09:22",
+   "data_date": "2026-11-23",
+   "updated_utc": "2026-11-24 11:17",
    "trading": true,
    "stale_source": false,
    "fresh": true
   },
   "leg": {
    "name": "涨跌腿",
-   "data_date": "2026-11-22",
+   "data_date": "2026-11-23",
    "trading": true,
    "fresh": true
   },
   "macro": {
    "name": "宏观 L1 + 解读日志",
-   "data_date": "2026-11-22",
+   "data_date": "2026-11-23",
    "trading": true,
    "fresh": true
   },
   "cal": {
    "name": "事件日历",
    "data_date": null,
-   "updated_utc": "2026-11-23 09:22",
+   "updated_utc": "2026-11-24 11:19",
    "trading": true,
    "fresh": true
   },
   "core": {
    "name": "核心选币",
-   "data_date": "2026-11-22",
-   "updated_utc": "2026-11-23 09:28 UTC",
+   "data_date": "2026-11-23",
+   "updated_utc": "2026-11-24 11:22 UTC",
    "fresh": true
   },
   "alpha": {
    "name": "Alpha 雷达",
-   "data_date": "2026-11-22",
-   "updated_utc": "2026-11-23T09:21:48+00:00",
+   "data_date": "2026-11-23",
+   "updated_utc": "2026-11-24T11:16:20+00:00",
    "fresh": true
   },
   "aiagent": {
    "name": "AI Agent",
-   "data_date": "2026-11-22",
-   "updated_utc": "2026-11-23T09:22:56Z",
+   "data_date": "2026-11-23",
+   "updated_utc": "2026-11-24T11:19:01Z",
    "fresh": true
   },
   "rwa": {
    "name": "RWA",
-   "data_date": "2026-11-22",
-   "updated_utc": "2026-11-23T09:23:20+00:00",
+   "data_date": "2026-11-23",
+   "updated_utc": "2026-11-24T11:19:28+00:00",
    "fresh": true
   }
  },
@@ -83,10 +83,6 @@
   "launchpad": "success"
  },
  "done": {
-  "2026-11-16": [
-   "am",
-   "pm"
-  ],
   "2026-11-17": [
    "pm"
   ],
@@ -106,6 +102,9 @@
    "pm"
   ],
   "2026-11-23": [
+   "pm"
+  ],
+  "2026-11-24": [
    "pm"
   ]
  }
