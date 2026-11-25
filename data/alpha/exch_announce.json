@@ -1425,6 +1425,64 @@
    "baseline": false,
    "kind": "other",
    "assets": []
+  },
+  "Bitget:12560603901603": {
+   "exchange": "Bitget",
+   "via": "bitget",
+   "title": "Bitget spot copy trading now supports 2 trading pairs",
+   "url": "https://www.bitget.com/en/support/articles/12560603901603",
+   "announce_utc": "2026-11-25T03:41:01Z",
+   "first_seen_utc": "2026-11-25T10:05:40Z",
+   "baseline": false,
+   "kind": "other",
+   "assets": []
+  },
+  "Bitget:12560603901595": {
+   "exchange": "Bitget",
+   "via": "bitget",
+   "title": "Bitget spot copy trade now supports rCENT/USDT",
+   "url": "https://www.bitget.com/en/support/articles/12560603901595",
+   "announce_utc": "2026-11-25T02:41:00Z",
+   "first_seen_utc": "2026-11-25T10:05:40Z",
+   "baseline": false,
+   "kind": "other",
+   "assets": []
+  },
+  "Bitget:12560603901565": {
+   "exchange": "Bitget",
+   "via": "bitget",
+   "title": "Bitget spot copy trade now supports rANT/USDT",
+   "url": "https://www.bitget.com/en/support/articles/12560603901565",
+   "announce_utc": "2026-11-24T16:41:00Z",
+   "first_seen_utc": "2026-11-25T10:05:40Z",
+   "baseline": false,
+   "kind": "other",
+   "assets": []
+  },
+  "Bitget:12560603901564": {
+   "exchange": "Bitget",
+   "via": "bitget",
+   "title": "Bitget futures copy trading now supports 2 perpetual futures",
+   "url": "https://www.bitget.com/en/support/articles/12560603901564",
+   "announce_utc": "2026-11-24T16:31:00Z",
+   "first_seen_utc": "2026-11-25T10:05:40Z",
+   "baseline": false,
+   "kind": "other",
+   "assets": []
+  },
+  "Bitget:12560603901559": {
+   "exchange": "Bitget",
+   "via": "bitget",
+   "title": "Bitget Announcement on the Listing of ANTOUSDT and ANTDUSDT Stock Perps",
+   "url": "https://www.bitget.com/en/support/articles/12560603901559",
+   "announce_utc": "2026-11-24T14:58:11Z",
+   "first_seen_utc": "2026-11-25T10:05:40Z",
+   "baseline": false,
+   "kind": "other",
+   "assets": [
+    "ANTD",
+    "ANTO"
+   ]
   }
  },
  "sources": {
@@ -1445,7 +1503,7 @@
    "page": "https://www.okx.com/help/section/announcements-new-listings",
    "x_handle": "待核实",
    "note": "官网接口通（/api/v5/support/announcements）",
-   "last_ok_utc": "2026-11-24T11:18:45Z",
+   "last_ok_utc": "2026-11-25T10:05:40Z",
    "n_total": 40,
    "err": null
   },
@@ -1456,8 +1514,8 @@
    "page": "https://www.bitget.com/support/categories/11865590960081",
    "x_handle": "待核实",
    "note": "官网接口通（/api/v2/public/annoucements）",
-   "last_ok_utc": "2026-11-24T11:18:45Z",
-   "n_total": 69,
+   "last_ok_utc": "2026-11-25T10:05:40Z",
+   "n_total": 74,
    "err": null
   },
   "Kraken": {
@@ -1467,7 +1525,7 @@
    "page": "https://blog.kraken.com/category/product/asset-listings",
    "x_handle": "待核实",
    "note": "博客 RSS 通",
-   "last_ok_utc": "2026-11-24T11:18:45Z",
+   "last_ok_utc": "2026-11-25T10:05:40Z",
    "n_total": 13,
    "err": null
   },
@@ -1542,6 +1600,6 @@
    "n_total": 0
   }
  },
- "generated": "2026-11-24T11:18:45Z",
+ "generated": "2026-11-25T10:05:40Z",
  "note": "公告时间原样记录；计划开盘 / 首笔成交 / 窗口目前只有 Binance（alpha/listings.py）"
 }

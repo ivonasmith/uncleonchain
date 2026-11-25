@@ -1,7 +1,7 @@
 {
   "schema": 4,
-  "generated_at": "2026-11-24T11:17:42Z",
-  "asof": "2026-11-23",
+  "generated_at": "2026-11-25T10:03:16Z",
+  "asof": "2026-11-24",
   "source": "Coin Metrics PriceUSD (2010-07-18~2017-08-16) + Binance spot BTCUSDT 1d (2017-08-17~, closed candles, UTC)",
   "btc_leg": {
     "direction": "down",
@@ -9,14 +9,14 @@
       "start_date": "2026-09-21",
       "start_close": 86620.0,
       "confirm_date": "2026-10-30",
-      "day": 63,
+      "day": 64,
       "drop_pct": 31.9,
       "low_close": 58951.51,
       "low_date": "2026-11-20",
-      "btc_close": 61270.93,
-      "from_peak_pct": -29.3,
+      "btc_close": 59832.0,
+      "from_peak_pct": -30.9,
       "reversal_line": 64846.66,
-      "to_reversal_pct": 5.8
+      "to_reversal_pct": 8.4
     },
     "badge": null,
     "prev_leg": {
@@ -33,14 +33,14 @@
       "start_date": "2026-09-27",
       "start_close": 45.66,
       "confirm_date": "2026-10-22",
-      "day": 57,
-      "drop_pct": 43.6,
-      "low_close": 25.78,
-      "low_date": "2026-11-20",
-      "from_peak_pct": -41.9,
-      "reversal_line": 29.64,
-      "to_reversal_pct": 11.8,
-      "idx_close": 26.52
+      "day": 58,
+      "drop_pct": 44.1,
+      "low_close": 25.5,
+      "low_date": "2026-11-24",
+      "from_peak_pct": -44.1,
+      "reversal_line": 29.33,
+      "to_reversal_pct": 15.0,
+      "idx_close": 25.5
     },
     "badge": null,
     "prev_leg": {
@@ -607,7 +607,7 @@
         ]
       },
       "index_from": "2018-08-31",
-      "asof": "2026-11-23",
+      "asof": "2026-11-24",
       "note": "动态篮子：每月 1 日按 30 日成交额排名评定进出，停牌/崩盘立刻剔除；等权、每日再平衡；对 USDT。"
     }
   },
@@ -616,12 +616,12 @@
     "ignition_date": "2026-08-21",
     "d0_date": "2026-08-27",
     "d0_close": 80249.58,
-    "n": 88,
+    "n": 89,
     "days_to_clear": 0,
     "clear_date": "2026-09-26",
     "stop_line": 72224.62,
     "stopped_date": null,
-    "btc_close": 61270.93,
-    "btc_vs_stop_pct": -15.2
+    "btc_close": 59832.0,
+    "btc_vs_stop_pct": -17.2
   }
 }
