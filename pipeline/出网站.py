@@ -6246,11 +6246,11 @@ def build_about():
 先看宏观在推还是在拖，再看周期位置（贵不贵），再看筹码结构（哪些价位有人在守、波动会不会放大），再看情绪（会不会超调），最后落到发射台一级市场——每天赚多少钱、钱从哪来。</p>
 <p>所有判断都按公开规则自动生成，每天一篇解读日志，写入即冻结；每周、每月再复盘一次；系统性的研究整理成分析报告。对了错了都留在这里，不做事后诸葛亮。</p>
 <p>{esc(DISCLAIMER)}</p>
-<p class="muted">访问统计：本站用 Umami 统计访问量和少量点击（生成长图、语言切换、报告是否读完等），只为了解哪些内容有人看。不用 cookie，不收集个人信息，不跨站追踪。</p>""", f"""<p>The author has spent close to ten years in web3 — operations, product design and an AMM DEX. This site puts the research process in public:
+<p class="muted">访问统计：本站用 Umami 统计页面访问、站内点击（导航、卡片、链接）、滚动深度和模块曝光，只为了解哪些板块、哪些内容有人看。不用 cookie，不收集个人身份信息，不跨站追踪。</p>""", f"""<p>The author has spent close to ten years in web3 — operations, product design and an AMM DEX. This site puts the research process in public:
 first how much risk budget the macro backdrop allows, then the cycle (cheap or expensive), supply structure (which levels are defended and whether moves will get bigger), sentiment (is it overshooting), and finally the launchpad primary market — how much money is made every day and where it comes from.</p>
 <p>Every judgement is generated from public rules; one log per day, frozen once written; weekly and monthly reviews; deeper research as reports. Right or wrong, it all stays here.</p>
 <p>{esc(DISCLAIMER_EN)}</p>
-<p class="muted">Analytics: this site uses Umami to count visits and a few clicks (share image, language switch, whether a report was read to the end) to learn which content is useful. No cookies, no personal data, no cross-site tracking.</p>""")
+<p class="muted">Analytics: this site uses Umami to count page visits, on-site clicks (navigation, cards, links), scroll depth and module views, to learn which sections and content are useful. No cookies, no personal identity data, no cross-site tracking.</p>""")
     body = f"""{crumbs([(T("关于", "About"), None)])}<div class="eyebrow">About</div>
 <div style="display:flex;gap:18px;align-items:center;margin-top:8px"><img src="/assets/favicon-192.png" alt="" style="width:84px;height:84px;border-radius:50%;box-shadow:0 0 0 2px var(--lime)">
 <div><h1>{T("关于" + BRAND, "About " + BRAND_EN)}</h1><p class="stamp" style="text-align:left">{esc(DOMAIN)} · <a href="{X_URL}">{esc(TWITTER)}</a></p></div></div>

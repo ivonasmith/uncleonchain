@@ -136,6 +136,23 @@ document.querySelectorAll('[data-feedback]').forEach(a=>{const zh=document.docum
   window.addEventListener('scroll',chk,{passive:true})}
  // 核心选币页签走 #hash，不算页面浏览，单独记
  if(/\/core\/$/.test(pg))window.addEventListener('hashchange',()=>tk('core_tab',{tab:location.hash.slice(1)||'home'}));
+ // 全站通用点击：链接 / 按钮 / [data-track] 每次点击都记。area = 导航 / 正文 / 其它；to = 站内目标板块（第一段路径）或外链域名；text = 文字前 40 字
+ document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('a,button,[data-track]');if(!t||t.matches('[data-no-track]'))return;
+  let to='',href='';
+  if(t.tagName==='A'&&t.href){try{const u=new URL(t.href,location.href);
+   if(u.origin===location.origin){href=u.pathname;to=u.pathname.split('/')[1]||'home'}else{href=u.hostname.replace(/^www\./,'');to='external'}}catch(x){}}
+  const txt=(t.innerText||t.getAttribute('aria-label')||t.getAttribute('title')||'').replace(/\s+/g,' ').trim().slice(0,40);
+  const area=t.closest('nav,aside,.side')?'nav':t.closest('main,article,.main')?'content':'other';
+  tk('click',{page:pg,area:area,to:to,text:txt,href:href.slice(0,80)})},true);
+ // 滚动深度：25 / 50 / 75 / 100% 各记一次
+ const dm={};window.addEventListener('scroll',()=>{const h=document.documentElement.scrollHeight-innerHeight;if(h<=0)return;const p=Math.round(scrollY/h*100);
+  [25,50,75,100].forEach(m=>{if(p>=m&&!dm[m]){dm[m]=1;tk('scroll_depth',{page:pg,depth:m})}})},{passive:true});
+ // 模块曝光：带 id 的分区、卡片、标了 data-module 的元素进入视口一半时记一次；模块名 = id 或其标题（前 40 字），同页同名只记一次
+ if('IntersectionObserver' in window){const seen={};
+  const io=new IntersectionObserver(es=>es.forEach(en=>{if(!en.isIntersecting)return;const el=en.target;
+   const key=(el.id||el.getAttribute('data-module')||((el.querySelector('h2,h3')||{}).textContent||'')).replace(/\s+/g,' ').trim().slice(0,40);
+   if(!key||seen[key])return;seen[key]=1;tk('module_view',{page:pg,module:key});io.unobserve(el)}),{threshold:0.5});
+  document.querySelectorAll('section[id],.card,[data-module]').forEach(el=>io.observe(el))}
 })();
 // ---- 术语与标签解释（G7）：术语第一次出现加虚下划线；悬停（桌面）/ 点按（手机）显示一句话
 (function(){
