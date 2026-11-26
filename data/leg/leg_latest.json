@@ -1,7 +1,7 @@
 {
   "schema": 4,
-  "generated_at": "2026-11-25T10:03:16Z",
-  "asof": "2026-11-24",
+  "generated_at": "2026-11-26T09:46:16Z",
+  "asof": "2026-11-25",
   "source": "Coin Metrics PriceUSD (2010-07-18~2017-08-16) + Binance spot BTCUSDT 1d (2017-08-17~, closed candles, UTC)",
   "btc_leg": {
     "direction": "down",
@@ -9,14 +9,14 @@
       "start_date": "2026-09-21",
       "start_close": 86620.0,
       "confirm_date": "2026-10-30",
-      "day": 64,
+      "day": 65,
       "drop_pct": 31.9,
       "low_close": 58951.51,
       "low_date": "2026-11-20",
-      "btc_close": 59832.0,
-      "from_peak_pct": -30.9,
+      "btc_close": 60458.01,
+      "from_peak_pct": -30.2,
       "reversal_line": 64846.66,
-      "to_reversal_pct": 8.4
+      "to_reversal_pct": 7.3
     },
     "badge": null,
     "prev_leg": {
@@ -33,14 +33,14 @@
       "start_date": "2026-09-27",
       "start_close": 45.66,
       "confirm_date": "2026-10-22",
-      "day": 58,
+      "day": 59,
       "drop_pct": 44.1,
       "low_close": 25.5,
       "low_date": "2026-11-24",
-      "from_peak_pct": -44.1,
+      "from_peak_pct": -43.0,
       "reversal_line": 29.33,
-      "to_reversal_pct": 15.0,
-      "idx_close": 25.5
+      "to_reversal_pct": 12.6,
+      "idx_close": 26.05
     },
     "badge": null,
     "prev_leg": {
@@ -596,9 +596,9 @@
         }
       ],
       "coverage": {
-        "universe": 714,
-        "with_data": 712,
-        "from_api": 509,
+        "universe": 719,
+        "with_data": 717,
+        "from_api": 514,
         "from_archive": 0,
         "no_data": 0,
         "failed": [
@@ -607,7 +607,7 @@
         ]
       },
       "index_from": "2018-08-31",
-      "asof": "2026-11-24",
+      "asof": "2026-11-25",
       "note": "动态篮子：每月 1 日按 30 日成交额排名评定进出，停牌/崩盘立刻剔除；等权、每日再平衡；对 USDT。"
     }
   },
@@ -616,12 +616,12 @@
     "ignition_date": "2026-08-21",
     "d0_date": "2026-08-27",
     "d0_close": 80249.58,
-    "n": 89,
+    "n": 90,
     "days_to_clear": 0,
     "clear_date": "2026-09-26",
     "stop_line": 72224.62,
     "stopped_date": null,
-    "btc_close": 59832.0,
-    "btc_vs_stop_pct": -17.2
+    "btc_close": 60458.01,
+    "btc_vs_stop_pct": -16.3
   }
 }

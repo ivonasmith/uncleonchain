@@ -1483,6 +1483,32 @@
     "ANTD",
     "ANTO"
    ]
+  },
+  "Bitget:12560603901639": {
+   "exchange": "Bitget",
+   "via": "bitget",
+   "title": "Bitget futures copy trading now supports 2 perpetual futures",
+   "url": "https://www.bitget.com/en/support/articles/12560603901639",
+   "announce_utc": "2026-11-25T15:31:00Z",
+   "first_seen_utc": "2026-11-26T09:48:40Z",
+   "baseline": false,
+   "kind": "other",
+   "assets": []
+  },
+  "Bitget:12560603901632": {
+   "exchange": "Bitget",
+   "via": "bitget",
+   "title": "Bitget Announcement on the Listing of RIVNUSDT, NVOUSDT and DISUSDT Stock Perps",
+   "url": "https://www.bitget.com/en/support/articles/12560603901632",
+   "announce_utc": "2026-11-25T14:48:20Z",
+   "first_seen_utc": "2026-11-26T09:48:40Z",
+   "baseline": false,
+   "kind": "other",
+   "assets": [
+    "DIS",
+    "NVO",
+    "RIVN"
+   ]
   }
  },
  "sources": {
@@ -1503,7 +1529,7 @@
    "page": "https://www.okx.com/help/section/announcements-new-listings",
    "x_handle": "待核实",
    "note": "官网接口通（/api/v5/support/announcements）",
-   "last_ok_utc": "2026-11-25T10:05:40Z",
+   "last_ok_utc": "2026-11-26T09:48:40Z",
    "n_total": 40,
    "err": null
   },
@@ -1514,8 +1540,8 @@
    "page": "https://www.bitget.com/support/categories/11865590960081",
    "x_handle": "待核实",
    "note": "官网接口通（/api/v2/public/annoucements）",
-   "last_ok_utc": "2026-11-25T10:05:40Z",
-   "n_total": 74,
+   "last_ok_utc": "2026-11-26T09:48:40Z",
+   "n_total": 76,
    "err": null
   },
   "Kraken": {
@@ -1525,7 +1551,7 @@
    "page": "https://blog.kraken.com/category/product/asset-listings",
    "x_handle": "待核实",
    "note": "博客 RSS 通",
-   "last_ok_utc": "2026-11-25T10:05:40Z",
+   "last_ok_utc": "2026-11-26T09:48:40Z",
    "n_total": 13,
    "err": null
   },
@@ -1600,6 +1626,6 @@
    "n_total": 0
   }
  },
- "generated": "2026-11-25T10:05:40Z",
+ "generated": "2026-11-26T09:48:40Z",
  "note": "公告时间原样记录；计划开盘 / 首笔成交 / 窗口目前只有 Binance（alpha/listings.py）"
 }

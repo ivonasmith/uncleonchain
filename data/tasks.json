@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-25T10:37:11+00:00",
+ "generated": "2026-11-26T10:37:38+00:00",
  "boards": [
   {
    "board": "alpha",
@@ -57,7 +57,7 @@
    "title": "机会卡补证（队列 38 个，从上往下补，M 新参与机制优先查）",
    "who": "codex",
    "pri": 1,
-   "deliver": "alpha/review/codex_2026-11-25_checks.json（JSON 数组，reviewer = codex）",
+   "deliver": "alpha/review/codex_2026-11-26_checks.json（JSON 数组，reviewer = codex）",
    "ref": "data/alpha/research_queue.json（prompt / schema / items）",
    "items": [
     {
@@ -89,15 +89,15 @@
      "kind": "tokenless"
     },
     {
-     "key": "g:8498",
-     "name": "entropy.io",
+     "key": "g:parent#turboflow",
+     "name": "Turboflow",
      "status": "原始线索",
      "fresh": true,
      "kind": "tokenless"
     },
     {
-     "key": "g:parent#turboflow",
-     "name": "Turboflow",
+     "key": "g:8498",
+     "name": "entropy.io",
      "status": "原始线索",
      "fresh": true,
      "kind": "tokenless"
@@ -250,15 +250,15 @@
      "kind": "tokenless"
     },
     {
-     "key": "g:parent#txflow",
-     "name": "TxFlow Perps",
+     "key": "g:7016",
+     "name": "Antarctic",
      "status": "待核验",
      "fresh": false,
      "kind": "tokenless"
     },
     {
-     "key": "g:7016",
-     "name": "Antarctic",
+     "key": "g:parent#txflow",
+     "name": "TxFlow Perps",
      "status": "待核验",
      "fresh": false,
      "kind": "tokenless"
@@ -336,7 +336,7 @@
    "title": "到期复核（3 个，补证里写的下次复核日已到）",
    "who": "codex",
    "pri": 1,
-   "deliver": "alpha/review/codex_2026-11-25_checks.json",
+   "deliver": "alpha/review/codex_2026-11-26_checks.json",
    "ref": null,
    "items": [
     {
@@ -364,7 +364,7 @@
    "title": "补「量从哪来」和关键事件（35 张已补证的卡还没有 flow / events，先做 Montra、Pons 当样板）",
    "who": "codex",
    "pri": 1,
-   "deliver": "alpha/review/codex_2026-11-25_checks.json（同 key 交新一条，带 flow / events / capture / next_review）",
+   "deliver": "alpha/review/codex_2026-11-26_checks.json（同 key 交新一条，带 flow / events / capture / next_review）",
    "ref": "data/alpha/research_queue.json 的 schema",
    "items": [
     {
@@ -761,16 +761,16 @@
      "name": "Bags"
     },
     {
-     "slug": "otc",
-     "name": "OTC"
-    },
-    {
      "slug": "anoncoin",
      "name": "Anoncoin"
     },
     {
      "slug": "rapid-launch",
      "name": "Rapid Launch"
+    },
+    {
+     "slug": "otc",
+     "name": "OTC"
     },
     {
      "slug": "metaplex",
@@ -781,8 +781,8 @@
      "name": "Pools"
     },
     {
-     "slug": "argus-world",
-     "name": "Argus World"
+     "slug": "volta",
+     "name": "Volta"
     },
     {
      "slug": "stockereum",
@@ -1039,7 +1039,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-15T12:35:00Z",
-   "deliver": "alpha/review/codex_2026-11-25_checks.json"
+   "deliver": "alpha/review/codex_2026-11-26_checks.json"
   },
   {
    "key": "alpha:m:bem-tapeout",
@@ -1068,7 +1068,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-15T12:27:58Z",
-   "deliver": "alpha/review/codex_2026-11-25_checks.json"
+   "deliver": "alpha/review/codex_2026-11-26_checks.json"
   },
   {
    "key": "alpha:g:9498",
@@ -1092,7 +1092,7 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-25_checks.json"
+   "deliver": "alpha/review/codex_2026-11-26_checks.json"
   },
   {
    "key": "alpha:g:parent#pocket-universe",
@@ -1116,31 +1116,7 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-25_checks.json"
-  },
-  {
-   "key": "alpha:g:8498",
-   "board": "alpha",
-   "priority": 1,
-   "task_type": "research",
-   "name": "entropy.io",
-   "missing": [
-    "M",
-    "A",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM"
-   ],
-   "source_refs": [
-    "data/alpha/research_queue.json"
-   ],
-   "status": "open",
-   "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-25_checks.json"
+   "deliver": "alpha/review/codex_2026-11-26_checks.json"
   },
   {
    "key": "alpha:g:parent#turboflow",
@@ -1164,7 +1140,31 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-25_checks.json"
+   "deliver": "alpha/review/codex_2026-11-26_checks.json"
+  },
+  {
+   "key": "alpha:g:8498",
+   "board": "alpha",
+   "priority": 1,
+   "task_type": "research",
+   "name": "entropy.io",
+   "missing": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "open",
+   "last_checked_utc": null,
+   "deliver": "alpha/review/codex_2026-11-26_checks.json"
   },
   {
    "key": "alpha:s:9065",
@@ -1189,7 +1189,7 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-25_checks.json"
+   "deliver": "alpha/review/codex_2026-11-26_checks.json"
   },
   {
    "key": "alpha:s:parent#spark",
@@ -1214,7 +1214,7 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-25_checks.json"
+   "deliver": "alpha/review/codex_2026-11-26_checks.json"
   },
   {
    "key": "alpha:s:8884",
@@ -1239,7 +1239,7 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-25_checks.json"
+   "deliver": "alpha/review/codex_2026-11-26_checks.json"
   },
   {
    "key": "alpha:s:parent#justlend",
@@ -1264,7 +1264,7 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-25_checks.json"
+   "deliver": "alpha/review/codex_2026-11-26_checks.json"
   },
   {
    "key": "alpha:s:8481",
@@ -1289,7 +1289,7 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-25_checks.json"
+   "deliver": "alpha/review/codex_2026-11-26_checks.json"
   },
   {
    "key": "alpha:s:parent#paperstrategy",
@@ -1314,7 +1314,7 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-25_checks.json"
+   "deliver": "alpha/review/codex_2026-11-26_checks.json"
   },
   {
    "key": "alpha:s:4063",
@@ -1339,7 +1339,7 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-25_checks.json"
+   "deliver": "alpha/review/codex_2026-11-26_checks.json"
   },
   {
    "key": "alpha:s:parent#liquity",
@@ -1364,7 +1364,7 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-25_checks.json"
+   "deliver": "alpha/review/codex_2026-11-26_checks.json"
   },
   {
    "key": "alpha:s:7655",
@@ -1389,7 +1389,7 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-25_checks.json"
+   "deliver": "alpha/review/codex_2026-11-26_checks.json"
   },
   {
    "key": "alpha:s:6771",
@@ -1414,7 +1414,7 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-25_checks.json"
+   "deliver": "alpha/review/codex_2026-11-26_checks.json"
   },
   {
    "key": "alpha:s:parent#threshold-network",
@@ -1439,7 +1439,7 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-25_checks.json"
+   "deliver": "alpha/review/codex_2026-11-26_checks.json"
   },
   {
    "key": "alpha:g:8144",
@@ -1465,7 +1465,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-25_checks.json"
+   "deliver": "alpha/review/codex_2026-11-26_checks.json"
   },
   {
    "key": "alpha:p:9415",
@@ -1489,7 +1489,7 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-25_checks.json"
+   "deliver": "alpha/review/codex_2026-11-26_checks.json"
   },
   {
    "key": "alpha:g:parent#blockchain-wallet",
@@ -1513,7 +1513,7 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-25_checks.json"
+   "deliver": "alpha/review/codex_2026-11-26_checks.json"
   },
   {
    "key": "alpha:g:9367",
@@ -1537,7 +1537,7 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-25_checks.json"
+   "deliver": "alpha/review/codex_2026-11-26_checks.json"
   },
   {
    "key": "alpha:g:7978",
@@ -1561,7 +1561,7 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-25_checks.json"
+   "deliver": "alpha/review/codex_2026-11-26_checks.json"
   },
   {
    "key": "alpha:g:parent#fomo",
@@ -1588,7 +1588,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-25_checks.json"
+   "deliver": "alpha/review/codex_2026-11-26_checks.json"
   },
   {
    "key": "alpha:g:5408",
@@ -1615,7 +1615,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-25_checks.json"
+   "deliver": "alpha/review/codex_2026-11-26_checks.json"
   },
   {
    "key": "alpha:g:7010",
@@ -1642,7 +1642,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-25_checks.json"
+   "deliver": "alpha/review/codex_2026-11-26_checks.json"
   },
   {
    "key": "alpha:g:parent#azverse",
@@ -1669,7 +1669,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-25_checks.json"
+   "deliver": "alpha/review/codex_2026-11-26_checks.json"
   },
   {
    "key": "alpha:g:4983",
@@ -1696,34 +1696,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-25_checks.json"
-  },
-  {
-   "key": "alpha:g:parent#txflow",
-   "board": "alpha",
-   "priority": 2,
-   "task_type": "evidence",
-   "name": "TxFlow Perps",
-   "missing": [
-    "M",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM",
-    "独立关联地址/自成交及去补贴留存审计未完成。",
-    "未独立重放全部费用与支付，适配器方法可能更新。",
-    "当前官方自身 token/积分/空投立场及适用日期 U。",
-    "官方原始表态日期 U，不用页面读取日期代替。"
-   ],
-   "source_refs": [
-    "data/alpha/research_queue.json"
-   ],
-   "status": "partial",
-   "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-25_checks.json"
+   "deliver": "alpha/review/codex_2026-11-26_checks.json"
   },
   {
    "key": "alpha:g:7016",
@@ -1750,7 +1723,34 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-25_checks.json"
+   "deliver": "alpha/review/codex_2026-11-26_checks.json"
+  },
+  {
+   "key": "alpha:g:parent#txflow",
+   "board": "alpha",
+   "priority": 2,
+   "task_type": "evidence",
+   "name": "TxFlow Perps",
+   "missing": [
+    "M",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "独立关联地址/自成交及去补贴留存审计未完成。",
+    "未独立重放全部费用与支付，适配器方法可能更新。",
+    "当前官方自身 token/积分/空投立场及适用日期 U。",
+    "官方原始表态日期 U，不用页面读取日期代替。"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "partial",
+   "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
+   "deliver": "alpha/review/codex_2026-11-26_checks.json"
   },
   {
    "key": "alpha:g:8415",
@@ -1777,7 +1777,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-25_checks.json"
+   "deliver": "alpha/review/codex_2026-11-26_checks.json"
   },
   {
    "key": "alpha:g:5864",
@@ -1804,7 +1804,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-25_checks.json"
+   "deliver": "alpha/review/codex_2026-11-26_checks.json"
   },
   {
    "key": "alpha:g:9296",
@@ -1831,7 +1831,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-25_checks.json"
+   "deliver": "alpha/review/codex_2026-11-26_checks.json"
   },
   {
    "key": "alpha:g:parent#okx-dex",
@@ -1858,7 +1858,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-25_checks.json"
+   "deliver": "alpha/review/codex_2026-11-26_checks.json"
   },
   {
    "key": "alpha:g:5825",
@@ -1885,7 +1885,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-25_checks.json"
+   "deliver": "alpha/review/codex_2026-11-26_checks.json"
   },
   {
    "key": "alpha:g:parent#rabby",
@@ -1912,7 +1912,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-25_checks.json"
+   "deliver": "alpha/review/codex_2026-11-26_checks.json"
   },
   {
    "key": "alpha:g:parent#hyperdash",
@@ -1939,7 +1939,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-25_checks.json"
+   "deliver": "alpha/review/codex_2026-11-26_checks.json"
   },
   {
    "key": "alpha:g:8916",
@@ -1966,7 +1966,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-25_checks.json"
+   "deliver": "alpha/review/codex_2026-11-26_checks.json"
   },
   {
    "key": "alpha:g:8866",
@@ -1993,7 +1993,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-25_checks.json"
+   "deliver": "alpha/review/codex_2026-11-26_checks.json"
   }
  ],
  "how": "Codex 每天：先改 check_report.json 里 who=codex 的问题，再按 tasks 从上往下做 who=codex 的；交付文件推 main。who=claude 的攒给 Claude 每周处理，who=大叔 的等大叔。"
