@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-26T10:37:38+00:00",
+ "generated": "2026-11-27T10:28:22+00:00",
  "boards": [
   {
    "board": "alpha",
@@ -54,10 +54,10 @@
   {
    "board": "alpha",
    "id": "alpha:research",
-   "title": "机会卡补证（队列 38 个，从上往下补，M 新参与机制优先查）",
+   "title": "机会卡补证（队列 41 个，从上往下补，M 新参与机制优先查）",
    "who": "codex",
    "pri": 1,
-   "deliver": "alpha/review/codex_2026-11-26_checks.json（JSON 数组，reviewer = codex）",
+   "deliver": "alpha/review/codex_2026-11-27_checks.json（JSON 数组，reviewer = codex）",
    "ref": "data/alpha/research_queue.json（prompt / schema / items）",
    "items": [
     {
@@ -73,6 +73,20 @@
      "status": "待核验",
      "fresh": false,
      "kind": "manual"
+    },
+    {
+     "key": "s:412",
+     "name": "THORChain DEX",
+     "status": "原始线索",
+     "fresh": true,
+     "kind": "surge"
+    },
+    {
+     "key": "s:3320",
+     "name": "Safe",
+     "status": "原始线索",
+     "fresh": true,
+     "kind": "surge"
     },
     {
      "key": "g:9498",
@@ -98,6 +112,20 @@
     {
      "key": "g:8498",
      "name": "entropy.io",
+     "status": "原始线索",
+     "fresh": true,
+     "kind": "tokenless"
+    },
+    {
+     "key": "g:5806",
+     "name": "Bloom Trading Bot",
+     "status": "原始线索",
+     "fresh": true,
+     "kind": "tokenless"
+    },
+    {
+     "key": "g:parent#exponent",
+     "name": "Exponent Yield Exchange",
      "status": "原始线索",
      "fresh": true,
      "kind": "tokenless"
@@ -187,11 +215,11 @@
      "kind": "tokenless"
     },
     {
-     "key": "p:9415",
-     "name": "Swan DAO",
+     "key": "g:7978",
+     "name": "Propr",
      "status": "原始线索",
      "fresh": false,
-     "kind": "listing"
+     "kind": "tokenless"
     },
     {
      "key": "g:parent#blockchain-wallet",
@@ -203,13 +231,6 @@
     {
      "key": "g:9367",
      "name": "MING",
-     "status": "原始线索",
-     "fresh": false,
-     "kind": "tokenless"
-    },
-    {
-     "key": "g:7978",
-     "name": "Propr",
      "status": "原始线索",
      "fresh": false,
      "kind": "tokenless"
@@ -278,15 +299,15 @@
      "kind": "tokenless"
     },
     {
-     "key": "g:9296",
-     "name": "The Standard Reserve",
+     "key": "g:parent#okx-dex",
+     "name": "OKX Swap",
      "status": "待核验",
      "fresh": false,
      "kind": "tokenless"
     },
     {
-     "key": "g:parent#okx-dex",
-     "name": "OKX Swap",
+     "key": "g:9296",
+     "name": "The Standard Reserve",
      "status": "待核验",
      "fresh": false,
      "kind": "tokenless"
@@ -318,16 +339,9 @@
      "status": "待核验",
      "fresh": false,
      "kind": "tokenless"
-    },
-    {
-     "key": "g:8866",
-     "name": "Loan Meme",
-     "status": "待核验",
-     "fresh": false,
-     "kind": "tokenless"
     }
    ],
-   "n": 38,
+   "n": 40,
    "note": "排序：手动线索 / 本站板块 ★ → 新发现 → 有参与入口 → 收入高。同一天多批追加进同一个文件。"
   },
   {
@@ -336,7 +350,7 @@
    "title": "到期复核（3 个，补证里写的下次复核日已到）",
    "who": "codex",
    "pri": 1,
-   "deliver": "alpha/review/codex_2026-11-26_checks.json",
+   "deliver": "alpha/review/codex_2026-11-27_checks.json",
    "ref": null,
    "items": [
     {
@@ -364,7 +378,7 @@
    "title": "补「量从哪来」和关键事件（35 张已补证的卡还没有 flow / events，先做 Montra、Pons 当样板）",
    "who": "codex",
    "pri": 1,
-   "deliver": "alpha/review/codex_2026-11-26_checks.json（同 key 交新一条，带 flow / events / capture / next_review）",
+   "deliver": "alpha/review/codex_2026-11-27_checks.json（同 key 交新一条，带 flow / events / capture / next_review）",
    "ref": "data/alpha/research_queue.json 的 schema",
    "items": [
     {
@@ -713,6 +727,10 @@
      "name": "BONK.fun Launchpad"
     },
     {
+     "slug": "montra",
+     "name": "Montra"
+    },
+    {
      "slug": "stonkfun",
      "name": "StonkFun"
     },
@@ -725,10 +743,6 @@
      "name": "Meteora Dynamic Bonding Curve"
     },
     {
-     "slug": "montra",
-     "name": "Montra"
-    },
-    {
      "slug": "graphite-protocol",
      "name": "Graphite Protocol"
     },
@@ -737,32 +751,32 @@
      "name": "clanker"
     },
     {
-     "slug": "o1-launchpad",
-     "name": "o1 Launchpad"
-    },
-    {
      "slug": "four.meme",
      "name": "four.meme"
     },
     {
-     "slug": "pons-v1",
-     "name": "Pons V1"
+     "slug": "o1-launchpad",
+     "name": "o1 Launchpad"
     },
     {
      "slug": "ascend-launchpad",
      "name": "Ascend Launchpad"
     },
     {
+     "slug": "pons-v1",
+     "name": "Pons V1"
+    },
+    {
      "slug": "noxa-fun",
      "name": "NOXA Fun"
     },
     {
-     "slug": "bags",
-     "name": "Bags"
-    },
-    {
      "slug": "anoncoin",
      "name": "Anoncoin"
+    },
+    {
+     "slug": "bags",
+     "name": "Bags"
     },
     {
      "slug": "rapid-launch",
@@ -777,16 +791,16 @@
      "name": "Metaplex"
     },
     {
-     "slug": "pools",
-     "name": "Pools"
-    },
-    {
      "slug": "volta",
      "name": "Volta"
     },
     {
      "slug": "stockereum",
      "name": "Stockereum"
+    },
+    {
+     "slug": "pools",
+     "name": "Pools"
     },
     {
      "slug": "glazecorp-launchpad",
@@ -818,7 +832,7 @@
   {
    "board": "alpha",
    "id": "alpha:cmc",
-   "title": "CMC 页面地址核对登记（7 个币）",
+   "title": "CMC 页面地址核对登记（8 个币）",
    "who": "codex",
    "pri": 3,
    "deliver": "alpha/cmc_slugs.json",
@@ -830,9 +844,10 @@
     "nullmask",
     "peapods-finance",
     "pons",
+    "safe",
     "thor-wallet"
    ],
-   "n": 7,
+   "n": 8,
    "note": null
   },
   {
@@ -1039,7 +1054,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-15T12:35:00Z",
-   "deliver": "alpha/review/codex_2026-11-26_checks.json"
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
   },
   {
    "key": "alpha:m:bem-tapeout",
@@ -1068,7 +1083,57 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-15T12:27:58Z",
-   "deliver": "alpha/review/codex_2026-11-26_checks.json"
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
+  },
+  {
+   "key": "alpha:s:412",
+   "board": "alpha",
+   "priority": 1,
+   "task_type": "research",
+   "name": "THORChain DEX",
+   "missing": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "TE"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "open",
+   "last_checked_utc": null,
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
+  },
+  {
+   "key": "alpha:s:3320",
+   "board": "alpha",
+   "priority": 1,
+   "task_type": "research",
+   "name": "Safe",
+   "missing": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "TE"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "open",
+   "last_checked_utc": null,
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
   },
   {
    "key": "alpha:g:9498",
@@ -1092,7 +1157,7 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-26_checks.json"
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
   },
   {
    "key": "alpha:g:parent#pocket-universe",
@@ -1116,7 +1181,7 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-26_checks.json"
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
   },
   {
    "key": "alpha:g:parent#turboflow",
@@ -1140,7 +1205,7 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-26_checks.json"
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
   },
   {
    "key": "alpha:g:8498",
@@ -1164,12 +1229,60 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-26_checks.json"
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
+  },
+  {
+   "key": "alpha:g:5806",
+   "board": "alpha",
+   "priority": 1,
+   "task_type": "research",
+   "name": "Bloom Trading Bot",
+   "missing": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "open",
+   "last_checked_utc": null,
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
+  },
+  {
+   "key": "alpha:g:parent#exponent",
+   "board": "alpha",
+   "priority": 1,
+   "task_type": "research",
+   "name": "Exponent Yield Exchange",
+   "missing": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "open",
+   "last_checked_utc": null,
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
   },
   {
    "key": "alpha:s:9065",
    "board": "alpha",
-   "priority": 1,
+   "priority": 2,
    "task_type": "research",
    "name": "Papertrade",
    "missing": [
@@ -1189,12 +1302,12 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-26_checks.json"
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
   },
   {
    "key": "alpha:s:parent#spark",
    "board": "alpha",
-   "priority": 1,
+   "priority": 2,
    "task_type": "research",
    "name": "Spark",
    "missing": [
@@ -1214,12 +1327,12 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-26_checks.json"
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
   },
   {
    "key": "alpha:s:8884",
    "board": "alpha",
-   "priority": 1,
+   "priority": 2,
    "task_type": "research",
    "name": "Nullmask",
    "missing": [
@@ -1239,12 +1352,12 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-26_checks.json"
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
   },
   {
    "key": "alpha:s:parent#justlend",
    "board": "alpha",
-   "priority": 1,
+   "priority": 2,
    "task_type": "research",
    "name": "JustLend V1",
    "missing": [
@@ -1264,7 +1377,7 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-26_checks.json"
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
   },
   {
    "key": "alpha:s:8481",
@@ -1289,7 +1402,7 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-26_checks.json"
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
   },
   {
    "key": "alpha:s:parent#paperstrategy",
@@ -1314,7 +1427,7 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-26_checks.json"
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
   },
   {
    "key": "alpha:s:4063",
@@ -1339,7 +1452,7 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-26_checks.json"
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
   },
   {
    "key": "alpha:s:parent#liquity",
@@ -1364,7 +1477,7 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-26_checks.json"
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
   },
   {
    "key": "alpha:s:7655",
@@ -1389,7 +1502,7 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-26_checks.json"
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
   },
   {
    "key": "alpha:s:6771",
@@ -1414,7 +1527,7 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-26_checks.json"
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
   },
   {
    "key": "alpha:s:parent#threshold-network",
@@ -1439,7 +1552,7 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-26_checks.json"
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
   },
   {
    "key": "alpha:g:8144",
@@ -1465,79 +1578,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-26_checks.json"
-  },
-  {
-   "key": "alpha:p:9415",
-   "board": "alpha",
-   "priority": 2,
-   "task_type": "research",
-   "name": "Swan DAO",
-   "missing": [
-    "M",
-    "A",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM"
-   ],
-   "source_refs": [
-    "data/alpha/research_queue.json"
-   ],
-   "status": "open",
-   "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-26_checks.json"
-  },
-  {
-   "key": "alpha:g:parent#blockchain-wallet",
-   "board": "alpha",
-   "priority": 2,
-   "task_type": "research",
-   "name": "Blockchain Wallet",
-   "missing": [
-    "M",
-    "A",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM"
-   ],
-   "source_refs": [
-    "data/alpha/research_queue.json"
-   ],
-   "status": "open",
-   "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-26_checks.json"
-  },
-  {
-   "key": "alpha:g:9367",
-   "board": "alpha",
-   "priority": 2,
-   "task_type": "research",
-   "name": "MING",
-   "missing": [
-    "M",
-    "A",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM"
-   ],
-   "source_refs": [
-    "data/alpha/research_queue.json"
-   ],
-   "status": "open",
-   "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-26_checks.json"
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
   },
   {
    "key": "alpha:g:7978",
@@ -1561,7 +1602,55 @@
    ],
    "status": "open",
    "last_checked_utc": null,
-   "deliver": "alpha/review/codex_2026-11-26_checks.json"
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
+  },
+  {
+   "key": "alpha:g:parent#blockchain-wallet",
+   "board": "alpha",
+   "priority": 2,
+   "task_type": "research",
+   "name": "Blockchain Wallet",
+   "missing": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "open",
+   "last_checked_utc": null,
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
+  },
+  {
+   "key": "alpha:g:9367",
+   "board": "alpha",
+   "priority": 2,
+   "task_type": "research",
+   "name": "MING",
+   "missing": [
+    "M",
+    "A",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "open",
+   "last_checked_utc": null,
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
   },
   {
    "key": "alpha:g:parent#fomo",
@@ -1588,7 +1677,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-26_checks.json"
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
   },
   {
    "key": "alpha:g:5408",
@@ -1615,7 +1704,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-26_checks.json"
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
   },
   {
    "key": "alpha:g:7010",
@@ -1642,7 +1731,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-26_checks.json"
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
   },
   {
    "key": "alpha:g:parent#azverse",
@@ -1669,7 +1758,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-26_checks.json"
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
   },
   {
    "key": "alpha:g:4983",
@@ -1696,7 +1785,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-26_checks.json"
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
   },
   {
    "key": "alpha:g:7016",
@@ -1723,7 +1812,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-26_checks.json"
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
   },
   {
    "key": "alpha:g:parent#txflow",
@@ -1750,7 +1839,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-26_checks.json"
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
   },
   {
    "key": "alpha:g:8415",
@@ -1777,7 +1866,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-26_checks.json"
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
   },
   {
    "key": "alpha:g:5864",
@@ -1804,34 +1893,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-26_checks.json"
-  },
-  {
-   "key": "alpha:g:9296",
-   "board": "alpha",
-   "priority": 2,
-   "task_type": "evidence",
-   "name": "The Standard Reserve",
-   "missing": [
-    "M",
-    "F",
-    "E",
-    "V",
-    "G",
-    "D",
-    "T",
-    "TM",
-    "独立关联地址/自成交及去补贴留存审计未完成。",
-    "未独立重放全部费用与支付，适配器方法可能更新。",
-    "当前官方自身 token/积分/空投立场及适用日期 U。",
-    "官方原始表态日期 U，不用页面读取日期代替。"
-   ],
-   "source_refs": [
-    "data/alpha/research_queue.json"
-   ],
-   "status": "partial",
-   "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-26_checks.json"
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
   },
   {
    "key": "alpha:g:parent#okx-dex",
@@ -1858,7 +1920,34 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-26_checks.json"
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
+  },
+  {
+   "key": "alpha:g:9296",
+   "board": "alpha",
+   "priority": 2,
+   "task_type": "evidence",
+   "name": "The Standard Reserve",
+   "missing": [
+    "M",
+    "F",
+    "E",
+    "V",
+    "G",
+    "D",
+    "T",
+    "TM",
+    "独立关联地址/自成交及去补贴留存审计未完成。",
+    "未独立重放全部费用与支付，适配器方法可能更新。",
+    "当前官方自身 token/积分/空投立场及适用日期 U。",
+    "官方原始表态日期 U，不用页面读取日期代替。"
+   ],
+   "source_refs": [
+    "data/alpha/research_queue.json"
+   ],
+   "status": "partial",
+   "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
   },
   {
    "key": "alpha:g:5825",
@@ -1885,7 +1974,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-26_checks.json"
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
   },
   {
    "key": "alpha:g:parent#rabby",
@@ -1912,7 +2001,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-26_checks.json"
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
   },
   {
    "key": "alpha:g:parent#hyperdash",
@@ -1939,7 +2028,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-26_checks.json"
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
   },
   {
    "key": "alpha:g:8916",
@@ -1966,7 +2055,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-26_checks.json"
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
   },
   {
    "key": "alpha:g:8866",
@@ -1993,7 +2082,7 @@
    ],
    "status": "partial",
    "last_checked_utc": "2026-11-14T13:58:39.525318+00:00",
-   "deliver": "alpha/review/codex_2026-11-26_checks.json"
+   "deliver": "alpha/review/codex_2026-11-27_checks.json"
   }
  ],
  "how": "Codex 每天：先改 check_report.json 里 who=codex 的问题，再按 tasks 从上往下做 who=codex 的；交付文件推 main。who=claude 的攒给 Claude 每周处理，who=大叔 的等大叔。"

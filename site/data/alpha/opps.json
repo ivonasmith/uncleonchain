@@ -1,11 +1,11 @@
 {
- "generated": "2026-11-26T09:45:03+00:00",
- "asof": "2026-11-25",
+ "generated": "2026-11-27T09:51:24+00:00",
+ "asof": "2026-11-26",
  "framework": "v1",
  "rules": "v2（2026-11-15）",
  "counts": {
-  "invest": 26,
-  "watch": 31,
+  "invest": 28,
+  "watch": 32,
   "reject": 0
  },
  "opps": [
@@ -257,9 +257,9 @@
     "chains": [
      "Robinhood Chain"
     ],
-    "rev30": 815372,
-    "chg30": -74.6,
-    "rev_all": 37117967,
+    "rev30": 786544,
+    "chg30": -74.4,
+    "rev_all": 37140471,
     "llama": "parent#pons",
     "fees7": null,
     "fees30": null,
@@ -282,7 +282,7 @@
     "rev_hist": [],
     "age": {
      "since": "2026-07-13",
-     "days": 136,
+     "days": 137,
      "basis": "协议收入数据首日"
     },
     "tok": {
@@ -292,7 +292,7 @@
      "chain": "robinhood",
      "first": "2026-07-15",
      "first_src": "DefiLlama 价格",
-     "days": 134,
+     "days": 135,
      "parent": false,
      "parent_name": null,
      "links": [
@@ -318,23 +318,23 @@
       "url": "https://dexscreener.com/robinhood/0x10cc6bd38112cac182db90b6a71d8bb5939526ba"
      },
      "snap": {
-      "mcap": 58870427,
-      "fdv": 58870427,
-      "vol24": 5549822.23,
-      "liq": 1116101.38,
-      "chg24": 6.09,
+      "mcap": 71121239,
+      "fdv": 71121239,
+      "vol24": 7442740.18,
+      "liq": 1273787.33,
+      "chg24": 20.79,
       "pairs": 30,
       "dex": "uniswap",
       "chain": "robinhood",
-      "at": "2026-11-26T09:45+00:00",
+      "at": "2026-11-27T09:51+00:00",
       "src": "DexScreener"
      }
     },
     "lpq": {
-     "数据日": "2026-11-24",
+     "数据日": "2026-11-25",
      "发币": {
-      "1d": 682,
-      "7d": 3978,
+      "1d": 502,
+      "7d": 3772,
       "估算": false,
       "工厂": [
        "robinhood:0xe33e9e479df8802cb0866d5d05258bec4cf62948",
@@ -349,15 +349,15 @@
       "口径": "查过交易的不同发币地址；每天单独数，取 7 天里最多的一天（没记 7 天去重），下限"
      },
      "存活": {
-      "批次": "2026-11-15",
-      "发出": 581,
+      "批次": "2026-11-17",
+      "发出": 781,
       "样本": 20,
-      "7天后仍有交易": 3,
-      "市值过10万美元": 1,
+      "7天后仍有交易": 0,
+      "市值过10万美元": 0,
       "口径": "批次那天发的币里抽 20 个，发出后 7～8 天逐个用 GeckoTerminal 查它的全部池子（含发射台曲线池）：近 24 小时有买卖的个数、市值（没有就用 FDV）≥ 10 万美元的个数；GeckoTerminal 没收录的池子看不到，算没交易，下限",
       "来源": "GeckoTerminal（链上样本 + 第三方行情）",
       "收录": 20,
-      "查询日": "2026-11-24"
+      "查询日": "2026-11-26"
      },
      "交易者": {
       "1d": null,
@@ -370,33 +370,32 @@
     },
     "money": {
      "vol": {
-      "total24h": 1930885,
-      "total7d": 12253220,
-      "total30d": 91072735
+      "total24h": 2853916,
+      "total7d": 12358903,
+      "total30d": 87892954
      },
      "fees": {
-      "total24h": 141233,
-      "total7d": 784715,
-      "total30d": 5355309
+      "total24h": 203745,
+      "total7d": 851358,
+      "total30d": 5226779
      },
      "rev": {
-      "total24h": 16987,
-      "total7d": 112715,
-      "total30d": 815372
+      "total24h": 22504,
+      "total7d": 110480,
+      "total30d": 786544
      },
      "hold": {
-      "total24h": 11708,
-      "total7d": 126562,
-      "total30d": 642539
+      "total24h": 11441,
+      "total7d": 129147,
+      "total30d": 614865
      },
      "take": 0.00895,
-     "share7": 0.135,
+     "share7": 0.141,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    51332,
     62670,
     60097,
     36534,
@@ -425,7 +424,8 @@
     9337,
     15359,
     15933,
-    16987
+    16987,
+    22504
    ]
   },
   {
@@ -705,9 +705,9 @@
     "chains": [
      "Elysium"
     ],
-    "rev30": 416670,
+    "rev30": 466337,
     "chg30": null,
-    "rev_all": 416670,
+    "rev_all": 466337,
     "llama": null,
     "fees7": null,
     "fees30": null,
@@ -719,7 +719,7 @@
      {
       "board": "launchpad",
       "rule": "lp_new",
-      "why": "进发射台矩阵 14 天，近 7 天手续费 99,173 美元",
+      "why": "进发射台矩阵 15 天，近 7 天手续费 119,357 美元",
       "since": "2026-11-10"
      }
     ],
@@ -737,7 +737,7 @@
     "rev_hist": [],
     "age": {
      "since": "2026-11-05",
-     "days": 21,
+     "days": 22,
      "basis": "协议收入数据首日"
     },
     "tok": {
@@ -768,23 +768,23 @@
       "url": "https://dexscreener.com/elysium/0x3e373dfe40db272433dca58527abac38dbd7acb0b6c92090c202a1eac7272a1d"
      },
      "snap": {
-      "mcap": 5889504,
-      "fdv": 5889504,
-      "vol24": 495186.62,
-      "liq": 410652.46,
-      "chg24": 33.26,
-      "pairs": 13,
+      "mcap": 14233354,
+      "fdv": 14233354,
+      "vol24": 3567601.68,
+      "liq": 742896.16,
+      "chg24": 142,
+      "pairs": 18,
       "dex": "uniswap",
       "chain": "elysium",
-      "at": "2026-11-26T09:45+00:00",
+      "at": "2026-11-27T09:51+00:00",
       "src": "DexScreener"
      }
     },
     "lpq": {
-     "数据日": "2026-11-24",
+     "数据日": "2026-11-25",
      "发币": {
-      "1d": 331,
-      "7d": 2241,
+      "1d": 254,
+      "7d": 2141,
       "估算": false,
       "工厂": [
        "elysium:0x38d3ef3a06d18fa3286fb5deafe611be725fcd15"
@@ -819,29 +819,29 @@
     },
     "money": {
      "vol": {
-      "total24h": 2510440,
-      "total7d": 7556189,
-      "total30d": 104202679
+      "total24h": 16690469,
+      "total7d": 19013368,
+      "total30d": 116553915
      },
      "fees": {
-      "total24h": 48340,
-      "total7d": 119357,
-      "total30d": 1645228
+      "total24h": 304343,
+      "total7d": 291870,
+      "total30d": 1832306
      },
      "rev": {
-      "total24h": 10051,
-      "total7d": 29945,
-      "total30d": 416670
+      "total24h": 76335,
+      "total7d": 76038,
+      "total30d": 466337
      },
      "hold": {
-      "total24h": 7034,
-      "total7d": 20966,
-      "total30d": 131573
+      "total24h": 53434,
+      "total7d": 53227,
+      "total30d": 166339
      },
      "take": 0.004,
-     "share7": 0.073,
+     "share7": 0.163,
      "src": "DefiLlama",
-     "short_history": 21
+     "short_history": 22
     }
    },
    "spark": [
@@ -865,7 +865,8 @@
     1129,
     8223,
     4099,
-    7976
+    7976,
+    49667
    ]
   },
   {
@@ -1050,8 +1051,8 @@
      "Base",
      "Arc"
     ],
-    "rev30": 1613447,
-    "chg30": 1048.8,
+    "rev30": 1574787,
+    "chg30": 717.3,
     "rev_all": null,
     "llama": null,
     "fees7": null,
@@ -1064,7 +1065,7 @@
      {
       "board": "aiagent",
       "rule": "ai_new",
-      "why": "AI Agent 板块：手续费从 2026-10-15 才开始，近 7 天 75,216 美元；板块备注：2026-10 才收录，30 天手续费很快冲到第一，真实需求还是自付刷量待 Codex 核",
+      "why": "AI Agent 板块：手续费从 2026-10-15 才开始，近 7 天 80,374 美元；板块备注：2026-10 才收录，30 天手续费很快冲到第一，真实需求还是自付刷量待 Codex 核",
       "since": "2026-10-15"
      }
     ],
@@ -1131,39 +1132,42 @@
      [
       "2026-11-26",
       1613447
+     ],
+     [
+      "2026-11-27",
+      1574787
      ]
     ],
     "age": {
      "since": "2026-10-15",
-     "days": 42,
+     "days": 43,
      "basis": "协议收入数据首日"
     },
     "tok": null,
     "money": {
      "vol": {
-      "total24h": 169706,
-      "total7d": 803717,
-      "total30d": 16134697
+      "total24h": 135580,
+      "total7d": 828476,
+      "total30d": 15748114
      },
      "fees": {
-      "total24h": 16970,
-      "total7d": 80374,
-      "total30d": 1613447
+      "total24h": 13558,
+      "total7d": 82850,
+      "total30d": 1574787
      },
      "rev": {
-      "total24h": 16970,
-      "total7d": 80374,
-      "total30d": 1613447
+      "total24h": 13558,
+      "total7d": 82850,
+      "total30d": 1574787
      },
      "hold": null,
      "take": 0.1,
-     "share7": 0.05,
+     "share7": 0.053,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    52218,
     21934,
     10602,
     11399,
@@ -1192,7 +1196,8 @@
     6524,
     3844,
     13556,
-    16970
+    16970,
+    13558
    ]
   },
   {
@@ -1202,7 +1207,7 @@
    "key": "x:aiagent:bankr",
    "name": "Bankr",
    "kind": "site",
-   "why_here": "AI Agent 板块标了异常：单日手续费占近 30 天的 54%",
+   "why_here": null,
    "manual": null,
    "discovered": "2026-11-15",
    "baseline": false,
@@ -1220,14 +1225,14 @@
      "why": "类目「AI Agents · launch」不在映射表"
     },
     "right": {
-     "v": "governance",
+     "v": "none",
      "src": "auto",
-     "why": "已有代币，权利待补证"
+     "why": "本协议和母协议都没登记代币"
     },
     "opportunity": {
-     "v": "rerate",
+     "v": "genesis",
      "src": "auto",
-     "why": "已有代币 → 产品与资产重估"
+     "why": "无币 → 初始参与（早期使用 / 积分）"
     },
     "attribute": {
      "v": "product",
@@ -1317,7 +1322,7 @@
    "comp": {
     "lo": 30.5,
     "hi": 85.5,
-    "cov": 0.33,
+    "cov": 0.38,
     "gated": false,
     "parts": {
      "M": {
@@ -1332,7 +1337,7 @@
       "v": 2.5,
       "src": "研究（只查清一项）"
      },
-     "TE": null
+     "TE": "NA"
     }
    },
    "one_liner": "给 AI Agent 提供钱包、交易、发币和 API，让 Agent 用交易费支付自己的计算成本。",
@@ -1390,22 +1395,15 @@
     "sources": [
      "site_aiagent"
     ],
-    "boards": [
-     {
-      "board": "aiagent",
-      "rule": "ai_spike",
-      "why": "AI Agent 板块标了异常：单日手续费占近 30 天的 54%",
-      "since": null
-     }
-    ],
+    "boards": null,
     "tvl": null,
     "listed": null,
     "slug": "bankr",
-    "url": "https://bankr.bot",
-    "logo": "https://icons.llamao.fi/icons/protocols/bankr",
-    "twitter": "bankrbot",
+    "url": null,
+    "logo": null,
+    "twitter": null,
     "children": null,
-    "token": true,
+    "token": false,
     "token_seen": null,
     "rev_hist": [],
     "tok": {
@@ -1415,7 +1413,7 @@
      "chain": "base",
      "first": "2024-12-10",
      "first_src": "DefiLlama 价格",
-     "days": 716,
+     "days": 717,
      "parent": false,
      "parent_name": null,
      "links": [
@@ -1441,37 +1439,37 @@
       "url": "https://dexscreener.com/base/0xaec085e5a5ce8d96a7bdd3eb3a62445d4f6ce703"
      },
      "snap": {
-      "mcap": 20613581,
-      "fdv": 20613581,
-      "vol24": 98134.87,
-      "liq": 1305729.52,
-      "chg24": 3.52,
-      "pairs": 15,
+      "mcap": 20505376,
+      "fdv": 20505376,
+      "vol24": 64648.79,
+      "liq": 1314075.23,
+      "chg24": -0.68,
+      "pairs": 16,
       "dex": "uniswap",
       "chain": "base",
-      "at": "2026-11-26T09:45+00:00",
+      "at": "2026-11-27T09:51+00:00",
       "src": "DexScreener"
      }
     },
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 7716,
-      "total7d": 59656,
-      "total30d": 242121
+      "total24h": 704,
+      "total7d": 30541,
+      "total30d": 246307
      },
      "rev": {
-      "total24h": 7525,
-      "total7d": 30721,
-      "total30d": 123261
+      "total24h": 659,
+      "total7d": 14282,
+      "total30d": 123473
      },
      "hold": {
       "total24h": 0,
-      "total7d": 19870,
-      "total30d": 205908
+      "total7d": 20380,
+      "total30d": 157086
      },
      "take": null,
-     "share7": 0.246,
+     "share7": 0.124,
      "src": "DefiLlama",
      "short_history": null
     }
@@ -1682,31 +1680,31 @@
     "rev_hist": [],
     "age": {
      "since": "2026-11-12",
-     "days": 14,
+     "days": 15,
      "basis": "DefiLlama 收录"
     },
     "tok": null,
     "money": {
      "vol": {
-      "total24h": 9892,
-      "total7d": 59376,
-      "total30d": 1539262
+      "total24h": 229101,
+      "total7d": 255777,
+      "total30d": 1744113
      },
      "fees": {
-      "total24h": 164,
-      "total7d": 1111.94,
-      "total30d": 238905.94
+      "total24h": 3820,
+      "total7d": 4370.9400000000005,
+      "total30d": 239030.94
      },
      "rev": {
-      "total24h": 49.36,
-      "total7d": 333.85,
-      "total30d": 71670.48999999999
+      "total24h": 1147,
+      "total7d": 1311.52,
+      "total30d": 71708.48999999999
      },
      "hold": null,
-     "take": 0.04656,
-     "share7": 0.039,
+     "take": 0.04111,
+     "share7": 0.147,
      "src": "DefiLlama",
-     "short_history": 14
+     "short_history": 15
     }
    },
    "spark": []
@@ -1718,7 +1716,7 @@
    "key": "x:launchpad:chain-elysium",
    "name": "Elysium 生态（新发射台聚集）",
    "kind": "site",
-   "why_here": "30 天内 Elysium 上新进矩阵的发射台有 10 个：Montra、Ascend Launchpad、Volta、ElysPump V2、Boxa V1、Kleos Launchpad；合计近 7 天手续费 141,424 美元",
+   "why_here": "30 天内 Elysium 上新进矩阵的发射台有 10 个：Montra、Ascend Launchpad、Volta、ElysPump V2、Kleos Launchpad、Boxa V1；合计近 7 天手续费 161,390 美元",
    "manual": null,
    "discovered": "2026-11-15",
    "baseline": false,
@@ -1935,7 +1933,7 @@
     "chg30": null,
     "rev_all": null,
     "llama": null,
-    "fees7": 141424,
+    "fees7": 161390,
     "fees30": null,
     "sources": [
      "site_launchpad"
@@ -1944,7 +1942,7 @@
      {
       "board": "launchpad",
       "rule": "lp_chain",
-      "why": "30 天内 Elysium 上新进矩阵的发射台有 10 个：Montra、Ascend Launchpad、Volta、ElysPump V2、Boxa V1、Kleos Launchpad；合计近 7 天手续费 141,424 美元",
+      "why": "30 天内 Elysium 上新进矩阵的发射台有 10 个：Montra、Ascend Launchpad、Volta、ElysPump V2、Kleos Launchpad、Boxa V1；合计近 7 天手续费 161,390 美元",
       "since": null
      }
     ],
@@ -2151,9 +2149,9 @@
     "chains": [
      "Elysium"
     ],
-    "rev30": 183434,
+    "rev30": 186223,
     "chg30": null,
-    "rev_all": 183434,
+    "rev_all": 186223,
     "llama": null,
     "fees7": null,
     "fees30": null,
@@ -2176,7 +2174,7 @@
     "rev_hist": [],
     "age": {
      "since": "2026-11-03",
-     "days": 23,
+     "days": 24,
      "basis": "协议收入数据首日"
     },
     "tok": {
@@ -2207,39 +2205,39 @@
       "url": "https://dexscreener.com/elysium/0x7b182abb748bae25e2c73abd8b4cf3157d8d35a47e4b36d1ee5565ade94c3c27"
      },
      "snap": {
-      "mcap": 334232,
-      "fdv": 334232,
-      "vol24": 47270.79,
-      "liq": 58332.29,
-      "chg24": 37.05,
-      "pairs": 5,
+      "mcap": 772600,
+      "fdv": 772600,
+      "vol24": 170328.72,
+      "liq": 93491.84,
+      "chg24": 133,
+      "pairs": 7,
       "dex": "uniswap",
       "chain": "elysium",
-      "at": "2026-11-26T09:45+00:00",
+      "at": "2026-11-27T09:51+00:00",
       "src": "DexScreener"
      }
     },
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 2427,
-      "total7d": 11340,
-      "total30d": 271052
+      "total24h": 5305,
+      "total7d": 12755,
+      "total30d": 275511
      },
      "rev": {
-      "total24h": 1324,
-      "total7d": 7120,
-      "total30d": 183434
+      "total24h": 3369,
+      "total7d": 7844,
+      "total30d": 186223
      },
      "hold": {
-      "total24h": 1179,
-      "total7d": 6440,
-      "total30d": 167176
+      "total24h": 3051,
+      "total7d": 7077,
+      "total30d": 169696
      },
      "take": null,
-     "share7": 0.042,
+     "share7": 0.046,
      "src": "DefiLlama",
-     "short_history": 23
+     "short_history": 24
     }
    },
    "spark": [
@@ -2265,7 +2263,8 @@
     1961,
     1062,
     364,
-    1050
+    1050,
+    2789
    ]
   },
   {
@@ -2448,7 +2447,7 @@
     "chains": [
      "Elysium"
     ],
-    "rev30": 250520,
+    "rev30": 254203,
     "chg30": null,
     "rev_all": null,
     "llama": null,
@@ -2522,39 +2521,43 @@
      [
       "2026-11-26",
       250520
+     ],
+     [
+      "2026-11-27",
+      254203
      ]
     ],
     "age": {
      "since": "2026-11-05",
-     "days": 21,
+     "days": 22,
      "basis": "协议收入数据首日"
     },
     "tok": null,
     "money": {
      "vol": {
-      "total24h": 205723,
-      "total7d": 1509583,
-      "total30d": 42991111
+      "total24h": 1174996,
+      "total7d": 1986257,
+      "total30d": 43739649
      },
      "fees": {
-      "total24h": 3421,
-      "total7d": 26550,
-      "total30d": 651417
+      "total24h": 16772,
+      "total7d": 31469,
+      "total30d": 661202
      },
      "rev": {
-      "total24h": 1115,
-      "total7d": 7361,
-      "total30d": 250520
+      "total24h": 5987,
+      "total7d": 9676,
+      "total30d": 254203
      },
      "hold": {
-      "total24h": 301,
-      "total7d": 1935.48,
-      "total30d": 68505.48
+      "total24h": 1614,
+      "total7d": 2577.48,
+      "total30d": 69512.48
      },
-     "take": 0.00583,
-     "share7": 0.035,
+     "take": 0.00581,
+     "share7": 0.045,
      "src": "DefiLlama",
-     "short_history": 21
+     "short_history": 22
     }
    },
    "spark": [
@@ -2578,7 +2581,8 @@
     715,
     1192,
     761,
-    947
+    947,
+    3683
    ]
   },
   {
@@ -2660,7 +2664,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 2,019,447 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 2,028,559 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -2798,8 +2802,8 @@
     "chains": [
      "Off Chain"
     ],
-    "rev30": 2019447,
-    "chg30": 106.3,
+    "rev30": 2028559,
+    "chg30": 103.4,
     "rev_all": null,
     "llama": null,
     "fees7": null,
@@ -2871,35 +2875,38 @@
      [
       "2026-11-26",
       2019447
+     ],
+     [
+      "2026-11-27",
+      2028559
      ]
     ],
     "age": {
      "since": "2025-11-20",
-     "days": 371,
+     "days": 372,
      "basis": "DefiLlama 收录"
     },
     "tok": null,
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 299316,
-      "total7d": 1508430,
-      "total30d": 5048609
+      "total24h": 107029,
+      "total7d": 1394472,
+      "total30d": 5071389
      },
      "rev": {
-      "total24h": 119727,
-      "total7d": 603374,
-      "total30d": 2019447
+      "total24h": 42812,
+      "total7d": 557791,
+      "total30d": 2028559
      },
      "hold": null,
      "take": null,
-     "share7": 0.299,
+     "share7": 0.275,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    33700,
     32782,
     70104,
     56444,
@@ -2928,7 +2935,8 @@
     24892,
     119815,
     91472,
-    119727
+    119727,
+    42812
    ]
   },
   {
@@ -3010,7 +3018,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 1,723,026 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 1,690,418 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -3148,8 +3156,8 @@
     "chains": [
      "Off Chain"
     ],
-    "rev30": 1723026,
-    "chg30": 139.3,
+    "rev30": 1690418,
+    "chg30": 126.1,
     "rev_all": null,
     "llama": null,
     "fees7": null,
@@ -3221,35 +3229,38 @@
      [
       "2026-11-26",
       1723026
+     ],
+     [
+      "2026-11-27",
+      1690418
      ]
     ],
     "age": {
      "since": "2025-12-11",
-     "days": 350,
+     "days": 351,
      "basis": "协议收入数据首日"
     },
     "tok": null,
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 42322,
-      "total7d": 309509,
-      "total30d": 3377605
+      "total24h": 28680,
+      "total7d": 292601,
+      "total30d": 3311974
      },
      "rev": {
-      "total24h": 22331,
-      "total7d": 162749,
-      "total30d": 1723026
+      "total24h": 14757,
+      "total7d": 153627,
+      "total30d": 1690418
      },
      "hold": null,
      "take": null,
-     "share7": 0.092,
+     "share7": 0.088,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    47365,
     54480,
     53200,
     54393,
@@ -3278,7 +3289,8 @@
     16895,
     26489,
     23812,
-    22331
+    22331,
+    14757
    ]
   },
   {
@@ -3360,7 +3372,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 19,833,830 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 20,284,806 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -3505,8 +3517,8 @@
     "chains": [
      "Polygon"
     ],
-    "rev30": 19833830,
-    "chg30": 21.5,
+    "rev30": 20284806,
+    "chg30": 24.2,
     "rev_all": null,
     "llama": null,
     "fees7": null,
@@ -3579,39 +3591,42 @@
      [
       "2026-11-26",
       19833830
+     ],
+     [
+      "2026-11-27",
+      20284806
      ]
     ],
     "age": {
      "since": "2021-10-26",
-     "days": 1857,
+     "days": 1858,
      "basis": "DefiLlama 收录"
     },
     "tok": null,
     "money": {
      "vol": {
-      "total24h": 174024447,
-      "total7d": 1258530180,
-      "total30d": 5872717808
+      "total24h": 197664637,
+      "total7d": 1329277867,
+      "total30d": 5851125450
      },
      "fees": {
-      "total24h": 3906956,
-      "total7d": 29351359,
-      "total30d": 133090723
+      "total24h": 5035931,
+      "total7d": 31658328,
+      "total30d": 134627648
      },
      "rev": {
-      "total24h": 591879,
-      "total7d": 5067513,
-      "total30d": 19833830
+      "total24h": 836260,
+      "total7d": 5448346,
+      "total30d": 20284806
      },
      "hold": null,
-     "take": 0.00338,
-     "share7": 0.214,
+     "take": 0.00347,
+     "share7": 0.227,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    385284,
     604567,
     430346,
     497143,
@@ -3640,7 +3655,8 @@
     1013779,
     522670,
     855535,
-    591879
+    591879,
+    836260
    ]
   },
   {
@@ -3722,7 +3738,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 4,182,120 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 4,172,561 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -3840,8 +3856,8 @@
     "chains": [
      "Hyperliquid L1"
     ],
-    "rev30": 4182120,
-    "chg30": 75.3,
+    "rev30": 4172561,
+    "chg30": 70.3,
     "rev_all": null,
     "llama": null,
     "fees7": null,
@@ -3913,35 +3929,38 @@
      [
       "2026-11-26",
       4182120
+     ],
+     [
+      "2026-11-27",
+      4172561
      ]
     ],
     "age": {
      "since": "2025-11-01",
-     "days": 390,
+     "days": 391,
      "basis": "协议收入数据首日"
     },
     "tok": null,
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 680804,
-      "total7d": 3745439,
-      "total30d": 12986422
+      "total24h": 224736,
+      "total7d": 3255182,
+      "total30d": 12924941
      },
      "rev": {
-      "total24h": 224692,
-      "total7d": 1232187,
-      "total30d": 4182120
+      "total24h": 78613,
+      "total7d": 1083828,
+      "total30d": 4172561
      },
      "hold": null,
      "take": null,
-     "share7": 0.288,
+     "share7": 0.252,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    88172,
     135324,
     160922,
     146675,
@@ -3970,7 +3989,8 @@
     54962,
     256543,
     159820,
-    224692
+    224692,
+    78613
    ]
   },
   {
@@ -4052,7 +4072,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 4,008,975 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 3,927,033 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -4175,8 +4195,8 @@
     "chains": [
      "Off Chain"
     ],
-    "rev30": 4008975,
-    "chg30": 75.9,
+    "rev30": 3927033,
+    "chg30": 69.0,
     "rev_all": null,
     "llama": null,
     "fees7": null,
@@ -4249,39 +4269,42 @@
      [
       "2026-11-26",
       4008975
+     ],
+     [
+      "2026-11-27",
+      3927033
      ]
     ],
     "age": {
      "since": "2025-12-31",
-     "days": 330,
+     "days": 331,
      "basis": "协议收入数据首日"
     },
     "tok": null,
     "money": {
      "vol": {
-      "total24h": 71,
-      "total7d": 1106,
-      "total30d": 480405
+      "total24h": 39,
+      "total7d": 1145,
+      "total30d": 479440
      },
      "fees": {
-      "total24h": 51872.06,
-      "total7d": 382456.07,
-      "total30d": 4175326.11
+      "total24h": 36238.01,
+      "total7d": 362417.08,
+      "total30d": 4093533.1199999996
      },
      "rev": {
-      "total24h": 48155.02,
-      "total7d": 351134.02,
-      "total30d": 4008974.77
+      "total24h": 34663,
+      "total7d": 333741.02,
+      "total30d": 3927032.77
      },
      "hold": null,
-     "take": 8.34499,
+     "take": 8.19087,
      "share7": 0.002,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    116605,
     126681,
     124026,
     133034,
@@ -4310,7 +4333,8 @@
     40839,
     50818,
     48248,
-    48155
+    48155,
+    34663
    ]
   },
   {
@@ -4392,7 +4416,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 3,910,552 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 3,883,821 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -4553,8 +4577,8 @@
      "Polygon",
      "BSC"
     ],
-    "rev30": 3910552,
-    "chg30": 25.8,
+    "rev30": 3883821,
+    "chg30": 25.4,
     "rev_all": null,
     "llama": null,
     "fees7": null,
@@ -4628,39 +4652,42 @@
      [
       "2026-11-26",
       3991124
+     ],
+     [
+      "2026-11-27",
+      3966559
      ]
     ],
     "age": {
      "since": "2023-01-01",
-     "days": 1425,
+     "days": 1426,
      "basis": "协议收入数据首日"
     },
     "tok": null,
     "money": {
      "vol": {
-      "total24h": 100061,
-      "total7d": 566403,
-      "total30d": 2565677
+      "total24h": 109847,
+      "total7d": 645091,
+      "total30d": 2573175
      },
      "fees": {
-      "total24h": 111325,
-      "total7d": 882185,
-      "total30d": 4006183
+      "total24h": 71036,
+      "total7d": 849088,
+      "total30d": 3982711
      },
      "rev": {
-      "total24h": 110326,
-      "total7d": 876528,
-      "total30d": 3991124
+      "total24h": 69943,
+      "total7d": 842648,
+      "total30d": 3966559
      },
      "hold": null,
-     "take": 1.55558,
-     "share7": 0.221,
+     "take": 1.5415,
+     "share7": 0.251,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    94508,
     324534,
     289529,
     179427,
@@ -4689,7 +4716,8 @@
     97024,
     136206,
     117906,
-    110326
+    110326,
+    69943
    ]
   },
   {
@@ -4771,7 +4799,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 1,969,387 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 1,940,276 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -4890,8 +4918,8 @@
     "chains": [
      "TxFlow"
     ],
-    "rev30": 1969387,
-    "chg30": 37.4,
+    "rev30": 1940276,
+    "chg30": 32.8,
     "rev_all": null,
     "llama": null,
     "fees7": null,
@@ -4963,35 +4991,38 @@
      [
       "2026-11-26",
       1969387
+     ],
+     [
+      "2026-11-27",
+      1940276
      ]
     ],
     "age": {
      "since": "2026-03-26",
-     "days": 245,
+     "days": 246,
      "basis": "协议收入数据首日"
     },
     "tok": null,
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 36292,
-      "total7d": 534768,
-      "total30d": 1969387
+      "total24h": 20486,
+      "total7d": 475946,
+      "total30d": 1940276
      },
      "rev": {
-      "total24h": 36292,
-      "total7d": 534768,
-      "total30d": 1969387
+      "total24h": 20486,
+      "total7d": 475946,
+      "total30d": 1940276
      },
      "hold": null,
      "take": null,
-     "share7": 0.272,
+     "share7": 0.245,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    49597,
     57540,
     86016,
     65300,
@@ -5020,7 +5051,8 @@
     27106,
     67729,
     27637,
-    36292
+    36292,
+    20486
    ]
   },
   {
@@ -5102,7 +5134,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 1,549,738 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 1,562,284 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -5221,8 +5253,8 @@
     "chains": [
      "Tron"
     ],
-    "rev30": 1549738,
-    "chg30": 60.7,
+    "rev30": 1562284,
+    "chg30": 66.0,
     "rev_all": null,
     "llama": null,
     "fees7": null,
@@ -5294,35 +5326,38 @@
      [
       "2026-11-26",
       1549738
+     ],
+     [
+      "2026-11-27",
+      1562284
      ]
     ],
     "age": {
      "since": "2023-07-24",
-     "days": 1221,
+     "days": 1222,
      "basis": "协议收入数据首日"
     },
     "tok": null,
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 12506,
-      "total7d": 426599,
-      "total30d": 1549738
+      "total24h": 30297,
+      "total7d": 412230,
+      "total30d": 1562284
      },
      "rev": {
-      "total24h": 12506,
-      "total7d": 426599,
-      "total30d": 1549738
+      "total24h": 30297,
+      "total7d": 412230,
+      "total30d": 1562284
      },
      "hold": null,
      "take": null,
-     "share7": 0.275,
+     "share7": 0.264,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    9954,
     36417,
     23075,
     26727,
@@ -5351,7 +5386,8 @@
     64888,
     23638,
     85337,
-    28556
+    28556,
+    22500
    ]
   },
   {
@@ -5433,7 +5469,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 988,875 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 987,989 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -5575,8 +5611,8 @@
      "Ethereum",
      "BSC"
     ],
-    "rev30": 988875,
-    "chg30": 67.9,
+    "rev30": 987989,
+    "chg30": 66.2,
     "rev_all": null,
     "llama": null,
     "fees7": null,
@@ -5649,35 +5685,38 @@
      [
       "2026-11-26",
       988875
+     ],
+     [
+      "2026-11-27",
+      987989
      ]
     ],
     "age": {
      "since": "2024-10-21",
-     "days": 766,
+     "days": 767,
      "basis": "协议收入数据首日"
     },
     "tok": null,
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 54764,
-      "total7d": 290504,
-      "total30d": 988875
+      "total24h": 19311,
+      "total7d": 277845,
+      "total30d": 987989
      },
      "rev": {
-      "total24h": 54764,
-      "total7d": 290504,
-      "total30d": 988875
+      "total24h": 19311,
+      "total7d": 277845,
+      "total30d": 987989
      },
      "hold": null,
      "take": null,
-     "share7": 0.294,
+     "share7": 0.281,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    20197,
     24418,
     67320,
     54335,
@@ -5706,7 +5745,8 @@
     18734,
     35839,
     62691,
-    54764
+    54764,
+    19311
    ]
   },
   {
@@ -5788,7 +5828,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 755,170 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 734,317 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -5928,8 +5968,8 @@
     "chains": [
      "Hyperliquid L1"
     ],
-    "rev30": 755170,
-    "chg30": 59.9,
+    "rev30": 734317,
+    "chg30": 47.7,
     "rev_all": null,
     "llama": null,
     "fees7": null,
@@ -6003,39 +6043,42 @@
      [
       "2026-11-26",
       755170
+     ],
+     [
+      "2026-11-27",
+      734317
      ]
     ],
     "age": {
      "since": "2025-05-12",
-     "days": 563,
+     "days": 564,
      "basis": "协议收入数据首日"
     },
     "tok": null,
     "money": {
      "vol": {
-      "total24h": 265960,
-      "total7d": 1296609,
-      "total30d": 6352448
+      "total24h": 103116,
+      "total7d": 1369732,
+      "total30d": 6305539
      },
      "fees": {
-      "total24h": 12692,
-      "total7d": 88072.34999999999,
-      "total30d": 755170.4400000002
+      "total24h": 5943,
+      "total7d": 69021.70999999999,
+      "total30d": 734316.7100000002
      },
      "rev": {
-      "total24h": 12692,
-      "total7d": 88072.34999999999,
-      "total30d": 755170.4400000002
+      "total24h": 5943,
+      "total7d": 69021.70999999999,
+      "total30d": 734316.7100000002
      },
      "hold": null,
-     "take": 0.11888,
-     "share7": 0.204,
+     "take": 0.11646,
+     "share7": 0.217,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    26797,
     26691,
     50061,
     30902,
@@ -6064,7 +6107,8 @@
     4323,
     11820,
     9104,
-    12692
+    12692,
+    5943
    ]
   },
   {
@@ -6146,7 +6190,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 637,916 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 636,347 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -6284,8 +6328,8 @@
     "chains": [
      "Off Chain"
     ],
-    "rev30": 637916,
-    "chg30": 24.4,
+    "rev30": 636347,
+    "chg30": 25.2,
     "rev_all": null,
     "llama": null,
     "fees7": null,
@@ -6357,35 +6401,38 @@
      [
       "2026-11-26",
       637916
+     ],
+     [
+      "2026-11-27",
+      636347
      ]
     ],
     "age": {
      "since": "2025-08-29",
-     "days": 454,
+     "days": 455,
      "basis": "协议收入数据首日"
     },
     "tok": null,
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 18416,
-      "total7d": 141868,
-      "total30d": 637916
+      "total24h": 18401,
+      "total7d": 137638,
+      "total30d": 636347
      },
      "rev": {
-      "total24h": 18416,
-      "total7d": 141868,
-      "total30d": 637916
+      "total24h": 18401,
+      "total7d": 137638,
+      "total30d": 636347
      },
      "hold": null,
      "take": null,
-     "share7": 0.222,
+     "share7": 0.216,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    19970,
     24485,
     24169,
     20274,
@@ -6414,7 +6461,8 @@
     19024,
     19948,
     20184,
-    18416
+    18416,
+    18401
    ]
   },
   {
@@ -6496,7 +6544,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 582,473 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 558,884 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -6630,8 +6678,8 @@
      "BSC",
      "Solana"
     ],
-    "rev30": 582473,
-    "chg30": 53.7,
+    "rev30": 558884,
+    "chg30": 34.2,
     "rev_all": null,
     "llama": null,
     "fees7": null,
@@ -6703,35 +6751,38 @@
      [
       "2026-11-26",
       582473
+     ],
+     [
+      "2026-11-27",
+      558884
      ]
     ],
     "age": {
      "since": "2026-10-01",
-     "days": 56,
+     "days": 57,
      "basis": "协议收入数据首日"
     },
     "tok": null,
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 17276,
-      "total7d": 101186,
-      "total30d": 582473
+      "total24h": 13934,
+      "total7d": 101195,
+      "total30d": 558884
      },
      "rev": {
-      "total24h": 17276,
-      "total7d": 101186,
-      "total30d": 582473
+      "total24h": 13934,
+      "total7d": 101195,
+      "total30d": 558884
      },
      "hold": null,
      "take": null,
-     "share7": 0.174,
+     "share7": 0.181,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    37523,
     59150,
     22821,
     14826,
@@ -6760,7 +6811,274 @@
     10107,
     19034,
     20271,
-    17276
+    17276,
+    13934
+   ]
+  },
+  {
+   "fresh": false,
+   "reviewer": null,
+   "id": "7978",
+   "key": "g:7978",
+   "name": "Propr",
+   "kind": "tokenless",
+   "why_here": null,
+   "manual": null,
+   "discovered": "2026-11-18",
+   "baseline": false,
+   "status": "原始线索",
+   "status_src": "auto",
+   "bucket": "watch",
+   "entry": [
+    "none"
+   ],
+   "entry_why": "还没查到资金参与方式",
+   "classes": {
+    "business": {
+     "v": "trading",
+     "src": "auto",
+     "why": "DefiLlama 类目「Trading App」→ 映射表"
+    },
+    "right": {
+     "v": "none",
+     "src": "auto",
+     "why": "本协议和母协议都没登记代币"
+    },
+    "opportunity": {
+     "v": "genesis",
+     "src": "auto",
+     "why": "无币 → 初始参与（早期使用 / 积分）"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": "U",
+     "src": "auto",
+     "why": "事实：近 30 天协议收入 201,182 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "TM": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "TE": {
+     "v": "NA",
+     "src": "auto",
+     "why": "还没有代币，代币经济不适用"
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "身份未经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "comp": {
+    "lo": 6.0,
+    "hi": 91.0,
+    "cov": 0.12,
+    "gated": true,
+    "parts": {
+     "M": null,
+     "R": null,
+     "G": {
+      "v": 6.0,
+      "src": "系统"
+     },
+     "TM": null,
+     "D": null,
+     "AF": null,
+     "TE": "NA"
+    }
+   },
+   "one_liner": null,
+   "research": null,
+   "evidence": [],
+   "data": {
+    "category": "Trading App",
+    "chains": [
+     "Ethereum"
+    ],
+    "rev30": 201182,
+    "chg30": 457.5,
+    "rev_all": null,
+    "llama": null,
+    "fees7": null,
+    "fees30": null,
+    "sources": [
+     "llama_tokenless"
+    ],
+    "boards": null,
+    "tvl": null,
+    "listed": null,
+    "slug": "propr",
+    "url": "https://app.propr.xyz",
+    "logo": "https://icons.llamao.fi/icons/protocols/propr",
+    "twitter": "ProprXYZ",
+    "children": [
+     "Propr"
+    ],
+    "token": false,
+    "token_seen": null,
+    "rev_hist": [
+     [
+      "2026-11-18",
+      122838
+     ],
+     [
+      "2026-11-19",
+      153328
+     ],
+     [
+      "2026-11-20",
+      120032
+     ],
+     [
+      "2026-11-21",
+      126831
+     ],
+     [
+      "2026-11-22",
+      73169
+     ],
+     [
+      "2026-11-23",
+      70634
+     ],
+     [
+      "2026-11-24",
+      108683
+     ],
+     [
+      "2026-11-25",
+      111171
+     ],
+     [
+      "2026-11-26",
+      134007
+     ],
+     [
+      "2026-11-27",
+      201182
+     ]
+    ],
+    "age": {
+     "since": "2026-04-07",
+     "days": 234,
+     "basis": "协议收入数据首日"
+    },
+    "tok": null,
+    "money": {
+     "vol": null,
+     "fees": {
+      "total24h": 84429,
+      "total7d": 321319,
+      "total30d": 1238529
+     },
+     "rev": {
+      "total24h": 50136,
+      "total7d": 86980,
+      "total30d": 201182
+     },
+     "hold": null,
+     "take": null,
+     "share7": 0.259,
+     "src": "DefiLlama",
+     "short_history": null
+    }
+   },
+   "spark": [
+    13253,
+    -17933,
+    46762,
+    22458,
+    -6910,
+    -2975,
+    11093,
+    6527,
+    3722,
+    1382,
+    17046,
+    17618,
+    -31300,
+    -19576,
+    -10402,
+    9585,
+    -7225,
+    5559,
+    -3493,
+    23815,
+    21895,
+    13031,
+    270,
+    6520,
+    -7205,
+    5934,
+    12485,
+    4099,
+    15011,
+    50136
    ]
   },
   {
@@ -6842,7 +7160,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 146,947 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 147,089 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -6908,8 +7226,8 @@
     "chains": [
      "Hyperliquid L1"
     ],
-    "rev30": 146947,
-    "chg30": 609.9,
+    "rev30": 147089,
+    "chg30": 629.6,
     "rev_all": null,
     "llama": null,
     "fees7": null,
@@ -6966,39 +7284,42 @@
      [
       "2026-11-26",
       146947
+     ],
+     [
+      "2026-11-27",
+      147089
      ]
     ],
     "age": {
      "since": "2026-05-02",
-     "days": 208,
+     "days": 209,
      "basis": "协议收入数据首日"
     },
     "tok": null,
     "money": {
      "vol": {
-      "total24h": 51506,
-      "total7d": 84714,
-      "total30d": 235125
+      "total24h": 1216,
+      "total7d": 78740,
+      "total30d": 235270
      },
      "fees": {
-      "total24h": 9339.96,
-      "total7d": 24933.98,
-      "total30d": 146946.56999999998
+      "total24h": 520.16,
+      "total7d": 22538.359999999997,
+      "total30d": 147088.84999999998
      },
      "rev": {
-      "total24h": 9339.96,
-      "total7d": 24933.98,
-      "total30d": 146946.56999999998
+      "total24h": 520.16,
+      "total7d": 22538.359999999997,
+      "total30d": 147088.84999999998
      },
      "hold": null,
-     "take": 0.62497,
-     "share7": 0.36,
+     "take": 0.62519,
+     "share7": 0.335,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    378,
     425,
     1731,
     2977,
@@ -7027,7 +7348,8 @@
     4103,
     1778,
     722,
-    9340
+    9340,
+    520
    ]
   },
   {
@@ -7109,7 +7431,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 115,469 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 116,493 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -7175,8 +7497,8 @@
     "chains": [
      "Hyperliquid L1"
     ],
-    "rev30": 115469,
-    "chg30": 101.8,
+    "rev30": 116493,
+    "chg30": 102.7,
     "rev_all": null,
     "llama": null,
     "fees7": null,
@@ -7208,35 +7530,38 @@
      [
       "2026-11-26",
       115469
+     ],
+     [
+      "2026-11-27",
+      116493
      ]
     ],
     "age": {
      "since": "2026-08-19",
-     "days": 99,
+     "days": 100,
      "basis": "协议收入数据首日"
     },
     "tok": null,
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 16283,
-      "total7d": 118155,
-      "total30d": 307519
+      "total24h": 5970,
+      "total7d": 93372,
+      "total30d": 309956
      },
      "rev": {
-      "total24h": 6644,
-      "total7d": 47009,
-      "total30d": 115469
+      "total24h": 2357,
+      "total7d": 37716,
+      "total30d": 116493
      },
      "hold": null,
      "take": null,
-     "share7": 0.384,
+     "share7": 0.301,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    1333,
     1935,
     1909,
     2546,
@@ -7265,7 +7590,8 @@
     1903,
     8991,
     5133,
-    6644
+    6644,
+    2357
    ]
   },
   {
@@ -7347,7 +7673,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 1,710,653 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 1,737,685 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -7414,9 +7740,9 @@
      "Ethereum",
      "Gnosis"
     ],
-    "rev30": 1710653,
-    "chg30": 320.7,
-    "rev_all": 21078045,
+    "rev30": 1737685,
+    "chg30": 321.6,
+    "rev_all": 21134026,
     "llama": null,
     "fees7": null,
     "fees30": null,
@@ -7439,7 +7765,7 @@
     "rev_hist": [],
     "age": {
      "since": "2023-05-03",
-     "days": 1303,
+     "days": 1304,
      "basis": "DefiLlama 收录"
     },
     "tok": {
@@ -7449,7 +7775,7 @@
      "chain": "ethereum",
      "first": "2025-06-17",
      "first_src": "DefiLlama 价格",
-     "days": 527,
+     "days": 528,
      "parent": false,
      "parent_name": null,
      "links": [
@@ -7476,43 +7802,42 @@
       "url_en": "https://www.binance.com/en/trade/SPK_USDT?type=spot"
      },
      "snap": {
-      "mcap": 39011050,
-      "fdv": 114149274,
-      "vol24": 22782.86,
-      "liq": 29676.45,
-      "chg24": 1.46,
-      "pairs": 6,
+      "mcap": 42165982,
+      "fdv": 123380842,
+      "vol24": 27592.89,
+      "liq": 31758.85,
+      "chg24": 8.14,
+      "pairs": 7,
       "dex": "uniswap",
       "chain": "ethereum",
-      "at": "2026-11-26T09:46+00:00",
+      "at": "2026-11-27T09:52+00:00",
       "src": "DexScreener"
      }
     },
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 154826,
-      "total7d": 3333336,
-      "total30d": 19292720
+      "total24h": 436225,
+      "total7d": 3456216,
+      "total30d": 19371360
      },
      "rev": {
-      "total24h": 14203,
-      "total7d": 286219,
-      "total30d": 1710653
+      "total24h": 10859,
+      "total7d": 247473,
+      "total30d": 1737685
      },
      "hold": {
-      "total24h": 14539,
-      "total7d": 98776,
-      "total30d": 387990
+      "total24h": 13517,
+      "total7d": 98186,
+      "total30d": 390711
      },
      "take": null,
-     "share7": 0.173,
+     "share7": 0.178,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    28949,
     166835,
     115420,
     84727,
@@ -7539,9 +7864,290 @@
     85797,
     45130,
     36606,
-    -1416,
-    11172,
-    14203
+    -2614,
+    33715,
+    37980,
+    10859
+   ]
+  },
+  {
+   "fresh": true,
+   "reviewer": null,
+   "id": "412",
+   "key": "s:412",
+   "name": "THORChain DEX",
+   "kind": "surge",
+   "why_here": "accel",
+   "manual": null,
+   "discovered": "2026-11-27",
+   "baseline": false,
+   "status": "原始线索",
+   "status_src": "auto",
+   "bucket": "invest",
+   "entry": [
+    "buy"
+   ],
+   "entry_why": "已有代币，可二级买入",
+   "classes": {
+    "business": {
+     "v": "trading",
+     "src": "auto",
+     "why": "DefiLlama 类目「Dexs」→ 映射表"
+    },
+    "right": {
+     "v": "governance",
+     "src": "auto",
+     "why": "已有代币，权利待补证"
+    },
+    "opportunity": {
+     "v": "rerate",
+     "src": "auto",
+     "why": "已有代币 → 产品与资产重估"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": "U",
+     "src": "auto",
+     "why": "事实：近 30 天协议收入 1,692,483 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "TM": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "TE": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "身份未经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "comp": {
+    "lo": 6.0,
+    "hi": 91.0,
+    "cov": 0.11,
+    "gated": true,
+    "parts": {
+     "M": null,
+     "R": null,
+     "G": {
+      "v": 6.0,
+      "src": "系统"
+     },
+     "TM": null,
+     "D": null,
+     "AF": null,
+     "TE": null
+    }
+   },
+   "one_liner": null,
+   "research": null,
+   "evidence": [],
+   "data": {
+    "category": "Dexs",
+    "chains": [
+     "THORChain",
+     "Bitcoin",
+     "Litecoin"
+    ],
+    "rev30": 1692483,
+    "chg30": 206.3,
+    "rev_all": 11283802,
+    "llama": null,
+    "fees7": null,
+    "fees30": null,
+    "sources": [
+     "llama_surge"
+    ],
+    "boards": null,
+    "tvl": null,
+    "listed": null,
+    "slug": "thorchain-dex",
+    "url": "https://thorchain.org",
+    "logo": "https://icons.llamao.fi/icons/protocols/thorchain-dex",
+    "twitter": "THORChain",
+    "children": [
+     "THORChain DEX"
+    ],
+    "token": true,
+    "token_seen": null,
+    "rev_hist": [],
+    "age": {
+     "since": "2021-04-11",
+     "days": 2056,
+     "basis": "协议收入数据首日"
+    },
+    "tok": {
+     "gecko": "thorchain",
+     "sym": "RUNE",
+     "address": "0x0000000000000000000000000000000000000000",
+     "chain": "thorchain",
+     "first": "2019-07-20",
+     "first_src": "DefiLlama 价格",
+     "days": 2687,
+     "parent": false,
+     "parent_name": null,
+     "links": [
+      {
+       "k": "coingecko",
+       "name": "CoinGecko",
+       "url": "https://www.coingecko.com/en/coins/thorchain"
+      },
+      {
+       "k": "dexscreener",
+       "name": "DexScreener",
+       "url": "https://dexscreener.com/search?q=0x0000000000000000000000000000000000000000"
+      },
+      {
+       "k": "defillama",
+       "name": "DefiLlama",
+       "url": "https://defillama.com/protocol/thorchain-dex"
+      }
+     ],
+     "chart": {
+      "name": "币安",
+      "name_en": "Binance",
+      "url": "https://www.binance.com/zh-CN/trade/RUNE_USDT?type=spot",
+      "url_en": "https://www.binance.com/en/trade/RUNE_USDT?type=spot"
+     },
+     "snap": {
+      "mcap": null,
+      "fdv": null,
+      "vol24": 46928075.2,
+      "liq": 12837928.82,
+      "chg24": 1.58,
+      "pairs": 30,
+      "dex": "uniswap",
+      "chain": "ethereum",
+      "at": "2026-11-27T09:52+00:00",
+      "src": "DexScreener"
+     }
+    },
+    "money": {
+     "vol": {
+      "total24h": 239309035,
+      "total7d": 1628346632,
+      "total30d": 4935199193
+     },
+     "fees": {
+      "total24h": 255205,
+      "total7d": 1934601,
+      "total30d": 5948146
+     },
+     "rev": {
+      "total24h": 76633,
+      "total7d": 552607,
+      "total30d": 1692483
+     },
+     "hold": {
+      "total24h": 2456,
+      "total7d": 17616,
+      "total30d": 52273.35
+     },
+     "take": 0.00034,
+     "share7": 0.33,
+     "src": "DefiLlama",
+     "short_history": null
+    }
+   },
+   "spark": [
+    13027,
+    8560,
+    52970,
+    69183,
+    493,
+    1038,
+    65402,
+    72288,
+    63454,
+    102302,
+    82877,
+    58714,
+    92802,
+    89298,
+    56389,
+    27374,
+    27093,
+    16121,
+    24037,
+    21756,
+    45826,
+    67461,
+    81411,
+    71045,
+    48704,
+    81078,
+    74941,
+    99122,
+    101084,
+    76633
    ]
   },
   {
@@ -7623,7 +8229,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 594,507 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 622,368 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -7689,9 +8295,9 @@
     "chains": [
      "Tron"
     ],
-    "rev30": 594507,
-    "chg30": 1138.2,
-    "rev_all": 1822625,
+    "rev30": 622368,
+    "chg30": 1197.7,
+    "rev_all": 1852201,
     "llama": null,
     "fees7": null,
     "fees30": null,
@@ -7713,7 +8319,7 @@
     "rev_hist": [],
     "age": {
      "since": "2023-11-20",
-     "days": 1102,
+     "days": 1103,
      "basis": "协议收入数据首日"
     },
     "tok": {
@@ -7723,7 +8329,7 @@
      "chain": "tron",
      "first": "2020-05-07",
      "first_src": "DefiLlama 价格",
-     "days": 2394,
+     "days": 2395,
      "parent": true,
      "parent_name": "JustLend",
      "links": [
@@ -7750,29 +8356,29 @@
       "url_en": "https://www.binance.com/en/trade/JST_USDT?type=spot"
      },
      "snap": {
-      "mcap": 1445142558,
-      "fdv": 1445142558,
-      "vol24": 185596.23,
-      "liq": 14576506.3,
-      "chg24": 0.13,
+      "mcap": 1404912317,
+      "fdv": 1404912317,
+      "vol24": 408784.41,
+      "liq": 14373000.43,
+      "chg24": -2.69,
       "pairs": 3,
       "dex": "sunswap",
       "chain": "tron",
-      "at": "2026-11-26T09:46+00:00",
+      "at": "2026-11-27T09:52+00:00",
       "src": "DexScreener"
      }
     },
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 188250,
-      "total7d": 1061377,
-      "total30d": 3614279
+      "total24h": 158695,
+      "total7d": 1055567,
+      "total30d": 3726439
      },
      "rev": {
-      "total24h": 35460,
-      "total7d": 194250,
-      "total30d": 594507
+      "total24h": 29576,
+      "total7d": 193235,
+      "total30d": 622368
      },
      "hold": {
       "total24h": 0,
@@ -7780,13 +8386,12 @@
       "total30d": 0
      },
      "take": null,
-     "share7": 0.294,
+     "share7": 0.283,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    1715,
     1477,
     1524,
     1516,
@@ -7815,7 +8420,8 @@
     10679,
     14878,
     36377,
-    35460
+    35460,
+    29576
    ]
   },
   {
@@ -7897,7 +8503,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 396,789 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 444,508 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -7963,9 +8569,9 @@
     "chains": [
      "Robinhood Chain"
     ],
-    "rev30": 396789,
-    "chg30": 101.2,
-    "rev_all": 593961,
+    "rev30": 444508,
+    "chg30": 125.4,
+    "rev_all": 641680,
     "llama": null,
     "fees7": null,
     "fees30": null,
@@ -7987,7 +8593,7 @@
     "rev_hist": [],
     "age": {
      "since": "2026-08-26",
-     "days": 92,
+     "days": 93,
      "basis": "DefiLlama 收录"
     },
     "tok": {
@@ -7997,7 +8603,7 @@
      "chain": "robinhood",
      "first": "2026-10-24",
      "first_src": "DefiLlama 价格",
-     "days": 33,
+     "days": 34,
      "parent": false,
      "parent_name": null,
      "links": [
@@ -8023,49 +8629,46 @@
       "url": "https://dexscreener.com/robinhood/0xcce8dcf7c4dcfee6b6588db724240d9d6a22ee456f9387bb831c8fcea970869e"
      },
      "snap": {
-      "mcap": 343830,
-      "fdv": 2545953,
-      "vol24": 72933.61,
-      "liq": 213635.26,
-      "chg24": -7.31,
-      "pairs": 3,
+      "mcap": 334198,
+      "fdv": 2480952,
+      "vol24": 24160.25,
+      "liq": 203673.84,
+      "chg24": -2.71,
+      "pairs": 2,
       "dex": "uniswap",
       "chain": "robinhood",
-      "at": "2026-11-26T09:46+00:00",
+      "at": "2026-11-27T09:52+00:00",
       "src": "DexScreener"
      }
     },
     "money": {
      "vol": {
-      "total24h": 7189511,
-      "total7d": 52352456,
-      "total30d": 407966188
+      "total24h": 6336118,
+      "total7d": 54620138,
+      "total30d": 418400624
      },
      "fees": {
-      "total24h": 16060,
-      "total7d": 110301,
-      "total30d": 787121
+      "total24h": 8854,
+      "total7d": 115443,
+      "total30d": 842346
      },
      "rev": {
-      "total24h": 6556,
-      "total7d": 39634,
-      "total30d": 396789
+      "total24h": 3407,
+      "total7d": 41768,
+      "total30d": 444508
      },
      "hold": {
-      "total24h": 6555,
-      "total7d": 42481,
-      "total30d": 443641
+      "total24h": 3407,
+      "total7d": 44614,
+      "total30d": 491356
      },
-     "take": 0.00097,
-     "share7": 0.128,
+     "take": 0.00106,
+     "share7": 0.131,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    13880,
-    22330,
-    0,
     32569,
     37927,
     18070,
@@ -8074,6 +8677,7 @@
     16539,
     17897,
     32422,
+    37320,
     23959,
     11381,
     17638,
@@ -8092,7 +8696,9 @@
     6280,
     3505,
     6499,
-    5765
+    5765,
+    7204,
+    3195
    ]
   },
   {
@@ -8174,7 +8780,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 339,788 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 339,802 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -8242,9 +8848,9 @@
      "Arbitrum",
      "Sonic"
     ],
-    "rev30": 339788,
-    "chg30": 1964.5,
-    "rev_all": 2376687,
+    "rev30": 339802,
+    "chg30": 1964.6,
+    "rev_all": 2376700,
     "llama": null,
     "fees7": null,
     "fees30": null,
@@ -8266,7 +8872,7 @@
     "rev_hist": [],
     "age": {
      "since": "2024-01-25",
-     "days": 1036,
+     "days": 1037,
      "basis": "DefiLlama 收录"
     },
     "tok": {
@@ -8276,7 +8882,7 @@
      "chain": "ethereum",
      "first": "2023-12-17",
      "first_src": "DefiLlama 价格",
-     "days": 1075,
+     "days": 1076,
      "parent": false,
      "parent_name": null,
      "links": [
@@ -8302,29 +8908,29 @@
       "url": "https://dexscreener.com/ethereum/0xae750560b09ad1f5246f3b279b3767afd1d79160"
      },
      "snap": {
-      "mcap": 3947667,
-      "fdv": 3947667,
-      "vol24": 14332.1,
-      "liq": 599685.15,
-      "chg24": 3.62,
-      "pairs": 28,
+      "mcap": 3846542,
+      "fdv": 3846542,
+      "vol24": 4714.44,
+      "liq": 590921.12,
+      "chg24": -2.41,
+      "pairs": 20,
       "dex": "uniswap",
       "chain": "ethereum",
-      "at": "2026-11-26T09:46+00:00",
+      "at": "2026-11-27T09:52+00:00",
       "src": "DexScreener"
      }
     },
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 4.64,
-      "total7d": 107.97000000000001,
-      "total30d": 339788.29000000004
+      "total24h": 11.07,
+      "total7d": 119.58999999999999,
+      "total30d": 339801.9100000001
      },
      "rev": {
-      "total24h": 4.64,
-      "total7d": 107.97000000000001,
-      "total30d": 339788.29000000004
+      "total24h": 11.07,
+      "total7d": 119.58999999999999,
+      "total30d": 339801.9100000001
      },
      "hold": {
       "total24h": 0,
@@ -8338,7 +8944,6 @@
     }
    },
    "spark": [
-    0,
     0,
     0,
     0,
@@ -8367,7 +8972,8 @@
     1,
     13,
     49,
-    6
+    6,
+    14
    ]
   },
   {
@@ -8449,7 +9055,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 280,226 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 282,984 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -8515,9 +9121,9 @@
     "chains": [
      "Ethereum"
     ],
-    "rev30": 280226,
-    "chg30": 856.2,
-    "rev_all": 36323836,
+    "rev30": 282984,
+    "chg30": 869.6,
+    "rev_all": 36327460,
     "llama": null,
     "fees7": null,
     "fees30": null,
@@ -8540,7 +9146,7 @@
     "rev_hist": [],
     "age": {
      "since": "2021-04-05",
-     "days": 2061,
+     "days": 2062,
      "basis": "协议收入数据首日"
     },
     "tok": {
@@ -8550,7 +9156,7 @@
      "chain": "ethereum",
      "first": "2021-04-05",
      "first_src": "DefiLlama 价格",
-     "days": 2061,
+     "days": 2062,
      "parent": false,
      "parent_name": null,
      "links": [
@@ -8577,29 +9183,29 @@
       "url_en": "https://www.binance.com/en/trade/LQTY_USDT?type=spot"
      },
      "snap": {
-      "mcap": 13031439,
-      "fdv": 13031439,
-      "vol24": 47805.41,
-      "liq": 329617.88,
-      "chg24": -0.88,
-      "pairs": 12,
+      "mcap": 13290085,
+      "fdv": 13290085,
+      "vol24": 64661.24,
+      "liq": 336239.47,
+      "chg24": 2.03,
+      "pairs": 11,
       "dex": "uniswap",
       "chain": "ethereum",
-      "at": "2026-11-26T09:46+00:00",
+      "at": "2026-11-27T09:52+00:00",
       "src": "DexScreener"
      }
     },
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 13534,
-      "total7d": 392571,
-      "total30d": 1300839.9
+      "total24h": 14502,
+      "total7d": 382966,
+      "total30d": 1308191.9
      },
      "rev": {
-      "total24h": 3144,
-      "total7d": 103234,
-      "total30d": 280226.41000000003
+      "total24h": 3624,
+      "total7d": 100832,
+      "total30d": 282984.41000000003
      },
      "hold": {
       "total24h": 0,
@@ -8607,13 +9213,12 @@
       "total30d": 156358.41
      },
      "take": null,
-     "share7": 0.302,
+     "share7": 0.293,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    866,
     1166,
     127146,
     1021,
@@ -8642,284 +9247,8 @@
     42530,
     13050,
     1021,
-    3144
-   ]
-  },
-  {
-   "fresh": false,
-   "reviewer": null,
-   "id": "7655",
-   "key": "s:7655",
-   "name": "THORWallet",
-   "kind": "surge",
-   "why_here": "young",
-   "manual": null,
-   "discovered": "2026-11-15",
-   "baseline": false,
-   "status": "原始线索",
-   "status_src": "auto",
-   "bucket": "invest",
-   "entry": [
-    "buy"
-   ],
-   "entry_why": "已有代币，可二级买入",
-   "classes": {
-    "business": {
-     "v": "trading",
-     "src": "auto",
-     "why": "DefiLlama 类目「DEX Aggregator」→ 映射表"
-    },
-    "right": {
-     "v": "governance",
-     "src": "auto",
-     "why": "已有代币，权利待补证"
-    },
-    "opportunity": {
-     "v": "rerate",
-     "src": "auto",
-     "why": "已有代币 → 产品与资产重估"
-    },
-    "attribute": {
-     "v": "product",
-     "src": "auto",
-     "why": "协议级对象，默认产品型"
-    }
-   },
-   "scores": {
-    "M": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "A": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "F": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "E": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "V": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "G": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "P": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "D": {
-     "v": "U",
-     "src": "auto",
-     "why": "事实：近 30 天协议收入 276,112 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
-    },
-    "L": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "T": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "TM": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "TE": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    }
-   },
-   "gates": {
-    "safety": {
-     "v": "待核验",
-     "src": "auto",
-     "why": "没有完成控制权审计一律待核验"
-    },
-    "data": {
-     "v": "待核验",
-     "src": "auto",
-     "why": "身份未经研究核对"
-    },
-    "exec": {
-     "v": "U",
-     "src": null,
-     "why": "个人执行，不公开"
-    }
-   },
-   "comp": {
-    "lo": 6.0,
-    "hi": 91.0,
-    "cov": 0.11,
-    "gated": true,
-    "parts": {
-     "M": null,
-     "R": null,
-     "G": {
-      "v": 6.0,
-      "src": "系统"
-     },
-     "TM": null,
-     "D": null,
-     "AF": null,
-     "TE": null
-    }
-   },
-   "one_liner": null,
-   "research": null,
-   "evidence": [],
-   "data": {
-    "category": "DEX Aggregator",
-    "chains": [
-     "THORChain"
-    ],
-    "rev30": 276112,
-    "chg30": 4.0,
-    "rev_all": 775103,
-    "llama": null,
-    "fees7": null,
-    "fees30": null,
-    "sources": [
-     "llama_surge"
-    ],
-    "boards": null,
-    "tvl": null,
-    "listed": null,
-    "slug": "thorwallet",
-    "url": "https://www.thorwallet.org",
-    "logo": "https://icons.llamao.fi/icons/protocols/thorwallet",
-    "twitter": "thorwallet",
-    "children": [
-     "THORWallet"
-    ],
-    "token": true,
-    "token_seen": null,
-    "rev_hist": [],
-    "age": {
-     "since": "2026-04-10",
-     "days": 230,
-     "basis": "协议收入数据首日"
-    },
-    "tok": {
-     "gecko": "thor-wallet",
-     "sym": "TITN",
-     "address": "0xe62bfbe57763ec24c0f130426f34dbce11fc5b06",
-     "chain": "base",
-     "first": "2025-11-03",
-     "first_src": "DefiLlama 价格",
-     "days": 388,
-     "parent": false,
-     "parent_name": null,
-     "links": [
-      {
-       "k": "coingecko",
-       "name": "CoinGecko",
-       "url": "https://www.coingecko.com/en/coins/thor-wallet"
-      },
-      {
-       "k": "dexscreener",
-       "name": "DexScreener",
-       "url": "https://dexscreener.com/search?q=0xe62bfbe57763ec24c0f130426f34dbce11fc5b06"
-      },
-      {
-       "k": "defillama",
-       "name": "DefiLlama",
-       "url": "https://defillama.com/protocol/thorwallet"
-      }
-     ],
-     "chart": {
-      "name": "DexScreener",
-      "name_en": "DexScreener",
-      "url": "https://dexscreener.com/base/0x8a8277fa0624a2112d6a049647d432ef9a9e75e2"
-     },
-     "snap": {
-      "mcap": 656623,
-      "fdv": 13640574,
-      "vol24": 12384.869999999999,
-      "liq": 254088.66,
-      "chg24": -1.59,
-      "pairs": 4,
-      "dex": "aero",
-      "chain": "base",
-      "at": "2026-11-26T09:46+00:00",
-      "src": "DexScreener"
-     }
-    },
-    "money": {
-     "vol": {
-      "total24h": 1057092,
-      "total7d": 35336200,
-      "total30d": 70195199
-     },
-     "fees": {
-      "total24h": 2837,
-      "total7d": 92728,
-      "total30d": 276112
-     },
-     "rev": {
-      "total24h": 2837,
-      "total7d": 92728,
-      "total30d": 276112
-     },
-     "hold": {
-      "total24h": 1553,
-      "total7d": 49478,
-      "total30d": 141970
-     },
-     "take": 0.00393,
-     "share7": 0.503,
-     "src": "DefiLlama",
-     "short_history": null
-    }
-   },
-   "spark": [
-    694,
-    3548,
-    790,
-    27871,
-    25672,
-    995,
-    1773,
-    5068,
-    5307,
-    2219,
-    11966,
-    1699,
-    20533,
-    2163,
-    853,
-    9141,
-    12615,
-    15557,
-    7287,
-    7545,
-    3620,
-    3033,
-    13435,
-    14861,
-    10899,
-    9954,
-    20940,
-    13449,
-    13138,
-    9487
+    3144,
+    3624
    ]
   },
   {
@@ -9091,7 +9420,7 @@
     "rev_hist": [],
     "age": {
      "since": "2025-09-25",
-     "days": 427,
+     "days": 428,
      "basis": "DefiLlama 收录"
     },
     "tok": {
@@ -9101,7 +9430,7 @@
      "chain": "ethereum",
      "first": "2025-10-15",
      "first_src": "DefiLlama 价格",
-     "days": 407,
+     "days": 408,
      "parent": false,
      "parent_name": null,
      "links": [
@@ -9128,47 +9457,46 @@
       "url_en": "https://www.binance.com/en/trade/YB_USDT?type=spot"
      },
      "snap": {
-      "mcap": 14185696,
-      "fdv": 40336912,
-      "vol24": 48565.3,
-      "liq": 377192.72,
-      "chg24": 0.31,
-      "pairs": 4,
+      "mcap": 16068192,
+      "fdv": 45689775,
+      "vol24": 225127.00999999998,
+      "liq": 413561.23,
+      "chg24": 13.38,
+      "pairs": 5,
       "dex": "curve",
       "chain": "ethereum",
-      "at": "2026-11-26T09:46+00:00",
+      "at": "2026-11-27T09:52+00:00",
       "src": "DexScreener"
      }
     },
     "money": {
      "vol": {
-      "total24h": 1825022,
-      "total7d": 12901010,
-      "total30d": 33775306
+      "total24h": 542473,
+      "total7d": 12333445,
+      "total30d": 34215541
      },
      "fees": {
-      "total24h": 103285,
-      "total7d": 185161,
-      "total30d": 649475
+      "total24h": 75696,
+      "total7d": 127240,
+      "total30d": 662850
      },
      "rev": {
-      "total24h": 0,
-      "total7d": 17691,
+      "total24h": 10313,
+      "total7d": 16524,
       "total30d": 173121
      },
      "hold": {
-      "total24h": 0,
-      "total7d": 17691,
+      "total24h": 10313,
+      "total7d": 16524,
       "total30d": 173121
      },
-     "take": 0.00513,
-     "share7": 0.382,
+     "take": 0.00506,
+     "share7": 0.36,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    0,
     0,
     0,
     117610,
@@ -9196,6 +9524,7 @@
     2387,
     0,
     11577,
+    0,
     0,
     0
    ]
@@ -9279,7 +9608,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 156,695 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 155,879 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -9345,9 +9674,9 @@
     "chains": [
      "Ethereum"
     ],
-    "rev30": 156695,
-    "chg30": 300.5,
-    "rev_all": 3008723,
+    "rev30": 155879,
+    "chg30": 258.9,
+    "rev_all": 3012345,
     "llama": null,
     "fees7": null,
     "fees30": null,
@@ -9370,7 +9699,7 @@
     "rev_hist": [],
     "age": {
      "since": "2023-02-14",
-     "days": 1381,
+     "days": 1382,
      "basis": "DefiLlama 收录"
     },
     "tok": {
@@ -9380,7 +9709,7 @@
      "chain": "ethereum",
      "first": "2022-01-03",
      "first_src": "DefiLlama 价格",
-     "days": 1788,
+     "days": 1789,
      "parent": false,
      "parent_name": null,
      "links": [
@@ -9407,29 +9736,29 @@
       "url_en": "https://www.binance.com/en/trade/T_USDT?type=spot"
      },
      "snap": {
-      "mcap": 43384186,
-      "fdv": 43384186,
-      "vol24": 57569.02,
-      "liq": 345701.39,
-      "chg24": 2.68,
+      "mcap": 43279993,
+      "fdv": 43279993,
+      "vol24": 7322.26,
+      "liq": 349716.45,
+      "chg24": 0.28,
       "pairs": 4,
       "dex": "curve",
       "chain": "ethereum",
-      "at": "2026-11-26T09:46+00:00",
+      "at": "2026-11-27T09:52+00:00",
       "src": "DexScreener"
      }
     },
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 3349,
-      "total7d": 74075,
-      "total30d": 156695
+      "total24h": 3622,
+      "total7d": 74441,
+      "total30d": 155879
      },
      "rev": {
-      "total24h": 3349,
-      "total7d": 74075,
-      "total30d": 156695
+      "total24h": 3622,
+      "total7d": 74441,
+      "total30d": 155879
      },
      "hold": {
       "total24h": 0,
@@ -9437,13 +9766,12 @@
       "total30d": 0
      },
      "take": null,
-     "share7": 0.473,
+     "share7": 0.478,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    4438,
     1416,
     2108,
     4110,
@@ -9472,7 +9800,283 @@
     13782,
     13605,
     7184,
-    3349
+    3349,
+    3622
+   ]
+  },
+  {
+   "fresh": true,
+   "reviewer": null,
+   "id": "3320",
+   "key": "s:3320",
+   "name": "Safe",
+   "kind": "surge",
+   "why_here": "accel",
+   "manual": null,
+   "discovered": "2026-11-27",
+   "baseline": false,
+   "status": "原始线索",
+   "status_src": "auto",
+   "bucket": "invest",
+   "entry": [
+    "buy"
+   ],
+   "entry_why": "已有代币，可二级买入",
+   "classes": {
+    "business": {
+     "v": "realworld",
+     "src": "auto",
+     "why": "DefiLlama 类目「Services」→ 映射表"
+    },
+    "right": {
+     "v": "governance",
+     "src": "auto",
+     "why": "已有代币，权利待补证"
+    },
+    "opportunity": {
+     "v": "rerate",
+     "src": "auto",
+     "why": "已有代币 → 产品与资产重估"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": "U",
+     "src": "auto",
+     "why": "事实：近 30 天协议收入 131,728 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "TM": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "TE": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "身份未经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "comp": {
+    "lo": 6.0,
+    "hi": 91.0,
+    "cov": 0.11,
+    "gated": true,
+    "parts": {
+     "M": null,
+     "R": null,
+     "G": {
+      "v": 6.0,
+      "src": "系统"
+     },
+     "TM": null,
+     "D": null,
+     "AF": null,
+     "TE": null
+    }
+   },
+   "one_liner": null,
+   "research": null,
+   "evidence": [],
+   "data": {
+    "category": "Services",
+    "chains": [
+     "Ethereum",
+     "Arbitrum",
+     "Gnosis"
+    ],
+    "rev30": 131728,
+    "chg30": 211.6,
+    "rev_all": 3755039,
+    "llama": null,
+    "fees7": null,
+    "fees30": null,
+    "sources": [
+     "llama_surge"
+    ],
+    "boards": null,
+    "tvl": null,
+    "listed": null,
+    "slug": "safe",
+    "url": "https://safe.global",
+    "logo": "https://icons.llamao.fi/icons/protocols/safe",
+    "twitter": "safe",
+    "children": [
+     "Safe"
+    ],
+    "token": true,
+    "token_seen": null,
+    "rev_hist": [],
+    "age": {
+     "since": "2023-08-01",
+     "days": 1214,
+     "basis": "DefiLlama 收录"
+    },
+    "tok": {
+     "gecko": "safe",
+     "sym": "SAFE",
+     "address": "0x5afe3855358e112b5647b952709e6165e1c1eeee",
+     "chain": "ethereum",
+     "first": "2024-04-23",
+     "first_src": "DefiLlama 价格",
+     "days": 948,
+     "parent": false,
+     "parent_name": null,
+     "links": [
+      {
+       "k": "coingecko",
+       "name": "CoinGecko",
+       "url": "https://www.coingecko.com/en/coins/safe"
+      },
+      {
+       "k": "dexscreener",
+       "name": "DexScreener",
+       "url": "https://dexscreener.com/search?q=0x5afe3855358e112b5647b952709e6165e1c1eeee"
+      },
+      {
+       "k": "defillama",
+       "name": "DefiLlama",
+       "url": "https://defillama.com/protocol/safe"
+      }
+     ],
+     "chart": {
+      "name": "DexScreener",
+      "name_en": "DexScreener",
+      "url": "https://dexscreener.com/ethereum/0x000ba527862e5b82cff0f7c66b646af023274aa1"
+     },
+     "snap": {
+      "mcap": 81440718,
+      "fdv": 81440718,
+      "vol24": 53357.64,
+      "liq": 104828.07,
+      "chg24": 9.96,
+      "pairs": 4,
+      "dex": "uniswap",
+      "chain": "ethereum",
+      "at": "2026-11-27T09:52+00:00",
+      "src": "DexScreener"
+     }
+    },
+    "money": {
+     "vol": null,
+     "fees": {
+      "total24h": 33479,
+      "total7d": 37160,
+      "total30d": 131728
+     },
+     "rev": {
+      "total24h": 33479,
+      "total7d": 37160,
+      "total30d": 131728
+     },
+     "hold": {
+      "total24h": 0,
+      "total7d": 0,
+      "total30d": 0
+     },
+     "take": null,
+     "share7": 0.282,
+     "src": "DefiLlama",
+     "short_history": null
+    }
+   },
+   "spark": [
+    8506,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    22193,
+    0,
+    0,
+    0,
+    0,
+    194,
+    17643,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    5535,
+    40497,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1702,
+    35458
    ]
   },
   {
@@ -9554,7 +10158,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 5,955,034 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 5,958,704 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -9707,8 +10311,8 @@
      "Ethereum",
      "Base"
     ],
-    "rev30": 5955034,
-    "chg30": -8.6,
+    "rev30": 5958704,
+    "chg30": -6.5,
     "rev_all": null,
     "llama": null,
     "fees7": null,
@@ -9783,11 +10387,15 @@
      [
       "2026-11-26",
       5955034
+     ],
+     [
+      "2026-11-27",
+      5958704
      ]
     ],
     "age": {
      "since": "2024-03-28",
-     "days": 973,
+     "days": 974,
      "basis": "协议收入数据首日"
     },
     "tok": null,
@@ -9798,14 +10406,14 @@
       "total30d": 0
      },
      "fees": {
-      "total24h": 194847,
-      "total7d": 1316084,
-      "total30d": 5955034
+      "total24h": 142538,
+      "total7d": 1236222,
+      "total30d": 5958704
      },
      "rev": {
-      "total24h": 194847,
-      "total7d": 1316084,
-      "total30d": 5955034
+      "total24h": 142538,
+      "total7d": 1236222,
+      "total30d": 5958704
      },
      "hold": null,
      "take": null,
@@ -9815,7 +10423,6 @@
     }
    },
    "spark": [
-    138868,
     169249,
     278656,
     256194,
@@ -9844,358 +10451,8 @@
     134666,
     190219,
     153373,
-    194847
-   ]
-  },
-  {
-   "fresh": false,
-   "reviewer": "codex",
-   "id": "pacifica",
-   "key": "g:parent#pacifica",
-   "name": "Pacifica Perps",
-   "kind": "tokenless",
-   "why_here": null,
-   "manual": null,
-   "discovered": "2026-11-14",
-   "baseline": true,
-   "status": "研究观察",
-   "status_src": "alpha/review/tokenless_checks.json",
-   "bucket": "invest",
-   "entry": [
-    "use"
-   ],
-   "entry_why": "官方有积分计划（研究补证）；积分不等于代币，兑现规则未公布",
-   "classes": {
-    "business": {
-     "v": "trading",
-     "src": "auto",
-     "why": "DefiLlama 类目「Derivatives」→ 映射表"
-    },
-    "right": {
-     "v": "none",
-     "src": "auto",
-     "why": "本协议和母协议都没登记代币"
-    },
-    "opportunity": {
-     "v": "genesis",
-     "src": "auto",
-     "why": "无币 → 初始参与（早期使用 / 积分）"
-    },
-    "attribute": {
-     "v": "product",
-     "src": "auto",
-     "why": "协议级对象，默认产品型"
-    }
-   },
-   "scores": {
-    "M": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "A": {
-     "v": 2,
-     "src": "research",
-     "why": "普通人可以「永续用户、符合规则的做市或积分用户。」参与，全成本未验 → 2"
-    },
-    "F": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "E": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "V": {
-     "v": 1,
-     "src": "research",
-     "why": "有积分 / 空投计划 → 1（仅排放或升值预期）"
-    },
-    "G": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "P": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "D": {
-     "v": "U",
-     "src": "auto",
-     "why": "事实：近 30 天协议收入 3,603,606 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
-    },
-    "L": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "T": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "TM": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "TE": {
-     "v": "NA",
-     "src": "auto",
-     "why": "还没有代币，代币经济不适用"
-    }
-   },
-   "gates": {
-    "safety": {
-     "v": "待核验",
-     "src": "auto",
-     "why": "没有完成控制权审计一律待核验"
-    },
-    "data": {
-     "v": "通过",
-     "src": "research",
-     "why": "身份经研究核对"
-    },
-    "exec": {
-     "v": "U",
-     "src": null,
-     "why": "个人执行，不公开"
-    }
-   },
-   "comp": {
-    "lo": 4.5,
-    "hi": 84.5,
-    "cov": 0.17,
-    "gated": true,
-    "parts": {
-     "M": null,
-     "R": null,
-     "G": {
-      "v": 2.0,
-      "src": "系统"
-     },
-     "TM": null,
-     "D": null,
-     "AF": {
-      "v": 2.5,
-      "src": "研究（只查清一项）"
-     },
-     "TE": "NA"
-    }
-   },
-   "one_liner": null,
-   "research": {
-    "token_stance": "有积分/空投计划",
-    "token_stance_src": "https://app.pacifica.fi/points",
-    "token_stance_date": "U",
-    "revenue_who": "Pacifica 财库；maker 返还归做市方，尚未扣的 affiliate 部分最终归属 U。",
-    "revenue_method": "逐成交实际正手续费和清算费减负手续费 maker rebates；不是按成交额乘固定费率估算，但 API 未披露 affiliate share，收入未扣该项。",
-    "wash_or_subsidy": "积分页面仍可读；有官方活动/竞赛。返还已计入扣减，affiliate 成本未完整扣减；实际刷量 U。",
-    "user_role": "永续用户、符合规则的做市或积分用户。",
-    "counter": "未扣 affiliate 分成及积分交易会同时抬高表观收入与活跃度。",
-    "verdict_reason": "费用来自成交记录，积分公开；保留未扣成本，不能将收入字段称最终利润。",
-    "missing": [
-     "独立关联地址/自成交及去补贴留存审计未完成。",
-     "未独立重放全部费用与支付，适配器方法可能更新。",
-     "官方计划不等于代币已发行或用户已获得权益；当前链上代币状态/分配需另核。",
-     "官方原始表态日期 U，不用页面读取日期代替。"
-    ],
-    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
-    "events": [],
-    "flow": null,
-    "next_review": null,
-    "capture": null,
-    "quality": null
-   },
-   "evidence": [
-    {
-     "url": "https://api.llama.fi/summary/fees/pacifica-perps?dataType=dailyRevenue",
-     "fields": [
-      "revenue_who",
-      "revenue_method",
-      "wash_or_subsidy",
-      "user_role",
-      "counter",
-      "verdict_reason"
-     ]
-    },
-    {
-     "url": "https://api.llama.fi/protocol/pacifica-perps",
-     "fields": [
-      "name",
-      "defillama_reference",
-      "metadata_symbol"
-     ]
-    },
-    {
-     "url": "https://app.pacifica.fi",
-     "fields": [
-      "user_role",
-      "official_identity"
-     ]
-    },
-    {
-     "url": "https://app.pacifica.fi/events",
-     "fields": [
-      "token_stance",
-      "wash_or_subsidy",
-      "user_role",
-      "counter",
-      "verdict_reason"
-     ]
-    },
-    {
-     "url": "https://app.pacifica.fi/points",
-     "fields": [
-      "token_stance",
-      "token_stance_date"
-     ]
-    }
-   ],
-   "data": {
-    "category": "Derivatives",
-    "chains": [
-     "Off Chain"
-    ],
-    "rev30": 3603606,
-    "chg30": 0.1,
-    "rev_all": null,
-    "llama": null,
-    "fees7": null,
-    "fees30": null,
-    "sources": [
-     "llama_tokenless"
-    ],
-    "boards": null,
-    "tvl": null,
-    "listed": null,
-    "slug": "pacifica-perps",
-    "url": "https://app.pacifica.fi",
-    "logo": "https://icons.llamao.fi/icons/protocols/pacifica-perps",
-    "twitter": "pacifica_fi",
-    "children": [
-     "Pacifica Perps"
-    ],
-    "token": false,
-    "token_seen": null,
-    "rev_hist": [
-     [
-      "2026-11-14",
-      3360183
-     ],
-     [
-      "2026-11-15",
-      3295627
-     ],
-     [
-      "2026-11-16",
-      3249588
-     ],
-     [
-      "2026-11-17",
-      3373851
-     ],
-     [
-      "2026-11-18",
-      3471464
-     ],
-     [
-      "2026-11-19",
-      3499664
-     ],
-     [
-      "2026-11-20",
-      3519747
-     ],
-     [
-      "2026-11-21",
-      3558480
-     ],
-     [
-      "2026-11-22",
-      3552732
-     ],
-     [
-      "2026-11-23",
-      3489822
-     ],
-     [
-      "2026-11-24",
-      3545443
-     ],
-     [
-      "2026-11-25",
-      3600641
-     ],
-     [
-      "2026-11-26",
-      3603606
-     ]
-    ],
-    "age": {
-     "since": "2025-09-08",
-     "days": 444,
-     "basis": "DefiLlama 收录"
-    },
-    "tok": null,
-    "money": {
-     "vol": {
-      "total24h": 55123,
-      "total7d": 379686,
-      "total30d": 1608870
-     },
-     "fees": {
-      "total24h": 125386,
-      "total7d": 886501,
-      "total30d": 3626168
-     },
-     "rev": {
-      "total24h": 124862,
-      "total7d": 882144,
-      "total30d": 3603606
-     },
-     "hold": null,
-     "take": 2.23984,
-     "share7": 0.236,
-     "src": "DefiLlama",
-     "short_history": null
-    }
-   },
-   "spark": [
-    117402,
-    122209,
-    151604,
-    140286,
-    52428,
-    53324,
-    128241,
-    118810,
-    144400,
-    161869,
-    141726,
-    43389,
-    57092,
-    132648,
-    125993,
-    121733,
-    117788,
-    130648,
-    85114,
-    72586,
-    180370,
-    168775,
-    153027,
-    154515,
-    158434,
-    123024,
-    68845,
-    135377,
-    117087,
-    124862
+    194847,
+    142538
    ]
   },
   {
@@ -10277,7 +10534,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 1,957,418 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 1,958,219 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -10415,8 +10672,8 @@
     "chains": [
      "Polygon"
     ],
-    "rev30": 1957418,
-    "chg30": -12.3,
+    "rev30": 1958219,
+    "chg30": -12.7,
     "rev_all": null,
     "llama": null,
     "fees7": null,
@@ -10488,39 +10745,42 @@
      [
       "2026-11-26",
       1957418
+     ],
+     [
+      "2026-11-27",
+      1958219
      ]
     ],
     "age": {
      "since": "2023-11-29",
-     "days": 1093,
+     "days": 1094,
      "basis": "协议收入数据首日"
     },
     "tok": null,
     "money": {
      "vol": {
-      "total24h": 1328222,
-      "total7d": 8454147,
-      "total30d": 45777088
+      "total24h": 1634817,
+      "total7d": 8606214,
+      "total30d": 45243023
      },
      "fees": {
-      "total24h": 65630,
-      "total7d": 418654,
-      "total30d": 1957418
+      "total24h": 83187,
+      "total7d": 425144,
+      "total30d": 1958219
      },
      "rev": {
-      "total24h": 65630,
-      "total7d": 418654,
-      "total30d": 1957418
+      "total24h": 83187,
+      "total7d": 425144,
+      "total30d": 1958219
      },
      "hold": null,
-     "take": 0.04276,
-     "share7": 0.185,
+     "take": 0.04328,
+     "share7": 0.19,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    72691,
     69098,
     73751,
     86162,
@@ -10549,7 +10809,8 @@
     49932,
     46084,
     54918,
-    69699
+    69699,
+    73492
    ]
   },
   {
@@ -10631,7 +10892,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 1,588,714 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 1,561,012 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -10758,8 +11019,8 @@
     "chains": [
      "Robinhood Chain"
     ],
-    "rev30": 1588714,
-    "chg30": -10.8,
+    "rev30": 1561012,
+    "chg30": -12.7,
     "rev_all": null,
     "llama": null,
     "fees7": null,
@@ -10831,39 +11092,42 @@
      [
       "2026-11-26",
       1588714
+     ],
+     [
+      "2026-11-27",
+      1561012
      ]
     ],
     "age": {
      "since": "2026-07-01",
-     "days": 148,
+     "days": 149,
      "basis": "协议收入数据首日"
     },
     "tok": null,
     "money": {
      "vol": {
-      "total24h": 1478378,
-      "total7d": 12338474,
-      "total30d": 68718964
+      "total24h": 1787055,
+      "total7d": 12650223,
+      "total30d": 67546197
      },
      "fees": {
-      "total24h": 54528,
-      "total7d": 415126,
-      "total30d": 1847648
+      "total24h": 32339,
+      "total7d": 394012,
+      "total30d": 1818059
      },
      "rev": {
-      "total24h": 44141,
-      "total7d": 343183,
-      "total30d": 1588714
+      "total24h": 25701,
+      "total7d": 325732,
+      "total30d": 1561012
      },
      "hold": null,
-     "take": 0.02312,
-     "share7": 0.18,
+     "take": 0.02311,
+     "share7": 0.187,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    53403,
     58528,
     96920,
     83598,
@@ -10892,7 +11156,8 @@
     23027,
     66108,
     38272,
-    44141
+    44141,
+    25701
    ]
   },
   {
@@ -10974,7 +11239,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 767,287 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 750,468 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -11113,8 +11378,8 @@
     "chains": [
      "Ink"
     ],
-    "rev30": 767287,
-    "chg30": -9.0,
+    "rev30": 750468,
+    "chg30": -11.5,
     "rev_all": null,
     "llama": null,
     "fees7": null,
@@ -11187,39 +11452,42 @@
      [
       "2026-11-26",
       767287
+     ],
+     [
+      "2026-11-27",
+      750468
      ]
     ],
     "age": {
      "since": "2025-11-20",
-     "days": 371,
+     "days": 372,
      "basis": "协议收入数据首日"
     },
     "tok": null,
     "money": {
      "vol": {
-      "total24h": 300192,
-      "total7d": 2543102,
-      "total30d": 16571250
+      "total24h": 128523,
+      "total7d": 2511470,
+      "total30d": 16361725
      },
      "fees": {
-      "total24h": 62224,
-      "total7d": 411769,
-      "total30d": 1944170
+      "total24h": 28978,
+      "total7d": 381091,
+      "total30d": 1925223
      },
      "rev": {
-      "total24h": 15146,
-      "total7d": 114303,
-      "total30d": 767287
+      "total24h": 6897,
+      "total7d": 103953,
+      "total30d": 750468
      },
      "hold": null,
-     "take": 0.0463,
+     "take": 0.04587,
      "share7": 0.153,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    23716,
     27349,
     50175,
     42205,
@@ -11248,7 +11516,8 @@
     12370,
     15332,
     10971,
-    15146
+    15146,
+    6897
    ]
   },
   {
@@ -11330,7 +11599,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 703,433 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 698,041 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -11450,8 +11719,8 @@
      "Ethereum",
      "Solana"
     ],
-    "rev30": 703433,
-    "chg30": -5.8,
+    "rev30": 698041,
+    "chg30": -7.1,
     "rev_all": null,
     "llama": null,
     "fees7": null,
@@ -11523,35 +11792,38 @@
      [
       "2026-11-26",
       703433
+     ],
+     [
+      "2026-11-27",
+      698041
      ]
     ],
     "age": {
      "since": "2025-09-28",
-     "days": 424,
+     "days": 425,
      "basis": "协议收入数据首日"
     },
     "tok": null,
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 163864,
-      "total7d": 1263917,
-      "total30d": 5908985
+      "total24h": 183457,
+      "total7d": 1268424,
+      "total30d": 5857169
      },
      "rev": {
-      "total24h": 21300,
-      "total7d": 153133,
-      "total30d": 703433
+      "total24h": 22038,
+      "total7d": 153010,
+      "total30d": 698041
      },
      "hold": null,
      "take": null,
-     "share7": 0.214,
+     "share7": 0.217,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    27430,
     25027,
     24850,
     25241,
@@ -11580,7 +11852,8 @@
     21169,
     21061,
     22619,
-    21300
+    21300,
+    22038
    ]
   },
   {
@@ -11662,7 +11935,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 686,799 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 686,583 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -11793,8 +12066,8 @@
      "XRPL",
      "Eclipse"
     ],
-    "rev30": 686799,
-    "chg30": -19.8,
+    "rev30": 686583,
+    "chg30": -17.5,
     "rev_all": null,
     "llama": null,
     "fees7": null,
@@ -11866,35 +12139,38 @@
      [
       "2026-11-26",
       686799
+     ],
+     [
+      "2026-11-27",
+      686583
      ]
     ],
     "age": {
      "since": "2026-04-24",
-     "days": 216,
+     "days": 217,
      "basis": "协议收入数据首日"
     },
     "tok": null,
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 230146,
-      "total7d": 1795576,
-      "total30d": 10199937
+      "total24h": 204492,
+      "total7d": 1645377,
+      "total30d": 10043889
      },
      "rev": {
-      "total24h": 19553,
-      "total7d": 132614,
-      "total30d": 686799
+      "total24h": 16667,
+      "total7d": 133925,
+      "total30d": 686583
      },
      "hold": null,
      "take": null,
-     "share7": 0.176,
+     "share7": 0.164,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    16236,
     27313,
     40382,
     32415,
@@ -11923,7 +12199,8 @@
     11779,
     19256,
     17303,
-    18696
+    18696,
+    16020
    ]
   },
   {
@@ -12005,7 +12282,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 601,299 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 603,494 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -12135,8 +12412,8 @@
      "Ethereum",
      "Arbitrum"
     ],
-    "rev30": 601299,
-    "chg30": 7.3,
+    "rev30": 603494,
+    "chg30": 7.5,
     "rev_all": null,
     "llama": null,
     "fees7": null,
@@ -12208,35 +12485,38 @@
      [
       "2026-11-26",
       601299
+     ],
+     [
+      "2026-11-27",
+      603494
      ]
     ],
     "age": {
      "since": "2024-08-13",
-     "days": 835,
+     "days": 836,
      "basis": "DefiLlama 收录"
     },
     "tok": null,
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 305396,
-      "total7d": 1904795,
-      "total30d": 7727096
+      "total24h": 226142,
+      "total7d": 1867993,
+      "total30d": 7707646
      },
      "rev": {
-      "total24h": 21193,
-      "total7d": 146472,
-      "total30d": 601299
+      "total24h": 21350,
+      "total7d": 147028,
+      "total30d": 603494
      },
      "hold": null,
      "take": null,
-     "share7": 0.247,
+     "share7": 0.242,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    19146,
     19230,
     19372,
     19175,
@@ -12265,19 +12545,20 @@
     20914,
     20872,
     20963,
-    21181
+    21181,
+    21341
    ]
   },
   {
-   "fresh": false,
+   "fresh": true,
    "reviewer": null,
-   "id": "7978",
-   "key": "g:7978",
-   "name": "Propr",
+   "id": "exponent",
+   "key": "g:parent#exponent",
+   "name": "Exponent Yield Exchange",
    "kind": "tokenless",
    "why_here": null,
    "manual": null,
-   "discovered": "2026-11-18",
+   "discovered": "2026-11-27",
    "baseline": false,
    "status": "原始线索",
    "status_src": "auto",
@@ -12290,7 +12571,7 @@
     "business": {
      "v": "trading",
      "src": "auto",
-     "why": "DefiLlama 类目「Trading App」→ 映射表"
+     "why": "DefiLlama 类目「Yield」→ 映射表"
     },
     "right": {
      "v": "none",
@@ -12347,7 +12628,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 134,007 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 104,821 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -12409,12 +12690,12 @@
    "research": null,
    "evidence": [],
    "data": {
-    "category": "Trading App",
+    "category": "Yield",
     "chains": [
-     "Ethereum"
+     "Solana"
     ],
-    "rev30": 134007,
-    "chg30": 58.8,
+    "rev30": 104821,
+    "chg30": 87.3,
     "rev_all": null,
     "llama": null,
     "fees7": null,
@@ -12425,109 +12706,77 @@
     "boards": null,
     "tvl": null,
     "listed": null,
-    "slug": "propr",
-    "url": "https://app.propr.xyz",
-    "logo": "https://icons.llamao.fi/icons/protocols/propr",
-    "twitter": "ProprXYZ",
+    "slug": "exponent-yield-exchange",
+    "url": "https://www.exponent.finance",
+    "logo": "https://icons.llamao.fi/icons/protocols/exponent-yield-exchange",
+    "twitter": "ExponentFinance",
     "children": [
-     "Propr"
+     "Exponent Yield Exchange"
     ],
     "token": false,
     "token_seen": null,
     "rev_hist": [
      [
-      "2026-11-18",
-      122838
-     ],
-     [
-      "2026-11-19",
-      153328
-     ],
-     [
-      "2026-11-20",
-      120032
-     ],
-     [
-      "2026-11-21",
-      126831
-     ],
-     [
-      "2026-11-22",
-      73169
-     ],
-     [
-      "2026-11-23",
-      70634
-     ],
-     [
-      "2026-11-24",
-      108683
-     ],
-     [
-      "2026-11-25",
-      111171
-     ],
-     [
-      "2026-11-26",
-      134007
+      "2026-11-27",
+      104821
      ]
     ],
     "age": {
-     "since": "2026-04-07",
-     "days": 233,
-     "basis": "协议收入数据首日"
+     "since": "2025-02-03",
+     "days": 662,
+     "basis": "DefiLlama 收录"
     },
     "tok": null,
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 51093,
-      "total7d": 267858,
-      "total30d": 1185209
+      "total24h": 9178,
+      "total7d": 89101,
+      "total30d": 112507
      },
      "rev": {
-      "total24h": 15011,
-      "total7d": 37114,
-      "total30d": 134007
+      "total24h": 6366,
+      "total7d": 85195,
+      "total30d": 104821
      },
      "hold": null,
      "take": null,
-     "share7": 0.226,
+     "share7": 0.792,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    -17039,
-    13253,
-    -17933,
-    46762,
-    22458,
-    -6910,
-    -2975,
-    11093,
-    6527,
-    3722,
-    1382,
-    17046,
-    17618,
-    -31300,
-    -19576,
-    -10402,
-    9585,
-    -7225,
-    5559,
-    -3493,
-    23815,
-    21895,
-    13031,
-    270,
-    6520,
-    -7205,
-    5934,
-    12485,
-    4099,
-    15011
+    650,
+    267,
+    758,
+    565,
+    283,
+    673,
+    427,
+    847,
+    489,
+    1818,
+    389,
+    555,
+    589,
+    4049,
+    1773,
+    414,
+    987,
+    467,
+    490,
+    516,
+    1289,
+    917,
+    414,
+    390,
+    529,
+    367,
+    395,
+    348,
+    76800,
+    6366
    ]
   },
   {
@@ -12609,7 +12858,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 8,495,803 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 8,446,571 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -12762,8 +13011,8 @@
      "Monad",
      "BSC"
     ],
-    "rev30": 8495803,
-    "chg30": -45.9,
+    "rev30": 8446571,
+    "chg30": -44.4,
     "rev_all": null,
     "llama": null,
     "fees7": null,
@@ -12838,39 +13087,42 @@
      [
       "2026-11-26",
       8495803
+     ],
+     [
+      "2026-11-27",
+      8446571
      ]
     ],
     "age": {
      "since": "2025-01-31",
-     "days": 664,
+     "days": 665,
      "basis": "协议收入数据首日"
     },
     "tok": null,
     "money": {
      "vol": {
-      "total24h": 23109089,
-      "total7d": 215717235,
-      "total30d": 1105583604
+      "total24h": 21625280,
+      "total7d": 181627148,
+      "total30d": 1104329364
      },
      "fees": {
-      "total24h": 73743,
-      "total7d": 1812058,
-      "total30d": 8590697.08
+      "total24h": 38975,
+      "total7d": 1638876,
+      "total30d": 8539994.08
      },
      "rev": {
-      "total24h": 73743,
-      "total7d": 1795076,
-      "total30d": 8495803.08
+      "total24h": 38975,
+      "total7d": 1626439,
+      "total30d": 8446571.08
      },
      "hold": null,
-     "take": 0.00768,
-     "share7": 0.195,
+     "take": 0.00765,
+     "share7": 0.164,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    237505,
     305435,
     482949,
     374169,
@@ -12898,8 +13150,9 @@
     344760,
     205211,
     286238,
-    202676,
-    73743
+    202630,
+    223087,
+    38975
    ]
   },
   {
@@ -12981,7 +13234,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 7,076,006 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 6,951,733 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -13122,8 +13375,8 @@
      "Solana",
      "BSC"
     ],
-    "rev30": 7076006,
-    "chg30": -50.1,
+    "rev30": 6951733,
+    "chg30": -50.4,
     "rev_all": null,
     "llama": null,
     "fees7": null,
@@ -13196,39 +13449,42 @@
      [
       "2026-11-26",
       7076006
+     ],
+     [
+      "2026-11-27",
+      6951733
      ]
     ],
     "age": {
      "since": "2025-01-20",
-     "days": 675,
+     "days": 676,
      "basis": "协议收入数据首日"
     },
     "tok": null,
     "money": {
      "vol": {
-      "total24h": 30425393,
-      "total7d": 176670547,
-      "total30d": 1057894218
+      "total24h": 25094267,
+      "total7d": 152880958,
+      "total30d": 1034821756
      },
      "fees": {
-      "total24h": 362763,
-      "total7d": 2449208,
-      "total30d": 15185689
+      "total24h": 380016,
+      "total7d": 2233651,
+      "total30d": 14903651
      },
      "rev": {
-      "total24h": 154105,
-      "total7d": 1115334,
-      "total30d": 7003349
+      "total24h": 188697,
+      "total7d": 1030341,
+      "total30d": 6878511
      },
      "hold": null,
-     "take": 0.00662,
-     "share7": 0.167,
+     "take": 0.00665,
+     "share7": 0.148,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    338556,
     313535,
     345566,
     296676,
@@ -13257,7 +13513,8 @@
     148819,
     151537,
     201657,
-    154105
+    154105,
+    188697
    ]
   },
   {
@@ -13339,7 +13596,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 4,668,172 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 4,646,281 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -13469,8 +13726,8 @@
      "Solana",
      "Base"
     ],
-    "rev30": 4668172,
-    "chg30": -61.2,
+    "rev30": 4646281,
+    "chg30": -60.3,
     "rev_all": null,
     "llama": null,
     "fees7": null,
@@ -13542,39 +13799,42 @@
      [
       "2026-11-26",
       4668172
+     ],
+     [
+      "2026-11-27",
+      4646281
      ]
     ],
     "age": {
      "since": "2023-12-31",
-     "days": 1061,
+     "days": 1062,
      "basis": "协议收入数据首日"
     },
     "tok": null,
     "money": {
      "vol": {
-      "total24h": 13407309,
-      "total7d": 93580191,
-      "total30d": 595947613
+      "total24h": 13188109,
+      "total7d": 85054346,
+      "total30d": 576212757
      },
      "fees": {
-      "total24h": 169841,
-      "total7d": 1276111,
-      "total30d": 6237874
+      "total24h": 213783,
+      "total7d": 1242531,
+      "total30d": 6182806
      },
      "rev": {
-      "total24h": 140209,
-      "total7d": 1005976,
-      "total30d": 4668172
+      "total24h": 163279,
+      "total7d": 966785,
+      "total30d": 4646281
      },
      "hold": null,
-     "take": 0.00783,
-     "share7": 0.157,
+     "take": 0.00806,
+     "share7": 0.148,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    185170,
     237695,
     187262,
     199668,
@@ -13603,7 +13863,8 @@
     141291,
     172428,
     130624,
-    140209
+    140209,
+    163279
    ]
   },
   {
@@ -13685,7 +13946,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 3,606,598 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 3,650,841 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -13808,8 +14069,8 @@
      "X Layer",
      "Monad"
     ],
-    "rev30": 3606598,
-    "chg30": -51.1,
+    "rev30": 3650841,
+    "chg30": -49.9,
     "rev_all": null,
     "llama": null,
     "fees7": null,
@@ -13881,19 +14142,23 @@
      [
       "2026-11-26",
       3606598
+     ],
+     [
+      "2026-11-27",
+      3650841
      ]
     ],
     "age": {
      "since": "2024-07-01",
-     "days": 878,
+     "days": 879,
      "basis": "协议收入数据首日"
     },
     "tok": null,
     "lpq": {
-     "数据日": "2026-11-24",
+     "数据日": "2026-11-25",
      "发币": {
-      "1d": 0,
-      "7d": 28590,
+      "1d": 5361,
+      "7d": 28109,
       "估算": false,
       "工厂": [
        "bsc:0xe2ce6ab80874fa9fa2aae65d277dd6b8e65c9de0",
@@ -13904,29 +14169,29 @@
      },
      "发币人": {
       "7d": null,
-      "1d": 703,
-      "数据日": "2026-11-24",
+      "1d": 775,
+      "数据日": "2026-11-25",
       "来源": "链上（BSC 公共节点）",
       "口径": "BSC Portal 0xe2cE…9De0 的内盘买卖和 TokenCreated；Flap 另一个 BSC 工厂和 Robinhood 链没扫。创建事件里不同的发币钱包（合约发起的换成交易发起钱包）；7d = 最近 7 天去重，攒满 7 天才出（现在 3 天）"
      },
      "存活": {
-      "批次": "2026-11-16",
-      "发出": 5723,
+      "批次": "2026-11-11～2026-11-17",
+      "发出": 19433,
       "样本": 20,
       "7天后仍有交易": null,
       "市值过10万美元": null,
       "口径": "批次那天发的币里抽 20 个，发出后 7～8 天逐个用 GeckoTerminal 查它的全部池子（含发射台曲线池）：近 24 小时有买卖的个数、市值（没有就用 FDV）≥ 10 万美元的个数；GeckoTerminal 没收录的池子看不到，算没交易，下限",
       "来源": "待接入（GeckoTerminal 不收这家的池子）",
       "收录": 0,
-      "查询日": "2026-11-25",
+      "查询日": "2026-11-26",
       "说明": "GeckoTerminal 没收录这家任何一个样本币的池子（曲线池不收），存活查不了；要换数据源或自己扫链上交易"
      },
      "交易者": {
-      "1d": 11812,
+      "1d": 12102,
       "7d": null,
       "前10地址成交占比": null,
-      "前10地址笔数占比": 0.0917,
-      "数据日": "2026-11-24",
+      "前10地址笔数占比": 0.0979,
+      "数据日": "2026-11-25",
       "覆盖天数": 3,
       "口径": "BSC Portal 0xe2cE…9De0 的内盘买卖和 TokenCreated；Flap 另一个 BSC 工厂和 Robinhood 链没扫。当天内盘买卖的不同钱包（经机器人 / 路由合约下单的换成交易发起钱包），毕业后 DEX 成交不算，下限；7d = 最近 7 天去重，攒满 7 天才出（现在 3 天）；前10 按笔数算，成交额口径要统一计价币，待接入",
       "来源": "链上（BSC 公共节点）"
@@ -13935,29 +14200,28 @@
     },
     "money": {
      "vol": {
-      "total24h": 10874565,
-      "total7d": 49672433,
-      "total30d": 211068611
+      "total24h": 15817479,
+      "total7d": 56259503,
+      "total30d": 216822455
      },
      "fees": {
-      "total24h": 509089,
-      "total7d": 2934019,
-      "total30d": 14601518
+      "total24h": 616844,
+      "total7d": 2995703,
+      "total30d": 14482820
      },
      "rev": {
-      "total24h": 155557,
-      "total7d": 775134,
-      "total30d": 3606598
+      "total24h": 210887,
+      "total7d": 843609,
+      "total30d": 3650841
      },
      "hold": null,
-     "take": 0.01709,
-     "share7": 0.235,
+     "take": 0.01684,
+     "share7": 0.259,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    133789,
     143193,
     182070,
     168797,
@@ -13986,7 +14250,363 @@
     106529,
     185051,
     99680,
-    128872
+    128872,
+    178032
+   ]
+  },
+  {
+   "fresh": false,
+   "reviewer": "codex",
+   "id": "pacifica",
+   "key": "g:parent#pacifica",
+   "name": "Pacifica Perps",
+   "kind": "tokenless",
+   "why_here": null,
+   "manual": null,
+   "discovered": "2026-11-14",
+   "baseline": true,
+   "status": "研究观察",
+   "status_src": "alpha/review/tokenless_checks.json",
+   "bucket": "invest",
+   "entry": [
+    "use"
+   ],
+   "entry_why": "官方有积分计划（研究补证）；积分不等于代币，兑现规则未公布",
+   "classes": {
+    "business": {
+     "v": "trading",
+     "src": "auto",
+     "why": "DefiLlama 类目「Derivatives」→ 映射表"
+    },
+    "right": {
+     "v": "none",
+     "src": "auto",
+     "why": "本协议和母协议都没登记代币"
+    },
+    "opportunity": {
+     "v": "genesis",
+     "src": "auto",
+     "why": "无币 → 初始参与（早期使用 / 积分）"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": 2,
+     "src": "research",
+     "why": "普通人可以「永续用户、符合规则的做市或积分用户。」参与，全成本未验 → 2"
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": 1,
+     "src": "research",
+     "why": "有积分 / 空投计划 → 1（仅排放或升值预期）"
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": "U",
+     "src": "auto",
+     "why": "事实：近 30 天协议收入 3,557,075 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "TM": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "TE": {
+     "v": "NA",
+     "src": "auto",
+     "why": "还没有代币，代币经济不适用"
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "通过",
+     "src": "research",
+     "why": "身份经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "comp": {
+    "lo": 2.5,
+    "hi": 82.5,
+    "cov": 0.17,
+    "gated": true,
+    "parts": {
+     "M": null,
+     "R": null,
+     "G": {
+      "v": 0.0,
+      "src": "系统"
+     },
+     "TM": null,
+     "D": null,
+     "AF": {
+      "v": 2.5,
+      "src": "研究（只查清一项）"
+     },
+     "TE": "NA"
+    }
+   },
+   "one_liner": null,
+   "research": {
+    "token_stance": "有积分/空投计划",
+    "token_stance_src": "https://app.pacifica.fi/points",
+    "token_stance_date": "U",
+    "revenue_who": "Pacifica 财库；maker 返还归做市方，尚未扣的 affiliate 部分最终归属 U。",
+    "revenue_method": "逐成交实际正手续费和清算费减负手续费 maker rebates；不是按成交额乘固定费率估算，但 API 未披露 affiliate share，收入未扣该项。",
+    "wash_or_subsidy": "积分页面仍可读；有官方活动/竞赛。返还已计入扣减，affiliate 成本未完整扣减；实际刷量 U。",
+    "user_role": "永续用户、符合规则的做市或积分用户。",
+    "counter": "未扣 affiliate 分成及积分交易会同时抬高表观收入与活跃度。",
+    "verdict_reason": "费用来自成交记录，积分公开；保留未扣成本，不能将收入字段称最终利润。",
+    "missing": [
+     "独立关联地址/自成交及去补贴留存审计未完成。",
+     "未独立重放全部费用与支付，适配器方法可能更新。",
+     "官方计划不等于代币已发行或用户已获得权益；当前链上代币状态/分配需另核。",
+     "官方原始表态日期 U，不用页面读取日期代替。"
+    ],
+    "checked_utc": "2026-11-14T13:58:39.525318+00:00",
+    "events": [],
+    "flow": null,
+    "next_review": null,
+    "capture": null,
+    "quality": null
+   },
+   "evidence": [
+    {
+     "url": "https://api.llama.fi/summary/fees/pacifica-perps?dataType=dailyRevenue",
+     "fields": [
+      "revenue_who",
+      "revenue_method",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://api.llama.fi/protocol/pacifica-perps",
+     "fields": [
+      "name",
+      "defillama_reference",
+      "metadata_symbol"
+     ]
+    },
+    {
+     "url": "https://app.pacifica.fi",
+     "fields": [
+      "user_role",
+      "official_identity"
+     ]
+    },
+    {
+     "url": "https://app.pacifica.fi/events",
+     "fields": [
+      "token_stance",
+      "wash_or_subsidy",
+      "user_role",
+      "counter",
+      "verdict_reason"
+     ]
+    },
+    {
+     "url": "https://app.pacifica.fi/points",
+     "fields": [
+      "token_stance",
+      "token_stance_date"
+     ]
+    }
+   ],
+   "data": {
+    "category": "Derivatives",
+    "chains": [
+     "Off Chain"
+    ],
+    "rev30": 3557075,
+    "chg30": -1.6,
+    "rev_all": null,
+    "llama": null,
+    "fees7": null,
+    "fees30": null,
+    "sources": [
+     "llama_tokenless"
+    ],
+    "boards": null,
+    "tvl": null,
+    "listed": null,
+    "slug": "pacifica-perps",
+    "url": "https://app.pacifica.fi",
+    "logo": "https://icons.llamao.fi/icons/protocols/pacifica-perps",
+    "twitter": "pacifica_fi",
+    "children": [
+     "Pacifica Perps"
+    ],
+    "token": false,
+    "token_seen": null,
+    "rev_hist": [
+     [
+      "2026-11-14",
+      3360183
+     ],
+     [
+      "2026-11-15",
+      3295627
+     ],
+     [
+      "2026-11-16",
+      3249588
+     ],
+     [
+      "2026-11-17",
+      3373851
+     ],
+     [
+      "2026-11-18",
+      3471464
+     ],
+     [
+      "2026-11-19",
+      3499664
+     ],
+     [
+      "2026-11-20",
+      3519747
+     ],
+     [
+      "2026-11-21",
+      3558480
+     ],
+     [
+      "2026-11-22",
+      3552732
+     ],
+     [
+      "2026-11-23",
+      3489822
+     ],
+     [
+      "2026-11-24",
+      3545443
+     ],
+     [
+      "2026-11-25",
+      3600641
+     ],
+     [
+      "2026-11-26",
+      3603606
+     ],
+     [
+      "2026-11-27",
+      3557075
+     ]
+    ],
+    "age": {
+     "since": "2025-06-09",
+     "days": 536,
+     "basis": "协议收入数据首日"
+    },
+    "tok": null,
+    "money": {
+     "vol": {
+      "total24h": 51328,
+      "total7d": 377314,
+      "total30d": 1607128
+     },
+     "fees": {
+      "total24h": 71221,
+      "total7d": 802599,
+      "total30d": 3579449
+     },
+     "rev": {
+      "total24h": 70871,
+      "total7d": 798500,
+      "total30d": 3557075
+     },
+     "hold": null,
+     "take": 2.21331,
+     "share7": 0.235,
+     "src": "DefiLlama",
+     "short_history": null
+    }
+   },
+   "spark": [
+    122209,
+    151604,
+    140286,
+    52428,
+    53324,
+    128241,
+    118810,
+    144400,
+    161869,
+    141726,
+    43389,
+    57092,
+    132648,
+    125993,
+    121733,
+    117788,
+    130648,
+    85114,
+    72586,
+    180370,
+    168775,
+    153027,
+    154515,
+    158434,
+    123024,
+    68845,
+    135377,
+    117087,
+    124862,
+    70871
    ]
   },
   {
@@ -14068,7 +14688,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 2,302,019 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 2,280,063 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -14188,8 +14808,8 @@
      "Ethereum",
      "Base"
     ],
-    "rev30": 2302019,
-    "chg30": -38.2,
+    "rev30": 2280063,
+    "chg30": -37.9,
     "rev_all": null,
     "llama": null,
     "fees7": null,
@@ -14261,25 +14881,29 @@
      [
       "2026-11-26",
       2302019
+     ],
+     [
+      "2026-11-27",
+      2280063
      ]
     ],
     "age": {
      "since": "2024-04-13",
-     "days": 957,
+     "days": 958,
      "basis": "协议收入数据首日"
     },
     "tok": null,
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 72525,
-      "total7d": 410454,
-      "total30d": 2302019
+      "total24h": 64727,
+      "total7d": 406766,
+      "total30d": 2280063
      },
      "rev": {
-      "total24h": 72525,
-      "total7d": 410454,
-      "total30d": 2302019
+      "total24h": 64727,
+      "total7d": 406766,
+      "total30d": 2280063
      },
      "hold": null,
      "take": null,
@@ -14289,7 +14913,6 @@
     }
    },
    "spark": [
-    93487,
     103443,
     88254,
     79840,
@@ -14318,7 +14941,8 @@
     50841,
     65011,
     55997,
-    62133
+    62133,
+    71531
    ]
   },
   {
@@ -14400,7 +15024,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 1,922,540 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 1,928,231 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -14528,8 +15152,8 @@
     "chains": [
      "BSC"
     ],
-    "rev30": 1922540,
-    "chg30": -2.3,
+    "rev30": 1928231,
+    "chg30": -2.9,
     "rev_all": null,
     "llama": null,
     "fees7": null,
@@ -14601,39 +15225,42 @@
      [
       "2026-11-26",
       1922540
+     ],
+     [
+      "2026-11-27",
+      1928231
      ]
     ],
     "age": {
      "since": "2024-09-10",
-     "days": 807,
+     "days": 808,
      "basis": "DefiLlama 收录"
     },
     "tok": null,
     "money": {
      "vol": {
-      "total24h": 15796372,
-      "total7d": 98775967,
-      "total30d": 371099293
+      "total24h": 15351722,
+      "total7d": 102896016,
+      "total30d": 372466930
      },
      "fees": {
-      "total24h": 160476,
-      "total7d": 989555,
-      "total30d": 6354664
+      "total24h": 157179,
+      "total7d": 1034123,
+      "total30d": 6229579
      },
      "rev": {
-      "total24h": 79743,
-      "total7d": 487822,
-      "total30d": 1922540
+      "total24h": 73061,
+      "total7d": 511914,
+      "total30d": 1928231
      },
      "hold": null,
      "take": 0.00518,
-     "share7": 0.266,
+     "share7": 0.276,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    72687,
     76837,
     77295,
     57904,
@@ -14662,7 +15289,8 @@
     70178,
     58901,
     81158,
-    77755
+    77755,
+    78378
    ]
   },
   {
@@ -14744,7 +15372,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 1,265,447 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 1,205,345 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -14863,8 +15491,8 @@
     "chains": [
      "Robinhood Chain"
     ],
-    "rev30": 1265447,
-    "chg30": -72.5,
+    "rev30": 1205345,
+    "chg30": -73.3,
     "rev_all": null,
     "llama": null,
     "fees7": null,
@@ -14936,39 +15564,42 @@
      [
       "2026-11-26",
       1265447
+     ],
+     [
+      "2026-11-27",
+      1205345
      ]
     ],
     "age": {
      "since": "2026-09-15",
-     "days": 72,
+     "days": 73,
      "basis": "协议收入数据首日"
     },
     "tok": null,
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 9237,
-      "total7d": 69772,
-      "total30d": 1338950
+      "total24h": 13530,
+      "total7d": 74020,
+      "total30d": 1273580
      },
      "rev": {
-      "total24h": 8822,
-      "total7d": 66887,
-      "total30d": 1265447
+      "total24h": 13194,
+      "total7d": 71211,
+      "total30d": 1205345
      },
      "hold": {
-      "total24h": 7511,
-      "total7d": 52498,
-      "total30d": 1005115
+      "total24h": 11820,
+      "total7d": 57180,
+      "total30d": 938084
      },
      "take": null,
-     "share7": 0.052,
+     "share7": 0.058,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    73603,
     97905,
     101840,
     77887,
@@ -14997,7 +15628,8 @@
     5262,
     8247,
     14102,
-    7853
+    7853,
+    13501
    ]
   },
   {
@@ -15079,7 +15711,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 1,073,494 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 1,071,230 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -15210,8 +15842,8 @@
      "Ethereum",
      "Sonic"
     ],
-    "rev30": 1073494,
-    "chg30": -1.1,
+    "rev30": 1071230,
+    "chg30": -1.8,
     "rev_all": null,
     "llama": null,
     "fees7": null,
@@ -15283,35 +15915,38 @@
      [
       "2026-11-26",
       1073494
+     ],
+     [
+      "2026-11-27",
+      1071230
      ]
     ],
     "age": {
      "since": "2025-01-31",
-     "days": 664,
+     "days": 665,
      "basis": "协议收入数据首日"
     },
     "tok": null,
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 129577,
-      "total7d": 1079064,
-      "total30d": 4920873
+      "total24h": 152155,
+      "total7d": 1090220,
+      "total30d": 4882457
      },
      "rev": {
-      "total24h": 28119,
-      "total7d": 244256,
-      "total30d": 1073494
+      "total24h": 35786,
+      "total7d": 249689,
+      "total30d": 1071230
      },
      "hold": null,
      "take": null,
-     "share7": 0.219,
+     "share7": 0.223,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    37988,
     38911,
     37459,
     37915,
@@ -15340,7 +15975,8 @@
     32757,
     35823,
     38906,
-    30617
+    30617,
+    35724
    ]
   },
   {
@@ -15422,7 +16058,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 1,213,926 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 1,251,933 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -15540,7 +16176,7 @@
      "Blast",
      "Sonic"
     ],
-    "rev30": 1213926,
+    "rev30": 1251933,
     "chg30": null,
     "rev_all": null,
     "llama": null,
@@ -15613,35 +16249,38 @@
      [
       "2026-11-26",
       1213926
+     ],
+     [
+      "2026-11-27",
+      1251933
      ]
     ],
     "age": {
      "since": "2026-11-05",
-     "days": 21,
+     "days": 22,
      "basis": "协议收入数据首日"
     },
     "tok": null,
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 62147,
-      "total7d": 443071,
-      "total30d": 2052106
+      "total24h": 48066,
+      "total7d": 418153,
+      "total30d": 2023626
      },
      "rev": {
-      "total24h": 54757,
-      "total7d": 385712,
-      "total30d": 1213926
+      "total24h": 38007,
+      "total7d": 359787,
+      "total30d": 1251933
      },
      "hold": null,
      "take": null,
-     "share7": 0.216,
+     "share7": 0.207,
      "src": "DefiLlama",
-     "short_history": 21
+     "short_history": 22
     }
    },
    "spark": [
-    0,
     0,
     0,
     0,
@@ -15670,7 +16309,8 @@
     112283,
     41273,
     35114,
-    54757
+    54757,
+    38007
    ]
   },
   {
@@ -15752,7 +16392,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 390,951 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 388,306 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -15818,8 +16458,8 @@
     "chains": [
      "Hyperliquid L1"
     ],
-    "rev30": 390951,
-    "chg30": 13.3,
+    "rev30": 388306,
+    "chg30": 12.4,
     "rev_all": null,
     "llama": null,
     "fees7": null,
@@ -15847,35 +16487,38 @@
      [
       "2026-11-26",
       390951
+     ],
+     [
+      "2026-11-27",
+      388306
      ]
     ],
     "age": {
      "since": "2026-07-31",
-     "days": 118,
+     "days": 119,
      "basis": "协议收入数据首日"
     },
     "tok": null,
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 15374,
-      "total7d": 101730,
-      "total30d": 390951
+      "total24h": 5900,
+      "total7d": 91062,
+      "total30d": 388306
      },
      "rev": {
-      "total24h": 15374,
-      "total7d": 101730,
-      "total30d": 390951
+      "total24h": 5900,
+      "total7d": 91062,
+      "total30d": 388306
      },
      "hold": null,
      "take": null,
-     "share7": 0.26,
+     "share7": 0.235,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    8545,
     16196,
     16119,
     13766,
@@ -15904,7 +16547,285 @@
     6865,
     16132,
     11481,
-    15374
+    15374,
+    5900
+   ]
+  },
+  {
+   "fresh": false,
+   "reviewer": null,
+   "id": "7655",
+   "key": "s:7655",
+   "name": "THORWallet",
+   "kind": "surge",
+   "why_here": "young",
+   "manual": null,
+   "discovered": "2026-11-15",
+   "baseline": false,
+   "status": "原始线索",
+   "status_src": "auto",
+   "bucket": "invest",
+   "entry": [
+    "buy"
+   ],
+   "entry_why": "已有代币，可二级买入",
+   "classes": {
+    "business": {
+     "v": "trading",
+     "src": "auto",
+     "why": "DefiLlama 类目「DEX Aggregator」→ 映射表"
+    },
+    "right": {
+     "v": "governance",
+     "src": "auto",
+     "why": "已有代币，权利待补证"
+    },
+    "opportunity": {
+     "v": "rerate",
+     "src": "auto",
+     "why": "已有代币 → 产品与资产重估"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": "U",
+     "src": "auto",
+     "why": "事实：近 30 天协议收入 279,362 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "TM": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "TE": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "身份未经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "comp": {
+    "lo": 2.0,
+    "hi": 87.0,
+    "cov": 0.11,
+    "gated": true,
+    "parts": {
+     "M": null,
+     "R": null,
+     "G": {
+      "v": 2.0,
+      "src": "系统"
+     },
+     "TM": null,
+     "D": null,
+     "AF": null,
+     "TE": null
+    }
+   },
+   "one_liner": null,
+   "research": null,
+   "evidence": [],
+   "data": {
+    "category": "DEX Aggregator",
+    "chains": [
+     "THORChain"
+    ],
+    "rev30": 279362,
+    "chg30": 8.5,
+    "rev_all": 779047,
+    "llama": null,
+    "fees7": null,
+    "fees30": null,
+    "sources": [
+     "llama_surge"
+    ],
+    "boards": null,
+    "tvl": null,
+    "listed": null,
+    "slug": "thorwallet",
+    "url": "https://www.thorwallet.org",
+    "logo": "https://icons.llamao.fi/icons/protocols/thorwallet",
+    "twitter": "thorwallet",
+    "children": [
+     "THORWallet"
+    ],
+    "token": true,
+    "token_seen": null,
+    "rev_hist": [],
+    "age": {
+     "since": "2026-04-10",
+     "days": 231,
+     "basis": "协议收入数据首日"
+    },
+    "tok": {
+     "gecko": "thor-wallet",
+     "sym": "TITN",
+     "address": "0xe62bfbe57763ec24c0f130426f34dbce11fc5b06",
+     "chain": "base",
+     "first": "2025-11-03",
+     "first_src": "DefiLlama 价格",
+     "days": 389,
+     "parent": false,
+     "parent_name": null,
+     "links": [
+      {
+       "k": "coingecko",
+       "name": "CoinGecko",
+       "url": "https://www.coingecko.com/en/coins/thor-wallet"
+      },
+      {
+       "k": "dexscreener",
+       "name": "DexScreener",
+       "url": "https://dexscreener.com/search?q=0xe62bfbe57763ec24c0f130426f34dbce11fc5b06"
+      },
+      {
+       "k": "defillama",
+       "name": "DefiLlama",
+       "url": "https://defillama.com/protocol/thorwallet"
+      }
+     ],
+     "chart": {
+      "name": "DexScreener",
+      "name_en": "DexScreener",
+      "url": "https://dexscreener.com/base/0x8a8277fa0624a2112d6a049647d432ef9a9e75e2"
+     },
+     "snap": {
+      "mcap": 606189,
+      "fdv": 12592876,
+      "vol24": 38508.75,
+      "liq": 244206.58,
+      "chg24": -7.69,
+      "pairs": 5,
+      "dex": "aero",
+      "chain": "base",
+      "at": "2026-11-27T09:52+00:00",
+      "src": "DexScreener"
+     }
+    },
+    "money": {
+     "vol": {
+      "total24h": 64181,
+      "total7d": 30465940,
+      "total30d": 71237672
+     },
+     "fees": {
+      "total24h": 1190,
+      "total7d": 81811,
+      "total30d": 279362
+     },
+     "rev": {
+      "total24h": 1190,
+      "total7d": 81811,
+      "total30d": 279362
+     },
+     "hold": {
+      "total24h": 525,
+      "total7d": 43932,
+      "total30d": 143817
+     },
+     "take": 0.00392,
+     "share7": 0.428,
+     "src": "DefiLlama",
+     "short_history": null
+    }
+   },
+   "spark": [
+    3548,
+    790,
+    27871,
+    25672,
+    995,
+    1773,
+    5068,
+    5307,
+    2219,
+    11966,
+    1699,
+    20533,
+    2163,
+    853,
+    9141,
+    12615,
+    15557,
+    7287,
+    7545,
+    3620,
+    3033,
+    13435,
+    14861,
+    10899,
+    9954,
+    20940,
+    13449,
+    13138,
+    9487,
+    3944
    ]
   },
   {
@@ -15986,7 +16907,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 232,434 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 229,347 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -16054,8 +16975,8 @@
      "Ethereum",
      "Base"
     ],
-    "rev30": 232434,
-    "chg30": -53.2,
+    "rev30": 229347,
+    "chg30": -53.7,
     "rev_all": null,
     "llama": null,
     "fees7": null,
@@ -16086,39 +17007,42 @@
      [
       "2026-11-26",
       232434
+     ],
+     [
+      "2026-11-27",
+      229347
      ]
     ],
     "age": {
      "since": "2024-04-12",
-     "days": 958,
+     "days": 959,
      "basis": "协议收入数据首日"
     },
     "tok": null,
     "money": {
      "vol": {
-      "total24h": 115626,
-      "total7d": 1139418,
-      "total30d": 5904179
+      "total24h": 132024,
+      "total7d": 1104142,
+      "total30d": 5919068
      },
      "fees": {
-      "total24h": 7082,
-      "total7d": 44696,
-      "total30d": 232433.87
+      "total24h": 3716.74,
+      "total7d": 34753.74,
+      "total30d": 229346.61
      },
      "rev": {
-      "total24h": 7082,
-      "total7d": 44696,
-      "total30d": 232433.87
+      "total24h": 3716.74,
+      "total7d": 34753.74,
+      "total30d": 229346.61
      },
      "hold": null,
-     "take": 0.03937,
-     "share7": 0.193,
+     "take": 0.03875,
+     "share7": 0.187,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    6804,
     17088,
     26322,
     15422,
@@ -16147,7 +17071,244 @@
     1645,
     7108,
     3952,
-    7082
+    7082,
+    3717
+   ]
+  },
+  {
+   "fresh": true,
+   "reviewer": null,
+   "id": "5806",
+   "key": "g:5806",
+   "name": "Bloom Trading Bot",
+   "kind": "tokenless",
+   "why_here": null,
+   "manual": null,
+   "discovered": "2026-11-27",
+   "baseline": false,
+   "status": "原始线索",
+   "status_src": "auto",
+   "bucket": "watch",
+   "entry": [
+    "none"
+   ],
+   "entry_why": "还没查到资金参与方式",
+   "classes": {
+    "business": {
+     "v": "trading",
+     "src": "auto",
+     "why": "DefiLlama 类目「Telegram Bot」→ 映射表"
+    },
+    "right": {
+     "v": "none",
+     "src": "auto",
+     "why": "本协议和母协议都没登记代币"
+    },
+    "opportunity": {
+     "v": "genesis",
+     "src": "auto",
+     "why": "无币 → 初始参与（早期使用 / 积分）"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": "U",
+     "src": "auto",
+     "why": "事实：近 30 天协议收入 115,896 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "TM": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "TE": {
+     "v": "NA",
+     "src": "auto",
+     "why": "还没有代币，代币经济不适用"
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "身份未经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "comp": {
+    "lo": 0.0,
+    "hi": 85.0,
+    "cov": 0.12,
+    "gated": true,
+    "parts": {
+     "M": null,
+     "R": null,
+     "G": {
+      "v": 0.0,
+      "src": "系统"
+     },
+     "TM": null,
+     "D": null,
+     "AF": null,
+     "TE": "NA"
+    }
+   },
+   "one_liner": null,
+   "research": null,
+   "evidence": [],
+   "data": {
+    "category": "Telegram Bot",
+    "chains": [
+     "Solana",
+     "BSC",
+     "Base"
+    ],
+    "rev30": 115896,
+    "chg30": -68.5,
+    "rev_all": null,
+    "llama": null,
+    "fees7": null,
+    "fees30": null,
+    "sources": [
+     "llama_tokenless"
+    ],
+    "boards": null,
+    "tvl": null,
+    "listed": null,
+    "slug": "bloom-trading-bot",
+    "url": "https://www.bloombot.app",
+    "logo": "https://icons.llamao.fi/icons/protocols/bloom-trading-bot",
+    "twitter": "BloomTrading",
+    "children": [
+     "Bloom Trading Bot"
+    ],
+    "token": false,
+    "token_seen": null,
+    "rev_hist": [
+     [
+      "2026-11-27",
+      115896
+     ]
+    ],
+    "age": {
+     "since": "2024-10-18",
+     "days": 770,
+     "basis": "协议收入数据首日"
+    },
+    "tok": null,
+    "money": {
+     "vol": {
+      "total24h": 197480,
+      "total7d": 1197090,
+      "total30d": 8402947
+     },
+     "fees": {
+      "total24h": 4213,
+      "total7d": 22970,
+      "total30d": 162927
+     },
+     "rev": {
+      "total24h": 3471,
+      "total7d": 15608,
+      "total30d": 115896
+     },
+     "hold": null,
+     "take": 0.01379,
+     "share7": 0.142,
+     "src": "DefiLlama",
+     "short_history": null
+    }
+   },
+   "spark": [
+    5799,
+    6344,
+    8203,
+    5804,
+    5690,
+    3398,
+    4946,
+    6280,
+    6311,
+    4862,
+    2838,
+    4193,
+    3167,
+    2166,
+    3798,
+    4224,
+    2273,
+    3992,
+    1440,
+    1210,
+    3330,
+    6207,
+    5737,
+    3875,
+    2344,
+    1854,
+    2453,
+    4019,
+    1467,
+    3471
    ]
   },
   {
@@ -16229,7 +17390,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 12,569,214 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 12,588,004 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -16295,9 +17456,9 @@
     "chains": [
      "Off Chain"
     ],
-    "rev30": 12569214,
+    "rev30": 12588004,
     "chg30": -80.9,
-    "rev_all": 78287339,
+    "rev_all": 78366000,
     "llama": null,
     "fees7": null,
     "fees30": null,
@@ -16319,7 +17480,7 @@
     "rev_hist": [],
     "age": {
      "since": "2026-10-09",
-     "days": 48,
+     "days": 49,
      "basis": "DefiLlama 收录"
     },
     "tok": {
@@ -16355,28 +17516,27 @@
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 277265,
-      "total7d": 3026551,
-      "total30d": 12569214
+      "total24h": 80543,
+      "total7d": 2791659,
+      "total30d": 12588004
      },
      "rev": {
-      "total24h": 277265,
-      "total7d": 3026551,
-      "total30d": 12569214
+      "total24h": 80543,
+      "total7d": 2791659,
+      "total30d": 12588004
      },
      "hold": {
-      "total24h": 262432,
-      "total7d": 2862846,
-      "total30d": 11694107
+      "total24h": 69222,
+      "total7d": 2633671,
+      "total30d": 11732446
      },
      "take": null,
-     "share7": 0.241,
+     "share7": 0.222,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    59871,
     134239,
     2023675,
     924129,
@@ -16405,7 +17565,8 @@
     28857,
     72609,
     121632,
-    456605
+    456605,
+    78661
    ]
   },
   {
@@ -16487,7 +17648,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 835,037 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 807,288 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -16555,9 +17716,9 @@
      "Ethereum",
      "BSC"
     ],
-    "rev30": 835037,
-    "chg30": -22.3,
-    "rev_all": 2068005,
+    "rev30": 807288,
+    "chg30": -25.0,
+    "rev_all": 2081823,
     "llama": null,
     "fees7": null,
     "fees30": null,
@@ -16579,7 +17740,7 @@
     "rev_hist": [],
     "age": {
      "since": "2026-09-23",
-     "days": 64,
+     "days": 65,
      "basis": "协议收入数据首日"
     },
     "tok": {
@@ -16589,7 +17750,7 @@
      "chain": "solana",
      "first": "2026-09-29",
      "first_src": "DefiLlama 价格",
-     "days": 58,
+     "days": 59,
      "parent": false,
      "parent_name": null,
      "links": [
@@ -16615,29 +17776,29 @@
       "url": "https://dexscreener.com/solana/4gwh5sakgzoukhhj4rh3p5fmpu6ypuaexv6fah5jqyfm"
      },
      "snap": {
-      "mcap": 8063375,
-      "fdv": 14311756,
-      "vol24": 438146.2,
-      "liq": 425419.28,
-      "chg24": -8.54,
-      "pairs": 21,
+      "mcap": 7888814,
+      "fdv": 14042727,
+      "vol24": 314311.99,
+      "liq": 426102.59,
+      "chg24": -2.11,
+      "pairs": 20,
       "dex": "raydium",
       "chain": "solana",
-      "at": "2026-11-26T09:46+00:00",
+      "at": "2026-11-27T09:52+00:00",
       "src": "DexScreener"
      }
     },
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 13385,
-      "total7d": 126570,
-      "total30d": 835037
+      "total24h": 14438,
+      "total7d": 120624,
+      "total30d": 807288
      },
      "rev": {
-      "total24h": 13385,
-      "total7d": 126570,
-      "total30d": 835037
+      "total24h": 14438,
+      "total7d": 120624,
+      "total30d": 807288
      },
      "hold": {
       "total24h": 0,
@@ -16645,13 +17806,12 @@
       "total30d": 0
      },
      "take": null,
-     "share7": 0.152,
+     "share7": 0.149,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    41567,
     38496,
     33353,
     38447,
@@ -16680,7 +17840,8 @@
     12315,
     17163,
     16908,
-    14443
+    14443,
+    13818
    ]
   },
   {
@@ -16762,7 +17923,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 373,567 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 384,037 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -16829,9 +17990,9 @@
      "Hyperliquid L1",
      "Off Chain"
     ],
-    "rev30": 373567,
-    "chg30": -88.4,
-    "rev_all": 3601817,
+    "rev30": 384037,
+    "chg30": -88.1,
+    "rev_all": 3617609,
     "llama": null,
     "fees7": null,
     "fees30": null,
@@ -16854,7 +18015,7 @@
     "rev_hist": [],
     "age": {
      "since": "2026-10-07",
-     "days": 50,
+     "days": 51,
      "basis": "协议收入数据首日"
     },
     "tok": {
@@ -16885,43 +18046,42 @@
       "url": "https://dexscreener.com/hyperevm/0xf01e7b40b9da303a0a097b69cd81c06c2c06b658"
      },
      "snap": {
-      "mcap": 2247687,
-      "fdv": 2247687,
-      "vol24": 981.4399999999999,
-      "liq": 400674.06,
-      "chg24": 5.53,
-      "pairs": 3,
+      "mcap": 2554904,
+      "fdv": 2554904,
+      "vol24": 21268.17,
+      "liq": 443226.99,
+      "chg24": 14.42,
+      "pairs": 2,
       "dex": "hyperswap",
       "chain": "hyperevm",
-      "at": "2026-11-26T09:46+00:00",
+      "at": "2026-11-27T09:52+00:00",
       "src": "DexScreener"
      }
     },
     "money": {
      "vol": null,
      "fees": {
-      "total24h": 526,
-      "total7d": 69799.3,
-      "total30d": 373566.94
+      "total24h": 15792,
+      "total7d": 84206.3,
+      "total30d": 384037.35
      },
      "rev": {
-      "total24h": 526,
-      "total7d": 69799.3,
-      "total30d": 373566.94
+      "total24h": 15792,
+      "total7d": 84206.3,
+      "total30d": 384037.35
      },
      "hold": {
-      "total24h": 0,
-      "total7d": 44627,
-      "total30d": 204678
+      "total24h": 12455,
+      "total7d": 57082,
+      "total30d": 217133
      },
      "take": null,
-     "share7": 0.187,
+     "share7": 0.219,
      "src": "DefiLlama",
      "short_history": null
     }
    },
    "spark": [
-    5322,
     14424,
     4993,
     37513,
@@ -16950,462 +18110,8 @@
     1064,
     632,
     300,
-    526
-   ]
-  },
-  {
-   "fresh": false,
-   "reviewer": null,
-   "id": "9415",
-   "key": "p:9415",
-   "name": "Swan DAO",
-   "kind": "listing",
-   "why_here": null,
-   "manual": null,
-   "discovered": "2026-11-14",
-   "baseline": true,
-   "status": "原始线索",
-   "status_src": "auto",
-   "bucket": "watch",
-   "entry": [
-    "none"
-   ],
-   "entry_why": "还没查到资金参与方式",
-   "classes": {
-    "business": {
-     "v": "trading",
-     "src": "auto",
-     "why": "DefiLlama 类目「CDP」→ 映射表"
-    },
-    "right": {
-     "v": "none",
-     "src": "auto",
-     "why": "本协议和母协议都没登记代币"
-    },
-    "opportunity": {
-     "v": "genesis",
-     "src": "auto",
-     "why": "无币 → 初始参与（早期使用 / 积分）"
-    },
-    "attribute": {
-     "v": "product",
-     "src": "auto",
-     "why": "协议级对象，默认产品型"
-    }
-   },
-   "scores": {
-    "M": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "A": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "F": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "E": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "V": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "G": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "P": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "D": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "L": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "T": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "TM": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "TE": {
-     "v": "NA",
-     "src": "auto",
-     "why": "还没有代币，代币经济不适用"
-    }
-   },
-   "gates": {
-    "safety": {
-     "v": "待核验",
-     "src": "auto",
-     "why": "没有完成控制权审计一律待核验"
-    },
-    "data": {
-     "v": "待核验",
-     "src": "auto",
-     "why": "身份未经研究核对"
-    },
-    "exec": {
-     "v": "U",
-     "src": null,
-     "why": "个人执行，不公开"
-    }
-   },
-   "comp": {
-    "lo": 0.0,
-    "hi": 100.0,
-    "cov": 0.0,
-    "gated": true,
-    "parts": {
-     "M": null,
-     "R": null,
-     "G": null,
-     "TM": null,
-     "D": null,
-     "AF": null,
-     "TE": "NA"
-    }
-   },
-   "one_liner": null,
-   "research": null,
-   "evidence": [],
-   "data": {
-    "category": "CDP",
-    "chains": [
-     "Ethereum"
-    ],
-    "rev30": null,
-    "chg30": null,
-    "rev_all": null,
-    "llama": null,
-    "fees7": null,
-    "fees30": null,
-    "sources": [
-     "llama_listing"
-    ],
-    "boards": null,
-    "tvl": 7481270,
-    "listed": "2026-11-12",
-    "slug": "swan-dao",
-    "url": "https://www.swanusd.com",
-    "logo": "https://icons.llamao.fi/icons/protocols/swan-dao",
-    "twitter": "MonolithMarket",
-    "children": null,
-    "token": false,
-    "token_seen": null,
-    "rev_hist": [],
-    "age": {
-     "since": "2026-11-12",
-     "days": 14,
-     "basis": "DefiLlama 收录"
-    },
-    "tok": null,
-    "money": {
-     "vol": null,
-     "fees": {
-      "total24h": 653,
-      "total7d": 4665,
-      "total30d": 10641.16
-     },
-     "rev": {
-      "total24h": 649,
-      "total7d": 4582,
-      "total30d": 10423.54
-     },
-     "hold": {
-      "total24h": 649,
-      "total7d": 4582,
-      "total30d": 10423.54
-     },
-     "take": null,
-     "share7": 0.438,
-     "src": "DefiLlama",
-     "short_history": 14
-    }
-   },
-   "spark": []
-  },
-  {
-   "fresh": false,
-   "reviewer": null,
-   "id": "9367",
-   "key": "g:9367",
-   "name": "MING",
-   "kind": "tokenless",
-   "why_here": null,
-   "manual": null,
-   "discovered": "2026-11-16",
-   "baseline": false,
-   "status": "原始线索",
-   "status_src": "auto",
-   "bucket": "watch",
-   "entry": [
-    "none"
-   ],
-   "entry_why": "还没查到资金参与方式",
-   "classes": {
-    "business": {
-     "v": "U",
-     "src": "auto",
-     "why": "类目「Gamified Mining」不在映射表"
-    },
-    "right": {
-     "v": "none",
-     "src": "auto",
-     "why": "本协议和母协议都没登记代币"
-    },
-    "opportunity": {
-     "v": "genesis",
-     "src": "auto",
-     "why": "无币 → 初始参与（早期使用 / 积分）"
-    },
-    "attribute": {
-     "v": "product",
-     "src": "auto",
-     "why": "协议级对象，默认产品型"
-    }
-   },
-   "scores": {
-    "M": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "A": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "F": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "E": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "V": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "G": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "P": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "D": {
-     "v": "U",
-     "src": "auto",
-     "why": "事实：近 30 天协议收入 137,248 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
-    },
-    "L": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "T": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "TM": {
-     "v": "U",
-     "src": null,
-     "why": ""
-    },
-    "TE": {
-     "v": "NA",
-     "src": "auto",
-     "why": "还没有代币，代币经济不适用"
-    }
-   },
-   "gates": {
-    "safety": {
-     "v": "待核验",
-     "src": "auto",
-     "why": "没有完成控制权审计一律待核验"
-    },
-    "data": {
-     "v": "待核验",
-     "src": "auto",
-     "why": "身份未经研究核对"
-    },
-    "exec": {
-     "v": "U",
-     "src": null,
-     "why": "个人执行，不公开"
-    }
-   },
-   "comp": {
-    "lo": 0.0,
-    "hi": 100.0,
-    "cov": 0.0,
-    "gated": true,
-    "parts": {
-     "M": null,
-     "R": null,
-     "G": null,
-     "TM": null,
-     "D": null,
-     "AF": null,
-     "TE": "NA"
-    }
-   },
-   "one_liner": null,
-   "research": null,
-   "evidence": [],
-   "data": {
-    "category": "Gamified Mining",
-    "chains": [
-     "BSC"
-    ],
-    "rev30": 137248,
-    "chg30": null,
-    "rev_all": null,
-    "llama": null,
-    "fees7": null,
-    "fees30": null,
-    "sources": [
-     "llama_tokenless"
-    ],
-    "boards": null,
-    "tvl": null,
-    "listed": null,
-    "slug": "ming",
-    "url": null,
-    "logo": "https://icons.llamao.fi/icons/protocols/ming",
-    "twitter": "mingbnb",
-    "children": [
-     "MING"
-    ],
-    "token": false,
-    "token_seen": null,
-    "rev_hist": [
-     [
-      "2026-11-16",
-      100926
-     ],
-     [
-      "2026-11-17",
-      106509
-     ],
-     [
-      "2026-11-18",
-      112066
-     ],
-     [
-      "2026-11-19",
-      116431
-     ],
-     [
-      "2026-11-20",
-      120255
-     ],
-     [
-      "2026-11-21",
-      123366
-     ],
-     [
-      "2026-11-22",
-      125885
-     ],
-     [
-      "2026-11-23",
-      129088
-     ],
-     [
-      "2026-11-24",
-      132342
-     ],
-     [
-      "2026-11-25",
-      134956
-     ],
-     [
-      "2026-11-26",
-      137248
-     ]
-    ],
-    "age": {
-     "since": "2026-11-05",
-     "days": 21,
-     "basis": "协议收入数据首日"
-    },
-    "tok": null,
-    "money": {
-     "vol": null,
-     "fees": {
-      "total24h": 2472,
-      "total7d": 25312,
-      "total30d": 166548
-     },
-     "rev": {
-      "total24h": 2009,
-      "total7d": 20817,
-      "total30d": 137248
-     },
-     "hold": {
-      "total24h": 1782,
-      "total7d": 18404,
-      "total30d": 119289
-     },
-     "take": null,
-     "share7": 0.152,
-     "src": "DefiLlama",
-     "short_history": 21
-    }
-   },
-   "spark": [
-    4284,
-    12194,
-    13000,
-    12658,
-    11836,
-    9488,
-    10070,
-    9373,
-    6592,
-    5948,
-    5483,
-    5583,
-    5557,
-    4365,
-    3824,
-    3111,
-    2519,
-    3203,
-    3254,
-    2614,
-    2292
+    526,
+    15792
    ]
   },
   {
@@ -17487,7 +18193,7 @@
     "D": {
      "v": "U",
      "src": "auto",
-     "why": "事实：近 30 天协议收入 126,103 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+     "why": "事实：近 30 天协议收入 144,054 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
     },
     "L": {
      "v": "U",
@@ -17551,7 +18257,7 @@
      "Solana",
      "BSC"
     ],
-    "rev30": 126103,
+    "rev30": 144054,
     "chg30": null,
     "rev_all": null,
     "llama": null,
@@ -17581,32 +18287,36 @@
      [
       "2026-11-26",
       126103
+     ],
+     [
+      "2026-11-27",
+      144054
      ]
     ],
     "age": {
      "since": "2025-11-05",
-     "days": 386,
+     "days": 387,
      "basis": "DefiLlama 收录"
     },
     "tok": null,
     "money": {
      "vol": {
-      "total24h": 1292500,
-      "total7d": 9611119,
-      "total30d": 49428635
+      "total24h": 1170769,
+      "total7d": 9425985,
+      "total30d": 48589053
      },
      "fees": {
-      "total24h": 18645,
-      "total7d": 126103,
-      "total30d": 126103
+      "total24h": 17951,
+      "total7d": 128796,
+      "total30d": 144054
      },
      "rev": {
-      "total24h": 18645,
-      "total7d": 126103,
-      "total30d": 126103
+      "total24h": 17951,
+      "total7d": 128796,
+      "total30d": 144054
      },
      "hold": null,
-     "take": 0.00255,
+     "take": 0.00296,
      "share7": 0.194,
      "src": "DefiLlama",
      "short_history": null
@@ -17619,7 +18329,275 @@
     18503,
     20786,
     17261,
-    18645
+    18645,
+    17951
+   ]
+  },
+  {
+   "fresh": false,
+   "reviewer": null,
+   "id": "9367",
+   "key": "g:9367",
+   "name": "MING",
+   "kind": "tokenless",
+   "why_here": null,
+   "manual": null,
+   "discovered": "2026-11-16",
+   "baseline": false,
+   "status": "原始线索",
+   "status_src": "auto",
+   "bucket": "watch",
+   "entry": [
+    "none"
+   ],
+   "entry_why": "还没查到资金参与方式",
+   "classes": {
+    "business": {
+     "v": "U",
+     "src": "auto",
+     "why": "类目「Gamified Mining」不在映射表"
+    },
+    "right": {
+     "v": "none",
+     "src": "auto",
+     "why": "本协议和母协议都没登记代币"
+    },
+    "opportunity": {
+     "v": "genesis",
+     "src": "auto",
+     "why": "无币 → 初始参与（早期使用 / 积分）"
+    },
+    "attribute": {
+     "v": "product",
+     "src": "auto",
+     "why": "协议级对象，默认产品型"
+    }
+   },
+   "scores": {
+    "M": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "A": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "F": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "E": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "V": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "G": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "P": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "D": {
+     "v": "U",
+     "src": "auto",
+     "why": "事实：近 30 天协议收入 138,788 美元，已过 100,000 门槛；是谁在付钱、去掉补贴还剩多少，待研究"
+    },
+    "L": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "T": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "TM": {
+     "v": "U",
+     "src": null,
+     "why": ""
+    },
+    "TE": {
+     "v": "NA",
+     "src": "auto",
+     "why": "还没有代币，代币经济不适用"
+    }
+   },
+   "gates": {
+    "safety": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "没有完成控制权审计一律待核验"
+    },
+    "data": {
+     "v": "待核验",
+     "src": "auto",
+     "why": "身份未经研究核对"
+    },
+    "exec": {
+     "v": "U",
+     "src": null,
+     "why": "个人执行，不公开"
+    }
+   },
+   "comp": {
+    "lo": 0.0,
+    "hi": 100.0,
+    "cov": 0.0,
+    "gated": true,
+    "parts": {
+     "M": null,
+     "R": null,
+     "G": null,
+     "TM": null,
+     "D": null,
+     "AF": null,
+     "TE": "NA"
+    }
+   },
+   "one_liner": null,
+   "research": null,
+   "evidence": [],
+   "data": {
+    "category": "Gamified Mining",
+    "chains": [
+     "BSC"
+    ],
+    "rev30": 138788,
+    "chg30": null,
+    "rev_all": null,
+    "llama": null,
+    "fees7": null,
+    "fees30": null,
+    "sources": [
+     "llama_tokenless"
+    ],
+    "boards": null,
+    "tvl": null,
+    "listed": null,
+    "slug": "ming",
+    "url": null,
+    "logo": "https://icons.llamao.fi/icons/protocols/ming",
+    "twitter": "mingbnb",
+    "children": [
+     "MING"
+    ],
+    "token": false,
+    "token_seen": null,
+    "rev_hist": [
+     [
+      "2026-11-16",
+      100926
+     ],
+     [
+      "2026-11-17",
+      106509
+     ],
+     [
+      "2026-11-18",
+      112066
+     ],
+     [
+      "2026-11-19",
+      116431
+     ],
+     [
+      "2026-11-20",
+      120255
+     ],
+     [
+      "2026-11-21",
+      123366
+     ],
+     [
+      "2026-11-22",
+      125885
+     ],
+     [
+      "2026-11-23",
+      129088
+     ],
+     [
+      "2026-11-24",
+      132342
+     ],
+     [
+      "2026-11-25",
+      134956
+     ],
+     [
+      "2026-11-26",
+      137248
+     ],
+     [
+      "2026-11-27",
+      138788
+     ]
+    ],
+    "age": {
+     "since": "2026-11-05",
+     "days": 22,
+     "basis": "协议收入数据首日"
+    },
+    "tok": null,
+    "money": {
+     "vol": null,
+     "fees": {
+      "total24h": 1930,
+      "total7d": 22655,
+      "total30d": 168481
+     },
+     "rev": {
+      "total24h": 1548,
+      "total7d": 18533,
+      "total30d": 138788
+     },
+     "hold": {
+      "total24h": 1381,
+      "total7d": 16407,
+      "total30d": 120667
+     },
+     "take": null,
+     "share7": 0.134,
+     "src": "DefiLlama",
+     "short_history": 22
+    }
+   },
+   "spark": [
+    4284,
+    12194,
+    13000,
+    12658,
+    11836,
+    9488,
+    10070,
+    9373,
+    6592,
+    5948,
+    5483,
+    5583,
+    5557,
+    4365,
+    3824,
+    3111,
+    2519,
+    3203,
+    3254,
+    2614,
+    2292,
+    1540
    ]
   },
   {
@@ -17830,7 +18808,7 @@
     "rev_hist": [],
     "age": {
      "since": "2026-08-21",
-     "days": 97,
+     "days": 98,
      "basis": "官方上线日（手动登记）"
     },
     "tok": {
@@ -17840,7 +18818,7 @@
      "chain": "bsc",
      "first": "2026-10-02",
      "first_src": "DefiLlama 价格",
-     "days": 55,
+     "days": 56,
      "parent": false,
      "parent_name": null,
      "links": [
@@ -17861,15 +18839,15 @@
       "url": "https://dexscreener.com/bsc/0x3098d7a051045000d68ec0360753a40c8cabea31"
      },
      "snap": {
-      "mcap": 4742250,
-      "fdv": 4742250,
-      "vol24": 194464.66,
-      "liq": 118151.28,
-      "chg24": -5.18,
-      "pairs": 16,
+      "mcap": 5067821,
+      "fdv": 5067821,
+      "vol24": 220127.93000000002,
+      "liq": 125078.91,
+      "chg24": 7.63,
+      "pairs": 23,
       "dex": "pancakeswap",
       "chain": "bsc",
-      "at": "2026-11-26T09:46+00:00",
+      "at": "2026-11-27T09:52+00:00",
       "src": "DexScreener"
      }
     }
@@ -17877,5 +18855,5 @@
    "spark": []
   }
  ],
- "queue_n": 38
+ "queue_n": 41
 }
