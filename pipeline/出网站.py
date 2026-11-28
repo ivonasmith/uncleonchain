@@ -5121,7 +5121,7 @@ def leg_macro_card():
             f'{leg_static()}</div></div>')
 
 
-# ---- 换腿过渡期（2026-11-28）：从高低点到反向确认要多久。读 leg_latest.json 的 transition_now + leg_history.json 的 transition；全部在出网站阶段写进 HTML
+# ---- 换腿过渡期（2026-11-28；11-28 大叔要求先下线，页面不调用，等讨论定方案再接回）：从高低点到反向确认要多久。读 leg_latest.json 的 transition_now + leg_history.json 的 transition；全部在出网站阶段写进 HTML
 LEGTR_CSS = """<style>
 .lgtr .sub{margin:16px 0 6px;font-size:15px}.lgtr .st{font-size:15px;line-height:1.7;margin:6px 0}
 .lgtr .tw{margin:8px 0 4px}.lgtr table{font-size:12.5px}.lgtr td,.lgtr th{white-space:nowrap}.lgtr td.l,.lgtr th.l{text-align:left}
@@ -5329,7 +5329,6 @@ def build_leg_tracker():
 <div class="chipgrid" id="lenChips"></div><div class="live" id="lenLive" style="display:none"></div><p class="muted small" data-i18n="len_p2"></p></section>
 <section class="blk" id="dd"><h2><span data-i18n="dd_h"></span>{tags["desc"]}</h2><p data-i18n="dd_p1"></p>
 <div id="ddMeter"></div><div class="legendline" id="ddLegend"></div><div class="live" id="ddLive" style="display:none"></div><p class="muted small" data-i18n="dd_p2"></p></section>
-{leg_transition_html()}
 <section class="blk" id="hist"><h2><span data-i18n="hist_h"></span>{tags["desc"]}</h2><div id="histMount"></div></section>
 <section class="blk" id="l89"><h2><span data-i18n="l89_h"></span>{tags["hyp"]}</h2><p data-i18n="l89_p1"></p><div class="bars" id="l89Bars"></div>
 <p class="muted small" data-i18n="l89_pre"></p><p data-i18n="l89_p2"></p><div class="callout" data-i18n="l89_falsify"></div></section>
@@ -5346,8 +5345,8 @@ def build_leg_tracker():
     css, js = leg_assets()
     emit("leg-tracker/index.html", T(f"涨跌腿追踪 · {BRAND}", f"Leg Tracker · {BRAND_EN}"), body, active="macro", narrow=True,
          extra_head=css, scripts=js,
-         desc=T("比特币每一条涨腿、跌腿走了多久、涨跌了多少，放到同一周期阶段的历史里看在什么位置；换腿过渡期：从高低点到反向确认的天数分布和当前读数。",
-                "How long each BTC up- and down-leg lasts and how far it goes, compared with legs from the same cycle phase; leg transitions: days from the extreme to reversal confirmation, with current readings."))
+         desc=T("比特币每一条涨腿、跌腿走了多久、涨跌了多少，放到同一周期阶段的历史里看在什么位置：历史规律和当前读数。",
+                "How long each BTC up- and down-leg lasts and how far it goes, compared with legs from the same cycle phase: historical patterns and current readings."))
 
 
 AGENT_DIR = os.path.join(ROOT, "public", "ai-agent", "monitor")      # tools/agent-id 的导出目录（交接包原样）
@@ -6342,7 +6341,7 @@ def build_methodology():
     banned = "".join(f"<tr><td class='l wrap'>{esc(T(a, b))}</td><td class='l wrap'>{esc(T(c, d))}</td></tr>" for a, b, c, d in R.BANNED)
     body = f"""{crumbs([(T("口径与规则", "Methodology"), None)])}<h1>{T("口径与规则", "Methodology")}</h1>
 <p class="lede keep">{T("解读日志里的每一个判断都来自下面这些公开规则。规则改动会在更正记录里留痕，历史日志不跟着改。", "Every judgement in the logs comes from the public rules below. Rule changes are logged in Corrections; past logs are never rewritten.")}</p>
-<nav class="anch static">{"".join(f'<a href="#{h}">{t}</a>' for t, h in ((T("层结论", "Verdicts"), "verdicts"), (T("综合研判", "Overall read"), "comp"), (T("L1 规则清单", "L1 rules"), "l1rules"), (T("标签说明", "Tags"), "legend"), (T("更新时间", "Schedule"), "schedule"), (T("统计窗口", "Stats window"), "window"), (T("换腿过渡期", "Leg transitions"), "leg-transition"), (T("指标与区间", "Indicators"), "indicators"), (T("预警阈值", "Alerts"), "alerts")))}</nav>
+<nav class="anch static">{"".join(f'<a href="#{h}">{t}</a>' for t, h in ((T("层结论", "Verdicts"), "verdicts"), (T("综合研判", "Overall read"), "comp"), (T("L1 规则清单", "L1 rules"), "l1rules"), (T("标签说明", "Tags"), "legend"), (T("更新时间", "Schedule"), "schedule"), (T("统计窗口", "Stats window"), "window"), (T("指标与区间", "Indicators"), "indicators"), (T("预警阈值", "Alerts"), "alerts")))}</nav>
 <h2 id="verdicts">{T("层结论怎么来", "How layer verdicts are made")}</h2>
 <div class="card mcard">
 {T(L1_RULES_ZH, L1_RULES_EN)}
@@ -6383,7 +6382,6 @@ def build_methodology():
 <h2>{T("解读日志规则", "Log rules")}</h2>
 <div class="card mcard">{T(f"日志日期 = 解读当天（UTC 日期），日更每天{TT(MAIN_TIME, False)}运行，每个读数带自己的数据日期（FRED 按美国工作日、NFCI 周度、交易所余额约有 2 周滞后，超过容忍天数标 ⚠）。写入即冻结；同一天重跑且核心缺失变少才覆盖一次并标「补录」。周复盘按 ISO 周（周一至周日），月复盘按自然月；切换发生在规则变更当天的，注明「规则变更所致」。人工点评放在 content/journal/，单独标注。网站其他位置展示日志内容时标「日志 · 冻结时间」，读数和最新值不同以最新值为准。",
                                                                                    f"Log date = UTC day of the run (the daily run is at {TT(MAIN_TIME, False)}); each reading carries its own data date (FRED on US business days, NFCI weekly, exchange balance ~2 weeks late; stale readings get ⚠). Frozen once written; a same-day re-run only overwrites when fewer core inputs are missing, marked 'Re-run'. Weekly reviews follow ISO weeks, monthly ones calendar months; switches on a rule-change day are labelled as such. Wherever log content appears elsewhere it is marked with its freeze time; the latest values win.")}</div>
-{leg_transition_method()}
 <h2>{T("发射台口径", "Launchpad conventions")}</h2><div class="tw"><table><tbody>{lp_rows}</tbody></table></div>"""
     emit("methodology/index.html", T(f"口径与规则 · {BRAND}", f"Methodology · {BRAND_EN}"), body, active="methodology")
 
