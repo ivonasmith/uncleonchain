@@ -1,19 +1,5 @@
 [
  {
-  "version": "2026.11.28.1",
-  "date": "2026-11-28",
-  "notify": false,
-  "title_zh": "涨跌腿页新增「换腿过渡期」：从高低点到反向确认要多久",
-  "title_en": "Leg tracker: new 'leg transitions' section — from the extreme to reversal confirmation",
-  "items": [
-   {
-    "type": "new",
-    "zh": "涨跌腿追踪页加一节「换腿过渡期」：BTC（10%）和山寨整体（15%）每条腿从真实高低点到反向确认用了几天、在换腿区间里一共待了几天、确认后有没有回到区间，按方向 × 牛熊 × 年代分组；当前面板给出「当前极值已过 k 天还没确认」的历史同类情况里最终确认的比例、确认的还要再等几天、先创新极值的再走多少，以及当前腿在同阶段历史腿里的排名。剔除 2010-08-01 以前起点的 3 条伪腿，BTC 剩 303 条。描述统计，口径写在「口径与规则」。数据只新增字段（leg_history.json 的 transition、leg_latest.json 的 transition_now），原有字段不变。",
-    "en": "The leg tracker gets a 'leg transitions' section: for BTC (10%) and the altcoin index (15%), how many days each leg took from its true high/low to the reversal confirmation, how many days it spent inside the transition band, and whether it came back after confirming, grouped by direction × bull/bear × era. The live panel shows, among past cases whose extreme was equally old without confirmation, the share that went on to confirm, the further wait, how far new extremes went, and where the current leg ranks among same-phase legs. Three artefact legs starting before 2010-08-01 are dropped, leaving 303 BTC legs. Descriptive statistics; definitions on the Methodology page. Data adds fields only (transition in leg_history.json, transition_now in leg_latest.json); existing fields are unchanged."
-   }
-  ]
- },
- {
   "version": "2026.11.26.1",
   "date": "2026-11-26",
   "notify": false,
