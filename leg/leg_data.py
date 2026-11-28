@@ -47,6 +47,7 @@ leg_data.py —— 网站「涨跌腿追踪 + 山寨整体涨跌腿 + 山寨轮�
   ③ 「45 天内不重复」边界是 ≥45 还是 >45  → 常量 IGN_GAP（默认 i - last >= 45）
 """
 import argparse
+import bisect
 import csv
 import datetime as dt
 import json
@@ -838,6 +839,288 @@ def history_block(dates, closes, coverage="full"):
             "legs": legs, "current": cur}
 
 
+# ---------------------------- 换腿过渡期（2026-11-28）：从真实高低点到反向确认要多久 ----------------------------
+# 只复用 scan_legs / cycle_regime / _quantile，不改 THR / ALT_THR。阈值作参数传入（BTC = THR，山寨 = ALT_THR）。
+TRANS_FROM = dt.date(2010, 8, 1)        # 起点早于这一天的腿是序列起点造成的伪腿，剔除（BTC 共 3 条）
+TRANS_ERAS = (("2010-13", 2010, 2013), ("2014-17", 2014, 2017), ("2018-21", 2018, 2021), ("2022-26", 2022, 2026))
+TRANS_MIN_N = 5                         # 条件统计：某组样本 < 5 → 样本不足，不出分位数
+TRANS_K_CAP = 30                        # 条件统计的天数上限：k = min(今天的实际天数, 30)
+TRANS_GROUPS = (("all", "全部", "All"), ("bull", "牛市段", "Bull phase"), ("post2018_bull", "2018 年后牛市段", "Bull phase since 2018"),
+                ("y2022", "2022–26", "2022–26"), ("y2022_bull", "2022–26 牛市段", "2022–26 bull phase"))
+
+
+def _stats_t(xs):
+    """分位数：同 _stats 的插值法（_quantile），保留两位小数（天数分位常是 .25 / .75）。"""
+    if not xs:
+        return None
+    return {"p25": round(_quantile(xs, .25), 2), "p50": round(_quantile(xs, .5), 2), "p75": round(_quantile(xs, .75), 2),
+            "p90": round(_quantile(xs, .9), 2), "max": round(max(xs), 2)}
+
+
+def _era(y):
+    return next((nm for nm, a, b in TRANS_ERAS if a <= y <= b), None)
+
+
+def _confirm_at(direction, closes, s, thr):
+    """起点 s 之后第一次反向确认的日（按传入的 thr；与 _confirm_idx 同口径）。"""
+    n = len(closes)
+    if direction == "up":
+        ref = closes[s] * (1 + thr)
+        return next((j for j in range(s + 1, n) if _ge(closes[j], ref)), None)
+    ref = closes[s] * (1 - thr)
+    return next((j for j in range(s + 1, n) if _le(closes[j], ref)), None)
+
+
+def _band(direction, start_close, thr):
+    """区间：涨腿 [起点, 起点×(1+thr)]，跌腿 [起点×(1-thr), 起点]。"""
+    if direction == "up":
+        return start_close, start_close * (1 + thr)
+    return start_close * (1 - thr), start_close
+
+
+def _in_band(direction, c, start_close, thr):
+    lo, hi = _band(direction, start_close, thr)
+    return _ge(c, lo) and _le(c, hi)
+
+
+def daily_state(closes, thr):
+    """scan_legs 的逐日版本：每天收盘后的状态 (mode, start_idx, ext_idx)。
+    up：start = 涨腿起点（低），ext = 当前最高收盘；down：start = 跌腿起点（高），ext = 当前最低收盘；未定方向 = None。
+    与 scan_legs 逐步同一套判断（selftest 核对末态一致）。"""
+    n = len(closes)
+    lo_i = hi_i = 0
+    mode, st_i = None, None
+    out = [None] * n
+    for i in range(1, n):
+        c = closes[i]
+        if mode is None:
+            if _ge(c, closes[lo_i] * (1 + thr)):
+                mode, st_i, hi_i = "up", lo_i, i
+            elif _le(c, closes[hi_i] * (1 - thr)):
+                mode, st_i, lo_i = "down", hi_i, i
+            else:
+                if c < closes[lo_i]:
+                    lo_i = i
+                if c > closes[hi_i]:
+                    hi_i = i
+        elif mode == "up":
+            if c > closes[hi_i]:
+                hi_i = i
+            elif _le(c, closes[hi_i] * (1 - thr)):
+                mode, st_i, lo_i = "down", hi_i, i
+        else:
+            if c < closes[lo_i]:
+                lo_i = i
+            elif _ge(c, closes[lo_i] * (1 + thr)):
+                mode, st_i, hi_i = "up", lo_i, i
+        if mode is not None:
+            out[i] = (mode, st_i, hi_i if mode == "up" else lo_i)
+    return out
+
+
+def _leg_transition(direction, dates, closes, s, e, thr):
+    """一条已走完的腿：确认用时 lag（日历天）、区间内总天数 band（起点到腿内最后一个在区间里的收盘）、确认后是否回到区间 revisit。"""
+    c = _confirm_at(direction, closes, s, thr)
+    last_in = max(j for j in range(s, e + 1) if _in_band(direction, closes[j], closes[s], thr))
+    revisit = c is not None and any(_in_band(direction, closes[j], closes[s], thr) for j in range(c + 1, e))
+    return {"dir": direction, "start_date": dates[s].isoformat(), "confirm_date": dates[c].isoformat() if c is not None else None,
+            "end_date": dates[e].isoformat(), "lag_days": (dates[c] - dates[s]).days if c is not None else None,
+            "band_days": (dates[last_in] - dates[s]).days, "revisit": bool(revisit), "era": _era(dates[s].year)}
+
+
+def transition_legs(dates, closes, thr, rmap):
+    """已走完的涨腿 / 跌腿逐条（剔除起点早于 TRANS_FROM 的）。rmap = {日期: bull/bear}，按腿终点日归类。"""
+    with _Thr(thr):
+        legs = scan_legs(closes)["legs"]
+    out = []
+    for d, s, e in legs:
+        if dates[s] < TRANS_FROM:
+            continue
+        r = _leg_transition(d, dates, closes, s, e, thr)
+        r["regime"] = rmap.get(dates[e], "bull")
+        out.append(r)
+    return out
+
+
+def transition_table(legs):
+    """dir × regime（全部 / 牛 / 熊）× era（全部 + 四个年代）。"""
+    rows = []
+    for d in ("up", "down"):
+        for rg in ("all", "bull", "bear"):
+            for era in ("all",) + tuple(nm for nm, _, _ in TRANS_ERAS):
+                sel = [l for l in legs if l["dir"] == d and (rg == "all" or l["regime"] == rg) and (era == "all" or l["era"] == era)]
+                n = len(sel)
+                rows.append({"dir": d, "regime": rg, "era": era, "n": n,
+                             "lag_days": _stats_t([l["lag_days"] for l in sel]),
+                             "band_days": _stats_t([l["band_days"] for l in sel]),
+                             "revisit_pct": round(100.0 * sum(l["revisit"] for l in sel) / n, 1) if n else None})
+    return rows
+
+
+def transition_samples(dates, closes, thr, rmap, k, want):
+    """条件样本：每一天 t 处于 want 方向（down = 跌腿还没确认，当前最低收盘已过 k 天；up = 涨腿还没跌破，当前最高收盘已过 k 天），
+    之后先发生的事：再创新极值（newlow / newhigh）或反向 10% 确认（confirm）。
+    确认 → wait = 确认日 − t（日历天）；再创新极值 → depth = 从当前极值再走的幅度（到腿结束前的最低 / 最高收盘，正数 %），腿没走完则 None。"""
+    n = len(closes)
+    st = daily_state(closes, thr)
+    out = []
+    for t in range(n):
+        s = st[t]
+        if s is None or s[0] != want:
+            continue
+        ext = s[2]
+        if (dates[t] - dates[ext]).days != k:
+            continue
+        L = closes[ext]
+        outcome, j_ev = None, None
+        for j in range(t + 1, n):
+            c = closes[j]
+            if want == "down":
+                if c < L:
+                    outcome, j_ev = "newlow", j
+                    break
+                if _ge(c, L * (1 + thr)):
+                    outcome, j_ev = "confirm", j
+                    break
+            else:
+                if c > L:
+                    outcome, j_ev = "newhigh", j
+                    break
+                if _le(c, L * (1 - thr)):
+                    outcome, j_ev = "confirm", j
+                    break
+        if outcome is None:
+            continue                           # 数据末尾还没有结果：不计入
+        rec = {"outcome": outcome, "wait": None, "depth": None,
+               "regime": rmap.get(dates[t], "bull"), "date": dates[t].isoformat()}
+        if outcome == "confirm":
+            rec["wait"] = (dates[j_ev] - dates[t]).days
+        else:                                  # 再创新极值：沿路径继续走到腿结束（反向确认）为止，记极端值
+            m = closes[j_ev]
+            done = False
+            for q in range(j_ev, n):
+                c = closes[q]
+                if want == "down":
+                    if c < m:
+                        m = c
+                    elif _ge(c, m * (1 + thr)):
+                        done = True
+                        break
+                else:
+                    if c > m:
+                        m = c
+                    elif _le(c, m * (1 - thr)):
+                        done = True
+                        break
+            if done:
+                rec["depth"] = round(((1 - m / L) if want == "down" else (m / L - 1)) * 100, 4)
+        out.append(rec)
+    return out
+
+
+def _cond_group(samples, key):
+    sel = [x for x in samples if key(x)]
+    conf = [x for x in sel if x["outcome"] == "confirm"]
+    newl = [x for x in sel if x["outcome"] != "confirm"]
+    n = len(sel)
+    g = {"n": n, "n_confirm": len(conf), "n_newlow": len(newl),
+         "p_confirm": round(100.0 * len(conf) / n, 1) if n >= TRANS_MIN_N else None,
+         "wait_days": _stats_t([x["wait"] for x in conf]) if len(conf) >= TRANS_MIN_N else None,
+         "further_depth_pct": None, "n_depth": None, "insufficient": n < TRANS_MIN_N}
+    deps = [x["depth"] for x in newl if x["depth"] is not None]
+    g["n_depth"] = len(deps)
+    if len(deps) >= TRANS_MIN_N:
+        g["further_depth_pct"] = _stats_t(deps)
+    return g
+
+
+def _group_key(name):
+    """分组按样本所在那天归类（周期口径 rmap；年份 = 样本日）。"""
+    bull = lambda x: x["regime"] == "bull"
+    yr = lambda x: int(x["date"][:4])
+    return {"all": lambda x: True, "bull": bull,
+            "post2018_bull": lambda x: yr(x) >= 2018 and bull(x),
+            "y2022": lambda x: yr(x) >= 2022,
+            "y2022_bull": lambda x: yr(x) >= 2022 and bull(x)}[name]
+
+
+def transition_now(dates, closes, thr, rmap, legs):
+    """当前这条腿（按 daily_state 末态）在历史条件样本、同阶段腿里的位置。legs = transition_legs 的完整列表（同阶段比较用）。"""
+    st = daily_state(closes, thr)[-1]
+    if st is None:
+        return None
+    want, s_i, e_i = st
+    age = (dates[-1] - dates[e_i]).days
+    k = min(age, TRANS_K_CAP)
+    samples = transition_samples(dates, closes, thr, rmap, k, want)
+    ext_c = closes[e_i]
+    line = ext_c * (1 + thr) if want == "down" else ext_c * (1 - thr)
+    now = closes[-1]
+    reg_now = rmap.get(dates[-1], "bull")
+
+    def rank_of(v, xs, key="days"):
+        """pctile = 同阶段历史腿里比它小的占比（%）；rank = 由大到小排第几（1 = 最长 / 最深）；of = 同阶段腿数。"""
+        if not xs:
+            return None
+        return {key: v, "pctile": round(100.0 * sum(1 for x in xs if x < v) / len(xs)),
+                "rank": 1 + sum(1 for x in xs if x > v), "of": len(xs), "max": round(max(xs), 1)}
+    same = [l for l in legs if l["dir"] == want and l["regime"] == reg_now]
+    d_today = (dates[-1] - dates[s_i]).days
+    d_ext = (dates[e_i] - dates[s_i]).days
+    depth_now = (closes[s_i] - ext_c) / closes[s_i] * 100 if want == "down" else (ext_c / closes[s_i] - 1) * 100
+    leg_len = lambda l: (dt.date.fromisoformat(l["end_date"]) - dt.date.fromisoformat(l["start_date"])).days
+    leg_dep = lambda l: abs(l["_dep"])
+    return {"dir": want, "regime_now": reg_now, "start_date": dates[s_i].isoformat(), "start_close": round(closes[s_i], 2),
+            "extreme_date": dates[e_i].isoformat(), "extreme_close": round(ext_c, 2),
+            "asof": dates[-1].isoformat(), "close_now": round(now, 2),
+            "age_days": age, "k_used": k,
+            "confirm_line": round(line, 2), "to_confirm_pct": round((line / now - 1) * 100, 1),
+            "groups": [dict(name=nm, label_zh=zh, label_en=en, **_cond_group(samples, _group_key(nm)))
+                       for nm, zh, en in TRANS_GROUPS],
+            "leg_rank": {"to_today": rank_of(d_today, [leg_len(l) for l in same]),
+                         "to_extreme": rank_of(d_ext, [leg_len(l) for l in same]),
+                         "depth": rank_of(round(depth_now, 1), [leg_dep(l) for l in same], "pct")},
+            "n_same_phase": len(same)}
+
+
+def transition_block(dates, closes, thr, rmap):
+    """一条序列（BTC 或山寨）的完整过渡期：历史逐条 + 统计表 + 当前位置。"""
+    legs = transition_legs(dates, closes, thr, rmap)
+    for l in legs:   # 同阶段比较用：腿的深度（未四舍五入）
+        s_ = dt.date.fromisoformat(l["start_date"])
+        e_ = dt.date.fromisoformat(l["end_date"])
+        i_s = bisect.bisect_left(dates, s_)
+        i_e = bisect.bisect_left(dates, e_)
+        l["_dep"] = (closes[i_e] / closes[i_s] - 1) * 100
+    now = transition_now(dates, closes, thr, rmap, legs)
+    for l in legs:
+        l.pop("_dep", None)
+    return {"threshold_pct": round(thr * 100, 1), "n_legs": len(legs), "legs": legs,
+            "by_dir_regime_era": transition_table(legs), "now": now}
+
+
+def transition_outputs(dates, closes, alt_series=None):
+    """leg_history.json 的 transition + leg_latest.json 的 transition_now（只加字段，不动已有字段）。alt_series = (山寨指数日期, 点位) 或 None。"""
+    reg, _ = cycle_regime(dates, closes)
+    rmap = dict(zip(dates, reg))
+    pick = lambda b: {"threshold_pct": b["threshold_pct"], "n_legs": b["n_legs"], "by_dir_regime_era": b["by_dir_regime_era"], "legs": b["legs"]}
+    tb = transition_block(dates, closes, THR, rmap)
+    ta = transition_block(alt_series[0], alt_series[1], ALT_THR, rmap) if alt_series else None
+    hist = {"threshold_pct": THR * 100, "alt_threshold_pct": ALT_THR * 100, "excluded_before": TRANS_FROM.isoformat(),
+            "eras": [nm for nm, _, _ in TRANS_ERAS],
+            "note": ("lag_days = 确认日 − 起点日（日历天）；band_days = 起点到腿内最后一个收盘仍在换腿区间里的天数"
+                     "（涨腿区间 [起点, 起点×(1+阈值)]，跌腿 [起点×(1−阈值), 起点]，含确认后又回到区间的日子）；"
+                     "revisit = 确认之后、腿结束之前有没有收盘回到区间。regime 按腿终点日（周期口径，事后），era 按起点年份。"
+                     "剔除起点早于 2010-08-01 的腿（序列起点造成的伪腿）。BTC 阈值 10%，山寨整体 15%。"),
+            "btc": pick(tb), "alt": pick(ta) if ta else None}
+    now = {"note": ("条件样本 = 历史上每一天处于同方向、当前极值已过 k 天还没反向确认（k = min(今天的天数, 30)），之后先发生的是再创新极值还是反向确认；"
+                    "wait_days = 确认的那些还要再等几天；further_depth_pct = 再创新极值的那些，到腿结束前比当前极值再走多少（%）。"
+                    "分组按样本所在那天；n < 5 不出分位数。leg_rank：同方向、同周期阶段（今天的口径）的已走完的腿里，pctile = 比它小的占比，rank = 由大到小第几。"
+                    "描述统计，不是信号。"),
+           "btc": tb["now"], "alt": ta["now"] if ta else None}
+    return hist, now
+
+
 # ---------------------------- 山寨轮动窗口 ----------------------------
 def find_ignitions(closes):
     ign, last = [], None
@@ -1081,7 +1364,43 @@ def selftest():
     assert ab["basket"]["threshold_pct"] == 15.0 and "idx_close" in ab["leg"] and ab["basket"]["rules"]["n_enter"] == 50
     ah = alt_history_block(zd2, zig2, zd2, zig2, [9] * len(zig2), cov, bi)
     assert ah["summary"]["completed_legs"] >= 1 and ah["current"]["ongoing"] and ah["legs"][0]["regime"] in ("bull", "bear")
-    print("selftest OK：涨腿 起点确认/回撤/结束/徽章边界；跌腿 起点/跌幅/反弹确认线/回到涨腿；历史逐条；山寨窗口 pending/build/trim/closing/cleared/stopped/idle/去重；山寨动态篮子（入选/剔除/崩盘/停牌/稳定币/新币）/归档解析/15%阈值/还原")
+    # 8) 换腿过渡期：确认用时 / 区间内总天数 / 确认后回到区间（手算）
+    ct = [100, 90, 100, 95, 120, 105]           # 跌腿 0→1；涨腿 1→4：90 起，第 2 天 100≥99 确认，第 3 天 95 回到 [90,99]，第 4 天 120 见顶，第 5 天 105≤108 结束
+    dt_ = [_d(i) for i in range(len(ct))]
+    tl = transition_legs(dt_, ct, 0.10, {})
+    up_ = [x for x in tl if x["dir"] == "up"][0]
+    assert (up_["lag_days"], up_["band_days"], up_["revisit"]) == (1, 2, True), up_
+    cn = [100, 90, 99, 105, 120, 112, 110, 108, 100, 105, 110]   # 涨腿 90→120：99 当天确认（含等号），之后不再回到 [90,99]；跌腿 120→100：108 当天确认，区间 [108,120] 最后一天 = 108
+    tl2 = transition_legs([_d(i) for i in range(len(cn))], cn, 0.10, {})
+    u2, d2 = [x for x in tl2 if x["dir"] == "up"][0], [x for x in tl2 if x["dir"] == "down" and x["start_date"] == _d(4).isoformat()][0]
+    assert (u2["lag_days"], u2["band_days"], u2["revisit"]) == (1, 1, False), u2
+    assert (d2["lag_days"], d2["band_days"], d2["revisit"]) == (3, 3, False), d2
+    with _Thr(0.10):
+        assert len(tl2) == len(scan_legs(cn)["legs"])
+    # 条件样本：低点 100（第 3 天）过了 2 天 → 第 6 天 95 先创新低（之后反弹 ≥104.5 结束，再深 5%）；低点 95（第 6 天）过了 2 天 → 第 9 天 106 先确认（再等 1 天）
+    cc = [100, 120, 107, 100, 101, 102, 95, 96, 97, 106]
+    dc = [_d(i) for i in range(len(cc))]
+    sm = transition_samples(dc, cc, 0.10, {}, 2, "down")
+    assert [(x["date"], x["outcome"], x["wait"], x["depth"]) for x in sm] == [(_d(5).isoformat(), "newlow", None, 5.0), (_d(8).isoformat(), "confirm", 1, None)], sm
+    sm1 = transition_samples(dc, cc, 0.10, {}, 1, "down")
+    assert [(x["outcome"], x["wait"]) for x in sm1] == [("newlow", None), ("confirm", 2)], sm1
+    su = transition_samples(dc, cc, 0.10, {}, 0, "up")    # 涨腿第 1 天的高点 120，下一天 107≤108 → 跌腿确认
+    assert [(x["outcome"], x["wait"]) for x in su] == [("confirm", 1)], su
+    tn = transition_now(dc, cc, 0.10, {}, [])
+    assert tn["dir"] == "up" and tn["extreme_close"] == 106 and tn["age_days"] == 0 and tn["confirm_line"] == 95.4 and tn["groups"][0]["insufficient"], tn
+    # 逐日状态 = scan_legs 每一步的末态（随机游走，逐个前缀核对）
+    import random
+    rnd = random.Random(7)
+    w = [100.0]
+    for _ in range(600):
+        w.append(w[-1] * (1 + rnd.gauss(0, 0.03)))
+    ds = daily_state(w, 0.10)
+    with _Thr(0.10):
+        for cut in range(2, len(w) + 1, 7):
+            sc = scan_legs(w[:cut])
+            want = None if sc["mode"] is None else (sc["mode"], sc["up_start"], sc["hi_i"]) if sc["mode"] == "up" else (sc["mode"], sc["down_start"], sc["lo_i"])
+            assert ds[cut - 1] == want, (cut, ds[cut - 1], want)
+    print("selftest OK：涨腿 起点确认/回撤/结束/徽章边界；跌腿 起点/跌幅/反弹确认线/回到涨腿；历史逐条；山寨窗口 pending/build/trim/closing/cleared/stopped/idle/去重；山寨动态篮子（入选/剔除/崩盘/停牌/稳定币/新币）/归档解析/15%阈值/还原；换腿过渡期（确认用时/区间天数/回到区间/条件样本 再创新低 vs 确认/逐日状态=scan_legs）")
 
 
 if __name__ == "__main__":
@@ -1108,7 +1427,7 @@ if __name__ == "__main__":
         cut = dt.date.fromisoformat(a.asof)
         pairs = [(d, c) for d, c in zip(dates, closes) if d <= cut]
         dates, closes = [p[0] for p in pairs], [p[1] for p in pairs]
-    alt_blk, alt_hist = None, None
+    alt_blk, alt_hist, alt_series = None, None, None
     if not a.no_alt and not a.csv:
         try:
             cache = load_alt_cache()
@@ -1133,6 +1452,7 @@ if __name__ == "__main__":
                 raise RuntimeError("山寨指数不足 400 天")
             alt_blk = alt_leg_block(idates, lv, ns, cov, binfo)
             alt_hist = alt_history_block(idates, lv, dates, closes, ns, cov, binfo)
+            alt_series = (idates, lv)
             if a.alt_calib:
                 alt_calib(coins, cut_d)
             if a.alt_scan:
@@ -1145,6 +1465,14 @@ if __name__ == "__main__":
     hist = history_block(dates, closes, coverage)
     if alt_hist:
         hist["alt"] = alt_hist
+    try:   # 换腿过渡期：只加字段；失败不影响已有输出
+        hist["transition"], out["transition_now"] = transition_outputs(dates, closes, alt_series)
+        tn = out["transition_now"]["btc"]
+        if tn:
+            print(f"[换腿过渡期] BTC {tn['dir']} 极值 {tn['extreme_date']} 已过 {tn['age_days']} 天，确认线 {tn['confirm_line']:,.2f}（{tn['to_confirm_pct']:+.1f}%）；"
+                  + "；".join(f"{g['label_zh']} {g['n_confirm']}/{g['n']}" for g in tn["groups"]))
+    except Exception as e:  # noqa
+        print(f"⚠ 换腿过渡期没有生成：{e}", file=sys.stderr)
     summarize(out, hist)
     print("已保存：", save(out, "latest"))
     print("已保存：", save(hist, "history"))

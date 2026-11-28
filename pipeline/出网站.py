@@ -5121,6 +5121,196 @@ def leg_macro_card():
             f'{leg_static()}</div></div>')
 
 
+# ---- 换腿过渡期（2026-11-28）：从高低点到反向确认要多久。读 leg_latest.json 的 transition_now + leg_history.json 的 transition；全部在出网站阶段写进 HTML
+LEGTR_CSS = """<style>
+.lgtr .sub{margin:16px 0 6px;font-size:15px}.lgtr .st{font-size:15px;line-height:1.7;margin:6px 0}
+.lgtr .tw{margin:8px 0 4px}.lgtr table{font-size:12.5px}.lgtr td,.lgtr th{white-space:nowrap}.lgtr td.l,.lgtr th.l{text-align:left}
+.lgtr .ins{color:var(--muted)}.lgtr svg{width:100%;height:auto;display:block;margin:6px 0}
+.lgtr .ax{fill:var(--muted);font-size:11px}.lgtr .gl{stroke:var(--line);stroke-width:1}
+.lgtr .wu{stroke:var(--up);stroke-width:2}.lgtr .wd{stroke:var(--dn);stroke-width:2}.lgtr .du{fill:var(--up)}.lgtr .dd{fill:var(--dn)}
+.lgtr .lgd{display:flex;flex-wrap:wrap;gap:2px 14px;font-size:12px;color:var(--muted)}.lgtr .lgd span:nth-child(-n+2){white-space:nowrap}.lgtr .lgd i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px}
+.lgtr details{margin-top:12px}.lgtr details>summary{cursor:pointer;font-weight:600}
+</style>"""
+
+
+def _fd(v):
+    if v is None:
+        return "—"
+    return f"{v:,.0f}" if abs(v - round(v)) < 1e-9 else f"{v:,.1f}"
+
+
+def _legtr_now(N, alt):
+    """当前面板：状态句 + 条件与历史（带分母、等级）+ 当前腿位置 + 五组条件统计表。"""
+    if not N:
+        return f'<p class="muted">{T("当前读数未生成。", "Current reading not generated.")}</p>'
+    name = T("山寨整体", "Altcoins") if alt else "BTC"
+    dn, age, k = N["dir"] == "down", N["age_days"], N["k_used"]
+    thr = 15 if alt else 10
+    line = "" if alt else T(f"（确认线 {N['confirm_line']:,.2f}）", f" (confirmation line {N['confirm_line']:,.2f})")
+    ext = "" if alt else T(f"（{N['extreme_date']} 收 {N['extreme_close']:,.2f}）", f" ({N['extreme_date']}, close {N['extreme_close']:,.2f})")
+    if dn:
+        s1 = T(f"{name} 现在离本轮最低收盘{ext} {age} 天，还差 {N['to_confirm_pct']:+.1f}% 才算涨腿确认{line}。",
+               f"{name} is {age} days past this leg's lowest close{ext}; it needs {N['to_confirm_pct']:+.1f}% to confirm an up-leg{line}.")
+    else:
+        s1 = T(f"{name} 现在离本轮最高收盘{ext} {age} 天，再回落 {abs(N['to_confirm_pct']):.1f}% 才算跌腿确认{line}。",
+               f"{name} is {age} days past this leg's highest close{ext}; a further {abs(N['to_confirm_pct']):.1f}% drop would confirm a down-leg{line}.")
+    G_ = {g["name"]: g for g in N["groups"]}
+    order = ("y2022_bull", "post2018_bull", "bull", "all") if N["regime_now"] == "bull" else ("y2022", "all")
+    pick = next((G_[o] for o in order if o in G_ and not G_[o]["insufficient"] and G_[o]["wait_days"]), None)
+    kk = T(f"{k} 天", f"{k} days") if age <= 30 else T("30 天以上（按 30 天算）", "30+ days (counted at 30)")
+    if pick:
+        w, dep = pick["wait_days"], pick["further_depth_pct"]
+        lbl = T(pick["label_zh"], pick["label_en"])
+        dz = T(f"，新{'低' if dn else '高'}中位再{'深' if dn else '涨'} {dep['p50']:.1f}%", f"; the median further move was {dep['p50']:.1f}%") if dep else ""
+        if dn:
+            s2 = T(f"历史上低点过了 {kk}还没确认的情况，{lbl} {pick['n']} 次里有 {pick['n_confirm']} 次最终确认（{pick['p_confirm']:.0f}%），"
+                   f"确认的中位再等 {_fd(w['p50'])} 天（最长 {_fd(w['max'])} 天）；其余 {pick['n_newlow']} 次先创了新低{dz}。",
+                   f"Historically, when the low was {kk} old with no confirmation ({lbl}), {pick['n_confirm']} of {pick['n']} cases went on to confirm "
+                   f"({pick['p_confirm']:.0f}%), after a median {_fd(w['p50'])} more days (longest {_fd(w['max'])}); the other {pick['n_newlow']} made a new low first{dz}.")
+        else:
+            s2 = T(f"历史上高点过了 {kk}还没跌破 {thr}% 的情况，{lbl} {pick['n']} 次里有 {pick['n_confirm']} 次最终跌腿确认（{pick['p_confirm']:.0f}%），"
+                   f"确认的中位再等 {_fd(w['p50'])} 天（最长 {_fd(w['max'])} 天）；其余 {pick['n_newlow']} 次先创了新高{dz}。",
+                   f"Historically, when the high was {kk} old without a {thr}% drop ({lbl}), {pick['n_confirm']} of {pick['n']} cases went on to confirm a down-leg "
+                   f"({pick['p_confirm']:.0f}%), after a median {_fd(w['p50'])} more days (longest {_fd(w['max'])}); the other {pick['n_newlow']} made a new high first{dz}.")
+        s2 += T(" 等级：描述统计。", " Grade: descriptive statistics.")
+    else:
+        s2 = T("同类历史样本不足 5 个，不给比例。等级：描述统计。", "Fewer than 5 comparable historical cases; no share given. Grade: descriptive statistics.")
+    R_ = N["leg_rank"]
+    ph = T("牛市段", "bull-phase") if N["regime_now"] == "bull" else T("熊市段", "bear-phase")
+    s3 = ""
+    if R_.get("to_today") and R_.get("to_extreme"):
+        a, b, d = R_["to_today"], R_["to_extreme"], R_["depth"]
+        word = T("跌腿", "down-legs") if dn else T("涨腿", "up-legs")
+        xt = T("低点", "low") if dn else T("高点", "high")
+        mag = T(f"跌幅 −{d['pct']:.1f}%，比 {d['pctile']}% 的同类跌腿深（第 {d['rank']}）", f"drop −{d['pct']:.1f}%, deeper than {d['pctile']}% of them (#{d['rank']})") if dn else \
+            T(f"涨幅 +{d['pct']:.1f}%，比 {d['pctile']}% 的同类涨腿大（第 {d['rank']}）", f"gain +{d['pct']:.1f}%, larger than {d['pctile']}% of them (#{d['rank']})")
+        s3 = T(f"起点到今天 {a['days']} 天 / 起点到当前{xt} {b['days']} 天：{ph} {a['of']} 条已走完的{word}里分别排第 {a['rank']}、第 {b['rank']}（由长到短，最长 {_fd(a['max'])} 天）；{mag}。",
+               f"Start to today {a['days']} days / start to current {xt} {b['days']} days: ranked #{a['rank']} and #{b['rank']} (longest first; longest {_fd(a['max'])} days) "
+               f"among {a['of']} completed {ph} {word}; {mag}.")
+    rows = ""
+    for g in N["groups"]:
+        lb = esc(T(g["label_zh"], g["label_en"]))
+        if g["insufficient"]:
+            rows += f'<tr><td class="l">{lb}</td><td>{g["n"]}</td><td class="l ins" colspan="3">{T("样本不足", "Too few cases")}</td></tr>'
+            continue
+        w, dep = g["wait_days"], g["further_depth_pct"]
+        wt = " / ".join(_fd(w[q]) for q in ("p50", "p75", "p90", "max")) if w else "—"
+        dt_ = " / ".join(f"{dep[q]:.1f}" for q in ("p50", "p90", "max")) + "%" if dep else T("样本不足", "Too few")
+        rows += (f'<tr><td class="l">{lb}</td><td>{g["n"]}</td><td>{g["n_confirm"]}（{g["p_confirm"]:.0f}%）</td>'
+                 f'<td>{wt}</td><td>{dt_} <span class="muted">n={g["n_depth"]}</span></td></tr>')
+    ev = T("新低", "new low") if dn else T("新高", "new high")
+    tbl = (f'<div class="tw"><table><thead><tr><th class="l">{T("分组", "Group")}</th><th>{T("样本", "Cases")}</th><th>{T("最终确认", "Confirmed")}</th>'
+           f'<th>{T("确认的再等（中位 / P75 / P90 / 最长，天）", "Further wait if confirmed (median / P75 / P90 / max, days)")}</th>'
+           f'<th>{T(f"先创{ev}的再走（中位 / P90 / 最多）", f"Further move after a {ev} (median / P90 / max)")}</th></tr></thead><tbody>{rows}</tbody></table></div>')
+    return (f'<p class="st"><b>{esc(s1)}</b></p><div class="live">{esc(s2)}</div>' + (f'<p>{esc(s3)}</p>' if s3 else "") + tbl
+            + f'<p class="tnote">{T(f"样本 = 历史上每一天：同方向、当前极值已过 {k} 天、还没反向确认 {thr}%；分组按样本所在那天，牛熊按价格周期事后划分。数据截至 {N['asof']}（UTC 收盘）。", f"A case = any past day in the same direction whose extreme was {k} days old without a {thr}% reversal; groups by that day; bull/bear phases are drawn after the fact from the price cycle. Data as of {N['asof']} (UTC close).")}</p>')
+
+
+def _legtr_chart(rows, metric, eras):
+    """横轴年代，每个年代涨 / 跌各一个点（中位）+ 须（P25–P90）。"""
+    get = lambda d, e: next((r for r in rows if r["dir"] == d and r["regime"] == "all" and r["era"] == e), None)
+    vals = [get(d, e)[metric]["p90"] for d in ("up", "down") for e in eras if get(d, e) and get(d, e)[metric]]
+    if not vals:
+        return ""
+    W, H, l, r_, t_, b = 640, 230, 40, 10, 12, 42
+    top = max(vals) * 1.1
+    y = lambda v: t_ + (H - t_ - b) * (1 - v / top)
+    step = (W - l - r_) / len(eras)
+    tick = max(1, round(top / 4 / 5) * 5)
+    g = "".join(f'<line class="gl" x1="{l}" x2="{W - r_}" y1="{y(v):.1f}" y2="{y(v):.1f}"/><text class="ax" x="{l - 6}" y="{y(v) + 4:.1f}" text-anchor="end">{v}</text>'
+                for v in range(0, int(top) + 1, tick))
+    for i, e in enumerate(eras):
+        cx = l + step * (i + .5)
+        g += f'<text class="ax" x="{cx:.1f}" y="{H - b + 16}" text-anchor="middle">{e}</text>'
+        ns = []
+        for d, dx, c in (("up", -10, "u"), ("down", 10, "d")):
+            rr = get(d, e)
+            ns.append(str(rr["n"] if rr else 0))
+            if not rr or not rr[metric]:
+                continue
+            s = rr[metric]
+            x = cx + dx
+            g += (f'<line class="w{c}" x1="{x:.1f}" x2="{x:.1f}" y1="{y(s["p25"]):.1f}" y2="{y(s["p90"]):.1f}"/>'
+                  f'<circle class="d{c}" cx="{x:.1f}" cy="{y(s["p50"]):.1f}" r="4.5"><title>{e} {T("涨腿" if d == "up" else "跌腿", "up" if d == "up" else "down")}: '
+                  f'P25 {_fd(s["p25"])} / {T("中位", "median")} {_fd(s["p50"])} / P90 {_fd(s["p90"])}</title></circle>')
+        g += f'<text class="ax" x="{cx:.1f}" y="{H - b + 31}" text-anchor="middle">n={"/".join(ns)}</text>'
+    return f'<svg viewBox="0 0 {W} {H}" role="img" aria-label="{T("按年代的分布", "Distribution by era")}">{g}</svg>'
+
+
+def _legtr_table(rows, eras):
+    lab = [(T("全部", "All"), "all", "all"), (T("牛市段", "Bull phase"), "bull", "all"), (T("熊市段", "Bear phase"), "bear", "all")] + \
+          [(e, "all", e) for e in eras] + [(T("2022–26 牛市段", "2022–26 bull"), "bull", "2022-26")]
+    out = ""
+    for d, dn in (("up", T("涨腿", "Up-legs")), ("down", T("跌腿", "Down-legs"))):
+        out += f'<tr><th class="l" colspan="9">{dn}</th></tr>'
+        for nm, rg, era in lab:
+            r = next((x for x in rows if x["dir"] == d and x["regime"] == rg and x["era"] == era), None)
+            if not r or not r["n"]:
+                continue
+            L, B = r["lag_days"], r["band_days"]
+            out += (f'<tr><td class="l">{esc(nm)}</td><td>{r["n"]}</td>' + "".join(f"<td>{_fd(L[q])}</td>" for q in ("p25", "p50", "p75", "p90", "max"))
+                    + f'<td>{_fd(B["p50"])} / {_fd(B["p90"])} / {_fd(B["max"])}</td><td>{r["revisit_pct"]:.0f}%</td></tr>')
+    return (f'<div class="tw"><table><thead><tr><th class="l">{T("分组", "Group")}</th><th>n</th><th>P25</th><th>{T("中位", "Median")}</th><th>P75</th><th>P90</th>'
+            f'<th>{T("最长", "Max")}</th><th>{T("区间内总天数（中位 / P90 / 最长）", "Days in band (median / P90 / max)")}</th><th>{T("确认后回到区间", "Back in band after confirm")}</th></tr></thead>'
+            f'<tbody>{out}</tbody></table></div><p class="tnote">{T("P25–最长 五列是确认用时（天）。", "The P25–Max columns are days to confirmation.")}</p>')
+
+
+def _legtr_hist(B, eras, alt):
+    if not B:
+        return f'<p class="muted">{T("历史统计未生成。", "History not generated.")}</p>'
+    rows = B["by_dir_regime_era"]
+    es = [e for e in eras if any(r["era"] == e and r["n"] for r in rows)]
+    lgd = f'<div class="lgd"><span><i style="background:var(--up)"></i>{T("涨腿", "Up-legs")}</span><span><i style="background:var(--dn)"></i>{T("跌腿", "Down-legs")}</span><span>{T("点 = 中位，须 = P25–P90，下方 n = 涨/跌腿数", "dot = median, whisker = P25–P90, n = up/down legs")}</span></div>'
+    return (f'<h3 class="sub">{T("确认用时：起点到反向确认（天）", "Days to confirmation: start to reversal confirmed")}</h3>{lgd}{_legtr_chart(rows, "lag_days", es)}'
+            f'<h3 class="sub">{T("区间内总天数：起点到最后一天还在换腿区间里（天）", "Days in the band: start to the last close still in the band")}</h3>{lgd}{_legtr_chart(rows, "band_days", es)}'
+            f'{_legtr_table(rows, es)}')
+
+
+def leg_transition_html():
+    """/leg-tracker/ 的「换腿过渡期」板块（#trans）。"""
+    now = (G.get("LEG") or {}).get("transition_now") or {}
+    tr = (load(os.path.join(DATA, "leg", "leg_history.json")) or {}).get("transition") or {}
+    if not now and not tr:
+        return ""
+    eras = tr.get("eras") or ["2010-13", "2014-17", "2018-21", "2022-26"]
+    nb = (tr.get("btc") or {}).get("n_legs")
+    alt_h = _legtr_hist(tr.get("alt"), eras, True)
+    return f"""{LEGTR_CSS}<section class="blk lgtr" id="trans"><h2>{T("换腿过渡期：从高低点到反向确认要多久", "Leg transitions: from the extreme to the reversal")} <span class="tag desc">{T("描述统计", "Descriptive")}</span></h2>
+<p>{T("一条腿的真实高低点要等反向走出 10%（山寨整体 15%）才确认。这一节看两件事：从高低点到确认用了几天，以及在 10% 区间里一共来回待了几天（包括确认后又回到区间的日子）。",
+     "A leg's true high or low is only confirmed after a 10% reversal (15% for altcoins). This section looks at how many days that took, and how many days price spent inside the 10% band in total (including days it came back after confirmation).")}</p>
+<h3 class="sub">BTC · {T("现在", "Now")}</h3>{_legtr_now(now.get("btc"), False)}
+<h3 class="sub">BTC · {T("历史", "History")}{T(f"（{nb} 条已走完的腿）", f" ({nb} completed legs)") if nb else ""}</h3>{_legtr_hist(tr.get("btc"), eras, False)}
+<details><summary>{T("山寨整体（等权篮子指数，15% 折线）", "Altcoins (equal-weight basket index, 15% swings)")}</summary>
+<h3 class="sub">{T("现在", "Now")}</h3>{_legtr_now(now.get("alt"), True)}<h3 class="sub">{T("历史", "History")}</h3>{alt_h}</details>
+<p class="tnote">{T("口径：确认用时 = 确认日 − 起点日；区间 = 涨腿 [起点, 起点×1.1]、跌腿 [起点×0.9, 起点]（山寨 15%）；牛熊按腿终点日、年代按起点年份；剔除 2010-08-01 以前起点的 3 条腿（序列起点造成的伪腿），BTC 剩 303 条。都是描述统计，不是信号。定义见",
+     "Method: days to confirmation = confirmation date − start date; band = [start, start×1.1] for up-legs, [start×0.9, start] for down-legs (15% for altcoins); bull/bear by leg end date, era by start year; 3 legs starting before 2010-08-01 are dropped (artefacts of the series start), leaving 303 BTC legs. Descriptive only, not a signal. Definitions: ")} <a href="{U("/methodology/#leg-transition")}">{T("口径与规则", "Methodology")}</a>{T("。", ".")}</p></section>"""
+
+
+def leg_transition_method():
+    """口径与规则页的定义（#leg-transition）。"""
+    items = [
+        T("确认用时 lag_days = 确认日 − 起点日（日历天）。起点 = 涨腿的最低收盘 / 跌腿的最高收盘；确认 = 收盘 ≥ 起点×1.1（涨腿）或 ≤ 起点×0.9（跌腿），含等号。山寨整体阈值 15%。",
+          "Days to confirmation = confirmation date − start date (calendar days). Start = the lowest close of an up-leg / highest close of a down-leg; confirmation = a close ≥ start×1.1 (up) or ≤ start×0.9 (down), inclusive. Altcoin threshold 15%."),
+        T("换腿区间：涨腿 [起点, 起点×1.1]，跌腿 [起点×0.9, 起点]。区间内总天数 = 起点到这条腿里最后一个收盘还在区间里的那天，包括确认后又回到区间的日子。",
+          "Transition band: [start, start×1.1] for up-legs, [start×0.9, start] for down-legs. Days in band = from the start to the last close inside the band within the leg, including returns after confirmation."),
+        T("确认后回到区间 = 确认日之后、腿结束之前，有没有任何一天收盘回到区间。",
+          "Back in band = any close inside the band after the confirmation date and before the leg ends."),
+        T("分组：方向 × 牛熊（周期口径，按腿终点日）× 年代（2010-13 / 2014-17 / 2018-21 / 2022-26，按起点年份）。剔除起点早于 2010-08-01 的腿（序列起点造成的伪腿，共 3 条），BTC 剩 303 条。分位数同涨跌腿历史表的插值法。",
+          "Groups: direction × bull/bear (price-cycle phase, by leg end date) × era (by start year). Legs starting before 2010-08-01 (3, artefacts of the series start) are dropped, leaving 303 BTC legs. Quantiles use the same interpolation as the leg history tables."),
+        T("实时条件统计：按同一套折线规则逐日往前走，每天只用当天以前的数据。跌腿状态下，记每一天「当前最低收盘已过 k 天、还没涨过最低收盘×1.1」；之后先发生的只有两种：再创新低，或涨腿确认。涨腿对称（当前最高收盘已过 k 天、还没跌破 10%）。k = 今天的实际天数，最多按 30 天算。",
+          "Live conditional statistics: step through history with the same swing rule, using only data up to each day. In a down-leg, record every day where the lowest close is k days old and price has not risen 10% above it; what happens first is either a new low or an up-leg confirmation. Up-legs are symmetric. k = today's actual age, capped at 30."),
+        T("统计三样：最终确认的比例；确认的还要再等几天；先创新极值的，从当前极值到腿结束（下一次反向确认）之前再走了多少。分组：全部 / 牛市段 / 2018 年后牛市段 / 2022-26 / 2022-26 牛市段，按样本所在那天归类；某组少于 5 个样本只写「样本不足」。",
+          "Three numbers: the share that went on to confirm; the further wait for those that did; for those that made a new extreme first, how much further it went before the next reversal. Groups: all / bull phase / bull phase since 2018 / 2022-26 / 2022-26 bull, by the case's own date; fewer than 5 cases shows 'too few cases'."),
+        T("当前腿位置：起点到今天、起点到当前极值两种天数，以及幅度，放在同方向、同牛熊阶段（今天的口径）已走完的腿里，给排名（由大到小）和比它小的占比。",
+          "Current-leg position: days from start to today and to the current extreme, plus the move size, ranked among completed legs of the same direction and phase (longest/largest first), with the share below it."),
+        T("数据：leg_history.json 的 transition、leg_latest.json 的 transition_now（2026-11-28 新增字段，原有字段不变）。证据等级：描述统计；牛熊是事后划分，不是实时信号。",
+          "Data: transition in leg_history.json and transition_now in leg_latest.json (fields added 2026-11-28; existing fields unchanged). Evidence grade: descriptive; bull/bear phases are drawn after the fact, not live signals."),
+    ]
+    return (f'<h2 id="leg-transition">{T("涨跌腿 · 换腿过渡期", "Leg tracker · leg transitions")}</h2><div class="card mcard"><ol>'
+            + "".join(f"<li>{esc(x)}</li>" for x in items)
+            + f'</ol><p class="tnote"><a href="{U("/leg-tracker/#trans")}">{T("看当前读数 →", "Current readings →")}</a></p></div>')
+
+
 def build_leg_tracker():
     """/leg-tracker/：设计稿 PAGE B。骨架在这里，文案 / 统计数字 / 当前读数由 leg.js 填。"""
     cr = crumbs([(T("宏观仪表盘", "Macro"), "/macro/"), (T("涨跌腿追踪", "Leg Tracker"), None)])
@@ -5139,6 +5329,7 @@ def build_leg_tracker():
 <div class="chipgrid" id="lenChips"></div><div class="live" id="lenLive" style="display:none"></div><p class="muted small" data-i18n="len_p2"></p></section>
 <section class="blk" id="dd"><h2><span data-i18n="dd_h"></span>{tags["desc"]}</h2><p data-i18n="dd_p1"></p>
 <div id="ddMeter"></div><div class="legendline" id="ddLegend"></div><div class="live" id="ddLive" style="display:none"></div><p class="muted small" data-i18n="dd_p2"></p></section>
+{leg_transition_html()}
 <section class="blk" id="hist"><h2><span data-i18n="hist_h"></span>{tags["desc"]}</h2><div id="histMount"></div></section>
 <section class="blk" id="l89"><h2><span data-i18n="l89_h"></span>{tags["hyp"]}</h2><p data-i18n="l89_p1"></p><div class="bars" id="l89Bars"></div>
 <p class="muted small" data-i18n="l89_pre"></p><p data-i18n="l89_p2"></p><div class="callout" data-i18n="l89_falsify"></div></section>
@@ -5155,8 +5346,8 @@ def build_leg_tracker():
     css, js = leg_assets()
     emit("leg-tracker/index.html", T(f"涨跌腿追踪 · {BRAND}", f"Leg Tracker · {BRAND_EN}"), body, active="macro", narrow=True,
          extra_head=css, scripts=js,
-         desc=T("比特币每一条涨腿、跌腿走了多久、涨跌了多少，放到同一周期阶段的历史里看在什么位置：历史规律和当前读数。",
-                "How long each BTC up- and down-leg lasts and how far it goes, compared with legs from the same cycle phase: historical patterns and current readings."))
+         desc=T("比特币每一条涨腿、跌腿走了多久、涨跌了多少，放到同一周期阶段的历史里看在什么位置；换腿过渡期：从高低点到反向确认的天数分布和当前读数。",
+                "How long each BTC up- and down-leg lasts and how far it goes, compared with legs from the same cycle phase; leg transitions: days from the extreme to reversal confirmation, with current readings."))
 
 
 AGENT_DIR = os.path.join(ROOT, "public", "ai-agent", "monitor")      # tools/agent-id 的导出目录（交接包原样）
@@ -6151,7 +6342,7 @@ def build_methodology():
     banned = "".join(f"<tr><td class='l wrap'>{esc(T(a, b))}</td><td class='l wrap'>{esc(T(c, d))}</td></tr>" for a, b, c, d in R.BANNED)
     body = f"""{crumbs([(T("口径与规则", "Methodology"), None)])}<h1>{T("口径与规则", "Methodology")}</h1>
 <p class="lede keep">{T("解读日志里的每一个判断都来自下面这些公开规则。规则改动会在更正记录里留痕，历史日志不跟着改。", "Every judgement in the logs comes from the public rules below. Rule changes are logged in Corrections; past logs are never rewritten.")}</p>
-<nav class="anch static">{"".join(f'<a href="#{h}">{t}</a>' for t, h in ((T("层结论", "Verdicts"), "verdicts"), (T("综合研判", "Overall read"), "comp"), (T("L1 规则清单", "L1 rules"), "l1rules"), (T("标签说明", "Tags"), "legend"), (T("更新时间", "Schedule"), "schedule"), (T("统计窗口", "Stats window"), "window"), (T("指标与区间", "Indicators"), "indicators"), (T("预警阈值", "Alerts"), "alerts")))}</nav>
+<nav class="anch static">{"".join(f'<a href="#{h}">{t}</a>' for t, h in ((T("层结论", "Verdicts"), "verdicts"), (T("综合研判", "Overall read"), "comp"), (T("L1 规则清单", "L1 rules"), "l1rules"), (T("标签说明", "Tags"), "legend"), (T("更新时间", "Schedule"), "schedule"), (T("统计窗口", "Stats window"), "window"), (T("换腿过渡期", "Leg transitions"), "leg-transition"), (T("指标与区间", "Indicators"), "indicators"), (T("预警阈值", "Alerts"), "alerts")))}</nav>
 <h2 id="verdicts">{T("层结论怎么来", "How layer verdicts are made")}</h2>
 <div class="card mcard">
 {T(L1_RULES_ZH, L1_RULES_EN)}
@@ -6192,6 +6383,7 @@ def build_methodology():
 <h2>{T("解读日志规则", "Log rules")}</h2>
 <div class="card mcard">{T(f"日志日期 = 解读当天（UTC 日期），日更每天{TT(MAIN_TIME, False)}运行，每个读数带自己的数据日期（FRED 按美国工作日、NFCI 周度、交易所余额约有 2 周滞后，超过容忍天数标 ⚠）。写入即冻结；同一天重跑且核心缺失变少才覆盖一次并标「补录」。周复盘按 ISO 周（周一至周日），月复盘按自然月；切换发生在规则变更当天的，注明「规则变更所致」。人工点评放在 content/journal/，单独标注。网站其他位置展示日志内容时标「日志 · 冻结时间」，读数和最新值不同以最新值为准。",
                                                                                    f"Log date = UTC day of the run (the daily run is at {TT(MAIN_TIME, False)}); each reading carries its own data date (FRED on US business days, NFCI weekly, exchange balance ~2 weeks late; stale readings get ⚠). Frozen once written; a same-day re-run only overwrites when fewer core inputs are missing, marked 'Re-run'. Weekly reviews follow ISO weeks, monthly ones calendar months; switches on a rule-change day are labelled as such. Wherever log content appears elsewhere it is marked with its freeze time; the latest values win.")}</div>
+{leg_transition_method()}
 <h2>{T("发射台口径", "Launchpad conventions")}</h2><div class="tw"><table><tbody>{lp_rows}</tbody></table></div>"""
     emit("methodology/index.html", T(f"口径与规则 · {BRAND}", f"Methodology · {BRAND_EN}"), body, active="methodology")
 
