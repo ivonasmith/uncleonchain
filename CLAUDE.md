@@ -67,7 +67,7 @@ Claude 是这个产品的操盘手：自己判断、自己做完、自己提交�
   卡片刻度（大叔 11-14 定）：`出网站.leg_scale` 按 L2 当前状态（L2_BULLISH 偏多 → 牛市阶段，否则熊市阶段，和「结合短期」同口径）取同阶段已走完的腿——BTC 2017-08 起、山寨整体指数 2018-08 起——写进站点版 `site/data/leg_latest.json` 的 `site_scale`（分位 + 全部天数 / 幅度，原始 data/leg 不动），`leg.js` 的 `dnScaleHTML` / `upScaleHTML` / `altScaleHTML` 画：幅度 = 四条分位线（只标「一半」「九成」，英文 Half / 9 in 10，不写 P90 这类行话）+ 一句「比 N 条里的 M 条走得久 / 跌得深」；天数 = 提示线（BTC 涨腿 89 天照设计稿；BTC 跌腿 45 天 `DN45`，假设级，证据是 2017 起 9 条，作废条件在详情页 #d45；山寨不画线）。配色照原回撤条（冷色渐深，超 P90 跌腿红 / 涨腿琥珀）。45 天线不进交易计划，要进先让 project 写进《操作规格》。
   换腿过渡期（11-28 大叔需求）：`leg_data.transition_outputs` → leg_history.json `transition`（每条腿 lag_days / band_days / revisit + dir×regime×era 统计表，剔除 2010-08-01 前 3 条伪腿，BTC 303 条）
   + leg_latest.json `transition_now`（当前极值已过 k 天的历史条件样本：确认比例 / 再等天数 / 再创新极值幅度，五组；当前腿同阶段排名）。只加字段、schema 不动；逐日状态 `daily_state` = scan_legs 逐步版（selftest 核对）。
-  页面 #trans 由 `出网站.leg_transition_html` 静态生成（不走 leg.js），口径页 #leg-transition。验收基准（11-27 收盘）已全部对上，小数差异只是基准保留 1 位。
+  **页面 11-28 已下线**（大叔：信息没重点，要做成像涨跌腿卡那样放在卡片旁辅助判断，讨论定方案后按 `docs/开发流程.md` C 级流程再上）；`leg_transition_html` / `leg_transition_method` 代码保留但不调用，json 字段照常生成。验收基准（11-27 收盘）已全部对上。
   设计稿换版时照原样拆：pure 函数 + STATS/T + 渲染片段原样搬进 leg.js，只改取数 / 预览删除 / 颜色变量。三个口径常量（THR_EQ / D0_INCLUDE_IGNITION / IGN_GAP）用脚本默认值，上线前 ACCEPTANCE 四个回放（--asof 2026-09-25～28）已全部对上；改规则先跑 `--selftest` 和回放。红线：不出现挂单 / 仓位 / 止损，不给个币名单。
 - `core/`：核心选币观测台（大叔 2026-11-14 交付：Notion《核心标的基本面与叙事追踪》+ 原型 obs.html + volume_rank.py）。`core-daily.yml` 每天 UTC 04:13 跑 `core/core_daily.py`
   → `data/core/core_latest.json`（当前读数）、`series/<币>.json`（详情页走势）、`core_history.json`（评分 / 成交额排名每天一行，不回填）→ 出网站复制到 `/data/core/` 并注入 `gates`（`出网站.core_gates`：L2 状态熊底区 / 熊末→牛初才过、L1 净流动性闸门）。
